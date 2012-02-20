@@ -50,7 +50,7 @@ GEM
       execjs
     coffee-script-source (1.2.0)
     daemon_controller (1.0.0)
-    devise (2.0.3)
+    devise (2.0.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
       railties (~> 3.1)
@@ -151,7 +151,7 @@ PLATFORMS
 DEPENDENCIES
   cancan
   coffee-rails (~> 3.2.1)
-  devise
+  devise (~> 2.0.4)
   fancybox-rails!
   jquery-rails
   mysql2

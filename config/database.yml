@@ -1,6 +1,7 @@
 # MySQL.  Versions 4.1 and 5.0 are recommended.
 # 
-# Install the MYSQL driver
+# Install the MYSQL _developmentssword: patrick
+# driver
 #   gem install mysql2
 #
 # Ensure the MySQL gem is defined in your Gemfile
@@ -14,8 +15,10 @@ development:
   reconnect: false
   database: patrick_development
   pool: 5
-  username: root
-  password:
+  username: patrick_admin
+  password: patrick
+  host: 192.168.11.32
+  port: 3306
   socket: /tmp/mysql.sock
 
 # Warning: The database defined as "test" will be erased and
