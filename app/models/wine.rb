@@ -1,9 +1,4 @@
-class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-
+class Wine < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :username
 
@@ -32,6 +27,4 @@ class User < ActiveRecord::Base
   # has_many :contact_people, :foreign_key => "erp_customer_id"
   # has_many :addresses, :foreign_key => "parent_id", :class_name => "ERP::CustomerAddress"
 
-
 end
-                                 ``
