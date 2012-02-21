@@ -7,7 +7,7 @@ gem 'rails', '3.2.0'
 
 gem 'mysql2'
 gem 'jquery-rails'
-gem 'devise'
+gem 'devise', "~> 2.0.4"
 gem 'cancan'
 gem 'passenger'
 gem 'will_paginate'
