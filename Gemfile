@@ -12,10 +12,12 @@ gem 'cancan'
 gem 'passenger'
 gem 'will_paginate'
 gem 'paperclip'
+gem 'omniauth'
 gem 'oauth'
 gem 'oauth_china'
 gem 'rails-i18n'
 gem 'fancybox-rails', :git => 'https://github.com/sverigemeny/fancybox-rails'
+gem 'backbone-on-rails'
 
 group :development, :test do
   gem 'pry'  # "binding.pry" in action

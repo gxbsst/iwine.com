@@ -1,12 +1,12 @@
 class Wine < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :username
+  #attr_accessible :email, :password, :password_confirmation, :remember_me, :username
 
-  has_one :user_profile
-  has_many :albums
-  has_many :wine_registers
-  has_many :wine_comments
-  has_many :photo_comments
+  #has_one :user_profile
+  #has_many :albums
+  #has_many :wine_registers
+  #has_many :wine_comments
+  #has_many :photo_comments
 
   # accepts_nested_attributes_for :user_profile
 	# alias :user_profiles_attribute :user_profile

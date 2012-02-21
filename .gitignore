@@ -11,3 +11,4 @@ tmtags
 /.settings/
 .gitkeep
 .idea
+database.yml

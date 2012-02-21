@@ -7,8 +7,53 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+    <div id="wrapper">
+      <div id="header">
+        <div id="topspace">
+          <div id="topnavi">
+          </div>
+          <div id="logo">
+           <%= image_tag('base/logo.gif') %>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div id="globel_navi_search">
+          <div id="globel_search"><input class="globel_search" name="" type="text" placeholder="酒名、酒庄、年份" /><a href="#" class="btn_g_search">搜索</a></div>
+          <div id="globel_navi">
+            <ul>
+              <li><a href="#"><span>首页</span></a></li>
+              <li><a class="current" href="#"><span>美酒</span></a></li>
+              <li><a href="#"><span>酒庄</span></a></li>
+              <li><a href="#"><span>社区</span></a></li>
+              <li><a href="#"><span>活动</span></a></li>
+            </ul>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+      <div id="mainholder" class="common_bg">
+        <div class="shadow_side"></div>
+        <div>
+          <%= image_tag('base/bg_white_t.gif') %>
+        </div>
+        <div id="maincontent" class="common_main">
 
-<%= yield %>
+        <%= yield %>
+          <!--end #maincontent-->
+        </div>
+        <div>
+          <%= image_tag('base/bg_white_b.gif') %>
+
+        </div>
+        <!--end mainholder-->
+      </div>
+      <div id="footer">
+        <div class="copyright">Copyright © 2011 Patrick, Inc. All rights reserved. </div>
+        <a href="#">关于我们</a> | <a href="#">帮助中心</a> | <a href="#">个人信息保护方针</a> | <a href="#">网站地图</a>
+        <!--end footer-->
+     </div>
+      <!--end wrapper-->
+    </div>
 
 </body>
 </html>
