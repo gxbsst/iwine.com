@@ -10,5 +10,5 @@ tmtags
 *.swp
 /.settings/
 .gitkeep
-.idea
-database.yml
+.idea/*
+config/database.yml
