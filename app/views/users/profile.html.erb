@@ -1,0 +1,8 @@
+<h1>User Profile</h1>
+<%= form_for :profile do |f| %>
+  <%= f.label :nickname %>:
+  <%= f.text_field :nickname %>
+
+                          <br />
+    <%= submit_tag('submit') %>
+<% end %>
