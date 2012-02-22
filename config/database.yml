@@ -30,8 +30,10 @@ test:
   reconnect: false
   database: patrick_test
   pool: 5
-  username: root
-  password:
+  host: 192.168.11.32
+  username: patrick_admin
+  password: patrick
+  port: 3306
   socket: /tmp/mysql.sock
 
 production:
@@ -40,6 +42,8 @@ production:
   reconnect: false
   database: patrick_production
   pool: 5
-  username: root
-  password:
+  host: 192.168.11.32
+  username: patrick_admin
+  password: patrick
+  port: 3306
   socket: /tmp/mysql.sock
