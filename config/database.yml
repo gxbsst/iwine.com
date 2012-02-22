@@ -15,9 +15,8 @@ development:
   reconnect: false
   database: patrick_development
   pool: 5
-  username: patrick_admin
-  password: patrick
-  host: 192.168.11.32
+  username: root
+  password:
   port: 3306
   socket: /tmp/mysql.sock
 
