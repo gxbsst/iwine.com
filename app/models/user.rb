@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   has_many :wine_comments
   has_many :photo_comments
 
+
+
   # accepts_nested_attributes_for :user_profile
 	# alias :user_profiles_attribute :user_profile
 
