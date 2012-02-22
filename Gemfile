@@ -11,11 +11,16 @@ gem 'devise', "~> 2.0.4"
 gem 'cancan'
 gem 'passenger'
 gem 'will_paginate'
-gem 'paperclip'
+
+gem "rmagick"
+gem "carrierwave"
+
 gem 'omniauth'
 gem 'oauth'
 gem 'oauth_china'
+
 gem 'rails-i18n'
+
 gem 'fancybox-rails', :git => 'https://github.com/sverigemeny/fancybox-rails'
 gem 'backbone-on-rails'
 

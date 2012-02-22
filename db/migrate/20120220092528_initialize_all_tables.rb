@@ -4,6 +4,7 @@ class InitializeAllTables < ActiveRecord::Migration
     create_table "albums", :force => true do |t|
       t.string   "type",          :limit => 0,                     :null => false
       t.string   "name",          :limit => 45,                    :null => false
+      t.integer 'user_id'
       t.text     "intro"
       t.boolean  "is_order_asc",                :default => false, :null => false
       t.integer  "cover_id",                    :default => 0
@@ -30,6 +31,9 @@ class InitializeAllTables < ActiveRecord::Migration
       t.integer  "commented_num",              :default => 0
       t.integer  "liked_num",                  :default => 0
       t.datetime "deleted_at"
+      t.boolean "is_cover", :default => false   #该图片是否为封面， 如用户当前头像， 酒标等
+      t.integer "audit_id"
+      t.integer "audit_status" #审核状态
       t.timestamps
     end
 
