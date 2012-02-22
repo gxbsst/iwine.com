@@ -1,9 +1,8 @@
-<h1>Users#profile</h1>
-<p>Find me in app/views/users/profile.html.erb</p>
+<h1>User Profile</h1>
+<%= form_for :profile do |f| %>
+  <%= f.label :nickname %>:
+  <%= f.text_field :nickname %>
 
-<%= form_for :photo, :html => {:multipart => true} do |f| %>
-    <p>
-      <%= f.file_field :raw_name %>
-    </p>
-    <%= f.submit %>
+                          <br />
+    <%= submit_tag('submit') %>
 <% end %>

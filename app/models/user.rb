@@ -34,6 +34,8 @@ class User < ActiveRecord::Base
   # has_many :contact_people, :foreign_key => "erp_customer_id"
   # has_many :addresses, :foreign_key => "parent_id", :class_name => "ERP::CustomerAddress"
 
+  def role?(value)
+    role === value.to_s
+  end
 
 end
-                                 ``
