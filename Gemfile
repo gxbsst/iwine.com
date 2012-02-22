@@ -12,7 +12,8 @@ gem 'cancan'
 gem 'passenger'
 gem 'will_paginate'
 
-gem "rmagick"
+#gem "rmagick"
+gem "mini_magick"
 gem "carrierwave"
 
 gem 'omniauth'
