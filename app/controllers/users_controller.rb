@@ -11,8 +11,7 @@ class UsersController < ApplicationController
 
   def avatar
     @photos = current_user.photos
-    @photo = current_user.avatar
-
+    @photo = current_user.avatar || Photo.new
     if request.post?
       @photo.attributes = params[:photo]
       @photo.owner_type = OWNER_TYPE_USER
@@ -20,5 +19,9 @@ class UsersController < ApplicationController
       @photo.save
       redirect_to '/users/avatar'
     end
+  end
+
+  def editAvatar
+    @photo = Photo.find params[:id]
   end
 end

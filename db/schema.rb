@@ -61,19 +61,19 @@ ActiveRecord::Schema.define(:version => 20120221035929) do
   create_table "photos", :force => true do |t|
     t.string   "raw_name"
     t.integer  "owner_type"
-    t.integer  "business_id",                               :null => false
+    t.integer  "business_id"
     t.text     "intro"
-    t.string   "category",      :limit => 0,                :null => false
+    t.string   "category",      :limit => 0, :default => ""
     t.integer  "size"
-    t.integer  "album_id",                                  :null => false
-    t.integer  "width",                      :default => 0, :null => false
-    t.integer  "height",                     :default => 0, :null => false
+    t.integer  "album_id"
+    t.integer  "width",                      :default => 0
+    t.integer  "height",                     :default => 0
     t.integer  "viewed_num",                 :default => 0
     t.integer  "commented_num",              :default => 0
     t.integer  "liked_num",                  :default => 0
     t.datetime "deleted_at"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "regions", :force => true do |t|

@@ -7,6 +7,8 @@ Patrick::Application.routes.draw do
     get :register , :to => 'devise/registrations#new'
   end
 
+  resource :photos
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -38,4 +38,7 @@ class User < ActiveRecord::Base
     role === value.to_s
   end
 
+  def avatar
+    Photo.find :first, :conditions => { :owner_type => OWNER_TYPE_USER, :business_id => id, :is_cover => 1 };
+  end
 end
