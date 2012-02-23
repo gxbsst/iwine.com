@@ -3,7 +3,7 @@ class Albums < ActiveRecord::Base
 
     belongs_to :user
     has_many :photos
-    has_one  :user_profile
+    has_one  :profile
     has_many :user_followers
     # has_many :user_listened
     has_many :user_collects

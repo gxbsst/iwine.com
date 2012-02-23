@@ -345,5 +345,32 @@ class InitializeAllTables < ActiveRecord::Migration
   end
 
   def down
+    drop_table :albums
+    drop_table :photos
+    drop_table :audit_logs
+    drop_table :friendships
+    drop_table :photo_comments
+    drop_table :regions
+    drop_table :social_messages
+    drop_table :social_message_posts
+    drop_table :user_good_hit_comments
+    drop_table :user_interests
+    drop_table :user_invite_logs
+    drop_table :user_oauths
+    drop_table :user_profiles
+    drop_table :user_wine_cellars
+    drop_table :user_wine_cellar_items
+    drop_table :wines
+    drop_table :wine_comments
+    drop_table :wine_details
+    drop_table :wine_drinkers
+    drop_table :wine_labels
+    drop_table :wine_prices
+    drop_table :wine_region_trees
+    drop_table :wine_registers
+    drop_table :wine_statistics
+    drop_table :wine_styles
+    drop_table :wine_varieties
+    drop_table :wineries
   end
 end

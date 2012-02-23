@@ -1,7 +1,12 @@
 Patrick::Application.routes.draw do
-  devise_for :users
+  ActiveAdmin.routes(self)
 
-  devise_scope :user do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
+  devise_for :users
+  resource :wine_registers
+
+  devise_scope :users do
     get :login , :to => "devise/sessions#new"
     get :logout , :to => 'devise/sessions#destroy'
     get :register , :to => 'devise/registrations#new'
@@ -56,7 +61,7 @@ Patrick::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'home#index'
+  root :to => 'static#index'
 
   # See how all your routes lay out with "rake routes"
 
