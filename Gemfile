@@ -10,7 +10,7 @@ gem 'jquery-rails'
 gem 'devise', "~> 2.0.4"
 gem 'cancan'
 gem 'passenger'
-gem 'will_paginate'
+gem 'kaminari'
 
 #gem "rmagick"
 gem "mini_magick"
@@ -25,7 +25,13 @@ gem 'rails-i18n'
 gem 'fancybox-rails', :git => 'https://github.com/sverigemeny/fancybox-rails'
 gem 'backbone-on-rails'
 
+gem 'simple_form'
+gem 'client_side_validations'
+
+gem 'activeadmin'
+
 group :development, :test do
+  gem 'i18n'
   gem 'pry'  # "binding.pry" in action
   gem 'wirble'
 end
