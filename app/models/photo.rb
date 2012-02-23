@@ -13,5 +13,4 @@ class Photo < ActiveRecord::Base
     raw_name.should_process = true
     raw_name.recreate_versions!
   end
-
 end

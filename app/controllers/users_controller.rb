@@ -1,26 +1,24 @@
 class UsersController < ApplicationController
-  #before_filter :authenticate_user!, :except => [:index, :show]
+  before_filter :authenticate_user!, :except => [:index, :show]
 
   def show
     @user = User.find params[:id]
   end
 
   def profile
-    #@profile = current_user.user_profile || current_user.build_user_profile
-    # if @profile == nil
-    #   @profile = current_user.build_user_profile
-    # endp
-    @photo = Photo.new
+    @profile = current_user.user_profile || current_user.build_user_profile
+  end
+
+  def avatar
+    @photos = current_user.photos
+    @photo = current_user.avatar
 
     if request.post?
       @photo.attributes = params[:photo]
-      @photo.owner_type = OWNER_TYPE_WINE
-      @photo.business_id = 100
-      @photo.user_id = 1
-
-      if @photo.save
-        #redirect_to '/users/profile'
-      end
+      @photo.owner_type = OWNER_TYPE_USER
+      @photo.business_id = current_user.id
+      @photo.save
+      redirect_to '/users/avatar'
     end
   end
 end
