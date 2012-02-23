@@ -1,14 +1,7 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+# encoding: UTF-8
 
-## 初始化产区
 require 'csv'
-csv = CSV.read(Rails.root.join('db') + 'region.csv')
+csv = CSV.read('region.csv')
 
 csv.each do |item|
   # 格式 0 2 4 6
@@ -16,8 +9,6 @@ csv.each do |item|
 
   #item_to_hash = Hash
   item_to_hash = Hash[*item]
-
-
 
   parent = 0
 
