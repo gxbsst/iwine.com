@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   has_many :wine_registers
   has_many :wine_comments
   has_many :photo_comments
-
+  has_many :photos, :foreign_key => 'business_id'
 
 
   # accepts_nested_attributes_for :user_profile
