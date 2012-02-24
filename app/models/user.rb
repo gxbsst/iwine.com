@@ -12,9 +12,8 @@ class User < ActiveRecord::Base
   has_many :registers
   has_many :comments
   has_many :photo_comments
-  has_many :photos, :foreign_key => :business_id
+  has_many :photos, :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_USER }
   has_many :registers
-
 
 
   # accepts_nested_attributes_for :user_profile
@@ -40,4 +39,7 @@ class User < ActiveRecord::Base
     role === value.to_s
   end
 
+  def avatar
+    Photo.find :first, :conditions => { :owner_type => OWNER_TYPE_USER, :business_id => id, :is_cover => 1 };
+  end
 end

@@ -6,17 +6,18 @@ class ImageUploader < CarrierWave::Uploader::Base
 
 
   # Include RMagick or MiniMagick support:
-  #include CarrierWave::RMagick
-  include CarrierWave::MiniMagick
+  include CarrierWave::RMagick
+#  include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   storage :file
-  # storage :fog
+# storage :fog
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{OWNER_TYPES[model.owner_type]}/#{model.business_id}"
+#    "uploads/#{model.class.to_s.underscore}/#{OWNER_TYPES[model.owner_type]}/#{model.business_id}"
+    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -66,14 +67,19 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   process :resize_to_fit => [400, 400]
 
-  ## USER
-  version :thumb, :if => :is_user?  do
+#  ## USER
+  version :thumb  do
+ process :crop
     process :resize_to_limit => [100, 100]
   end
 
-  version :large, :if => :is_user? do
-    process :resize_to_limit => [200, 200]
+ version :avatar do
+    process :crop
   end
+
+#  version :large, :if => :is_user? do
+#    process :resize_to_limit => [200, 200]
+#  end
 
   ## WINE
   version :w_thumb, :if => :is_wine?  do
@@ -97,6 +103,20 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   def should_process?
     @should_process ||= false
+  end
+
+  def crop
+    binding.pry
+    if model.crop_x.present?
+      process :resize_to_limit => [50, 50]
+      manipulate! do |img|
+        img.crop!(
+          model.crop_x.to_i,
+          model.crop_y.to_i, 
+          model.crop_w.to_i,
+          model.crop_h.to_i)
+      end
+    end
   end
 
   #

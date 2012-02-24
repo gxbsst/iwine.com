@@ -6,17 +6,26 @@ class UsersController < ApplicationController
   end
 
   def profile
-    @profile = current_user.user_profile
-    if @profile == nil
-      @profile = current_user.build_user_profile
-    end
+    @profile = current_user.user_profile || current_user.build_user_profile
+  end
 
-    if request.post?
-      @profile.attributes = params[:profile]
-      if @profile.save
-        redirect_to '/users/profile'
-      end
+  def avatar
+    @photos = current_user.photos
+    @avatar = current_user.avatar
+    @photo = Photo.new
+
+
+    if request.post? 
+      @photo.attributes = params[:photo]
+      @photo.owner_type = OWNER_TYPE_USER
+      @photo.business_id = current_user.id
+      @photo.save
+      redirect_to '/users/avatar'
     end
   end
 
+  def edit_avatar
+    @photo = Photo.find params[:id]
+    render :layout => false 
+  end
 end
