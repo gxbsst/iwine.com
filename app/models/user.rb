@@ -12,13 +12,8 @@ class User < ActiveRecord::Base
   has_many :registers
   has_many :comments
   has_many :photo_comments
-<<<<<<< HEAD
   has_many :photos, :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_USER }
-=======
-  has_many :photos, :foreign_key => :business_id
   has_many :registers
-
->>>>>>> 1f619afae10087eff6fb3770d2585ed45f78394d
 
 
   # accepts_nested_attributes_for :user_profile

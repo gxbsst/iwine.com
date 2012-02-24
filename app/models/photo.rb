@@ -1,5 +1,5 @@
 class Photo < ActiveRecord::Base
-  attr_accessible :image
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   belongs_to :user
 
   mount_uploader :image, ImageUploader
@@ -9,8 +9,13 @@ class Photo < ActiveRecord::Base
 
   after_save :recreate_delayed_versions!
 
+ 
   def recreate_delayed_versions!
-    image.should_process = true
-    image.recreate_versions!
+    binding.pry
+#    image.should_process = true
+    image.recreate_versions! if crop_x.present?
+#    self.image.recreate_versions! if self.image.present?
   end
+
+
 end

@@ -12,8 +12,8 @@ gem 'cancan'
 gem 'passenger'
 gem 'kaminari'
 
-#gem "rmagick"
-gem "mini_magick"
+gem "rmagick"
+#gem "mini_magick"
 gem "carrierwave"
 
 gem 'omniauth'
@@ -23,6 +23,7 @@ gem 'oauth_china'
 gem 'rails-i18n'
 
 gem 'fancybox-rails', :git => 'https://github.com/sverigemeny/fancybox-rails'
+gem 'jcrop-rails'
 gem 'backbone-on-rails'
 
 gem 'simple_form'
