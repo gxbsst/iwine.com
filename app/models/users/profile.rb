@@ -1,2 +1,2 @@
-class USERS::Profile < ActiveRecord::Base
+class Users::Profile < ActiveRecord::Base
 end

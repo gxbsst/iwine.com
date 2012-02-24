@@ -1,2 +1,2 @@
-class USERS::InviteLogs < ActiveRecord::Base
+class Users::InviteLogs < ActiveRecord::Base
 end

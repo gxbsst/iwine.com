@@ -1,2 +1,2 @@
-class WINES::VarietyPercentage < ActiveRecord::Base
+class Wines::VarietyPercentage < ActiveRecord::Base
 end

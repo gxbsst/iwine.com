@@ -1,11 +1,11 @@
 <h2>上传酒款</h2>
-<%= simple_form_for @wine_register, :html => { :class => 'form-horizontal'} do |f| %>
-    <%= f.error_messages %>
-    <%= f.input :name_en %>
-    <%= f.input :name_zh %>
+
+<%= simple_form_for @register, :html => { :class => 'form-horizontal'} do |f| %>
+    <%= f.input :name_en, :label => '英文名' %>
+    <%= f.input :name_zh, %>
     <%= f.input :official_site %>
-    <%= f.association :wine_style %>
-    <%= f.association :winery %>
+    <%= f.association :style, :collection => 1..2 %>
+
     <%= f.input :vintage %>
     <%= f.input :drinkable_begin %>
     <%= f.input :drinkable_end %>
@@ -14,3 +14,4 @@
     <%= f.input :variety_name %>
     <%= f.input :capacity %>
 <% end %>
+

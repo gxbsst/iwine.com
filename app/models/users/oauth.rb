@@ -1,3 +1,3 @@
-class USERS::Oauth < ActiveRecord::Base
-  include UserSupport
+class Users::Oauth < ActiveRecord::Base
+  include Users::UserSupport
 end

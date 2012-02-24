@@ -48,5 +48,10 @@ module Patrick
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+
+    ## Fixed
+    # DEPRECATION WARNING: ActiveSupport::Memoizable is deprecated...
+    ActiveSupport::Deprecation.silenced = true
   end
 end
