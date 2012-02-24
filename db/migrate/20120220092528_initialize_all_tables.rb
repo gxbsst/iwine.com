@@ -69,7 +69,7 @@ class InitializeAllTables < ActiveRecord::Migration
     create_table "regions", :force => true do |t|
       t.integer "parent_id",   :limit => 2,   :default => 0,     :null => false
       t.string  "region_name", :limit => 120, :default => "",    :null => false
-      t.boolean "region_type",                :default => false, :null => false
+      t.integer "region_type"
       t.timestamps
     end
 

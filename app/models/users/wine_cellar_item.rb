@@ -1,2 +1,2 @@
-class USERS::WineCellarItem < ActiveRecord::Base
+class Users::WineCellarItem < ActiveRecord::Base
 end

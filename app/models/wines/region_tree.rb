@@ -1,2 +1,4 @@
-class WINES::RegionTree < ActiveRecord::Base
+class Wines::RegionTree < ActiveRecord::Base
+  include Wines::WineSupport
+
 end

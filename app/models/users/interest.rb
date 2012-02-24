@@ -1,2 +1,4 @@
-class USERS::Interest < ActiveRecord::Base
+class Users::Interest < ActiveRecord::Base
+  include Users::UserSupport
+
 end

@@ -1,4 +1,4 @@
-class WINES::Detail < ActiveRecord::Base
-  include WineSupport
+class Wines::Detail < ActiveRecord::Base
+  include Wines::WineSupport
 
 end

@@ -1,7 +1,7 @@
 class WinesController < ApplicationController
 
   def register
-     @wine_register = Register.new
+     @register = Wines::Register.new
   end
 
 end

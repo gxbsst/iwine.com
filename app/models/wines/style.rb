@@ -1,2 +1,3 @@
-class WINES::Style < ActiveRecord::Base
+class Wines::Style < ActiveRecord::Base
+  include Wines::WineSupport
 end

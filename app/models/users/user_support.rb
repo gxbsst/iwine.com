@@ -1,7 +1,7 @@
-module USERS
+module Users
   module UserSupport
     def self.included(base)
-      base.set_table_name 'user_' + base.table_name unless base.table_name =~/^user\_/
+      base.table_name = 'user_' + base.table_name unless base.table_name =~/^user\_/
       base.extend ClassMethods
     end
 

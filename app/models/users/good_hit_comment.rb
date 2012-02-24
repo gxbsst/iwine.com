@@ -1,2 +1,2 @@
-class USERS::GoodHitComment < ActiveRecord::Base
+class Users::GoodHitComment < ActiveRecord::Base
 end

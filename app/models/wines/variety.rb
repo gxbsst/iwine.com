@@ -1,2 +1,2 @@
-class WINES::Variety < ActiveRecord::Base
+class Wines::Variety < ActiveRecord::Base
 end
