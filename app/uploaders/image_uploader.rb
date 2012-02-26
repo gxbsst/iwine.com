@@ -7,11 +7,11 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   include CarrierWave::RMagick
-#  include CarrierWave::MiniMagick
+  #  include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   storage :file
-# storage :fog
+  # storage :fog
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -69,11 +69,10 @@ class ImageUploader < CarrierWave::Uploader::Base
 
 #  ## USER
   version :thumb  do
- process :crop
     process :resize_to_limit => [100, 100]
   end
 
- version :avatar do
+  version :avatar do
     process :crop
   end
 
@@ -81,7 +80,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 #    process :resize_to_limit => [200, 200]
 #  end
 
-  ## WINE
+## WINE
   version :w_thumb, :if => :is_wine?  do
     process :resize_to_limit => [200, 200]
   end
@@ -106,15 +105,13 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def crop
-    binding.pry
     if model.crop_x.present?
-      process :resize_to_limit => [50, 50]
       manipulate! do |img|
-        img.crop!(
-          model.crop_x.to_i,
-          model.crop_y.to_i, 
-          model.crop_w.to_i,
-          model.crop_h.to_i)
+        x = model.crop_x.to_i
+        y = model.crop_y.to_i
+        w = model.crop_w.to_i
+        h = model.crop_h.to_i
+        img.crop!(x, y, w, h)
       end
     end
   end
