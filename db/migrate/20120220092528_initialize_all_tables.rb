@@ -18,7 +18,7 @@ class InitializeAllTables < ActiveRecord::Migration
     end
 
     create_table "photos", :force => true do |t|
-      t.string   "raw_name"
+      t.string   "image"
       t.integer  "owner_type"   # 该图片是属于哪个类型： 1 => 用户， 2 => wine, 3 => winery
       t.integer  "business_id",                                    :null => false  # 和owner_type配合使用， 如果owner_type 为用户， 则该id为用户的id
       t.text     "intro"

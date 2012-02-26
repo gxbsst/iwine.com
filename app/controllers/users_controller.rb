@@ -14,11 +14,12 @@ class UsersController < ApplicationController
     @avatar = current_user.avatar
     @photo = Photo.new
 
-
-    if request.post? 
-      @photo.attributes = params[:photo]
-      @photo.owner_type = OWNER_TYPE_USER
-      @photo.business_id = current_user.id
+    if request.put?
+      @photo = Photo.find(params[:id])
+      @photo.crop_x = params[:photo][:crop_x]
+      @photo.crop_y = params[:photo][:crop_y]
+      @photo.crop_w = params[:photo][:crop_w]
+      @photo.crop_h = params[:photo][:crop_h]
       @photo.save
       redirect_to '/users/avatar'
     end
