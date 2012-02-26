@@ -14,7 +14,6 @@ class UsersController < ApplicationController
     @avatar = current_user.avatar
     @photo = Photo.new
 
-
     if request.post? 
       @photo.attributes = params[:photo]
       @photo.owner_type = OWNER_TYPE_USER
