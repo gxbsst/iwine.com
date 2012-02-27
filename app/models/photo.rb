@@ -12,9 +12,10 @@ class Photo < ActiveRecord::Base
  
   def recreate_delayed_versions!
     image.should_process = true
-    image.recreate_versions! if crop_x.present?
-#    self.image.recreate_versions! if self.image.present?
+    image.recreate_versions!
   end
+
+
 
 
 end

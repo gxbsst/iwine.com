@@ -19,7 +19,7 @@ $(document).ready(function() {
   <% @photos.each do |photo| %>
     <%= image_tag photo.image_url :thumb %>
     <%= image_tag photo.image_url :avatar %>
-    <%= link_to '修改', {:controller => 'users', :action => 'edit_avatar', :id => photo}, :class => 'fancybox fancybox.ajax' %>
+    <%= link_to '修改', {:controller => 'users', :action => 'crop', :id => photo}, :class => 'fancybox fancybox.ajax' %>
   <% end %>
 <% else %>
   还没有图片 赶快上传吧
