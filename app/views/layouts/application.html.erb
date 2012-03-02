@@ -31,13 +31,13 @@
       </div>
       <div id="mainholder">
         <%= yield :wine_title %>
-        <div class="common_bg bg_shadow">
-          <div class="shadow_side"></div>
-          <div><%= image_tag 'base/bg_white_t.gif' %></div>
-          <div id="maincontent" class="<%= set_layout_class_name %>">
-            <%= yield %>
+        <div class="bg_shadow">
+          <div class="bg_bigshadow">
+            <div id="maincontent" class="<%= set_layout_class_name %>">
+              <%= yield %>
+            </div>
           </div>
-          <div><%= image_tag 'base/bg_white_b.gif' %></div>
+          <div class="bg_shadow_bottom"></div>
         </div>
       </div>
       <div id="footer"><div class="copyright">Copyright © 2011 Patrick, Inc. All rights reserved. </div>
