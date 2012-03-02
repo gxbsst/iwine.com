@@ -16,7 +16,7 @@ class Wines::Comment < ActiveRecord::Base
   @prepared = false
   
   # paginate config
-  paginates_per 20
+  paginates_per 10 
 
   before_save :check_point
 

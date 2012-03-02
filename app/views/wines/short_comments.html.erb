@@ -6,7 +6,10 @@
     <h2><%= @wine_detail.year.to_s + @wine.name_zh%> 的评论</h2>
   </div>
   <div class="sort_space">
-    <div class="sort_item"><a href="＃">按投票排序</a> | <a href="＃">按时间排序</a></div><div class="count">共<%= @wine_comments.total_count.to_i %>条</div>
+    <div class="sort_item">
+      <a href="<%= url_for :action => 'short_comments', :wine_detail_id => @wine_detail.id %>">按投票排序</a> | 
+      <a href="<%= url_for :action => 'short_comments', :wine_detail_id => @wine_detail.id, :order => 'time' %>">按时间排序</a>
+    </div><div class="count">共<%= @wine_comments.total_count.to_i %>条</div>
   </div>
   <div class="comment_list">
       <% if @wine_comments.length > 0 %>
@@ -29,7 +32,7 @@
               </div>
               <div class="float_l mr5">
                 <a href="#"><%= comment.user.username %></a>
-                <span class="time"><%= comment.updated_at.strftime '%Y-%m-%d'%></span>
+                <span class="time"><%= comment.updated_at%></span>
               </div>
               <% if comment.point.present? %>
               <span class="star_s<%=(comment.point/2).to_s%>"></span>
@@ -43,8 +46,9 @@
       </ul>
       <% end %>
   </div>
- <%= paginate @wine_comments %> 
-  <div class="pagination"><span class="disabled"> < </span><span class="current">1</span><a href="#?page=2">2</a><a href="#?page=3">3</a><a href="#?page=4">4</a><a href="#?page=5">5</a><a href="#?page=6">6</a><a href="#?page=7">7</a>...<a href="#?page=199">199</a><a href="#?page=200">200</a><a href="#?page=2"> > </a></div>
+ <div class="pagination">
+ <%= paginate @wine_comments, :outer_window => 2 %> 
+ </div>
 </div>
 <div id="rightcol" class="comment_list_side">
   <!--popup test link-->

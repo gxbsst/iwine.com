@@ -62,7 +62,7 @@ class WinesController < ApplicationController
       comment.point = params[:point]
       comment.save
     end
-    redirect_to :action => 'show', :wine_detail_id => comment.wine_detail_id
+    redirect_to request.referer
   end
 
   def delete_short_comment
@@ -97,7 +97,7 @@ class WinesController < ApplicationController
       .where(["wine_detail_id = ?", params[:wine_detail_id]])
       .order("#{order} DESC,id DESC")
       .page params[:page] || 1
-
+    binding.pry
     @wine_detail = Wines::Detail.find params[:wine_detail_id]
     @wine = @wine_detail.wine
     @user_comment = @wine_detail.comment current_user.id
