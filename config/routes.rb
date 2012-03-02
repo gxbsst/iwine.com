@@ -12,6 +12,12 @@ Patrick::Application.routes.draw do
     get :register , :to => 'devise/registrations#new'
   end
 
+  namespace :users do
+    get 'albums/new'
+    get 'albums/create'
+    get 'albums/show'
+  end
+
   resource :photos
 
   # The priority is based upon order of creation:

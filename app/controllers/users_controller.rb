@@ -25,12 +25,15 @@ class UsersController < ApplicationController
 
   def crop
     @photo = Photo.find params[:id]
+
     if request.put?
       @photo.attributes = params[:photo]
       @photo.save
       redirect_to '/users/avatar'
       return
     end
+
     render :layout => false
   end
+
 end

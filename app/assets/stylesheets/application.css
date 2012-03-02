@@ -6,6 +6,7 @@
  *= require base
  *= require jcrop
  *= require wines
+ *= require_tree ./albums
 */
 
 /*! fancyBox v2.0.4 fancyapps.com | fancyapps.com/fancybox/#license */
