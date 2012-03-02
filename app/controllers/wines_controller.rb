@@ -97,7 +97,7 @@ class WinesController < ApplicationController
       .where(["wine_detail_id = ?", params[:wine_detail_id]])
       .order("#{order} DESC,id DESC")
       .page params[:page] || 1
-    binding.pry
+
     @wine_detail = Wines::Detail.find params[:wine_detail_id]
     @wine = @wine_detail.wine
     @user_comment = @wine_detail.comment current_user.id
