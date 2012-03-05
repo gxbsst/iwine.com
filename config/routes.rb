@@ -1,18 +1,17 @@
 Patrick::Application.routes.draw do
+  resources :wine_registers
+
   ActiveAdmin.routes(self)
 
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   devise_for :users
-  resource :wine_registers
 
   devise_scope :users do
     get :login , :to => "devise/sessions#new"
     get :logout , :to => 'devise/sessions#destroy'
     get :register , :to => 'devise/registrations#new'
   end
-
-  resource :photos
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
