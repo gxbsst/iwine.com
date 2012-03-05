@@ -280,7 +280,7 @@
 /*patrick style*/
 .popup_header {}
 .popup_header h1 {padding:10px;border-bottom:1px solid #ccc;background-color:#ddd;font-size:14px;}
-.popup_header .close {background:url(fancybox_sprite.png) no-repeat left top; width: 12px; height:12px;margin:10px 10px 0 0;float:right;}
+.popup_header .close {background:url(base/fancybox_sprite.png) no-repeat left top; width: 12px; height:12px;margin:10px 10px 0 0;float:right;}
 .popup_content {padding:10px;}
 .popup_content .wine_bid_box table {border-left:1px solid #ccc;border-top:1px solid #ccc; margin:auto;}
 .popup_content .wine_bid_box table th {text-align:right; width:100px;}
