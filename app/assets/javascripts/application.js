@@ -12,6 +12,8 @@
 //= require backbone-localstorage
 //= require fancybox
 //= require jcrop
+//= require swfobject
+//= require jquery.uploadify.v2.1.4
 
 
 $(function(){

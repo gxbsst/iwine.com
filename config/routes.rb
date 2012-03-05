@@ -17,6 +17,7 @@ Patrick::Application.routes.draw do
     get 'albums/new'
     get 'albums/create'
     get 'albums/show'
+    get 'albums/upload'
   end
 
   resource :photos

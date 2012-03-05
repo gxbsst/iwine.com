@@ -1,0 +1,46 @@
+<div id="cu_user_menu" class="clearfix">
+  <span class="f14">《 <a href="community_albmu_list.html">返回相册首页</a></span>
+</div>
+<div class="title_btn clearfix">
+  <h2>上传照片</h2>
+</div>
+<div id="leftcol" class="mr50">
+  <div class="photo_upload">
+    <p class="mb10">选择相册 
+      <select name="">
+        <% @albums.each do |album| %>
+          <option><%= t album.name %></option>
+        <% end %>
+      </select> 
+      <a href="<%= url_for :action => 'new' %>" class="new_album fancybox.ajax icon_add_album ml20">新建相册</a>
+    </p>
+    <p class="mb10"><a href="community_photo_upload3.html" class="button_gray"><span>选择照片</span></a><input type="file" id="photo_image" value="选择照片"/></p>
+    <p>提示：每次最多可以批量上传二十张照片，按着 “command” 键可以一次选择多张照片</p>
+  </div>
+</div>
+<div id="rightcol">
+  <p class="mb20">相册总容量1G</p>
+</div>
+<div class="clear"></div>
+<script type="text/javascript">
+  var upload_params = {
+    '#{key}' : '#{cookies[key]}',
+    '#{request_forgery_protection_token}' : '#{form_authenticity_token}',
+    '_http_accept': 'application/javascript'
+  };
+
+  $('input#photo_image').uploadify({
+    'uploader'     : '/uploadify.swf',
+    'script'       : '/users/albums/upload',
+    'fileDataName' : 'photo[image]',
+    'fileExt'      : '*.png;*.jpg;*.gif',
+    'cancelImg'    : '/assets/cancel.png',
+    'multi'        : true,
+    'scriptData'   : upload_params,
+    'auto'         : true,
+    'onComplete'   : function(e, id, obj, response, data) {
+      $('#photos').append(response);
+    }
+  });
+$('.new_album').fancybox({padding:0, margin: 0, width: 450, height: 'auto', autoSize: false, modal: true});
+</script>
