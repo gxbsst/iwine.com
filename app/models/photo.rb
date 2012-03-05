@@ -34,5 +34,5 @@ class Photo < ActiveRecord::Base
       image.should_process = true
       image.recreate_versions!
   end
-end
 
+end
