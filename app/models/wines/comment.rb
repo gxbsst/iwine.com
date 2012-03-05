@@ -14,9 +14,9 @@ class Wines::Comment < ActiveRecord::Base
   belongs_to :detail, :class_name => "Wines::Detail", :foreign_key => 'wine_detail_id'
 
   @prepared = false
-  
+
   # paginate config
-  paginates_per 10 
+  paginates_per 10
 
   before_save :check_point
 

@@ -9,12 +9,6 @@ $(document).ready(function() {
 </script>
 <% end %>
 
-<% if @avatar.present? %>
-  头像：<%= image_tag @avatar.image_url :avatar %>
-<% else %>
-  请选择一张做为你的头像
-<% end %>
-
 <% unless @photos.blank? %>
   <% @photos.each do |photo| %>
     <%= image_tag photo.image_url :thumb %>
@@ -25,7 +19,7 @@ $(document).ready(function() {
   还没有图片 赶快上传吧
 <% end %>
 
-<%= form_for @photo, :url => '/users/avatar', :html => { :multipart => 'true' } do |f| %>
+<%= form_for @photo, :url => '/users/avatar', :html => { :multipart => 'true' }, :method => :post do |f| %>
   <%= f.file_field :image %>
   <%= f.submit %>
 <% end %>

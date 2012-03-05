@@ -1,0 +1,23 @@
+zh-CN:
+  helpers:
+    label:
+      wines_register:
+        name_zh: "中文名"
+        name_en: "英文名"
+        official_site: "官方网站"
+        wine_style_id: "类型"
+        region_tree_id: "产区"
+        winery_id: "酒庄"
+        photo_name: "图片"
+        vintage: "年份"
+        drinkable_begin: "适饮年份"
+        alcoholicity: "酒精含量"
+        variety_percentage: "葡萄品种成分百分比"
+        variety_name: "葡萄品种"
+        capacity: "容量"
+
+
+
+
+
+

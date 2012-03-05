@@ -8,15 +8,14 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :username
 
-  has_one :profile
+  has_one  :profile, :class_name => 'Users::Profile'
   has_many :albums
-  has_many :registers
-  has_many :comments
+  has_many :registers, :class_name => 'Wines::Register'
+  has_many :comments, :class_name => 'Wines::Comment'
+  has_one  :good_hit_comment, :class_name => 'Users::GoodHitComment'
   has_many :photo_comments
   has_many :photos, :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_USER }
-  has_many :registers
-  has_one :avatar, :class_name => 'Photo', :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_USER, :is_cover => true }
-  has_one :good_hit_comment, :class_name => 'Users::GoodHitComment'
+  has_one :avatar, :class_name => 'Photo', :foreign_key => 'business_id', :conditions => { :is_cover => true }
 
   # accepts_nested_attributes_for :user_profile
 	# alias :user_profiles_attribute :user_profile

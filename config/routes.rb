@@ -1,10 +1,11 @@
 Patrick::Application.routes.draw do
+  resources :wine_registers
+
   ActiveAdmin.routes(self)
 
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   devise_for :users
-  resource :wine_registers
 
   devise_scope :user do
     get :login , :to => "devise/sessions#new"
