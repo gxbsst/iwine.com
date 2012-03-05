@@ -5,6 +5,21 @@
 # below each fixture, per the syntax in the comments below
 #
 one: {}
+#  name_en:
+#  name_zh:
+#  official_site:
+#  wine_style_id:
+#  region_tree_id:
+#  winery_id:
+#  photo_name:
+#  photo_origin_name:
+#  vintage:
+#  drinkable_begin:
+#  drinkable_end:
+#  alcoholicity:
+#  variety_percentage:
+#  variety_name:
+#  capacity:
 # column: value
 #
 two: {}

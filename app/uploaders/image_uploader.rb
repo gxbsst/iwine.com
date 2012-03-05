@@ -16,8 +16,8 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-#    "uploads/#{model.class.to_s.underscore}/#{OWNER_TYPES[model.owner_type]}/#{model.business_id}"
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    "uploads/#{model.class.to_s.underscore}/#{OWNER_TYPES[model.owner_type]}/#{model.business_id}"
+    #"uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -25,6 +25,15 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
   # end
 
+  def md5
+    var = :"@#{mounted_as}_md5"
+    model.instance_variable_get(var) or model.instance_variable_set(var, ::Digest::MD5.file(current_path).hexdigest)
+  end
+
+  def filename
+    #"#{model.id}#{File.extname(original_filename.to_s)}" if original_filename
+    @name ||= "#{model.created_at.to_i}.#{file.extension}" if original_filename.present?
+  end
   # Process files as they are uploaded:
   # process :scale => [200, 300]
   #
@@ -49,11 +58,11 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   "something.jpg" if original_filename
   # end
 
-  def filename
-    #@name ||= "#{timestamp}-#{super}.jpg" if original_filename.present? and super.present?
-    #@name ||= "#{timestamp}.jpg" if original_filename.present? and super.present?
-    @name ||= "#{secure_token}.#{file.extension}" if original_filename.present?
-  end
+  #def filename
+  #  #@name ||= "#{timestamp}-#{super}.jpg" if original_filename.present? and super.present?
+  #  #@name ||= "#{timestamp}.jpg" if original_filename.present? and super.present?
+  #  #@name ||= "#{secure_token}.#{file.extension}" if original_filename.present?
+  #end
 
   def timestamp
     var = :"@#{mounted_as}_timestamp"
@@ -69,18 +78,28 @@ class ImageUploader < CarrierWave::Uploader::Base
 
 #  ## USER
   version :thumb  do
-    process :resize_to_limit => [100, 100]
-  end
-
-  version :avatar do
     process :crop
+    resize_to_fill(100, 100)
   end
 
-#  version :large, :if => :is_user? do
-#    process :resize_to_limit => [200, 200]
-#  end
+  def is_new? picture
+    model.new_record?
+  end
 
-## WINE
+  # version :large, :if => :is_user?  do
+  #  resize_to_limit(200, 200)
+  #end
+  #
+  #version :avatar, :if => :is_crop? do
+  #  process :crop
+  #  #resize_to_fill(200, 200)
+  #end
+
+  #  version :large, :if => :is_user? do
+  #    process :resize_to_limit => [200, 200]
+  #  end
+
+  ## WINE
   version :w_thumb, :if => :is_wine?  do
     process :resize_to_limit => [200, 200]
   end
@@ -138,9 +157,14 @@ class ImageUploader < CarrierWave::Uploader::Base
     model.owner_type == OWNER_TYPE_WINERY
   end
 
+  #def secure_token
+  #  var = :"@#{mounted_as}_secure_token"
+  #  model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.uuid)
+  #end
   def secure_token
-    var = :"@#{mounted_as}_secure_token"
-    model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.uuid)
+    ivar = "@#{mounted_as}_secure_token"
+    token = model.instance_variable_get(ivar)
+    token ||= model.instance_variable_set(ivar,ActiveSupport::SecureRandom.hex(4))
   end
 
 end

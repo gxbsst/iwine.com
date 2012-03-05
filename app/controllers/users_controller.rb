@@ -11,8 +11,15 @@ class UsersController < ApplicationController
 
   def avatar
     @photos = current_user.photos
-    @avatar = current_user.avatar
+    #@avatar = current_user.avatar
     @photo = Photo.new
+
+    if request.post?
+      @photo.image = params[:photo][:image]
+      @photo.owner_type = OWNER_TYPE_USER
+      @photo.business_id= current_user.id
+      @photo.save
+    end
 
     if request.put?
       @photo = Photo.find(params[:id])

@@ -1,20 +1,20 @@
 class Albums < ActiveRecord::Base
     # attr_accessible :user_profiles, :email, :username
 
-    belongs_to :user
-    has_many :photos
-    has_one  :profile
-    has_many :user_followers
-    # has_many :user_listened
-    has_many :user_collects
-    has_many :user_posts
-    has_many :groups_users
-    has_many :groups, :through => :groups_users
-    has_many :followers, :class_name => "UserFollower"
-    has_many :listens,  :class_name => "UserFollower", :foreign_key => :follower_user_id
-
-    accepts_nested_attributes_for :user_profile
-    alias :user_profiles_attribute :user_profile
+    #belongs_to :user
+    #has_many :photos
+    #has_one  :profile
+    #has_many :user_followers
+    ## has_many :user_listened
+    #has_many :user_collects
+    #has_many :user_posts
+    #has_many :groups_users
+    #has_many :groups, :through => :groups_users
+    #has_many :followers, :class_name => "UserFollower"
+    #has_many :listens,  :class_name => "UserFollower", :foreign_key => :follower_user_id
+    #
+    #accepts_nested_attributes_for :user_profile
+    #alias :user_profiles_attribute :user_profile
 
     #验证
     # validates_presence_of   :name,          :message => ERROR_EMPTY
