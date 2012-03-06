@@ -1,20 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <title>Patrick</title>
-  <%= stylesheet_link_tag    "application" %>
-
-  <%= csrf_meta_tags %>
-</head>
-<body>
+  <head>
+    <title>Patrick</title>
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <%= yield :head %>
+  </head>
+  <body>
     <div id="wrapper">
       <div id="header">
         <div id="topspace">
-          <div id="topnavi">
-          </div>
-          <div id="logo">
-           <%= image_tag('base/logo.gif') %>
-          </div>
+          <div id="topnavi"><a href="#">xiaoying 的帐户</a> | <a href="#">邮件(2)</a> | <a href="#">退出</a></div>
+          <div id="logo"><%= image_tag 'base/logo.gif', :width => 287, :height => 44, :alt=>'Patrick' %></div>
           <div class="clear"></div>
         </div>
         <div id="globel_navi_search">
@@ -31,34 +29,23 @@
           <div class="clear"></div>
         </div>
       </div>
-      <div id="mainholder" class="common_bg">
-        <div class="shadow_side"></div>
-        <div>
-          <%= image_tag('base/bg_white_t.gif') %>
+      <div id="mainholder">
+        <%= yield :wine_title %>
+        <div class="common_bg bg_shadow">
+          <div class="shadow_side"></div>
+          <div><%= image_tag 'base/bg_white_t.gif' %></div>
+          <div id="maincontent" class="<%= set_layout_class_name %>">
+            <%= yield %>
+          </div>
+          <div><%= image_tag 'base/bg_white_b.gif' %></div>
         </div>
-        <div id="maincontent" class="common_main">
-
-        <%= yield %>
-          <!--end #maincontent-->
-        </div>
-        <div>
-          <%= image_tag('base/bg_white_b.gif') %>
-
-        </div>
-        <!--end mainholder-->
       </div>
-      <div id="footer">
-        <div class="copyright">Copyright © 2011 Patrick, Inc. All rights reserved. </div>
-        <a href="#">关于我们</a> | <a href="#">帮助中心</a> | <a href="#">个人信息保护方针</a> | <a href="#">网站地图</a>
-        <!--end footer-->
-     </div>
-      <!--end wrapper-->
+      <div id="footer"><div class="copyright">Copyright © 2011 Patrick, Inc. All rights reserved. </div>
+        <a href="#">关于我们</a> | <a href="#">帮助中心</a> | <a href="#">个人信息保护方针</a> | <a href="#">网站地图</a></div>
     </div>
-
-</body>
+  </body>
 </html>
 
-  <%= javascript_include_tag "application" %>
 
 
 

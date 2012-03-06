@@ -17,7 +17,7 @@ function update_crop(coords){
 </script>
 
 <%= image_tag @photo.image_url, :id => 'cropbox' %>
-<%= form_for @photo, :url => "/users/avatar/#{@photo.id}" do |f| %>
+<%= form_for @photo, :url => "/users/crop/#{@photo.id}" do |f| %>
   <% [:crop_x , :crop_y , :crop_w , :crop_h].each do |attr| %>
     <%= f.hidden_field attr, :id => attr %>
   <% end %>

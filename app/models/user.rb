@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  cattr_accessor :current_user
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -15,7 +16,6 @@ class User < ActiveRecord::Base
   has_many :photo_comments
   has_many :photos, :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_USER }
   has_one :avatar, :class_name => 'Photo', :foreign_key => 'business_id', :conditions => { :is_cover => true }
-
 
   # accepts_nested_attributes_for :user_profile
 	# alias :user_profiles_attribute :user_profile
@@ -40,7 +40,4 @@ class User < ActiveRecord::Base
     role === value.to_s
   end
 
-  def avatar
-    Photo.find :first, :conditions => { :owner_type => OWNER_TYPE_USER, :business_id => id, :is_cover => 1 };
-  end
 end

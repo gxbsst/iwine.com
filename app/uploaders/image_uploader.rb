@@ -17,7 +17,8 @@ class ImageUploader < CarrierWave::Uploader::Base
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{OWNER_TYPES[model.owner_type]}/#{model.business_id}"
-    #"uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+
+  #  "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -59,10 +60,11 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
 
   #def filename
-  #  #@name ||= "#{timestamp}-#{super}.jpg" if original_filename.present? and super.present?
-  #  #@name ||= "#{timestamp}.jpg" if original_filename.present? and super.present?
-  #  #@name ||= "#{secure_token}.#{file.extension}" if original_filename.present?
-  #end
+
+    #@name ||= "#{timestamp}-#{super}.jpg" if original_filename.present? and super.present?
+    #@name ||= "#{timestamp}.jpg" if original_filename.present? and super.present?
+    #@name ||= "#{secure_token}.#{file.extension}" if original_filename.present?
+#  end
 
   def timestamp
     var = :"@#{mounted_as}_timestamp"
@@ -74,16 +76,18 @@ class ImageUploader < CarrierWave::Uploader::Base
   #  version :user_large
   #end
 
-  process :resize_to_fit => [400, 400]
-
-#  ## USER
-  version :thumb  do
-    process :crop
-    resize_to_fill(100, 100)
+  version :large, :if => :is_user? do
+    resize_to_limit(600, 600)
   end
 
-  def is_new? picture
-    model.new_record?
+#  ## USER
+
+  version :thumb, :if => :is_user? do
+    resize_to_limit(100, 100)
+  end
+
+  version :avatar, :if => :is_crop? do
+    process :crop
   end
 
   # version :large, :if => :is_user?  do
@@ -117,22 +121,19 @@ class ImageUploader < CarrierWave::Uploader::Base
     process :resize_to_limit => [200, 200]
   end
 
-
-
   def should_process?
     @should_process ||= false
   end
 
   def crop
-    if model.crop_x.present?
-      manipulate! do |img|
-        x = model.crop_x.to_i
-        y = model.crop_y.to_i
-        w = model.crop_w.to_i
-        h = model.crop_h.to_i
-        img.crop!(x, y, w, h)
-      end
+    manipulate! do |img|
+      x = model.crop_x.to_i
+      y = model.crop_y.to_i
+      w = model.crop_w.to_i
+      h = model.crop_h.to_i
+      img.crop!(x, y, w, h)
     end
+    binding.pry
   end
 
   #
@@ -142,6 +143,10 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   protected
 
+  def is_crop? picture
+    return false unless should_process?
+    return model.crop_x.present?
+  end
 
   def is_user? picture
     return false unless should_process?

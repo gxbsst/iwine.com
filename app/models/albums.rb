@@ -16,6 +16,7 @@ class Albums < ActiveRecord::Base
     #accepts_nested_attributes_for :user_profile
     #alias :user_profiles_attribute :user_profile
 
+
     #验证
     # validates_presence_of   :name,          :message => ERROR_EMPTY
     #   validates_presence_of   :email_address, :message => ERROR_EMPTY
