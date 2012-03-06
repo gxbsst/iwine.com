@@ -13,4 +13,8 @@ class WinesController < ApplicationController
      end
   end
 
+  def show
+
+  end
+
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120223110228) do
+ActiveRecord::Schema.define(:version => 20120305082511) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20120223110228) do
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
 
   create_table "albums", :force => true do |t|
-    t.string   "type",          :limit => 0,                     :null => false
+    t.integer  "type",                                           :null => false
     t.string   "name",          :limit => 45,                    :null => false
     t.integer  "user_id"
     t.text     "intro"
@@ -93,15 +93,15 @@ ActiveRecord::Schema.define(:version => 20120223110228) do
   add_index "photo_comments", ["photo_id", "created_at", "deleted_statues"], :name => "photo_id"
 
   create_table "photos", :force => true do |t|
-    t.string   "raw_name"
+    t.string   "image"
     t.integer  "owner_type"
-    t.integer  "business_id",                                   :null => false
+    t.integer  "business_id"
     t.text     "intro"
-    t.string   "category",      :limit => 0,                    :null => false
+    t.string   "category",      :limit => 0, :default => ""
     t.integer  "size"
-    t.integer  "album_id",                                      :null => false
-    t.integer  "width",                      :default => 0,     :null => false
-    t.integer  "height",                     :default => 0,     :null => false
+    t.integer  "album_id"
+    t.integer  "width",                      :default => 0
+    t.integer  "height",                     :default => 0
     t.integer  "viewed_num",                 :default => 0
     t.integer  "commented_num",              :default => 0
     t.integer  "liked_num",                  :default => 0
@@ -109,16 +109,16 @@ ActiveRecord::Schema.define(:version => 20120223110228) do
     t.boolean  "is_cover",                   :default => false
     t.integer  "audit_id"
     t.integer  "audit_status"
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "regions", :force => true do |t|
-    t.integer  "parent_id",   :limit => 2,   :default => 0,     :null => false
-    t.string   "region_name", :limit => 120, :default => "",    :null => false
-    t.boolean  "region_type",                :default => false, :null => false
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.integer  "parent_id",   :limit => 2,   :default => 0,  :null => false
+    t.string   "region_name", :limit => 120, :default => "", :null => false
+    t.integer  "region_type",                :default => 0,  :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
   end
 
   add_index "regions", ["parent_id"], :name => "parent_id"
@@ -400,6 +400,7 @@ ActiveRecord::Schema.define(:version => 20120223110228) do
     t.string   "name_en"
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
+    t.string   "pinyin"
   end
 
   add_index "wine_varieties", ["culture"], :name => "culture"

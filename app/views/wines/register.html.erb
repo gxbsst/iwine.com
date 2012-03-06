@@ -12,7 +12,8 @@
     <div><%= f.label :drinkable_end %><%= f.text_field :drinkable_begin %></div>
     <div><%= f.label :drinkable_end %><%= f.text_field :drinkable_end %></div>
     <div>
-      <%= f.label :variety_name %> <%= f.select :variety_name, Wines::Variety.all.collect{|v| [v.name, v.id]}, {:include_blank => false} %>
+      <%= f.label :variety_name %>
+      <%= f.text_field :variety_name, data: { autocomplete_source: wine_varieties_path}  %>
       <%= f.label :variety_percentage %><%= f.text_field :variety_percentage, :id => 'new_variety' %> <span id="create_variety"><%= t :add %></span> <span class="variety_percentage_error"></span>
     </div>
 

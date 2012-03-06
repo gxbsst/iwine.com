@@ -6,12 +6,14 @@
 //
 
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
 //= require underscore
 //= require backbone
 //= require backbone-localstorage
 //= require fancybox
 //= require jcrop
+//= require wines
 
 
 $(function(){
@@ -62,13 +64,14 @@ $(function(){
         addOne: function(model) {
             var view = new VarietyItem({model : model});
             $("#variety_items").append(view.render().el);
-            $('#wines_register_variety_name option:selected').removeAttr('selected').next('option').attr('selected', 'selected');
+//            $('#wines_register_variety_name option:selected').removeAttr('selected').next('option').attr('selected', 'selected');
         },
 
         createVariety: function(){
             var variety = {
-                name_value : this.name_input.val(),
-                name : this.$("#wines_register_variety_name option:selected").text(),
+//                name_value : this.name_input.val(),
+//                name : this.$("#wines_register_variety_name option:selected").text(),
+                name: this.name_input.val(),
                 percentage : this.percentage_input.val()
             };
             VarietyCollection.create(variety, {error: this.handleError, success: this.handleSuccess});
@@ -115,7 +118,7 @@ $(function(){
 
         setText: function() {
             this.$('.variety_name').text(this.model.get('name'));
-            this.$('.variety_name_value_hidden').val(this.model.get('name_value'));
+            this.$('.variety_name_value_hidden').val(this.model.get('name'));
             this.$('.variety_percentage_hidden').val(this.model.get('percentage'));
             this.$('.variety_percentage').text(this.model.get('percentage'));
         }

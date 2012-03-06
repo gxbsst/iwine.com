@@ -2,7 +2,7 @@ class InitializeAllTables < ActiveRecord::Migration
   def up
 
     create_table "albums", :force => true do |t|
-      t.string   "type",          :limit => 0,                     :null => false
+      t.integer  "type",          :limit => 1,   :default => 1,   :null => false
       t.string   "name",          :limit => 45,                    :null => false
       t.integer 'user_id'
       t.text     "intro"

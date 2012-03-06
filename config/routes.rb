@@ -13,6 +13,15 @@ Patrick::Application.routes.draw do
     get :register , :to => 'devise/registrations#new'
   end
 
+  resources :wine_varieties
+
+  #
+  #  member do
+  #    get 'register'
+  #  end
+  #
+  #end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -13,3 +13,4 @@ tmtags
 .idea/*
 config/database.yml
 public/uploads/*
+.sass-cache

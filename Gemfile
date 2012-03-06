@@ -31,6 +31,8 @@ gem 'client_side_validations'
 
 gem 'activeadmin'
 
+gem 'hanzi_to_pinyin' , git: 'git://github.com/wxianfeng/hanzi_to_pinyin.git'
+
 group :development, :test do
   gem 'i18n'
   gem 'pry'  # "binding.pry" in action
