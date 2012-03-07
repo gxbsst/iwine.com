@@ -2,20 +2,16 @@
 class WinesController < ApplicationController
   before_filter :authenticate_user!, :set_current_user
 
-  def set_current_user
-    User::current_user = current_user
-  end
-
   def register
-     @register = Wines::Register.new
-     if request.post?
-       @register.attributes = params[:wines_register]
-       @register.variety_name = params[:wines_register][:variety_name_value].to_json
-       @register.variety_percentage = params[:wines_register][:variety_percentage_value].to_json
-       if @register.save
-         flash[:notice] = '保存成功'
-       end
-     end
+    @register = Wines::Register.new
+    if request.post?
+      @register.attributes = params[:wines_register]
+      @register.owner_type = OWNER_TYPE_WINE_REGISTER
+      if @register.save
+        flash[:notice] =  :save_success
+      else
+      end
+    end
   end
 
   def show
@@ -102,10 +98,10 @@ class WinesController < ApplicationController
     order = params[:order] == 'time' ? 'created_at' : 'good_hit'
 
     @wine_comments = Wines::Comment
-      .includes([:user, :avatar, :user_good_hit])
-      .where(["wine_detail_id = ?", params[:wine_detail_id]])
-      .order("#{order} DESC,id DESC")
-      .page params[:page] || 1
+    .includes([:user, :avatar, :user_good_hit])
+    .where(["wine_detail_id = ?", params[:wine_detail_id]])
+    .order("#{order} DESC,id DESC")
+    .page params[:page] || 1
 
     @wine_detail = Wines::Detail.find params[:wine_detail_id]
     @wine = @wine_detail.wine
@@ -115,5 +111,11 @@ class WinesController < ApplicationController
 
   def long_comments
 
+  end
+
+  private
+
+  def set_current_user
+    User::current_user = current_user || 0
   end
 end

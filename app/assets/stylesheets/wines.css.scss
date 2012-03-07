@@ -26,40 +26,157 @@ ul.ui-autocomplete {
 }
 
 /*wine*/
-.wineprofile_name {margin:0 10px 10px 10px;}
-.wineprofile_name h1 {font-size:22px;margin:0;color:#333;}
-.wineprofile_name h2 {font-size:14px;margin:0;}
-.wineprofile_main {padding:20px;}
-#wp_left {width:130px;float:left;margin-right:20px;}
-#wp_middle {width:510px;float:left;margin-right:30px;}
-#wp_right {width:250px;float:left;}
-#wp_left .wine_img {margin-bottom:10px;}
-.wine_info {position:relative;border-bottom:1px dotted #ccc;padding:0 0 15px 0;}
-.score_price {text-align:right;position:absolute;left:333px;}
-ul.wui_rating {margin-bottom:5px;float:left;}
-.wui_rating li {margin-right:5px;float:left;}
-.wui_rating li.last {margin-right:0;}
-.wui_rating_rp, .wui_rating_score, .wui_rating_iwd, .wui_rating_ws {background:url(base/bg_r.gif) no-repeat;height:16px;float:left;text-align:center;line-height:16px;}
-.wui_rating_rp, .wui_rating_iwd, .wui_rating_ws {color:#333333;}
-.wui_rating_iwd {background-position: 0 0;width:32px;}
-.wui_rating_rp, .wui_rating_ws {background-position: 0 -21px;width:27px;}
-.wui_rating_score {background-position:-27px -21px;width:27px;color:#333333;}
-a.moreprice {padding-right:10px;background:url(base/icon.gif) no-repeat 74px -64px;}
-.interest_add {padding:15px 0 10px 0;}
-.subject_menu {margin:0 0 50px 0;}
-.subject_menu ul li {float:left;padding-left:20px;margin:0 20px 0 0;}
-.subject_menu ul li.comment_add, .subject_menu ul li.tasting_note_add, .subject_menu ul li.share {background:url(base/icon.gif) no-repeat;}
-.subject_menu ul li.comment_add {background-position:0 -103px;}
-.subject_menu ul li.tasting_note_add {background-position: 0 -126px;}
-.subject_menu ul li.share {background-position: 0 -149px;}
-.related_info h2 {font-size:16px;color:#333;border-bottom:3px solid #ccc;padding:0 0 5px 0;margin-top:40px;}
-.related_info h2 a {font-size:12px;}
-ul.pic_col5 li {float:left;margin:0 10px 0 0;}
-.wp_count ul {background-color:#f3f3f3;padding:10px;}
-.wp_count ul li {float:left;width:35px;border-right:1px dotted #ccc;padding-left:10px;}
-.wp_count ul li span {display:block;}
-.wine_year ul li {float:left;display:inline-block;padding-right:5px;margin:0 5px 5px 0;line-height:16px;background:url(base/line_solid.gif) no-repeat right 3px;}
-.wine_year ul li a {color:#cc9966;}
-.wine_year ul li.current a {background-color:#cc9966;color:#fff;}
-a.year_more {padding-right:10px;background:url(base/icon.gif) no-repeat 74px -64px;}
-.comment_score_display .score {padding-top:3px;}
+.wineprofile_name {
+	margin: 0 10px 10px 10px;
+}
+.wineprofile_name h1 {
+	font-size: 22px;
+	margin: 0;
+	color: #333;
+}
+.wineprofile_name h2 {
+	font-size: 14px;
+	margin: 0;
+}
+.wineprofile_main {
+	padding: 20px;
+}
+#wp_left {
+	width: 130px;
+	float: left;
+	margin-right: 20px;
+}
+#wp_middle {
+	width: 510px;
+	float: left;
+	margin-right: 30px;
+}
+#wp_right {
+	width: 250px;
+	float: left;
+}
+#wp_left .wine_img {
+	margin-bottom: 10px;
+}
+.wine_info {
+	position: relative;
+	border-bottom: 1px dotted #ccc;
+	padding: 0 0 15px 0;
+}
+.score_price {
+	text-align: right;
+	position: absolute;
+	left: 333px;
+}
+ul.wui_rating {
+	margin-bottom: 5px;
+	float: left;
+}
+.wui_rating li {
+	margin-right: 5px;
+	float: left;
+}
+.wui_rating li.last {
+	margin-right: 0;
+}
+.wui_rating_rp, .wui_rating_score, .wui_rating_iwd, .wui_rating_ws {
+	background: url(base/bg_r.gif) no-repeat;
+	height: 16px;
+	float: left;
+	text-align: center;
+	line-height: 16px;
+}
+.wui_rating_rp, .wui_rating_iwd, .wui_rating_ws {
+	color: #333333;
+}
+.wui_rating_iwd {
+	background-position: 0 0;
+	width: 32px;
+}
+.wui_rating_rp, .wui_rating_ws {
+	background-position: 0 -21px;
+	width: 27px;
+}
+.wui_rating_score {
+	background-position: -27px -21px;
+	width: 27px;
+	color: #333333;
+}
+a.moreprice {
+	padding-right: 10px;
+	background: url(base/icon.gif) no-repeat 74px -64px;
+}
+.interest_add {
+	padding: 15px 0 10px 0;
+}
+.subject_menu {
+	margin: 0 0 50px 0;
+}
+.subject_menu ul li {
+	float: left;
+	padding-left: 20px;
+	margin: 0 20px 0 0;
+}
+.subject_menu ul li.comment_add, .subject_menu ul li.tasting_note_add, .subject_menu ul li.share {
+	background: url(base/icon.gif) no-repeat;
+}
+.subject_menu ul li.comment_add {
+	background-position: 0 -103px;
+}
+.subject_menu ul li.tasting_note_add {
+	background-position: 0 -126px;
+}
+.subject_menu ul li.share {
+	background-position: 0 -149px;
+}
+.related_info h2 {
+	font-size: 16px;
+	color: #333;
+	border-bottom: 3px solid #ccc;
+	padding: 0 0 5px 0;
+	margin-top: 40px;
+}
+.related_info h2 a {
+	font-size: 12px;
+}
+ul.pic_col5 li {
+	float: left;
+	margin: 0 10px 0 0;
+}
+.wp_count ul {
+	background-color: #f3f3f3;
+	padding: 10px;
+}
+.wp_count ul li {
+	float: left;
+	width: 35px;
+	border-right: 1px dotted #ccc;
+	padding-left: 10px;
+}
+.wp_count ul li span {
+	display: block;
+}
+.wine_year ul li {
+	float: left;
+	display: inline-block;
+	padding-right: 5px;
+	margin: 0 5px 5px 0;
+	line-height: 16px;
+	background: url(base/line_solid.gif) no-repeat right 3px;
+}
+.wine_year ul li a {
+	color: #cc9966;
+}
+.wine_year ul li.current a {
+	background-color: #cc9966;
+	color: #fff;
+}
+a.year_more {
+	padding-right: 10px;
+	background: url(base/icon.gif) no-repeat 74px -64px;
+}
+.comment_score_display .score {
+	padding-top: 3px;
+}
+
+

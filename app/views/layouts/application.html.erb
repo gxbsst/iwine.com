@@ -3,6 +3,7 @@
   <head>
     <title>Patrick</title>
     <%= stylesheet_link_tag    "application" %>
+    <%= raw stylesheet_if_exists "#{params[:controller]}/#{params[:controller]}", "#{params[:controller]}/#{params[:action]}" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= yield :head %>
@@ -31,10 +32,10 @@
       </div>
       <div id="mainholder">
         <%= yield :wine_title %>
-        <div class="common_bg bg_shadow">
-          <div class="shadow_side"></div>
-          <div><%= image_tag 'base/bg_white_t.gif' %></div>
-          <div id="maincontent" class="<%= set_layout_class_name %>">
+			<%= render 'share/layout_fragment', :controller_name => params[:controller], :action_name => params[:action] %>
+            <% flash.each do |name, msg| %>
+             <%= content_tag(:div, raw(msg), :id => "flash_#{name}") %>
+            <% end %>
             <%= yield %>
           </div>
           <div><%= image_tag 'base/bg_white_b.gif' %></div>

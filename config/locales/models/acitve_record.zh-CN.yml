@@ -1,9 +1,14 @@
 zh-CN:
+  activerecord:
+    models:
+      register: '酒款'
+
   helpers:
     label:
       wines_register:
-        name_zh: "中文名"
-        name_en: "英文名"
+        name_zh: "名称(中文)"
+        name_en: "名称(英文)"
+        other_cn_name: "其他中文名"
         official_site: "官方网站"
         wine_style_id: "类型"
         region_tree_id: "产区"
@@ -12,10 +17,10 @@ zh-CN:
         vintage: "年份"
         drinkable_begin: "适饮年份"
         alcoholicity: "酒精含量"
-        variety_percentage: "葡萄品种成分百分比"
+        variety_percentage: "成分百分比"
+        variety_percentage_value: "成分百分比"
         variety_name: "葡萄品种"
         capacity: "容量"
-
 
 
 

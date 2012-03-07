@@ -295,3 +295,10 @@
 .comment_box th {text-align:right;}
 .comment_star label {float:left;margin-right:10px;vertical-align: middle;font-size:12px;}
 .comment_star label input {vertical-align:middle;margin-right:5px;}
+
+
+/*Form Error Message*/
+
+.field_with_errors .message {
+    color: #D00;
+}

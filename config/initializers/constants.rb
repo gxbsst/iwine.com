@@ -11,3 +11,5 @@ OWNER_TYPES = {
     OWNER_TYPE_WINERY => 'winery',
     OWNER_TYPE_WINE_REGISTER => 'wine_register'
 }
+
+APP_DATA = YAML.load_file(Rails.root.join('config', 'data.yml'))

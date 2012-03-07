@@ -1,13 +1,8 @@
 zh-CN:
-  add: "添加"
-  create_wine_item: "添加酒的条目"
-  back_to_home: "返回首页"
-
-
   activerecord:
     errors:
       models:
-        wines_register:
+        register:
           attributes:
             vintage:
               invalid: "请输入正确的格式， 如:2004"

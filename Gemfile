@@ -33,6 +33,8 @@ gem 'activeadmin'
 
 gem 'hanzi_to_pinyin' , git: 'git://github.com/wxianfeng/hanzi_to_pinyin.git'
 
+gem "breadcrumbs_on_rails"
+
 group :development, :test do
   gem 'i18n'
   gem 'pry'  # "binding.pry" in action

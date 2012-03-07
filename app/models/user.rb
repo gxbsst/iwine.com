@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   has_many :photo_comments
   has_many :photos, :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_USER }
   has_one :avatar, :class_name => 'Photo', :foreign_key => 'business_id', :conditions => { :is_cover => true }
+  has_one :cellar, :class_name => 'Users::WineCellar'
 
   # accepts_nested_attributes_for :user_profile
 	# alias :user_profiles_attribute :user_profile

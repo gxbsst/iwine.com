@@ -1,5 +1,10 @@
 en:
-  helpers:
+ activerecord:
+    models:
+      register: 'Wine'
+ helpers:
     label:
       wines_register:
         name_zh: "Chinese Name"
+
+
