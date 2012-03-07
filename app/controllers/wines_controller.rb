@@ -108,7 +108,6 @@ class WinesController < ApplicationController
     @user_comment = @wine_detail.comment current_user.id
   end
 
-
   def long_comments
 
   end

@@ -11,6 +11,8 @@ gem 'devise', "~> 2.0.4"
 gem 'cancan'
 gem 'passenger'
 gem 'kaminari'
+#gem 'uploadify'
+gem 'flash_cookie_session'
 
 gem "rmagick"
 #gem "mini_magick"

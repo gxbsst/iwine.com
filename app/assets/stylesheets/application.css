@@ -6,6 +6,8 @@
  *= require base
  *= require jcrop
  *= require wines
+ *= require uploadify 
+ *= require_tree ./albums
 */
 
 
@@ -297,8 +299,10 @@
 .comment_star label input {vertical-align:middle;margin-right:5px;}
 
 
+
 /*Form Error Message*/
 
 .field_with_errors .message {
     color: #D00;
 }
+.creat_new table th, .creat_new table td {padding:5px; vertical-align:top;}

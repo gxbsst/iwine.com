@@ -32,21 +32,12 @@
       </div>
       <div id="mainholder">
         <%= yield :wine_title %>
-			<%= render 'share/layout_fragment', :controller_name => params[:controller], :action_name => params[:action] %>
-            <% flash.each do |name, msg| %>
-             <%= content_tag(:div, raw(msg), :id => "flash_#{name}") %>
-            <% end %>
-            <%= yield %>
-          </div>
-          <div><%= image_tag 'base/bg_white_b.gif' %></div>
-        </div>
+		<%= render 'share/layout_fragment', :controller_name => params[:controller], :action_name => params[:action] %>
+		
+
       </div>
       <div id="footer"><div class="copyright">Copyright © 2011 Patrick, Inc. All rights reserved. </div>
         <a href="#">关于我们</a> | <a href="#">帮助中心</a> | <a href="#">个人信息保护方针</a> | <a href="#">网站地图</a></div>
     </div>
   </body>
 </html>
-
-
-
-

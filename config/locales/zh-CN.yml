@@ -1,4 +1,10 @@
 zh-CN:
+  helpers:
+    submit:
+      create: "创建 %{model}"
+      update: "更新 %{model}"
+      submit: "提交 %{model}"
+      
   views:
     pagination:
       first: "首页"
