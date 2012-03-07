@@ -24,7 +24,7 @@ class Photo < ActiveRecord::Base
   mount_uploader :image, ImageUploader
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   #after_update :crop_avatar
-  after_update :recreate_delayed_versions!
+  after_save :recreate_delayed_versions!
 
   #def crop_avatar
   #  image.recreate_versions! if crop_x.present?

@@ -32,8 +32,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    #"#{model.id}#{File.extname(original_filename.to_s)}" if original_filename
-    @name ||= "#{model.created_at.to_i}.#{file.extension}" if original_filename.present?
+    model.read_attribute( :image ) || Digest::SHA1.hexdigest("#{Time.now.utc}--#{original_filename()}") + '.' + file.extension
   end
   # Process files as they are uploaded:
   # process :scale => [200, 300]
@@ -133,7 +132,6 @@ class ImageUploader < CarrierWave::Uploader::Base
       h = model.crop_h.to_i
       img.crop!(x, y, w, h)
     end
-    binding.pry
   end
 
   #

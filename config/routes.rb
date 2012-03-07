@@ -15,9 +15,13 @@ Patrick::Application.routes.draw do
 
   namespace :users do
     get 'albums/new'
+    post 'albums/new'
+
     get 'albums/create'
     get 'albums/show'
+
     get 'albums/upload'
+    post 'albums/upload'
   end
 
   resource :photos

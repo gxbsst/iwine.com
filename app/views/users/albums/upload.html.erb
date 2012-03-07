@@ -7,15 +7,17 @@
 <div id="leftcol" class="mr50">
   <div class="photo_upload">
     <p class="mb10">选择相册 
-      <select name="">
+      <select onchange="selectAlbum(this)">
         <% @albums.each do |album| %>
-          <option><%= t album.name %></option>
+          <option value="<%= album.id %>"><%= t album.name %></option>
         <% end %>
       </select> 
       <a href="<%= url_for :action => 'new' %>" class="new_album fancybox.ajax icon_add_album ml20">新建相册</a>
     </p>
-    <p class="mb10"><a href="community_photo_upload3.html" class="button_gray"><span>选择照片</span></a><input type="file" id="photo_image" value="选择照片"/></p>
-    <p>提示：每次最多可以批量上传二十张照片，按着 “command” 键可以一次选择多张照片</p>
+    <p class="mb10">
+      <input type="file" id="photo_image" value="选择照片"/></p>
+    <p><a href="javascript:$('input#photo_image').uploadifyUpload();" class="button_gray"><%= t :upload %></a></p>
+    <p>提示：每次最多可以批量上传二十张照片</p>
   </div>
 </div>
 <div id="rightcol">
@@ -24,8 +26,9 @@
 <div class="clear"></div>
 <script type="text/javascript">
   var upload_params = {
-    '#{key}' : '#{cookies[key]}',
-    '#{request_forgery_protection_token}' : '#{form_authenticity_token}',
+    "<%= key = Rails.application.config.session_options[:key] %>" : "<%= cookies[key] %>",
+    "<%= request_forgery_protection_token %>" : encodeURI(encodeURIComponent('<%= form_authenticity_token %>')),
+    'album_id' : '<%= @albums[0].id %>',
     '_http_accept': 'application/javascript'
   };
 
@@ -37,10 +40,17 @@
     'cancelImg'    : '/assets/cancel.png',
     'multi'        : true,
     'scriptData'   : upload_params,
-    'auto'         : true,
+    'auto'         : false,
     'onComplete'   : function(e, id, obj, response, data) {
       $('#photos').append(response);
+      console.log( response );
     }
   });
+
+function selectAlbum(el){
+  upload_params.album_id = el.value;
+  $('input#photo_image').uploadifySettings( 'scriptData' , upload_params );
+};
+
 $('.new_album').fancybox({padding:0, margin: 0, width: 450, height: 'auto', autoSize: false, modal: true});
 </script>

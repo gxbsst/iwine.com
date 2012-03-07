@@ -30,6 +30,7 @@ class UsersController < ApplicationController
 
       @photo.save
       redirect_to '/users/avatar'
+      return
     end
   end
 
