@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 require 'csv'
-csv = CSV.read('region.csv')
+csv = CSV.read('db/region_tree.csv')
 
 csv.each do |item|
   # 格式 0 2 4 6
@@ -21,9 +21,8 @@ csv.each do |item|
       # 1. 法国,France,波尔多,Bordeaux,梅多克,Médoc,梅多克,Médoc
       # 2. 添加一个字段， 保存原生文字，如:RhÃ´ne Valley, name_en 保存 RhA´ne Valley
       # 转换方法: "Moulis/ Moulis-en-MÃ©doc".to_ascii_brutal => https://github.com/tomash/ascii_tic
-
-      region = Wines::RegionTree.where("name_zh='" + key + "'").first
-      region = Wines::RegionTree.create( :name_zh => key, :name_en => value, :parent => parent, :scope => 0, :tree_left => 0, :tree_right => 0)   if region.blank?
+      region = RegionTree.where("name_zh='" + key + "'").first
+      region = RegionTree.create( :name_zh => key, :name_en => value, :parent_id => parent, :scope => 0, :tree_left => 0, :tree_right => 0)   if region.blank?
       parent = region.id
     end
   end

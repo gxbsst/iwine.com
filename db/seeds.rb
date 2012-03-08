@@ -9,46 +9,46 @@
 
 ## 初始化 wine style
 
-# styles = [
-#     ['Red Wine', '红葡萄酒'],
-#     ['White Wine', '粉红葡萄酒'],
-#     ['Sparkling Wine', '起泡酒'],
-#     ['Champagne Wine', '香槟酒'],
-#     ['Port Wine', '波特酒'],
-#     ['Sherry Wine', '雪利酒'],
-#     ['Enhance Wine', '加强酒'],
-#     ['Sweet Wine', '甜酒'],
-#     ['Others', '其它']
-# ]
+ styles = [
+     ['Red Wine', '红葡萄酒'],
+     ['White Wine', '粉红葡萄酒'],
+     ['Sparkling Wine', '起泡酒'],
+     ['Champagne Wine', '香槟酒'],
+     ['Port Wine', '波特酒'],
+     ['Sherry Wine', '雪利酒'],
+     ['Enhance Wine', '加强酒'],
+     ['Sweet Wine', '甜酒'],
+     ['Others', '其它']
+ ]
 # 
-# styles.each do |style|
-#   Wines::Style.create(:name_en => style[0], :name_zh => style[1]) if Wines::Style.find_by_name_en(style[0]).blank?
-# end
+ styles.each do |style|
+   Wines::Style.create(:name_en => style[0], :name_zh => style[1]) if Wines::Style.find_by_name_en(style[0]).blank?
+ end
 # 
 # ## 导入中国地区表
 require 'csv'
-# csv = CSV.read(Rails.root.join('db') + 'region.csv')
-# 
-# csv.each do |item|
-#   puts item[3]
-#   Region.create(:parent_id => item[1], :region_name => item[2], :region_type => item[3].to_i ) if Region.find_by_region_name(item[2]).blank?
-# end
+ csv = CSV.read(Rails.root.join('db') + 'region.csv')
+ 
+ csv.each do |item|
+   puts item[3]
+   Region.create(:parent_id => item[1], :region_name => item[2], :region_type => item[3].to_i ) if Region.find_by_region_name(item[2]).blank?
+ end
 # 
 # ## TODO:
 # # 导入 Variety
-# csv = CSV.read(Rails.root.join('db', 'wine_variety_i18n.csv'))
-# 
-# csv.each do |item|
-#   begin
-#     unless item[2].blank?
-#       item[2] = item[2].force_encoding 'utf-8'
-#       item[2].contains_cjk? ? pinyin = HanziToPinyin.hanzi_to_pinyin(item[2]) : pinyin = '' 
-#     end
-#     Wines::Variety.create(:name_zh => item[2], :name_en => item[0].to_ascii_brutal, :origin_name => item[0], :pinyin => pinyin) if Wines::Variety.find_by_origin_name(item[0]).blank?
-#   rescue Exception => e
-#     puts e
-#   end
-# end
+ csv = CSV.read(Rails.root.join('db', 'wine_variety_i18n.csv'))
+ 
+ csv.each do |item|
+   begin
+     unless item[2].blank?
+       item[2] = item[2].force_encoding 'utf-8'
+       item[2].contains_cjk? ? pinyin = HanziToPinyin.hanzi_to_pinyin(item[2]) : pinyin = '' 
+     end
+     Wines::Variety.create(:name_zh => item[2], :name_en => item[0].to_ascii_brutal, :origin_name => item[0], :pinyin => pinyin) if Wines::Variety.find_by_origin_name(item[0]).blank?
+   rescue Exception => e
+     puts e
+   end
+ end
 
 
 ## 导入一个酒款
