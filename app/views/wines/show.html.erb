@@ -1,27 +1,25 @@
 <%= content_for :wine_title do  %>
-  <div class="wineprofile_name"><h1><%= @wine_detail.year.to_s + ' ' + @wine.name_zh%></h1><h2><%= @wine_detail.year.to_s + ' ' + @wine.name_en%></h2></div>
+  <div class="wineprofile_name"><h1><%= @wine_detail.cname %></h1><h2><%= @wine_detail.ename %></h2></div>
 <% end %>
 <div id="wp_left">
-  <div class="wine_img"><img src="/assets/base/test/win_130p.jpg" width="130" height="140" alt="2001拉菲珍宝" /></div>
-  <div class="star_score mb30"><span class="star_b_s<%= @wine_statistic.avarage_score.round*10/2%>  mr10 float_l"></span> <%= @wine_statistic.avarage_score%>分<br/>
-    <%= @wine_statistic.score_user_count%>人评价</div>
+	<div class="wine_img">
+		<!-- <img src="/assets/base/test/win_130p.jpg" width="130" height="140" alt="2001拉菲珍宝" /> -->
+		<%= image_tag @wine_detail.cover.image_url( :w_thumb ), :title => @wine_detail.name, :width => 130, :height => 140, :alt => @wine_detail.name %>
+	</div>
+	<div class="star_score mb30">
+		<span class="star_b_s<%= @wine_statistic.avarage_score.round*10/2%>  mr10 float_l">
+		</span> 
+		<%= @wine_statistic.avarage_score %>分<br/>
+		<%= @wine_statistic.score_user_count %>人评价
+	</div>
   <h2 class="sidebar">更多年份</h2>
   <div class="wine_year">
-    <ul class="clearfix">
-      <li><a href="#">2011</a></li>
-      <li><a href="#">2010</a></li>
-      <li><a href="#">2008</a></li>
-      <li><a href="#">2007</a></li>
-      <li><a href="#">2006</a></li>
-      <li><a href="#">2004</a></li>
-      <li><a href="#">2003</a></li>
-      <li><a href="#">2002</a></li>
-      <li class="current"><a href="#">2001</a></li>
-      <li><a href="#">2000</a></li>
-      <li><a href="#">1999</a></li>
-      <li><a href="#">1998</a></li>
-    </ul>
-    <a class="year_more">显示更多年份</a>
+	<ul class="clearfix">
+		<% @wine_detail.all_vintage.each do  |v| %>
+			<li><a href="#" <%= v == @wine_detail.year ? 'class="current"' : '' %>><%= v %></a></li>
+		<% end %>
+	</ul>
+	<%= link_to "显示更多年份", { :controller => "wines", :action => "list", :wine_id => @wine_detail.wine_id }, { :class => "year_more" }  %>
   </div>
 </div>
 <div id="wp_middle">
@@ -44,13 +42,14 @@
       <p>价格：¥2580 起</p>
       <a class="moreprice" href="#">更多价格信息</a>
     </div>
-    <p>其他中文名：小拉菲、拉菲复牌<br/>
-      酒庄：<a href="＃">某某酒庄</a><br/>
-      官方网站：<a href="http://www.lafite.com" target="_blank">http://www.lafite.com</a><br/>
-      产区：<a href="#">法国</a> ><a href="#"> 波尔多</a> > <a href="#">波亚克</a><br/>
-      类型：<img src="/assets/base/wine_red.gif" width="18" height="7" alt="红葡萄酒" /> <a href="#">红葡萄酒</a><br/>
-      酒精度：12.5%<br/>
-      容量：750ml<br/>
+    <p>其他中文名：<%= @wine_detail.other_cn_name %><br/>
+      酒庄：<%= link_to @wine.winery.name, :controller => "wineries", :action => 'show', :id => @wine.winery.id %><br/>
+      官方网站：<%= link_to @wine.official_site, 'http://' + @wine.official_site, :target => '_blank' %><br/>
+      产区： <%= render 'share/region_tree', :region_tree => @wine_detail.get_region_path %> <br/>
+      类型：<%= image_tag "base/" + @wine.style.name_en + '.gif' %><%= link_to @wine.style.name_zh, :controller => :searh, :action => :wine, :style => @wine.style.name_en %>
+	 <br/>
+      酒精度：<%= @wine_detail.alcoholicity %><br/>
+      容量： <%= @wine_detail.capacity %><br/>
       葡萄品种：<br/>
       赤霞珠 (50%-70%)、梅洛(30%-50%)、<br/>
       适饮年限: 2009年－2015年</p>
@@ -147,7 +146,7 @@
         <li class="clearfix">
           <div class="user_img">
             <a href="#">
-              <%= image_tag comment.avatar.image_url, :width=>50, :height=>50, :alt=>comment.user.username %>
+              <% # image_tag comment.avatar.image_url, :width=>50, :height=>50, :alt=>comment.user.username %>
             </a>
           </div>
           <div class="comment_main_profile clearfix">
@@ -161,7 +160,7 @@
               </div>
               <div class="float_l mr5">
                 <a href="#"><%= comment.user.username %></a>
-                <span class="time"><%= comment.updated_at.strftime '%Y-%m-%d'%></span>
+                <span class="time"><%# comment.updated_at.strftime '%Y-%m-%d'%></span>
               </div>
               <% if comment.point.present? %>
               <span class="star_s<%=(comment.point/2).to_s%>"></span>

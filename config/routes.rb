@@ -17,8 +17,13 @@ Patrick::Application.routes.draw do
   resources :wine_varieties
   
   namespace :users do
-     match ":user_id/cellars/" => "cellars#index", :via => [:get], :as => 'cellar' 
-     match ":user_name/cellars/edit" => "cellars#edit"
+     match ":user_id/cellars/" => "cellars#index", :via => [:get]
+     match ":user_id/cellars/edit" => "cellars#edit"
+  end
+  
+  namespace :users do
+     match ":user_id/bid/mine" => "bid#mine", :via => [:get] 
+     match ":user_id/bid/list" => "bid#list"
   end
 
   #

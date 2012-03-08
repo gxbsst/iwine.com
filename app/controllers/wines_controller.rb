@@ -15,10 +15,10 @@ class WinesController < ApplicationController
   end
 
   def show
-    @wine_detail = Wines::Detail.find params[:wine_detail_id]
+    @wine_detail = Wines::Detail.includes( :cover, :photos, :statistic,  {:wine => [:style, :winery]}).find( params[:wine_detail_id].to_i )
     @wine = @wine_detail.wine
     @wine_statistic = @wine_detail.statistic || @wine_detail.build_statistic
-    @wine_comments = @wine_detail.best_comments
+    @wine_comments = @wine_detail.best_comments( 6 )
     @user_comment = @wine_detail.comment current_user.id
   end
 
@@ -110,6 +110,10 @@ class WinesController < ApplicationController
 
   def long_comments
 
+  end
+  
+  def list
+    
   end
 
   private

@@ -221,7 +221,7 @@ class InitializeAllTables < ActiveRecord::Migration
       t.integer  "price"
       t.string   "alcoholicity",    :limit => 45
       t.string   "capacity",        :limit => 45
-      t.integer  "wine_style_id",                  :null => false
+      t.integer  "wine_style_id"
       t.integer  "wine_id"
       t.integer  "year"
       t.string   "unique_url",      :limit => 128
@@ -311,8 +311,8 @@ class InitializeAllTables < ActiveRecord::Migration
     end
 
     create_table "wine_varieties", :force => true do |t|
-      t.string  "culture", :limit => 7, :null => false
-      t.string  "name",                 :null => false
+      t.string  "culture", :limit => 7
+      t.string  "name",                
       t.string  "name_en"
       t.timestamps
     end

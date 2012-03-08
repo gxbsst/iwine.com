@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120306041940) do
+ActiveRecord::Schema.define(:version => 20120308080049) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -297,7 +297,7 @@ ActiveRecord::Schema.define(:version => 20120306041940) do
     t.integer  "price"
     t.string   "alcoholicity",    :limit => 45
     t.string   "capacity",        :limit => 45
-    t.integer  "wine_style_id",                  :null => false
+    t.integer  "wine_style_id"
     t.integer  "wine_id"
     t.integer  "year"
     t.string   "unique_url",      :limit => 128
@@ -341,7 +341,7 @@ ActiveRecord::Schema.define(:version => 20120306041940) do
   end
 
   create_table "wine_region_trees", :force => true do |t|
-    t.integer  "parent"
+    t.integer  "parent_id"
     t.string   "name_en",    :limit => 45
     t.string   "name_zh",    :limit => 45
     t.integer  "tree_right",               :null => false
@@ -356,8 +356,8 @@ ActiveRecord::Schema.define(:version => 20120306041940) do
     t.string   "name_en",            :limit => 128
     t.string   "official_site",      :limit => 100
     t.integer  "wine_style_id"
-    t.integer  "region_tree_id",                                   :null => false
-    t.integer  "winery_id",                                        :null => false
+    t.integer  "region_tree_id"
+    t.integer  "winery_id"
     t.string   "photo_name",         :limit => 100
     t.string   "photo_origin_name"
     t.integer  "vintage"
@@ -371,8 +371,8 @@ ActiveRecord::Schema.define(:version => 20120306041940) do
     t.integer  "audit_log_id"
     t.integer  "user_id"
     t.integer  "result"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "other_cn_name"
   end
 
@@ -396,12 +396,13 @@ ActiveRecord::Schema.define(:version => 20120306041940) do
   end
 
   create_table "wine_varieties", :force => true do |t|
-    t.string   "culture",    :limit => 7, :null => false
-    t.string   "name",                    :null => false
+    t.string   "culture",     :limit => 7, :default => ""
+    t.string   "name_zh",                  :default => ""
     t.string   "name_en"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "pinyin"
+    t.string   "origin_name"
   end
 
   add_index "wine_varieties", ["culture"], :name => "culture"
@@ -417,7 +418,7 @@ ActiveRecord::Schema.define(:version => 20120306041940) do
   add_index "wine_variety_percentages", ["wine_detail_id"], :name => "fk_wine_detail"
 
   create_table "wineries", :force => true do |t|
-    t.string   "name",           :limit => 45
+    t.string   "name_en",        :limit => 45
     t.integer  "region_id",                     :null => false
     t.integer  "region_tree_id",                :null => false
     t.text     "history"
@@ -441,6 +442,8 @@ ActiveRecord::Schema.define(:version => 20120306041940) do
     t.integer  "region_tree_id",                :null => false
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
+    t.string   "origin_name"
+    t.string   "other_cn_name"
   end
 
   add_index "wines", ["region_tree_id"], :name => "fk_wine_region_tree1"

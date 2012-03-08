@@ -1,201 +1,873 @@
-1,"zh","品丽珠",NULL
-2,"zh","",NULL
-3,"zh","美乐",NULL
-4,"zh","",NULL
-5,"zh","赤霞珠/加本利苏维翁",NULL
-6,"zh","",NULL
-7,"zh","",NULL
-8,"zh","",NULL
-9,"zh","",NULL
-10,"zh","黑品乐",NULL
-11,"zh","增芳德",NULL
-12,"zh","丹魄/添普兰尼洛",NULL
-13,"zh","雾葡萄",NULL
-14,"zh","",NULL
-15,"zh","桑娇维塞",NULL
-16,"zh","",NULL
-17,"zh","",NULL
-18,"zh","",NULL
-19,"zh","佳美",NULL
-20,"zh","西拉",NULL
-21,"zh","穆尔伟德",NULL
-22,"zh","歌海娜",NULL
-23,"zh","",NULL
-24,"zh","",NULL
-25,"zh","维欧尼",NULL
-26,"zh","巴贝拉",NULL
-27,"zh","",NULL
-28,"zh","丹拿",NULL
-29,"zh","佳利酿",NULL
-30,"zh","佳美娜",NULL
-31,"zh","卡娜伊奥罗",NULL
-32,"zh","卡斯特劳",NULL
-33,"zh","味而多",NULL
-34,"zh","品乐塔吉",NULL
-35,"zh","夏卡雷罗",NULL
-36,"zh","多姿桃",NULL
-37,"zh","宝石",NULL
-38,"zh","布鲁奈罗",NULL
-39,"zh","果若",NULL
-40,"zh","格丽尼奥里诺",NULL
-41,"zh","神索",NULL
-42,"zh","科维纳",NULL
-43,"zh","莱弗斯科",NULL
-44,"zh","蒙特普恰诺",NULL
-45,"zh","阿里亚尼考",NULL
-46,"zh","马尔白克",NULL
-47,"zh","马瑟兰",NULL
-48,"zh","黑曼罗",NULL
-49,"zh","黑达沃拉",NULL
-50,"zh","",NULL
-51,"zh","",NULL
-52,"zh","",NULL
-53,"zh","",NULL
-54,"zh","",NULL
-55,"zh","",NULL
-56,"zh","",NULL
-57,"zh","",NULL
-58,"zh","",NULL
-59,"zh","",NULL
-60,"zh","",NULL
-61,"zh","",NULL
-62,"zh","",NULL
-63,"zh","",NULL
-64,"zh","",NULL
-65,"zh","",NULL
-66,"zh","",NULL
-67,"zh","",NULL
-68,"zh","",NULL
-69,"zh","",NULL
-70,"zh","",NULL
-71,"zh","",NULL
-72,"zh","",NULL
-73,"zh","",NULL
-74,"zh","",NULL
-75,"zh","",NULL
-76,"zh","",NULL
-77,"zh","",NULL
-78,"zh","",NULL
-79,"zh","",NULL
-80,"zh","",NULL
-81,"zh","",NULL
-82,"zh","",NULL
-83,"zh","",NULL
-84,"zh","",NULL
-85,"zh","",NULL
-86,"zh","",NULL
-87,"zh","",NULL
-88,"zh","",NULL
-89,"zh","",NULL
-90,"zh","",NULL
-91,"zh","",NULL
-92,"zh","",NULL
-93,"zh","",NULL
-94,"zh","",NULL
-95,"zh","",NULL
-96,"zh","",NULL
-97,"zh","",NULL
-98,"zh","",NULL
-99,"zh","",NULL
-100,"zh","",NULL
-101,"zh","",NULL
-102,"zh","",NULL
-103,"zh","",NULL
-104,"zh","",NULL
-105,"zh","",NULL
-106,"zh","",NULL
-107,"zh","",NULL
-108,"zh","",NULL
-109,"zh","",NULL
-110,"zh","",NULL
-111,"zh","",NULL
-112,"zh","",NULL
-113,"zh","",NULL
-114,"zh","",NULL
-115,"zh","",NULL
-116,"zh","",NULL
-117,"zh","",NULL
-118,"zh","",NULL
-119,"zh","",NULL
-120,"zh","",NULL
-121,"zh","",NULL
-122,"zh","",NULL
-123,"zh","",NULL
-124,"zh","",NULL
-125,"zh","",NULL
-126,"zh","",NULL
-127,"zh","",NULL
-128,"zh","",NULL
-129,"zh","",NULL
-130,"zh","",NULL
-131,"zh","",NULL
-132,"zh","",NULL
-133,"zh","",NULL
-134,"zh","",NULL
-135,"zh","",NULL
-136,"zh","",NULL
-137,"zh","",NULL
-138,"zh","",NULL
-139,"zh","",NULL
-140,"zh","",NULL
-141,"zh","",NULL
-142,"zh","",NULL
-143,"zh","",NULL
-144,"zh","",NULL
-145,"zh","",NULL
-146,"zh","",NULL
-147,"zh","",NULL
-148,"zh","",NULL
-149,"zh","",NULL
-150,"zh","",NULL
-151,"zh","",NULL
-152,"zh","",NULL
-153,"zh","",NULL
-154,"zh","",NULL
-155,"zh","",NULL
-156,"zh","",NULL
-157,"zh","",NULL
-158,"zh","",NULL
-159,"zh","",NULL
-160,"zh","",NULL
-161,"zh","",NULL
-162,"zh","",NULL
-163,"zh","",NULL
-164,"zh","",NULL
-165,"zh","",NULL
-166,"zh","",NULL
-167,"zh","",NULL
-168,"zh","",NULL
-169,"zh","",NULL
-170,"zh","",NULL
-171,"zh","",NULL
-172,"zh","",NULL
-173,"zh","",NULL
-174,"zh","",NULL
-175,"zh","",NULL
-176,"zh","",NULL
-177,"zh","",NULL
-178,"zh","",NULL
-179,"zh","",NULL
-180,"zh","",NULL
-181,"zh","",NULL
-182,"zh","",NULL
-183,"zh","",NULL
-184,"zh","",NULL
-185,"zh","",NULL
-186,"zh","",NULL
-187,"zh","",NULL
-188,"zh","",NULL
-189,"zh","",NULL
-190,"zh","",NULL
-191,"zh","",NULL
-192,"zh","",NULL
-193,"zh","",NULL
-194,"zh","",NULL
-195,"zh","",NULL
-196,"zh","",NULL
-197,"zh","",NULL
-198,"zh","",NULL
-199,"zh","",NULL
-200,"zh","",NULL
-201,"zh","",NULL
+Albillo,White,阿比利诺
+Albariño,White,阿尔巴利诺
+Alvarinho,White,
+Cainho Branco,White,
+Agiorgitiko,Red,
+Aghiorghitiko,Red,阿吉欧吉提可
+Aligoté,White,阿里高特
+Aglianico,Red,阿里亚尼考
+Airén,White,阿依伦
+Antão Vaz,White,安图奥维斯
+Barbera,Red,巴贝拉
+Băbească Neagră,Red,巴贝萨卡尼格拉
+Bical,White,巴加
+Tinta Barroca,Red,巴罗卡红
+Garnacha Blanca,White,白歌海娜
+Grenache Blanc,White,白歌海娜
+Chenin Blanc,White,白诗南
+Pineau de la Loire,White,白诗南
+Steen,White,白诗南
+Ugni blanc,White,白玉霓
+Trebbiano,White,白玉霓
+Melon de Bourgogne,White,勃艮第香瓜
+Muscadet,White,密斯卡岱
+Bonarda,Red,勃纳达
+Bual,Red,布尔
+Boal,Red,
+Bourboulenc,White,布尔朗克
+Trepat,Red,查帕
+Cabernet Sauvignon,Red,赤霞珠
+Zweigelt,Red,茨威格
+Zweigeltrebe,Red,
+Rotburger,Red,
+Dornfelder,Red,丹菲特
+Tannat,Red,丹娜
+Pedro Ximénez,White,德罗-门西内
+PX,White,德罗-门西内
+Alamís,White,
+Tibouren,Red,堤布宏
+Dolcetto,Red,多姿桃
+Falanghina,White,法拉菲娜
+Fiano,White,菲诺
+Fernao Pires,White,费尔诺皮埃斯
+Fernão Pires,White,
+Maria Gomes,White,
+Colombard,White,鸽笼白
+Garnatxa,Red,歌海娜
+Grenache,Red,歌海娜
+Garnacha,Red,歌海娜
+Cannonau,Red,
+Graciano,Red,格拉西亚诺
+Moristel,Red,
+Grechetto,White,格莱托
+Greco Bianco,White,格瑞比阿科
+Nero d'Avola,Red,黑达沃拉
+Terret Noir,Red,黑德瑞
+Negroamaro,Red,黑曼罗
+Tinta Negra Mole,Red,黑莫乐
+Preto Martinho,Red,
+Pinot Noir,Red,黑皮诺
+Spätburgunder,Red,
+Blauburgunder,Red,
+Pinot Nero,Red,黑皮诺
+Picpoul Noir,Red,黑匹格普勒
+Rolle,White,侯尔
+Roupeiro,White,胡佩里奥
+Codega,White,
+Roussanne,White,胡姗
+Pinot Grigio,White,灰皮诺
+Pinot Gris,White,灰皮诺
+Grauburgunder,White,
+Gaglioppo,Red,加利尤波
+Carignan,Red,佳丽酿
+Carignane,Red,佳丽酿
+Cariñena,Red,佳丽酿
+Carignano,Red,佳丽酿
+Mazuelo,Red,
+Gamay,Red,佳美
+Gamay Noir,Red,
+Carménère,Red,佳美娜
+Zinfandel,Red,金粉黛
+Crljenak Kaštelanski,Red,
+Primitivo,Red,
+Garganega,White,卡尔卡耐卡
+Colorino,Red,卡乐罗
+Canaiolo,Red,卡内奥罗
+Cortese,White,柯蒂丝
+Corvina,Red,科维纳
+Corvinone,Red,
+Clairette,White,克莱雷特
+Criolla Grande,White,克里奥拉格林塔
+Blaufränkisch,Red,蓝色弗朗克
+Lemberger,Red,
+Franconia,Red,
+Kékfrankos,Red,
+Gamé,Red,
+Wildbacher,Red,蓝色威德巴赫
+Blauer Wildbacher,Red,
+Riesling,White,雷司令
+Johannisberg Riesling,White,
+Rheinriesling,White,
+Klingelberger,White,
+Rondinella,Red,龙堤内拉
+Grüner Veltliner,White,绿维特利纳
+Ribolla,White,罗柏拉
+Robola,White,
+Macabeo,White,马卡贝奥
+Macabeu,White,
+Alcañón,White,
+Viura,White,
+Malvasia,White,玛尔维萨
+Marsanne,White,玛珊
+Merlot,Red,梅洛
+Mourvèdre,Red,慕合怀特
+Monastrell,Red,
+Mataro,Red,
+Nebbiolo,Red,内比欧罗
+Palomino,White,帕洛米诺
+Listan,White,
+Perrum,White,
+Pais,Red,派斯
+Pinotage,Red,皮诺塔吉
+Cabernet Franc,Red,品丽珠
+Poulsard,Red,普萨
+Plousard,Red,
+Gewürztraminer,White,琼瑶浆
+Tramini,White,
+Sémillon,White,赛美蓉
+Sangiovese,Red,桑乔维赛
+Cabernet Gernischet,Red,蛇龙珠
+Shiraz,Red,设拉子
+Syrah,Red,西拉
+Muscat,White,麝香
+Moscato,White,麝香
+Cinsaut,Red,神索
+Cinsault,Red,神索
+Ottavianello,Red,
+St. Laurent,Red,圣罗兰
+Svatovavrinecke,Red,
+Scheurebe,White,施埃博
+Tempranillo,Red,添普尼罗
+Tinta Roriz,Red,
+Ull de Llebre,Red,
+Cencibel,Red,
+Tinta del Pais,Red,
+Torrontés,White,托隆特斯
+Torontel,White,
+Vidal Blanc,White,维达尔
+Vidal,White,
+Viognier,White,维欧尼
+Silvaner,White,西万尼
+Sylvaner,White,
+Österreicher,White,
+Chardonnay,White,霞多丽
+Petit Verdot,Red,小维尔多
+Muscat of Alexandria,White,亚历山大麝香
+Moscatell,White,
+Moscatel de Málaga,White,
+Moscatel de Setúbal,White,
+Sauvignon Blanc,White,长相思
+Sauvignon Gris,White,
+Abbuotto,Red,
+Abouriou,Red,
+Acolon,Red,
+Aleatico,Red,
+Agliano,Red,
+Alexandrouli,Red,
+Alfrocheiro Preto,Red,
+Alicante Bouschet,Red,
+Alicante Ganzin,Red,
+Alvarelhão,Red,
+Brancelho,Red,
+Amorghiano,Red,
+Ancellotta,Red,
+Aragónez,Red,
+Aramon,Red,
+Aspiran,Red,
+Aubun,Red,
+Avana,Red,
+Avarengo,Red,
+Baco Noir,Red,
+Baga,Red,
+Barbarossa,Red,
+Barsalinga,Red,
+Bastardo,Red,
+Trousseau,Red,
+Bellone,Red,
+Béquignol,Red,
+Black Muscat,Red,
+Blatina,Red,
+Blauburger,Red,
+Blauer Portugieser,Red,
+Blauer Portuguiser,Red,
+Oporto,Red,
+Kékoportó,Red,
+Portugais,Red,
+Bobal,Red,
+Bogazkere,Red,
+Bondola,Red,
+Bordo,Red,
+Ives Noir,Red,
+Bouchalès,Red,
+Bovale,Red,
+Borgonja Crna,Red,
+Brachetto or Braquet,Red,
+Brancellao,Red,
+Brown Muscat,Red,
+Brun Fourca,Red,
+Cabernet Severny,Red,
+Caddiu,Red,
+Cagnulari,Red,
+Caiño Tinto,Red,
+Caladoc,Red,
+Calitor,Red,
+Callet,Red,
+Caloria,Red,
+Canina nera,Red,
+Caricagiola,Red,
+Carmine,Red,
+Carnelian,Red,
+Castelão,Red,
+Periquita,,
+Castets,Red,
+Castiglione,Red,
+Catanese,Red,
+Centurian,Red,
+Cesanese,Red,
+Cesar,Red,
+Charbono,Red,
+Cienna,Red,
+Ciliegiolo,Red,
+Complexa,Red,
+Cornalin,Red,
+Cornifesto,Red,
+Counoise,Red,
+Croatina,Red,
+Darkenuša,Red,
+Dobričić,Red,
+Domina,Red,
+Dunkelfelder,Red,
+Duras,Red,
+Durif,Red,
+Petite Sirah,Red,
+Espadeiro,Red,
+Étraire,Red,
+Fer,Red,
+Ferrón,Red,
+Fetească Neagră,Red,
+Forcayat,Red,
+Forcallat,Red,
+Fortana,Red,
+Frappato,Red,
+Freisa,Red,
+Frühroter Veltliner,Red,
+Fumin,Red,
+Gamashara,Red,
+Gamaret,Red,
+Garanoir,Red,
+Garrut,Red,
+Girò,Red,
+Grand Noir de la Calmette,Red,
+Gran Negro,Red,
+Grão Negro,Red,
+Greco Nero,Red,
+Grignolino,Red,
+Gropello,Red,
+Grolleau,Red,
+Groslot,Red,
+Gros Verdot,Red,
+Guarnaccia,Red,
+Helfensteiner,Red,
+Heroldrebe,Red,
+Hondarrabi Beltza,Red,
+Humagne Rouge,Red,
+Jaén,Red,
+Joubertin,Red,
+Jaubertin,Red,
+Juan Garcia,Red,
+Juan Ibáñez,Red,
+Miguel del Arco,Red,
+Jurancon noir,Red,
+Kadarka,Red,
+Kalecik Karasi,Red,
+Kékoporto,Red,
+Kékoportó,Red,
+Kotsifali,Red,
+Kratosija,Red,
+Lacrima di Morro,Red,
+Lacrima Nera,Red,
+Lagrein,Red,
+Lambrusco,Red,
+Liatiko,Red,
+Limnio,Red,
+Listan Negro,Red,
+Lladoner Pelut,Red,
+Lledoner Pelut,Red,
+Madrasa,Red,
+Magaratch Bastardo,Red,
+Magaratch Ruby,Red,
+Magarach Ruby,Red,
+Magliocco,Red,
+Magliocco Canino,Red,
+Maiolica,Red,
+Malbec,Red,马尔贝克
+Auxerrois,Red,
+Cot,Red,
+Malvasia di Schierano,Red,
+Malvasia Nera,Red,
+Mammolo,Red,
+Mandelaria,Red,
+Mandelari,Red,
+Mandolari,Red,
+Mantonegro,Red,
+Mara,Red,
+Maratheftiko,Red,
+Marselan,Red,
+Marsigliana,Red,
+Marzemino,Red,
+Matrassa,Red,
+Mavro,Red,
+Mavrodafni,Red,
+Mavrodaphne,Red,
+Mavrud,Red,
+Mavroudi,Red,
+Mayorquin,Red,
+Melnik,Red,
+Mencia,Red,
+Jaen,Red,
+Merenzao,Red,
+Merille,Red,
+Milgranet,Red,
+Millot,Red,
+Mission,Red,
+Molinara,Red,
+Mondeuse,Red,
+Monica,Red,
+Montepulciano,Red,
+Montù,Red,
+Montuni,Red,
+Moravia,Red,
+Moreto,Red,
+Moristel,Red,
+Mourisco Tinto,Red,
+Mouyssaguès,Red,
+Mujuretuli,Red,
+Muscardin,Red,
+Muscat Hamburg,Red,
+Negoska,Red,
+Négrette,Red,
+Negru de Dragasani,Red,
+Nero Buono di Coro,Red,
+Nerello Cappuccio,Red,
+Nerello Mascalese,Red,
+Neretto di Bairo,Red,
+Neyret,Red,
+Nielluccio,Red,
+Nincusa,Red,
+Nocera,Red,
+Notardomenico,Red,
+Ojaleshi,Red,
+Öküzgözü,Red,
+Olivella nera,Red,
+Oseleta,Red,
+Pamid,Red,
+Parana,Red,
+Pascale di Cagliari,Red,
+Pelaverga,Red,
+Peloursin,Red,
+Perdal,Red,
+Perricone,Red,
+Persan,Red,
+Petit Rouge,Red,
+Piedirosso,Red,
+Pignerol,Red,
+Pignola Valtellinese,Red,
+Pignolo,Red,
+Pineau d'Aunis,Red,
+Pinot Meunier,Red,莫尼耶品乐
+Schwarzriesling,Red,
+Müllerebe,Red,
+Pinot St. George,Red,
+Plassa,Red,
+Plavac Mali,Red,
+Plavina,Red,
+Pollera Nera,Red,
+Portan,Red,
+Portugieser,Red,
+Prieto Picudo,Red,
+Primitivo,Red,
+Prokupac,Red,
+Provechon,Red,
+Raboso,Red,
+Ramisco,Red,
+Refosco,Red,
+Refošk,Red,
+Roesler,Red,
+Rossese,Red,
+Rossignola,Red,
+Rossola Nera,Red,
+Rotberger,Red,
+Rouchet,Red,
+Ruché,Red,
+Roche,Red,
+Rubired,Red,
+Ruby Cabernet,Red,
+Rufete,Red,
+Tinta Pinheira,Red,
+Tinta Carvalha,Red,
+Rufeta,Red,
+Sagrantino,Red,
+Saperavi,Red,
+Schiava,Red,
+Trollinger,Red,
+Schioppettino,Red,
+Schönburger,Red,
+Sciacarello,Red,
+Sciascinoso,Red,
+Segalin,Red,
+Ségalin,Red,
+Servanin,Red,
+Sgaretta,Red,
+Shiroka Melnishka Losa,Red,
+Melnik,Red,
+Sousão,Red,
+Sousón,Red,
+St-Macaire,Red,
+Sumoll,Red,
+Susumaiello,Red,
+Taminga,Red,
+Tarrango,Red,
+Tazzelenghe,Red,
+Teroldego,Red,
+Teroldego Rotaliano,Red,
+Thiniatiko,Red,
+Tinta Amarela,Red,
+Tinta Caiada,Red,
+Tinta Carvalha,Red,
+Tinta Francisca,Red,
+Tinta Madeira,Red,
+Tinta Miuda,Red,
+Tinta Pinheira,Red,
+Tinto Cão,Red,
+Touriga Franca,Red,
+Touriga Francesa,Red,
+Touriga Nacional,Red,
+Azal Espanhol,Red,
+Preto de Mortágua,Red,
+Trevisana Nera,Red,
+Trincadeira,Red,
+Castelão,Red,
+Torneiro,Red,
+Troia,Red,
+Uva di Troia,Red,
+Trollinger,Red,
+Trousseau,Red,
+Turca,Red,
+Uva di Troia,Red,
+Uva Rara,Red,
+Vaccarese,Red,
+Vaccarèse,Red,
+Valdiguié,Red,
+Vespolina,Red,
+Vien de Nus,Red,
+Volidza,Red,
+Vranac,Red,
+Xynomavro,Red,
+Aidani,White,
+Aidini,White,
+Aedani,White,
+Alarije,White,
+Alarijen,White,
+Albalonga,White,
+Albana,White,
+Albarello,White,
+Albarola,White,
+Alcañón,White,
+Altesse,White,
+Roussette,White,
+Amigne,White,
+Ansonica,White,
+Inzolia,White,
+Aragnan Blanc,White,
+Arbois,White,
+Arinto,White,
+Arneis,White,
+Arnsburger,White,
+Arrufiac,White,
+Arrufiat,White,
+Ruffiac,White,
+Arvine,White,
+Asprinio Bianco,White,
+Assario Branco,White,
+Assyrtiko,White,
+Assyrtico,White,
+Athiri,White,
+Aubin,White,
+Auxerrois Blanc,White,
+Avesso,White,
+Azal,White,
+Bacchus,White,
+Baco Blanc,White,
+Baiyu,White,
+Rkatsiteli,White,
+Banat Riesling,White,
+Banat Rizling,White,
+Barcelo,White,
+Baroque,White,
+Belina,White,
+Benedino,White,
+Biancame,White,
+Bianchello,White,
+Bianchetta Trevigiana,White,
+Bianchetti Genovese,White,
+Bianco d'Alessano,White,
+Biancolella,White,
+Biancone,White,
+Blanc de Morgex,White,
+Boais,White,
+Bogdanuša,White,
+Bombino Bianco,White,
+Borba Blanca,White,
+Borrado das Moscas,White,
+Bosco,White,
+Bouvier,White,
+Breidecker,White,
+Budai Zöld,White,
+Bukettraube,White,
+Buonamico,White,
+Burger,White,
+Monbadon,White,
+Camaralet,White,
+Carica l'Asino,White,
+Carignan blanc,White,
+Catarratto,White,
+Cayetana,White,
+Calagraño,White,
+Cerceal,White,
+Cereza,White,
+Chasan,White,
+Chasselas,White,
+Fendant,White,
+Gutedel,White,
+Chenel,White,
+Claret de Gers,White,
+Claret de Gascogne,White,
+Claverie,White,
+Cococciola,White,
+Cocur,White,
+Coda di Volpe,White,
+Codega,White,
+Roupeiro,White,
+Completer,White,
+Courbu,White,
+Xuri Zerratua,White,
+Bordelesa Zuri,White,
+Crato,White,
+Crato Bianco,White,
+Crouchen,White,
+Clare Riesling,White,
+Cape Riesling,White,
+Cserszegi Fűszeres,White,
+Cygne blanc,White,
+Dattier,White,
+Debina,White,
+Diagalves,White,
+Dimiat,White,
+Dinka,White,
+Dona blanca,White,
+Doradillo,White,
+Drupeggio,White,
+Durella,White,
+Ehrenfelser,White,
+Elbling,White,
+Emerald Riesling,White,
+Emir Karasi,White,
+Encruzado,White,
+Erbaluce,White,
+Esgana Cão,White,
+Esagna,White,
+Sercial,White,
+Esquitxagos,White,
+Ezerjó,White,
+Faber,White,
+Faberrebe,White,
+False Pedro,White,
+Pedro Luis,White,
+Cañocazo,White,
+Favorita,White,
+Favorita,White,
+Ferral,White,
+Fetească Albă,White,
+Fetiaska,White,
+Leànyka,White,
+Fetească Regală,White,
+Fié,White,
+Fiét,White,
+Fié gris,White,
+Findling,White,
+Flora,White,
+Folle Blanche,White,
+Gros Plant,White,
+Piquepoult,White,
+Fologosão,White,
+Francavida,White,
+Francusa,White,
+Freisamer,White,
+Freiburger,White,
+Friulano,White,
+Tocai Friulano,White,
+Fromenteau,White,
+Frontignan,White,
+Furmint,White,
+Mosler,White,
+Sipon,White,
+Galego Dourado,White,
+Garrido,White,
+Gellewza,White,
+Gloria,White,
+Godello,White,
+Goldburger,White,
+Goldriesling,White,
+Gouais blanc,White,
+Gouveio,White,
+Graisse,White,
+Plant de Graisse,White,
+Grasa,White,
+Grasă de Cotnari,White,
+Grecanico,White,
+Greco,White,
+Green Hungarian,White,
+Grenache Gris,White,
+Grignolino,White,
+Grillo,White,
+Grk Bijeli,White,
+Grolleau gris,White,
+Gros Manseng,White,
+Izkiriota Handi,White,
+Guardavalle,White,
+Guarnaccia Bianca,White,
+Gutenborner,White,
+Hárslevelű,White,
+Hondarrabi Zuri,White,
+Humagne,White,
+Huxelrebe,White,
+Weisser Gutedel,White,
+Courtillier Musqué,White,
+Incrocio Manzoni,White,
+Irsai Oliver,White,
+Irsay Oliver,White,
+Irsai Olivér,White,
+Italia,White,
+Izsáki Sarfehér,White,
+Izsáki,White,
+Jacquère,White,
+Jaén blanca,White,
+Jampal,White,
+Juhfark,White,
+Juwel,White,
+Kanzler,White,
+Karija l'Osü,White,
+Keknyelu,White,
+Kéknyelű,White,
+Kerner,White,
+Knipperle,White,
+Klein Rauschling,,
+Kövérszőlő,White,
+Krstač,White,
+Kujundžuša,White,
+Ladikino,White,
+Lado,White,
+Lagorthi,White,
+Lauzet,White,
+Len de l'El,White,
+Len de l'Elh,White,
+Loureira,White,
+Lumassina,White,
+Maceratino,White,
+Madeleine Angevine,White,
+Majarcă Albă,White,
+Malagousia,White,
+Malagoussia,White,
+Malvar,White,
+Malvoisie,White,
+Manteudo,White,
+Mantonico Bianco,White,
+Mauzac,White,
+Merseguera,White,
+Escanyavella,White,
+Meslier St-François,White,
+Mezesfehér,White,
+Miousap,White,
+Misket,White,
+Molette,White,
+Moll,White,
+Montu,White,
+Morio-Muskat,White,
+Moscatel de Austria,White,
+Moscatel Rosada,White,
+Moschofilero,White,
+Moscophilero,White,
+Mtsvane,White,
+Müller-Thurgau,White,
+Rivaner,White,
+Muscadelle,White,
+Muscat Blanc,White,
+Muscat Frontignan,White,
+Muskateller,White,
+Moscatel Branco,White,
+Muscat Ottonel,White,
+Nasco,White,
+Neherleschol,White,
+Neuburger,White,
+Nobling,White,
+Nosiola,White,
+Nuragus,White,
+Ondenc,White,
+Optima,White,
+Orion,White,
+Ortega,White,
+Ortrugo,White,
+Oz,White,
+Pagedebit,White,
+Pampanuto,White,
+Pampanino,White,
+Parč,White,
+Pardillo,White,
+Pardina,White,
+Parellada,White,
+Pascal Blanc,White,
+Passerina,White,
+Pecorello,White,
+Pecorino,White,
+Pedro Giménez,White,
+Perle,White,
+Petit Courbu,White,
+Petit Manseng,White,
+Izkiriota Ttipi,White,
+Petit Meslier,White,
+Petite Arvine,White,
+Picardin,White,
+Picolit,White,
+Piccolit,White,
+Piccolito,White,
+Picpoul,White,
+Pigato,White,
+Pignerol,White,
+Pignooletto,White,
+Pinella,White,
+Pinot Blanc,White,白皮诺
+Pinot Bianco,White,白皮诺
+Klevner,White,
+Weissburgunder,White,
+Pinot Jaune,White,
+Szürkebarát,White,
+Planta Fina,White,
+Planta Nova,White,
+Plavai,White,
+Pošip,White,
+Prosecco,White,
+Prunesta,White,
+Rabigato,White,
+Rabo de Ovelha,White,
+Raisin Blanc,White,
+Rauschling,White,
+Rāuschling,White,
+Regner,White,
+Reichensteiner,White,
+Rèze,White,
+Rhoditis,White,
+Roditis,,
+Rieslaner,White,
+Rkatsiteli,White,
+Roditis,White,
+Rhoditis,,
+Rollo,White,
+Romorantin,White,
+Roter Veltliner,White,
+Rotgipfler,White,
+Sabro,White,
+Sacy,White,
+Sarfeher,White,
+Sárfehér,White,
+Sauvignon Vert,White,
+Sauvignonasse,White,
+Savagnin,White,
+Savagnin Blanc,White,
+Savatiano,White,
+Schönburger,White,
+Septiner,White,
+Sercial,White,
+Cerceal,White,
+Esgana Cao,White,
+Sereksia,White,
+Sideritis,White,
+Siegerrebe,White,
+Smederevka,White,
+Spagnol,White,
+Spätrot,White,
+Zierfandler,White,
+St-Pierre Doré,White,
+Ste Marie,White,
+Sultana,White,
+Symphony,White,
+Tamarêz,White,
+Tamares,White,
+Crato Branco,White,
+Tamîioasa,White,
+Tămîioasă Românească,White,
+Tamianka,White,
+Taminga,White,
+Téoulier,White,
+Terrantez,White,
+Terret gris,White,
+Timorasso,White,
+Tourbat,White,
+Torbato,White,
+Traminer,White,
+Tramini,White,
+Traminac,White,
+Trbljan,White,
+Treixadura,White,
+Trajadura,White,
+Tresallier,White,
+Trousseau Gris,White,
+Grey Riesling,White,
+Tsaoussi,White,
+Tsolikauri,White,
+Verdea,White,
+Verdeca,White,
+Verdejo,White,
+Verdelho,White,
+Gouveio,White,
+Godello,White,
+Verdello,White,
+Verdesse,White,
+Verdicchio,White,
+Verdil,White,
+Verdosilla,White,
+Verdiso,White,
+Verdia,White,
+Verdoncho,White,
+Verduzzo,White,
+Verduzzo Trevigiano,White,
+Vermentino,White,
+Rolle,White,
+Vernaccia,White,
+Veroga,White,
+Vespaiola,White,
+Vilana,White,
+Vinhao,White,
+Viosinho,White,
+Vital (grape),White,
+Vitovska,White,
+Vugava,White,
+Weldra,White,
+Welschriesling,White,
+Riesling Italico,White,
+Olaszrizling,White,
+Lazki Rizling,White,
+Graševina,White,
+Würzer,White,
+Xarel·lo,White,
+Xarello,White,
+Xynisteri,White,
+Zala Gyöngye,White,
+Zalema,White,
+Zefir,White,
+Zenit,White,
+Zéta,White,
+Orémus,White,
+Zeusz,White,
+Zierfandler,White,
+Žilavka,White,
+Žlahtina,White,

@@ -5,4 +5,6 @@ class Users::CellarsController < ApplicationController
   
   def edit
   end
+  
+
 end

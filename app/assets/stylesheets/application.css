@@ -8,6 +8,7 @@
  *= require wines
  *= require uploadify 
  *= require_tree ./albums
+ *= require_tree ./users
 */
 
 

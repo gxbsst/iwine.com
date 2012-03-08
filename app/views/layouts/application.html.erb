@@ -3,7 +3,7 @@
   <head>
     <title>Patrick</title>
     <%= stylesheet_link_tag    "application" %>
-    <%= raw stylesheet_if_exists "#{params[:controller]}/#{params[:controller]}", "#{params[:controller]}/#{params[:action]}" %>
+    <%= raw stylesheet_if_exists "#{params[:controller]}", "#{params[:controller]}/#{params[:action]}" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= yield :head %>

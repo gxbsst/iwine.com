@@ -1,6 +1,10 @@
 class Wine < ActiveRecord::Base
 
   has_many :details, :class_name => 'Wines::Detail'
+  belongs_to :winery
+  belongs_to :style, :class_name => "Wines::Style", :foreign_key => "wine_style_id"
+  belongs_to :region, :class_name => "Wines::Region", :foreign_key => "region_tree_id"
+
   # Setup accessible (or protected) attributes for your model
   #attr_accessible :email, :password, :password_confirmation, :remember_me, :username
 
@@ -28,5 +32,5 @@ class Wine < ActiveRecord::Base
 	#   end
   # has_many :contact_people, :foreign_key => "erp_customer_id"
   # has_many :addresses, :foreign_key => "parent_id", :class_name => "ERP::CustomerAddress"
-
+  
 end

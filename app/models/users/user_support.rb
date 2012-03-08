@@ -7,7 +7,9 @@ module Users
 
     # Class Methods
     module ClassMethods
-      #  项目要用到的公共 class methods
+      
+
+      
     end
   end
 end

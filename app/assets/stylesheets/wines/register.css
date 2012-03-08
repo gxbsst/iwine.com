@@ -1,0 +1,18 @@
+#variety_items {
+}
+
+#variety_items li {
+  background: #EEE;
+}
+#variety_items li span {
+  margin:  5px 10px 0 0;
+}
+
+.left {
+  width: 650px;
+  float: left;
+}
+.right {
+  width: 250px;
+  float: right;
+}
