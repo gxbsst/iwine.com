@@ -79,6 +79,9 @@ class ImageUploader < CarrierWave::Uploader::Base
     resize_to_limit(600, 600)
   end
 
+  version :normal, :if => :is_user? do
+    resize_to_limit(190, 190)
+  end
 #  ## USER
 
   version :thumb, :if => :is_user? do
