@@ -1,4 +1,5 @@
 Patrick::Application.routes.draw do
+
   resources :wine_registers
 
   ActiveAdmin.routes(self)
@@ -33,14 +34,35 @@ Patrick::Application.routes.draw do
   #
   #end
   namespace :users do
+
     get 'albums/new'
     post 'albums/new'
+
+    #match "albums/new" => "albums/#new", :via => [:get, :post]
+    #match "albums/:action", :via => [:get, :post]
 
     get 'albums/create'
     get 'albums/show'
 
     get 'albums/upload'
     post 'albums/upload'
+
+    post 'albums/upload_list'
+
+    get 'albums/delete'
+    post 'albums/delete'
+
+    get 'albums/delete_photo'
+    post 'albums/delete_photo'
+
+    post 'albums/save_upload_list'
+
+    get 'albums/photo'
+
+    get 'albums/edit'
+    post 'albums/edit'
+
+    get 'albums/list'
   end
 
   resource :photos

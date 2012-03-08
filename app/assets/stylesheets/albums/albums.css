@@ -18,7 +18,7 @@ ul.album_list li h3 a:hover {text-decoration:none;}
 ul.album_list li .album_info, .photo_info {color:#999;}
 .album_intro {padding:10px 15px;background-color:#f3f3f3; margin-bottom:30px;}
 .photo_list {position:relative;}
-.photo_list_item {display:inline-block;width:190px;float:left;padding:0 20px;margin:0 0 30px 0;}
+.photo_list_item {display:inline-block;width:190px;float:left;padding:0 20px;margin:0 0 30px 0;height:300px;}
 .photo_list_item .description, .photo_detail .description {color:#333; margin:0 0 5px 0;}
 .photo_list_item .no-description {color:#ccc; font-style:italic; margin:0 0 5px 0;}
 .bottom_action_space {padding:10px 0; border-top:1px solid #ccc;}
