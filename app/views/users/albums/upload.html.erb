@@ -32,18 +32,56 @@
     '_http_accept': 'application/javascript'
   };
 
+  var uploaded_image_ids = [];
+
   $('input#photo_image').uploadify({
-    'uploader'     : '/uploadify.swf',
-    'script'       : '/users/albums/upload',
-    'fileDataName' : 'photo[image]',
-    'fileExt'      : '*.png;*.jpg;*.gif',
-    'cancelImg'    : '/assets/cancel.png',
-    'multi'        : true,
-    'scriptData'   : upload_params,
-    'auto'         : false,
-    'onComplete'   : function(e, id, obj, response, data) {
-      $('#photos').append(response);
-      console.log( response );
+    'uploader'      : '/uploadify.swf',
+    'script'        : '/users/albums/upload',
+    'fileDataName'  : 'photo[image]',
+    'fileExt'       : '*.png;*.jpg;*.gif',
+    'cancelImg'     : '/assets/cancel.png',
+    'multi'         : true,
+    'scriptData'    : upload_params,
+    'auto'          : false,
+    'simUploadLimit': 20,
+
+    onComplete: function(e, id, obj, response, data){
+      if( response > 0 )
+        uploaded_image_ids.push( response );
+    },
+
+    onAllComplete: function(){
+      var hidden_field ,
+        form = document.createElement( 'form' );
+
+      form.action = '<%= url_for :action => 'upload_list' %>';
+      form.method = 'post';
+
+      hidden_field = document.createElement( 'input' );
+      hidden_field.type = 'hidden';
+      hidden_field.name = 'utf8';
+      hidden_field.value = '✓';
+      form.appendChild( hidden_field );
+
+      hidden_field = document.createElement( 'input' );
+      hidden_field.type = 'hidden';
+      hidden_field.name = '<%= request_forgery_protection_token %>';
+      hidden_field.value = '<%= form_authenticity_token %>';
+      form.appendChild( hidden_field );
+
+      hidden_field = document.createElement( 'input' );
+      hidden_field.type = 'hidden';
+      hidden_field.name = 'album_id';
+      hidden_field.value = upload_params.album_id;
+      form.appendChild( hidden_field );
+
+      hidden_field = document.createElement( 'input' );
+      hidden_field.type = 'hidden';
+      hidden_field.name = 'photo_ids';
+      hidden_field.value = uploaded_image_ids.join();
+      form.appendChild( hidden_field );
+
+      form.submit();
     }
   });
 
