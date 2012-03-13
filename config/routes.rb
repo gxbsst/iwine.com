@@ -61,6 +61,7 @@ Patrick::Application.routes.draw do
 
     get 'albums/edit'
     post 'albums/edit'
+    put 'albums/edit'
 
     get 'albums/list'
   end

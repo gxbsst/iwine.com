@@ -7,11 +7,7 @@
 <div id="leftcol" class="mr50">
   <div class="photo_upload">
     <p class="mb10">选择相册 
-      <select onchange="selectAlbum(this)">
-        <% @albums.each do |album| %>
-          <option value="<%= album.id %>"><%= t album.name %></option>
-        <% end %>
-      </select> 
+      <%= select("album", "name", @albums.collect {|album| [album.name, album.id] }, :selected => @select_album_id ) %>
       <a href="<%= url_for :action => 'new' %>" class="new_album fancybox.ajax icon_add_album ml20">新建相册</a>
     </p>
     <p class="mb10">
@@ -28,7 +24,7 @@
   var upload_params = {
     "<%= key = Rails.application.config.session_options[:key] %>" : "<%= cookies[key] %>",
     "<%= request_forgery_protection_token %>" : encodeURI(encodeURIComponent('<%= form_authenticity_token %>')),
-    'album_id' : '<%= @albums[0].id %>',
+    'album_id' : '<%= @select_album_id %>',
     '_http_accept': 'application/javascript'
   };
 
@@ -85,10 +81,10 @@
     }
   });
 
-function selectAlbum(el){
-  upload_params.album_id = el.value;
-  $('input#photo_image').uploadifySettings( 'scriptData' , upload_params );
-};
+  $('#album_name').bind('change', function(){
+    upload_params.album_id = this.value;
+    $('input#photo_image').uploadifySettings( 'scriptData' , upload_params );
+  });
 
 $('.new_album').fancybox({padding:0, margin: 0, width: 450, height: 'auto', autoSize: false, modal: true});
 </script>

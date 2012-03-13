@@ -2,17 +2,19 @@
   <span class="f14">《 <a href="community_albmu_list.html">返回相册首页</a></span>
 </div>
 <div class="title_btn clearfix">
-  <h2>相册属性编辑-吃货那点事儿</h2>
+  <h2>相册属性编辑-<%= @album.name %></h2>
 </div>
+<%= form_for @album, :url => {:action => 'edit', :album_id => @album.id } do |f| %>
 <div id="leftcol" class="mr50">
   <p class="mb5">相册名称（必填）</p>
-  <input name="" type="text" class="text" value="吃货那点事儿" size="60" />
+  <%= f.text_field :name %>
   <p class="mt10 mb5">相册描述</p>
-  <textarea class="text" name="textarea" id="textarea" cols="57" rows="12"></textarea>
-  <p class="mt10"><a href="" class="button_gray ml5"><span>保存设置</span></a><a href="" class="button_gray"><span>取消</span></a></p>
+  <%= f.text_area :intro%>
+  <p class="mt10"><a href="javascript:$('#edit_album_<%= @album.id%>').submit();" class="button_gray ml5"><span>保存设置</span></a>
+  </p>
 </div>
+<% end %>
 <div id="rightcol">
   <p class="mb20">相册总容量1G</p>
 </div>
 <div class="clear"></div>
-

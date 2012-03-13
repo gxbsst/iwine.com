@@ -21,10 +21,18 @@
 
 class Photo < ActiveRecord::Base
 
+  belongs_to :album
+
+  delegate :user_id, :to => :album
+
+  paginates_per 12 
+
   mount_uploader :image, ImageUploader
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   #after_update :crop_avatar
   after_save :recreate_delayed_versions!
+
+  after_destroy :update_album_delete
 
   #def crop_avatar
   #  image.recreate_versions! if crop_x.present?
@@ -33,6 +41,11 @@ class Photo < ActiveRecord::Base
   def recreate_delayed_versions!
       image.should_process = true
       image.recreate_versions!
+  end
+
+  def update_album_delete
+    album.photos_num -= 1;
+    album.save
   end
 
 end
