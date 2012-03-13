@@ -2,7 +2,6 @@ class Users::AlbumsController < PhotosController
   before_filter :authenticate_user!, :except => ['show' , 'list' , 'photo']
 
   def upload
-
     if request.post?
       photo = Photo.new
       photo.image = params[:photo][:image]
@@ -33,7 +32,7 @@ class Users::AlbumsController < PhotosController
   end
 
   def save_upload_list
-    photos = Photo.all :conditions => { :id => params[:photo].keys , :album_id => params[:album_id]}
+    photos = Photo.all :conditions => { :id => params[:photo].keys , :album_id => params[:album_id] }
     cover = Photo.first :conditions => { :album_id => params[:album_id] , :is_cover => true }
 
     photos.each do |photo|
@@ -73,6 +72,17 @@ class Users::AlbumsController < PhotosController
   end
 
   def delete
+    if request.post?
+      @album = Album.first :conditions => { :id => params[:album_id] , :created_by => current_user.id }
+
+      if @album.present? && @album.name != 'avatar'
+        Photo.delete_all '`album_id`=' + @album.id.to_s
+        @album.delete
+      end
+
+      redirect_to request.referer
+      return
+    end
 
     render :layout => false
   end
@@ -95,6 +105,11 @@ class Users::AlbumsController < PhotosController
 
   def show
     @album = Album.find params[:album_id]
+
+    if @album.blank?
+      redirect_to request.referer
+    end
+
     @user = @album.user
 
     if user_signed_in? && current_user.id == @user.id
@@ -114,6 +129,9 @@ class Users::AlbumsController < PhotosController
 
   def photo
     @album = Album.find params[:album_id]
+    if @album.blank?
+      redirect_to request.referer
+    end
 
     if params[:index].to_i < 0
       @index = @album.photos_num - 1
@@ -134,6 +152,9 @@ class Users::AlbumsController < PhotosController
 
   def edit
     @album = Album.first :conditions => { :id => params[:album_id] , :created_by => current_user.id }
+    if @album.blank?
+      redirect_to request.referer
+    end
 
     if request.put?
       @album.attributes = params[:album]
@@ -157,6 +178,14 @@ class Users::AlbumsController < PhotosController
 
   end
 
+  def update_photo_intro
+    photo = Photo.find params[:photo_id]
+    photo.intro = params[:photo]["intro"]
+    photo.save
+
+    render :json => photo
+  end
+
   def check_owner
     if params[:user_id].blank?
       if user_signed_in?
@@ -175,5 +204,8 @@ class Users::AlbumsController < PhotosController
     end
 
     @user = User.find @album_user_id
+    if @user.blank?
+      redirect_to request.referer
+    end
   end
 end

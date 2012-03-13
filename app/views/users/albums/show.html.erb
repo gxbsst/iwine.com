@@ -19,10 +19,16 @@
         </a>
       </div>
       <% if photo.intro.present? %>
-        <div class="description"><%= photo.intro %></div>
+        <div class="description">
+          <% if @is_owner %>
+          <%= best_in_place photo, :intro, {:path => {:action => 'update_photo_intro', :photo_id => photo.id } } %>
+          <% else %>
+          <%= photo.intro %>
+          <% end %>
+        </div>
       <% elsif @is_owner %>
-        <div class="no-description">
-          点击添加描述
+        <div class="description">
+          <%= best_in_place photo, :intro, { :nil => '点击添加描述', :path => {:action => 'update_photo_intro', :photo_id => photo.id} } %>
         </div>
       <% end %>
       <div class="photo_info"><%= photo.created_at.strftime '%Y-%m-%d'%> 上传 | 
@@ -37,7 +43,9 @@
  <%= paginate @photos, :outer_window => 2 %> 
 </div>
 <div class="bottom_action_space clearfix mt20">
-  <a href="popup_album_delete_confirm.html" class="fancybox fancybox.ajax button_gray float_r"><span>删除相册</span></a>
+  <% if @is_owner && @album.name != 'avatar' %>
+  <a href="<%= url_for :action => 'delete', :album_id => @album.id %>" class="fancybox_delete_photo fancybox.ajax button_gray float_r"><span>删除相册</span></a>
+  <% end %>
   <span class="mr10">分享到</span>
   <span class="icon_like" href="#">(13)</span>
 </div>
@@ -45,9 +53,11 @@
 <input type="hidden" name="photo_id" id="delete_photo_id"/>
 <% end %>
 <script type="text/javascript">
-
 $('.fancybox_delete_photo').fancybox({padding:0, margin: 0, width: 450, height: 'auto', autoSize: false, modal: true});
+
 function delete_upload_photo( id ){
   $('#delete_photo_id').val( id ).parent().submit();
 };
+
+$('.best_in_place').best_in_place();
 </script>

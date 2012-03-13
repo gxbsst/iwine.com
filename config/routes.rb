@@ -69,6 +69,9 @@ Patrick::Application.routes.draw do
     put 'albums/edit'
 
     get 'albums/list'
+
+    post 'albums/update_photo_intro'
+    put 'albums/update_photo_intro'
   end
     
   ## WINE VARIETY
