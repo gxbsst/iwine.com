@@ -10,10 +10,12 @@ gem 'jquery-rails'
 gem 'devise', "~> 2.0.4"
 gem 'cancan'
 gem 'passenger'
-gem 'will_paginate'
+gem 'kaminari'
+#gem 'uploadify'
+gem 'flash_cookie_session'
 
-#gem "rmagick"
-gem "mini_magick"
+gem "rmagick"
+#gem "mini_magick"
 gem "carrierwave"
 
 gem 'omniauth'
@@ -23,9 +25,16 @@ gem 'oauth_china'
 gem 'rails-i18n'
 
 gem 'fancybox-rails', :git => 'https://github.com/sverigemeny/fancybox-rails'
+gem 'jcrop-rails'
 gem 'backbone-on-rails'
 
+gem 'simple_form'
+gem 'client_side_validations'
+
+gem 'activeadmin'
+
 group :development, :test do
+  gem 'i18n'
   gem 'pry'  # "binding.pry" in action
   gem 'wirble'
 end

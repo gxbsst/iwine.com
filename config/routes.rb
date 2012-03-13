@@ -1,4 +1,11 @@
 Patrick::Application.routes.draw do
+
+  resources :wine_registers
+
+  ActiveAdmin.routes(self)
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
   devise_for :users
 
   devise_scope :user do
@@ -6,6 +13,40 @@ Patrick::Application.routes.draw do
     get :logout , :to => 'devise/sessions#destroy'
     get :register , :to => 'devise/registrations#new'
   end
+
+  namespace :users do
+
+    get 'albums/new'
+    post 'albums/new'
+
+    #match "albums/new" => "albums/#new", :via => [:get, :post]
+    #match "albums/:action", :via => [:get, :post]
+
+    get 'albums/create'
+    get 'albums/show'
+
+    get 'albums/upload'
+    post 'albums/upload'
+
+    post 'albums/upload_list'
+
+    get 'albums/delete'
+    post 'albums/delete'
+
+    get 'albums/delete_photo'
+    post 'albums/delete_photo'
+
+    post 'albums/save_upload_list'
+
+    get 'albums/photo'
+
+    get 'albums/edit'
+    post 'albums/edit'
+
+    get 'albums/list'
+  end
+
+  resource :photos
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -56,7 +97,7 @@ Patrick::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'home#index'
+  root :to => 'static#index'
 
   # See how all your routes lay out with "rake routes"
 

@@ -1,0 +1,35 @@
+<% content_for :wine_register do %>
+    <%= javascript_include_tag 'wine_registers' %>
+<% end %>
+<h2>上传酒款</h2>
+
+<%= form_for @register, :url => 'register', :html => { :class => 'form-horizontal'} do |f| %>
+
+    <div><%= f.label :name_en %><%= f.text_field :name_en %></div>
+    <div><%= f.label :name_zh %><%= f.text_field :name_zh %></div>
+    <div><%= f.label :official_site %><%= f.text_field :official_site%></div>
+    <div><%= f.label :vintage %><%= f.text_field :vintage %></div>
+    <div><%= f.label :drinkable_end %><%= f.text_field :drinkable_begin %></div>
+    <div><%= f.label :drinkable_end %><%= f.text_field :drinkable_end %></div>
+    <div>
+      <%= f.label :variety_name %> <%= f.select :variety_name, Wines::Variety.all.collect{|v| [v.name, v.id]}, {:include_blank => false} %>
+      <%= f.label :variety_percentage %><%= f.text_field :variety_percentage, :id => 'new_variety' %> <span id="create_variety"><%= t :add %></span> <span class="variety_percentage_error"></span>
+    </div>
+
+    <ul id="variety_items">
+
+    </ul>
+    <div><%= f.label :capacity %><%= f.text_field :capacity %></div>
+
+    <%= f.button :submit %>
+<% end %>
+
+<script type="text/template" id="variety_item">
+  <span class="variety_name"></span>
+  <span class="variety_percentage"></span>
+  <span class="variety_destroy">x</span>
+  <input type="hidden" name = "wines_register[variety_name_value][]" class="variety_name_value_hidden" />
+  <input type="hidden" name = "wines_register[variety_percentage_value][]" class="variety_percentage_hidden" />
+</script>
+
+

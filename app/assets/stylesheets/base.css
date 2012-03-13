@@ -150,7 +150,7 @@ a.btn_mail {background-position:0 -49px;height:12px;width:16px;}
 a.btn_bid {background:url(base/btn.jpg) no-repeat;text-indent:-9999px;}
 a.btn_bid {display:block;background-position:0 0;width:50px;height:25px;}
 a.btn_bid:active {background-position:0 -25px;}
-
+ 
 .icon_userlevel {background:url(base/icon.gif) no-repeat;display:block;}
 .icon_userlevel {width:13px;height:12px;background-position: 0 -177px;}
 .icon_like {background:url(base/icon.gif) no-repeat 0 -176px;padding-left:20px;}

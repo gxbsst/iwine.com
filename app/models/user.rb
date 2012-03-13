@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  cattr_accessor :current_user
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -7,13 +8,14 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :username
 
-  has_one :user_profile
-  has_many :albums
-  has_many :wine_registers
-  has_many :wine_comments
+  has_one  :profile, :class_name => 'Users::Profile'
+  has_many :albums, :class_name => 'Album', :foreign_key => 'created_by'
+  has_many :registers, :class_name => 'Wines::Register'
+  has_many :comments, :class_name => 'Wines::Comment'
+  has_one  :good_hit_comment, :class_name => 'Users::GoodHitComment'
   has_many :photo_comments
-
-
+  has_many :photos, :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_USER }
+  has_one :avatar, :class_name => 'Photo', :foreign_key => 'business_id', :conditions => { :is_cover => true }
 
   # accepts_nested_attributes_for :user_profile
 	# alias :user_profiles_attribute :user_profile

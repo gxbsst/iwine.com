@@ -18,7 +18,7 @@ class InitializeAllTables < ActiveRecord::Migration
     end
 
     create_table "photos", :force => true do |t|
-      t.string   "raw_name"
+      t.string   "image"
       t.integer  "owner_type"   # 该图片是属于哪个类型： 1 => 用户， 2 => wine, 3 => winery
       t.integer  "business_id",                                    :null => false  # 和owner_type配合使用， 如果owner_type 为用户， 则该id为用户的id
       t.text     "intro"
@@ -69,7 +69,7 @@ class InitializeAllTables < ActiveRecord::Migration
     create_table "regions", :force => true do |t|
       t.integer "parent_id",   :limit => 2,   :default => 0,     :null => false
       t.string  "region_name", :limit => 120, :default => "",    :null => false
-      t.boolean "region_type",                :default => false, :null => false
+      t.integer "region_type"
       t.timestamps
     end
 
@@ -345,5 +345,32 @@ class InitializeAllTables < ActiveRecord::Migration
   end
 
   def down
+    drop_table :albums
+    drop_table :photos
+    drop_table :audit_logs
+    drop_table :friendships
+    drop_table :photo_comments
+    drop_table :regions
+    drop_table :social_messages
+    drop_table :social_message_posts
+    drop_table :user_good_hit_comments
+    drop_table :user_interests
+    drop_table :user_invite_logs
+    drop_table :user_oauths
+    drop_table :user_profiles
+    drop_table :user_wine_cellars
+    drop_table :user_wine_cellar_items
+    drop_table :wines
+    drop_table :wine_comments
+    drop_table :wine_details
+    drop_table :wine_drinkers
+    drop_table :wine_labels
+    drop_table :wine_prices
+    drop_table :wine_region_trees
+    drop_table :wine_registers
+    drop_table :wine_statistics
+    drop_table :wine_styles
+    drop_table :wine_varieties
+    drop_table :wineries
   end
 end

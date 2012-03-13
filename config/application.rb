@@ -17,6 +17,7 @@ module Patrick
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths += %W(#{config.root}/app/models/*)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -29,10 +30,10 @@ module Patrick
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
     config.time_zone = 'Beijing'
-    config.active_record.default_timezone = :Beijing
+    config.active_record.default_timezone = :utc
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     # config.i18n.default_locale = :de
     config.i18n.default_locale = "zh-CN"
 
@@ -47,5 +48,10 @@ module Patrick
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+
+    ## Fixed
+    # DEPRECATION WARNING: ActiveSupport::Memoizable is deprecated...
+    ActiveSupport::Deprecation.silenced = true
   end
 end

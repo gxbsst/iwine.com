@@ -1,0 +1,32 @@
+/*community*/
+#cu_user_menu {background:url(line_dotted.gif) repeat-x left bottom;padding:0 0 15px 0;margin:0 0 15px 0;}
+#cu_user_menu .pic {float:left;margin-right:15px;}
+#cu_user_menu .info_menu {float:left;width:855px;}
+#cu_user_menu .info_menu h1 {font-size:20px;color:#333;}
+.edit_signature {display:inline;}
+.edit_signature span {font-size:12px;color:#999;}
+.info_menu ul li {float:left;display:block;background:url(dotted_s_s.gif) repeat-y right 0;padding:0 10px 0 0;margin-right:10px;}
+.info_menu ul li a {color:#990000}
+.title_btn h2 {font-size:18px;color:#333;margin-bottom:20px;}
+.title_btn h2 span.count_b {font-size:14px;}
+ul.album_list li {background-color:#f3f3f3;padding:10px; margin:0 10px 30px 10px;display:inline;float:left;width:190px;}
+ul.album_list li .pic, .photo_list_item .thumb, .photo_detail_pic {margin-bottom:8px;}
+ul.album_list li h3, .photo_list_item h3, .photo_detail h3, .other_album h3 {font-size:14px;color:#333;margin:0 0 5px 0;}
+.comment h3, .other_content h3 {color:#333;}
+ul.album_list li h3 a {color:#333;}
+ul.album_list li h3 a:hover {text-decoration:none;}
+ul.album_list li .album_info, .photo_info {color:#999;}
+.album_intro {padding:10px 15px;background-color:#f3f3f3; margin-bottom:30px;}
+.photo_list {position:relative;}
+.photo_list_item {display:inline-block;width:190px;float:left;padding:0 20px;margin:0 0 30px 0;height:300px;}
+.photo_list_item .description, .photo_detail .description {color:#333; margin:0 0 5px 0;}
+.photo_list_item .no-description {color:#ccc; font-style:italic; margin:0 0 5px 0;}
+.bottom_action_space {padding:10px 0; border-top:1px solid #ccc;}
+.photo_detail {margin-bottom:30px;}
+.photo_detail .pn {text-align:center;margin-bottom:15px;}
+.photo_detail .photo_info {padding:10px 0;border-top:1px solid #ccc;margin-top:20px;}
+ul.other_album li {margin-bottom:10px;}
+ul.other_album li .pic {border:5px solid #f3f3f3;float:left;margin-right:10px;}
+ul.other_album li h3 a {color:#333;}
+ul.other_album li h3 a:hover {color:#333;text-decoration:none;}
+ul.other_album .album_info {float:left; width:140px;color:#999;}

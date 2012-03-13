@@ -12,3 +12,4 @@ tmtags
 .gitkeep
 .idea/*
 config/database.yml
+public/uploads/*
