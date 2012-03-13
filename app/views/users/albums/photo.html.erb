@@ -2,23 +2,24 @@
 <%= render 'cu_user_menu' %>
 <% end %>
 <div class="title_btn clearfix">
-  <h2><%= @user.username %>的相册-吃货那点事儿 <span class="count_b">(共<%= @album.photos_num %>张)</span></h2>
+  <h2><%= @user.username %>的相册-<%= @album.intro %> <span class="count_b">(共<%= @album.photos_num %>张)</span></h2>
 </div>
 <div id="leftcol" class="mr50">
   <div class="photo_detail">
     <div class="pn clearfix">
-      <a href="#" class="button_gray float_r"><span>下一张</span></a>
-      <a href="" class="button_gray float_r mr5"><span>上一张</span></a>
+      <a href="<%= url_for :action => 'photo', :album_id => @album.id, :index => @index + 1%>" class="button_gray float_r"><span>下一张</span></a>
+      <a href="<%= url_for :action => 'photo', :album_id => @album.id, :index => @index - 1%>" class="button_gray float_r mr5"><span>上一张</span></a>
       <a href="<%= url_for :action => 'show', :album_id => @album.id %>" class="button_gray float_l"><span>返回该相册</span></a>
-      第<%= @count + 1 %>张/共<%= @album.photos_num %>张
+      第<%= @index + 1 %>张/共<%= @album.photos_num %>张
     </div>
-    <div class="photo_detail_pic"><img src="/assets/base/test/photo_600.jpg" alt="三文鱼色拉" width="600" height="404" /></div>
-    <h3>三文鱼色拉</h3>
-    <div class="description">中午在COCO吃了咖喱，色拉赞！</div>
+    <div class="photo_detail_pic">
+      <%= image_tag @photo.image_url :large %>
+    </div>
+    <div class="description"><%= @photo.intro %></div>
     <div class="photo_info clearfix">
       <span class="float_r">分享到</span>
       <span class="icon_like float_r mr10">(13)</span>
-      10浏览 | 4评论
+      <%= @photo.viewed_num %>浏览 | <%= @photo.commented_num %>评论
     </div>
   </div>
   <div class="comment">
@@ -73,27 +74,23 @@
 <div id="rightcol" class="other_content">
   <h3>我的其他相册</h3>
   <ul class="other_album">
+    <% @top_albums.each do |album| %>
     <li class="clearfix">
-      <div class="pic"><a href="community_photo_list.html"><img src="/assets/base/test/album_cover5_s.jpg" width="90" height="90" /></a></div>
+      <div class="pic">
+        <a href="<%= url_for :action => 'show', :album_id => album.id %>">
+          <% if album.cover.present? %>
+          <%= image_tag album.cover.image_url( :thumb ), :width => 90, :height => 90 %>
+          <% else %>
+          <img src="/assets/base/test/album_cover5_s.jpg" width="90" height="90" />
+          <% end %>
+        </a>
+      </div>
       <div class="album_info">
-        <h3><a href="community_photo_list.html">植物也欢乐</a></h3>
-        3张照片<br/>2012-2-13 更新
+        <h3><a href="<%= url_for :action => 'show', :album_id => album.id %>"><%= album.intro %></a></h3>
+        <%= album.photos_num %>张照片<br/><%= album.updated_at.strftime '%Y-%m-%d'%> 更新
       </div>
     </li>
-    <li class="clearfix">
-      <div class="pic"><a href="community_photo_list.html"><img src="/assets/base/test/album_cover5_s.jpg" width="90" height="90" /></a></div>
-      <div class="album_info">
-        <h3><a href="community_photo_list.html">植物也欢乐</a></h3>
-        3张照片<br/>2012-2-13 更新
-      </div>
-    </li>
-    <li class="clearfix">
-      <div class="pic"><a href="community_photo_list.html"><img src="/assets/base/test/album_cover5_s.jpg" width="90" height="90" /></a></div>
-      <div class="album_info">
-        <h3><a href="community_photo_list.html">植物也欢乐</a></h3>
-        3张照片<br/>2012-2-13 更新
-      </div>
-    </li>
+    <% end %>
     <div class="clear"></div>
   </ul>
 </div>

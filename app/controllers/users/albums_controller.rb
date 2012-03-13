@@ -113,13 +113,23 @@ class Users::AlbumsController < PhotosController
   end
 
   def photo
-    @photo = Photo.find params[:photo_id]
+    @album = Album.find params[:album_id]
 
-    @photo = Photo.first :conditions => ''
+    if params[:index].to_i < 0
+      @index = @album.photos_num - 1
+    elsif params[:index].to_i >= @album.photos_num
+      @index = 0
+    else
+      @index = params[:index].to_i
+    end
 
-    @album = @photo.album
+    @photo = @album.photo @index
     @user = @album.user
-    @count = Photo.count :conditions => '`album_id`=' + @album.id.to_s + ' and `id` > ' + @photo.id.to_s
+    @top_albums = @user.top_albums 3
+    @photo.viewed_num += 1
+    @album.viewed_num += 1
+    @photo.save
+    @album.save
   end
 
   def edit

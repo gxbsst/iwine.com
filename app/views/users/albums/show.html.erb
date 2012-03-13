@@ -11,10 +11,10 @@
 </div>
 <div class="album_intro"><%= @album.intro %></div>
 <div class="photolist">
-  <% @photos.each do |photo| %>
+  <% @photos.each_with_index do |photo, i| %>
     <div class="photo_list_item">
       <div class="thumb">
-        <a href="<%= url_for :action => 'photo', :photo_id => photo.id %>">
+        <a href="<%= url_for :action => 'photo', :album_id => @album.id, :index => i %>">
           <%= image_tag photo.image_url :normal %>
         </a>
       </div>

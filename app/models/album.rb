@@ -14,4 +14,14 @@ class Album < ActiveRecord::Base
  
     cover
   end
+
+  def position photo_id
+    Photo.count( :conditions => '`album_id`=' + id.to_s + ' and `id` > ' + photo_id.to_s ) + 1
+  end
+
+  def photo index
+    index = 0 if index < 0
+    Photo.first :conditions => { :album_id => id } , :order => 'id DESC' , :offset => index , :limit => 1
+  end
+
 end
