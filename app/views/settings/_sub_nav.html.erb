@@ -1,0 +1,12 @@
+<% sub_menu = { "basic" => "/settings", "privacy" => "/settings/privacy", "invite" => "/settings/invite", "sync" => "/settings/sync" } %>
+<div id="navcontainer">
+	<ul id="navlist">
+		<% sub_menu.each do |action_name, url| %>
+		 <% if action == action_name %>
+			<li  id="active" ><%= link_to t("nav.sub_nav.settings.#{action_name}"),  url, {:id => "current"} %></li>
+		 <% else %>
+			<li><%= link_to t("nav.sub_nav.settings.#{action_name}"), url %></li>
+		 <% end %>
+		<% end %>
+	</ul>
+</div>

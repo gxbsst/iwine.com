@@ -1,0 +1,8 @@
+
+<div id="topnavi">
+	<% if user_signed_in? %>
+		<%= link_to current_user.username + '的帐户', '/settings/'  %> ｜ <a href="#">邮件(2)</a> | <%= link_to '登出', '/logout' %>  
+	<% else %>
+		<%= link_to '注册', new_user_registration_path %>  | <%= link_to '登陆', new_user_session_path %>  
+	<% end %>
+</div>

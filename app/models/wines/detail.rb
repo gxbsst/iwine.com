@@ -1,4 +1,7 @@
 class Wines::Detail < ActiveRecord::Base
+  
+  paginates_per 10
+  
   include Wines::WineSupport
   
   belongs_to :wine
@@ -6,9 +9,9 @@ class Wines::Detail < ActiveRecord::Base
   #  has_many :good_comments, :foreign_key => 'wine_detail_id', :class_name => 'Wines::Comment', :order => 'good_hit DESC, id DESC', :limit => 5, :include => [:user_good_hit] 
   has_one :statistic, :foreign_key => 'wine_detail_id'
   has_one :cover, :class_name => 'Photo',  :foreign_key => 'business_id', :conditions => { :is_cover => true, :owner_type => OWNER_TYPE_WINE }
-  has_many :photos, :class_name => 'Photo',  :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_WINE }
+  has_many :photos, :class_name => 'Photo',  :foreign_key => 'business_id', :limit => 5, :order => 'created_at DESC', :conditions => { :owner_type => OWNER_TYPE_WINE }
   has_many :prices, :class_name => "Price", :foreign_key => "wine_detail_id"
-  has_many :variety_percentages, :class_name => 'VarietyPercentage', :foreign_key => 'wine_detail_id'
+  has_many :variety_percentages, :class_name => 'VarietyPercentage', :foreign_key => 'wine_detail_id', :dependent => :destroy
   belongs_to :audit_log, :class_name => "AuditLog", :foreign_key => "audit_id"
     
   def comment( user_id )
@@ -48,6 +51,10 @@ class Wines::Detail < ActiveRecord::Base
   
   def get_region_path_html( symbol = " > " )
     get_region_path.reverse!.collect { |region| region.name_en + '/' + region.name_zh }.join( symbol )
+  end
+  
+  def drinkable
+    drinkable_begin.to_s + ' - ' + drinkable_end.to_s
   end
   
 end

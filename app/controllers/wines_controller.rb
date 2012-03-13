@@ -1,7 +1,11 @@
 # encoding: UTF-8
 class WinesController < ApplicationController
-  before_filter :authenticate_user!, :set_current_user
+  before_filter :authenticate_user!, :set_current_user, :except => [:index, :show]
 
+  def index
+    @wines = Wines::Detail.includes(:wine, :cover).order("created_at ASC").page params[:page] || 1
+  end
+  
   def register
     @register = Wines::Register.new
     if request.post?
@@ -15,7 +19,7 @@ class WinesController < ApplicationController
   end
 
   def show
-    @wine_detail = Wines::Detail.includes( :cover, :photos, :statistic,  {:wine => [:style, :winery]}).find( params[:wine_detail_id].to_i )
+    @wine_detail = Wines::Detail.includes( :cover, :photos, :statistic,  { :wine => [:style, :winery]} ).find( params[:wine_detail_id].to_i )
     @wine = @wine_detail.wine
     @wine_statistic = @wine_detail.statistic || @wine_detail.build_statistic
     @wine_comments = @wine_detail.best_comments( 6 )

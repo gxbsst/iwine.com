@@ -9,6 +9,7 @@
  *= require uploadify 
  *= require_tree ./albums
  *= require_tree ./users
+ *= require cellars
 */
 
 
@@ -304,6 +305,46 @@
 /*Form Error Message*/
 
 .field_with_errors .message {
-    color: #D00;
+	color: #D00;
 }
-.creat_new table th, .creat_new table td {padding:5px; vertical-align:top;}
+.creat_new table th, .creat_new table td {
+	padding: 5px;
+	vertical-align: top;
+}
+
+
+ul#navlist {
+	list-style-type: none;
+	padding-bottom: 31px;
+	border-bottom: 1px solid #CCC;
+	margin: 0;
+}
+
+ul#navlist li {
+	float: left;
+	height: 28px;
+	background-color: #EFEFEF;
+	margin: 2px 2px 0 2px;
+	border: 1px solid #CCC;
+}
+
+ul#navlist li#active {
+	border-bottom: 1px solid #fff;
+	background-color: #fff;
+}
+
+li#active a {
+	color: #000;
+}
+
+#navlist a {
+	float: left;
+	display: block;
+	color: #666;
+	text-decoration: none;
+	padding: 4px;
+}
+
+#navlist a:hover {
+	background: #fff;
+	}

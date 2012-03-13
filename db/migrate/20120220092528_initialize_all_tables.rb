@@ -155,6 +155,7 @@ class InitializeAllTables < ActiveRecord::Migration
       t.integer "relationship"
       t.string  "website"
       t.integer "notify_status"
+    
       t.integer "nickname_updated_at",                :default => 0, :null => false
       t.timestamps
     end

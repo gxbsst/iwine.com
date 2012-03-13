@@ -37,6 +37,9 @@ gem 'hanzi_to_pinyin' , git: 'git://github.com/wxianfeng/hanzi_to_pinyin.git'
 
 gem "breadcrumbs_on_rails"
 
+## Exception Handler
+gem 'exception_notification', :require => 'exception_notifier'
+
 group :development, :test do
   gem 'i18n'
   gem 'pry'  # "binding.pry" in action
