@@ -24,7 +24,7 @@ class WineRegisterUploader < CarrierWave::Uploader::Base
 
   # Process files as they are uploaded:
   #process :scale => [400, 400]
-  process :resize_to_fit => [500, 500]
+  process :resize_to_limit => [500, '']
   #
   # def scale(width, height)
   #   # do something

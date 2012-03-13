@@ -1,0 +1,90 @@
+<%= hidden_field_tag :wine_detail_id, params[:wine_detail_id]%>
+
+<table class="winery_list mb30 winery_add" width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th colspan="3"><%= @wine_detail.name %></th>
+	</tr>
+	<tr>
+		<td rowspan="13" class="wine_add_img">
+			<%= image_tag @wine_detail.cover.image_url( :w_thumb ), :title => @wine_detail.name, :width => 130, :height => 140, :alt => @wine_detail.name %>
+		</td>
+		<td class="add_item">酒名</td>
+		<td><%= @wine_detail.name %></td>
+	</tr>
+	<tr>
+		<td class="add_item">年份<span class="red">*</span></td>
+		<td><label>
+			<%= f.text_field :year, :class => 'year' %>
+			年 
+		</label></td>
+	</tr>
+	<tr>
+		<td class="add_item">产区</td>
+		<td><%= render 'share/region_tree', :region_tree => @wine_detail.get_region_path %> </td>
+	</tr>
+	<tr>
+		<td class="add_item">酒庄</td>
+		<td><%= @wine.winery.name %></td>
+	</tr>
+	<tr>
+		<td class="add_item">种类</td>
+		<td><%= image_tag "base/" + @wine.style.name_en + '.gif' %><%= link_to @wine.style.name_zh, :controller => :searh, :action => :wine, :style => @wine.style.name_en %></td>
+	</tr>
+	<tr>
+		<td class="add_item">酒商</td>
+		<td>
+			<%= f.text_field :buy_from, :class => 'text winemaker', :placeholder => '请输入酒商' %>
+		</td>
+	</tr>
+	<tr>
+		<td class="add_item">容量<span class="red">*</span></td>
+		<td><label>
+			<%= f.select :capacity, APP_DATA['wines']['capacity'].collect{|i| [i, i]}, {:include_blank => true } %>
+		</label></td>
+	</tr>
+	<tr>
+		<td class="add_item">数量<span class="red">*</span></td>
+		<td>
+			
+			<%= f.text_field :number, :class => 'quantity' %>
+			支
+		</td>
+	</tr>
+	<tr>
+		<td class="add_item">购入价格<span class="red">*</span></td>
+		<td><label>
+			<%= f.text_field :price, :class => 'price' %>
+			元
+		</label></td>
+	</tr>
+	<tr>
+		<td class="add_item">购入时间</td>
+		<td><label>
+			<%= f.date_select :buy_date, :start_year => 1900, :discard_day => true %>
+		</label></td>
+		</tr>
+		<tr>
+			<td class="add_item">适饮年限</td>
+			<td>
+				<%= f.date_select :drinkable_begin, :discard_day => true, :discard_month => true, :start_year =>  1990, :end_year => Time.now.year + 150  %>
+				
+				年到 
+				<%= f.date_select :drinkable_end, :discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150 %>
+				
+				
+				年
+			</td>
+			</tr>
+			<tr>
+				<td class="add_item">所在地<span class="red">*</span></td>
+				<td><label>
+					<%= f.select :location, APP_DATA['users']['cellars']['item']['location'].collect{|i| [i, i]}, {:include_blank => true } %>
+				</label></td>
+			</tr>
+			<tr>
+				<td class="add_item">仅自己可见</td>
+				<td><label>
+					<%= f.check_box :private_type %>
+				</label></td>
+			</tr>
+		</table>

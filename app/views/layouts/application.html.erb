@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>Patrick</title>
+    <title><%= content_for?(:title) ? content_for(:title) : 'Patrick' %></title>
     <%= stylesheet_link_tag    "application" %>
     <%= raw stylesheet_if_exists "#{params[:controller]}", "#{params[:controller]}/#{params[:action]}" %>
     <%= javascript_include_tag "application" %>
@@ -12,21 +12,14 @@
     <div id="wrapper">
       <div id="header">
         <div id="topspace">
-          <div id="topnavi"><a href="#">xiaoying 的帐户</a> | <a href="#">邮件(2)</a> | <a href="#">退出</a></div>
+		<%= render "share/user_fragment" %>
+		
           <div id="logo"><%= image_tag 'base/logo.gif', :width => 287, :height => 44, :alt=>'Patrick' %></div>
           <div class="clear"></div>
         </div>
         <div id="globel_navi_search">
           <div id="globel_search"><input class="globel_search" name="" type="text" placeholder="酒名、酒庄、年份" /><a href="#" class="btn_g_search">搜索</a></div>
-          <div id="globel_navi">
-            <ul>
-              <li><a href="#"><span>首页</span></a></li>
-              <li><a class="current" href="#"><span>美酒</span></a></li>
-              <li><a href="#"><span>酒庄</span></a></li>
-              <li><a href="#"><span>社区</span></a></li>
-              <li><a href="#"><span>活动</span></a></li>
-            </ul>
-          </div>
+         	<%= render 'share/main_nav', :controller => params[:controller], :action => params[:action] %>
           <div class="clear"></div>
         </div>
       </div>
@@ -36,8 +29,7 @@
 		
 
       </div>
-      <div id="footer"><div class="copyright">Copyright © 2011 Patrick, Inc. All rights reserved. </div>
-        <a href="#">关于我们</a> | <a href="#">帮助中心</a> | <a href="#">个人信息保护方针</a> | <a href="#">网站地图</a></div>
+		<%= render 'share/footer' %>
     </div>
   </body>
 </html>

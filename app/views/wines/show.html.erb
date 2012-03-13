@@ -2,6 +2,7 @@
   <div class="wineprofile_name"><h1><%= @wine_detail.cname %></h1><h2><%= @wine_detail.ename %></h2></div>
 <% end %>
 <div id="wp_left">
+
 	<div class="wine_img">
 		<!-- <img src="/assets/base/test/win_130p.jpg" width="130" height="140" alt="2001拉菲珍宝" /> -->
 		<%= image_tag @wine_detail.cover.image_url( :w_thumb ), :title => @wine_detail.name, :width => 130, :height => 140, :alt => @wine_detail.name %>
@@ -51,11 +52,16 @@
       酒精度：<%= @wine_detail.alcoholicity %><br/>
       容量： <%= @wine_detail.capacity %><br/>
       葡萄品种：<br/>
-      赤霞珠 (50%-70%)、梅洛(30%-50%)、<br/>
-      适饮年限: 2009年－2015年</p>
+	  <% @wine_detail.variety_percentages.each do |i| %>
+       <%= i.name_zh %> (<%= i.percentage %>)、
+      <% end %>
+	  <br/>
+      适饮年限: <%= @wine_detail.drinkable %></p>
   </div>
   <div class="interest_add clearfix">
-    <a class="button_brown float_r" href="#"><span>加入我的酒窖</span></a>
+	<%= link_to "/mine/cellars/new/?wine_detail_id=#{@wine_detail.id}",  :class => "button_brown float_r" do %>
+		<span>加入我的酒窖</span>
+	<% end %>
     <% if @user_comment.present? %>
     <div class="comment_score_display">
       <p><span class="mr30">我<%= @user_comment.drink_status == 'want' ? '想喝' : '喝过' %>这支酒</span>
@@ -98,19 +104,18 @@
       <li class="share"><a href="#">分享</a></li>
     </ul>
   </div>
+
   <div class="related_info">
-    <h2>关于2001 拉菲珍宝的介绍</h2>
+    <h2>关于<%= @wine_detail.cname %>介绍</h2>
     <div class="indent">
       <span class="short">拉菲庄是由一名姓拉菲（Lafite）的贵族创园于1354年，在十四世纪已相当有名气。到了1675年她由当时世界的酒业一号人物希刚公爵（J. D. Segur）购得。希刚当时在酒界叱咤风云，他同时拥有顶级的历史名庄拉图（Chateau Latour）、木桐（Chateau Mouton）和凯龙世家（Chateau Calon-Segur）。法王路易十四曾说希刚家族可能是法国最富有的家族。在十七世纪，法国基本上是勃艮第
         （Burgundy）酒的天下。而当时上流社会的著名“交际花”法王路易十五的情妇庞巴迪因在罗曼尼酒庄的争夺中，输给了路易十五的堂兄弟，波旁王朝的亲王，康帝亲王（Prince de Conti），因而把兴趣转投向拉菲，令拉菲往往成为凡尔赛宫贵族们的杯中佳物。1755年希刚家族的第三代掌门人去世后，拉菲产权进入了一段较为混乱的历史时期。但拉菲酒的品质依旧不为人失望...</span><a  href="">阅读全部</a>
     </div>
-    <h2 class="clearfix"><a class="button_gray float_r" href=""><span>添加图片</span></a>2011拉菲珍宝的图片<span class="count_more">(<a href="#">8</a>)<a href="#">更多...</a></span></h2>
+    <h2 class="clearfix"><a class="button_gray float_r" href=""><span>添加图片</span></a><%= @wine_detail.cname %>的图片<span class="count_more">(<%= link_to @wine_detail.photos.count, :controller => 'photos' %>)<a href="#">更多...</a></span></h2>
     <ul class="pic_col5 clearfix">
-      <li><a href="#"><img src="/assets/base/test/wine_90p_1.jpg" width="90" height="108" alt="酒名" /></a></li>
-      <li><a href="#"><img src="/assets/base/test/wine_90p_2.jpg" width="90" height="108" alt="酒名" /></a></li>
-      <li><a href="#"><img src="/assets/base/test/wine_90p_3.jpg" width="90" height="108" alt="酒名" /></a></li>
-      <li><a href="#"><img src="/assets/base/test/wine_90p_4.jpg" width="90" height="108" alt="酒名" /></a></li>
-      <li class="la"><a href="#"><img src="/assets/base/test/wine_90p_5.jpg" width="90" height="108" alt="酒名" /></a></li>
+	  <% @wine_detail.photos[1..5].each do |photo| %>
+	  	<li><%= link_to (image_tag photo.image_url( :w_thumb ), :width => 90, :height => 108, :alt => @wine_detail.name), "/wines/#{@wine_detail.id}/photos/#{photo.id}" %>
+	  <% end %>
       <div class="clear"></div>
     </ul>
     <h2 class="clearfix">喜欢这支酒的人还喜欢</h2>
@@ -146,7 +151,7 @@
         <li class="clearfix">
           <div class="user_img">
             <a href="#">
-              <% # image_tag comment.avatar.image_url, :width=>50, :height=>50, :alt=>comment.user.username %>
+              <%  image_tag comment.avatar.image_url, :width=>50, :height=>50, :alt=>comment.user.username  if comment.avatar.respond_to? 'image_url'%>
             </a>
           </div>
           <div class="comment_main_profile clearfix">
@@ -160,7 +165,7 @@
               </div>
               <div class="float_l mr5">
                 <a href="#"><%= comment.user.username %></a>
-                <span class="time"><%# comment.updated_at.strftime '%Y-%m-%d'%></span>
+                <span class="time"><% comment.updated_at.strftime '%Y-%m-%d' if comment.updated_at.respond_to? 'strftime' %></span>
               </div>
               <% if comment.point.present? %>
               <span class="star_s<%=(comment.point/2).to_s%>"></span>

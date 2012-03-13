@@ -80,7 +80,7 @@ class Users::AlbumsController < ApplicationController
   end
 
   def photo
-
+    @photo = Photo.find(params[:id])
   end
 
   def edit

@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :username
 
-  has_one  :profile, :class_name => 'Users::Profile'
+  has_one  :profile, :class_name => 'Users::Profile', :dependent => :destroy
   has_many :albums, :class_name => 'Album', :foreign_key => 'created_by'
   has_many :registers, :class_name => 'Wines::Register'
   has_many :comments, :class_name => 'Wines::Comment'
@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
   has_many :photos, :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_USER }
   has_one :avatar, :class_name => 'Photo', :foreign_key => 'business_id', :conditions => { :is_cover => true }
   has_one :cellar, :class_name => 'Users::WineCellar'
+  
+  accepts_nested_attributes_for :profile, :allow_destroy => true
 
   # accepts_nested_attributes_for :user_profile
 	# alias :user_profiles_attribute :user_profile
