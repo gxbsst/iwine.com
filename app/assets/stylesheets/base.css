@@ -92,7 +92,7 @@ ul, li {
 ul, li {
     list-style: none outside none;
 }
-.error, .alert, .notice, .success, .info {
+.error, .alert, .notice, .success, .info, .flash_notice {
     border: 2px solid #DDDDDD;
     margin-bottom: 1em;
     padding: 0.8em;
@@ -103,12 +103,12 @@ ul, li {
     border-color: #FBC2C4;
     color: #8A1F11;
 }
-.notice {
+.notice, .flash_notice {
     background: none repeat scroll 0 0 #FFF6BF;
     border-color: #FFD324;
     color: #514721;
 }
-.success {
+.success, .flash_notice {
     background: none repeat scroll 0 0 #E6EFC2;
     border-color: #C6D880;
     color: #264409;

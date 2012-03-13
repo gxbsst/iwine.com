@@ -1,4 +1,3 @@
-
 $(function(){
 
     window.Variety = Backbone.Model.extend({
@@ -29,12 +28,14 @@ $(function(){
 
     window.Varieties = Backbone.View.extend({
 
+//        template: _.template( $("#variety_item").html()),
+
         events: {
             "click span#create_variety" : "createVariety"
         },
 
         initialize: function() {
-            this.name_input = this.$("#wines_register_variety_name_value");
+            this.name_input = this.$("#wines_register_variety_name");
             this.percentage_input = this.$("#new_variety");
             VarietyCollection.bind('add', this.addOne, this);
         },
@@ -45,14 +46,13 @@ $(function(){
         addOne: function(model) {
             var view = new VarietyItem({model : model});
             $("#variety_items").append(view.render().el);
-            // $('#wines_register_variety_name option:selected').removeAttr('selected').next('option').attr('selected', 'selected');
+            $('#wines_register_variety_name option:selected').removeAttr('selected').next('option').attr('selected', 'selected');
         },
 
         createVariety: function(){
             var variety = {
-//                name_value : this.name_input.val(),
-//                name : this.$("#wines_register_variety_name option:selected").text(),
-                name: this.name_input.val(),
+                name_value : this.name_input.val(),
+                name : this.$("#wines_register_variety_name option:selected").text(),
                 percentage : this.percentage_input.val()
             };
             VarietyCollection.create(variety, {error: this.handleError, success: this.handleSuccess});
@@ -99,7 +99,7 @@ $(function(){
 
         setText: function() {
             this.$('.variety_name').text(this.model.get('name'));
-            this.$('.variety_name_hidden').val(this.model.get('name'));
+            this.$('.variety_name_value_hidden').val(this.model.get('name_value'));
             this.$('.variety_percentage_hidden').val(this.model.get('percentage'));
             this.$('.variety_percentage').text(this.model.get('percentage'));
         }
@@ -109,5 +109,3 @@ $(function(){
     window.App = new Varieties({el: $("#new_wines_register")});
 
 });
-
-

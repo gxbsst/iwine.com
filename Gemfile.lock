@@ -60,6 +60,9 @@ GEM
       jquery-rails
       railties (>= 3.1)
     bcrypt-ruby (3.0.1)
+    best_in_place (1.0.6)
+      jquery-rails
+      rails (~> 3.1)
     bourbon (1.4.0)
       sass (>= 3.1)
     breadcrumbs_on_rails (2.2.0)
@@ -89,6 +92,8 @@ GEM
     eco-source (1.1.0.rc.1)
     ejs (1.0.0)
     erubis (2.7.0)
+    exception_notification (2.5.2)
+      actionmailer (>= 3.0.4)
     execjs (1.3.0)
       multi_json (~> 1.0)
     fastercsv (1.5.4)
@@ -210,12 +215,14 @@ PLATFORMS
 DEPENDENCIES
   activeadmin
   backbone-on-rails
+  best_in_place
   breadcrumbs_on_rails
   cancan
   carrierwave
   client_side_validations
   coffee-rails (~> 3.2.1)
   devise (~> 2.0.4)
+  exception_notification
   fancybox-rails!
   flash_cookie_session
   hanzi_to_pinyin!

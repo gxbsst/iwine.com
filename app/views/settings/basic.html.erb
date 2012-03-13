@@ -1,0 +1,53 @@
+<%= render "sub_nav", :validate => true, :action => params[:action]  %>
+
+<%= form_for @user, :url => "/wines" do |f| -%>
+<table border="0" cellspacing="5" cellpadding="5">
+	<tr>
+		<td><%= f.label :username%></td>
+		<td><%= f.text_field :username %></td>
+	</tr>
+	<%= f.fields_for :profile do |p| %>
+	<tr>
+		<td><%= p.label :bio %></td>
+		<td><%= p.text_field :bio %></td>
+	</tr>
+	<tr>
+		<td><%= p.label :nickname %></td>
+		<td><%= p.text_field :nickname %></td>
+	</tr>
+	
+	<tr>
+		<td><%= p.label :living_city %></td>
+		<td><%= p.text_field :living_city %></td>
+	</tr>
+	
+	<tr>
+		<td><%= p.label :hometown %></td>
+		<td><%= p.text_field :hometown %></td>
+	</tr>
+	
+	<tr>
+		<td><%= p.label :gender %></td>
+		<td><%= p.text_field :gender %></td>
+	</tr>
+	
+	<tr>
+		<td><%= p.label :birthday %></td>
+		<td><%= p.text_field :birthday %></td>
+	</tr>
+	
+	<tr>
+		<td><%= p.label :vocation %></td>
+		<td><%= p.text_field :vocation %></td>
+	</tr>
+	
+	<tr>
+		<td><%= p.label :real_name %></td>
+		<td><%= p.text_field :real_name %></td>
+	</tr>
+		
+	<% end %>
+</table>
+
+  <%= f.submit %>
+<% end -%>

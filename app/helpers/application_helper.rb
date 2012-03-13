@@ -18,5 +18,19 @@ module ApplicationHelper
 
     return results.join("\n")
   end
-
+  
+  def title(page_title, options={})
+    content_for(:title, page_title.to_s)
+    return content_tag(:h1, page_title, options)
+  end
+  
+  
+  def wine_cover_tag(object, options = {} )
+    if object.respond_to? "cover"
+      image_tag object.cover.image_url( options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt]
+    else
+      image_tag "base/test/win_50p.jpg"
+    end  
+  end
+  
 end

@@ -57,4 +57,11 @@ Patrick::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  
+  # Exception Handler
+  config.middleware.use ExceptionNotifier,
+    :email_prefix => "[Exception] ",
+    :sender_address => %{"Exception Notifier" <support@sidways.com>},
+    :exception_recipients => %w{weston.wei@sidways.com}
+    
 end

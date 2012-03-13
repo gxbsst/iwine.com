@@ -1,40 +1,45 @@
 Patrick::Application.routes.draw do
 
-  resources :wine_registers
+  get "mine/index"
 
+  root :to => 'static#index'
+  ## ADMIN
   ActiveAdmin.routes(self)
-
   devise_for :admin_users, ActiveAdmin::Devise.config
+  
+  ## SETTINGS
+  
+  match "/settings/", :to => "settings#basic"
 
+  get "settings/privacy"
+
+  get "settings/invite"
+
+  get "settings/sync"
+
+  get "settings/account"
+  
+
+  ## USER
   devise_for :users
-
+  
   devise_scope :user do
     get :login , :to => "devise/sessions#new"
     get :logout , :to => 'devise/sessions#destroy'
     get :register , :to => 'devise/registrations#new'
   end
 
-
-  resources :wine_varieties
   
   namespace :users do
-     match ":user_id/cellars/" => "cellars#index", :via => [:get]
-     match ":user_id/cellars/edit" => "cellars#edit"
-  end
-  
-  namespace :users do
-     match ":user_id/bid/mine" => "bid#mine", :via => [:get] 
-     match ":user_id/bid/list" => "bid#list"
-  end
+    ## CELLAR
+    match ":user_id/cellars/" => "cellars#index", :via => [:get]
+    match ":user_id/cellars/edit" => "cellars#edit"
 
-  #
-  #  member do
-  #    get 'register'
-  #  end
-  #
-  #end
-  namespace :users do
-
+    ## BID
+    match ":user_id/bid/mine" => "bid#mine", :via => [:get] 
+    match ":user_id/bid/list" => "bid#list"
+    
+    ## ALBUMS
     get 'albums/new'
     post 'albums/new'
 
@@ -61,12 +66,48 @@ Patrick::Application.routes.draw do
 
     get 'albums/edit'
     post 'albums/edit'
+    put 'albums/edit'
 
     get 'albums/list'
+
+    post 'albums/update_photo_intro'
+    put 'albums/update_photo_intro'
+  end
+    
+  ## WINE VARIETY
+  resources :wine_varieties
+  
+  ## WINERY
+  resources :wineries
+  
+  ## WINE
+  # resources :wines
+  match "/wines/register", :to => "wines#register"
+  
+  namespace :wines do
+    match ':wine_detail_id/:photos/:id' => "photos#show", :constraints => { :id => /\d+/, :wine_detail_id => /\d+/ }
+  end
+  
+  resources :photos
+  resources :events
+  
+  ## MINE
+  match '', to: 'mine#show', constraints: {subdomain: /.+/}
+  namespace :mine do
+    resource :cellars
+    # match "cellars/new", :to => "cellars#new", :via => [:post, :get]
   end
 
-  resource :photos
-
+  ## STATIC
+  match "/about_us", :to => "static#about_us"
+  match "/contact_us", :to => "static#contact_us"
+  match "/help", :to => "static#help"
+  match "/private", :to => "static#private"
+  match "/site_map", :to => "static#site_map"
+  match "/home", :to => "static#home"
+  
+  match ':controller(/:action(/:id(.:format)))'
+    
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -116,11 +157,11 @@ Patrick::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'static#index'
+  
 
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  match ':controller(/:action(/:id(.:format)))'
+  
 end

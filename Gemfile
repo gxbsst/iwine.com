@@ -13,6 +13,7 @@ gem 'passenger'
 gem 'kaminari'
 #gem 'uploadify'
 gem 'flash_cookie_session'
+gem 'best_in_place'
 
 gem "rmagick"
 #gem "mini_magick"
@@ -36,6 +37,9 @@ gem 'activeadmin'
 gem 'hanzi_to_pinyin' , git: 'git://github.com/wxianfeng/hanzi_to_pinyin.git'
 
 gem "breadcrumbs_on_rails"
+
+## Exception Handler
+gem 'exception_notification', :require => 'exception_notifier'
 
 group :development, :test do
   gem 'i18n'

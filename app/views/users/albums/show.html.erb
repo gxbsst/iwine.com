@@ -1,97 +1,63 @@
-<div id="cu_user_menu" class="clearfix">
-  <div class="pic">
-    <a href="#">
-      <%= image_tag current_user.avatar.image_url( :thumb ), :width => 50, :height => 50 %>
-    </a>
-  </div>
-  <div class="info_menu">
-    <h1><%= current_user.username %> <img src="/assets/base/icon_user_l1.gif" width="13" height="12" alt="评论等级" />
-      <div class="edit_signature"><span> 准备小宇宙爆发......（<a href="#">修改</a>）</span></div></h1>
-    <ul class="clearfix">
-      <li><a href="community_listen.html">收听</a></li>
-      <li><a href="community_myhp.html">主页</a></li>
-      <li><a href="cellar_mycellar.html">酒窖</a></li>
-      <li><a href="community_statuses.html">广播</a></li>
-      <li><a href="community_albmu_list.html">相册</a></li>
-      <li><a href="community_setting.html">设置</a></li>
-    </ul>
-  </div>
-  <div class="clear"></div>
-</div>
+<% if user_signed_in? %>
+<%= render 'cu_user_menu' %>
+<% end %>
 <div class="title_btn clearfix">
-  <a href="community_albmu_list.html" class="button_gray float_r"><span>返回相册首页</span></a>
-  <a href="community_photo_upload.html" class="button_gray float_r mr5"><span>添加照片</span></a>
-  <a href="<%= url_for :action => 'edit', :id => @album.id %>" class="button_gray float_r mr5"><span>编辑相册属性</span></a>
-  <h2>我的相册-<%= @album.name %> <span class="count_b">(共10张)</span></h2>
+  <a href="<%= url_for :action => 'list', :user_id => @user.id %>" class="button_gray float_r"><span>返回相册首页</span></a>
+  <% if @is_owner %>
+  <a href="<%= url_for :action => 'upload', :album_id => params[:album_id]%>" class="button_gray float_r mr5"><span>添加照片</span></a>
+  <a href="<%= url_for :action => 'edit', :album_id => @album.id %>" class="button_gray float_r mr5"><span>编辑相册属性</span></a>
+  <% end %>
+  <h2><%= @user.username %>的相册-<%= @album.name %> <span class="count_b">(共<%= @photos.total_count %>张)</span></h2>
 </div>
-<div class="album_intro">关于吃和吃货的二三事，食物和地点的记录，也许某天可以出本图片集也说不定...^^</div>
+<div class="album_intro"><%= @album.intro %></div>
 <div class="photolist">
-  <div class="photo_list_item">
-    <div class="thumb"><a href="community_photo_detail.html"><img src="/assets/base/test/photo_190_1.jpg" /></a></div>
-    <h3>三文鱼色拉</h3>
-    <div class="description">中午在COCO吃了咖喱，色拉赞！</div>
-    <div class="photo_info">2012-1-28上传 | <a href="＃">删除</a><br/>
-      10浏览 | 2喜欢 | <a href="community_photo_detail.html">5评论</a></div>
-  </div>
-  <div class="photo_list_item">
-    <div class="thumb"><a href="community_photo_detail.html"><img src="/assets/base/test/photo_190_4.jpg" /></a></div>
-    <h3>附近终于有7-11了</h3>
-    <div class="no-description">点击可添加描述</div>
-    <div class="photo_info">2012-1-28上传 | <a href="＃">删除</a><br/>
-      10浏览 | 2喜欢 | <a href="community_photo_detail.html">5评论</a></div>
-  </div>
-  <div class="photo_list_item">
-    <div class="thumb"><a href="community_photo_detail.html"><img src="/assets/base/test/photo_190_3.jpg" /></a></div>
-    <h3>草莓餐</h3>
-    <div class="description">这个季节还是应该吃草莓啊</div>
-    <div class="photo_info">2012-1-28上传 | <a href="＃">删除</a><br/>
-      10浏览 | 2喜欢 | <a href="community_photo_detail.html">5评论</a></div>
-  </div>
-  <div class="photo_list_item">
-    <div class="thumb"><a href="community_photo_detail.html"><img src="/assets/base/test/photo_190_2.jpg" /></a></div>
-    <h3>081206</h3>
-    <div class="no-description">点击可添加描述</div>
-    <div class="photo_info">2012-1-28上传 | <a href="＃">删除</a><br/>
-      10浏览 | 2喜欢 | <a href="community_photo_detail.html">5评论</a></div>
-  </div>
-  <div class="clear"></div>
-  <div class="photo_list_item">
-    <div class="thumb"><a href="community_photo_detail.html"><img src="/assets/base/test/photo_190_8.jpg" /></a></div>
-    <h3>自己动手丰衣足食</h3>
-    <div class="no-description">点击可添加描述</div>
-    <div class="photo_info">2012-1-28上传 | <a href="＃">删除</a><br/>
-      10浏览 | 2喜欢 | <a href="community_photo_detail.html">5评论</a></div>
-  </div>
-  <div class="photo_list_item">
-    <div class="thumb"><a href="community_photo_detail.html"><img src="/assets/base/test/photo_190_6.jpg" /></a></div>
-    <h3>f043</h3>
-    <div class="no-description">点击可添加描述</div>
-    <div class="photo_info">2012-1-28上传 | <a href="＃">删除</a><br/>
-      10浏览 | 2喜欢 | <a href="community_photo_detail.html">5评论</a></div>
-  </div>
-  <div class="photo_list_item">
-    <div class="thumb"><a href="community_photo_detail.html"><img src="/assets/base/test/photo_190_7.jpg" /></a></div>
-    <h3>f042</h3>
-    <div class="no-description">点击可添加描述</div>
-    <div class="photo_info">2012-1-28上传 | <a href="＃">删除</a><br/>
-      10浏览 | 2喜欢 | <a href="community_photo_detail.html">5评论</a></div>
-  </div>
-  <div class="photo_list_item">
-    <div class="thumb"><a href="community_photo_detail.html"><img src="/assets/base/test/photo_190_9.jpg" /></a></div>
-    <h3>Let's party~</h3>
-    <div class="no-description">点击可添加描述</div>
-    <div class="photo_info">2012-1-28上传 | <a href="＃">删除</a><br/>
-      10浏览 | 2喜欢 | <a href="community_photo_detail.html">5评论</a></div>
-  </div>
+  <% @photos.each_with_index do |photo, i| %>
+    <div class="photo_list_item">
+      <div class="thumb">
+        <a href="<%= url_for :action => 'photo', :album_id => @album.id, :index => i %>">
+          <%= image_tag photo.image_url :normal %>
+        </a>
+      </div>
+      <% if photo.intro.present? %>
+        <div class="description">
+          <% if @is_owner %>
+          <%= best_in_place photo, :intro, {:path => {:action => 'update_photo_intro', :photo_id => photo.id } } %>
+          <% else %>
+          <%= photo.intro %>
+          <% end %>
+        </div>
+      <% elsif @is_owner %>
+        <div class="description">
+          <%= best_in_place photo, :intro, { :nil => '点击添加描述', :path => {:action => 'update_photo_intro', :photo_id => photo.id} } %>
+        </div>
+      <% end %>
+      <div class="photo_info"><%= photo.created_at.strftime '%Y-%m-%d'%> 上传 | 
+        <a href="<%= url_for :action => 'delete_photo', :photo_id => photo.id %>" class="fancybox_delete_photo fancybox.ajax">删除</a>
+        <br/>
+        <%= photo.viewed_num%>浏览 | <%= photo.liked_num%>喜欢 | <a href="community_photo_detail.html"><%= photo.commented_num%>评论</a></div>
+    </div>
+  <% end %>
   <div class="clear"></div>
 </div>
-<div class="pagination"><span class="disabled"> < </span><span class="current">1</span><a href="#?page=2">2</a><a href="#?page=3">3</a><a href="#?page=4">4</a><a href="#?page=5">5</a><a href="#?page=6">6</a><a href="#?page=7">7</a>...<a href="#?page=199">199</a><a href="#?page=200">200</a><a href="#?page=2"> > </a></div>
+<div class="pagination">
+ <%= paginate @photos, :outer_window => 2 %> 
+</div>
 <div class="bottom_action_space clearfix mt20">
-  <a href="popup_album_delete_confirm.html" class="fancybox fancybox.ajax button_gray float_r"><span>删除相册</span></a>
+  <% if @is_owner && @album.name != 'avatar' %>
+  <a href="<%= url_for :action => 'delete', :album_id => @album.id %>" class="fancybox_delete_photo fancybox.ajax button_gray float_r"><span>删除相册</span></a>
+  <% end %>
   <span class="mr10">分享到</span>
   <span class="icon_like" href="#">(13)</span>
 </div>
+<%= form_tag :action => 'delete_photo', :method => 'post' do %>
+<input type="hidden" name="photo_id" id="delete_photo_id"/>
+<% end %>
 <script type="text/javascript">
+$('.fancybox_delete_photo').fancybox({padding:0, margin: 0, width: 450, height: 'auto', autoSize: false, modal: true});
 
-$('.edit_album_profile').fancybox({padding:0, margin: 0, width: 450, height: 'auto', autoSize: false, modal: true});
+function delete_upload_photo( id ){
+  $('#delete_photo_id').val( id ).parent().submit();
+};
+
+$('.best_in_place').best_in_place();
 </script>
