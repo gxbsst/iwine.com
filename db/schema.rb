@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120312055811) do
+ActiveRecord::Schema.define(:version => 20120313090515) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -123,6 +123,20 @@ ActiveRecord::Schema.define(:version => 20120312055811) do
 
   add_index "regions", ["parent_id"], :name => "parent_id"
   add_index "regions", ["region_type"], :name => "region_type"
+
+  create_table "searches", :force => true do |t|
+    t.string   "keywords"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "settings", :force => true do |t|
+    t.string   "name"
+    t.string   "value"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "social_message_posts", :force => true do |t|
     t.integer  "message_id", :limit => 8, :default => 0, :null => false

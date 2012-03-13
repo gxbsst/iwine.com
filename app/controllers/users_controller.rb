@@ -1,5 +1,6 @@
+# encoding: utf-8
 class UsersController < ApplicationController
-  before_filter :authenticate_user!, :except => [:index, :show]
+  before_filter :authenticate_user!, :except => [:index, :show, :register_success]
 
   def show
     @user = User.find params[:id]
@@ -45,6 +46,10 @@ class UsersController < ApplicationController
     end
 
     render :layout => false
+  end
+  
+  def register_success
+    @title = "注册成功."
   end
 
 end

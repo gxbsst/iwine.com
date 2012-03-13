@@ -6,7 +6,7 @@
 	</tr>
 	<tr>
 		<td rowspan="13" class="wine_add_img">
-			<%= image_tag @wine_detail.cover.image_url( :w_thumb ), :title => @wine_detail.name, :width => 130, :height => 140, :alt => @wine_detail.name %>
+			<%= wine_cover_tag( @wine_detail, :thumb_name => "w_thumb", :title => @wine_detail.name, :width => 130, :height => 140, :alt => @wine_detail.name )%>
 		</td>
 		<td class="add_item">酒名</td>
 		<td><%= @wine_detail.name %></td>

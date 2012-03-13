@@ -26,7 +26,7 @@ module ApplicationHelper
   
   
   def wine_cover_tag(object, options = {} )
-    if object.respond_to? "cover"
+    if object.cover.respond_to? "image_url"
       image_tag object.cover.image_url( options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt]
     else
       image_tag "base/test/win_50p.jpg"

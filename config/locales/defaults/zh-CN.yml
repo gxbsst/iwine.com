@@ -23,6 +23,9 @@ zh-CN:
         sync: "同步动向"
       mine:
         index : "首页"
+        settings: "设置"
+        feeds: "收听"
+        status: "广播"
         cellars: "我的酒窖"
         albums: "我的相册"
         wines: "我上传的酒"
