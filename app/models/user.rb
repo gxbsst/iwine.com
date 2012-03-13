@@ -43,4 +43,9 @@ class User < ActiveRecord::Base
     role === value.to_s
   end
 
+  def top_albums count
+    count = 0 if count < 0
+    Album.all :conditions => { :created_by => id }, :order => 'photos_num DESC', :limit => count
+  end
+
 end

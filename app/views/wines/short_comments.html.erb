@@ -32,7 +32,7 @@
               </div>
               <div class="float_l mr5">
                 <a href="#"><%= comment.user.username %></a>
-                <span class="time"><%= comment.updated_at%></span>
+                <span class="time"><%= comment.updated_at.strftime '%Y-%m-%d'%></span>
               </div>
               <% if comment.point.present? %>
               <span class="star_s<%=(comment.point/2).to_s%>"></span>
