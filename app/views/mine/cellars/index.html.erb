@@ -1,6 +1,8 @@
 <%= render "sub_nav"%>
 <div class="winery_main">
-	<a title="添加藏酒" href="cellar_add_step1.html" class="button_red float_r"><span>添加藏酒</span></a>
+	<%= link_to  "/mine/cellars/add?step=1", :class => "button_red float_r" do %>
+		<span>添加藏酒</span>
+	<% end %>
 	<div class="sort_item clearfix">
 		<div class="float_l">共<%= @cellar_items.count %>支 | 排序：</div>
 		<select class="mr10 float_l" id="select" name="select">

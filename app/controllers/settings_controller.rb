@@ -1,5 +1,6 @@
 class SettingsController < ApplicationController
   before_filter :authenticate_user!
+  
   def basic
     @user = User.includes(:profile).find(current_user.id)
     @user.profile ||= @user.build_profile

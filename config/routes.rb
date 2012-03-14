@@ -6,9 +6,9 @@ Patrick::Application.routes.draw do
   ## ADMIN
   ActiveAdmin.routes(self)
   devise_for :admin_users, ActiveAdmin::Devise.config
-  
+
   ## SETTINGS
-  
+
   match "/settings/", :to => "settings#basic"
 
   get "settings/privacy"
@@ -18,86 +18,82 @@ Patrick::Application.routes.draw do
   get "settings/sync"
 
   get "settings/account"
-  
+
 
   ## USER
-  devise_for :users
-  
+  devise_for :users, :controllers => { :registrations => "registrations" }
+
   devise_scope :user do
     get :login , :to => "devise/sessions#new"
     get :logout , :to => 'devise/sessions#destroy'
     get :register , :to => 'devise/registrations#new'
   end
 
-  
+  #用户注册成功后的页面
+  match "users/register/success", :to => "users#register_success"
+
+  match ':controller(/:action(/:id))', :controller => /users\/[^\/]+/
+ 
   namespace :users do
     ## CELLAR
     match ":user_id/cellars/" => "cellars#index", :via => [:get]
     match ":user_id/cellars/edit" => "cellars#edit"
 
     ## BID
-    match ":user_id/bid/mine" => "bid#mine", :via => [:get] 
+    match ":user_id/bid/mine" => "bid#mine", :via => [:get]
     match ":user_id/bid/list" => "bid#list"
     
     ## ALBUMS
-    get 'albums/new'
-    post 'albums/new'
-
-    #match "albums/new" => "albums/#new", :via => [:get, :post]
-    #match "albums/:action", :via => [:get, :post]
-
-    get 'albums/create'
-    get 'albums/show'
-
-    get 'albums/upload'
-    post 'albums/upload'
-
-    post 'albums/upload_list'
-
-    get 'albums/delete'
-    post 'albums/delete'
-
-    get 'albums/delete_photo'
-    post 'albums/delete_photo'
-
-    post 'albums/save_upload_list'
-
-    get 'albums/photo'
-
-    get 'albums/edit'
-    post 'albums/edit'
-    put 'albums/edit'
-
-    get 'albums/list'
-
-    post 'albums/update_photo_intro'
-    put 'albums/update_photo_intro'
+    match ":user_id/albums/list" => "albums#list"
+    match ":user_id/albums/show" => "albums#show"
+    match ":user_id/albums/photo" => "albums#photo"
   end
-    
-  ## WINE VARIETY
-  resources :wine_varieties
-  
-  ## WINERY
-  resources :wineries
-  
+
+  ## API
+  namespace :api do
+    match "wineries/names", :to => "wineries#names"
+    match "wine_varieties/index", :to => "wine_varieties#index"
+  end
+
   ## WINE
   # resources :wines
   match "/wines/register", :to => "wines#register"
-  
+
   namespace :wines do
     match ':wine_detail_id/:photos/:id' => "photos#show", :constraints => { :id => /\d+/, :wine_detail_id => /\d+/ }
   end
-  
-  resources :photos
+
+  # resources :photos
   resources :events
-  
+
   ## MINE
-  match '', to: 'mine#show', constraints: {subdomain: /.+/}
+ 
+  match ':controller(/:action(/:id))', :controller => /mine\/[^\/]+/
   namespace :mine do
-    resource :cellars
+    # CELLARS
+    resources :cellars    
+    # ALBUMS
+    # match "albums",  :to => "albums#index"
+    # post "albums/upload_list"
+    # post "albums/save_upload_list"
+    # get "albums/upload"
+    # post "albums/upload"
+    # 
+    # match "show", :to => "albums#show"
+    # match "albums/upload", :to => "albums#upload", :via => [:get, :post]
+    match "albums(/:album_id)/upload", :to => "albums#upload", :via => [:get, :post]
+    #   # match "index",  :to => "albums#index"
+
+    # WINES
+    resource :wines
+
     # match "cellars/new", :to => "cellars#new", :via => [:post, :get]
   end
+  
 
+  ## SEARCHS
+  resources :searches
+  
   ## STATIC
   match "/about_us", :to => "static#about_us"
   match "/contact_us", :to => "static#contact_us"
@@ -105,9 +101,9 @@ Patrick::Application.routes.draw do
   match "/private", :to => "static#private"
   match "/site_map", :to => "static#site_map"
   match "/home", :to => "static#home"
-  
+
   match ':controller(/:action(/:id(.:format)))'
-    
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -157,11 +153,11 @@ Patrick::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  
+
 
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  
+
 end

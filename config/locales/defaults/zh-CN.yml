@@ -11,7 +11,7 @@ zh-CN:
     mine: "我的Patrick"
     about_us: "关于我们"
     contact_us: "联系我们"
-    help: "帮组中心"
+    help: "帮助中心"
     private: "免责声明"
     site_map: "网站地图"
     
@@ -23,6 +23,9 @@ zh-CN:
         sync: "同步动向"
       mine:
         index : "首页"
+        settings: "设置"
+        feeds: "收听"
+        status: "广播"
         cellars: "我的酒窖"
         albums: "我的相册"
         wines: "我上传的酒"

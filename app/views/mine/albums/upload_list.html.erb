@@ -5,7 +5,7 @@
   <h2>完成上传 - 添加描述</h2>
 </div>
 <div class="photolist">
-<%= form_tag '/users/albums/save_upload_list', :id => 'save_upload_list_form' do %>
+<%= form_tag '/mine/albums/save_upload_list', :id => 'save_upload_list_form' do %>
   <% @photos.each do |photo| %>
   <div class="photo_list_item clearfix" id="upload_photo_div_<%= photo.id %>">
     <div class="thumb">

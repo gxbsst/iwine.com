@@ -1,5 +1,5 @@
-<% sub_menu = { "index" => "/mine", "cellars" => "/mine/cellars", "albums" => "/mine/albums", "wines" => "/mine/wines", "wish" => "/mine/wish", "do" => "/mine/do" } %>
-<div id="navcontainer">
+<% sub_menu = { "index" => "/mine", "feeds" => "/mine/feeds", "cellars" => "/mine/cellars", "status" => "/mine/status", "albums" => "/mine/albums", "wines" => "/mine/wines", "wish" => "/mine/wish", "do" => "/mine/do", "settings" => "/settings/" } %>
+<!-- <div id="navcontainer">
 	<ul id="navlist">
 		<% sub_menu.each do |action_name, url| %>
 		 <% if action == action_name %>
@@ -9,4 +9,28 @@
 		 <% end %>
 		<% end %>
 	</ul>
+</div> -->
+
+
+<div id="cu_user_menu" class="clearfix">
+  <div class="pic">
+	<a href="#">
+		 <%#= image_tag current_user.avatar.image_url( :thumb ), :width => 50 , :height => 50 %>
+		<img src="/assets/base/test/user_img50.jpg" alt="不良夏生" width="50" height="50"></a>
+	</div>
+  <div class="info_menu">
+    <h1><%= current_user.username %> <img src="/assets/base/icon_user_l1.gif" width="13" height="12" alt="评论等级">
+      <div class="edit_signature"><span> 准备小宇宙爆发......（<a href="#">修改</a>）</span></div></h1>
+    <ul class="clearfix">
+	
+		<% sub_menu.each do |action_name, url| %>
+		 <% if action == action_name %>
+			<li  class="current" ><%= link_to t("nav.sub_nav.mine.#{action_name}"),  url %></li>
+		 <% else %>
+			<li><%= link_to t("nav.sub_nav.mine.#{action_name}"), url %></li>
+		 <% end %>
+		<% end %>
+    </ul>
+  </div>
+  <div class="clear"></div>
 </div>

@@ -31,7 +31,7 @@
 
         <tr>
           <td><%= f.label :winery_id %></td>
-          <td><%= f.text_field :winery_id, data: { autocomplete_source: '/wineries/names'} %></td>
+          <td><%= f.text_field :winery_id, data: { autocomplete_source: '/api/wineries/names'} %></td>
         </tr>
         <tr>
           <td><%= f.label :official_site %></td>
@@ -47,7 +47,7 @@
         <tr>
           <td><%= f.label :variety_name %></td>
           <td>
-            <%= f.text_field :variety_name_value, data: { autocomplete_source: wine_varieties_path}  %>
+            <%= f.text_field :variety_name_value, data: { autocomplete_source: '/api/wine_varieties/index' }  %>
             <%= f.label :variety_percentage_value %> <%= f.text_field :variety_percentage_value, :id => 'new_variety' %> <span id="create_variety"><%= t :add %></span> <span class="variety_percentage_error"></span>
             <ul id="variety_items">
 
