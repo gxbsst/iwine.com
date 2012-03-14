@@ -3,7 +3,7 @@ class Mine::CellarsController < ApplicationController
 
 
 
-  def show
+  def index
     @cellar_items = Users::WineCellarItem.includes(:wine_cellar, {:wine_detail => [:cover, :wine]}).page params[:page] || 1
 
   end

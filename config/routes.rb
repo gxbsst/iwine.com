@@ -32,7 +32,8 @@ Patrick::Application.routes.draw do
   #用户注册成功后的页面
   match "users/register/success", :to => "users#register_success"
 
-
+  match ':controller(/:action(/:id))', :controller => /users\/[^\/]+/
+ 
   namespace :users do
     ## CELLAR
     match ":user_id/cellars/" => "cellars#index", :via => [:get]
@@ -41,40 +42,11 @@ Patrick::Application.routes.draw do
     ## BID
     match ":user_id/bid/mine" => "bid#mine", :via => [:get]
     match ":user_id/bid/list" => "bid#list"
-
+    
     ## ALBUMS
-    get 'albums/new'
-    post 'albums/new'
-
-    #match "albums/new" => "albums/#new", :via => [:get, :post]
-    #match "albums/:action", :via => [:get, :post]
-
-    get 'albums/create'
-    get 'albums/show'
-
-    get 'albums/upload'
-    post 'albums/upload'
-
-    post 'albums/upload_list'
-
-    get 'albums/delete'
-    post 'albums/delete'
-
-    get 'albums/delete_photo'
-    post 'albums/delete_photo'
-
-    post 'albums/save_upload_list'
-
-    get 'albums/photo'
-
-    get 'albums/edit'
-    post 'albums/edit'
-    put 'albums/edit'
-
-    get 'albums/list'
-
-    post 'albums/update_photo_intro'
-    put 'albums/update_photo_intro'
+    match ":user_id/albums/list" => "albums#list"
+    match ":user_id/albums/show" => "albums#show"
+    match ":user_id/albums/photo" => "albums#photo"
   end
 
   ## API
@@ -91,26 +63,33 @@ Patrick::Application.routes.draw do
     match ':wine_detail_id/:photos/:id' => "photos#show", :constraints => { :id => /\d+/, :wine_detail_id => /\d+/ }
   end
 
-  resources :photos
+  # resources :photos
   resources :events
 
   ## MINE
-  match '', to: 'mine#show', constraints: {subdomain: /.+/}
+ 
+  match ':controller(/:action(/:id))', :controller => /mine\/[^\/]+/
   namespace :mine do
     # CELLARS
-    resource :cellars
-    match "cellars/add", :to => "cellars#add"
-    
+    resources :cellars    
     # ALBUMS
-    resource :albums do
-      match "upload", :to => "albums#upload"
-    end
-    
+    # match "albums",  :to => "albums#index"
+    # post "albums/upload_list"
+    # post "albums/save_upload_list"
+    # get "albums/upload"
+    # post "albums/upload"
+    # 
+    # match "show", :to => "albums#show"
+    # match "albums/upload", :to => "albums#upload", :via => [:get, :post]
+    match "albums(/:album_id)/upload", :to => "albums#upload", :via => [:get, :post]
+    #   # match "index",  :to => "albums#index"
+
     # WINES
     resource :wines
-    
+
     # match "cellars/new", :to => "cellars#new", :via => [:post, :get]
   end
+  
 
   ## SEARCHS
   resources :searches

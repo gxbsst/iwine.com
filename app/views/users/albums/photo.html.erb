@@ -1,6 +1,4 @@
-<% if user_signed_in? %>
-<%= render 'cu_user_menu' %>
-<% end %>
+
 <div class="title_btn clearfix">
   <h2><%= @user.username %>的相册-<%= @album.intro %> <span class="count_b">(共<%= @album.photos_num %>张)</span></h2>
 </div>
@@ -72,7 +70,7 @@
   </div>
 </div>
 <div id="rightcol" class="other_content">
-  <h3>我的其他相册</h3>
+  <h3><%= current_user.username %>的其他相册</h3>
   <ul class="other_album">
     <% @top_albums.each do |album| %>
     <li class="clearfix">

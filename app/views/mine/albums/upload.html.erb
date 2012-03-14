@@ -32,14 +32,15 @@
 
   $('input#photo_image').uploadify({
     'uploader'      : '/uploadify.swf',
-    'script'        : '/users/albums/upload',
+    'script'        : '/mine/albums/upload',
     'fileDataName'  : 'photo[image]',
     'fileExt'       : '*.png;*.jpg;*.gif',
     'cancelImg'     : '/assets/cancel.png',
     'multi'         : true,
     'scriptData'    : upload_params,
     'auto'          : false,
-    'simUploadLimit': 5,
+	'simUploadLimit': 10,
+	'queueSizeLimit': 10,
 
     onComplete: function(e, id, obj, response, data){
       if( response > 0 )

@@ -13,7 +13,11 @@
 
 
 <div id="cu_user_menu" class="clearfix">
-  <div class="pic"><a href="#"><img src="/assets/base/test/user_img50.jpg" alt="不良夏生" width="50" height="50"></a></div>
+  <div class="pic">
+	<a href="#">
+		 <%#= image_tag current_user.avatar.image_url( :thumb ), :width => 50 , :height => 50 %>
+		<img src="/assets/base/test/user_img50.jpg" alt="不良夏生" width="50" height="50"></a>
+	</div>
   <div class="info_menu">
     <h1><%= current_user.username %> <img src="/assets/base/icon_user_l1.gif" width="13" height="12" alt="评论等级">
       <div class="edit_signature"><span> 准备小宇宙爆发......（<a href="#">修改</a>）</span></div></h1>
