@@ -81,7 +81,7 @@ class Mine::AlbumsController < ApplicationController
         @album.delete
       end
 
-      redirect_to request.referer
+      redirect_to :action => 'index'
       return
     end
 
