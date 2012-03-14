@@ -162,7 +162,7 @@
           <div class="comment_main_profile clearfix">
             <div class="name_time_score clearfix">
               <div class="help_count"><%= comment.good_hit.to_i %>
-                <% if comment.user_good_hit.present? %>
+                <% if comment.user_good_hit.present? && user_signed_in %>
                 有用
                 <% else %>
                 <%= link_to '有用', :action => 'good_short_comment', :comment_id => comment.id %>

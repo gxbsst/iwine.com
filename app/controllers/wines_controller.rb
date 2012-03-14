@@ -1,6 +1,7 @@
 # encoding: UTF-8
 class WinesController < ApplicationController
-  before_filter :authenticate_user!, :set_current_user, :except => [:index, :show]
+  before_filter :authenticate_user!, :except => [:index, :show]
+  before_filter :set_current_user
 
   def index
     @wines = Wines::Detail.includes(:wine, :cover).order("created_at ASC").page params[:page] || 1
@@ -24,6 +25,7 @@ class WinesController < ApplicationController
     @wine_statistic = @wine_detail.statistic || @wine_detail.build_statistic
     @wine_comments = @wine_detail.best_comments( 6 )
     @user_comment = @wine_detail.comment current_user.id
+    binding.pry
   end
 
   def upload_photo
