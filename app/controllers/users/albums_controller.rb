@@ -19,8 +19,8 @@ class Users::AlbumsController < PhotosController
 
     @albums = current_user.albums
     if @albums.blank?
-      avatar_album = Album.create :created_by => current_user.id , :name => 'avatar', :owner_type => OWNER_TYPE_USER
-      default_album = Album.create :created_by => current_user.id , :name => 'other', :owner_type => OWNER_TYPE_USER
+      avatar_album = Album.create :created_by => current_user.id , :name => 'avatar'
+      default_album = Album.create :created_by => current_user.id , :name => 'other'
       @albums = [avatar_album, default_album]
     end
 
