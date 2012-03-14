@@ -112,7 +112,11 @@
     <div class="indent">
       <span class="short"><%= simple_format(@wine.winery.history.scan(/./mu)[0,320].join) %> </span><a  href="">阅读全部</a>
     </div>
-    <h2 class="clearfix"><a class="button_gray float_r" href=""><span>添加图片</span></a><%= @wine_detail.cname %>的图片<span class="count_more">(<%= link_to @wine_detail.photos.count, :controller => 'photos' %>)<a href="#">更多...</a></span></h2>
+    <h2 class="clearfix">
+		<%= link_to  url_for( :controller => "mine/albums", :action => "upload", :owner_type => OWNER_TYPE_WINE, :business_id => @wine_detail.id), :class => "button_gray float_r" do  %>
+			<span>添加图片</span>
+		<% end %>
+		<%= @wine_detail.cname %>的图片<span class="count_more">(<%= link_to @wine_detail.photos.count, :controller => 'photos' %>)<a href="#">更多...</a></span></h2>
     <ul class="pic_col5 clearfix">
     <% @wine_detail.photos[1..5].each do |photo| %>
       <li><%= link_to (image_tag photo.image_url( :w_thumb ), :width => 90, :height => 108, :alt => @wine_detail.name), "/wines/#{@wine_detail.id}/photos/#{photo.id}" %>

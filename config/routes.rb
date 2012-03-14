@@ -102,7 +102,9 @@ Patrick::Application.routes.draw do
     match "cellars/add", :to => "cellars#add"
     
     # ALBUMS
-    resource :albums
+    resource :albums do
+      match "upload", :to => "albums#upload"
+    end
     
     # WINES
     resource :wines
