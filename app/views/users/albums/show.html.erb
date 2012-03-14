@@ -16,9 +16,14 @@
 
           <%= photo.intro %>
         </div>
-      <div class="photo_info"><%= photo.created_at.strftime '%Y-%m-%d'%> 上传 | 
-        
-		<%= photo.viewed_num%>浏览 | <%= photo.liked_num%>喜欢 | <a href="community_photo_detail.html"><%= photo.commented_num%>评论</a></div>
+
+      <% end %>
+      <div class="photo_info"><%= photo.created_at.strftime '%Y-%m-%d'%> 上传 
+        <% if @is_owner %>
+        | <a href="<%= url_for :action => 'delete_photo', :photo_id => photo.id %>" class="fancybox_delete_photo fancybox.ajax">删除</a>
+        <% end %>
+        <br/>
+        <%= photo.viewed_num%>浏览 | <%= photo.liked_num%>喜欢 | <a href="community_photo_detail.html"><%= photo.commented_num%>评论</a></div>
     </div>
   <% end %>
   <div class="clear"></div>
