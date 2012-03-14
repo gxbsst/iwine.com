@@ -62,7 +62,7 @@ class Mine::CellarsController < ApplicationController
 
     if @cellar_item.update_attributes(params[:users_wine_cellar_item])
       flash[:notice] = "成功更新"
-      redirect_to :action => :show
+      redirect_to :action => :index
     else
       render :action => 'edit'
     end

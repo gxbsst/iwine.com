@@ -68,19 +68,11 @@ Patrick::Application.routes.draw do
 
   ## MINE
  
-  match ':controller(/:action(/:id))', :controller => /mine\/[^\/]+/
   namespace :mine do
     # CELLARS
-    resources :cellars    
+    resources :cellars 
+       
     # ALBUMS
-    # match "albums",  :to => "albums#index"
-    # post "albums/upload_list"
-    # post "albums/save_upload_list"
-    # get "albums/upload"
-    # post "albums/upload"
-    # 
-    # match "show", :to => "albums#show"
-    # match "albums/upload", :to => "albums#upload", :via => [:get, :post]
     match "albums(/:album_id)/upload", :to => "albums#upload", :via => [:get, :post]
     #   # match "index",  :to => "albums#index"
 
@@ -89,6 +81,7 @@ Patrick::Application.routes.draw do
 
     # match "cellars/new", :to => "cellars#new", :via => [:post, :get]
   end
+  match ':controller(/:action(/:id))', :controller => /mine\/[^\/]+/
   
 
   ## SEARCHS
