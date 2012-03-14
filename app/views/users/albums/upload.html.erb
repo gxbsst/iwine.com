@@ -13,7 +13,7 @@
     <p class="mb10">
       <input type="file" id="photo_image" value="选择照片"/></p>
     <p><a href="javascript:$('input#photo_image').uploadifyUpload();" class="button_gray"><%= t :upload %></a></p>
-    <p>提示：每次最多可以批量上传二十张照片</p>
+    <p>提示：每次最多可以批量上传五张照片</p>
   </div>
 </div>
 <div id="rightcol">
@@ -39,7 +39,7 @@
     'multi'         : true,
     'scriptData'    : upload_params,
     'auto'          : false,
-    'simUploadLimit': 20,
+    'simUploadLimit': 5,
 
     onComplete: function(e, id, obj, response, data){
       if( response > 0 )

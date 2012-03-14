@@ -8,7 +8,7 @@
 </div>
 <div class="popup_footer">
   <div class="wine_bid_btn margin_auto" style="width:93px;">
-    <a href="javascript:$.fancybox.close=(true);" class="button_gray float_r" ><span>取消</span></a>
+    <a href="javascript:;" onclick="$.fancybox.close(true);" class="button_gray float_r" ><span>取消</span></a>
     <%= form_tag :action => 'delete' do %>
     <a href="javascript:;" onclick="$(this).parent().submit();$.fancybox.close(true);" class="button_gray float_r mr5"><span>确定</span></a>
     <input type="hidden" name="album_id" value="<%= params[:album_id] %>" />
