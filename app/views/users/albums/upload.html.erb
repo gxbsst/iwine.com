@@ -48,6 +48,11 @@
     },
 
     onAllComplete: function(){
+      if( uploaded_image_ids.length < 1 ){
+        alert( '有错误，请重试' ); 
+        return;
+      }
+
       var hidden_field ,
         form = document.createElement( 'form' );
 
