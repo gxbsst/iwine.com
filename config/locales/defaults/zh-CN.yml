@@ -19,6 +19,8 @@ zh-CN:
       settings:
         basic: "基本设置"
         privacy: "隐私设置"
+        avatar: "修改头像"
+        update_password: "修改密码"
         invite: "邀请好友"
         sync: "同步动向"
       mine:

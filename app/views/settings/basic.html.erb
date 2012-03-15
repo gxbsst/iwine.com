@@ -1,20 +1,36 @@
 <%= render "sub_nav", :validate => true, :action => params[:action]  %>
 
-<%= form_for @user, :url => "/wines" do |f| -%>
+<%= render_stickies %>
+
+ <%= javascript_include_tag 'region_china' %>
+
+<%= form_for @user, :url => settings_path, :html => { :class => 'form-horizontal', :multipart => true, :method => :put } do |f| -%>
 <table border="0" cellspacing="5" cellpadding="5">
 	<tr>
 		<td><%= f.label :username%></td>
 		<td><%= f.text_field :username %></td>
 	</tr>
-	<%= f.fields_for :profile do |p| %>
+	<!-- AVATAR -->
+	<%= f.fields_for :avatar do |a|%>
 	<tr>
-		<td><%= p.label :bio %></td>
-		<td><%= p.text_field :bio %></td>
+		<td><%= f.label :image %></td>
+		<td><%= image_tag @user.avatar.image_url(:thumb), :title => "title", :class => "class" %><%= f.file_field :image %></td>
 	</tr>
+	<% end %>
+	
+	<!-- PROFILE -->
+	<%= f.fields_for :profile do |p| %>
+	
+	<tr>
+		<td><%= p.label :real_name %></td>
+		<td><%= p.text_field :real_name %></td>
+	</tr>
+	
 	<tr>
 		<td><%= p.label :nickname %></td>
 		<td><%= p.text_field :nickname %></td>
 	</tr>
+	
 	
 	<tr>
 		<td><%= p.label :living_city %></td>
@@ -28,22 +44,36 @@
 	
 	<tr>
 		<td><%= p.label :gender %></td>
-		<td><%= p.text_field :gender %></td>
+		<td><%= p.radio_button :gender, 1, :checked => true %> 男 <%= p.radio_button :gender, 0 %> 女</td>
 	</tr>
 	
 	<tr>
 		<td><%= p.label :birthday %></td>
-		<td><%= p.text_field :birthday %></td>
+		<td><%= p.date_select :birthday, :start_year =>  1910, :end_year => Time.now.year, :default => { :year => 1980, :month => 9, :day => 6 }  %></td>
 	</tr>
+	
+	<tr>
+		<td><%= p.label :website %></td>
+	<td><%= p.text_field :website %></td>
+	</tr>
+	<tr>
+		<td><%= p.label :qq %></td>
+	<td><%= p.text_field :qq %></td>
+	</tr>
+	
+	<tr>
+		<td><%= p.label :msn %></td>
+	<td><%= p.text_field :msn %></td>
+	</tr>
+	
 	
 	<tr>
 		<td><%= p.label :vocation %></td>
 		<td><%= p.text_field :vocation %></td>
 	</tr>
-	
 	<tr>
-		<td><%= p.label :real_name %></td>
-		<td><%= p.text_field :real_name %></td>
+		<td><%= p.label :bio %></td>
+		<td><%= p.text_area :bio, :size => "40x10" %></td>
 	</tr>
 		
 	<% end %>

@@ -78,7 +78,7 @@
 			<tr>
 				<td class="add_item">所在地<span class="red">*</span></td>
 				<td><label>
-					<%= f.select :location, APP_DATA['users']['cellars']['item']['location'].collect{|i| [i, i]}, {:include_blank => true } %>
+					<%= f.select :location, APP_DATA['users']['cellars']['item']['location'].collect{|i| [i, i]} %>
 				</label></td>
 			</tr>
 			<tr>

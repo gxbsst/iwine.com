@@ -3,22 +3,21 @@ Patrick::Application.routes.draw do
   get "mine/index"
 
   root :to => 'static#index'
+
   ## ADMIN
   ActiveAdmin.routes(self)
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   ## SETTINGS
-
-  match "/settings/", :to => "settings#basic"
-
-  get "settings/privacy"
-
-  get "settings/invite"
-
-  get "settings/sync"
-
-  get "settings/account"
-
+  match "/settings", :to => "settings#basic", :via => [:get, :post, :put]
+  
+  # resource :settings do
+    # match "(basic)/", :to => "settings#basic", :via => [:get, :post, :put]
+    # match "privacy", :to => "settings#privacy", :via => [:get, :post]
+    # match "invite", :to => "settings#invite", :via => [:get, :post]
+    # match "sync", :to => "settings#sync", :via => [:get, :post]
+    # match "account", :to => "settings#account", :via => [:get, :post]
+  # end
 
   ## USER
   devise_for :users, :controllers => { :registrations => "registrations" }
@@ -33,7 +32,7 @@ Patrick::Application.routes.draw do
   match "users/register/success", :to => "users#register_success"
 
   match ':controller(/:action(/:id))', :controller => /users\/[^\/]+/
- 
+
   namespace :users do
     ## CELLAR
     match ":user_id/cellars/" => "cellars#index", :via => [:get]
@@ -42,7 +41,7 @@ Patrick::Application.routes.draw do
     ## BID
     match ":user_id/bid/mine" => "bid#mine", :via => [:get]
     match ":user_id/bid/list" => "bid#list"
-    
+
     ## ALBUMS
     match ":user_id/albums/list" => "albums#list"
     match ":user_id/albums/show" => "albums#show"
@@ -56,7 +55,6 @@ Patrick::Application.routes.draw do
   end
 
   ## WINE
-  # resources :wines
   match "/wines/register", :to => "wines#register"
 
   namespace :wines do
@@ -67,11 +65,12 @@ Patrick::Application.routes.draw do
   resources :events
 
   ## MINE
- 
   namespace :mine do
+    
     # CELLARS
-    resources :cellars 
-       
+    match "cellars/add", :to => "cellars#add"
+    resources :cellars  
+
     # ALBUMS
     match "albums(/:album_id)/upload", :to => "albums#upload", :via => [:get, :post]
     #   # match "index",  :to => "albums#index"
@@ -82,11 +81,13 @@ Patrick::Application.routes.draw do
     # match "cellars/new", :to => "cellars#new", :via => [:post, :get]
   end
   match ':controller(/:action(/:id))', :controller => /mine\/[^\/]+/
-  
 
   ## SEARCHS
   resources :searches
-  
+
+  ## WINERIES
+  resources :wineries
+
   ## STATIC
   match "/about_us", :to => "static#about_us"
   match "/contact_us", :to => "static#contact_us"
@@ -95,6 +96,7 @@ Patrick::Application.routes.draw do
   match "/site_map", :to => "static#site_map"
   match "/home", :to => "static#home"
 
+  ## GLOBAL
   match ':controller(/:action(/:id(.:format)))'
 
   # The priority is based upon order of creation:

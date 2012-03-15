@@ -21,7 +21,7 @@ module ApplicationHelper
   
   def title(page_title, options={})
     content_for(:title, page_title.to_s)
-    return content_tag(:h1, page_title, options)
+    return content_tag(:h2, page_title, options)
   end
   
   
@@ -31,6 +31,18 @@ module ApplicationHelper
     else
       image_tag "base/test/win_50p.jpg"
     end  
+  end
+  
+  def user_avatar_tag(object, options = {} )
+    if object.avatar.respond_to? "image_url"
+      image_tag object.avatar.image_url( options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt]
+    else
+      image_tag "base/test/user_img50.jpg", :width => options[:width], :height => options[:height], :alt => options[:alt]
+    end  
+  end
+  
+  def after_sign_in_path_for(resource)
+    return request.env['omniauth.origin'] || stored_location_for(resource) || mine_path
   end
   
 end

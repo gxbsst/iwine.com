@@ -156,7 +156,7 @@
         <li class="clearfix">
           <div class="user_img">
             <a href="#">
-              <%  image_tag comment.avatar.image_url, :width=>50, :height=>50, :alt=>comment.user.username  if comment.avatar.respond_to? 'image_url'%>
+              <%=  image_tag comment.avatar.image_url, :width=>50, :height=>50, :alt=>comment.user.username %>
             </a>
           </div>
           <div class="comment_main_profile clearfix">
@@ -170,7 +170,7 @@
               </div>
               <div class="float_l mr5">
                 <a href="#"><%= comment.user.username %></a>
-                <span class="time"><% comment.updated_at.strftime '%Y-%m-%d' if comment.updated_at.respond_to? 'strftime' %></span>
+                <span class="time"><%= comment.updated_at.strftime '%Y-%m-%d' %></span>
               </div>
               <% if comment.point.present? %>
               <span class="star_s<%=(comment.point/2).to_s%>"></span>

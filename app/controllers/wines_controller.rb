@@ -5,18 +5,6 @@ class WinesController < ApplicationController
   def index
     @wines = Wines::Detail.includes(:wine, :cover).order("created_at ASC").page params[:page] || 1
   end
-  
-  def register
-    @register = Wines::Register.new
-    if request.post?
-      @register.attributes = params[:wines_register]
-      @register.owner_type = OWNER_TYPE_WINE_REGISTER
-      if @register.save
-        flash[:notice] =  :save_success
-      else
-      end
-    end
-  end
 
   def show
     @wine_detail = Wines::Detail.includes( :cover, :photos, :statistic,  { :wine => [:style, :winery]} ).find( params[:wine_detail_id].to_i )

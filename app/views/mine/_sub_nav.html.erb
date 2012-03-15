@@ -16,7 +16,8 @@
   <div class="pic">
 	<a href="#">
 		 <%#= image_tag current_user.avatar.image_url( :thumb ), :width => 50 , :height => 50 %>
-		<img src="/assets/base/test/user_img50.jpg" alt="不良夏生" width="50" height="50"></a>
+		<%= user_avatar_tag current_user, :thumb_name => "thumb", :width => 50, :height => 50, :alt => current_user.username %>
+	</a>
 	</div>
   <div class="info_menu">
     <h1><%= current_user.username %> <img src="/assets/base/icon_user_l1.gif" width="13" height="12" alt="评论等级">

@@ -5,7 +5,6 @@ class Mine::CellarsController < ApplicationController
 
   def index
     @cellar_items = Users::WineCellarItem.includes(:wine_cellar, {:wine_detail => [:cover, :wine]}).page params[:page] || 1
-
   end
 
   def edit
@@ -26,7 +25,6 @@ class Mine::CellarsController < ApplicationController
     @cellar_item.number = 1
     @cellar_item.wine_detail_id = @wine_detail.id
     @cellar_item.capacity = @wine_detail.capacity
-
   end
 
   def create
@@ -38,6 +36,7 @@ class Mine::CellarsController < ApplicationController
 
     @cellar_item = Users::WineCellarItem.new
     @cellar_item.attributes = params[:users_wine_cellar_item]
+    @cellar_item.wine_detail_id = @wine_detail.id
     @cellar_item.user_wine_cellar_id = @cellar.id
     @cellar_item.year ||= @wine_detail.year
     @cellar_item.user_id = current_user.id
@@ -45,8 +44,9 @@ class Mine::CellarsController < ApplicationController
     ## TODO: 如果这个年份的酒不存在， 则创建这个年份的酒记录 new = old.dup to clone
 
     if @cellar_item.save
-      flash[:notice] = "成功建立"
-      redirect_to :action => :show
+      #flash[:notice] = "成功建立"
+      notice_stickie("建立成功.")
+      redirect_to :action => :index
     else
       render :action => 'new'
     end
@@ -61,7 +61,8 @@ class Mine::CellarsController < ApplicationController
     @cellar_item.year = @wine_detail.year
 
     if @cellar_item.update_attributes(params[:users_wine_cellar_item])
-      flash[:notice] = "成功更新"
+      # flash[:notice] = "成功更新"
+      notice_stickie("更新成功.")
       redirect_to :action => :index
     else
       render :action => 'edit'
@@ -72,8 +73,9 @@ class Mine::CellarsController < ApplicationController
   def destroy
     @cellar_item = Users::WineCellarItem.where(["id = ? AND user_id = ? ", params[:id], current_user.id ]).first
     if @cellar_item.delete
-      flash[:notice] = "成功删除"
-      redirect_to :action => :show
+      # flash[:notice] = "删除成功."
+      notice_stickie("删除成功.")
+      redirect_to :action => :index
     end
   end
   

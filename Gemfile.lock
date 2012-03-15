@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/techbang/stickies.git
+  revision: 5b18fae852f723befcc0b12a52ae3960a2721c00
+  specs:
+    stickies (0.1.4)
+
+GIT
   remote: git://github.com/wxianfeng/hanzi_to_pinyin.git
   revision: 357561a8536dbfcd730e6feefed161bbdba29ab1
   specs:
@@ -241,6 +247,7 @@ DEPENDENCIES
   rmagick
   sass-rails (~> 3.2.3)
   simple_form
+  stickies!
   turn
   uglifier (>= 1.0.3)
   wirble

@@ -41,6 +41,9 @@ gem "breadcrumbs_on_rails"
 ## Exception Handler
 gem 'exception_notification', :require => 'exception_notifier'
 
+## Success/Notice/Error Style
+gem "stickies", :git => "git://github.com/techbang/stickies.git"
+
 group :development, :test do
   gem 'i18n'
   gem 'pry'  # "binding.pry" in action

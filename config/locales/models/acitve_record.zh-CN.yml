@@ -26,6 +26,22 @@ zh-CN:
         username: "用户名"
         password: "密码"
         password_confirmation: "确认密码"
+      user[profile_attributes]:
+        bio: "一句话签名"
+        nickname: "昵称"
+        living_city: "所在地"
+        hometown: "家乡"
+        gender: "性别"
+        birthday: "生日"
+        vocation: "职业"
+        company: "公司"
+        real_name: "真实名字"
+        school: "毕业学校"
+        phone_number: "电话号码"
+        relationship: "爱情状态" 
+        
+
+        
 
 
 

@@ -1,0 +1,26 @@
+<%= render "sub_nav", :validate => true, :action => params[:action]  %>
+<% content_for :head do %>
+<script type="text/javascript">
+$(document).ready(function() {
+  $(".fancybox").fancybox({
+    autoSize: false,
+    width: 450
+  });
+});
+</script>
+<% end %>
+
+<% unless @photos.blank? %>
+  <% @photos.each do |photo| %>
+    <%= image_tag photo.image_url :thumb %>
+    <%= image_tag photo.image_url :avatar %>
+    <%= link_to '修改', {:controller => 'users', :action => 'crop', :id => photo}, :class => 'fancybox fancybox.ajax' %>
+  <% end %>
+<% else %>
+  还没有图片 赶快上传吧
+<% end %>
+
+<%= form_for @photo, :url => '/users/avatar', :html => { :multipart => 'true' }, :method => :post do |f| %>
+  <%= f.file_field :image %>
+  <%= f.submit %>
+<% end %>
