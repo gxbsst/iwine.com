@@ -1,6 +1,6 @@
 <%= render "mine/sub_nav", :action => params[:action] %>
 <div id="cu_user_menu" class="clearfix">
-  <span class="f14">《 <a href="community_albmu_list.html">返回相册首页</a></span>
+  <span class="f14">《 <a href="<%= url_for :action => 'index' %>">返回相册首页</a></span>
 </div>
 <div class="title_btn clearfix">
   <h2>上传照片</h2>
@@ -14,7 +14,7 @@
     <p class="mb10">
       <input type="file" id="photo_image" value="选择照片"/></p>
     <p><a href="javascript:$('input#photo_image').uploadifyUpload();" class="button_gray"><%= t :upload %></a></p>
-    <p>提示：每次最多可以批量上传五张照片</p>
+    <p>提示：每次最多可以批量上传10张照片</p>
   </div>
 </div>
 <div id="rightcol">
@@ -49,6 +49,11 @@
     },
 
     onAllComplete: function(){
+      if( uploaded_image_ids.length < 1 ){
+        alert( '有错误，请重试' ); 
+        return;
+      }
+
       var hidden_field ,
         form = document.createElement( 'form' );
 

@@ -1,4 +1,5 @@
 zh-CN:
+
   activerecord:
     models:
       register: '酒款'
@@ -26,7 +27,6 @@ zh-CN:
         username: "用户名"
         password: "密码"
         password_confirmation: "确认密码"
-      user[profile_attributes]:
         bio: "一句话签名"
         nickname: "昵称"
         living_city: "所在地"
@@ -39,8 +39,9 @@ zh-CN:
         school: "毕业学校"
         phone_number: "电话号码"
         relationship: "爱情状态" 
-        
-
+      album:
+        name: '名称'
+        intro: '描述'
         
 
 
