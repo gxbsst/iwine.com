@@ -13,7 +13,6 @@ class WinesController < ApplicationController
     @wine_statistic = @wine_detail.statistic || @wine_detail.build_statistic
     @wine_comments = @wine_detail.best_comments( 6 )
     @user_comment = @wine_detail.comment current_user.id
-    binding.pry
   end
 
   def upload_photo
