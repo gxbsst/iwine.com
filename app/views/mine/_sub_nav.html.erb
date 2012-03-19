@@ -22,6 +22,8 @@
   <div class="info_menu">
     <h1><%= current_user.username %> <img src="/assets/base/icon_user_l1.gif" width="13" height="12" alt="评论等级">
       <div class="edit_signature"><span> 准备小宇宙爆发......（<a href="#">修改</a>）</span></div></h1>
+
+	<%= best_in_place current_user.profile, :bio, :type => :textarea, :path => "/wines", :ok_button => 'Save', :cancel_button => 'Cancel' %>
     <ul class="clearfix">
 	
 		<% sub_menu.each do |action_name, url| %>
