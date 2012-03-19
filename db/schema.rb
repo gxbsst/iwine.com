@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120314015817) do
+ActiveRecord::Schema.define(:version => 20120319035019) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20120314015817) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",          :limit => 45,                    :null => false
+    t.integer  "user_id"
     t.text     "intro"
     t.boolean  "is_order_asc",                :default => false, :null => false
     t.integer  "cover_id",                    :default => 0
@@ -104,17 +105,19 @@ ActiveRecord::Schema.define(:version => 20120314015817) do
     t.integer  "commented_num",              :default => 0
     t.integer  "liked_num",                  :default => 0
     t.datetime "deleted_at"
+    t.boolean  "is_cover",                   :default => false
+    t.integer  "audit_id"
+    t.integer  "audit_status"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_cover",                   :default => false
   end
 
   create_table "regions", :force => true do |t|
     t.integer  "parent_id",   :limit => 2,   :default => 0,     :null => false
     t.string   "region_name", :limit => 120, :default => "",    :null => false
     t.boolean  "region_type",                :default => false, :null => false
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "regions", ["parent_id"], :name => "parent_id"
@@ -222,6 +225,8 @@ ActiveRecord::Schema.define(:version => 20120314015817) do
     t.integer  "nickname_updated_at",                :default => 0, :null => false
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
+    t.text     "_config"
+    t.string   "contact_email"
   end
 
   add_index "user_profiles", ["user_id"], :name => "user_profile_FI_1"
@@ -271,7 +276,6 @@ ActiveRecord::Schema.define(:version => 20120314015817) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "password_salt"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
@@ -292,15 +296,15 @@ ActiveRecord::Schema.define(:version => 20120314015817) do
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
 
   create_table "wine_comments", :force => true do |t|
-    t.integer  "wine_detail_id",                               :null => false
-    t.integer  "user_id",                                      :null => false
+    t.integer  "wine_detail_id",                              :null => false
+    t.integer  "user_id",                                     :null => false
     t.text     "content"
-    t.integer  "good_hit",                     :default => 0,  :null => false
-    t.integer  "point",          :limit => 1,  :default => 0,  :null => false
-    t.string   "drink_status",   :limit => 40, :default => "", :null => false
+    t.integer  "good_hit",                     :default => 0
+    t.integer  "point",          :limit => 1,  :default => 0
+    t.string   "drink_status",   :limit => 40
     t.integer  "flag",           :limit => 1,  :default => 0
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
   end
 
   create_table "wine_details", :force => true do |t|
@@ -356,11 +360,11 @@ ActiveRecord::Schema.define(:version => 20120314015817) do
     t.integer  "parent_id"
     t.string   "name_en",    :limit => 45
     t.string   "name_zh",    :limit => 45
-    t.integer  "tree_right"
-    t.integer  "tree_left"
-    t.integer  "scope"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "tree_right",               :null => false
+    t.integer  "tree_left",                :null => false
+    t.integer  "scope",                    :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   create_table "wine_registers", :force => true do |t|
@@ -368,8 +372,8 @@ ActiveRecord::Schema.define(:version => 20120314015817) do
     t.string   "name_en",            :limit => 128
     t.string   "official_site",      :limit => 100
     t.integer  "wine_style_id"
-    t.integer  "region_tree_id",                                   :null => false
-    t.integer  "winery_id",                                        :null => false
+    t.integer  "region_tree_id"
+    t.integer  "winery_id"
     t.string   "photo_name",         :limit => 100
     t.string   "photo_origin_name"
     t.integer  "vintage"
@@ -383,8 +387,8 @@ ActiveRecord::Schema.define(:version => 20120314015817) do
     t.integer  "audit_log_id"
     t.integer  "user_id"
     t.integer  "result"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "other_cn_name"
   end
 

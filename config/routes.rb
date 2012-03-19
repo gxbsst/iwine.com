@@ -49,10 +49,11 @@ Patrick::Application.routes.draw do
   end
 
   ## API
-  namespace :api do
-    match "wineries/names", :to => "wineries#names"
-    match "wine_varieties/index", :to => "wine_varieties#index"
-  end
+   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
+  # namespace :api do
+  #   match "wineries/names", :to => "wineries#names"
+  #   match "wine_varieties/index", :to => "wine_varieties#index"
+  # end
 
   ## WINE
   match "/wines/register", :to => "wines#register"

@@ -6,3 +6,10 @@ zh-CN:
           attributes:
             vintage:
               invalid: "请输入正确的格式， 如:2004"
+        users/profile:
+          attributes:
+            contact_email:
+              email_format: "Email格式不正确"
+            msn:
+              email_format: "Email格式不正确"
+                

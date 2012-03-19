@@ -1,0 +1,39 @@
+<% if profile.living_city.nil? %>
+<div id="region">
+<span id="province">
+	<%= select_tag "region[province]",  options_for_select(Region.locals(1).collect{ |l| [l.region_name, l.id] }), :prompt => '-请选择-' %>	
+</span>
+
+<span id="city">
+	<%= select_tag "region[city]", [], :prompt => '-请选择-' %>	
+</span>
+
+<span id="district">
+<%= select_tag "region[district]", [], :prompt => '-请选择-' %>		
+</span>
+
+</div>
+<% else %>
+
+<div id="region" style="display: none">
+
+<span id="province">
+	<%= select_tag "region[province]",  options_for_select(Region.locals(1).collect{ |l| [l.region_name, l.id] }), :prompt => '-请选择-' %>	
+</span>
+
+<span id="city">
+	<%= select_tag "region[city]", options_for_select([]), :prompt => '-请选择-' %>	
+</span>
+
+<span id="district">
+<%= select_tag "region[district]", options_for_select([]), :prompt => '-请选择-' %>		
+</span>
+
+<%= link_to t(:cancle_edit), "javascript: void(0)", :id => "cancle_edit_region" %>
+
+</div>
+
+<div id="region_text">
+	<%= profile.get_living_city_path.collect {|region| region.region_name}.join("-") %>  <%= link_to t(:edit), "javascript: void(0)", :id => "edit_region" %>
+</div>
+<% end %>

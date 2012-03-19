@@ -5,16 +5,25 @@ class SettingsController < ApplicationController
 
   def basic
     @title = "基本设置"
-    @user = User.includes(:profile).find(current_user.id)
-    @user.profile ||= @user.build_profile
-    @user.avatar ||= @user.build_avatar
-    ## TODO 
-    # update ...
-    # if request.put?
-    #   @user = User.new(params[:user])
-    #   notice_stickie("更新成功成功.")
-    #   # redirect_to :action => 'basic'
-    # end
+
+    @profile = current_user.profile
+    @profile ||= Users::Profile.new
+    
+    if request.put?
+      @user = current_user
+      @profile = current_user.profile
+      
+      ## 处理配置信息
+      set_config 
+      
+      ## 处理所在地信息
+      set_living_city_id
+      
+      if @user.update_attribute(:username, params[:users_profile][:username]) &&  @profile.update_attributes(params[:users_profile])
+        notice_stickie("更新成功.")
+      end
+      # redirect_to :action => 'basic'
+    end
   end
 
   def update_password
@@ -46,7 +55,7 @@ class SettingsController < ApplicationController
   end
 
   def account
-
+    Hash
   end
 
   def avatar
@@ -73,6 +82,26 @@ class SettingsController < ApplicationController
       redirect_to '/users/avatar'
       return
     end
+  end
+  
+  private
+  
+  def set_config
+    params[:config].each {|k,v| @profile.config[k] = v }
+  end
+  
+  def set_living_city_id
+    regions = params[:region]
+    
+    regions.reject!{ |k,v| v.blank? }
+    return true if regions.blank?
+    
+    regions.keys.each_with_index do |key, index|
+      if index == regions.length - 1
+         params[:users_profile][:living_city] = regions[key]
+      end
+    end
+    
   end
 
 end

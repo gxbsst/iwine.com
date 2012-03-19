@@ -44,6 +44,9 @@ gem 'exception_notification', :require => 'exception_notifier'
 ## Success/Notice/Error Style
 gem "stickies", :git => "git://github.com/techbang/stickies.git"
 
+## storing a tree of options in a serialized ActiveRecord column  https://github.com/metaskills/store_configurable
+gem 'store_configurable', '~> 3.2.0'
+
 group :development, :test do
   gem 'i18n'
   gem 'pry'  # "binding.pry" in action
