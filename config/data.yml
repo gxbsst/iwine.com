@@ -19,3 +19,12 @@ user_profile:
       3: 只显示星座
       4: 只显示月日
       5: 保密
+    message:
+      1: <strong>所有人</strong><span>aaa</span>
+      2: 可信用户
+      3: 我关注的人
+    recommend:
+      1: 在我附近上网的人
+      2: 我的MSN／邮箱联系人
+      3: 与我有间接关注的人
+      4: 与我有共同好友的人

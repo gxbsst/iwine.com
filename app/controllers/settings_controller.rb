@@ -27,15 +27,17 @@ class SettingsController < ApplicationController
   end
 
   def update_password
+    @title = "修改密码"
     @user = current_user
-    
     if request.put?
       @user = User.find(current_user.id)
       if @user.update_attributes(params[:user])
         # Sign in the user by passing validation in case his password changed
         sign_in @user, :bypass => true
+        notice_stickie t("update_success")
         # redirect_to root_path
       else
+        error_stickie t("update_failed")
         redirect_to :action => "update_password"
       end
     end
@@ -43,7 +45,16 @@ class SettingsController < ApplicationController
   end
 
   def privacy
-
+    @title = "隐私设置"
+    @profile = current_user.profile
+    
+    if request.put?
+      set_config
+      if @profile.save
+        notice_stickie t("update_success.")
+      end
+    end
+    
   end
 
   def invite

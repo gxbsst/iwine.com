@@ -12,6 +12,8 @@ class Users::Profile < ActiveRecord::Base
   
   validates :qq, :presence => false, :allow_blank => true, :numericality => true
   
+  validates :username, :presence => true
+  
   delegate :username, :to => :user
  # validates_numericality_of :qq, :message => "请输入正确的格式"  
   # attr_protected :_config

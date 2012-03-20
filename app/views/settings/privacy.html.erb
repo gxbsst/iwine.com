@@ -1,1 +1,47 @@
 <%= render "sub_nav", :action => params[:action]  %>
+<%= render_stickies %>
+<%= form_for @profile, :url => url_for( :action => "privacy" ) do |f| -%>
+<table border="0" cellspacing="5" cellpadding="5">
+	<tr>
+		<th valign="top" width="120">
+			私信
+		</th>
+		<td valign="top">
+			<% APP_DATA["user_profile"]["configs"]["message"].each do |key,value| %>
+			
+			<% config_value = current_user.profile.config.message %>
+			<%  config_value = 1 if config_value.blank? %>
+			<% checked = true if key ==  config_value.to_i %>
+			
+			<%= radio_button_tag("config[message]", key , key == @profile.config.message.to_i, options = {}) %> 
+			<%=  label_tag "config_message_#{key}" do  %>
+				<%=  raw value %>
+			<% end %><br />
+			
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<th valign="top">
+			推荐
+		</th>
+		<td valign="top">
+			
+			<% APP_DATA["user_profile"]["configs"]["recommend"].each do |key,value| %>
+			
+			<% config_value = current_user.profile.config.recommend %>
+			<%  config_value = 1 if config_value.blank? %>
+			<% checked = true if key ==  config_value.to_i %>
+			
+			<%= radio_button_tag("config[recommend]", key , key == @profile.config.recommend.to_i, options = {}) %> 
+			<%=  label_tag "config_recommend_#{key}" do  %>
+				<%=  raw value %>
+			<% end %><br />
+			
+			<% end %>
+		</td>
+	</tr>
+</table>
+
+<p align="center"><%= f.submit %></p>
+<% end -%>
