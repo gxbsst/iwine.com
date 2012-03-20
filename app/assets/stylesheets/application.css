@@ -11,6 +11,7 @@
  *= require cellars
  *= require mine
  *= require stickies
+ *= require users
 */
 
 
@@ -349,3 +350,14 @@ li#active a {
 #navlist a:hover {
 	background: #fff;
 	}
+	
+.field_with_errors input.text {
+  border: 1px solid red;
+  
+}
+.field_with_errors {
+/*  height: 50px;*/
+}
+.signup .field_with_errors label.message {
+  width: auto;
+}

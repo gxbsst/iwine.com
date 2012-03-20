@@ -781,3 +781,12 @@ div.pagination span.disabled {
     float: right;
     font-size: 11px;
 }
+
+a.button_green, a.button_green span, a.button_green:active, a.button_green:active span {background:url(base/btn_green.gif) no-repeat;}
+a.button_green {background-position:left top;display:inline-block;padding-left:10px;color:#fff;text-decoration:none;}
+a.button_green span {background-position:right top;display:inline-block;height:25px;line-height:25px;padding-right:10px;}
+a.button_green:active {background-position:left -25px;}
+a.button_green:active span {background-position:right -25px;}
+
+.roundedbox250 {background:url(base/bg_rounded250_t.gif) no-repeat left top;padding-top:5px;}
+.roundedbox250 .content {background-color:#f3f3f3;padding:10px 20px;}

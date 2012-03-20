@@ -20,6 +20,11 @@ class User < ActiveRecord::Base
   
   accepts_nested_attributes_for :profile, :allow_destroy => true
 
+  # validates :username, :presence => false, :allow_blank => true, :numericality => true
+  validates :agree_term, :acceptance => true
+  validates :email, :uniqueness => true
+  
+  
   # accepts_nested_attributes_for :user_profile
 	# alias :user_profiles_attribute :user_profile
 
