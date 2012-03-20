@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(:version => 20120320065718) do
 
   create_table "photo_comments", :force => true do |t|
     t.integer  "user_id",                            :null => false
-    t.integer  "reply_user_id",   :default => 0,     :null => false
+    t.integer  "reply_id",        :default => 0,     :null => false
     t.integer  "photo_id",                           :null => false
     t.text     "comment",                            :null => false
     t.boolean  "deleted_statues", :default => false, :null => false

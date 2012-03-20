@@ -46,8 +46,10 @@ class Users::AlbumsController < PhotosController
     @album.viewed_num += 1
     @photo.save
     @album.save
-  end
 
+    @photo_comment = PhotoComment.new
+    @photo_comments = PhotoComment.all :conditions => { :photo_id => @photo.id }
+  end
 
   def list
     check_owner
@@ -57,6 +59,24 @@ class Users::AlbumsController < PhotosController
       .order("id DESC")
       .page params[:page] || 1
 
+  end
+
+  def photo_comment
+    if request.post?
+      photo_comment = PhotoComment.new
+      photo_comment.attributes = params[:photo_comment]
+      photo_comment.user_id = current_user.id
+      photo_comment.save
+
+      photo = Photo.find photo_comment.photo_id
+      album = Album.find photo.album_id
+      photo.commented_num += 1
+      album.commented_num += 1
+      photo.save
+      album.save
+    end
+
+    redirect_to request.referer
   end
   
   private
