@@ -1,26 +1,33 @@
-<%= render "sub_nav", :validate => true, :action => params[:action]  %>
-<% content_for :head do %>
-<script type="text/javascript">
-$(document).ready(function() {
-  $(".fancybox").fancybox({
-    autoSize: false,
-    width: 450
-  });
-});
-</script>
+<%= render "sub_nav", :action => params[:action]  %>
+<%= render_stickies %>
+
+<% unless current_user.avatar.blank? %>
+<%= image_tag current_user.avatar_url(:large), id: "cropbox" %>
+
+<br />
+<br />
+<h4>预览</h4>
+<div style="width:50px; height:50px; overflow:hidden">
+	<%= image_tag current_user.avatar.url(:large), :id => "preview" %>
+</div>
+
+<%= form_for current_user, :url => url_for(:action => :avatar), :method => :post  do |f| %>
+<% %w[x y w h].each do |attribute| %>
+<%= f.hidden_field "crop_#{attribute}" %>
+<% end %>
+<div class="actions">
+	<%= f.submit "保存" %>
+</div>
 <% end %>
 
-<% unless @photos.blank? %>
-  <% @photos.each do |photo| %>
-    <%= image_tag photo.image_url :thumb %>
-    <%= image_tag photo.image_url :avatar %>
-    <%= link_to '修改', {:controller => 'users', :action => 'crop', :id => photo}, :class => 'fancybox fancybox.ajax' %>
-  <% end %>
 <% else %>
-  还没有图片 赶快上传吧
+<p> 快来上传你的头像吧! </p>
 <% end %>
 
-<%= form_for @photo, :url => '/users/avatar', :html => { :multipart => 'true' }, :method => :post do |f| %>
-  <%= f.file_field :image %>
-  <%= f.submit %>
+
+
+<%= form_for current_user, :url => url_for(:action => :avatar), :html => { :multipart => 'true' } do |f| %>
+<%= f.file_field :avatar %>
+<%= f.submit %>
 <% end %>
+

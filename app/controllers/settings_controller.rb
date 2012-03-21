@@ -8,17 +8,17 @@ class SettingsController < ApplicationController
 
     @profile = current_user.profile
     @profile ||= Users::Profile.new
-    
+
     if request.put?
       @user = current_user
       @profile = current_user.profile
-      
+
       ## 处理配置信息
       set_config 
-      
+
       ## 处理所在地信息
       set_living_city_id
-      
+
       if @user.update_attribute(:username, params[:users_profile][:username]) &&  @profile.update_attributes(params[:users_profile])
         notice_stickie("更新成功.")
       end
@@ -28,7 +28,7 @@ class SettingsController < ApplicationController
 
   def update_password
     @user = current_user
-    
+
     if request.put?
       @user = User.find(current_user.id)
       if @user.update_attributes(params[:user])
@@ -55,53 +55,64 @@ class SettingsController < ApplicationController
   end
 
   def account
-    Hash
+
   end
 
   def avatar
+    
     @title = "设置头像"
-    @photos = current_user.photos
-    #@avatar = current_user.avatar
-    @photo = Photo.new
 
-    if request.post?
-      @photo.image = params[:photo][:image]
-      @photo.owner_type = OWNER_TYPE_USER
-      @photo.business_id= current_user.id
-      @photo.save
-    end
-
+    # 保存图片
     if request.put?
-      @photo = Photo.find(params[:id])
-      @photo.crop_x = params[:photo][:crop_x]
-      @photo.crop_y = params[:photo][:crop_y]
-      @photo.crop_w = params[:photo][:crop_w]
-      @photo.crop_h = params[:photo][:crop_h]
-
-      @photo.save
-      redirect_to '/users/avatar'
-      return
+      if save_avatar 
+        notice_stickie t("save_successed")  
+      end
+      redirect_to :action => :avatar      
+      
     end
+
+    # 裁剪图片
+    if request.post?
+      if params[:user][:crop_x].present?
+        crop_avatar
+        notice_stickie t("save_successed")  
+      end
+      
+      redirect_to :action => :basic      
+      
+    end
+
   end
-  
+
   private
-  
+
   def set_config
     params[:config].each {|k,v| @profile.config[k] = v }
   end
-  
+
   def set_living_city_id
     regions = params[:region]
-    
+
     regions.reject!{ |k,v| v.blank? }
     return true if regions.blank?
-    
+
     regions.keys.each_with_index do |key, index|
       if index == regions.length - 1
-         params[:users_profile][:living_city] = regions[key]
+        params[:users_profile][:living_city] = regions[key]
       end
     end
-    
+
+  end
+
+  ## 保存图片
+  def save_avatar
+    current_user.avatar = params[:user][:avatar]
+    current_user.save
+  end
+
+  # ## 更新图片
+  def crop_avatar
+     current_user.update_attributes(params[:user])
   end
 
 end

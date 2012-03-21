@@ -13,7 +13,7 @@
 	<!-- AVATAR -->
 	<tr>
 		<td><%= f.label :image %></td>
-		<td><%= image_tag current_user.avatar.image_url(:thumb), :title => "title", :class => "class" %> <%= link_to "编辑头像", :action => "avatar" %></td>
+		<td><%= image_tag current_user.avatar_url(:large) %> <%= image_tag current_user.avatar_url(:thumb) %> <%= link_to "编辑头像", :action => "avatar" %></td>
 	</tr>
 	
 	<!-- PROFILE -->
