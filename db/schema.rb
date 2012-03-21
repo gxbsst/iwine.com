@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120319035019) do
+ActiveRecord::Schema.define(:version => 20120320133443) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(:version => 20120319035019) do
 
   create_table "photo_comments", :force => true do |t|
     t.integer  "user_id",                            :null => false
-    t.integer  "reply_user_id",   :default => 0,     :null => false
+    t.integer  "reply_id",        :default => 0,     :null => false
     t.integer  "photo_id",                           :null => false
     t.text     "comment",                            :null => false
     t.boolean  "deleted_statues", :default => false, :null => false
@@ -265,9 +265,9 @@ ActiveRecord::Schema.define(:version => 20120319035019) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "username",               :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                  :default => "",   :null => false
+    t.string   "username",               :default => "",   :null => false
+    t.string   "encrypted_password",     :default => "",   :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -284,9 +284,11 @@ ActiveRecord::Schema.define(:version => 20120319035019) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "authentication_token"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
     t.string   "role"
+    t.boolean  "agree_term",             :default => true
+    t.string   "avatar"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

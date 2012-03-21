@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, :timeoutable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :username
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :crop_x, :crop_y, :crop_w, :crop_h
 
   has_one  :profile, :class_name => 'Users::Profile', :dependent => :destroy
   has_many :albums, :class_name => 'Album', :foreign_key => 'created_by'
@@ -15,11 +15,27 @@ class User < ActiveRecord::Base
   has_one  :good_hit_comment, :class_name => 'Users::GoodHitComment'
   has_many :photo_comments
   has_many :photos, :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_USER }
-  has_one :avatar, :class_name => 'Photo', :foreign_key => 'business_id', :conditions => { :is_cover => true }
+  # has_one  :avatar, :class_name => 'Photo', :foreign_key => 'business_id', :conditions => { :is_cover => true }
   has_one :cellar, :class_name => 'Users::WineCellar'
   
   accepts_nested_attributes_for :profile, :allow_destroy => true
 
+  # validates :username, :presence => false, :allow_blank => true, :numericality => true
+  validates :agree_term, :acceptance => true, :on => :create
+  validates :email, :uniqueness => true
+  
+  # upload avatar
+  mount_uploader :avatar, AvatarUploader
+  
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
+  after_update :crop_avatar
+  
+  def crop_avatar
+    if crop_x.present?
+      avatar.recreate_versions!
+    end 
+  end
+  
   # accepts_nested_attributes_for :user_profile
 	# alias :user_profiles_attribute :user_profile
 

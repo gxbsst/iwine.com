@@ -5,7 +5,7 @@
 #cu_user_menu .info_menu h1 {font-size:20px;color:#333;}
 .edit_signature {display:inline;}
 .edit_signature span {font-size:12px;color:#999;}
-.info_menu ul li {float:left;display:block;background:url(dotted_s_s.gif) repeat-y right 0;padding:0 10px 0 0;margin-right:10px;}
+.info_menu ul li {float:left;display:block;background:url(../base/dotted_s_s.gif) repeat-y right 0;padding:0 10px 0 0;margin-right:10px;}
 .info_menu ul li a {color:#990000}
 .title_btn h2 {font-size:18px;color:#333;margin-bottom:20px;}
 .title_btn h2 span.count_b {font-size:14px;}
