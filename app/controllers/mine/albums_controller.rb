@@ -156,6 +156,7 @@ class Mine::AlbumsController < ApplicationController
   end
 
   def photo
+
     @album = Album.find params[:album_id]
     if @album.blank?
       redirect_to request.referer
@@ -176,6 +177,9 @@ class Mine::AlbumsController < ApplicationController
     @album.viewed_num += 1
     @photo.save
     @album.save
+
+    @photo_comment = PhotoComment.new
+    @photo_comments = PhotoComment.all :conditions => { :photo_id => @photo.id }
   end
 
   def index
