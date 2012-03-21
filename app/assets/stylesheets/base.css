@@ -770,7 +770,23 @@ div.pagination span.disabled {
     font-size: 11px;
 }
 
-a.button_green, a.button_green span, a.button_green:active, a.button_green:active span, a.button_green_b, a.button_green_b span, a.button_green_b:active, a.button_green_b:active span {background:url(base/btn_green.gif) no-repeat;}
+a.button_green {
+    background-position: left top;
+    color: #FFFFFF;
+    display: inline-block;
+    padding-left: 10px;
+    text-decoration: none;
+}
+a.button_green, a.button_green span, a.button_green:active, a.button_green:active span, a.button_green_b, a.button_green_b span, a.button_green_b:active, a.button_green_b:active span {
+    background: url("base/btn_green.gif") no-repeat scroll 0 0 transparent;
+}
+a.button_green span {
+    background-position: right top;
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    padding-right: 10px;
+}
 a.button_green_b {background-position:left -50px;display:inline-block;padding-left:15px;color:#fff;text-decoration:none;font-size:14px;}
 a.button_green_b span {background-position:right -50px;display:inline-block;height:30px;line-height:30px;padding-right:15px;}
 a.button_green_b:active {background-position:left -80px;}
