@@ -21,32 +21,25 @@
     </div>
   </div>
   <div class="comment">
-    <a href="#add_comment" onclick="$('#photo_comment_comment').focus();" class="button_gray float_r"><span>添加评论</span></a><h3>评论</h3>
+    <a href="#add_comment" class="button_gray float_r"><span>添加评论</span></a><h3>评论</h3>
     <div class="comment_list">
       <ul>
         <% @photo_comments.each do |comment| %>
         <li class="clearfix">
           <div class="user_img">
-            <a href="#">
-              <% if comment.user.avatar.present? %>
-              <%= image_tag comment.user.avatar.image_url( :thumb ), :width => 50, :height => 50 %>
-              <% else %>
-              <img src="/images/test/user_img50.jpg" width="50" height="50" alt="user name" />
-              <% end %>
-            </a>
+            <a href="#"><img src="/images/test/user_img50.jpg" width="50" height="50" alt="user name" /></a>
           </div>
           <div class="comment_main">
             <div class="name_time_score">
               <div class="mr5">
-                <a href="#" id="comment_user_<%= comment.id %>"><%= comment.user.username %> </a> 
+                <a href="#">xiaoying</a> 
                 <span class="time"><%= comment.created_at.strftime '%Y-%m-%d'%></span>
-                <a href="javascript:;" onclick="reply_to(<%= comment.id %>);">回复</a>
               </div>
             </div>
             <% if comment.reply_id > 0 %>
-            <div class="reply_content"><%= comment.reply_to.comment %></div>
+            <div class="reply_content">这是哪家店的呀？我也要吃！</div>
             <% end %>
-            <div class="comment_content" id="comment_content_<%= comment.id %>"><%= comment.comment %></div>
+            <div class="comment_content"><%= comment.comment %></div>
           </div>
           <div class="clear"></div>
         </li>
@@ -57,15 +50,13 @@
         <input type="hidden" name="photo_comment[photo_id]" value="<%= @photo.id %>" />
         <%= f.hidden_field :reply_id %>
         <div class="user_img">
-            <% if current_user.avatar.present? %>
-            <%= image_tag current_user.avatar.image_url( :thumb ), :width => 50, :height => 50 %>
-            <% else %>
-            <img src="/images/test/user_img50.jpg" width="50" height="50" alt="user name" />
-            <% end %>
+          <img src="/assets/base/test/user_img50.jpg" width="50" height="50" />
         </div>
         <div class="comment_input">
           <a name="add_comment" id="add_comment"></a>
-          <div style="display: none;" id="reply_comment_content" class="reply_content2">
+          <div style="display: none;" class="reply_content2">
+            这是哪家店的啊？我也要吃！
+            <span class="reply_to">by aluoaluo</span>
           </div>
           <%= f.text_area :comment, :class => 'comment' %>
           <a href="javascript:;" onclick="$(this).parent().parent().submit();" class="button_gray float_l mt10"><span>OK, 加上去</span></a>
@@ -99,10 +90,3 @@
   </ul>
 </div>
 <div class="clear"></div>
-<script type="text/javascript">
-function reply_to( comment_id ){
-  $('#reply_comment_content').css('display' , 'block');
-  $('#reply_comment_content').html( $('#comment_content_' + comment_id).text() + ' <span class="reply_to">by '+ $('#comment_user_'+comment_id).text() +'</span>');
-  $('#photo_comment_reply_id').val(comment_id);
-};
-</script>

@@ -176,13 +176,10 @@ class Mine::AlbumsController < ApplicationController
     @album.viewed_num += 1
     @photo.save
     @album.save
-    render :template => "users/albums/photo"
   end
-
 
   def index
     @albums = Album .where(["created_by= ?", current_user.id]).order("id DESC").page params[:page] || 1
   end
-  
  
 end
