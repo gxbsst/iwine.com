@@ -50,6 +50,7 @@ Patrick::Application.routes.draw do
     match "syncs/:type/new" => "syncs#new", :as => :sync_new
     match "syncs/:type/callback" => "syncs#callback", :as => :sync_callback
   end
+  match ':controller(/:action(/:id))', :controller => /users\/[^\/]+/
 
   #用户注册成功后的页面
   match "users/register/success", :to => "users#register_success"

@@ -17,7 +17,8 @@ class User < ActiveRecord::Base
   has_many :photos, :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_USER }
   has_one :avatar, :class_name => 'Photo', :foreign_key => 'business_id', :conditions => { :is_cover => true }
   has_one :cellar, :class_name => 'Users::WineCellar'
-  
+  has_many :oauths, :class_name => 'Users::Oauth'
+
   accepts_nested_attributes_for :profile, :avatar, :allow_destroy => true
 
   # accepts_nested_attributes_for :user_profile
