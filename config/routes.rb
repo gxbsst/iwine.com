@@ -19,6 +19,10 @@ Patrick::Application.routes.draw do
     # match "account", :to => "settings#account", :via => [:get, :post]
   # end
 
+  # oauth china
+  match "syncs/:type/new" => "syncs#new", :as => :sync_new
+  match "syncs/:type/callback" => "syncs#callback", :as => :sync_callback
+
   ## USER
   devise_for :users, :controllers => { :registrations => "registrations" }
 
@@ -28,10 +32,6 @@ Patrick::Application.routes.draw do
     get :register , :to => 'devise/registrations#new'
   end
 
-  #用户注册成功后的页面
-  match "users/register/success", :to => "users#register_success"
-
-  match ':controller(/:action(/:id))', :controller => /users\/[^\/]+/
 
   namespace :users do
     ## CELLAR
@@ -46,8 +46,15 @@ Patrick::Application.routes.draw do
     match ":user_id/albums/list" => "albums#list"
     match ":user_id/albums/show" => "albums#show"
     match ":user_id/albums/photo" => "albums#photo"
+
+    match "syncs/:type/new" => "syncs#new", :as => :sync_new
+    match "syncs/:type/callback" => "syncs#callback", :as => :sync_callback
   end
 
+  #用户注册成功后的页面
+  match "users/register/success", :to => "users#register_success"
+
+  match ':controller(/:action(/:id))', :controller => /users\/[^\/]+/
   ## API
   namespace :api do
     match "wineries/names", :to => "wineries#names"
