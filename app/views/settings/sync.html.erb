@@ -1,1 +1,6 @@
 <%= render "sub_nav", :action => params[:action]  %>
+
+
+<%  @oauth_list.each do |oauth| %>
+  <%= oauth.sns_name %>
+<% end %>

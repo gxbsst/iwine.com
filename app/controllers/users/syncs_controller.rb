@@ -20,21 +20,26 @@ class Users::SyncsController < ApplicationController
     user_oauth = Users::Oauth.new 
     user_oauth.user_id = current_user.id
     user_oauth.access_token = results[:access_token]
-    user_oauth.sns_name = "sina"
+    user_oauth.sns_name = client.name.to_s
+    user_oauth.sns_user_id = client.me["id"]
     user_oauth.refresh_token = results[:access_token_secret]
     user_oauth.save
+
+  end
+
+  def show
+
   end
   
-  # 获取好友
-  # def friends
-  #    tokens = current_user.oauths.oauth_record('sina').first.tokens
-  #    client = OauthChina::Sina.load(tokens)
-  #    client.friends
-  # end
-
   private
 
   def build_oauth_token_key(name, oauth_token)
     [name, oauth_token].join("_")
   end
+
+  def client
+    tokens = current_user.oauths.oauth_record('sina').first.tokens
+    @client ||= OauthChina::Sina.load(tokens)
+  end
+
 end

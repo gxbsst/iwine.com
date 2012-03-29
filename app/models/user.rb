@@ -49,4 +49,17 @@ class User < ActiveRecord::Base
     Album.all :conditions => { :created_by => id }, :order => 'photos_num DESC', :limit => count
   end
 
+  def oauth_client( sns_name )
+    if @client.blank?
+      @client = {} 
+    end
+
+    if @client[ sns_name ].blank?
+      tokens = Users::Oauth.all :conditions => { :user_id => id , :sns_name => sns_name }
+      @client[ sns_name ] = OauthChina::Sina.load( tokens )
+    end
+
+    @client[ sns_name ]
+  end
+
 end

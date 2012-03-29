@@ -42,7 +42,7 @@ class SettingsController < ApplicationController
   end
 
   def sync
-
+    @oauth_list = Users::Oauth.all :conditions => { :user_id => current_user.id }
   end
 
   def account
