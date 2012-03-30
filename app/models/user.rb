@@ -51,11 +51,11 @@ class User < ActiveRecord::Base
 
   def oauth_client( sns_name )
     if @client.blank?
-      @client = {} 
+      @client = {}
     end
 
     if @client[ sns_name ].blank?
-      tokens = Users::Oauth.all :conditions => { :user_id => id , :sns_name => sns_name }
+      tokens = Users::Oauth.first :conditions => { :user_id => id , :sns_name => sns_name.to_s }
       @client[ sns_name ] = OauthChina::Sina.load( tokens )
     end
 
