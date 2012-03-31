@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120320015539) do
+ActiveRecord::Schema.define(:version => 20120331032715) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -72,10 +72,10 @@ ActiveRecord::Schema.define(:version => 20120320015539) do
   end
 
   create_table "friendships", :force => true do |t|
-    t.integer  "following"
-    t.integer  "follower"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "user_id"
+    t.integer  "follower_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "photo_comments", :force => true do |t|

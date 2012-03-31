@@ -62,4 +62,13 @@ class User < ActiveRecord::Base
     @client[ sns_name ]
   end
 
+
+  def followers
+    Friendship.all :conditions => { :user_id => id }
+  end
+
+  def followings
+    Friendship.all :conditions => { :follower_id => id }
+  end
+
 end

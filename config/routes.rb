@@ -46,9 +46,6 @@ Patrick::Application.routes.draw do
     match ":user_id/albums/list" => "albums#list"
     match ":user_id/albums/show" => "albums#show"
     match ":user_id/albums/photo" => "albums#photo"
-
-    match "syncs/:type/new" => "syncs#new", :as => :sync_new
-    match "syncs/:type/callback" => "syncs#callback", :as => :sync_callback
   end
   match ':controller(/:action(/:id))', :controller => /users\/[^\/]+/
 
@@ -87,6 +84,9 @@ Patrick::Application.routes.draw do
     resource :wines
 
     # match "cellars/new", :to => "cellars#new", :via => [:post, :get]
+
+    match "syncs/:type/new" => "syncs#new", :as => :sync_new
+    match "syncs/:type/callback" => "syncs#callback", :as => :sync_callback
   end
   match ':controller(/:action(/:id))', :controller => /mine\/[^\/]+/
 

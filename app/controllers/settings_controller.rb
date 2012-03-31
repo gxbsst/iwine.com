@@ -44,7 +44,6 @@ class SettingsController < ApplicationController
     @oauth_list = [ :sina ]
     @oauth_list = Users::Oauth.all :conditions => { :user_id => current_user.id }
 
-    c = current_user.oauth_client :sina
   end
 
   def account
