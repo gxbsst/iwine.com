@@ -40,10 +40,16 @@ class SettingsController < ApplicationController
 
   end
 
-  def sync
+  def new
+    client = OauthChina::Sina.new
+    authorize_url = client.authorize_url
+    Rails.cache.write(build_oauth_token_key(client.name, client.oauth_token), client.dump)
+    redirect_to authorize_url
+  end
+
+  def syncs
     @oauth_list = [ :sina ]
     @oauth_list = Users::Oauth.all :conditions => { :user_id => current_user.id }
-
   end
 
   def account
@@ -73,13 +79,6 @@ class SettingsController < ApplicationController
       redirect_to '/users/avatar'
       return
     end
-  end
-
-  def sync 
-    client = OauthChina::Sina.new
-    authorize_url = client.authorize_url
-    Rails.cache.write(build_oauth_token_key(client.name, client.oauth_token), client.dump)
-    redirect_to authorize_url
   end
 
   def callback

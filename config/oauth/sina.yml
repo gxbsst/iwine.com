@@ -2,10 +2,10 @@ development:
   key:    3378977054
   secret: c0c3e93126439a890c92460113d683ad
   url:    http://localhost:3000
-  callback: "http://localhost:3000/mine/syncs/sina/callback"
+  callback: "http://localhost:3000/settings/sina/callback"
 
 production:
   key:    3378977054
   secret: c0c3e93126439a890c92460113d683ad
   url:    http://localhost:3000
-  callback: "http://localhost:3000/mine/syncs/sina/callback"
+  callback: "http://localhost:3000/settings/sina/callback"

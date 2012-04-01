@@ -20,8 +20,8 @@ Patrick::Application.routes.draw do
   # end
 
   # oauth china
-  match "syncs/:type/new" => "syncs#new", :as => :sync_new
-  match "syncs/:type/callback" => "syncs#callback", :as => :sync_callback
+  match "/settings/:type/new" => "settings#new", :as => :sync_new
+  match "/settings/:type/callback" => "settings#callback", :as => :sync_callback
 
   ## USER
   devise_for :users, :controllers => { :registrations => "registrations" }
@@ -84,9 +84,6 @@ Patrick::Application.routes.draw do
     resource :wines
 
     # match "cellars/new", :to => "cellars#new", :via => [:post, :get]
-
-    match "syncs/:type/new" => "syncs#new", :as => :sync_new
-    match "syncs/:type/callback" => "syncs#callback", :as => :sync_callback
   end
   match ':controller(/:action(/:id))', :controller => /mine\/[^\/]+/
 
