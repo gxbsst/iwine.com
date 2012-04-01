@@ -15,11 +15,11 @@ class FriendsController < ApplicationController
   end
 
   def followers
-    followers = Friendship.all :conditions => { :user_id => current_user.id }
+    @followers = current_user.followers
   end
 
   def followings
-    followings = Friendship.all :conditions => { :follower_id => current_user.id }
+    @followings = current_user.followings
   end
 
 end

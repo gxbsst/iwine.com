@@ -19,6 +19,9 @@ class User < ActiveRecord::Base
   has_one :cellar, :class_name => 'Users::WineCellar'
   has_many :oauths, :class_name => 'Users::Oauth'
 
+  has_many :followers, :class_name => 'Friendship', :include => :follower
+  has_many :followings, :class_name => 'Friendship', :foreign_key => 'follower_id', :include => :user
+
   accepts_nested_attributes_for :profile, :avatar, :allow_destroy => true
 
   # accepts_nested_attributes_for :user_profile
@@ -62,9 +65,10 @@ class User < ActiveRecord::Base
     @client[ sns_name ]
   end
 
-
   def followers
+
     Friendship.all :conditions => { :user_id => id }
+
   end
 
   def followings

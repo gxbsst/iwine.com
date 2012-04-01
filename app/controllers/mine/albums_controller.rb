@@ -148,7 +148,7 @@ class Mine::AlbumsController < ApplicationController
 
     order = params[:order] === 'time' ? 'created_at' : 'liked_num';
     
-    @photos = Photo 
+    @photos = Photo
       .where(["album_id= ?", params[:album_id]])
       .order("#{order} DESC,id DESC")
       .page params[:page] || 1
