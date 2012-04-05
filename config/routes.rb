@@ -20,7 +20,7 @@ Patrick::Application.routes.draw do
   # end
 
   # oauth china
-  match "/settings/:type/new" => "settings#new", :as => :sync_new
+  match "/settings/:type/sync" => "settings#new", :as => :sync_new
   match "/settings/:type/callback" => "settings#callback", :as => :sync_callback
 
   ## USER

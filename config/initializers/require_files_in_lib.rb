@@ -10,3 +10,11 @@ end
 OauthChina::Sina.class_eval do 
   include SNS::Sina
 end
+
+OauthChina::Qq.class_eval do 
+  include SNS::Qq
+end
+
+OauthChina::Douban.class_eval do 
+  include SNS::Douban
+end

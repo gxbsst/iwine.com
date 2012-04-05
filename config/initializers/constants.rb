@@ -12,4 +12,10 @@ OWNER_TYPES = {
     OWNER_TYPE_WINE_REGISTER => 'wine_register'
 }
 
+SNS_SERVERS = [
+    'sina',
+    'qq',
+    'douban'
+]
+
 APP_DATA = YAML.load_file(Rails.root.join('config', 'data.yml'))

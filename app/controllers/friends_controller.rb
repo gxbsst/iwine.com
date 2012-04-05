@@ -22,4 +22,13 @@ class FriendsController < ApplicationController
     @followings = current_user.followings
   end
 
+  def sync 
+    client = current_user.oauth_client( params[:sns_name] )
+    @friends = client.friends
+  end
+
+  def sns
+
+  end
+
 end

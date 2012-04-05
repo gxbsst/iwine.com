@@ -1,0 +1,3 @@
+<% SNS_SERVERS.each do |sns_name| %>
+  <%= link_to sns_name, '/friends/sync?sns_name=' + sns_name %>
+<% end %>
