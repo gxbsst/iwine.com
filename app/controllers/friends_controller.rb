@@ -25,6 +25,7 @@ class FriendsController < ApplicationController
   def sync 
     client = current_user.oauth_client( params[:sns_name] )
     @friends = client.friends
+    binding.pry
   end
 
   def sns

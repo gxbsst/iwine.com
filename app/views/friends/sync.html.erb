@@ -1,4 +1,4 @@
 <%= params[:sns_name] %>:
 <% @friends.each do |friend| %>
-  <%= friend['screen_name'] %>
+  <%= friend['screen_name'] || friend['name']%>
 <% end %>

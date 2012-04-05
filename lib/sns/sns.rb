@@ -32,7 +32,8 @@ module SNS
 
     def friends
       friends = self.get('http://open.t.qq.com/api/friends/mutual_list').body
-      JSON.parse(friends)
+      friends = JSON.parse(friends)
+      friends['data']['info']
     end
 
   end
