@@ -73,8 +73,8 @@ module SNS
       list = []
 
       data['entry'].each do |friend|
-        list.push( {
-          :username => friend[db:uid]['$t'],
+        list.push({
+          :username => friend['db:uid']['$t'],
           :nick => friend['title'],
           :avatar => friend['link'][2]['@href']
         })

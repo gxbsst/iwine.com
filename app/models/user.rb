@@ -53,7 +53,6 @@ class User < ActiveRecord::Base
   end
 
   def oauth_client( sns_name )
-
     if @client.blank?
       @client = { }
     end
@@ -71,7 +70,6 @@ class User < ActiveRecord::Base
       @client[ sns_name ].instance_eval do 
         @sns_user_id = oauth.sns_user_id
       end
-
     end
 
     @client[ sns_name ]
@@ -99,6 +97,4 @@ class User < ActiveRecord::Base
 
     token
   end
-
-
 end
