@@ -10,7 +10,7 @@ class FriendsController < ApplicationController
   def unfollow
     friendship = Friendship.first :conditions => { :user_id => params[:user_id] , :follower_id => current_user.id }
     if friendship.present?
-     friendship.destroy
+      friendship.destroy
     end
   end
 

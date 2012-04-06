@@ -5,7 +5,18 @@ module SNS
       # tokens = current_user.oauths.oauth_record('sina').tokens
       # client = OauthChina::Sina.load(tokens)
       followers_json = self.get("http://api.t.sina.com.cn/statuses/followers.json").body
-      JSON.parse(followers_json)
+      data = JSON.parse followers_json
+      list = []
+
+      data.each do |friend|
+        list.push( {
+          :sns_user_id => friend['id'],
+          :username => friend['screen_name'],
+          :avatar => friend['profile_image_url']
+        })
+      end
+
+      list
     end
 
     def me
@@ -31,29 +42,45 @@ module SNS
     end
 
     def friends
-      friends = self.get('http://open.t.qq.com/api/friends/mutual_list').body
-      friends = JSON.parse(friends)
-      friends['data']['info']
-    end
+      data = self.get('http://open.t.qq.com/api/friends/mutual_list').body
+      data = JSON.parse data
+      list = []
 
+      data['data']['info'].each do |friend|
+        list.push( {
+          :sns_user_id => friend['name'],
+          :username => friend['nick'],
+          :avatar => friend['headurl']
+        })
+      end
+      list
+    end
   end
 
-
   module Douban 
-
     def me
-      user = self.get('http://api.douban.com/people/@me').body
-      XML.parse user
+      user = self.get('http://api.douban.com/people/%40me?alt=json').body
+      JSON.parse user
     end
 
     def user_id
-      me['data']['name']
+      me['db:uid']['$t']
     end
 
     def friends
-      friends = self.get('http://open.t.qq.com/api/friends/mutual_list').body
-      XML.parse(friends)
-    end
+      data = self.get('http://api.douban.com/people/'+ @sns_user_id +'/contacts?alt=json').body
+      data = JSON.parse data
+      list = []
 
+      data['entry'].each do |friend|
+        list.push( {
+          :username => friend[db:uid]['$t'],
+          :nick => friend['title'],
+          :avatar => friend['link'][2]['@href']
+        })
+      end
+
+      list
+    end
   end
 end

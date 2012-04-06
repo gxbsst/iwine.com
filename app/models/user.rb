@@ -53,20 +53,24 @@ class User < ActiveRecord::Base
   end
 
   def oauth_client( sns_name )
+
     if @client.blank?
       @client = { }
     end
 
     if @client[ sns_name ].blank?
-      tokens = Users::Oauth.first :conditions => { :user_id => id , :sns_name => sns_name.to_s }
+      oauth = Users::Oauth.first :conditions => { :user_id => id , :sns_name => sns_name.to_s }
 
-      if tokens.blank?
+      if oauth.blank?
         return
       end
 
       sns_class_name = sns_name.capitalize
       oauth_module = eval( "OauthChina::#{sns_class_name}" )
-      @client[ sns_name ] = oauth_module.load( tokens.tokens )
+      @client[ sns_name ] = oauth_module.load( oauth.tokens )
+      @client[ sns_name ].instance_eval do 
+        @sns_user_id = oauth.sns_user_id
+      end
 
     end
 
