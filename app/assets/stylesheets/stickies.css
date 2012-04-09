@@ -10,10 +10,8 @@
 #stickies .notice_stickie,
 #stickies .debug_stickie
 {
-  margin-bottom: 1em;
-  padding: 0.8em;
-  text-align: center;
-  border: 2px solid #DDD;
+    margin: 10px 0;
+    padding: 8px;
 }
 
 #stickies .error_stickie
@@ -30,10 +28,9 @@
 
 #stickies .notice_stickie
 {
-  background: none repeat scroll 0 0 #E6EFC2;
-   border-color: #C6D880;
-   color: #264409;
-  }
+    border: solid 1px #399c07;
+    background-color: #d7ffaf;
+}
 
 #stickies .debug_stickie
 {

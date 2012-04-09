@@ -23,7 +23,7 @@ gem 'omniauth'
 gem 'oauth'
 gem 'oauth_china'
 
-gem 'rails-i18n'
+#gem 'rails-i18n'
 
 gem 'fancybox-rails', :git => 'https://github.com/sverigemeny/fancybox-rails'
 gem 'jcrop-rails'
@@ -44,13 +44,11 @@ gem 'exception_notification', :require => 'exception_notifier'
 ## Success/Notice/Error Style
 gem "stickies", :git => "git://github.com/techbang/stickies.git"
 
-## storing a tree of options in a serialized ActiveRecord column  https://github.com/metaskills/store_configurable
-gem 'store_configurable', '~> 3.2.0'
-
 group :development, :test do
   gem 'i18n'
   gem 'pry'  # "binding.pry" in action
   gem 'wirble'
+  gem 'rspec-rails'
 end
 # Gems used only for assets and not required
 # in production environments by default.
@@ -74,6 +72,11 @@ gem 'capistrano'
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
 group :test do
+  gem "factory_girl_rails"
+  gem "capybara"
+  gem "guard-rspec"
+  gem "database_cleaner"
   # Pretty printed test output
+
   gem 'turn', :require => false
 end

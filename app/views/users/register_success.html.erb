@@ -1,32 +1,4 @@
-<div id="maincontent" class="common_main">
-    <div id="main_t" class="clearfix">
-      <h1>马上加入Patrick!</h1>
-      <div class="clear"></div>
-    </div>
-     <div id="leftcol" class="mr50">
-         <div class="signup">
-            <div class="signup_step">
-            <img src="../images/signup_set2.jpg" alt="填写信息" width="620" height="40" />
-            </div>
-            <div class="success">
-             <p>感谢您成为Patrick会员！我们已将激活邮件发送至您的邮箱：
-             <br />
-             <%= params[:email] %>
-             <br />
-            请登陆邮箱并激活，即可完成注册！</p>
-            </div>
-            <div style="margin-top:100px;">
-            	<p class="fbb mb10">没有收到激活邮件？</p>
-                  <p>
-                  1 检查一下上面Email地址是否正确，错了就 <%= link_to "重新注册", "/users/sign_up" %>一次吧 <br />
-                  2 看看是否在邮箱的垃圾箱里
-                  <br />
-            3 稍等几分钟，若仍旧没收到确认信，让 Patrick <%= link_to "重发一封", "/users/confirmation/new" %></p>
-		   </div>
-       </div>
-     </div>
-
-	<%= render "text_info" %>
-	
-    <div class="clear"></div>
-</div>
+<%= title @title %>
+<p class="success">
+	恭喜你， 你的注册已经成功, 请到您的邮箱( <%= params[:email] %> )激活帐号.
+</p>
