@@ -1,18 +1,66 @@
-<h2>登录</h2>
-
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
-
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
-
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
-
-<%= render "links" %>
-
+<div id="main_t" class="clearfix">
+    <h1>登陆Patrick!</h1>
+    <div class="clear"></div>
+  </div>
+   <div id="leftcol" class="mr50">
+       <div class="signup">
+          <div class="signup_box">
+			<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+         <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <th class="">&nbsp;</th>
+              <td class="signin">  <%= devise_error_messages! %></td>
+            </tr>
+            <tr>
+              <th width="110" class=""><%= f.label :email %></th>
+              <td width=""> <%= f.email_field :email, :class => "text basic-input" %></td>
+            </tr>
+            <tr>
+              <th><%= f.label :password %></th>
+              <td><%= f.password_field :password, :class => "text basic-input" %></td>
+            </tr>
+            <tr>
+              <th>&nbsp;</th>
+              <td>
+				<%= f.check_box :remember_me %> <%= f.label "下次自动登陆", :style => "display: inline; float: none;" %> |
+				<%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+				  <%= link_to "忘记密码?", new_password_path(resource_name) %><br />
+				<% end -%>
+			</td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td class="signin">
+				<%= link_to "javascript:void(0)", :class => "button_green_b" do  %>
+					<span>登陆</span>
+				<% end %>
+				
+				<script type="text/javascript" charset="utf-8">
+				$('a.button_green_b').click(function(){
+					$(this).parents('form').submit();
+					return false;
+				});
+				</script>
+				</td>
+            </tr>
+          </table>
+		  <% end -%>
+     </div>
+        
+       </div>
+   </div>
+   <div id="rightcol" class="other_content">
+   	<div class="roundedbox250">
+      	<div class="content align_c">
+          	<p class="mb10 f14">还没有Patrick账户了？</p>
+              <p>
+				<a class="button_red" href="#"></a>
+				<%= link_to "/users/sign_up", :class => "button_red" do %>
+					<span>立即注册</span>
+				<% end %>
+			</p>
+          </div>
+          <div><%= image_tag "base/bg_rounded250_b.gif", :width => 250, :height => 5 %></div>
+      </div>
+   </div>
+  <div class="clear"></div>

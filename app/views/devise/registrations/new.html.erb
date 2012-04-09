@@ -8,46 +8,60 @@
 		<div class="signup_step">
 			<%= image_tag "base/signup_set1.jpg", :alt => "填写信息", :width => "620", :height => "40" %>
 		</div>
+		
+		<div class="signup_box">
+			<%= form_for(@user, :url => registration_path(resource_name), :validate => true ) do |f| %>
+			<%= devise_error_messages! %>
 
-		<%= form_for(@user, :url => registration_path(resource_name), :validate => true ) do |f| %>
-		<%= devise_error_messages! %>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                     <tr>
+                       <th width="110" class=""><span class="red">*</span><%= f.label :email %></th>
+                       <td width=""><%= f.email_field :email, :class => "text basic-input", :validate => { :presence => true, :uniqueness => true}  %> <span class="tips">用来登陆Patrik，接受到激活邮件才能完成注册</span></td>
+                     </tr>
+                     <tr>
+                       <th><span class="red">*</span><%= f.label :password %></th>
+                       <td><%= f.password_field :password, :class => "text basic-input", :validate => { :presence => true, :confirmation => true } %>
+                       <span class="tips"> 字母、数字或符号，最短6个字符，区分大小写</span></td>
+                     </tr>
+                     <tr>
+                       <th><span class="red">*</span><%= f.label :password_confirmation %></th>
+                       <td><%= f.password_field :password_confirmation, :class => "text basic-input" %></td>
+                     </tr>
+                     <tr>
+                       <th><span class="red">*</span><%= f.label :username %></th>
+                       <td>	<%= f.text_field :username, :class => "text basic-input" %>
+                       <span class="tips"> 中英文均可，最长7个英文或14个汉字</span></td>
+                     </tr>
 
-		<div class="item">
-			<%= f.label :email %>
-			<%= f.email_field :email, :class => "text basic-input", :validate => { :presence => true, :uniqueness => true}  %>
-			
-			<span>用来登陆Patrik，接受到激活邮件才能完成注册</span>
-		</div>
-		<div class="item">
-			<%= f.label :password %><%= f.password_field :password, :class => "text basic-input", :validate => { :presence => true, :confirmation => true } %><span>字母、数字或符号，最短6个字符，区分大小写</span>
-		</div>
-		<div class="item">
-			<%= f.label :password_confirmation %><%= f.password_field :password_confirmation, :class => "text basic-input" %><span>&nbsp;</span>
-		</div>
-		<div class="item">
-			<%= f.label :username %><%= f.text_field :username, :class => "text basic-input" %><span>中英文均可，最长7个英文或14个汉字</span>
-		</div>
-		<div class="item">
-			<label>&nbsp;</label>
-				<%= f.check_box :agree_term %>
-				<%= link_to "我已阅读并同意使用条款", "/private" %>
-			</div>
-			<div class="item-submit">
-				<label>&nbsp;</label>
-				<%= link_to "javascript:void(0)", :class => "button_red" do  %>
-				<span>立即注册</span>
+                     <tr>
+                       <th>&nbsp;</th>
+                       <td>
+                       	<%= f.check_box :agree_term %>
+						<%= link_to "我已阅读并同意使用条款", "/private" %>
+                       </td>
+                     </tr>
+                     <tr>
+                       <td>&nbsp;</td>
+					<td>
+						<%= link_to "javascript:void(0)", :class => "button_green" do  %>
+						<span>立即注册</span>
+						<% end %>
+
+						<script type="text/javascript" charset="utf-8">
+						$('a.button_red').click(function(){
+							$("form#new_user").submit();
+							return false;
+						});
+						</script>
+
+					</td>
+                     </tr>
+                   </table>
+            
+
 				<% end %>
-
-				<script type="text/javascript" charset="utf-8">
-				$('a.button_red').click(function(){
-					$("form#new_user").submit();
-					return false;
-				});
-				</script>
-
-			</div>
-			<% end %>
-
+			
+		</div>
 		</div>
 	</div>
 	<%= render "users/text_info" %>
