@@ -30,7 +30,6 @@ class SettingsController < ApplicationController
         redirect_to :action => "update_password"
       end
     end
-
   end
 
   def privacy
@@ -41,8 +40,29 @@ class SettingsController < ApplicationController
 
   end
 
-  def sync
+  def sync 
+    if params[:sns_name] == 'sina'
+      client = OauthChina::Sina.new
+      authorize_url = client.authorize_url
+      Rails.cache.write(build_oauth_token_key(client.name, client.oauth_token), client.dump)
 
+    elsif params[:sns_name] == 'qq'
+      client = OauthChina::Qq.new
+      authorize_url = client.authorize_url
+      Rails.cache.write(build_oauth_token_key(client.name, client.oauth_token), client.dump)
+
+    elsif params[:sns_name] == 'douban'
+      client = OauthChina::Douban.new
+      authorize_url = client.authorize_url
+      Rails.cache.write(build_oauth_token_key(client.name, client.oauth_token), client.dump)
+    end
+
+    redirect_to( authorize_url || request.referer )
+  end
+
+  def syncs
+    @sns_servers = SNS_SERVERS
+    @avaliable_sns = current_user.avalible_sns
   end
 
   def account
@@ -52,7 +72,6 @@ class SettingsController < ApplicationController
   def avatar
     @title = "设置头像"
     @photos = current_user.photos
-    #@avatar = current_user.avatar
     @photo = Photo.new
 
     if request.post?
@@ -73,6 +92,37 @@ class SettingsController < ApplicationController
       redirect_to '/users/avatar'
       return
     end
+  end
+
+  def callback
+    if params[:type] == 'sina'
+      client = OauthChina::Sina.load(Rails.cache.read(build_oauth_token_key(params[:type], params[:oauth_token])))
+    elsif params[:type] == 'qq'
+      client = OauthChina::Qq.load(Rails.cache.read(build_oauth_token_key(params[:type], params[:oauth_token])))
+    elsif params[:type] == 'douban'
+      client = OauthChina::Douban.load(Rails.cache.read(build_oauth_token_key(params[:type], params[:oauth_token])))
+    end
+    
+    client.authorize(:oauth_verifier => params[:oauth_verifier])
+    results = client.dump
+
+    if results[:access_token] && results[:access_token_secret]
+      flash[:notice] = 'done'
+    else
+      flash[:notice] = 'fail'
+    end
+
+    user_oauth = current_user.oauth_token( client.name.to_s )
+    user_oauth.access_token = results[:access_token]
+    user_oauth.sns_user_id = client.user_id
+    user_oauth.refresh_token = results[:access_token_secret]
+    user_oauth.save
+
+    redirect_to :action => 'syncs'
+  end
+
+  def build_oauth_token_key(name, oauth_token)
+    [name, oauth_token].join("_")
   end
 
 end

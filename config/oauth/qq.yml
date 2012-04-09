@@ -1,0 +1,11 @@
+development:
+  key:    801082967
+  secret: 2a127a239da09c9ae8086dc30b0ed4e8
+  url:    http://localhost:3000
+  callback: "http://localhost:3000/settings/qq/callback"
+
+production:
+  key:    801082967
+  secret: 2a127a239da09c9ae8086dc30b0ed4e8
+  url:    http://localhost:3000
+  callback: "http://localhost:3000/settings/qq/callback"

@@ -18,7 +18,12 @@ class User < ActiveRecord::Base
   # has_one  :avatar, :class_name => 'Photo', :foreign_key => 'business_id', :conditions => { :is_cover => true }
   has_one :cellar, :class_name => 'Users::WineCellar'
   
-  accepts_nested_attributes_for :profile, :allow_destroy => true
+  has_many :oauths, :class_name => 'Users::Oauth'
+
+  has_many :followers, :class_name => 'Friendship', :include => :follower
+  has_many :followings, :class_name => 'Friendship', :foreign_key => 'follower_id', :include => :user
+
+  accepts_nested_attributes_for :profile, :avatar, :allow_destroy => true
 
   # validates :username, :presence => false, :allow_blank => true, :numericality => true
   validates :agree_term, :acceptance => true, :on => :create
@@ -64,4 +69,49 @@ class User < ActiveRecord::Base
     Album.all :conditions => { :created_by => id }, :order => 'photos_num DESC', :limit => count
   end
 
+  def oauth_client( sns_name )
+    if @client.blank?
+      @client = { }
+    end
+
+    if @client[ sns_name ].blank?
+      oauth = Users::Oauth.first :conditions => { :user_id => id , :sns_name => sns_name.to_s }
+
+      if oauth.blank?
+        return
+      end
+
+      sns_class_name = sns_name.capitalize
+      oauth_module = eval( "OauthChina::#{sns_class_name}" )
+      @client[ sns_name ] = oauth_module.load( oauth.tokens )
+      @client[ sns_name ].instance_eval do 
+        @sns_user_id = oauth.sns_user_id
+      end
+    end
+
+    @client[ sns_name ]
+  end
+
+  def avalible_sns
+    list = {} 
+    tokens = Users::Oauth.all :conditions => { :user_id => id }
+    
+    tokens.each do |token|
+      list[token[:sns_name]] = token
+    end
+
+    list
+  end
+
+  def oauth_token( sns_name )
+    token = Users::Oauth.first :conditions => { :user_id => id , :sns_name => sns_name }
+
+    if token.blank?
+      token = Users::Oauth.new
+      token.user_id = id
+      token.sns_name = sns_name
+    end
+
+    token
+  end
 end

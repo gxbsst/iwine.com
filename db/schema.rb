@@ -73,10 +73,10 @@ ActiveRecord::Schema.define(:version => 20120320133443) do
   end
 
   create_table "friendships", :force => true do |t|
-    t.integer  "following"
-    t.integer  "follower"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "user_id"
+    t.integer  "follower_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "photo_comments", :force => true do |t|
