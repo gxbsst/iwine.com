@@ -5,4 +5,6 @@
  *= require_self
  *= require v2/base
  *= require v2/screen_fullpage_layout
+ *= require v2/users
+ *= require v2/friends
 */
