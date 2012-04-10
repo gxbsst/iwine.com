@@ -70,7 +70,7 @@ zh-CN:
         login: "登录"
         modern_browsers: "只支持较新的浏览器。"
         password: "密码"
-        remember_me: "下次自动登陆"
+        remember_me: "记住密码"
         sign_in: "登录"
         username: "用户名"
       signed_in: "登录成功。"
