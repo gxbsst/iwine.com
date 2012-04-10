@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class FriendsController < ApplicationController
   
   def follow
@@ -12,6 +13,32 @@ class FriendsController < ApplicationController
     if friendship.present?
       friendship.destroy
     end
+
+  # 查找好友
+  def find
+
+  end
+
+  # 查找好友结果
+  def find_result
+
+  end
+
+  # 设置同步
+  def sync
+
+  end
+
+  def find_email_friends
+
+  end
+
+  def index
+
+  end
+
+  def invite
+
   end
 
   def followers

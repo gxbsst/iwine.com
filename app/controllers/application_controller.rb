@@ -1,3 +1,4 @@
+
 class ApplicationController < ActionController::Base
   layout "waterfall"
   #protect_from_forgery

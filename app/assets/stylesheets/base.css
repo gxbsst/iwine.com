@@ -130,19 +130,7 @@ ul, li {
 .info a {
     color: #205791;
 }
-input, textarea {
-    background: none repeat scroll 0 0 #FFFFFF;
-    border-radius: 3px 3px 3px 3px;
-    font-family: Arial,Helvetica,sans-serif;
-    font-size: 12px;
-    padding: 2px 5px;
-}
-input.text, input.year, input.month, input.quantity, input.price, textarea {
-    border: 1px solid #CCCCCC;
-}
-input {
-    height: 19px;
-}
+
 input.year {
     width: 50px;
 }
@@ -781,3 +769,40 @@ div.pagination span.disabled {
     float: right;
     font-size: 11px;
 }
+
+a.button_green {
+    background-position: left top;
+    color: #FFFFFF;
+    display: inline-block;
+    padding-left: 10px;
+    text-decoration: none;
+}
+a.button_green, a.button_green span, a.button_green:active, a.button_green:active span, a.button_green_b, a.button_green_b span, a.button_green_b:active, a.button_green_b:active span {
+    background: url("base/btn_green.gif") no-repeat scroll 0 0 transparent;
+}
+a.button_green span {
+    background-position: right top;
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    padding-right: 10px;
+}
+a.button_green_b {background-position:left -50px;display:inline-block;padding-left:15px;color:#fff;text-decoration:none;font-size:14px;}
+a.button_green_b span {background-position:right -50px;display:inline-block;height:30px;line-height:30px;padding-right:15px;}
+a.button_green_b:active {background-position:left -80px;}
+a.button_green_b:active span {background-position:right -80px;}
+.signin a.button_green_b {padding-left:30px;}
+.signin a.button_green_b span {padding-right:30px;}
+
+
+#main_t {background:url(base/line_dotted.gif) repeat-x left bottom;padding:0 0 15px 0;margin:0 0 15px 0;}
+#main_t h1 {font-size:20px;color:#333;}
+.roundedbox250 {background:url(base/bg_rounded250_t.gif) no-repeat left top;padding-top:5px;}
+.roundedbox250 .content {background-color:#f3f3f3;padding:10px 20px;}
+
+.fbb {font-size:14px;color:#333;}
+
+textarea.user_sign_box {width:200px;}
+
+
+input, textarea{padding:3px; font-size:12px;font-family:Arial, Helvetica, sans-serif;}

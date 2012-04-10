@@ -1,5 +1,5 @@
-<header class="header clearfix">
-  <div class="header-content grid-95 middle clearfix">
+<header class="header">
+  <div class="header-content grid-95 middle ">
     <div class="logo">
       <%= link_to (image_tag "v2/logo.png"), '/' %>
     </div>
@@ -10,19 +10,9 @@
       <% end %>
     </div>
 
-    <ul class="user_nav">
-      <li class="user_center">
+      <%= render "share/user_fragment" %>
 
-        <%= link_to image_tag('v2/user_test.png'), { :controller => "items", :action => "edit", :id => @item }, :class => "avatar"   %>
 
-        <%= link_to_icon "arrow_down", {:controller => "items", :action => "edit", :id => @item } %>
-
-      </li>
-      <li class="user_add">
-        <%= link_to_icon "add_green", :controller => "items", :action => "edit", :id => @item %>
-
-      </li>
-    </ul>
 
     <!-- header-content end -->
   </div>
