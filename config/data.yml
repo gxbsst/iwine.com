@@ -6,7 +6,7 @@ users:
   cellars:
     item:
       location: [北京, 上海, 香港,广州, 深圳, 其他]
-      
+
 user_profile:
   configs:
     normal:

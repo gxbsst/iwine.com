@@ -74,10 +74,27 @@ module SNS
 
       data['entry'].each do |friend|
         list.push({
-          :username => friend['db:uid']['$t'],
-          :nick => friend['title'],
+          :sns_user_name => friend['db:uid']['$t'],
+          :username => friend['title'],
           :avatar => friend['link'][2]['@href']
         })
+      end
+
+      list
+    end
+  end
+
+  module Gmail
+    def friends( login , password )
+      data = Contacts::Gmail.new(login, password).contacts
+      list = []
+
+      data.each do |row|
+        list.push({
+          :sns_user_name => row[1] ,
+          :username => row[0] ,
+          :avatar => '' 
+        });
       end
 
       list

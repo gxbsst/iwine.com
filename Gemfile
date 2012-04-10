@@ -14,6 +14,8 @@ gem 'kaminari'
 #gem 'uploadify'
 gem 'flash_cookie_session'
 gem 'best_in_place'
+gem 'contacts_cn'
+gem 'hpricot'
 
 gem "rmagick"
 #gem "mini_magick"
