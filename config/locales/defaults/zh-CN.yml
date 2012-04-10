@@ -39,10 +39,4 @@ zh-CN:
     
   
     
-  activerecord:
-    errors:
-      models:
-        wines_register:
-          attributes:
-            vintage:
-              invalid: "请输入正确的格式， 如:2004"
+ 

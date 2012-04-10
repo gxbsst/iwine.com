@@ -20,6 +20,7 @@ Patrick::Application.routes.draw do
   # end
 
   # oauth china
+
   match "/settings/:type/sync" => "settings#new", :as => :sync_new
   match "/settings/:type/callback" => "settings#callback", :as => :sync_callback
 
@@ -46,6 +47,9 @@ Patrick::Application.routes.draw do
     match ":user_id/albums/list" => "albums#list"
     match ":user_id/albums/show" => "albums#show"
     match ":user_id/albums/photo" => "albums#photo"
+
+    match "syncs/:type/new" => "syncs#new", :as => :sync_new
+    match "syncs/:type/callback" => "syncs#callback", :as => :sync_callback
   end
   match ':controller(/:action(/:id))', :controller => /users\/[^\/]+/
 

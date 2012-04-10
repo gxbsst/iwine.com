@@ -3,6 +3,7 @@ tmp/*
 .DS_Store
 *.tmproj
 Thumbs.db
+.*
 ._*
 nbproject/
 .project

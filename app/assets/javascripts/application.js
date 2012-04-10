@@ -10,7 +10,7 @@
 //= require jquery_ujs
 //= require underscore
 //= require backbone
-//= require backbone-localstorage
+// require backbone-localstorage
 //= require fancybox
 //= require jcrop
 //= require wines
@@ -19,6 +19,7 @@
 //= require jquery.uploadify.v2.1.4
 //= require best_in_place
 //= require stickies
+//= require settings
 
 
 

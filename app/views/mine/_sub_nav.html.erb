@@ -15,8 +15,7 @@
 <div id="cu_user_menu" class="clearfix">
   <div class="pic">
 	<a href="#">
-		 <%#= image_tag current_user.avatar.image_url( :thumb ), :width => 50 , :height => 50 %>
-		<%= user_avatar_tag current_user, :thumb_name => "thumb", :width => 50, :height => 50, :alt => current_user.username %>
+		 <%= image_tag current_user.avatar_url( :thumb ), :width => 50 , :height => 50, :alt => current_user.username  %>
 	</a>
 	</div>
   <div class="info_menu">

@@ -25,7 +25,7 @@ gem 'omniauth'
 gem 'oauth'
 gem 'oauth_china'
 
-gem 'rails-i18n'
+#gem 'rails-i18n'
 
 gem 'fancybox-rails', git: 'https://github.com/sverigemeny/fancybox-rails'
 gem 'jcrop-rails'
@@ -50,6 +50,7 @@ group :development, :test do
   gem 'i18n'
   gem 'pry'  # "binding.pry" in action
   gem 'wirble'
+  gem 'rspec-rails'
 end
 # Gems used only for assets and not required
 # in production environments by default.
@@ -67,12 +68,17 @@ end
 # gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano'
+gem 'capistrano'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
 group :test do
+  gem "factory_girl_rails"
+  gem "capybara"
+  gem "guard-rspec"
+  gem "database_cleaner"
   # Pretty printed test output
+
   gem 'turn', :require => false
 end
