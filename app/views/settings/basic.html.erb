@@ -45,7 +45,6 @@
 	<tr>
 		<td><%= f.label :birthday %></td>
 		<td>
-			<%= f.date_select :birthday, :start_year => 1910, :end_year => Time.now.year, :default => { :year => 1980, :month => 9, :day => 6 }  %>
 			<%= select_tag "config[birthday]", options_for_select(APP_DATA["user_profile"]["configs"]["birth_day"].collect{|k,v| [v,k]}, @profile.config.birthday) %>
 		</td>
 	</tr>
