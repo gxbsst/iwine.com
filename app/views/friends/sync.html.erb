@@ -1,0 +1,38 @@
+<div class="friends">
+  <div id="main_t" class="clearfix">
+    <h1>添加好友</h1>
+    <div class="clear"></div>
+  </div>
+
+  <div class="box box_1">
+    <h3>通过社交平台寻找好友</h3>
+    <ul>
+      <li>
+        <%= link_to_icon "sina", APP_DATA["friends"]["oauth"]["authorize_url"]["sina"] %>
+      </li>
+      <li>
+        <%= link_to_icon "qq", APP_DATA["friends"]["oauth"]["authorize_url"]["qq"] %>
+      </li>
+      <li>
+        <%= link_to_icon "douban", APP_DATA["friends"]["oauth"]["authorize_url"]["douban"] %>
+      </li>
+    </ul>
+
+    <div class="buttons">
+      <%= link_to_button "search_all_syncs", "/" %>
+      <%= link_to_button "syncs_settings", "/" %>
+    </div>
+    <!-- .box end -->
+  </div>
+  <div class="clear"> </div>
+
+ <div class="sync">
+   <h3>您还没有设置人人网帐号</h3>
+   <!------------------------------------------>
+   <!-- TODO: big的ICON还未齐全， 请通知肖颖 -->
+   <!------------------------------------------>
+   <p><%= link_to_icon "renren_big", "/" %> <br /> 同步任人即可找到好友</p>
+ </div>
+<!-- friends end -->
+</div>
+

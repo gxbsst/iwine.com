@@ -1,0 +1,61 @@
+<div class="friends">
+  <div id="main_t" class="clearfix">
+    <h1>添加好友</h1>
+    <div class="clear"></div>
+  </div>
+
+  <div class="box box_1">
+    <h3>通过社交平台寻找好友</h3>
+    <ul>
+      <li>
+        <%= link_to_icon "sina", APP_DATA["friends"]["oauth"]["authorize_url"]["sina"] %>
+      </li>
+      <li>
+        <%= link_to_icon "qq", APP_DATA["friends"]["oauth"]["authorize_url"]["qq"] %>
+      </li>
+      <li>
+        <%= link_to_icon "douban", APP_DATA["friends"]["oauth"]["authorize_url"]["douban"] %>
+      </li>
+    </ul>
+
+    <div class="buttons">
+      <%= link_to_button "search_all_syncs", "/" %>
+      <%= link_to_button "syncs_settings", "/" %>
+    </div>
+    <!-- .box end -->
+  </div>
+  <div class="clear"> </div>
+
+  <div class="box box_2">
+    <h3>通过邮箱寻找好友</h3>
+    <ul>
+      <li>
+        <%= link_to_icon "gmail", APP_DATA["friends"]["oauth"]["authorize_url"]["gmail"] %>
+       <br />
+        <%= link_to_button "find_friend", "/" %>
+      </li>
+  </div>
+
+  <div class="clear"> </div>
+  <div class="box box_3">
+    <h3>通过邮件邀请好友加入</h3>
+    <%= form_tag :action => "email_invite" do %>
+
+
+    <div class="email_address">
+      <%= text_area_tag "email_address", nil, :placeholder => '输入邮件地址' %>
+    </div>
+
+    <div class="description">
+      <%= text_area_tag "description", nil,  :placeholder => '输入邀请留言' %>
+    </div>
+    <div class="name">
+      <%= text_field_tag "name", nil, :placeholder => "输入你的姓名" %>
+    </div>
+    <p class="submit"> <%= image_submit_tag "v2/button/send_invite.png" %> </p>
+
+<% end -%>
+
+</div>
+<!-- friends end -->
+</div>

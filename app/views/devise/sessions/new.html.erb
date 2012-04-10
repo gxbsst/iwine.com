@@ -6,7 +6,7 @@
        <div class="signup">
           <div class="signup_box">
 			<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-         <table width="100%" border="0" cellspacing="0" cellpadding="0">
+         <table width="100%" border="0" cellspacing="5" cellpadding="0">
             <tr>
               <th class="">&nbsp;</th>
               <td class="signin">  <%= devise_error_messages! %></td>
@@ -60,7 +60,7 @@
 				<% end %>
 			</p>
           </div>
-          <div><%= image_tag "base/bg_rounded250_b.gif", :width => 250, :height => 5 %></div>
+          <div><%= image_tag "base/bg_rounded250_b.gif", :width => 250, :height => 5, :class => "block" %></div>
       </div>
    </div>
   <div class="clear"></div>

@@ -55,5 +55,13 @@ module ApplicationHelper
             url_or_object,
             options)
   end
+  
+  def link_to_button(button_name, url_or_object, options={})
+    options.merge!({ :class => "button #{button_name}" })
+
+    link_to(image_tag("v2/button/#{button_name}.png", { :title => button_name }),
+            url_or_object,
+            options)
+  end
 
 end
