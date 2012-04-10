@@ -25,7 +25,7 @@ gem 'oauth_china'
 
 #gem 'rails-i18n'
 
-gem 'fancybox-rails', :git => 'https://github.com/sverigemeny/fancybox-rails'
+gem 'fancybox-rails', :git => 'git://github.com/sverigemeny/fancybox-rails'
 gem 'jcrop-rails'
 gem 'backbone-on-rails'
 
