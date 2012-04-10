@@ -15,3 +15,5 @@ tmtags
 config/database.yml
 public/uploads/*
 .sass-cache
+config/deploy.rb
+Capfile

@@ -1,0 +1,33 @@
+
+@media screen {
+
+    /* force vertical scrollbar */
+    body {
+        overflow-y: scroll;
+    }
+
+    /* fallback for missing media queries support*/
+    body > header,
+    body > #main,
+    body > footer {
+        min-width: 760px;
+    }
+
+    /* Basic Element Styling */
+    header {
+        background: #844d53;
+        color: #ccc;
+    }
+
+    header h1 {
+        background: transparent;
+        color: #fff;
+    }
+
+    footer {
+        /* background: #eee; */
+        color: #444;
+    }
+
+}
+
