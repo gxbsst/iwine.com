@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
 
   def oauth_client( sns_name )
     if @client.blank?
-      @client = { }
+      @client = {}
     end
 
     if @client[ sns_name ].blank?
@@ -97,4 +97,9 @@ class User < ActiveRecord::Base
 
     token
   end
+
+  def friends_from_sns sns_name
+
+  end
+
 end

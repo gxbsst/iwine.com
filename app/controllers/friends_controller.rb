@@ -23,6 +23,10 @@ class FriendsController < ApplicationController
   end
 
   def sync 
+    if params[:sns_name] == 'gmail'
+        
+    end
+
     client = current_user.oauth_client( params[:sns_name] )
     @friends = client.friends
   end
