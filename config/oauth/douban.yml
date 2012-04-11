@@ -1,0 +1,11 @@
+development:
+  key:    03d7e14aef3e11590b87a3e0cdba340b
+  secret: 46be81cb7f653bf1
+  url:    http://localhost:3000
+  callback: "http://localhost:3000/settings/douban/callback"
+
+production:
+  key:    03d7e14aef3e11590b87a3e0cdba340b
+  secret: 46be81cb7f653bf1
+  url:    http://localhost:3000
+  callback: "http://localhost:3000/settings/douban/callback"

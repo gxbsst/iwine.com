@@ -5,25 +5,16 @@ class SettingsController < ApplicationController
 
   def basic
     @title = "基本设置"
-
-    @profile = current_user.profile
-    @profile ||= Users::Profile.new
-    
-    if request.put?
-      @user = current_user
-      @profile = current_user.profile
-      
-      ## 处理配置信息
-      set_config 
-      
-      ## 处理所在地信息
-      set_living_city_id
-      
-      if @user.update_attribute(:username, params[:users_profile][:username]) &&  @profile.update_attributes(params[:users_profile])
-        notice_stickie("更新成功.")
-      end
-      # redirect_to :action => 'basic'
-    end
+    @user = User.includes(:profile).find(current_user.id)
+    @user.profile ||= @user.build_profile
+    @user.avatar ||= @user.build_avatar
+    ## TODO 
+    # update ...
+    # if request.put?
+    #   @user = User.new(params[:user])
+    #   notice_stickie("更新成功成功.")
+    #   # redirect_to :action => 'basic'
+    # end
   end
 
   def update_password
@@ -41,7 +32,6 @@ class SettingsController < ApplicationController
         redirect_to :action => "update_password"
       end
     end
-
   end
 
   def privacy
@@ -61,18 +51,38 @@ class SettingsController < ApplicationController
 
   end
 
-  def sync
+  def sync 
+    if params[:sns_name] == 'sina'
+      client = OauthChina::Sina.new
+      authorize_url = client.authorize_url
+      Rails.cache.write(build_oauth_token_key(client.name, client.oauth_token), client.dump)
 
+    elsif params[:sns_name] == 'qq'
+      client = OauthChina::Qq.new
+      authorize_url = client.authorize_url
+      Rails.cache.write(build_oauth_token_key(client.name, client.oauth_token), client.dump)
+
+    elsif params[:sns_name] == 'douban'
+      client = OauthChina::Douban.new
+      authorize_url = client.authorize_url
+      Rails.cache.write(build_oauth_token_key(client.name, client.oauth_token), client.dump)
+    end
+
+    redirect_to( authorize_url || request.referer )
+  end
+
+  def syncs
+    @sns_servers = SNS_SERVERS
+    @avaliable_sns = current_user.avalible_sns
   end
 
   def account
-    Hash
+
   end
 
   def avatar
     @title = "设置头像"
     @photos = current_user.photos
-    #@avatar = current_user.avatar
     @photo = Photo.new
 
     if request.post?
@@ -94,25 +104,36 @@ class SettingsController < ApplicationController
       return
     end
   end
-  
-  private
-  
-  def set_config
-    params[:config].each {|k,v| @profile.config[k] = v }
-  end
-  
-  def set_living_city_id
-    regions = params[:region]
-    
-    regions.reject!{ |k,v| v.blank? }
-    return true if regions.blank?
-    
-    regions.keys.each_with_index do |key, index|
-      if index == regions.length - 1
-         params[:users_profile][:living_city] = regions[key]
-      end
+
+  def callback
+    if params[:type] == 'sina'
+      client = OauthChina::Sina.load(Rails.cache.read(build_oauth_token_key(params[:type], params[:oauth_token])))
+    elsif params[:type] == 'qq'
+      client = OauthChina::Qq.load(Rails.cache.read(build_oauth_token_key(params[:type], params[:oauth_token])))
+    elsif params[:type] == 'douban'
+      client = OauthChina::Douban.load(Rails.cache.read(build_oauth_token_key(params[:type], params[:oauth_token])))
     end
     
+    client.authorize(:oauth_verifier => params[:oauth_verifier])
+    results = client.dump
+
+    if results[:access_token] && results[:access_token_secret]
+      flash[:notice] = 'done'
+    else
+      flash[:notice] = 'fail'
+    end
+
+    user_oauth = current_user.oauth_token( client.name.to_s )
+    user_oauth.access_token = results[:access_token]
+    user_oauth.sns_user_id = client.user_id
+    user_oauth.refresh_token = results[:access_token_secret]
+    user_oauth.save
+
+    redirect_to :action => 'syncs'
+  end
+
+  def build_oauth_token_key(name, oauth_token)
+    [name, oauth_token].join("_")
   end
 
 end

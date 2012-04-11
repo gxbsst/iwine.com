@@ -1,0 +1,74 @@
+.friends .box {
+  background: #F3F3F3;
+  margin: 0 10px 10px 10px;
+  padding: 10px;
+  overflow: auto;
+}
+
+.friends .box ul li {
+  display: inline;
+  text-align: center;
+}
+.friends .box .buttons {
+  margin-top: 10px;
+}
+
+.friends .box_2 ul li{
+  display: block;
+  width: 240px;
+  float: left;
+}
+
+.friends .box_3  textarea{
+  width: 360px;
+  height: 120px;
+  margin-bottom: 10px;
+}
+.friends .box_3 .submit {
+  margin-top: 10px;
+}
+
+/*result start*/
+.friends .result{
+  margin-top: 10px;
+}
+.friends .result .person_item {
+  width: 160px;
+  height: 80px;
+  margin: 10px 25px;
+  float: left;
+  display: inline;
+}
+.friends .result .person_item .avatar {
+  width: 65px;
+  height: 65px;
+  border: 1px solid #CCC;
+  padding-top: 5px;
+  padding-left: 5px;
+  float: left;
+  margin-right: 10px;
+}
+.friends .result .person_item .button {
+  margin-top: 10px;
+}
+
+/*result end*/
+
+/* find_email_friends start*/
+.friends .mail_form form {
+  margin-left: 250px;
+  margin-top: 20px;
+}
+.friends .mail_form form .text_input input {
+  width: 190px;
+}
+/*fiend_email_friends end*/
+
+
+/* sync start */
+.friends .sync p {
+  text-align: center;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+/*sync end*/

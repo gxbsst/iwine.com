@@ -148,7 +148,7 @@ class Mine::AlbumsController < ApplicationController
 
     order = params[:order] === 'time' ? 'created_at' : 'liked_num';
     
-    @photos = Photo 
+    @photos = Photo
       .where(["album_id= ?", params[:album_id]])
       .order("#{order} DESC,id DESC")
       .page params[:page] || 1
@@ -156,6 +156,7 @@ class Mine::AlbumsController < ApplicationController
   end
 
   def photo
+
     @album = Album.find params[:album_id]
     if @album.blank?
       redirect_to request.referer
@@ -176,13 +177,13 @@ class Mine::AlbumsController < ApplicationController
     @album.viewed_num += 1
     @photo.save
     @album.save
-    render :template => "users/albums/photo"
-  end
 
+    @photo_comment = PhotoComment.new
+    @photo_comments = PhotoComment.all :conditions => { :photo_id => @photo.id }
+  end
 
   def index
     @albums = Album .where(["created_by= ?", current_user.id]).order("id DESC").page params[:page] || 1
   end
-  
  
 end

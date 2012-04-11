@@ -1,24 +1,25 @@
 wines:
   capacity: [750ml, 500ml, 200ml, 其他]
-  
-  
+
+
 users:
   cellars:
     item:
       location: [北京, 上海, 香港,广州, 深圳, 其他]
-  
+
 user_profile:
   configs:
-    normal: 
+    normal:
       1: 所有人可见
       2: 我关注的人可见
       3: 仅自己可见
-    birth_day: 
+    birth_day:
       1: 公开
       2: 完整显示
       3: 只显示星座
       4: 只显示月日
       5: 保密
+<<<<<<< HEAD
     message:
       1: <strong>所有人</strong><span>aaa</span>
       2: 可信用户
@@ -28,3 +29,11 @@ user_profile:
       2: 我的MSN／邮箱联系人
       3: 与我有间接关注的人
       4: 与我有共同好友的人
+=======
+friends:
+  oauth:
+    authorize_url:
+      sina: "/sync/sina/new"
+      qq: "/sync/qq/new"
+      douban: "/sync/douban/new"
+>>>>>>> develop

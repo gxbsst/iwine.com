@@ -1,3 +1,11 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.basic-input {width:200px;}
+.captcha {width:95px;}
+.signup_step {margin:0 0 20px 0;}
+.information_box table td, .information_box table th {padding:5px 10px;}
+.information_box table th {text-align:right;width:90px;}
+.signup_box table td, .signup_box table th {padding:5px 10px;}
+.signup_box table th {text-align:right;width:90px;}
+.signup_box table span.tips {margin-left:5px;color:#999;}

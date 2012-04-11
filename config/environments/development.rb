@@ -32,4 +32,5 @@ Patrick::Application.configure do
   # mailer
   config.action_mailer.delivery_method = :smtp
 
+  config.action_controller.perform_caching = true
 end

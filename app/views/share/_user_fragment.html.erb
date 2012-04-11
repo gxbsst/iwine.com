@@ -1,8 +1,34 @@
 
-<div id="topnavi">
-	<% if user_signed_in? %>
-		<%= link_to current_user.username + '的帐户', '/settings/'  %> ｜ <a href="#">邮件(2)</a> | <%= link_to '登出', '/logout' %>  
-	<% else %>
-		<%= link_to '注册', new_user_registration_path %>  | <%= link_to '登陆', new_user_session_path %>  
-	<% end %>
+<%  if user_signed_in? %>
+
+  <ul class="user_nav">
+    <li class="user_center">
+      <%= link_to image_tag('v2/user_test.png'), { :controller => "items", :action => "edit", :id => @item }, :class => "avatar"   %>
+      <%= link_to_icon "arrow_down", {:controller => "items", :action => "edit", :id => @item } %>
+    </li>
+    <li class="user_add">
+      <%= link_to_icon "add_green","#add_data", :class => "fancybox"  %>
+    </li>
+  </ul>
+
+<% else %>
+
+  <ul class="user_nav not_sign_in">
+    <li class="sign_up">
+      <%= link_to_icon "sign_up", new_user_registration_path  %>
+
+    </li>
+    <li class="sign_in">
+      <%= link_to_icon "sign_in",  new_user_session_path  %>
+    </li>
+  </ul>
+
+<% end %>
+
+<div style="display:none">
+<div id="add_data">
+  <ul>
+    <li> <%= link_to "朋友", {:controller => "friends", :action => "find" }  %></li>
+  </ul>
+</div>
 </div>

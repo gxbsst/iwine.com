@@ -1,9 +1,7 @@
-# encoding: utf-8
 class Users::Profile < ActiveRecord::Base
-  
   include Users::UserSupport
-  
   belongs_to :user
+<<<<<<< HEAD
   
   attr_accessor :username
   
@@ -33,3 +31,6 @@ class Users::Profile < ActiveRecord::Base
   end
   
 end
+=======
+end
+>>>>>>> develop

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module ApplicationHelper
 
   def set_layout_class_name
@@ -18,12 +19,12 @@ module ApplicationHelper
 
     return results.join("\n")
   end
-  
+
   def title(page_title, options={})
     content_for(:title, page_title.to_s)
     return content_tag(:h2, page_title, options)
   end
-  
+
   ## 显示酒的封面
   def wine_cover_tag(object, options = {} )
     if object.cover.respond_to? "image_url"
@@ -39,12 +40,28 @@ module ApplicationHelper
       image_tag object.avatar.image_url( options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt]
     else
       image_tag "base/test/user_img50.jpg", :width => options[:width], :height => options[:height], :alt => options[:alt]
-    end  
+    end
   end
-  
+
   ## 更改用户登录后跳转的URL
   def after_sign_in_path_for(resource)
     return request.env['omniauth.origin'] || stored_location_for(resource) || mine_path
   end
+
+  def link_to_icon(icon_name, url_or_object, options={})
+    options.merge!({ :class => "icon #{icon_name}" })
+
+    link_to(image_tag("v2/icon/#{icon_name}.png", { :title => icon_name }),
+            url_or_object,
+            options)
+  end
   
+  def link_to_button(button_name, url_or_object, options={})
+    options.merge!({ :class => "button #{button_name}" })
+
+    link_to(image_tag("v2/button/#{button_name}.png", { :title => button_name }),
+            url_or_object,
+            options)
+  end
+
 end
