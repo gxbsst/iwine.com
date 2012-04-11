@@ -6,8 +6,7 @@ class SettingsController < ApplicationController
   def basic
     @title = "基本设置"
 
-    @profile = current_user.profile
-    @profile ||= Users::Profile.new
+    @profile = current_user.profile || current_user.build_profile
 
     if request.put?
       @user = current_user
