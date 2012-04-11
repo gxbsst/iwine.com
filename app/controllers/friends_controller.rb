@@ -13,7 +13,8 @@ class FriendsController < ApplicationController
     if friendship.present?
       friendship.destroy
     end
-
+  end
+  
   # 查找好友
   def find
 
