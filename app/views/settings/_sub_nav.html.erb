@@ -1,17 +1,20 @@
 <%= title @title %>
+
 <% sub_menu = { "basic" => "/settings", "avatar" => "/settings/avatar", "update_password" => "/settings/update_password",  "privacy" => "/settings/privacy", "invite" => "/settings/invite", "sync" => "/settings/syncs" } %>
 
+<!--
 <div id="cu_user_menu" class="clearfix">
   <div class="info_menu">
     <ul class="clearfix">
-		<% sub_menu.each do |action_name, url| %>
-		 <% if action == action_name %>
-			<li  class="current" ><%= link_to t("nav.sub_nav.settings.#{action_name}"),  url %></li>
-		 <% else %>
-			<li><%= link_to t("nav.sub_nav.settings.#{action_name}"), url %></li>
-		 <% end %>
-		<% end %>
+                <% sub_menu.each do |action_name, url| %>
+                 <% if action == action_name %>
+                        <li  class="current" ><%= link_to t("nav.sub_nav.settings.#{action_name}"),  url %></li>
+                 <% else %>
+                        <li><%= link_to t("nav.sub_nav.settings.#{action_name}"), url %></li>
+                 <% end %>
+                <% end %>
     </ul>
   </div>
   <div class="clear"></div>
 </div>
+-->

@@ -4,7 +4,7 @@ class SettingsController < ApplicationController
   before_filter :authenticate_user!
 
   def basic
-    @title = "基本设置"
+    @title = "帐号设置"
 
     @profile = current_user.profile || current_user.build_profile
 
@@ -13,7 +13,7 @@ class SettingsController < ApplicationController
       @profile = current_user.profile
 
       ## 处理配置信息
-      set_config
+      # set_config
 
       ## 处理所在地信息
       set_living_city_id
@@ -45,9 +45,9 @@ class SettingsController < ApplicationController
   end
 
   def privacy
-    @title = "隐私设置"
+    @title = "广播/通知设置"
     @profile = current_user.profile
-
+    # binding.pry
     if request.put?
       set_config
       if @profile.save
@@ -124,6 +124,11 @@ class SettingsController < ApplicationController
   # ## 更新图片
   def crop_avatar
     current_user.update_attributes(params[:user])
+  end
+
+  # 初始化配置信息
+  def init_configs
+
   end
 
 end

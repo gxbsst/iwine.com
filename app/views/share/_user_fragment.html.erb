@@ -26,9 +26,37 @@
 <% end %>
 
 <div style="display:none">
-<div id="add_data">
-  <ul>
-    <li> <%= link_to "朋友", {:controller => "friends", :action => "find" }  %></li>
-  </ul>
-</div>
+  <div id="add_data">
+    <h3> 添加 </h3>
+    <div class="text_info"> 请选择你想要添加的内容类型 </div>
+    <ul>
+      <li>
+        <%= link_to_icon "add_detail_comment", {:controller => "wines", :action => "detail_comment" }  %>
+        <div class="clear">
+
+        </div>
+        <%= link_to "添加品酒辞", :controller => "wines", :action => "detail_comment" %>
+      </li>
+      <li>
+        <%= link_to_icon "add_simple_comment", {:controller => "wines", :action => "detail_comment" }  %> <br />
+        <%= link_to "添加评论", :controller => "wines", :action => "detail_comment" %>
+
+      </li>
+      <li>
+        <%= link_to_icon "add_wine", {:controller => "wines", :action => "detail_comment" }  %> <br />
+        <%= link_to "添加红酒", :controller => "wines", :action => "detail_comment" %>
+
+      </li>
+      <li>
+        <%= link_to_icon "add_to_cellar", {:controller => "wines", :action => "detail_comment" }  %> <br />
+        <%= link_to "添加藏酒", :controller => "wines", :action => "" %>
+
+      </li>
+      <li>
+        <%= link_to_icon "add_friends", {:controller => "friends", :action => "find" }  %> <br />
+        <%= link_to "添加好友", :controller => "friends", :action => "find" %>
+
+      </li>
+    </ul>
+  </div>
 </div>

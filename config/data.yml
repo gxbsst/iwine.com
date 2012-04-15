@@ -6,6 +6,9 @@ users:
       location: [北京, 上海, 香港,广州, 深圳, 其他]
 user_profile:
   configs:
+    defaults:
+      normal: 1 #默认分享或者所有人可见
+      email: [1, 2, 3]
     normal:
       1: 所有人可见
       2: 我关注的人可见
@@ -25,10 +28,36 @@ user_profile:
       2: 我的MSN／邮箱联系人
       3: 与我有间接关注的人
       4: 与我有共同好友的人
+    email:
+      1: 我收到一条私信
+      2: 我收到一条回复或评论
+      3: 我被某人关注
+      4: 我的酒评被收藏
+      5: 关于新 iWine 产品功能和技巧的更新
+      6: 关于我的 iWine 账号的产品或服务更新
+    share:
+      1: 默认分享
+
+
 friends:
   oauth:
     authorize_url:
       sina      : "/sync/sina/new"
       qq        : "/sync/qq/new"
       douban    : "/sync/douban/new"
+
+image:
+  user:
+    origin:
+      width: 280
+      height: 280
+    large:
+      width: 130
+      height: 130
+    middle:
+      width: 50
+      height: 50
+    thumb:
+      width: 30
+      height: 30
 

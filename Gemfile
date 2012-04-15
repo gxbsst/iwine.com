@@ -18,14 +18,14 @@ gem 'contacts_cn'
 gem 'hpricot'
 
 gem "rmagick"
-#gem "mini_magick"
+gem "mini_magick"
 gem "carrierwave"
 
 gem 'omniauth'
 gem 'oauth'
 gem 'oauth_china'
 
-#gem 'rails-i18n'
+gem 'rails-i18n'
 
 gem 'fancybox-rails', :git => 'git://github.com/sverigemeny/fancybox-rails'
 gem 'jcrop-rails'

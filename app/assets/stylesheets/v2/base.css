@@ -541,6 +541,9 @@ a.btn_bid:active {
   margin: 0;
   width: 55px;
 }
+.header-content ul.user_nav li.user_add {
+    width: 74px;
+}
 .header-content ul.user_nav li.user_center {
   height: 34px;
   background: #DDD;
@@ -669,6 +672,8 @@ input, textarea {
 
 #main_t {
   width: 600px;
+  padding-left: 20px;
+  padding-top: 10px;
 }
 #main_t  h1 {
   font-size: 16px;

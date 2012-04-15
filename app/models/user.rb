@@ -39,6 +39,10 @@ class User < ActiveRecord::Base
   def crop_avatar
     if crop_x.present?
       avatar.recreate_versions!
+
+      # Crop之后，重新生成缩略图
+      resize_avatar(:large, :middle)
+      resize_avatar(:large, :thumb)
     end
   end
 
@@ -118,6 +122,17 @@ class User < ActiveRecord::Base
 
   def friends_from_sns sns_name
 
+  end
+
+  private
+
+  def resize_avatar(from_version, to_version)
+    params =  APP_DATA["image"]["user"]["#{to_version.to_s}"]["width"].to_s << "x" <<  APP_DATA["image"]["user"]["#{to_version.to_s}"]["height"].to_s
+    source_path = Rails.root.to_s << "/public" << avatar.url(from_version)
+    target_path = Rails.root.to_s << "/public" <<  avatar.url(to_version)
+    image = MiniMagick::Image.open(source_path)
+    image.resize(params)
+    image.write(target_path)
   end
 
 end

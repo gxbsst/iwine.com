@@ -22,19 +22,29 @@
 //= require settings
 
 $(document).ready(function(){
-		    // 添加朋友、酒等
-		    $("a.add_green").fancybox({
-		                maxWidth        : 500,
-		                maxHeight       : 150,
-		                fitToView       : false,
-		                width           : '70%',
-		                height          : '70%',
-		                autoSize        : false,
-		                closeClick      : false,
-		                openEffect      : 'none',
-		                closeEffect     : 'none'
-		});
-		
+    // 添加朋友、酒等
+    $("a.add_green").fancybox({
+        maxWidth        : 500,
+        maxHeight       : 150,
+        fitToView       : false,
+        width           : '70%',
+        height          : '70%',
+        autoSize        : false,
+        closeClick      : false,
+        openEffect      : 'none',
+        closeEffect     : 'none',
+        helpers : {
+            overlay : {
+                opacity : 0.8,
+                css : {
+                    'background-color' : '#FFF'
+                }
+            }
+
+        } // end helper
+
+    });
+
 });
 
 

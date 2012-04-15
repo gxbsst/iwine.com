@@ -7,5 +7,10 @@
  *= require v2/screen_fullpage_layout
  *= require v2/users
  *= require v2/friends
- *= require fancybox
+ *= require v2/settings
+ *= require v2/fancybox
+ *= require stickies
+ *= require jcrop
+ *= require uploadify
 */
+
