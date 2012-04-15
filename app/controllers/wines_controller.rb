@@ -3,6 +3,11 @@ class WinesController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show]
   before_filter :set_current_user
 
+  ## TODO: 这个action为演示用， 使用后可以删除
+  def preview
+
+  end
+
   def index
     @wines = Wines::Detail.includes(:wine, :cover).order("created_at ASC").page params[:page] || 1
   end
@@ -104,9 +109,9 @@ class WinesController < ApplicationController
   def long_comments
 
   end
-  
+
   def list
-    
+
   end
 
   private

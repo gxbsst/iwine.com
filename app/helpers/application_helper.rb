@@ -2,10 +2,13 @@
 module ApplicationHelper
 
   def set_layout_class_name
-    if params[:action] ==  'show'
+
+    if params[:action] ==  'show' && params[:controller] == "wines"
       'wineprofile_main'
     elsif params[:action] == 'avatar'
       'user'
+    elsif params[:controller] == "static" || params[:controller] == "wines"
+      "span_950"
     else
       'common_main'
     end
@@ -55,7 +58,7 @@ module ApplicationHelper
             url_or_object,
             options)
   end
-  
+
   def link_to_button(button_name, url_or_object, options={})
     options.merge!({ :class => "button #{button_name}" })
 
@@ -64,4 +67,7 @@ module ApplicationHelper
             options)
   end
 
+  def avatar(version)
+    current_user.avatar.url(version)
+  end
 end

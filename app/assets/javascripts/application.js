@@ -20,21 +20,34 @@
 //= require best_in_place
 //= require stickies
 //= require settings
+//= require kissy
 
 $(document).ready(function(){
-		    // 添加朋友、酒等
-		    $("a.add_green").fancybox({
-		                maxWidth        : 500,
-		                maxHeight       : 150,
-		                fitToView       : false,
-		                width           : '70%',
-		                height          : '70%',
-		                autoSize        : false,
-		                closeClick      : false,
-		                openEffect      : 'none',
-		                closeEffect     : 'none'
-		});
-		
+
+    // 下拉菜单
+
+    $('a.arrow_down').click(function (event) {
+        // $(this).preventDefault();
+        event.preventDefault();
+        $('ul.drop_down_menu').slideToggle('medium');
+    });
+
+    // 添加朋友、酒等
+    $("a.add_green").fancybox({
+        maxWidth        : 500,
+        maxHeight       : 150,
+        fitToView       : false,
+        width           : '70%',
+        height          : '70%',
+        autoSize        : false,
+        closeClick      : false,
+        openEffect      : 'none',
+        closeEffect     : 'none'
+    });
+
+    // 酒详细页面
+    $("a.wine_profile").fancybox();
+
 });
 
 

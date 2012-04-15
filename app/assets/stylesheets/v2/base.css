@@ -557,6 +557,29 @@ a.btn_bid:active {
 .header-content ul.not_sign_in li {
   margin: 0 3px;
 }
+.drop_down_menu {
+    /* border: 1px solid #1C1C1C; */
+    display: none;
+    width: 120px;
+    display: none;
+    position: absolute;
+    z-index: 10000;
+    background: #DDD;
+    right: 0;
+    top: 34px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 2px 0 2px 2px;
+}
+.header-content ul.user_nav .drop_down_menu li {
+    float: none;
+}
+.drop_down_menu li a {
+    display: block;
+    width: 111px;
+    padding: 5px 10px;
+    text-decoration: none;
+}
 /**********************/
 /* /\* header end *\/ */
 /**********************/
@@ -689,3 +712,15 @@ input, textarea {
 #leftcol .sort_item {
     float: right;
 }
+
+/* span_950 start */
+.span_950 .header-content  {
+    width: 950px;
+    }
+.span_950 #main {
+    min-width: 950px;
+    width: auto;
+    background: none;
+    }
+/* span_950 end */
+
