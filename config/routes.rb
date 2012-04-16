@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
 
   get "mine/index"
@@ -10,7 +11,7 @@ Patrick::Application.routes.draw do
 
   ## SETTINGS
   match "/settings", :to => "settings#basic", :via => [:get, :post, :put]
-  
+
   # resource :settings do
     # match "(basic)/", :to => "settings#basic", :via => [:get, :post, :put]
     # match "privacy", :to => "settings#privacy", :via => [:get, :post]
@@ -21,8 +22,8 @@ Patrick::Application.routes.draw do
 
   # oauth china
 
-  match "/settings/:type/sync" => "settings#new", :as => :sync_new
-  match "/settings/:type/callback" => "settings#callback", :as => :sync_callback
+  match "/friends/:type/sync" => "friends#new", :as => :sync_new
+  match "/friends/:type/callback" => "friends#callback", :as => :sync_callback
 
   ## USER
   devise_for :users, :controllers => { :registrations => "registrations" }
@@ -62,6 +63,7 @@ Patrick::Application.routes.draw do
     match "wineries/names", :to => "wineries#names"
     match "wine_varieties/index", :to => "wine_varieties#index"
   end
+  match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
 
   ## WINE
   match "/wines/register", :to => "wines#register"
@@ -75,10 +77,10 @@ Patrick::Application.routes.draw do
 
   ## MINE
   namespace :mine do
-    
+
     # CELLARS
     match "cellars/add", :to => "cellars#add"
-    resources :cellars  
+    resources :cellars
 
     # ALBUMS
     match "albums(/:album_id)/upload", :to => "albums#upload", :via => [:get, :post]

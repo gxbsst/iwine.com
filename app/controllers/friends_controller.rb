@@ -2,46 +2,37 @@
 class FriendsController < ApplicationController
   
   def follow
-    friendship = Friendship.new
-    friendship.user_id = params[:user_id]
-    friendship.follower_id = current_user.id
-    friendship.save
+
+    params[:user_id].split(',').each do |user_id|
+      if current_user.is_following( user_id ).blank? && current_user.id != user_id.to_i
+
+        friendship = Friendship.new
+        friendship.user_id = user_id
+        friendship.follower_id = current_user.id
+        friendship.save
+
+      end
+    end
+
+    redirect_to request.referer
   end
 
   def unfollow
     friendship = Friendship.first :conditions => { :user_id => params[:user_id] , :follower_id => current_user.id }
+
     if friendship.present?
       friendship.destroy
     end
+
+    redirect_to request.referer
   end
   
   # 查找好友
   def find
-
-  end
-
-  # 查找好友结果
-  def find_result
-
+    @availabe_sns = current_user.available_sns
   end
 
   # 设置同步
-  def sync
-
-  end
-
-  def find_email_friends
-
-  end
-
-  def index
-
-  end
-
-  def invite
-
-  end
-
   def followers
     @followers = current_user.followers
   end
@@ -51,16 +42,56 @@ class FriendsController < ApplicationController
   end
 
   def sync 
-    if params[:sns_name] == 'gmail'
-        
+    client = current_user.oauth_client( params[:sns_name] )
+    @availabe_sns = current_user.available_sns
+    @user_ids = []
+
+    if client.present?
+      @recommend_friends = current_user.remove_followings client.possible_local_friends
+      @authorized = true
+      @recommend_friends.each do |f|
+        @user_ids.push( f.user_id )
+      end
+    else
+      @authorized = false
     end
 
-    client = current_user.oauth_client( params[:sns_name] )
-    @friends = client.friends
   end
 
-  def sns
-
+  def new_sns
+    sns_class_name = params[:sns_name].capitalize
+    oauth_module = eval( "OauthChina::#{sns_class_name}" )
+    client = oauth_module.new
+    authorize_url = client.authorize_url
+    Rails.cache.write(build_oauth_token_key(client.name, client.oauth_token), client.dump)
+    redirect_to authorize_url
   end
 
+  def callback
+    sns_class_name = params[:type].capitalize
+    oauth_module = eval( "OauthChina::#{sns_class_name}" )
+    client = oauth_module.load(Rails.cache.read(build_oauth_token_key(params[:type], params[:oauth_token])))
+    client.authorize(:oauth_verifier => params[:oauth_verifier])
+    results = client.dump
+
+    if results[:access_token] && results[:access_token_secret]
+      flash[:notice] = "done"
+    else
+      flash[:notice] = "fail"
+    end
+
+    user_oauth = current_user.oauth_token client.name.to_s
+    user_oauth.access_token = results[:access_token]
+    user_oauth.sns_user_id = client.user_id
+    user_oauth.refresh_token = results[:access_token_secret]
+    user_oauth.save
+
+    redirect_to '/friends/sync?sns_name=' + params[:type]
+  end
+
+  private
+
+  def build_oauth_token_key(name, oauth_token)
+    [name, oauth_token].join("_")
+  end
 end

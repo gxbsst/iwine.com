@@ -19,6 +19,15 @@ module SNS
       list
     end
 
+    def possible_local_friends
+      sns_user_ids = []
+
+      friends.each do |friend|
+        sns_user_ids.push friend[:sns_user_id]
+      end
+      Users::Oauth.all :conditions => { 'sns_name' => 'sina', 'sns_user_id' => sns_user_ids }
+    end
+
     def me
       user = self.get("http://api.t.sina.com.cn/account/verify_credentials.json").body
       JSON.parse user
@@ -51,9 +60,19 @@ module SNS
           :sns_user_id => friend['name'],
           :username => friend['nick'],
           :avatar => friend['headurl']
-        })
+        } )
       end
       list
+    end
+        
+    def possible_local_friends
+      sns_user_ids = []
+
+      friends.each do |friend|
+        sns_user_ids.push friend[:sns_user_id]
+      end
+
+      Users::Oauth.all :conditions => { 'sns_name' => 'qq', 'sns_user_id' => sns_user_ids }
     end
   end
 
@@ -74,13 +93,24 @@ module SNS
 
       data['entry'].each do |friend|
         list.push({
-          :sns_user_name => friend['db:uid']['$t'],
+          :sns_user_id => friend['db:uid']['$t'],
           :username => friend['title'],
           :avatar => friend['link'][2]['@href']
         })
       end
 
       list
+    end
+    
+    def possible_local_friends
+      sns_user_ids = []
+      data = {}
+
+      friends.each do |friend|
+        sns_user_ids.push friend[:sns_user_id]
+      end
+
+      Users::Oauth.all :conditions => { 'sns_name' => 'douban', 'sns_user_id' => sns_user_ids }
     end
   end
 

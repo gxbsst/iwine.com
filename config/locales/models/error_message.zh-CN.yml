@@ -1,6 +1,8 @@
 zh-CN:
   activerecord:
     errors:
+      messages:
+        record_invalid: "未经过验证"
       models:
         register:
           attributes:
@@ -12,4 +14,5 @@ zh-CN:
               email_format: "Email格式不正确"
             msn:
               email_format: "Email格式不正确"
+              
                 

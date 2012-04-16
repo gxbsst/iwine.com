@@ -20,7 +20,8 @@ SNS_SERVERS = [
 
 EMAIL_SERVERS = [
   'gmail' ,
-  'qq' 
+  'qq'
 ]
+
 
 APP_DATA = YAML.load_file(Rails.root.join('config', 'data.yml'))

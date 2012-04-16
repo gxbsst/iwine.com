@@ -1,19 +1,19 @@
 <% if controller_name == 'users/cellars' || controller_name == 'users/bid' || controller_name == 'mine/bid' || controller_name == 'mine/cellars'%>
-<div class="winery bg_shadow_red">
-	<div class="bg_bigshadow_red">
-		<div id="maincontent" class="<%= set_layout_class_name %>">
-			<%= yield %>
-		</div>
-	</div>
-	<div class="bg_shadow_bottom_red"></div>
-</div>
+  <div class="winery bg_shadow_red">
+    <div class="bg_bigshadow_red">
+      <div id="maincontent" class="<%= set_layout_class_name %>">
+	<%= yield %>
+      </div>
+    </div>
+    <div class="bg_shadow_bottom_red"></div>
+  </div>
 <% else %>
-<div class="bg_shadow">
-	<div class="bg_bigshadow">
-		<div id="maincontent" class="<%= set_layout_class_name %>">
-			<%= yield %>
-		</div>
-	</div>
-	<div class="bg_shadow_bottom"></div>
-</div>
+  <div class="bg_shadow">
+    <div class="bg_bigshadow">
+      <div id="maincontent" class="<%= set_layout_class_name %>">
+	<%= yield %>
+      </div>
+    </div>
+    <div class="bg_shadow_bottom"></div>
+  </div>
 <% end %>

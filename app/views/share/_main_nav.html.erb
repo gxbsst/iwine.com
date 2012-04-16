@@ -1,13 +1,13 @@
 <% nav_items = { :home => 'static', :wines => 'wines', :wineries => 'wineries',  :events => 'events', :mine => 'mine' } %>
 <div id="globel_navi">
-   <ul>
-	<% nav_items.each do |key, value| %>
-     <li>
-		<% (controller_path =~ /#{value}/) == 0  ? class_name = 'current' : '' %>
-		<%= link_to "/#{key}",  :class => class_name  do %>
-		<span><%= t ("nav.#{key}") %></span>			
-		<% end %>
-	 </li>
+  <ul>
+    <% nav_items.each do |key, value| %>
+      <li>
+	<% (controller_path =~ /#{value}/) == 0  ? class_name = 'current' : '' %>
+	<%= link_to "/#{key}",  :class => class_name  do %>
+	  <span><%= t ("nav.#{key}") %></span>			
 	<% end %>
-   </ul>
- </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

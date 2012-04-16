@@ -39,9 +39,18 @@ zh-CN:
         school: "毕业学校"
         phone_number: "电话号码"
         relationship: "爱情状态" 
+      users_profile:
+        email: "邮箱"
+        username: "昵称"
+        gender: "性别"
+        birthday: "生日"
+        website: "博客地址"
+        bio: "介绍"
+        living_city: "所在地"
       album:
         name: '名称'
         intro: '描述'
+        
         
 
 

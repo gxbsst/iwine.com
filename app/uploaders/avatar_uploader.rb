@@ -2,12 +2,12 @@
 
 class AvatarUploader < CarrierWave::Uploader::Base
   permissions 0777
-  
+
   # Include RMagick or MiniMagick support:
-  
-  include CarrierWave::RMagick
-  
-  # include CarrierWave::MiniMagick
+
+  # include CarrierWave::RMagick
+
+  include CarrierWave::MiniMagick
   # Choose what kind of storage to use for this uploader:
   storage :file
   # storage :fog
@@ -19,10 +19,10 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
-  
+
   def default_url
-     "/assets/base/" + [version_name, "user_default.jpg"].compact.join('_')
-   end
+    "/assets/base/" + [version_name, "user_default.jpg"].compact.join('_')
+  end
 
   # Process files as they are uploaded:
   # process :scale => [200, 300]
@@ -35,14 +35,21 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # version :thumb do
   #   process :scale => [50, 50]
   # end
+  version :origin do
+    resize_to_limit(APP_DATA["image"]["user"]["origin"]["width"],  APP_DATA["image"]["user"]["origin"]["height"])
+  end
 
   version :large do
-    resize_to_limit(200,200)
+    process :crop
+    resize_to_limit(APP_DATA["image"]["user"]["large"]["width"],APP_DATA["image"]["user"]["large"]["height"])
   end
-  
+
+  version :middle do
+    resize_to_limit( APP_DATA["image"]["user"]["middle"]["width"],  APP_DATA["image"]["user"]["middle"]["height"])
+  end
+
   version :thumb do
-    process :crop    
-    resize_to_limit(50,50)
+    resize_to_limit( APP_DATA["image"]["user"]["thumb"]["width"],  APP_DATA["image"]["user"]["thumb"]["height"])
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
@@ -56,21 +63,35 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
-  
+
   def filename
     model.read_attribute( :avatar ) || Digest::SHA1.hexdigest("#{Time.now.utc}--#{original_filename()}") + '.png'
   end
-  
-  def crop      
-    resize_to_limit(200, 200)
-    manipulate! do |img|
-      x = model.crop_x.to_i
-      y = model.crop_y.to_i
-      w = model.crop_w.to_i
-      h = model.crop_h.to_i      
-      img.crop!(x, y, w, h)
-    end
+
+  def crop
+    if model.crop_x.present?
+      resize_to_limit(APP_DATA["image"]["user"]["origin"]["width"],  APP_DATA["image"]["user"]["origin"]["height"])
+
+      manipulate! do |img|
+        x = model.crop_x
+        y = model.crop_y
+        w = model.crop_w
+        h = model.crop_h
+
+        # img.crop!(x, y, w, h)
+        # crop_params = "#{w}x#{h}+#{x}+#{y}"
+        # binding.pry
+        # img.crop(crop_params)
+        w << 'x' << h << '+' << x << '+' << y
+        img.crop(w)
+         # img.strip
+        # model.avatar.recreate_versions!
+        img
+      end
+
+    end # end if
+
   end
-  
+
 
 end
