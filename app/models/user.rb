@@ -21,8 +21,13 @@ class User < ActiveRecord::Base
   has_many :oauths, :class_name => 'Users::Oauth'
   has_many :followers, :class_name => 'Friendship', :include => :follower
   has_many :followings, :class_name => 'Friendship', :foreign_key => 'follower_id', :include => :user
+<<<<<<< HEAD
   
   accepts_nested_attributes_for :profile, :allow_destroy => true
+=======
+
+  accepts_nested_attributes_for :profile,  :allow_destroy => true
+>>>>>>> develop
 
   # validates :username, :presence => false, :allow_blank => true, :numericality => true
   validates :agree_term, :acceptance => true, :on => :create
