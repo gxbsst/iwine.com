@@ -23,8 +23,6 @@
 //= require kissy
 
 $(document).ready(function(){
-<<<<<<< HEAD
-=======
 
     // 下拉菜单
 
@@ -37,7 +35,6 @@ $(document).ready(function(){
     // 酒详细页面
     $("a.wine_profile").fancybox();
 
->>>>>>> 7e1b74b49a7052a4c5ebd644dca00a1fed53e1c8
     // 添加朋友、酒等
     $("a.add_green").fancybox({
         maxWidth        : 500,
@@ -48,7 +45,6 @@ $(document).ready(function(){
         autoSize        : false,
         closeClick      : false,
         openEffect      : 'none',
-<<<<<<< HEAD
         closeEffect     : 'none',
         helpers : {
             overlay : {
@@ -57,16 +53,9 @@ $(document).ready(function(){
                     'background-color' : '#FFF'
                 }
             }
-
         } // end helper
 
     });
-=======
-        closeEffect     : 'none'
-    });
-
-
->>>>>>> 7e1b74b49a7052a4c5ebd644dca00a1fed53e1c8
 
 });
 
