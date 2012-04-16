@@ -55,11 +55,35 @@ module ApplicationHelper
             url_or_object,
             options)
   end
+
+  def link_to_sns_icon(available, sns_name, url_or_object, options={})
+    options.merge!({ :class => "icon #{sns_name}" })
+
+    if available
+      icon_name = 'icon_' + sns_name + '_on'
+    else
+      icon_name = 'icon_' + sns_name + '_off'
+    end
+
+
+    link_to(image_tag("v2/icon/#{icon_name}.png", { :title => icon_name }),
+            url_or_object,
+            options)
+  end
   
   def link_to_button(button_name, url_or_object, options={})
     options.merge!({ :class => "button #{button_name}" })
 
     link_to(image_tag("v2/button/#{button_name}.png", { :title => button_name }),
+            url_or_object,
+            options)
+  end
+  
+  def link_to_sync_button(sns_name, url_or_object, options={})
+    options.merge!({ :class => "button #{sns_name}" })
+
+    button_name = 'btn_syn_' + sns_name
+    link_to(image_tag("v2/button/#{button_name}.jpg", { :title => button_name }),
             url_or_object,
             options)
   end

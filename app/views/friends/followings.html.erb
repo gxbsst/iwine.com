@@ -1,4 +1,4 @@
 我的followings:
 <% @followings.each do |following| %>
-  <%= following.user.username %>
+  <%= link_to following.user.username, '/friends/unfollow?user_id=' + following.user.id.to_s %>
 <% end %>

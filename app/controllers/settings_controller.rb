@@ -50,8 +50,43 @@ class SettingsController < ApplicationController
 
   end
 
-  def sync
+  def syncs
+    @sns_servers = SNS_SERVERS
+    @avaliable_sns = current_user.available_sns
 
+  end
+
+  def sync
+    sns_class_name = params[:sns_name].capitalize
+    oauth_module = eval( "OauthChina::#{sns_class_name}" )
+    client = oauth_module.new
+    authorize_url = client.authorize_url
+    Rails.cache.write(build_oauth_token_key(client.name, client.oauth_token), client.dump)
+    redirect_to authorize_url
+  end
+
+  def callback
+    sns_class_name = params[:type].capitalize
+    oauth_module = eval( "OauthChina::#{sns_class_name}" )
+    client = oauth_module.load(Rails.cache.read(build_oauth_token_key(params[:type], params[:oauth_token])))
+    client.authorize(:oauth_verifier => params[:oauth_verifier])
+    results = client.dump
+
+    if results[:access_token] && results[:access_token_secret]
+      flash[:notice] = "done"
+    else
+      flash[:notice] = "fail"
+    end
+
+    user_oauth = Users::Oauth.new 
+    user_oauth.user_id = current_user.id
+    user_oauth.access_token = results[:access_token]
+    user_oauth.sns_name = client.name.to_s
+    user_oauth.sns_user_id = client.me["id"]
+    user_oauth.refresh_token = results[:access_token_secret]
+    user_oauth.save
+
+    redirect_to :action => 'syncs'
   end
 
   def account
@@ -101,7 +136,10 @@ class SettingsController < ApplicationController
         params[:users_profile][:living_city] = regions[key]
       end
     end
+  end
 
+  def build_oauth_token_key(name, oauth_token)
+    [name, oauth_token].join("_")
   end
 
   ## 保存图片

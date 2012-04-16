@@ -92,7 +92,7 @@ class User < ActiveRecord::Base
     @client[ sns_name ]
   end
 
-  def avalible_sns
+  def available_sns
     list = {} 
     tokens = Users::Oauth.all :conditions => { :user_id => id }
     
@@ -115,8 +115,20 @@ class User < ActiveRecord::Base
     token
   end
 
-  def friends_from_sns sns_name
+  def remove_followings sns_friends
+    users = []
 
+    sns_friends.each do |f|
+      if !is_following f.user_id
+        users.push( f )
+      end
+    end
+
+    users
+  end
+
+  def is_following user_id
+    Friendship.first :conditions => { :user_id => user_id , :follower_id => id }
   end
 
 end
