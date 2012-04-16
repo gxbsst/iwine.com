@@ -2,10 +2,13 @@
 module ApplicationHelper
 
   def set_layout_class_name
-    if params[:action] ==  'show'
+
+    if params[:action] ==  'show' && params[:controller] == "wines"
       'wineprofile_main'
     elsif params[:action] == 'avatar'
       'user'
+    elsif params[:controller] == "static" || params[:controller] == "wines"
+      "span_950"
     else
       'common_main'
     end
@@ -22,7 +25,14 @@ module ApplicationHelper
 
   def title(page_title, options={})
     content_for(:title, page_title.to_s)
-    return content_tag(:h2, page_title, options)
+    # return content_tag(:h2, page_title, options)
+    html = <<-HTML
+      <div id="main_t" class="clearfix">
+      <h1>#{page_title}</h1>
+      <div class="clear"></div>
+     </div>
+    HTML
+    return html.html_safe
   end
 
   ## 显示酒的封面
@@ -51,7 +61,7 @@ module ApplicationHelper
   def link_to_icon(icon_name, url_or_object, options={})
     options.merge!({ :class => "icon #{icon_name}" })
 
-    link_to(image_tag("v2/icon/#{icon_name}.png", { :title => icon_name }),
+    link_to(image_tag("v2/icon/#{icon_name}.png", { :title => icon_name, :align => "center" }),
             url_or_object,
             options)
   end
@@ -70,11 +80,11 @@ module ApplicationHelper
             url_or_object,
             options)
   end
-  
+
   def link_to_button(button_name, url_or_object, options={})
     options.merge!({ :class => "button #{button_name}" })
 
-    link_to(image_tag("v2/button/#{button_name}.png", { :title => button_name }),
+    link_to(image_tag("v2/button/#{button_name}.png", { :title => button_name, :align => "center" }),
             url_or_object,
             options)
   end
@@ -88,4 +98,7 @@ module ApplicationHelper
             options)
   end
 
+  def avatar(version)
+    current_user.avatar.url(version)
+  end
 end

@@ -4,17 +4,16 @@ class SettingsController < ApplicationController
   before_filter :authenticate_user!
 
   def basic
-    @title = "基本设置"
+    @title = "帐号设置"
 
-    @profile = current_user.profile
-    @profile ||= Users::Profile.new
+    @profile = current_user.profile || current_user.build_profile
 
     if request.put?
       @user = current_user
       @profile = current_user.profile
 
       ## 处理配置信息
-      set_config 
+      # set_config
 
       ## 处理所在地信息
       set_living_city_id
@@ -27,6 +26,7 @@ class SettingsController < ApplicationController
   end
 
   def update_password
+    @title = "修改密码"
     @user = current_user
 
     if request.put?
@@ -34,8 +34,10 @@ class SettingsController < ApplicationController
       if @user.update_attributes(params[:user])
         # Sign in the user by passing validation in case his password changed
         sign_in @user, :bypass => true
+        notice_stickie t("update_success")
         # redirect_to root_path
       else
+        error_stickie t("update_failed")
         redirect_to :action => "update_password"
       end
     end
@@ -43,6 +45,15 @@ class SettingsController < ApplicationController
   end
 
   def privacy
+    @title = "广播/通知设置"
+    @profile = current_user.profile
+    # binding.pry
+    if request.put?
+      set_config
+      if @profile.save
+        notice_stickie t("update_success.")
+      end
+    end
 
   end
 
@@ -94,27 +105,27 @@ class SettingsController < ApplicationController
   end
 
   def avatar
-    
+
     @title = "设置头像"
 
     # 保存图片
     if request.put?
-      if save_avatar 
-        notice_stickie t("save_successed")  
+      if save_avatar
+        notice_stickie t("save_successed")
       end
-      redirect_to :action => :avatar      
-      
+      redirect_to :action => :avatar
+
     end
 
     # 裁剪图片
     if request.post?
       if params[:user][:crop_x].present?
         crop_avatar
-        notice_stickie t("save_successed")  
+        notice_stickie t("save_successed")
       end
-      
-      redirect_to :action => :basic      
-      
+
+      redirect_to :action => :basic
+
     end
 
   end
@@ -150,7 +161,12 @@ class SettingsController < ApplicationController
 
   # ## 更新图片
   def crop_avatar
-     current_user.update_attributes(params[:user])
+    current_user.update_attributes(params[:user])
+  end
+
+  # 初始化配置信息
+  def init_configs
+
   end
 
 end

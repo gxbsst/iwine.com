@@ -2,87 +2,78 @@
 
 <%= render_stickies %>
 
- <%= javascript_include_tag 'region_china' %>
+<%= javascript_include_tag 'region_china' %>
 
-<%= form_for @profile, :url => settings_path, :validate => true,  :html => { :class => 'form-horizontal', :multipart => true, :method => :put } do |f| -%>
-<table border="0" cellspacing="5" cellpadding="5">
-	<tr>
-		<td><%= f.label :username%>*</td>
-		<td><%= f.text_field :username %> <%= link_to "修改密码", :action => "update_password" %></td>
-	</tr>
-	<!-- AVATAR -->
-	<tr>
-		<td><%= f.label :image %></td>
-		<td><%= image_tag current_user.avatar_url(:large) %> <%= image_tag current_user.avatar_url(:thumb) %> <%= link_to "编辑头像", :action => "avatar" %></td>
-	</tr>
-	
-	<!-- PROFILE -->
-	
-	<tr>
-		<td><%= f.label :real_name %></td>
-		<td><%= f.text_field :real_name %> <%= select_tag "config[real_name]", options_for_select(APP_DATA["user_profile"]["configs"]["normal"].collect{|k,v| [v,k]}, @profile.config.real_name) %></td>
-	</tr>
-	
-	<!-- <tr>
-		<td><%= f.label :nickname %></td>
-		<td><%= f.text_field :nickname %></td>
-	</tr> -->
-	
-	
-	<tr>
-		<td><%= f.label :living_city %>*</td>
-		<td>
-			<%= render "region", :profile => @profile, :p => f %>
-		</td>
-	</tr>
-	
-	
-	<tr>
-		<td><%= f.label :gender %></td>
-		<td><%= f.radio_button :gender, 1, :checked => true %> 男 <%= f.radio_button :gender, 0 %> 女</td>
-	</tr>
-	
-	<tr>
-		<td><%= f.label :birthday %></td>
-		<td>
-			<%= select_tag "config[birthday]", options_for_select(APP_DATA["user_profile"]["configs"]["birth_day"].collect{|k,v| [v,k]}, @profile.config.birthday) %>
-		</td>
-	</tr>
-	
-	<tr>
-		<td><%= f.label :website %></td>
-	<td><%= f.text_field :website %>  <%= select_tag "config[website]", options_for_select(APP_DATA["user_profile"]["configs"]["normal"].collect{|k,v| [v,k]}, @profile.config.website) %></td>
-	</tr>
-	
-	<tr>
-		<td><%= f.label :contact_email %></td>
-	<td><%= f.text_field :contact_email %>  <%= select_tag "config[contact_email]", options_for_select(APP_DATA["user_profile"]["configs"]["normal"].collect{|k,v| [v,k]}, @profile.config.contact_email) %></td>
-	</tr>
-	
-	<tr>
-		<td><%= f.label :qq %></td>
-	<td><%= f.text_field :qq %> 
-		 <%= select_tag "config[qq]", options_for_select(APP_DATA["user_profile"]["configs"]["normal"].collect{|k,v| [v,k]}, @profile.config.qq) %></td>
-	</tr>
-	
-	<tr>
-		<td><%= f.label :msn %></td>
-	<td><%= f.text_field :msn %> 	 <%= select_tag "config[msn]", options_for_select(APP_DATA["user_profile"]["configs"]["normal"].collect{|k,v| [v,k]}, @profile.config.msn) %></td>
-	</tr>
-	
-	
-	<tr>
-		<td><%= f.label :vocation %></td>
-		<td><%= f.text_field :vocation %></td>
-	</tr>
-	<tr>
-		<td><%= f.label :bio %></td>
-		<td><%= f.text_area :bio, :size => "40x10" %></td>
-	</tr>
-		
-</table>
+<div class="settings basic">
+  <div class="left">
+    <%= form_for @profile, :url => settings_path, :validate => true,  :html => { :class => 'form-horizontal', :multipart => true, :method => :put } do |f| -%>
+    <table border="0" cellspacing="10" cellpadding="5">
+      <tr>
+        <td width="100px" class="label"><%= f.label :email %></td>
+        <td><%= @profile.email %> <%= link_to "修改密码", {:action => "update_password"}, :class => "red" %></td>
+      </tr>
+      <tr>
+        <td  class="label"><span class="red">*</span><%= f.label :username%></td>
+        <td class="text_input" ><%= f.text_field :username %></td>
+      </tr>
+      <tr>
+        <td  class="label"><%= f.label :gender %></td>
+        <td><%= f.radio_button :gender, 1, :checked => true %> 男 <%= f.radio_button :gender, 0 %> 女</td>
+      </tr>
 
-  <%= f.submit %>
+      <tr>
+        <td class="label"><%= f.label :birthday %></td>
+        <td>
+          <%= f.date_select :birthday, :start_year => 1910, :end_year => Time.now.year, :default => { :year => 1980, :month => 9, :day => 6 }  %>
+        </td>
+      </tr>
+      <!-- PROFILE -->
+      <tr>
+        <td class="label"><span class="red">*</span><%= f.label :living_city %></td>
+        <td>
+          <%= render "region", :profile => @profile, :p => f %>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="label"><%= f.label :website %></td>
+        <td class="text_input"><%= f.text_field :website %> </td>
+      </tr>
+
+      <tr>
+       <td class="label" valign="top" ><%= f.label :bio %></td>
+        <td><%= f.text_area :bio, :size => "40x10" %></td>
+      </tr>
+      <tr>
+        <td class="label">通知设置</td>
+        <td> <%= link_to_button "privacy_setting", :action => "privacy" %> </td>
+      </tr>
+      <tr>
+        <td class="label"> 同步设置 </td>
+        <td valign="top" >
+          <%= render "friends/icons" %> <%= link_to_button "sync_settings", "/" %>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td class="submit">  <%= image_submit_tag "v2/button/save.png" %> </td>
+      </tr>
+    </table>
+
+
 <% end -%>
+</div>
+
+<div class="right">
+  <!-- AVATAR -->
+  <%= image_tag current_user.avatar_url(:large), :align => "left" %>
+ <%= image_tag current_user.avatar_url(:middle), :align => "left", :width => "50px", :height => "50px" %>
+ <%= image_tag current_user.avatar_url(:thumb), :align => "left", :width => "30px", :height => "30px" %>
+ <div class="clear"></div>
+ <br />
+  <%= link_to_button "edit_avatar", :action => "avatar" %>
+</div>
+<!-- end .basic -->
+</div>
 
 
