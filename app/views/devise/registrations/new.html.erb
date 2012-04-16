@@ -46,9 +46,9 @@
       <% end %>
 
       <script type="text/javascript" charset="utf-8">
-        $('a.button_green').click(function(){
+        $('a.button_green').click(function(event){
+		event.preventDefault();
         $("form#new_user").submit();
-        return false;
         });
       </script>
 

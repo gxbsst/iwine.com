@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
-  # cattr_accessor :current_user, :
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -18,9 +18,7 @@ class User < ActiveRecord::Base
   has_many :photos, :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_USER }
   # has_one  :avatar, :class_name => 'Photo', :foreign_key => 'business_id', :conditions => { :is_cover => true }
   has_one :cellar, :class_name => 'Users::WineCellar'
-
   has_many :oauths, :class_name => 'Users::Oauth'
-
   has_many :followers, :class_name => 'Friendship', :include => :follower
   has_many :followings, :class_name => 'Friendship', :foreign_key => 'follower_id', :include => :user
 
@@ -34,6 +32,7 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :agree_term, :current_user
+  
   after_update :crop_avatar
 
   def crop_avatar
