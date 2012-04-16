@@ -3,8 +3,16 @@
 
   <ul class="user_nav">
     <li class="user_center">
-      <%= link_to image_tag('v2/user_test.png'), { :controller => "items", :action => "edit", :id => @item }, :class => "avatar"   %>
-      <%= link_to_icon "arrow_down", {:controller => "items", :action => "edit", :id => @item } %>
+      <%= link_to image_tag(avatar(:thumb)), { :controller => "mine" }, :class => "avatar"   %>
+      <%= link_to_icon "arrow_down", "#" %>
+      <ul class="drop_down_menu">
+        <li><%= link_to "设置", :controller => "settings", :action => "basic" %></li>
+        <li><%= link_to "找朋友", :controller => "friends", :action => "find" %></li>
+        <li><%= link_to "我的Patrick", :controller => "mine" %></li>
+        <li><%= link_to "我的酒窖", :controller => "mine", :action => "cellar" %></li>
+        <li><%= link_to "登出",  logout_path %></li>
+
+      </ul>
     </li>
     <li class="user_add">
       <%= link_to_icon "add_green","#add_data", :class => "fancybox"  %>

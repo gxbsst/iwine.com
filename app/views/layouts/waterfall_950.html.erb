@@ -12,19 +12,17 @@
   <%= javascript_include_tag "html5" %>
   <![endif]-->
 </head>
-<body >
+<body class="span_950" >
 
   <%= render "share/header" %>
-    <div class="main_top"> </div>
 
   <div id="main">
     <%= yield %>
-    <div class="clear"></div>
+
     <!-- main end -->
   </div>
-    <div class="main_bottom"></div>
 
-  <%= render "share/footer" %>
+  <%#= render "share/footer" %>
 
 </body>
 </html>
