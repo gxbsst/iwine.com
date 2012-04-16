@@ -2,12 +2,12 @@
 class ApplicationController < ActionController::Base
   # layout "waterfall"
   layout  proc { |controller|
-    span_950 = ["static", "wine"]
+    span_950 = ["static", "wines"]
     # span_860 = ["settings"]
     if span_950.include? controller.controller_name
       "waterfall_950"
     else
-      "watterfall"
+      "waterfall"
     end
   }
 

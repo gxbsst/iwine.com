@@ -32,6 +32,9 @@ $(document).ready(function(){
         $('ul.drop_down_menu').slideToggle('medium');
     });
 
+    // 酒详细页面
+    $("a.wine_profile").fancybox();
+
     // 添加朋友、酒等
     $("a.add_green").fancybox({
         maxWidth        : 500,
@@ -45,8 +48,7 @@ $(document).ready(function(){
         closeEffect     : 'none'
     });
 
-    // 酒详细页面
-    $("a.wine_profile").fancybox();
+
 
 });
 

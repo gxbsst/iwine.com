@@ -570,6 +570,7 @@ a.btn_bid:active {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 2px 0 2px 2px;
+    opacity: 0.7
 }
 .header-content ul.user_nav .drop_down_menu li {
     float: none;

@@ -5,6 +5,7 @@ class WinesController < ApplicationController
 
   ## TODO: 这个action为演示用， 使用后可以删除
   def preview
+    render :layout => false
 
   end
 
