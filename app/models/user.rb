@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
-  cattr_accessor :current_user
+  # cattr_accessor :current_user, :
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, :timeoutable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :crop_x, :crop_y, :crop_w, :crop_h
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :crop_x, :crop_y, :crop_w, :crop_h, :agree_term
 
   has_one  :profile, :class_name => 'Users::Profile', :dependent => :destroy
   has_many :albums, :class_name => 'Album', :foreign_key => 'created_by'
@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   # upload avatar
   mount_uploader :avatar, AvatarUploader
 
-  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :agree_term, :current_user
   after_update :crop_avatar
 
   def crop_avatar
