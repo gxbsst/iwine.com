@@ -24,7 +24,7 @@ class FriendsController < ApplicationController
       friendship.destroy
     end
 
-    redirect_to request.referer
+    redirect_to :action => 'find' 
   end
   
   # 查找好友
