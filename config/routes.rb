@@ -22,8 +22,8 @@ Patrick::Application.routes.draw do
 
   # oauth china
 
-  match "/settings/:type/sync" => "settings#new", :as => :sync_new
-  match "/settings/:type/callback" => "settings#callback", :as => :sync_callback
+  match "/friends/:type/sync" => "friends#new", :as => :sync_new
+  match "/friends/:type/callback" => "friends#callback", :as => :sync_callback
 
   ## USER
   devise_for :users, :controllers => { :registrations => "registrations" }

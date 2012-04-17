@@ -36,7 +36,7 @@ gem 'client_side_validations'
 
 gem 'activeadmin'
 
-gem 'hanzi_to_pinyin' , git: 'git://github.com/wxianfeng/hanzi_to_pinyin.git'
+gem 'hanzi_to_pinyin' , :git => 'git://github.com/wxianfeng/hanzi_to_pinyin.git'
 
 gem "breadcrumbs_on_rails"
 

@@ -6,18 +6,19 @@
 
   <div class="box box_1">
     <h3>通过社交平台寻找好友</h3>
+    <% if SNS_SERVERS.present? %>
     <ul>
+      <% SNS_SERVERS.each do |sns_name| %>
       <li>
-        <%= link_to_icon "sina", APP_DATA["friends"]["oauth"]["authorize_url"]["sina"] %>
+        <% if @availabe_sns[sns_name].present? %>
+          <%= link_to_sns_icon true, sns_name, '/friends/sync?sns_name=' + sns_name %>
+        <% else %>
+          <%= link_to_sns_icon false, sns_name, '/friends/sync?sns_name=' + sns_name %>
+        <% end %>
       </li>
-      <li>
-        <%= link_to_icon "qq", APP_DATA["friends"]["oauth"]["authorize_url"]["qq"] %>
-      </li>
-      <li>
-        <%= link_to_icon "douban", APP_DATA["friends"]["oauth"]["authorize_url"]["douban"] %>
-      </li>
+      <% end %>
     </ul>
-
+    <% end %>
     <div class="buttons">
       <%= link_to_button "search_all_syncs", "/" %>
       <%= link_to_button "syncs_settings", "/" %>
@@ -30,7 +31,7 @@
     <h3>通过邮箱寻找好友</h3>
     <ul>
       <li>
-        <%= link_to_icon "gmail", APP_DATA["friends"]["oauth"]["authorize_url"]["gmail"] %>
+        <%= link_to_icon "gmail", '/' %>
        <br />
         <%= link_to_button "find_friend", "/" %>
       </li>
