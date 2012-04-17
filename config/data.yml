@@ -41,10 +41,7 @@ user_profile:
 
 friends:
   oauth:
-    authorize_url:
-      sina      : "/sync/sina/new"
-      qq        : "/sync/qq/new"
-      douban    : "/sync/douban/new"
+    sync_url: /friends/sync
 
 image:
   user:
