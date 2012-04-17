@@ -58,6 +58,16 @@ class FriendsController < ApplicationController
 
   end
 
+  def delete_sns
+    user_oauth = Users::Oauth.first :conditions => { :user_id => current_user.id , :sns_name => params[:sns_name] }
+
+    if user_oauth.present?
+      user_oauth.delete
+    end
+
+    redirect_to request.referer
+  end
+
   def new_sns
     sns_class_name = params[:sns_name].capitalize
     oauth_module = eval( "OauthChina::#{sns_class_name}" )
@@ -87,6 +97,10 @@ class FriendsController < ApplicationController
     user_oauth.save
 
     redirect_to '/friends/sync?sns_name=' + params[:type]
+  end
+
+  def sns
+    @available_sns = current_user.available_sns
   end
 
   private

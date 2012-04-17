@@ -21,11 +21,19 @@ module SNS
 
     def possible_local_friends
       sns_user_ids = []
+      friends_hash = {}
 
       friends.each do |friend|
         sns_user_ids.push friend[:sns_user_id]
+        friends_hash[ friend[:sns_user_id] ] = friend
       end
-      Users::Oauth.all :conditions => { 'sns_name' => 'sina', 'sns_user_id' => sns_user_ids }
+      local_user = Users::Oauth.all :conditions => { 'sns_name' => 'sina', 'sns_user_id' => sns_user_ids }
+
+      local_user.each do |friend|
+        friend.sns_info = friends_hash[friend.sns_user_id.to_i]
+      end
+
+      local_user
     end
 
     def me
@@ -36,7 +44,6 @@ module SNS
     def user_id
       me['id']
     end
-
   end
 
   module Qq
@@ -67,12 +74,19 @@ module SNS
         
     def possible_local_friends
       sns_user_ids = []
+      friends_hash = {}
 
       friends.each do |friend|
         sns_user_ids.push friend[:sns_user_id]
+        friends_hash[ friend[:sns_user_id] ] = friend
+      end
+      local_user = Users::Oauth.all :conditions => { 'sns_name' => 'qq', 'sns_user_id' => sns_user_ids }
+
+      local_user.each do |friend|
+        friend.sns_info = friends_hash[friend.sns_user_id.to_i]
       end
 
-      Users::Oauth.all :conditions => { 'sns_name' => 'qq', 'sns_user_id' => sns_user_ids }
+      local_user
     end
   end
 
@@ -104,13 +118,19 @@ module SNS
     
     def possible_local_friends
       sns_user_ids = []
-      data = {}
+      friends_hash = {}
 
       friends.each do |friend|
         sns_user_ids.push friend[:sns_user_id]
+        friends_hash[ friend[:sns_user_id] ] = friend
+      end
+      local_user = Users::Oauth.all :conditions => { 'sns_name' => 'douban', 'sns_user_id' => sns_user_ids }
+
+      local_user.each do |friend|
+        friend.sns_info = friends_hash[friend.sns_user_id.to_i]
       end
 
-      Users::Oauth.all :conditions => { 'sns_name' => 'douban', 'sns_user_id' => sns_user_ids }
+      local_user
     end
   end
 

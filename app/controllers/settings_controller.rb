@@ -168,5 +168,4 @@ class SettingsController < ApplicationController
   def init_configs
 
   end
-
 end

@@ -1,4 +1,7 @@
 class Users::Oauth < ActiveRecord::Base
+
+  attr_accessor :sns_info
+
   include Users::UserSupport
 
   belongs_to :user
@@ -8,5 +11,6 @@ class Users::Oauth < ActiveRecord::Base
   def tokens
     { :access_token => access_token, :access_token_secret => refresh_token }
   end
+
 
 end
