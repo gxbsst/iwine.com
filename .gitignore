@@ -18,3 +18,5 @@ public/uploads/*
 config/deploy.rb
 Capfile
 Gemfile.lock
+
+/.idea/workspace.xml

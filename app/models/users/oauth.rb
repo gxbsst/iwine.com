@@ -1,5 +1,8 @@
 class Users::Oauth < ActiveRecord::Base
   include Users::UserSupport
+
+  belongs_to :user
+  
   scope :oauth_record, ->(sns_name){ where(["sns_name = ?", sns_name])}
   
   def tokens
