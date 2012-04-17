@@ -12,5 +12,7 @@
  *= require stickies
  *= require jcrop
  *= require uploadify
+ *= require ../cellars
+ *= require v2/messages
 */
 

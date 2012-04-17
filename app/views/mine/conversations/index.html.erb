@@ -1,0 +1,32 @@
+
+<div id="mainspace860">
+	<div id="message">
+		<div class="title clearfix">
+			<div class="message_search">
+				<%= link_to "#send_message_form", :class => "btn_gray mr5 send_message"  do %>
+				<span>发送私信</span>
+				<% end %>
+				<div class="reply_form" id="send_message_form" style="display: none">
+					<%= render "send_message_form", :message => @message %>
+				</div>
+
+				<div class="search_space"><input name="" type="text" placeholder="查找联系人或私信内容"/>
+					<a href="#" class="search_btn"></a>
+				</div>
+			</div>
+			<h1>我的私信</h1>
+		</div>
+		<div class="message_list">
+			<%= render_stickies %>
+			
+			<ul class="private_list">
+				<% @conversations.each do |conversation| %>
+				<%= render conversation %>	
+				<% end %>
+			</ul>
+		</div>
+	</div>
+</div>
+		 <div class="pagination">
+		 <%= paginate @conversations, :outer_window => 2 %> 
+		 </div>
