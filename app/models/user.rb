@@ -31,7 +31,8 @@ class User < ActiveRecord::Base
   # upload avatar
   mount_uploader :avatar, AvatarUploader
 
-  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :agree_term, :current_user
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :agree_term
+  cattr_accessor :current_user
   
   after_update :crop_avatar
 

@@ -6,10 +6,10 @@
       <%= link_to image_tag(avatar(:thumb)), { :controller => "mine" }, :class => "avatar"   %>
       <%= link_to_icon "arrow_down", "#" %>
       <ul class="drop_down_menu">
-        <li><%= link_to "设置", :controller => "settings", :action => "basic" %></li>
-        <li><%= link_to "找朋友", :controller => "friends", :action => "find" %></li>
-        <li><%= link_to "我的Patrick", :controller => "mine" %></li>
-        <li><%= link_to "我的酒窖", :controller => "mine", :action => "cellar" %></li>
+        <li><%= link_to "设置", :controller => "/settings", :action => "basic" %></li>
+        <li><%= link_to "找朋友", :controller => "/friends", :action => "find" %></li>
+        <li><%= link_to "我的Patrick", :controller => "/mine" %></li>
+        <li><%= link_to "我的酒窖", :controller => "/mine", :action => "cellars" %></li>
         <li><%= link_to "登出",  logout_path %></li>
 
       </ul>
@@ -39,30 +39,30 @@
     <div class="text_info"> 请选择你想要添加的内容类型 </div>
     <ul>
       <li>
-        <%= link_to_icon "add_detail_comment", {:controller => "wines", :action => "detail_comment" }  %>
+        <%= link_to_icon "add_detail_comment", {:controller => "/wines", :action => "detail_comment" }  %>
         <div class="clear">
 
         </div>
-        <%= link_to "添加品酒辞", :controller => "wines", :action => "detail_comment" %>
+        <%= link_to "添加品酒辞", :controller => "/wines", :action => "detail_comment" %>
       </li>
       <li>
-        <%= link_to_icon "add_simple_comment", {:controller => "wines", :action => "detail_comment" }  %> <br />
-        <%= link_to "添加评论", :controller => "wines", :action => "detail_comment" %>
+        <%= link_to_icon "add_simple_comment", {:controller => "/wines", :action => "detail_comment" }  %> <br />
+        <%= link_to "添加评论", :controller => "/wines", :action => "detail_comment" %>
 
       </li>
       <li>
-        <%= link_to_icon "add_wine", {:controller => "wines", :action => "detail_comment" }  %> <br />
-        <%= link_to "添加红酒", :controller => "wines", :action => "detail_comment" %>
+        <%= link_to_icon "add_wine", {:controller => "/wines", :action => "detail_comment" }  %> <br />
+        <%= link_to "添加红酒", :controller => "/wines", :action => "detail_comment" %>
 
       </li>
       <li>
-        <%= link_to_icon "add_to_cellar", {:controller => "wines", :action => "detail_comment" }  %> <br />
-        <%= link_to "添加藏酒", :controller => "wines", :action => "" %>
+        <%= link_to_icon "add_to_cellar", "/mine/cellars/add?step=1"  %> <br />
+        <%= link_to "添加藏酒", "/mine/cellars/add?step=1" %>
 
       </li>
       <li>
-        <%= link_to_icon "add_friends", {:controller => "friends", :action => "find" }  %> <br />
-        <%= link_to "添加好友", :controller => "friends", :action => "find" %>
+        <%= link_to_icon "add_friends", {:controller => "/friends", :action => "find" }  %> <br />
+        <%= link_to "添加好友", :controller => "/friends", :action => "find" %>
 
       </li>
     </ul>
