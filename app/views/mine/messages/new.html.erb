@@ -1,0 +1,11 @@
+
+<%= form_for @message, :url => "/mine/messages/create" do |f| %>
+
+<%= f.text_field :recipients %>
+<%= f.text_field :subject %>
+<%= f.text_area :body %>
+
+<%= f.submit() %>
+
+
+<%  end -%>
