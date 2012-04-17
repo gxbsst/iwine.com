@@ -730,3 +730,9 @@ input, textarea {
     }
 /* span_950 end */
 
+/* form errors */
+.field_with_errors input[type=text], .field_with_errors textarea {
+  border: 2px solid red;
+}
+/* form errors end */
+

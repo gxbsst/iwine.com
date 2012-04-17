@@ -48,6 +48,9 @@ gem "stickies", :git => "git://github.com/techbang/stickies.git"
 
 gem 'store_configurable', '~> 3.2.0'
 
+## Message
+gem 'mailboxer'
+
 group :development, :test do
   gem 'i18n'
   gem 'pry'  # "binding.pry" in action

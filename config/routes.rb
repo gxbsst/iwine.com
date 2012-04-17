@@ -89,6 +89,10 @@ Patrick::Application.routes.draw do
     # WINES
     resource :wines
 
+    # Message
+    # match "conversations/:id/reply", :to => "conversations#reply", :via => [:get, :post]
+    resources :messages
+    resources :conversations
     # match "cellars/new", :to => "cellars#new", :via => [:post, :get]
   end
   match ':controller(/:action(/:id))', :controller => /mine\/[^\/]+/

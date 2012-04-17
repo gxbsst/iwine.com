@@ -32,18 +32,24 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :agree_term, :current_user
+
+  ## extend message for user
+  acts_as_messageable
   
+
+  ## crop avatar
   after_update :crop_avatar
-
-  def crop_avatar
-    if crop_x.present?
-      avatar.recreate_versions!
-
-      # Crop之后，重新生成缩略图
-      resize_avatar(:large, :middle)
-      resize_avatar(:large, :thumb)
-    end
+  
+  def name
+    self.to_s
   end
+
+  def mailboxer_email(message)
+    email
+  end
+  
+  
+  
 
   # accepts_nested_attributes_for :user_profile
   # alias :user_profiles_attribute :user_profile
@@ -132,6 +138,16 @@ class User < ActiveRecord::Base
     image = MiniMagick::Image.open(source_path)
     image.resize(params)
     image.write(target_path)
+  end
+
+   def crop_avatar
+    if crop_x.present?
+      avatar.recreate_versions!
+
+      # Crop之后，重新生成缩略图
+      resize_avatar(:large, :middle)
+      resize_avatar(:large, :thumb)
+    end
   end
 
 end
