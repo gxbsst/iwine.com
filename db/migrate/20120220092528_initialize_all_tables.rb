@@ -313,7 +313,7 @@ class InitializeAllTables < ActiveRecord::Migration
 
     create_table "wine_varieties", :force => true do |t|
       t.string  "culture", :limit => 7
-      t.string  "name",                
+      t.string  "name"
       t.string  "name_en"
       t.timestamps
     end
