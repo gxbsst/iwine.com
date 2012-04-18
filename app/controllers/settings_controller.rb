@@ -4,7 +4,10 @@ class SettingsController < ApplicationController
   before_filter :authenticate_user!
 
   def basic
+
     @title = "帐号设置"
+
+    @availabe_sns = current_user.available_sns
 
     @profile = current_user.profile || current_user.build_profile
 
@@ -89,7 +92,7 @@ class SettingsController < ApplicationController
       flash[:notice] = "fail"
     end
 
-    user_oauth = Users::Oauth.new 
+    user_oauth = Users::Oauth.new
     user_oauth.user_id = current_user.id
     user_oauth.access_token = results[:access_token]
     user_oauth.sns_name = client.name.to_s
