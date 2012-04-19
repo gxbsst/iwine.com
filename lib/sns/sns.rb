@@ -133,21 +133,4 @@ module SNS
       local_user
     end
   end
-
-  module Gmail
-    def friends( login , password )
-      data = Contacts::Gmail.new(login, password).contacts
-      list = []
-
-      data.each do |row|
-        list.push({
-          :sns_user_name => row[1] ,
-          :username => row[0] ,
-          :avatar => '' 
-        });
-      end
-
-      list
-    end
-  end
 end

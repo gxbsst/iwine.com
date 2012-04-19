@@ -103,6 +103,14 @@ class FriendsController < ApplicationController
     @available_sns = current_user.available_sns
   end
 
+  def from_email
+
+    if request.post?
+      @recommend_users = current_user.mail_contacts params[:email], params[:login], params[:password] 
+    end
+
+  end
+
   private
 
   def build_oauth_token_key(name, oauth_token)
