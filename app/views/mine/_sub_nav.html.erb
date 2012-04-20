@@ -1,35 +1,38 @@
-<% sub_menu = { "index" => "/mine", "feeds" => "/mine/feeds", "cellars" => "/mine/cellars", "status" => "/mine/status", "albums" => "/mine/albums", "wines" => "/mine/wines", "wish" => "/mine/wish", "do" => "/mine/do", "settings" => "/settings/" } %>
-<!-- <div id="navcontainer">
-	<ul id="navlist">
-		<% sub_menu.each do |action_name, url| %>
-		 <% if action == action_name %>
-			<li  id="active" ><%= link_to t("nav.sub_nav.mine.#{action_name}"),  url, {:id => "current"} %></li>
-		 <% else %>
-			<li><%= link_to t("nav.sub_nav.mine.#{action_name}"), url %></li>
-		 <% end %>
-		<% end %>
-	</ul>
-</div> -->
+<% sub_menu = {
+     "cellars"          => "/mine/cellars",
+     "wine_follows"     => "/mine/wine_follows",
+     "winery_follows"   => "/mine/winery_follows",
+     "simple_comments"  => "/mine/simple_comments",
+     "detail_comments"  => "/mine/detail_comments",
+     "user_follows"     => "/mine/user_follows",
+     "user_followed"    => "/mine/user_followed",
+     "albums"           => "/mine/albums" } %>
 
 
 <div id="cu_user_menu" class="clearfix">
   <div class="pic">
-	<a href="#">
-		 <%= image_tag current_user.avatar_url( :thumb ), :width => 50 , :height => 50, :alt => current_user.username  %>
-	</a>
-	</div>
+    <%= link_to_user current_user, users_path(current_user), :with_avatar => true, :avatar_version => :large %>
+  </div>
   <div class="info_menu">
-    <h1><%= current_user.username %> <img src="/assets/base/icon_user_l1.gif" width="13" height="12" alt="评论等级">
-      <div class="edit_signature"><span> 准备小宇宙爆发......（<a href="#">修改</a>）</span></div></h1>
+    <h1>
+      <%= current_user.username %>
+      <img src="/assets/base/icon_user_l1.gif" width="13" height="12" alt="评论等级">
+      <div class="edit_signature">
+        <span> <%= current_user.profile.bio %>（<a href="#">修改</a>）</span>
+      </div>
+    </h1>
     <ul class="clearfix">
-	
-		<% sub_menu.each do |action_name, url| %>
-		 <% if action == action_name %>
-			<li  class="current" ><%= link_to t("nav.sub_nav.mine.#{action_name}"),  url %></li>
-		 <% else %>
-			<li><%= link_to t("nav.sub_nav.mine.#{action_name}"), url %></li>
-		 <% end %>
-		<% end %>
+      <% sub_menu.each do |action_name, url| %>
+        <% if action == action_name %>
+          <li  class="current" >
+            <%= link_to t("nav.sub_nav.mine.#{action_name}"),  url %>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to t("nav.sub_nav.mine.#{action_name}"), url %>
+          </li>
+        <% end %>
+      <% end %>
     </ul>
   </div>
   <div class="clear"></div>
