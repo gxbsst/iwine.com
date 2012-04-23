@@ -20,3 +20,5 @@ Capfile
 Gemfile.lock
 
 /.idea/workspace.xml
+/app/models/user.rb
+/db/schema.rb
