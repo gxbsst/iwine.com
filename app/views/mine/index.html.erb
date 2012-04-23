@@ -1,1 +1,13 @@
 <%= render "sub_nav", :action => params[:action] %>
+
+<% @comments.each do |comment| %>
+  <%= comment.content %>
+<% end %>
+
+<% @followers.each do |user| %>
+  <%= user.user.username %>
+<% end %>
+
+<% @followings.each do |user| %>
+  <%= user.user.username %>
+<% end %>

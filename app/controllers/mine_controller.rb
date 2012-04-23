@@ -2,8 +2,11 @@ class MineController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    ## TODO
-    # 喜欢的， 喝过的
+
+    @followers = current_user.followers
+    @followings = current_user.followings
+    @comments = current_user.comments
+
   end
   
   def wish
@@ -21,6 +24,5 @@ class MineController < ApplicationController
   def status
     
   end
-  
   
 end

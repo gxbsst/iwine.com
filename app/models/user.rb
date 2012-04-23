@@ -155,6 +155,7 @@ class User < ActiveRecord::Base
 
   end
 
+
   private
 
   def resize_avatar(from_version, to_version)
