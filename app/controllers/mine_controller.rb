@@ -5,7 +5,6 @@ class MineController < ApplicationController
   def index
     ## TODO
     # 喜欢的， 喝过的
-    @simple_comments = Wines::Comment.all
     # 藏酒
     @wine_collections = ""
     # 关注的酒
