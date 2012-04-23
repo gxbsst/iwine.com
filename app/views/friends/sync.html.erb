@@ -21,7 +21,7 @@
     <% end %>
     <div class="buttons">
       <%= link_to_button "search_all_syncs", "/" %>
-      <%= link_to_button "syncs_settings", "/" %>
+      <%= link_to_button "syncs_settings", "/friends/sns" %>
     </div>
     <!-- .box end -->
   </div>
@@ -45,7 +45,7 @@
 <div class="person">
   <% @recommend_friends.each do|friend| %>
   <div class="person_item">
-    <p class="avatar">  <%= link_to image_tag(friend.user.avatar,  :width => "60px", :height => "60px"), "/" %> </p>
+    <p class="avatar">  <%= link_to image_tag(friend.sns_info[:avatar],  :width => "60px", :height => "60px"), "/" %> </p>
     <p class="name"> <%= link_to friend.user.username, '/friends/follow?user_id=' + friend.user_id.to_s %>
     <p class="button"> <%= link_to_button "add_friend", '/friends/follow?user_id=' + friend.user_id.to_s %>
       <!-- person item end -->
@@ -65,4 +65,5 @@
  </div>
 <% end %>
 <!-- friends end -->
+</div>
 </div>

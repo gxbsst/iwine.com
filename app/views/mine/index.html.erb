@@ -1,1 +1,68 @@
-<%= render "sub_nav", :action => params[:action] %>
+<div class="mine">
+  <%= render "sub_nav", :action => params[:action] %>
+  <div class="clear"></div>
+
+  <div class="left">
+    <div class="box box_1 cellar">
+      <h3>藏酒 <span class="font_12"><%= link_to "(12支, 更多)", :controller => "/mine/cellars" %></span> </h3>
+      <!-- .box end -->
+      <%= render "mine/share/wine_image_list", :wine => @wine_collections %>
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="box box_2 wine_follows">
+      <h3>关注的酒<span class="font_12"><%= link_to "(12支, 更多)", :controller => "/mine/cellars" %></span> </h3>
+      <%= render "mine/share/wine_image_list", :wine => @wine_follows %>
+      <!-- .box end -->
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="box box_3 detail_comments">
+      <h3>品酒辞<span class="font_12"><%= link_to "(12支, 更多)", :controller => "/mine/cellars" %></span> </h3>
+
+      <!-- TODO: 使用 render @detail_comments , 模板在 wines/detail_comments -->
+      <%= render "wines/testing_notes/testing_note" %>
+      <!-- .box end -->
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="box box_4 simple_comments">
+      <h3>评论<span class="font_12"><%= link_to "(12支, 更多)", :controller => "/mine/cellars" %></span> </h3>
+      <%= render @simple_comments %>
+      <!-- .box end -->
+    </div>
+    <!-- left end -->
+  </div>
+
+  <div class="right">
+    <div class="box box_1  user_follows" >
+      <h3>关注的人<span class="font_12"><%= link_to "(12支, 更多)", :controller => "/mine/cellars" %></span> </h3>
+      <%= render "mine/share/user_list", :wine => @wine_collections %>
+      <!-- .box end -->
+     </div>
+
+    <div class="clear"></div>
+
+    <div class="box box_2  user_followed" >
+      <h3>粉丝<span class="font_12"><%= link_to "(12支, 更多)", :controller => "/mine/cellars" %></span> </h3>
+      <%= render "mine/share/user_list", :wine => @wine_collections %>
+      <!-- .box end -->
+     </div>
+
+    <div class="clear"></div>
+
+    <div class="box box_3  event_follows" >
+      <h3>关注的活动<span class="font_12"><%= link_to "(12支, 更多)", :controller => "/mine/cellars" %></span> </h3>
+      <%= render "mine/share/user_list", :wine => @wine_collections %>
+      <!-- .box end -->
+     </div>
+
+    <!-- right end -->
+  </div>
+  <!-- .mine end -->
+</div>
+
+<div class="clear"></div>

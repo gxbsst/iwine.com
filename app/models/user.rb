@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   has_many :followers, :class_name => 'Friendship', :include => :follower
   has_many :followings, :class_name => 'Friendship', :foreign_key => 'follower_id', :include => :user
 
-  accepts_nested_attributes_for :profile,  :allow_destroy => true
+  accepts_nested_attributes_for :profile, :allow_destroy => true
 
   # validates :username, :presence => false, :allow_blank => true, :numericality => true
   validates :agree_term, :acceptance => true, :on => :create
@@ -31,20 +31,68 @@ class User < ActiveRecord::Base
   # upload avatar
   mount_uploader :avatar, AvatarUploader
 
-  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :agree_term, :current_user
-  
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :agree_term
+  cattr_accessor :current_user
+
+  ## extend message for user
+  acts_as_messageable
+
+  ## crop avatar
   after_update :crop_avatar
 
-  def crop_avatar
-    if crop_x.present?
-      avatar.recreate_versions!
-
-      # Crop之后，重新生成缩略图
-      resize_avatar(:large, :middle)
-      resize_avatar(:large, :thumb)
-    end
+  def name
+    self.to_s
   end
 
+  def mailboxer_email(message)
+    email
+  end
+
+   ##################################
+   # 用户资源统计， 如:  藏酒，好友 #
+   ##################################
+
+  # 藏酒
+  def wine_cellar_count
+    ## TODO: 当酒窖未创建时， 会出错， 因此当用户注册帐号时， 请同时创建酒窖、相册等用户资源信息
+    cellar.items.count
+  end
+
+  # 关注的酒
+  def wine_follows_count
+    ## TODO 更改用户评论操作之后，更新以下计算代码
+    comments.count
+  end
+
+  # 关注的酒庄
+  def winery_follows_count
+    ## TODO: 未实现这个功能， 实现之后请更新
+  end
+
+  # 评论
+  def simple_comment_count
+    ## TODO: 未实现这个功能， 实现之后请更新
+  end
+
+  # 酒评
+  def detail_comment_count
+    ## TODO: 未实现这个功能， 实现之后请更新
+  end
+
+  # 关注的人
+  def user_followes_count
+    followers.count
+  end
+
+  # 粉丝
+  def user_followeds_count
+    followings.count
+  end
+
+  # 相册
+  def albums_count
+    albums.count
+  end
   # accepts_nested_attributes_for :user_profile
   # alias :user_profiles_attribute :user_profile
 
@@ -97,7 +145,7 @@ class User < ActiveRecord::Base
   end
 
   def available_sns
-    list = {} 
+    list = {}
     tokens = Users::Oauth.all :conditions => { :user_id => id }
 
     tokens.each do |token|
@@ -144,6 +192,16 @@ class User < ActiveRecord::Base
     image = MiniMagick::Image.open(source_path)
     image.resize(params)
     image.write(target_path)
+  end
+
+   def crop_avatar
+    if crop_x.present?
+      avatar.recreate_versions!
+
+      # Crop之后，重新生成缩略图
+      resize_avatar(:large, :middle)
+      resize_avatar(:large, :thumb)
+    end
   end
 
 end

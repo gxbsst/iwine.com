@@ -56,6 +56,50 @@ $(document).ready(function(){
         } // end helper
 
     });
+    
+    // 回复信息
+    $("a.reply_conversation").fancybox({
+        maxWidth        : 500,
+        maxHeight       : 150,
+        fitToView       : false,
+        width           : '70%',
+        height          : '70%',
+        autoSize        : false,
+        closeClick      : false,
+        openEffect      : 'none',
+        closeEffect     : 'none',
+        helpers : {
+            overlay : {
+                opacity : 0.8,
+                css : {
+                    'background-color' : '#FFF'
+                }
+            }
+        } // end helper
+
+    });
+    
+    // 发送信息
+    $("a.send_message").fancybox({
+        maxWidth        : 500,
+        maxHeight       : 260,
+        fitToView       : false,
+        width           : '70%',
+        height          : '100%',
+        autoSize        : false,
+        closeClick      : false,
+        openEffect      : 'none',
+        closeEffect     : 'none',
+        helpers : {
+            overlay : {
+                opacity : 0.8,
+                css : {
+                    'background-color' : '#FFF'
+                }
+            }
+        } // end helper
+
+    });
 
 });
 
