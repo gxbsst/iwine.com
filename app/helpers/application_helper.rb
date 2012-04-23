@@ -88,7 +88,7 @@ module ApplicationHelper
             url_or_object,
             options)
   end
-  
+
   def link_to_sync_button(sns_name, url_or_object, options={})
     options.merge!({ :class => "button #{sns_name}" })
 
@@ -101,8 +101,8 @@ module ApplicationHelper
   ## Link to User with avatar
   def link_to_user(user_object, url_or_object, options={})
     avatar_version = options[:avatar_version] || :middle
-    if options[:with_avatar] 
-      link_to(image_tag(avatar(user_object,avatar_version)), url_or_object, options)
+    if options[:with_avatar]
+      link_to(image_tag(avatar(user_object,avatar_version), :align => "left"), url_or_object, options)
     else
       if current_user.id == user_object.id
         link_to("我", url_or_object, options)

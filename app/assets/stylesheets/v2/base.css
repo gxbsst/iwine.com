@@ -18,6 +18,12 @@ body {
 .block {
   display: block;
 }
+.relative {
+    position: relative;
+   }
+.absolute {
+    position: absolute;
+    }
 .clearfix:after {
   clear: both;
   content: " .";
@@ -727,6 +733,10 @@ input, textarea {
     min-width: 950px;
     width: auto;
     background: none;
+    }
+.span_950.fixed_width #main{
+    margin: 0 auto;
+    width: 950px;
     }
 /* span_950 end */
 

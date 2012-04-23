@@ -5,35 +5,51 @@
      "simple_comments"  => "/mine/simple_comments",
      "detail_comments"  => "/mine/detail_comments",
      "user_follows"     => "/mine/user_follows",
-     "user_followed"    => "/mine/user_followed",
+     "user_followeds"    => "/mine/user_followeds",
      "albums"           => "/mine/albums" } %>
 
+<div id="cu_user_menu" class="clearfix relative">
+  <div class="user_info">
+    <div class="avatar relative">
+      <%= link_to_user current_user,
+                       users_path(current_user),
+                       :with_avatar => true,
+                       :avatar_version => :large %>
 
-<div id="cu_user_menu" class="clearfix">
-  <div class="pic">
-    <%= link_to_user current_user, users_path(current_user), :with_avatar => true, :avatar_version => :large %>
-  </div>
-  <div class="info_menu">
-    <h1>
-      <%= current_user.username %>
-      <img src="/assets/base/icon_user_l1.gif" width="13" height="12" alt="评论等级">
+    </div>
+     <%= link_to "我的酒窖", "/mine/cellar", :class => "block button absolute" %>
+    <div class="text_info">
+      <h3><%= current_user.username %></h3>
       <div class="edit_signature">
-        <span> <%= current_user.profile.bio %>（<a href="#">修改</a>）</span>
+        <p class="bio"> <%= current_user.profile.bio %>（<a href="#">修改</a>） </p>
+        <br />
+        <%= link_to_icon "message", {:controller => 'mine/conversations'} %>
+        <%= link_to "私信(0)", {:controller => 'mine/conversations'} %> |
+        <%= link_to "设置", :controller => "/settings" %>
       </div>
-    </h1>
+    </div>
+    <!-- user_info end -->
+  </div>
+  <div class="clear">
+  </div>
+  <div class="sub_nav absolute">
     <ul class="clearfix">
       <% sub_menu.each do |action_name, url| %>
         <% if action == action_name %>
           <li  class="current" >
+            <%= link_to "2" , url %>
             <%= link_to t("nav.sub_nav.mine.#{action_name}"),  url %>
           </li>
         <% else %>
           <li>
+            <%= link_to "2" , url %> <br />
             <%= link_to t("nav.sub_nav.mine.#{action_name}"), url %>
           </li>
         <% end %>
       <% end %>
     </ul>
+    <!-- sub_nav end -->
   </div>
   <div class="clear"></div>
+  <!-- cu_user_menu end -->
 </div>
