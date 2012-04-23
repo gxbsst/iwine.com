@@ -1,12 +1,14 @@
 <% content_for :wine_register do %>
-    <%= javascript_include_tag 'wine_registers' %>
+    <%#= javascript_include_tag 'wine_registers' %>
+    <%= javascript_include_tag 'region_world' %>
 <% end %>
 <div class="left">
   <h3><%= t :create_wine_item %></h3>
 
-  <%= form_for @register, :validate => true, :url => 'register', :html => { :class => 'form-horizontal', :multipart => true } do |f| %>
+  <%= form_for @register, :validate => true, :url => url_for(:action => :create), :html => { :class => 'form-horizontal', :multipart => true } do |f| %>
 
       <%= render 'share/error_messages', :target => @register %>
+		
       <table  cellspacing="10" cellpadding="5">
         <tr>
           <td><%= f.label :name_en %></td>
@@ -14,12 +16,16 @@
         </tr>
         <tr>
           <td><%= f.label :name_zh %></td>
-          <td><%= f.text_field :name_zh %></td>
+          <td><%= f.select :name_zh,  Wines::Style.all.collect{ |s| [s.name_zh + '/' + s.name_en, s.id] }, :html => {:id => "name_zh" } %></td>
         </tr>
         <tr>
           <td><%= f.label :other_cn_name %></td>
           <td><%= f.text_field :other_cn_name %> <span class="hint"> 多个名称用逗号隔开.</span></td>
         </tr>
+		<tr>
+			<td></td>
+			<td><%= render "region_tree" %></td>
+		</tr>
         <tr>
           <td><%= f.label :wine_style_id %></td>
           <td><%= f.select :wine_style_id, Wines::Style.all.collect{ |s| [s.name_zh + '/' + s.name_en, s.id] } %></td>
@@ -41,7 +47,15 @@
 
         <tr>
           <td><%= f.label :drinkable_begin %></td>
-          <td><%= f.text_field :drinkable_begin %> - <%= f.text_field :drinkable_end %></td>
+          <td>
+		<%= f.date_select :drinkable_begin, :discard_day => true, :discard_month => true, :start_year =>  1990, :end_year => Time.now.year + 150  %>
+		
+		年到 
+		<%= f.date_select :drinkable_end, :discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150 %>
+		
+		年
+		
+		</td>
         </tr>
 
         <tr>

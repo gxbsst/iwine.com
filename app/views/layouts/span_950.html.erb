@@ -4,6 +4,7 @@
   <%= stylesheet_link_tag    "v2/application" %>
   <%= raw stylesheet_if_exists "#{params[:controller]}", "#{params[:controller]}/#{params[:action]}" %>
   <%= javascript_include_tag "application" %>
+  <%= yield :wine_register %>
   <%= csrf_meta_tags %>
   <!--[if lte IE 7]>
   <%= stylesheet_link_tag "v2/ie" %>

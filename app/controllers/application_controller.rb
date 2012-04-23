@@ -4,9 +4,9 @@ class ApplicationController < ActionController::Base
   layout  proc { |controller|
     span_950 = ["static", "wines"]
     # span_860 = ["settings"]
-    if span_950.include? controller.controller_name
+    if params[:controller].include? "static"
       "waterfall_950"
-    elsif controller.controller_name == "mine"
+    elsif params[:controller].include? "mine"
       "span_950"
     else
       "waterfall"

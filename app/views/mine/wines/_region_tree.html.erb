@@ -1,0 +1,30 @@
+
+
+<div id="region">
+	
+<span id="tree_one">
+	<%= select_tag "region[one]",  options_for_select(Wines::RegionTree.region(0).collect{ |l| [l.name_en + "/" + l.name_zh, l.id] }), :prompt => '-请选择-' %>	
+</span>
+
+<span id="tree_two" class="tree" style="display: none" >
+	<%= select_tag "region[two]", [], :prompt => '-请选择-' %>	
+</span>
+
+<span id="tree_three" class="tree"  style="display: none">
+<%= select_tag "region[three]", [], :prompt => '-请选择-' %>		
+</span>
+
+<span id="tree_four" class="tree" style="display: none">
+<%= select_tag "region[four]", [], :prompt => '-请选择-' %>		
+</span>
+
+<span id="tree_five" class="tree"  style="display: none">
+<%= select_tag "region[five]", [], :prompt => '-请选择-' %>		
+</span>
+
+<span id="tree_six" class="tree"  style="display: none">
+<%= select_tag "region[six]", [], :prompt => '-请选择-' %>		
+</span>
+
+
+</div>
