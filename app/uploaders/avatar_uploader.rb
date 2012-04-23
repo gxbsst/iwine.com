@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 class AvatarUploader < CarrierWave::Uploader::Base
-
   permissions 0777
 
   # Include RMagick or MiniMagick support:

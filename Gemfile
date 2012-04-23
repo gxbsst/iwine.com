@@ -49,6 +49,9 @@ gem "stickies", :git => "git://github.com/techbang/stickies.git"
 
 gem 'store_configurable', '~> 3.2.0'
 
+## Message
+gem 'mailboxer'
+
 group :development, :test do
   gem 'i18n'
   gem 'pry'  # "binding.pry" in action
@@ -61,6 +64,7 @@ group :assets do
   gem 'sass-rails', "  ~> 3.2.3"
   gem 'coffee-rails', "~> 3.2.1"
   gem 'uglifier', '>= 1.0.3'
+  gem 'compass-rails'
 end
 
 
