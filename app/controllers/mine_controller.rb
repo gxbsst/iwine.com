@@ -29,5 +29,4 @@ class MineController < ApplicationController
 
   end
 
-
 end
