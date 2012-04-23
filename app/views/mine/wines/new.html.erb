@@ -1,10 +1,10 @@
-<% content_for :wine_register do %>
+<% #content_for :wine_register do %>
     <%= javascript_include_tag 'wine_registers' %>
-<% end %>
+<%# end %>
 <div class="left">
   <h3><%= t :create_wine_item %></h3>
 
-  <%= form_for @register, :validate => true, :url => 'register', :html => { :class => 'form-horizontal', :multipart => true } do |f| %>
+  <%= form_for @register, :validate => true, :url => {:action => :create}, :html => { :class => 'form-horizontal', :multipart => true } do |f| %>
 
       <%= render 'share/error_messages', :target => @register %>
       <table  cellspacing="10" cellpadding="5">
@@ -43,7 +43,10 @@
           <td><%= f.label :drinkable_begin %></td>
           <td><%= f.text_field :drinkable_begin %> - <%= f.text_field :drinkable_end %></td>
         </tr>
-
+        <tr>
+          <td><%= f.label :region_tree_id %></td>
+          <td><%= f.text_field :region_tree_id %>英文名/中文名</td>
+        </tr>
         <tr>
           <td><%= f.label :variety_name %></td>
           <td>

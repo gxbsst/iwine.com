@@ -5,12 +5,12 @@ namespace :app do
     require 'csv'
     styles = [
       ['Red Wine', '红葡萄酒'],
-      ['White Wine', '粉红葡萄酒'],
+      ['White Wine', '白葡萄酒'],
+      ['Rose Wine', '粉红葡萄酒'],
       ['Sparking Wine', '起泡酒'],
-      ['Champagne Wine', '香槟酒'],
       ['Port Wine', '波特酒'],
       ['Sherry Wine', '雪利酒'],
-      ['Enhance Wine', '加强酒'],
+      ['Fortified Wine', '加强酒'],
       ['Sweet Wine', '甜酒'],
       ['Others', '其它']
     ]
@@ -48,20 +48,7 @@ namespace :app do
     end
   end
 
-  desc "TODO"
-  task :upload_photos => :environment do
-     csv = CSV.read("#{Rails.root}/lib/wine_sample.csv")
-     csv.each do |item|
-       wine_register = Wines::Register.find_or_initialize_by_origin_name_and_vintage(item[1].force_encoding('utf-8'),item[8])
-       file_path = Rails.root.join('db', item[0], Dir.entries(Rails.root.join('db', item[0])).select{|x| x != '.' && x != '..'}.first)
-       wine_register.photo_name = open(file_path)
-       wine_register.region_tree_id = 1
-       wine_register.winery_id = 1
-       # photo = Photo.create(:owner_type => 2, :business_id => 1, :image => File.read(a))
-       #photo = Photo.create(:owner_type => 2, :business_id => @wine_detail.id, :image => open(file_path))
-       wine_register.save
-     end
-  end
+
 
   desc "TODO"
   task :upload_all_wines => :environment do
@@ -203,6 +190,7 @@ namespace :app do
               :business_id => wine_detail.id,
               :category => 1,
               :album_id => 1,
+              :is_cover => 1,
               :image => open(photo_path))
           puts wine.id
         end
@@ -239,7 +227,7 @@ namespace :app do
             # 2. 添加一个字段， 保存原生文字，如:RhÃ´ne Valley, name_en 保存 RhA´ne Valley
             # 转换方法: "Moulis/ Moulis-en-MÃ©doc".to_ascii_brutal => https://github.com/tomash/ascii_tic
             region = Wines::RegionTree.where("name_en = ? and level = ? ", value, level).first
-            region = Wines::RegionTree.create(:doc => value == last_value ? doc : nil,:name_zh => name_zh, :name_en => value, :origin_name => ascii_value, :parent_id => parent, :scope => 0, :tree_left => 0, :tree_right => 0, :level => level) if region.blank?
+            region = Wines::RegionTree.create(:doc => value == last_value ? doc : nil,:name_zh => name_zh, :name_en => ascii_value, :origin_name => value, :parent_id => parent, :scope => 0, :tree_left => 0, :tree_right => 0, :level => level) if region.blank?
             parent = region.id
             level = level + 1
           end
