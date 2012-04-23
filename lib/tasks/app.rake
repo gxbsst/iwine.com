@@ -67,7 +67,8 @@ namespace :app do
   task :upload_all_wines => :environment do
 
     ## 导入酒和详细信息
-    csv  = CSV.read("#{Rails.root}/lib/wines_datas.csv")
+    file_path = Rails.root.join("lib/tasks/data/wines_datas.csv")
+    csv  = CSV.read(file_path)
     csv.each do |item|
       begin
         region_tree = Wines::RegionTree.where("origin_name = ? and level = ?", item[6].to_s.split('/').last, item[6].to_s.split('/').size).first
@@ -110,8 +111,10 @@ namespace :app do
           wine_register.status = 0
           wine_register.result = 0
           # process photo
-          if Dir.exist? Rails.root.join('lib', 'wines_photos', item[0])
-            file_path = Rails.root.join('lib','wines_photos', item[0], Dir.entries(Rails.root.join('lib', 'wines_photos', item[0])).select{|x| x != '.' && x != '..' && x != '.DS_Store'}.first)
+          photo_path  = Rails.root.join('lib', 'tasks','data', 'wine_images', item[0])
+
+          if Dir.exist? photo_path
+            file_path = Rails.root.join(photo_path, Dir.entries(photo_path).select{|x| x != '.' && x != '..' && x != '.DS_Store'}.first)
             wine_register.photo_name = open(file_path)
           end
           wine_register.save
@@ -217,8 +220,8 @@ namespace :app do
   task :init_region_tree => :environment do
     require 'csv'
     # TODO: “请修改下面的路径”
-
-    Dir.glob("/Users/sidways/Documents/Region_Trees/*").each do |csv_file|
+    file_path_directory = Rails.root.join("lib/tasks/data/region_tree/*")
+    Dir.glob(file_path_directory).each do |csv_file|
       puts "=============== begin #{csv_file} ====================="
       csv = CSV.read(csv_file)
       csv.each do |item|
