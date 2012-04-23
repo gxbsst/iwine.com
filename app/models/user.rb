@@ -183,6 +183,27 @@ class User < ActiveRecord::Base
     Friendship.first :conditions => { :user_id => user_id , :follower_id => id }
   end
 
+  def mail_contacts email, login, password
+
+    if email == 'gmail'
+      email_list = []
+      data = Contacts::Gmail.new( login , password ).contacts
+
+      data.each do |email|
+        email_list.push( email[1] )
+      end
+
+      return User.all :conditions => { :email => email_list }
+      
+    elsif email == 'sina'
+
+    elsif email == 'qq'
+
+    end
+
+  end
+
+
   private
 
   def resize_avatar(from_version, to_version)

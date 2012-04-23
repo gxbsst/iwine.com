@@ -12,5 +12,4 @@ class Users::Oauth < ActiveRecord::Base
     { :access_token => access_token, :access_token_secret => refresh_token }
   end
 
-
 end
