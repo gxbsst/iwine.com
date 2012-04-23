@@ -48,7 +48,7 @@
     <p class="avatar">  <%= link_to image_tag(friend.sns_info[:avatar],  :width => "60px", :height => "60px"), "/" %> </p>
     <p class="name"> <%= link_to friend.user.username, '/friends/follow?user_id=' + friend.user_id.to_s %>
     <p class="button"> <%= link_to_button "add_friend", '/friends/follow?user_id=' + friend.user_id.to_s %>
-      <!-- person item end -->
+    <!-- person item end -->
   </div>
   <% end %>
   <div class="clear"> </div>
@@ -62,7 +62,7 @@
    <!-- TODO: big的ICON还未齐全， 请通知肖颖 -->
    <!------------------------------------------>
    <p><%= link_to_sync_button params[:sns_name], '/friends/new_sns?sns_name=' + params[:sns_name] %> <br />点击按钮绑定账号</p>
- </div>
+</div>
 <% end %>
 <!-- friends end -->
 </div>

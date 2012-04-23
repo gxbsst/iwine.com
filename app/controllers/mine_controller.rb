@@ -11,6 +11,7 @@ class MineController < ApplicationController
     # 关注的酒
     @wine_follows = ""
 
+
     @followers = current_user.followers
     @followings = current_user.followings
     @comments = current_user.comments
@@ -32,6 +33,4 @@ class MineController < ApplicationController
   def status
 
   end
-
-
 end
