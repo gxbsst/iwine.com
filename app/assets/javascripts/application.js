@@ -55,7 +55,7 @@ $(document).ready(function(){
         } // end helper
 
     });
-    
+
     // 回复信息
     $("a.reply_conversation").fancybox({
         maxWidth        : 500,
@@ -77,7 +77,7 @@ $(document).ready(function(){
         } // end helper
 
     });
-    
+
     // 发送信息
     $("a.send_message").fancybox({
         maxWidth        : 500,
@@ -98,6 +98,13 @@ $(document).ready(function(){
             }
         } // end helper
 
+    });
+
+
+    // Mine 鼠标滑动显示编辑、删除按钮
+    $(".mine.wine_follows .left  .box .item ").hover(function(){
+        $(this).children(".delete").toggle();
+        $(this).children(".edit").toggle();
     });
 
 });
