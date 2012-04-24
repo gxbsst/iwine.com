@@ -37,7 +37,7 @@
       <% sub_menu.each do |action_name, url| %>
         <% if action == action_name %>
           <li  class="current" >
-            <%= link_to "2" , url %>
+            <%= link_to "2" , url %> <br />
             <%= link_to t("nav.sub_nav.mine.#{action_name}"),  url %>
           </li>
         <% else %>

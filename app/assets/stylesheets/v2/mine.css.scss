@@ -24,6 +24,7 @@ $h4_font_size: 14px;
         }
         }
     /* Mine Layout  */
+
     .font_12 {
         font-size: 12px;
     }
@@ -34,6 +35,7 @@ $h4_font_size: 14px;
         }
         }
     #cu_user_menu {
+
         .user_info {
             .avatar {
                 width: 130px;
@@ -63,14 +65,17 @@ $h4_font_size: 14px;
         .sub_nav  {
             top: 80px;
             width: 800px;
-            padding-top: 10px;
             padding-left: 150px;
-            height: 40px;
+            height: 50px;
             background: $background_color_grey;
             ul {
                 margin: 0 auto;
+                li.current {
+                    background: url("mine_sub_nav_current_bg.png") repeat-x left center;
+                }
                 li {
                     @include horizontal-list-item;
+                    padding: 5px 10px 0 10px;
                     text-align: center;
                     a {
                         color: $text_color_grey;
