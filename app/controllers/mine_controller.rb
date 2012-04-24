@@ -10,6 +10,20 @@ class MineController < ApplicationController
 
   end
 
+  # 关注的酒
+  def wine_follows
+
+  end
+
+  # 我的评论
+  def simple_comments
+
+  end
+
+  def user_follows
+
+  end
+
   def wish
 
   end
