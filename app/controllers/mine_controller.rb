@@ -3,13 +3,6 @@ class MineController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    ## TODO
-    # 喜欢的， 喝过的
-    # 藏酒
-    @wine_collections = ""
-    # 关注的酒
-    @wine_follows = ""
-
 
     @followers = current_user.followers
     @followings = current_user.followings

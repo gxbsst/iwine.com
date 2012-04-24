@@ -203,7 +203,6 @@ class User < ActiveRecord::Base
 
   end
 
-
   private
 
   def resize_avatar(from_version, to_version)
@@ -215,7 +214,7 @@ class User < ActiveRecord::Base
     image.write(target_path)
   end
 
-   def crop_avatar
+  def crop_avatar
     if crop_x.present?
       avatar.recreate_versions!
 
@@ -224,5 +223,4 @@ class User < ActiveRecord::Base
       resize_avatar(:large, :thumb)
     end
   end
-
 end

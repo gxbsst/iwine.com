@@ -1,5 +1,4 @@
 class Wines::Detail < ActiveRecord::Base
-  
   paginates_per 10
   
   include Wines::WineSupport
@@ -56,5 +55,5 @@ class Wines::Detail < ActiveRecord::Base
   def drinkable
     drinkable_begin.to_s + ' - ' + drinkable_end.to_s
   end
-  
+
 end
