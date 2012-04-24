@@ -20,6 +20,7 @@ gem 'hpricot'
 gem "rmagick"
 gem "mini_magick"
 gem "carrierwave"
+gem "fileutils"
 
 gem 'omniauth'
 gem 'oauth'
