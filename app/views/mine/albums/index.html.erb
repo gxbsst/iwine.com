@@ -1,4 +1,7 @@
+<div class="mine albums">
 <%= render "/mine/sub_nav", :action => params[:action] %>
+<div class="clear"></div>
+
 <div class="title_btn clearfix">
   <a href="<%= url_for :action => 'new' %>" class="new_album fancybox.ajax button_gray float_r"><span>新建相册</span></a>
   <a href="<%= url_for :action => 'upload' %>" class="button_gray float_r mr5"><span>添加照片</span></a>
@@ -25,8 +28,10 @@
 </ul>
 <div class="clear"></div>
 <div class="pagination">
- <%= paginate @albums, :outer_window => 2 %> 
+ <%= paginate @albums, :outer_window => 2 %>
 </div>
 <script type="text/javascript">
 $('.new_album').fancybox({padding:0, margin: 0, width: 450, height: 'auto', autoSize: false, modal: true});
 </script>
+<!-- end mine -->
+</div>

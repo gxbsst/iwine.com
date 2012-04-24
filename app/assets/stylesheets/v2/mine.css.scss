@@ -8,7 +8,7 @@ $h4_font_size: 14px;
 }
 .mine {
     .item.dotted {
-         border-bottom: 1px dotted #CCC;
+        border-bottom: 1px dotted #CCC;
     }
     .item {
         overflow: auto;
@@ -22,7 +22,7 @@ $h4_font_size: 14px;
             right: 30px;
             top: 0px;
         }
-        }
+    }
     /* Mine Layout  */
 
     .font_12 {
@@ -33,7 +33,7 @@ $h4_font_size: 14px;
         a {
             color: $text_color_grey;
         }
-        }
+    }
     #cu_user_menu {
 
         .user_info {
@@ -182,13 +182,13 @@ $h4_font_size: 14px;
         float: left;
         margin-right: 10px;
 
-        }
+    }
     .item {
         overflow: auto;
         padding: 15px 0;
     }
 
- }
+}
 /* 关注的酒 结束*/
 
 
@@ -198,7 +198,7 @@ $h4_font_size: 14px;
         float: left;
         margin-right: 10px;
         height: 70px;
-        }
+    }
     .item {
         height: 74px;
         width: 150px;
@@ -214,18 +214,18 @@ $h4_font_size: 14px;
         padding: 0;
     }
 
-      a.find_friends {
-            width: 130px;
-            height: 30px;
-            background: $button_background_green;
-            color: #FFF;
-            text-align: center;
-            padding-top: 10px;
-            font-size: 14px;
-            font-weight: bold;
-        }
+    a.find_friends {
+        width: 130px;
+        height: 30px;
+        background: $button_background_green;
+        color: #FFF;
+        text-align: center;
+        padding-top: 10px;
+        font-size: 14px;
+        font-weight: bold;
+    }
 
- }
+}
 /* 关注的人 结束*/
 
 /* 简评 开始 */
@@ -244,3 +244,17 @@ $h4_font_size: 14px;
 }
 
 /*简评 结束*/
+
+/* 相册 开始 */
+.mine.albums {
+    .title_btn {
+        margin: 20px 0;
+    }
+    .album_list {
+        li {
+            @include horizontal-list-item;
+            margin: 20px;
+        }
+    }
+}
+/* 相册 结束 */
