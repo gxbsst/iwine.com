@@ -167,6 +167,18 @@ class User < ActiveRecord::Base
     token
   end
 
+  def remove_followings_from_user data 
+    users = []
+
+    data.each do |f|
+      if !is_following f.id
+        users.push( f )
+      end
+    end
+
+    users
+  end
+
   def remove_followings sns_friends
     users = []
 

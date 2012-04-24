@@ -10,6 +10,16 @@ class MineController < ApplicationController
 
   end
 
+  def unfollow
+    friendship = Friendship.first :conditions => { :user_id => params[:user_id] , :follower_id => current_user.id }
+
+    if friendship.present?
+      friendship.destroy
+    end
+
+    redirect_to request.referer
+  end
+
   # 关注的酒
   def wine_follows
 
@@ -30,6 +40,8 @@ class MineController < ApplicationController
       .where(["follower_id = ?", current_user.id])
       .order("id DESC")
       .page params[:page] || 1
+
+    @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
 
   end
 
