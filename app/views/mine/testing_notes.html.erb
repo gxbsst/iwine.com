@@ -1,14 +1,15 @@
-<div class="mine index user_follows">
+<div class="mine index testing_notes">
   <%= render "sub_nav", :action => params[:action] %>
   <div class="clear"></div>
 
   <div class="left">
-    <div class="box box_1">
-      <h3>关注的人 <span class="font_12">(共 12 人)</span> </h3>
+    <div class="box box_3 detail_comments">
+      <h3>品酒辞</h3>
 
-      <%= render "mine/share/user_follows" %>
-      <div class="clear"></div>
+      <%= render "wines/testing_notes/testing_note" %>
+
       <!-- pagination start  -->
+
       <div class="pagination">
         <nav class="pagination">
           <span class="page current">1</span>
@@ -35,18 +36,6 @@
     <!-- left end -->
   </div>
 
-  <div class="right">
-    <div class="box box_1  user_follows" >
-      <h3>可能感兴趣的人</h3>
-      <%= render "mine/share/user_will_follows" %>
-      <div class="clear"></div>
-      <%= link_to "添加或邀请好友", "/friends/find", :class => "button block find_friends" %>
-      <!-- .box end -->
-    </div>
-
-    <div class="clear"></div>
-    <!-- right end -->
-  </div>
   <!-- .mine end -->
 </div>
 

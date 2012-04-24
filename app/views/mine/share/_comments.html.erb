@@ -1,0 +1,74 @@
+<!-- 酒评论带评分 -->
+<% (1..2).each do |i| %>
+<div class="item relative dotted">
+  <div class="pic">
+    <%= image_tag "v2/test/m_w_3.png", :title => "title", :class => "class" %>
+  </div>
+  <p class="comment_info">
+    评论 <a href="#"> 2001拉非</a> <%= link_to_icon "wine_comment", "/" %>
+    <br />2011-12-23
+    <% 5.times do |i| %>
+      <%= image_tag 'base/star_red.jpg', :width=>15, :height=>14 %>
+    <% end %>
+  </p>
+  <p class="description"> 味道确实好 </p>
+  <%= link_to_icon "delete", "/", :style => "display: none", :class => "delete" %>
+  <%= link_to_icon "edit", "/", :style => "display: none", :class => "edit" %>
+</div>
+<div class="clear"></div>
+<% end %>
+
+<!-- 图片评论 -->
+
+<% (1..2).each do |i| %>
+<div class="item relative dotted">
+  <div class="pic float_right">
+    <%= image_tag "v2/test/m_w_3.png", :title => "title", :class => "class" %>
+  </div>
+  <p class="comment_info">
+    评论 <a href="#"> 1998 干红葡萄酒 France 法国的照片</a> <%= link_to_icon "photo_comment", "/" %>
+    <br />2011-12-23
+  </p>
+  <p class="description"> “这张照片是我一个朋友拍的，他是摄影师也是红酒爱好者。” </p>
+  <%= link_to_icon "delete", "/", :style => "display: none", :class => "delete" %>
+  <%= link_to_icon "edit", "/", :style => "display: none", :class => "edit" %>
+</div>
+<div class="clear"></div>
+<% end %>
+
+
+<!-- 酒庄评论 -->
+<% (1..2).each do |i| %>
+<div class="item relative dotted">
+  <div class="pic">
+    <%= image_tag "v2/test/m_w_3.png", :title => "title", :class => "class" %>
+  </div>
+  <p class="comment_info">
+    评论 <a href="#">某某酒庄</a> <%= link_to_icon "winery_comment", "/" %>
+    <br />2011-12-23
+  </p>
+  <p class="description"> 味道确实好 </p>
+  <%= link_to_icon "delete", "/", :style => "display: none", :class => "delete" %>
+  <%= link_to_icon "edit", "/", :style => "display: none", :class => "edit" %>
+</div>
+<div class="clear"></div>
+<% end %>
+
+<!-- 回复别人的评论 -->
+<% (1..2).each do |i| %>
+<div class="item relative dotted">
+  <div class="pic">
+    <%= image_tag "v2/test/m_w_3.png", :title => "title", :class => "class" %>
+  </div>
+  <p class="comment_info">
+    评论 <a href="#">某某酒庄</a> <%= link_to_icon "reply_comment", "/" %>
+    <br />2011-12-23
+  </p>
+  <p>回复<%= link_to_user current_user, "/", %>:<i> 这里是被评论的内容</i> </p>
+  <p class="description"> 味道确实好 </p>
+  <%= link_to_icon "delete", "/", :style => "display: none", :class => "delete" %>
+  <%= link_to_icon "edit", "/", :style => "display: none", :class => "edit" %>
+</div>
+<div class="clear"></div>
+<% end %>
+

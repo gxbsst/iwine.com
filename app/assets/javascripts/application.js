@@ -108,6 +108,12 @@ $(document).ready(function(){
         $(this).children(".edit").toggle();
     });
 
+
+    $(".mine.simple_comments .left  .box .item ").hover(function(){
+        $(this).children(".delete").toggle();
+        $(this).children(".edit").toggle();
+    });
+
 });
 
 
