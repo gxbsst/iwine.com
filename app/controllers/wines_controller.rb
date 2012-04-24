@@ -14,7 +14,7 @@ class WinesController < ApplicationController
   end
 
   def show
-    @wine_detail = Wines::Detail.includes( :cover, :photos, :statistic,  { :wine => [:style, :winery]} ).find( params[:wine_detail_id].to_i )
+    @wine_detail = Wines::Detail.includes( :cover, :photos, :statistic,  { :wine => [:style, :winery]} ).find( params[:id].to_i )
     @wine = @wine_detail.wine
     @wine_statistic = @wine_detail.statistic || @wine_detail.build_statistic
     @wine_comments = @wine_detail.best_comments( 6 )

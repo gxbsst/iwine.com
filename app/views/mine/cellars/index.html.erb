@@ -40,7 +40,7 @@
 					<td><%= cellar_item.year %></td>
 					<td><%= wine_detail.name %><br>
 						<br>
-						<%= render 'share/region_tree', :region_tree => wine_detail.get_region_path %> <br>
+						<%= render 'share/region_tree', :region_tree => wine_detail.get_region_path(wine_detail.wine.region_tree_id) %> <br>
 						<%= wine_detail.wine.winery.name %><br>
 						<%= image_tag "base/" + wine_detail.wine.style.name_en + '.gif' %><%= link_to wine_detail.wine.style.name_zh, :controller => :searh, :action => :wine, :style => wine_detail.wine.style.name_en %>
 					</td>

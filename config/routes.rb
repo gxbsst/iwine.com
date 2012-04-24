@@ -87,8 +87,8 @@ Patrick::Application.routes.draw do
     #   # match "index",  :to => "albums#index"
 
     # WINES
-    resource :wines
-
+    match "wines/add", :to => "wines#add"
+    resources :wines
     # Message
     # match "conversations/:id/reply", :to => "conversations#reply", :via => [:get, :post]
     resources :messages
@@ -98,11 +98,12 @@ Patrick::Application.routes.draw do
   match ':controller(/:action(/:id))', :controller => /mine\/[^\/]+/
 
   ## SEARCHS
+  match "searches/search_wines", :to => "searches#search_wines"
   resources :searches
 
   ## WINERIES
   resources :wineries
-
+  resources :wines
   ## STATIC
   match "/about_us", :to => "static#about_us"
   match "/contact_us", :to => "static#contact_us"

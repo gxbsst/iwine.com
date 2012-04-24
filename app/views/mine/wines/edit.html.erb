@@ -1,0 +1,69 @@
+<h2>添加酒款</h2>
+<div class='wine_register'>
+    <%= javascript_include_tag 'wine_registers_variety' %>
+    <% content_for :wine_register do %>
+        <%= javascript_include_tag 'region_world' %>
+    <% end %>
+    <h2>请添加<%= "#{@register.show_vintage} #{@register.name_en}"%>的详细信息</h2>
+
+    <%= form_for @register, :url => {:action => :update},  :html => { :class => 'form-horizontal'} do |f| %>
+        <%= render 'share/error_messages', :target => @register %>
+
+        <table  cellspacing="10" cellpadding="5">
+
+        <tr>
+          <td><%= f.label :name_zh %></td>
+          <td><%= f.text_field :name_zh %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :other_cn_name %></td>
+          <td><%= f.text_field :other_cn_name %> <span class="hint"> 多个名称用逗号隔开.</span></td>
+        </tr>
+
+        <tr>
+          <td><%= f.label :official_site %></td>
+          <td><% if @register.official_site %> http://<%= f.text_field :official_site, :readonly => "readonly" %><% else %>http://<%= f.text_field :official_site %><% end %></td>
+        </tr>
+
+        <tr>
+            <td><%= f.label :drinkable_begin %></td>
+          <td>
+            <%= f.date_select :drinkable_begin, :discard_day => true, :discard_month => true, :start_year =>  1990, :end_year => Time.now.year + 150  %>
+
+            年到
+            <%= f.date_select :drinkable_end, :discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150 %>
+
+            年
+
+          </td>
+        </tr>
+        <tr>
+          <td><%= f.label :variety_name %></td>
+          <td>
+            <%= f.text_field :variety_name_value, :name => "wines_register[variety_name_value][]", data: { autocomplete_source: '/api/wine_varieties/index' }  %>
+            <%= f.label :variety_percentage_value %> <%= f.text_field :variety_percentage_value, :name => "wines_register[variety_percentage_value][]", :id => 'new_variety', :size => 10 %>% <span id="create_variety"><%= t :add %></span> <span class="variety_percentage_error"></span>
+            <ul id="variety_items"></ul>
+          </td>
+        </tr>
+        <tr>
+          <td><%= f.label :alcoholicity %></td>
+          <td><%= f.text_field :alcoholicity, :size => 10 %>%</td>
+        </tr>
+        <tr>
+          <td>评分</td>
+          <td>
+          <%= f.fields_for :special_comments do |s| %>
+            <label>评论家</label><%= s.text_field :name, :name => "special_comment[name][]", :id => "special_comment_name", :size => 20%>
+            <label>得分</label><%= s.text_field :score, :name => "special_comment[score][]", :id => "special_comment_score", :size => 10%>
+            <label>适饮年限</label>
+            <%= s.date_select :drinkable_begin, {:discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150}, {:name => "special_comment[drinkable_begin][]"} %><span class="gray">年至</span>
+            <%= s.date_select :drinkable_end, {:discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150}, {:name => "special_comment[drinkable_end][]"}%><span class="gray">年</span>
+            <span id="create_special_comment">添加</span>
+          <% end %>
+          <ul id="special_comment_items"></ul>
+          </td>
+        </tr>
+        <tr><td></td><td><%= f.button "提交信息" %></td></tr>
+      </table>
+  <% end %>
+</div>

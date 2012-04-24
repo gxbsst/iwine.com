@@ -20,7 +20,7 @@
 	</tr>
 	<tr>
 		<td class="add_item">产区</td>
-		<td><%= render 'share/region_tree', :region_tree => @wine_detail.get_region_path %> </td>
+		<td><%= render 'share/region_tree', :region_tree => @wine_detail.get_region_path(@wine_detail.wine.region_tree_id) %> </td>
 	</tr>
 	<tr>
 		<td class="add_item">酒庄</td>

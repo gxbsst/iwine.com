@@ -1,10 +1,34 @@
 $background_color_grey: #F0F0F0;
 $background_color_red: #B90000;
+$button_background_green: #85AE55;
 $text_color_grey: #333;
+$h4_font_size: 14px;
 #main {
     @include single-box-shadow;
 }
 .mine {
+    .item {
+        .delete {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+        .edit {
+            position: absolute;
+            right: 30px;
+            top: 10px;
+        }
+        }
+    /* Mine Layout  */
+    .font_12 {
+        font-size: 12px;
+    }
+    h4 {
+        font-size: $h4_font_size;
+        a {
+            color: $text_color_grey;
+        }
+        }
     #cu_user_menu {
         .user_info {
             .avatar {
@@ -52,6 +76,15 @@ $text_color_grey: #333;
             }
         }
     }
+
+/* mine layout end  */
+
+
+}
+
+/* 首页  */
+.mine.index {
+
 
 
     .box_1 {
@@ -131,4 +164,57 @@ $text_color_grey: #333;
     }
 }
 
+/* 首页结束 */
 
+
+/* 关注的酒 */
+.mine.wine_follows {
+    .box .pic {
+        float: left;
+        margin-right: 10px;
+
+        }
+    .item {
+        overflow: auto;
+        padding: 15px 0;
+        border-bottom: 1px dotted #CCC;
+    }
+
+ }
+/* 关注的酒 结束*/
+
+
+/* 关注的人 */
+.mine.user_follows {
+    .box .pic {
+        float: left;
+        margin-right: 10px;
+        height: 70px;
+        }
+    .item {
+        width: 150px;
+        float: left;
+        overflow: auto;
+        padding: 15px 0;
+        p {
+            margin: 5px 0;
+        }
+    }
+    .right .item {
+        width: 140px;
+        padding: 0;
+    }
+
+      a.find_friends {
+            width: 130px;
+            height: 30px;
+            background: $button_background_green;
+            color: #FFF;
+            text-align: center;
+            padding-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+ }
+/* 关注的人 结束*/

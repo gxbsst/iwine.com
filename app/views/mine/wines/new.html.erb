@@ -1,95 +1,46 @@
+<h2>添加酒款</h2>
+<div class="wine_register">
 <% content_for :wine_register do %>
     <%= javascript_include_tag 'wine_registers_variety' %>
     <%= javascript_include_tag 'region_world' %>
 <% end %>
-<div class="left">
-  <h3><%= t :create_wine_item %></h3>
+  <h2>请填写<%= "#{@register.show_vintage} #{@register.name_en}" %>的基本信息</h2>
 
-  <%= form_for @register, :validate => true, :url => url_for(:action => :create), :html => { :class => 'form-horizontal', :multipart => true } do |f| %>
-
+  <%= form_for @register, :validate => true, :url => {:action => :create}, :method => :post ,:html => { :class => 'form-horizontal', :multipart => true } do |f| %>
+      <% unless @register.new_record? %><input type="hidden" name="register_id" value="<%= @register.id %>"/><% end %>
       <%= render 'share/error_messages', :target => @register %>
 		
       <table  cellspacing="10" cellpadding="5">
         <tr>
           <td><%= f.label :name_en %></td>
-          <td><%= f.text_field :name_en %></td>
+          <td><% if @read_only %> <%= f.text_field :name_en, "readonly" => "readonly" %> <% else %><%= f.text_field :name_en %><% end %></td>
         </tr>
-        <tr>
-          <td><%= f.label :name_zh %></td>
-          <td><%= f.select :name_zh,  Wines::Style.all.collect{ |s| [s.name_zh + '/' + s.name_en, s.id] }, :html => {:id => "name_zh" } %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :other_cn_name %></td>
-          <td><%= f.text_field :other_cn_name %> <span class="hint"> 多个名称用逗号隔开.</span></td>
-        </tr>
+
 		<tr>
 			<td><%= f.label :region_tree_id %></td>
-			<td><%= render "region_tree" %></td>
+			<td><% if @read_only %><%= render 'share/region_tree', :region_tree => @register.get_region_path(@wine.region_tree_id) %> <% else %><%= render "region_tree" %><% end %></td>
 		</tr>
         <tr>
           <td><%= f.label :wine_style_id %></td>
-          <td><%= f.select :wine_style_id, Wines::Style.all.collect{ |s| [s.name_zh + '/' + s.name_en, s.id] } %></td>
+          <td><% if @read_only %> <%= @register.style.name %> <% else %> <%= f.select :wine_style_id, Wines::Style.all.collect{ |s| [s.name_zh + '/' + s.name_en, s.id] } %><% end %></td>
         </tr>
         <tr>
           <td><%= f.label :vintage %></td>
-          <td><%= f.text_field :vintage, :placeholder => '2012' %></td>
-        </tr>
-
-        <tr>
-          <td><%= f.label :winery_id %></td>
-          <td><%= f.text_field :winery_id, data: { autocomplete_source: '/api/wineries/names'} %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :official_site %></td>
-          <td><%= f.text_field :official_site %></td>
-        </tr>
-
-
-        <tr>
-          <td><%= f.label :drinkable_begin %></td>
-          <td>
-		<%= f.date_select :drinkable_begin, :discard_day => true, :discard_month => true, :start_year =>  1990, :end_year => Time.now.year + 150  %>
-
-		年到
-		<%= f.date_select :drinkable_end, :discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150 %>
-
-		年
-
-		</td>
-        </tr>
-
-        <tr>
-          <td><%= f.label :variety_name %></td>
-          <td>
-            <%= f.text_field :variety_name_value, :name => "wines_register[variety_name_value][]", data: { autocomplete_source: '/api/wine_varieties/index' }  %>
-            <%= f.label :variety_percentage_value %> <%= f.text_field :variety_percentage_value, :name => "wines_register[variety_percentage_value][]", :id => 'new_variety' %> <span id="create_variety"><%= t :add %></span> <span class="variety_percentage_error"></span>
-            <ul id="variety_items">
-
-            </ul>
-          </td>
+          <td><%= f.date_select :vintage, :discard_day => true, :discard_month => true, :start_year => 1990, :end_year => Time.now.year + 150 %>年</td>
         </tr>
         <tr>
           <td><%= f.label :capacity %></td>
           <td><%= f.select :capacity, APP_DATA['wines']['capacity'].collect{|i| [i, i]}, {:include_blank => true } %></td>
         </tr>
-
         <tr>
           <td><%= f.label :photo_name %></td>
           <td><%= f.file_field :photo_name %></td>
         </tr>
-
+        <tr><td></td><td><%= f.button "下一步" %></td></tr>
       </table>
-      <%= f.button :submit %>
 
   <% end %>
 
-  <script type="text/template" id="variety_item">
-    <span class="variety_name"></span>
-    <span class="variety_percentage"></span>
-    <span class="variety_destroy">x</span>
-    <input type="hidden" name = "wines_register[variety_name][]" class="variety_name_hidden" />
-    <input type="hidden" name = "wines_register[variety_percentage][]" class="variety_percentage_hidden" />
-  </script>
   <!--end .left -->
 </div>
 
@@ -107,4 +58,5 @@
 
 <div class="clear"></div>
 
-
+  <!--wine_regiseter end-->
+</div>

@@ -1,5 +1,6 @@
+#encoding: UTF-8
 class Wines::Detail < ActiveRecord::Base
-  
+
   paginates_per 10
   
   include Wines::WineSupport
@@ -33,28 +34,17 @@ class Wines::Detail < ActiveRecord::Base
   def name
     cname + ename
   end
-  
+
+  def show_year
+    year.blank? ? '年代未知' : year.strftime("%Y")
+  end
+
   def other_cn_name
     wine.other_cn_name
   end
   
-  def get_region_path
-    region = Wines::RegionTree.find( wine.region_tree_id )
-    parent = region.parent
-    path = []
-    until parent == nil
-      path << parent
-      parent = parent.parent
-    end
-    path.reverse!
-  end
-  
   def get_region_path_html( symbol = " > " )
     get_region_path.reverse!.collect { |region| region.name_en + '/' + region.name_zh }.join( symbol )
-  end
-  
-  def drinkable
-    drinkable_begin.to_s + ' - ' + drinkable_end.to_s
   end
   
 end
