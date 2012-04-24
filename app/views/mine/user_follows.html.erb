@@ -1,0 +1,54 @@
+<div class="mine index user_follows">
+  <%= render "sub_nav", :action => params[:action] %>
+  <div class="clear"></div>
+
+  <div class="left">
+    <div class="box box_1">
+      <h3>关注的人 <span class="font_12">(共 12 人)</span> </h3>
+
+      <%= render "mine/share/user_follows" %>
+      <div class="clear"></div>
+      <!-- pagination start  -->
+      <div class="pagination">
+        <nav class="pagination">
+          <span class="page current">1</span>
+          <span class="page">
+            <a href="/mine/conversations?page=2" rel="next">2</a>
+          </span>
+          <span class="next">
+            <a href="/mine/conversations?page=2" rel="next">&gt;</a>
+          </span>
+          <span class="last">
+            <a href="/mine/conversations?page=2">最后</a>
+          </span>
+
+        </nav>
+      <!-- pagination  end   -->
+      </div>
+
+
+      <!-- .box end -->
+    </div>
+
+    <div class="clear"></div>
+
+    <!-- left end -->
+  </div>
+
+  <div class="right">
+    <div class="box box_1  user_follows" >
+      <h3>可能感兴趣的人</h3>
+      <%= render "mine/share/user_will_follows" %>
+      <div class="clear"></div>
+      <%= link_to "添加或邀请好友", "/friens/find", :class => "button block find_friends" %>
+      <!-- .box end -->
+    </div>
+
+    <div class="clear"></div>
+    <!-- right end -->
+  </div>
+  <!-- .mine end -->
+</div>
+
+<div class="clear"></div>
+
