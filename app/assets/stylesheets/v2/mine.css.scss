@@ -7,16 +7,20 @@ $h4_font_size: 14px;
     @include single-box-shadow;
 }
 .mine {
+    .item.dotted {
+         border-bottom: 1px dotted #CCC;
+    }
     .item {
+        overflow: auto;
         .delete {
             position: absolute;
             right: 10px;
-            top: 10px;
+            top: 0;
         }
         .edit {
             position: absolute;
             right: 30px;
-            top: 10px;
+            top: 0px;
         }
         }
     /* Mine Layout  */
@@ -177,7 +181,6 @@ $h4_font_size: 14px;
     .item {
         overflow: auto;
         padding: 15px 0;
-        border-bottom: 1px dotted #CCC;
     }
 
  }
@@ -192,6 +195,7 @@ $h4_font_size: 14px;
         height: 70px;
         }
     .item {
+        height: 74px;
         width: 150px;
         float: left;
         overflow: auto;
@@ -218,3 +222,20 @@ $h4_font_size: 14px;
 
  }
 /* 关注的人 结束*/
+
+/* 简评 开始 */
+
+.mine.simple_comments {
+    .box .item {
+        padding: 20px 0;
+        .pic {
+            float: left;
+            margin-right: 10px;
+        }
+        .float_right {
+            float: right;
+        }
+    }
+}
+
+/*简评 结束*/

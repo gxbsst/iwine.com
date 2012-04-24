@@ -4,7 +4,7 @@ zh-CN:
   new_album: "新建相册"
   create_wine_item: "添加酒的条目"
   back_to_home: "返回首页"
-  
+
   nav:
     home: "首页"
     wines: "美酒"
@@ -16,7 +16,7 @@ zh-CN:
     help: "帮助中心"
     private: "免责声明"
     site_map: "网站地图"
-    
+
     sub_nav:
       settings:
         basic: "基本设置"
@@ -26,6 +26,12 @@ zh-CN:
         invite: "邀请好友"
         sync: "同步动向"
       mine:
+        comments : "评论"
+        testing_notes : "品酒辞"
+        wine_follows : "关注的酒"
+        winery_follows : "关注的酒庄"
+        user_follows : "关注的人"
+        user_followers : "粉丝"
         index : "首页"
         settings: "设置"
         feeds: "收听"
@@ -35,8 +41,8 @@ zh-CN:
         wines: "我上传的酒"
         wish: "想喝"
         do: "喝过"
-        
-    
-  
-    
- 
+
+
+
+
+

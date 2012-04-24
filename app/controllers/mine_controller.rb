@@ -16,8 +16,11 @@ class MineController < ApplicationController
   end
 
   # 我的评论
-  def simple_comments
+  def comments
+    @comments = Wines::Comment.all
+  end
 
+  def testing_notes
   end
 
   def followings
@@ -30,6 +33,9 @@ class MineController < ApplicationController
 
   end
 
+  def user_followers
+
+  end
   def wish
 
   end
