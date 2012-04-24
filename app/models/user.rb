@@ -208,9 +208,9 @@ class User < ActiveRecord::Base
       return User.all :conditions => { :email => email_list }
       
     elsif email == 'sina'
-
+      #TODO
     elsif email == 'qq'
-
+      #TODO
     end
 
   end

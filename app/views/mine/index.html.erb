@@ -37,7 +37,7 @@
   <div class="right">
     <div class="box box_1  user_follows" >
       <h3>关注的人<span class="font_12">
-        <%= link_to "("+@followings.length.to_s+"人, 更多)", :controller => "/mine/cellars" %></span> 
+        <%= link_to "("+@followings.length.to_s+"人, 更多)", :controller => "/mine/followings" %></span> 
       </h3>
       <% if @followings.present? %>
       <%= render "mine/share/following_list", :items => @followings %>
@@ -51,10 +51,10 @@
       <h3>粉丝<span class="font_12">
         <%= link_to "("+@followers.length.to_s+"人, 更多)", :controller => "/mine/cellars" %></span> 
       </h3>
-      <% if @followings.present? %>
+      <% if @followers.present? %>
       <%= render "mine/share/follower_list", :items => @followers  %>
       <% else %>
-      你还没还有关注任何人！
+      你还没有粉丝！
       <% end %>
       <!-- .box end -->
     </div>
