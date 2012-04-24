@@ -1,35 +1,20 @@
 <div class="mine index user_follows">
   <%= render "sub_nav", :action => params[:action] %>
   <div class="clear"></div>
-
   <div class="left">
     <div class="box box_1">
-      <h3>关注的人 <span class="font_12">(共 12 人)</span> </h3>
-      <%= render "mine/share/user_follows" %>
+      <h3>关注的人 <span class="font_12">(共 <%= @followings.total_count %> 人)</span> </h3>
+      <%= render "mine/share/user_followings" %>
       <div class="clear"></div>
       <!-- pagination start  -->
       <div class="pagination">
-        <nav class="pagination">
-          <span class="page current">1</span>
-          <span class="page">
-            <a href="/mine/conversations?page=2" rel="next">2</a>
-          </span>
-          <span class="next">
-            <a href="/mine/conversations?page=2" rel="next">&gt;</a>
-          </span>
-          <span class="last">
-            <a href="/mine/conversations?page=2">最后</a>
-          </span>
-        </nav>
+      <%= paginate @followings, :outer_window => 2 %> 
       <!-- pagination  end   -->
       </div>
 
-
       <!-- .box end -->
     </div>
-
     <div class="clear"></div>
-
     <!-- left end -->
   </div>
 

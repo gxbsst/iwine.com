@@ -20,7 +20,13 @@ class MineController < ApplicationController
 
   end
 
-  def user_follows
+  def followings
+    
+    @followings = Friendship
+      .includes([:user])
+      .where(["follower_id = ?", current_user.id])
+      .order("id DESC")
+      .page params[:page] || 1
 
   end
 
