@@ -16,4 +16,15 @@ class Mine::WinesController < ApplicationController
     end
   end
 
+  def create
+    @register = Wines::Register.new()
+    @register.attributes = params[:wines_register]
+    @register.region_tree_id = params[:wines_register][:region].values.pop
+    @register.winery_id = 1
+    if @register.save
+      redirect_to mine_wine_path @register, :notice => "成功上传新酒款！"
+    else
+      render :action => "new"
+    end
+  end
 end
