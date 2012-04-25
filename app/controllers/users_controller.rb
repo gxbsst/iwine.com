@@ -4,13 +4,9 @@ class UsersController < ApplicationController
   before_filter :get_user
 
   def index
-    ## TODO
-    # 喜欢的， 喝过的
-    @simple_comments = Wines::Comment.all
-    # 藏酒
-    @wine_collections = ""
-    # 关注的酒
-    @wine_follows = ""
+    @followers = @user.followers
+    @followings =@user.followings
+    @comments = @user.comments
     render "mine/index"
   end
 
