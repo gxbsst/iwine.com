@@ -49,7 +49,7 @@
     <div class="clear"></div>
     <div class="box box_2  user_followed" >
       <h3>粉丝<span class="font_12">
-        <%= link_to "("+@followers.length.to_s+"人, 更多)", :controller => "/mine/cellars" %></span> 
+        <%= link_to "("+@followers.length.to_s+"人, 更多)", :controller => "/mine/followers" %></span> 
       </h3>
       <% if @followers.present? %>
       <%= render "mine/share/follower_list", :items => @followers  %>
