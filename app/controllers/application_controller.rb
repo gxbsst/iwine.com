@@ -6,7 +6,8 @@ class ApplicationController < ActionController::Base
     # span_860 = ["settings"]
     if span_950.include? controller.controller_name
       "waterfall_950"
-    elsif controller.controller_name == "mine"
+    elsif controller.controller_name == "mine" ||  controller.controller_name == "albums" ||  controller.controller_name == "albums" || controller.controller_name == "users"
+
       "span_950"
     else
       "waterfall"

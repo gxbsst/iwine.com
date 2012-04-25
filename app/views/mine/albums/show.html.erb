@@ -1,20 +1,22 @@
-<%= render "mine/sub_nav", :action => params[:action] %>
+<div class="mine albums">
+<%= render "/mine/sub_nav", :action => params[:action] %>
+<div class="clear"></div>
 
 <div class="title_btn clearfix">
 
-	<%= link_to url_for(:action => :index), :class => "button_gray float_r" do %>
-	<span>返回相册首页</span>
-	<% end %>
+        <%= link_to url_for(:action => :index), :class => "button_gray float_r" do %>
+        <span>返回相册首页</span>
+        <% end %>
 
-	<%= link_to url_for(:action => :upload, :album_id => params[:album_id]), :class => "button_gray float_r mr5" do %>
-	<span>添加照片</span>
-	<% end %>
+        <%= link_to url_for(:action => :upload, :album_id => params[:album_id]), :class => "button_gray float_r mr5" do %>
+        <span>添加照片</span>
+        <% end %>
 
-	<%= link_to url_for(:action => :edit, :album_id => @album.id), :class => "button_gray float_r mr5" do %>
-	<span>编辑相册属性</span>
-	<% end %>
+        <%= link_to url_for(:action => :edit, :album_id => @album.id), :class => "button_gray float_r mr5" do %>
+        <span>编辑相册属性</span>
+        <% end %>
 
-	<h2><%= @user.username %>的相册-<%= @album.name %> <span class="count_b">(共<%= @photos.total_count %>张)</span></h2>
+        <h2><%= @user.username %>的相册-<%= @album.name %> <span class="count_b">(共<%= @photos.total_count %>张)</span></h2>
 
 </div>
 <div class="album_intro"><%= @album.intro %></div>
@@ -40,7 +42,7 @@
           <%= best_in_place photo, :intro, { :nil => '点击添加描述', :path => {:action => 'update_photo_intro', :photo_id => photo.id} } %>
         </div>
       <% end %>
-      <div class="photo_info"><%= photo.created_at.strftime '%Y-%m-%d'%> 上传 | 
+      <div class="photo_info"><%= photo.created_at.strftime '%Y-%m-%d'%> 上传 |
         <a href="<%= url_for :action => 'delete_photo', :photo_id => photo.id %>" class="fancybox_delete_photo fancybox.ajax">删除</a>
         <br/>
         <%= photo.viewed_num%>浏览 | <%= photo.liked_num%>喜欢 | <a href="community_photo_detail.html"><%= photo.commented_num%>评论</a>
@@ -74,3 +76,7 @@ function delete_upload_photo( id ){
 
 $('.best_in_place').best_in_place();
 </script>
+
+<!-- end mine -->
+</div>
+

@@ -1,7 +1,44 @@
 # encoding: utf-8
 class UsersController < ApplicationController
-  before_filter :authenticate_user!, :except => [:index, :show, :register_success]
 
+  before_filter :get_user
+
+  def index
+    ## TODO
+    # 喜欢的， 喝过的
+    @simple_comments = Wines::Comment.all
+    # 藏酒
+    @wine_collections = ""
+    # 关注的酒
+    @wine_follows = ""
+    render "mine/index"
+  end
+
+  # 关注的酒
+  def wine_follows
+    render "mine/wine_follows"
+  end
+
+  # 我的评论
+  def comments
+    @comments = Wines::Comment.all
+    render "mine/comments"
+  end
+
+  def testing_notes
+    render "mine/testing_notes"
+  end
+
+  def user_follows
+    render "mine/user_follows"
+  end
+
+  def user_followers
+    render "mine/user_followers"
+  end
+
+  # before_filter :authenticate_user!, :except => [:index, :show, :register_success]
+=begin
   def show
     @user = User.find params[:id]
   end
@@ -47,9 +84,15 @@ class UsersController < ApplicationController
 
     render :layout => false
   end
-  
+
   def register_success
     @title = "注册成功."
+  end
+=end
+  private
+
+  def get_user
+    @user = User.find(params[:user_id])
   end
 
 end

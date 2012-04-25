@@ -599,20 +599,20 @@ a.btn_bid:active {
   width: 847px;
   margin: 0 auto;
   min-height: 300px;
-  background: url('main.png') repeat-y center top;
+  /* background: url('main.png') repeat-y center top; */
   padding: 10px;
 }
 .main_top {
   margin: 20px  auto 0 auto;
   width: 867px;
   height: 12px;
-  background: url('main_top.png') no-repeat center bottom;
+  /* background: url('main_top.png') no-repeat center bottom; */
 }
 .main_bottom {
   margin: 0 auto;
   height: 12px;
   width: 867px;
-  background: url('main_bottom.png') no-repeat left top;
+  /* background: url('main_bottom.png') no-repeat left top; */
 }
 /* main end */
 
