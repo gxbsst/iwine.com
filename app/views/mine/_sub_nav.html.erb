@@ -1,23 +1,22 @@
 <% sub_menu = {
-     "cellars"          => "/mine/cellars",
-     "wine_follows"     => "/mine/wine_follows",
-     "winery_follows"   => "/mine/winery_follows",
-     "comments"  => "/mine/comments",
-     "testing_notes"  => "/mine/testing_notes",
-     "user_follows"     => "/mine/user_follows",
-     "user_followers"    => "/mine/user_followers",
-     "albums"           => "/mine/albums" } %>
+     "wine_follows"     => "wine_follows",
+     "winery_follows"   => "winery_follows",
+     "comments"  => "comments",
+     "testing_notes"  => "testing_notes",
+     "user_follows"     => "user_follows",
+     "user_followers"    => "user_followers",
+     "albums"           => "albums" } %>
 
 <div id="cu_user_menu" class="clearfix relative">
   <div class="user_info">
     <div class="avatar relative">
-      <%= link_to_user current_user,
-                       users_path(current_user),
+      <%= link_to_user @user,
+                       users_path(@user),
                        :with_avatar => true,
                        :avatar_version => :large %>
 
     </div>
-     <%= link_to "我的酒窖", "/mine/cellar", :class => "block button absolute" %>
+     <%= link_to "我的酒窖", "/mine/cellars", :class => "block button absolute" %>
     <div class="text_info">
       <h3><%= current_user.username %></h3>
       <div class="edit_signature">
@@ -37,7 +36,7 @@
       <% sub_menu.each do |action_name, url| %>
         <% if action == action_name %>
           <li  class="current" >
-            <%= link_to "2" , url %>
+            <%= link_to "2" , url %> <br />
             <%= link_to t("nav.sub_nav.mine.#{action_name}"),  url %>
           </li>
         <% else %>

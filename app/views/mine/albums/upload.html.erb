@@ -1,4 +1,7 @@
-<%= render "mine/sub_nav", :action => params[:action] %>
+<div class="mine albums">
+<%= render "/mine/sub_nav", :action => params[:action] %>
+<div class="clear"></div>
+
 <div id="cu_user_menu" class="clearfix">
   <span class="f14">《 <a href="<%= url_for :action => 'index' %>">返回相册首页</a></span>
 </div>
@@ -7,7 +10,7 @@
 </div>
 <div id="leftcol" class="mr50">
   <div class="photo_upload">
-    <p class="mb10">选择相册 
+    <p class="mb10">选择相册
       <%= select("album", "name", @albums.collect {|album| [album.name, album.id] }, :selected => @select_album_id ) %>
       <a href="<%= url_for :action => 'new' %>" class="new_album fancybox.ajax icon_add_album ml20">新建相册</a>
     </p>
@@ -50,7 +53,7 @@
 
     onAllComplete: function(){
       if( uploaded_image_ids.length < 1 ){
-        alert( '有错误，请重试' ); 
+        alert( '有错误，请重试' );
         return;
       }
 
@@ -95,3 +98,6 @@
 
 $('.new_album').fancybox({padding:0, margin: 0, width: 450, height: 'auto', autoSize: false, modal: true});
 </script>
+
+<!-- end mine -->
+</div>
