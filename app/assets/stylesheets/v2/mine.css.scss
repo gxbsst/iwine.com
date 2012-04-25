@@ -6,7 +6,7 @@ $h4_font_size: 14px;
 #main {
     @include single-box-shadow;
 }
-.mine {
+.mine, .users {
     .item.dotted {
         border-bottom: 1px dotted #CCC;
     }
@@ -54,8 +54,9 @@ $h4_font_size: 14px;
                 padding-top: 8px;
                 text-align: center;
                 font-size: 14px;
-                right: 0;
-                top: 20px;
+                right: 20px;
+                top: 87px;
+                z-index: 1000;
                 &:hover {
                     text-decoration: none;
                 }
@@ -64,8 +65,8 @@ $h4_font_size: 14px;
 
         .sub_nav  {
             top: 80px;
-            width: 800px;
-            padding-left: 150px;
+            width: 710px;
+            padding-left: 240px;
             height: 50px;
             background: $background_color_grey;
             ul {
@@ -75,7 +76,7 @@ $h4_font_size: 14px;
                 }
                 li {
                     @include horizontal-list-item;
-                    padding: 5px 10px 0 10px;
+                    padding: 5px 20px 0 20px;
                     text-align: center;
                     a {
                         color: $text_color_grey;
@@ -92,7 +93,7 @@ $h4_font_size: 14px;
 }
 
 /* 首页  */
-.mine.index {
+.mine.index, .users.index {
 
 
 
@@ -177,7 +178,7 @@ $h4_font_size: 14px;
 
 
 /* 关注的酒 */
-.mine.wine_follows {
+.mine.wine_follows, .users.wine_follows {
     .box .pic {
         float: left;
         margin-right: 10px;
@@ -193,14 +194,14 @@ $h4_font_size: 14px;
 
 
 /* 关注的人 */
-.mine.user_follows {
+.mine.user_follows, .users.user_follows {
     .box .pic {
         float: left;
         margin-right: 10px;
         height: 70px;
     }
     .item {
-        height: 74px;
+        height: 80px;
         width: 150px;
         float: left;
         overflow: auto;
@@ -230,7 +231,7 @@ $h4_font_size: 14px;
 
 /* 简评 开始 */
 
-.mine.simple_comments {
+.mine.simple_comments, .users.simple_comments {
     .box .item {
         padding: 20px 0;
         .pic {
@@ -246,7 +247,7 @@ $h4_font_size: 14px;
 /*简评 结束*/
 
 /* 相册 开始 */
-.mine.albums {
+.mine.albums, .users.albums {
     .title_btn {
         margin: 20px 0;
     }
