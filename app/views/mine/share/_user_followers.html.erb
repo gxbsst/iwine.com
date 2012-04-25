@@ -6,7 +6,7 @@
     </div>
     <h4> 铃木食堂 </h4>
     <p><%= link_to_button "follow", "/" %> </p>
-    <p> <%= link_to "移除粉丝", :controller => "items" %> </p>
+    <p> <%= link_to "移除粉丝", {:controller => "items"}, :class => "cancle_follower" %> </p>
   </div>
 <% end %>
 
@@ -18,7 +18,7 @@
     </div>
     <h4> 铃木食堂 </h4>
     <p> 互相关注 </p>
-    <p> <%= link_to "取消关注", :controller => "items" %> </p>
+    <p> <%= link_to "取消关注", {:controller => "items"}, :class => "cancle_follow" %> </p>
 
   </div>
 <% end %>

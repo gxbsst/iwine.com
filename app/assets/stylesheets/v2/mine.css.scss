@@ -259,3 +259,12 @@ $h4_font_size: 14px;
     }
 }
 /* 相册 结束 */
+
+
+/* users */
+.users {
+    a.cancle_follow, a.follow {
+        display: none;
+    }
+
+}
