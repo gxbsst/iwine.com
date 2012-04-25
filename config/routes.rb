@@ -16,12 +16,6 @@ Patrick::Application.routes.draw do
 
   ## MINE
   namespace :mine do
-    match "wine_follows" => "mine#wine_follows"
-    match "winery_follows" => "mine#winery_follows"
-    match "comments" => "mine#comments"
-    match "testing_notes" => "mine#testing_notes"
-    match "user_follows" => "mine#user_follows"
-    match "user_followers" => "mine#user_followers"
     # CELLARS
     match "cellars/add", :to => "cellars#add"
     resources :cellars
