@@ -1,7 +1,7 @@
 # encoding: utf-8
 class UsersController < ApplicationController
-
   before_filter :get_user
+  before_filter :direct_current_user
 
   def index
     ## TODO
@@ -93,6 +93,13 @@ class UsersController < ApplicationController
 
   def get_user
     @user = User.find(params[:user_id])
+  end
+
+  def direct_current_user
+
+    if @user == current_user
+      redirect_to :controller => "/mine"
+    end
   end
 
 end
