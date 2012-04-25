@@ -98,7 +98,7 @@ class UsersController < ApplicationController
   def direct_current_user
 
     if @user == current_user
-      redirect_to :controller => "/mine"
+      redirect_to :controller => "mine"
     end
   end
 

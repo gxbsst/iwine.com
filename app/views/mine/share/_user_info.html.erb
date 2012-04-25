@@ -1,0 +1,29 @@
+<% if current_user == @user %>
+  <h3><%= @user.username %></h3>
+  <div class="edit_signature">
+    <p class="bio"> <%= @user.profile.bio %> （<a href="#">修改</a>）</p>
+    <br />
+    <%= link_to_icon "message", {:controller => 'mine/conversations'} %>
+    <%= link_to "私信(0)", {:controller => 'mine/conversations'} %> |
+    <%= link_to "设置", :controller => "/settings" %>
+  </div>
+</div>
+
+<% else %>
+
+<h3><%= @user.username %></h3>
+<div class="edit_signature">
+  <p class="bio"> <%= @user.profile.bio %> </p>
+  <p class="buttons" >
+    <%  if current_user.is_following @user.id %>
+      已关注
+      <%= link_to_button "cancle_follow", "/" %>
+    <% else %>
+      <%= link_to_button "follow", "/" %>
+    <% end %>
+  <%= link_to_button "send_message", {:controller => '/mine/conversations'} %>
+  </p>
+</div>
+</div>
+
+<% end %>
