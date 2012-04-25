@@ -18,15 +18,7 @@
     </div>
      <%= link_to "我的酒窖", "/mine/cellars", :class => "block button absolute" %>
     <div class="text_info">
-      <h3><%= current_user.username %></h3>
-      <div class="edit_signature">
-        <p class="bio"> <%= current_user.profile.bio %>（<a href="#">修改</a>） </p>
-        <br />
-        <%= link_to_icon "message", {:controller => 'mine/conversations'} %>
-        <%= link_to "私信(0)", {:controller => 'mine/conversations'} %> |
-        <%= link_to "设置", :controller => "/settings" %>
-      </div>
-    </div>
+      <%= render "mine/share/user_info" %>
     <!-- user_info end -->
   </div>
   <div class="clear">
