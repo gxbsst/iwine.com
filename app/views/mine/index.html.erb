@@ -36,7 +36,11 @@
   <div class="right">
     <div class="box box_1  user_follows" >
       <h3>关注的人<span class="font_12">
-        <%= link_to "("+@followings.length.to_s+"人, 更多)", :controller => "/mine/followings" %></span>
+        <% if params[:user_id].present? %>
+          <%= link_to "("+@followings.length.to_s+"人, 更多)", :controller => "/users/"+params[:user_id]+"/followings" %></span>
+        <% else %>
+          <%= link_to "("+@followings.length.to_s+"人, 更多)", :controller => "/mine/followings" %></span>
+        <% end %>
       </h3>
       <% if @followings.present? %>
       <%= render "mine/share/following_list", :items => @followings %>
@@ -48,7 +52,11 @@
     <div class="clear"></div>
     <div class="box box_2  user_followed" >
       <h3>粉丝<span class="font_12">
-        <%= link_to "("+@followers.length.to_s+"人, 更多)", :controller => "/mine/followers" %></span>
+        <% if params[:user_id].present? %>
+          <%= link_to "("+@followers.length.to_s+"人, 更多)", :controller => "/users/"+params[:user_id]+"/followers" %></span>
+        <% else %>
+          <%= link_to "("+@followers.length.to_s+"人, 更多)", :controller => "/mine/followers" %></span>
+        <% end %>
       </h3>
       <% if @followers.present? %>
       <%= render "mine/share/follower_list", :items => @followers  %>

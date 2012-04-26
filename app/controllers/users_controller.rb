@@ -36,8 +36,16 @@ class UsersController < ApplicationController
     render "mine/followings"
   end
 
-  def user_followers
-    render "mine/user_followers"
+  def followers
+    @followers = Friendship
+      .includes([:follower])
+      .where(["user_id = ?", current_user.id])
+      .order("id DESC")
+      .page params[:page] || 1
+
+    @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
+
+    render "mine/followers"
   end
 
   # before_filter :authenticate_user!, :except => [:index, :show, :register_success]
