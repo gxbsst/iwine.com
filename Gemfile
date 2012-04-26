@@ -89,3 +89,5 @@ group :test do
 
   gem 'turn', :require => false
 end
+
+gem 'user_resource_init', :path => 'lib/patrick/user_resource_init'
