@@ -78,5 +78,4 @@ class MineController < ApplicationController
   def get_user
     @user = current_user
   end
-
 end

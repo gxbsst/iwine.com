@@ -1,6 +1,5 @@
 # encoding: utf-8
 class UsersController < ApplicationController
-
   before_filter :get_user
 
   def index
@@ -25,8 +24,16 @@ class UsersController < ApplicationController
     render "mine/testing_notes"
   end
 
-  def user_follows
-    render "mine/user_follows"
+  def followings
+    @followings = Friendship
+      .includes([:user])
+      .where(["follower_id = ?", current_user.id])
+      .order("id DESC")
+      .page params[:page] || 1
+
+    @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
+
+    render "mine/followings"
   end
 
   def user_followers
@@ -90,5 +97,4 @@ class UsersController < ApplicationController
   def get_user
     @user = User.find(params[:user_id])
   end
-
 end

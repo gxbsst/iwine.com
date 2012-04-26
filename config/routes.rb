@@ -42,8 +42,8 @@ Patrick::Application.routes.draw do
     match ":user_id/winery_follows" => "users#winery_follows"
     match ":user_id/comments" => "users#comments"
     match ":user_id/testing_notes" => "users#testing_notes"
-    match ":user_id/user_follows" => "users#user_follows"
-    match ":user_id/user_followers" => "users#user_followers"
+    match ":user_id/followings" => "users#followings"
+    match ":user_id/followers" => "users#followers"
 
     ## CELLAR
     match ":user_id/cellars/" => "cellars#index", :via => [:get]
