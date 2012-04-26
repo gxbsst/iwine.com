@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #class Photo < ActiveRecord::Base
 #  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 #  belongs_to :user
@@ -22,10 +23,11 @@
 class Photo < ActiveRecord::Base
 
   belongs_to :album
+  acts_as_commentable
 
   delegate :user_id, :to => :album
 
-  paginates_per 12 
+  paginates_per 12
 
   mount_uploader :image, ImageUploader
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
