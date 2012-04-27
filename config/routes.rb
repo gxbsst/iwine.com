@@ -80,12 +80,36 @@ Patrick::Application.routes.draw do
   # resources :photos
   resources :events
 
+  ## MINE
+  namespace :mine do
+
+    # CELLARS
+    match "cellars/add", :to => "cellars#add"
+    resources :cellars
+
+    # ALBUMS
+    match "albums(/:album_id)/upload", :to => "albums#upload", :via => [:get, :post]
+    #   # match "index",  :to => "albums#index"
+
+    # WINES
+    match "wines/add", :to => "wines#add"
+    resources :wines
+    # Message
+    # match "conversations/:id/reply", :to => "conversations#reply", :via => [:get, :post]
+    resources :messages
+    resources :conversations
+    # match "cellars/new", :to => "cellars#new", :via => [:post, :get]
+  end
+  match ':controller(/:action(/:id))', :controller => /mine\/[^\/]+/
+
+
   ## SEARCHS
+  match "searches/search_wines", :to => "searches#search_wines"
   resources :searches
 
   ## WINERIES
   resources :wineries
-
+  resources :wines
   ## STATIC
   match "/about_us", :to => "static#about_us"
   match "/contact_us", :to => "static#contact_us"

@@ -46,7 +46,7 @@
     <p>其他中文名：<%= @wine_detail.other_cn_name %><br/>
       酒庄：<%= link_to @wine.winery.name, :controller => "wineries", :action => 'show', :id => @wine.winery.id %><br/>
       官方网站：<%= link_to @wine.official_site, 'http://' + @wine.official_site, :target => '_blank' %><br/>
-      产区： <%= render 'share/region_tree', :region_tree => @wine_detail.get_region_path %> <br/>
+      产区： <%= render 'share/region_tree', :region_tree => @wine_detail.get_region_path(@wine_detail.wine.region_tree_id) %> <br/>
       类型：<%= image_tag "base/" + @wine.style.name_en + '.gif' %><%= link_to @wine.style.name_zh, :controller => :searh, :action => :wine, :style => @wine.style.name_en %>
    <br/>
       酒精度：<%= @wine_detail.alcoholicity %><br/>

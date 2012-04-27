@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
     #span_950 = ["static", "wines"]
     # span_860 = ["settings"]
     if params[:controller] == "static" && params[:action] == "index"
-      "waterfall"
+     "waterfall"
     elsif params[:controller] == "settings"
       "span_860"
     else

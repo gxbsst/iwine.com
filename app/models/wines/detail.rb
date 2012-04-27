@@ -1,4 +1,9 @@
+#encoding: UTF-8
 class Wines::Detail < ActiveRecord::Base
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/upload_wine
   paginates_per 10
 
   include Wines::WineSupport
@@ -57,4 +62,16 @@ class Wines::Detail < ActiveRecord::Base
     drinkable_begin.to_s + ' - ' + drinkable_end.to_s
   end
 
+  def show_year
+    year.blank? ? '年代未知' : year.strftime("%Y")
+  end
+
+  def other_cn_name
+    wine.other_cn_name
+  end
+  
+  def get_region_path_html( symbol = " > " )
+    get_region_path.reverse!.collect { |region| region.name_en + '/' + region.name_zh }.join( symbol )
+  end
+  
 end

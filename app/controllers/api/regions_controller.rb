@@ -1,7 +1,10 @@
 class Api::RegionsController < ApplicationController
   respond_to :json
   layout nil
-
+  
+  #######################################################
+  ## 中国地区
+  #######################################################
   
   def locals
     # type = params[:type]
@@ -27,4 +30,15 @@ class Api::RegionsController < ApplicationController
      districts = Region.districts(parent_id)
      render :json => districts
   end
+  
+  #######################################################
+  ## 葡萄酒世界产区
+  #######################################################
+  
+  def region_world
+    parent_id = params[:parent_id]
+    regions = Wines::RegionTree.region(parent_id).order("id DESC")
+    render :json => regions
+  end
+    
 end

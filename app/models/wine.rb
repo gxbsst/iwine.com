@@ -1,6 +1,7 @@
 class Wine < ActiveRecord::Base
 
   has_many :details, :class_name => '::Wines::Detail'
+  has_many :special_comments, :as => :special_commentable
   belongs_to :winery
   belongs_to :style, :class_name => "::Wines::Style", :foreign_key => "wine_style_id"
   belongs_to :region, :class_name => "::Wines::Region", :foreign_key => "region_tree_id"

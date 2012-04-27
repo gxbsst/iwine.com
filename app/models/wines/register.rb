@@ -7,7 +7,7 @@ class Wines::Register < ActiveRecord::Base
   belongs_to :style, :foreign_key => 'wine_style_id'
   belongs_to :winery
   belongs_to :region_tree, :foreign_key => 'region_tree_id'
-
+  has_many :special_comments, :as => :special_commentable
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :variety_name_value, :variety_percentage_value, :owner_type, :business_id
 
   ## upload image with carrierwave
@@ -17,7 +17,6 @@ class Wines::Register < ActiveRecord::Base
   serialize :variety_percentage, Array
 
   validates :name_en, :presence => true
-  validates :vintage, :format => { :with => /^[1|2][\d]{3}$/ }, :presence => true
 
   def self.has_translation(*attributes)
     attributes.each do |attribute|
@@ -27,6 +26,8 @@ class Wines::Register < ActiveRecord::Base
     end
   end
 
-
+  def show_vintage
+    vintage.blank? ? "-" : vintage.strftime("%Y")
+  end
 
 end

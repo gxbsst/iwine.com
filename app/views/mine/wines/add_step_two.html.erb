@@ -1,0 +1,39 @@
+<h2>添加酒款</h2>
+<div class="wine_register">
+  <div id="search_wine">
+    <div class="wine_add_step2 mb30">第二步：选择你想上传得酒</div>
+    <%= render :partial => "mine/wines/search_wine", :object => @search %>
+    <div id="new_wine_register"><div class="float_r">这些都不是？<%= link_to "添加新酒款", new_mine_wine_path %></div><div class="float_l">我们为您查询以下酒款</div></div>
+  </div>
+    <% unless @search.wines.blank? %>
+      <ul class="wine_list">
+        <% @search.wines.each do |detail| %>
+            <li class="wine_photo">
+                <%= wine_cover_tag( detail, :thumb_name => "w_thumb", :width => "50", :height => "63" )%>
+
+            </li>
+            <li>
+              <%= detail.wine.name_zh %><br/>
+              <%=  detail.wine.name_en %><br/>
+              已有年份
+              <div>
+                <% Wines::Detail.where("wine_id = ?", detail.wine_id).select('id, year').each do |wine_detail| %>
+                    <%= link_to wine_detail.show_year, wine_path(wine_detail.id) %>
+                <% end %>
+              </div>
+              <%= link_to "添加新年份", new_mine_wine_path(:wine_detail_id => detail.id, :class => "button_gray")%>
+            </li>
+        <% end %>
+      </ul>
+    <% else %>
+        <div class="search_none_wine">没有找到相关酒款，您愿意为我们添加吗？</div>
+        <%= link_to "添加酒款", new_mine_wine_path %>
+    <% end %>
+
+  <script type="text/javascript" charset="utf-8">
+    $('a#next').click(function(){
+      $("form.edit_search").submit();
+      return false;
+    });
+  </script>
+</div>

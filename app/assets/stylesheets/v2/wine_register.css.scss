@@ -1,0 +1,64 @@
+$background_color_grey: #F0F0F0;
+#main{
+  margin-top:20px;
+  padding:20px;
+}
+ul.ui-autocomplete{
+  background-color:#ffffff;
+  border:1px solid #E9E9E9;
+  width:188px;
+  
+  li:hover{
+    background-color:#E9E9E9;
+  }
+  li a{
+    color:black;
+  }
+}
+
+.wine_register {
+  padding:40px;
+  min-height:500px;
+  ul li a{
+    text-decoration: underline;
+  }
+  h2{
+    margin: 0 0 20px 0;
+    font-size: 16px;
+  }
+  #new_wine_register{
+    padding:15px 0;
+    overflow:hidden;
+  }
+  ul.wine_list{
+    border: 1px solid gray;
+    overflow:hidden;
+    padding:10px;
+    li{
+      float:left;
+    }
+    li.wine_photo{
+      padding:0 20px 0 10px;
+    }
+  }
+  .search_none_wine{
+    background-color: yellow;
+    padding:10px;
+    margin-bottom: 15px;
+  }
+  .gray{
+    color:gray;
+  }
+  #special_comment_items, #variety_items{
+    margin:10px 0;
+    .extra_attribute{
+      background-color:#E9E9E9;
+      margin-right:2px;
+      padding:5px 10px;
+    }
+  }
+  #success_upload_wine{
+    padding:15px;
+    background-color:#E9E9E9;
+  }
+}
