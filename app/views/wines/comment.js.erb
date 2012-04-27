@@ -1,0 +1,21 @@
+$("#comment_form").html("<%= escape_javascript(render('wines/share/comment_form', :comment => @comment)) %>");
+
+    $.fancybox({
+        maxWidth                : 500,
+        maxHeight               : 260,
+        fitToView               : false,
+        width                   : '70%',
+        height                  : '100%',
+        'autoScale'             : true,
+        'transitionIn'          : 'fade',
+        'transitionOut'         : 'fade',
+        'href'                  : '#comment_form',
+         helpers                :{
+           overlay                      : {
+                opacity                 : 0.8,
+                css                     : {
+                    'background-color'  : '#FFF'
+                }
+            }
+        } // end helper
+        });

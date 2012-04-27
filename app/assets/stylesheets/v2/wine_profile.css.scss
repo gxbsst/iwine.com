@@ -10,12 +10,12 @@ $text_color_grey: #333;
 .wine_profile {
     overflow: auto;
     h2 {
-	font-size: 18px;
-	line-height: 120%;
-	span {
-	    color: #999;
-	    font-size: 14px;
-	}
+        font-size: 18px;
+        line-height: 120%;
+        span {
+            color: #999;
+            font-size: 14px;
+        }
     }
     .box {
         overflow: auto;
@@ -32,6 +32,10 @@ $text_color_grey: #333;
         width: 670px;
         // Buttons
         .buttons {
+            .loading {
+                left: 0;
+                top: 0;
+            }
             ul li {
                 @include horizontal-list-item;
                 a {
@@ -44,19 +48,19 @@ $text_color_grey: #333;
                         width: 70px;
                         height: 26px;
                     }
-		    .follow_wine, .comment  {
-			width: 50px;
-		    }
+                    .follow_wine, .comment  {
+                        width: 50px;
+                    }
                 }
             } // .add end
             .share {
-		margin-top: 10px;
-		float: right;
-		width: 200px;
-		p {
-		    width: 40px;
-		    float: left;
-		}
+                margin-top: 10px;
+                float: right;
+                width: 200px;
+                p {
+                    width: 40px;
+                    float: left;
+                }
                 ul li {
                     a {
                         width: 17px;
@@ -65,34 +69,34 @@ $text_color_grey: #333;
                 }
             }
         } //Buttons end
-	.cover {
-	    text-align: center;
-	    .thumbs {
-		overflow: auto;
-		width: 240px;
-		margin: 10px auto;
-		padding-left: 23px;
-		a {
-		    display: block;
-		    float: left;
-		}
-		.icon {
-		    top: 20px;
-		    width: 23px;
-		    height: 23px;
-		}
-		.compass_icons-arrow_left {
-		    left: 0;
-		}
-		.compass_icons-arrow_right {
-		    right: 0;
-		}
-		.pic {
-		    margin: 0 6px;
-		}
-		
-	    }
-	} // Cover end
+        .cover {
+            text-align: center;
+            .thumbs {
+                overflow: auto;
+                width: 240px;
+                margin: 10px auto;
+                padding-left: 23px;
+                a {
+                    display: block;
+                    float: left;
+                }
+                .icon {
+                    top: 20px;
+                    width: 23px;
+                    height: 23px;
+                }
+                .compass_icons-arrow_left {
+                    left: 0;
+                }
+                .compass_icons-arrow_right {
+                    right: 0;
+                }
+                .pic {
+                    margin: 0 6px;
+                }
+
+            }
+        } // Cover end
         .testing_notes {
 
             h4 {
@@ -129,75 +133,75 @@ $text_color_grey: #333;
                 }
             }
         } // comments end
-	.followers {
-	    .item {
-		float: left;
-		width: 50px;
-		margin: 0 5px 0 0;
-	    }
-	} // followers end/
+        .followers {
+            .item {
+                float: left;
+                width: 50px;
+                margin: 0 5px 0 0;
+            }
+        } // followers end/
         .owners {
             .item {
                 width: 300px;
                 float: left;
-		.pic {
-		    margin-right: 10px;
-		    width: 50px;
-		    float: left;
-		}
+                .pic {
+                    margin-right: 10px;
+                    width: 50px;
+                    float: left;
+                }
             }
         }
-	.events {
-	    .pic {
-		height: 70px;
-		float: left;
-		margin-right: 10px;
-	    }
-	}
+        .events {
+            .pic {
+                height: 70px;
+                float: left;
+                margin-right: 10px;
+            }
+        }
     } // left end
     .right {
-	.box {
-	    border-bottom: 0;
-	}
+        .box {
+            border-bottom: 0;
+        }
         float: right;
         width: 250px;
         overflow: auto;
-	.resource {
-	    ul li {
-		@include horizontal-list-item;
-		text-align: center;
-		a {
-		    color: $text_color_grey;
-		}
-	    }
-	} // resource end
-	.spec {
-	    table {
-		td.l {
-		    width: 52px;
-		    text-align: right;
-		    vertical-align: top;
-		    padding: 3px 5px 3px 0;
-		}
-		td.c {
-		    padding: 3px 0 0 5px;
-		}
-	    }
-	} // Spec end
-	.special_comments {
-	    table {
-		width: 100%;
-		th {
-		    background: #C33;
-		    color: #FFF;
-		    border-right: 2px solid #FFF;
-		}
-		td {
-		    border-bottom: 1px solid #CCC;
-		    padding: 5px;
-		}
-	    }
-	}
+        .resource {
+            ul li {
+                @include horizontal-list-item;
+                text-align: center;
+                a {
+                    color: $text_color_grey;
+                }
+            }
+        } // resource end
+        .spec {
+            table {
+                td.l {
+                    width: 52px;
+                    text-align: right;
+                    vertical-align: top;
+                    padding: 3px 5px 3px 0;
+                }
+                td.c {
+                    padding: 3px 0 0 5px;
+                }
+            }
+        } // Spec end
+        .special_comments {
+            table {
+                width: 100%;
+                th {
+                    background: #C33;
+                    color: #FFF;
+                    border-right: 2px solid #FFF;
+                }
+                td {
+                    border-bottom: 1px solid #CCC;
+                    padding: 5px;
+                }
+            }
+        }
     }
 
 }

@@ -115,6 +115,15 @@ class WinesController < ApplicationController
 
   end
 
+  # 关注/评论
+  def comment
+    @comment = Comment.new
+    # if request.xhr?
+    #   # form = render_to_string :partial => 'wines/share/comment_form'
+    #   render :partial => 'wines/share/comment_form'
+    # end
+  end
+
   private
 
   def set_current_user

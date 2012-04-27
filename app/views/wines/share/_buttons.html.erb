@@ -1,9 +1,12 @@
+<div id="loading" class="loading absolute" style="display: none">
+  loading...
+</div>
 <div class="add">
   <ul>
-    <li><%= link_to "", { :action => :follow_wine }, :class => "follow_wine compass_buttons-follow_wine"%></li>
-    <li><%= link_to "", { :action => :comment}, :class => "comment compass_buttons-comment"%></li>
-    <li><%= link_to "", { :action => :follow_wine }, :class => "testint_note compass_buttons-testing_note"%></li>
-    <li><%= link_to "", { :action => :follow_wine }, :class => "add_to_cellar compass_buttons-add_to_cellar"%></li>
+    <li><%= link_to "", { :action => "comment" }, :remote => true, :class => "follow_wine compass_buttons-follow_wine ajax"%></li>
+    <li><%= link_to "", { :action => :comment}, :class => "comment compass_buttons-comment ajax"%></li>
+    <li><%= link_to "", { :action => :follow_wine }, :class => "testint_note compass_buttons-testing_note ajax"%></li>
+    <li><%= link_to "", { :action => :follow_wine }, :class => "add_to_cellar compass_buttons-add_to_cellar ajax"%></li>
   </ul>
   <!-- add end -->
 </div>
