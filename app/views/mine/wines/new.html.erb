@@ -5,7 +5,6 @@
     <%= javascript_include_tag 'region_world' %>
 <% end %>
   <h2>请填写<%= "#{@register.show_vintage} #{@register.name_en}" %>的基本信息</h2>
-
   <%= form_for @register, :validate => true, :url => {:action => :create}, :method => :post ,:html => { :class => 'form-horizontal', :multipart => true } do |f| %>
       <% unless @register.new_record? %><input type="hidden" name="register_id" value="<%= @register.id %>"/><% end %>
       <%= render 'share/error_messages', :target => @register %>

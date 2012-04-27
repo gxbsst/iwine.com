@@ -100,5 +100,4 @@ class Mine::WinesController < ApplicationController
   def find_register
     @register = Wines::Register.find(params[:id])
   end
-
 end
