@@ -1,0 +1,5 @@
+<p><strong>更多年份</strong></p>
+<% (1..7).each do |i| %>
+<%= link_to "2002", :controller => "items", :action => "edit", :id => @item %>
+<% end %>
+<%= link_to "...", :controller => "items", :action => "edit", :id => @item %>

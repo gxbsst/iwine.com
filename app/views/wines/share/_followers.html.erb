@@ -1,0 +1,13 @@
+<h3>
+  他们关注
+  <span class="font_12">
+    <%= link_to "（共21人，更多...)", :controller => "/mine/cellars" %>
+  </span>
+</h3>
+
+<% (1..11).each do |i| %>
+  <div class="item">
+      <%= link_to (image_tag "v2/test/u_2.png", :align => "left" ), :controller => "items", :action => "edit", :id => @item %>
+  </div>
+<% end %>
+
