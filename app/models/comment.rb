@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 class Comment < ActiveRecord::Base
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
-
   validates_presence_of :body
   validates_presence_of :user
 
@@ -9,6 +8,9 @@ class Comment < ActiveRecord::Base
   # want user to vote on the quality of comments.
   # acts_as_voteable
   acts_as_votable
+
+  # 保存分享信息， 如新浪微博等
+  store_configurable
   belongs_to :commentable, :polymorphic => true
 
   # NOTE: Comments belong to a user
@@ -17,14 +19,18 @@ class Comment < ActiveRecord::Base
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text
   # example in readme
-  def self.build_from(obj, user_id, comment, star = 0)
+  def self.build_from(obj, user_id, comment, options = { } )
     c = self.new
     c.commentable_id = obj.id
     c.commentable_type = obj.class.base_class.name
     c.body = comment
     c.user_id = user_id
-    # 评星
-    c.star = star
+    # opstions
+    unless options.blank?
+      options.each do |k, v|
+        c.send("#{k}=", v)
+      end
+    end
     c
   end
 

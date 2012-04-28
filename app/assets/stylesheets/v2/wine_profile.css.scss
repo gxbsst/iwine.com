@@ -7,6 +7,21 @@ $text_color_grey: #333;
 .span_950.fixed_width.wines.show #main{
     @include box-shadow(#FFFFFF 0 0 0 0);
 }
+#comment_form {
+    width: 500px;
+    height: 290px;
+    ul {
+        display: inline;
+        li {
+            @include horizontal-list-item;
+        }
+    }
+    textarea {
+        width: 454px;
+        height: 75px;
+    }
+}
+
 .wine_profile {
     overflow: auto;
     h2 {

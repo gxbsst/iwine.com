@@ -1,9 +1,28 @@
+<%= form_for @comment, :url => {:action => :comment}, :validate => true do |f| -%>
+<%= hidden_field_tag "wine_detail_id", @wine_detail.id %>
 <h3> 我要评论 </h3>
-<p>***** </p>
-<p>简短评论: </p>
+<div class="star_rate" id="wine_profile_star_bar">
+  <ul id="stars">
 
-<%= form_for @comment, :url => {:action => :comment} do |f| -%>
-
-
-
+  </ul>
+  <input type="hidden" name="rate_value" value=<%= @comment.point || 0 %> />
+  <span class="text_value"></span>
+</div>
+<div class="clear"> </div>
+  <p>简短评论: </p>
+  <div class="text_area">
+    <%= f.text_area :body,  :rows => 10, :cols => 25 %>
+  </div>
+  <div class="private">
+    <%= f.check_box :private %>仅自己可见
+  </div>
+  <div class="share relative">
+    分享到: <%= f.check_box :is_share %> 广播
+    <%= image_submit_tag "v2/button/save_grey.png", :class => "absolute" %>
+  </div>
 <% end -%>
+
+<script type="text/template" id="star_item">
+  <%= image_tag 'base/star_gray.jpg', :width => 15, :height => 14 %>
+ </script>
+

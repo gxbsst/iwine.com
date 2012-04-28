@@ -117,7 +117,29 @@ class WinesController < ApplicationController
 
   # 关注/评论
   def comment
-    @comment = Comment.new
+    @wine_detail = Wines::Detail.find(params[:wine_detail_id])
+    #如果是关注
+    if params[:do] == "follow"
+      @comment = @wine_detail.current_user_follow(current_user)
+      @comment = @comment.blank? ?  Comment.new : @comment.first
+    else
+      @comment = Comment.new
+    end
+    if request.post?
+      # 默认为评论， follow 为关注
+      do_action = params[:do] || "comment"
+      @wine_detail = Wines::Detail.find(params[:wine_detail_id])
+      @comment = Comment.build_from(@wine_detail,
+                                    current_user.id ,
+                                    params[:comment][:body],
+                                    :point => params[:rate_value],
+                                    :do => do_action,
+                                    :is_share => params[:comment][:is_share],
+                                    :private => params[:comment][:private])
+      if @comment.save
+        redirect_to "/wines/show?wine_detail_id=#{@wine_detail.id}"
+      end
+    end
     # if request.xhr?
     #   # form = render_to_string :partial => 'wines/share/comment_form'
     #   render :partial => 'wines/share/comment_form'
