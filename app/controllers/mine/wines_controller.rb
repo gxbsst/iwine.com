@@ -1,5 +1,6 @@
 # encoding: UTF-8
 class Mine::WinesController < ApplicationController
+  before_filter :require_user
   before_filter :find_register, :only => [:show, :edit, :update]
   before_filter :check_region_tree, :only => :create
   before_filter :check_edit_register, :only => [:edit, :update]
@@ -21,15 +22,7 @@ class Mine::WinesController < ApplicationController
 
   def update
     params[:wines_register].delete('special_comments')
-    params[:special_comment][:name].each_with_index do |value, index|
-      next if value.blank?
-      @register.special_comments.create(
-        :name => params[:special_comment][:name][index],
-        :score => params[:special_comment][:score][index],
-        :drinkable_begin => params[:special_comment][:drinkable_begin][index],
-        :drinkable_end => params[:special_comment][:drinkable_end][index]
-      )
-    end
+    Wines::SpecialComment.build_special_comment(@register, params[:special_comment])
     @register.result = 1 #设置为一，用户无法再编辑
     if @register.update_attributes(params[:wines_register])
       redirect_to mine_wine_path(@register)
@@ -50,10 +43,11 @@ class Mine::WinesController < ApplicationController
         :official_site => @wine.official_site,
         :wine_style_id => @wine.wine_style_id,
         :region_tree_id => @wine.region_tree_id,
+        :user_id => current_user.id,
         :winery_id => 1
       )
     else
-      @register = Wines::Register.new
+      @register = current_user.registers.new()
     end
     if request.post?
       @register.attributes = params[:wines_register]
@@ -65,7 +59,7 @@ class Mine::WinesController < ApplicationController
   end
 
   def create
-    @register = params[:register_id] ? Wines::Register.find_by_id(params[:register_id]) : Wines::Register.new(params[:wines_register])
+    @register = params[:register_id] ? Wines::Register.find_by_id(params[:register_id]) : current_user.registers.new(params[:wines_register])
     @register.attributes = params[:wines_register]
     @register.region_tree_id ||= @region_tree_id
     @register.variety_name = @register.variety_name_value
@@ -92,8 +86,7 @@ class Mine::WinesController < ApplicationController
 
   def check_region_tree
     if params[:region]
-      region_value = params[:region].values.pop
-      @region_tree_id = region_value.blank? ? 1 : region_value
+      @region_tree_id = params[:region].values.delete_if{|a| a == ""}.pop
     end
   end
 

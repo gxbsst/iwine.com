@@ -34,6 +34,7 @@ ul.ui-autocomplete{
     border: 1px solid gray;
     overflow:hidden;
     padding:10px;
+    margin-bottom: 10px;
     li{
       float:left;
     }
@@ -60,5 +61,11 @@ ul.ui-autocomplete{
   #success_upload_wine{
     padding:15px;
     background-color:#E9E9E9;
+  }
+}
+.admin_wine_register{
+  form input{
+    padding:3px 10px 3px;
+    width:auto;
   }
 }

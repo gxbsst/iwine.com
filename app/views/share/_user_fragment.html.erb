@@ -53,8 +53,8 @@
 
       </li>
       <li>
-        <%= link_to_icon "add_wine", {:controller => "/wines", :action => "detail_comment" }  %> <br />
-        <%= link_to "添加红酒", :controller => "/wines", :action => "detail_comment" %>
+        <%= link_to_icon "add_wine", mine_wines_add_path(:step => 1)  %> <br />
+        <%= link_to "添加红酒", mine_wines_add_path(:step => 1) %>
 
       </li>
       <li>

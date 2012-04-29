@@ -30,5 +30,7 @@ module Wines
      def drinkable
        "#{drinkable_begin.strftime('%Y') if drinkable_begin}-#{drinkable_end.strftime('%Y') if drinkable_end}"
      end
+
+
    end
 end

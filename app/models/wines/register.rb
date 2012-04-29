@@ -16,8 +16,7 @@ class Wines::Register < ActiveRecord::Base
   serialize :variety_name, Array
   serialize :variety_percentage, Array
 
-  validates :name_en, :presence => true
-
+  validates :name_en, :region_tree_id, :presence => true
   def self.has_translation(*attributes)
     attributes.each do |attribute|
       define_method "#{attribute}" do

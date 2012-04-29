@@ -34,7 +34,7 @@
             <%= f.date_select :drinkable_end, :discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150 %>
 
             年
-
+            <%=  "hello shanhua" if current_user %>
           </td>
         </tr>
         <tr>
@@ -42,7 +42,19 @@
           <td>
             <%= f.text_field :variety_name_value, :name => "wines_register[variety_name_value][]", data: { autocomplete_source: '/api/wine_varieties/index' }  %>
             <%= f.label :variety_percentage_value %> <%= f.text_field :variety_percentage_value, :name => "wines_register[variety_percentage_value][]", :id => 'new_variety', :size => 10 %>% <span id="create_variety"><%= t :add %></span> <span class="variety_percentage_error"></span>
-            <ul id="variety_items"></ul>
+            <ul id="variety_items">
+              <% percentage_arr = @register.variety_percentage %>
+              <% @register.variety_name.each_with_index do |variety_name, index| %>
+                  <% next if variety_name.blank? %>
+                  <li>
+                    <span class="extra_attribute"><%= variety_name %></span>
+                    <span class="extra_attribute"><%= percentage_arr[index] %></span>
+                    <input type="hidden" name="wines_register[variety_name_value][]" value="<%= variety_name %>"/>
+                    <input type="hidden" name="wines_register[variety_percentage_value][]" value="<%= percentage_arr[index] %>"/>
+                    <span class="delete_variety">删除</span>
+                  </li>
+              <% end %>
+            </ul>
           </td>
         </tr>
         <tr>
@@ -60,7 +72,21 @@
             <%= s.date_select :drinkable_end, {:discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150}, {:name => "special_comment[drinkable_end][]"}%><span class="gray">年</span>
             <span id="create_special_comment">添加</span>
           <% end %>
-          <ul id="special_comment_items"></ul>
+          <ul id="special_comment_items">
+             <% @register.special_comments.each do |s| %>
+                <% next if s.name.blank? %>
+                <li>
+                  <span class="extra_attribute"><%= s.name %></span>
+                  <span class="extra_attribute"><%= s.score %></span>
+                  <span class="extra_attribute"><%= s.drinkable %></span>
+                  <input name="special_comment[name][]" type="hidden" value="<%= s.name %>"/>
+                  <input name="special_comment[score][]" type="hidden" value="<%= s.score %>"/>
+                  <input name='special_comment[drinkable_begin][]' type='hidden' value="<%= s.drinkable_begin %>" />
+                  <input name='special_comment[drinkable_end][]' type='hidden' value="<%= s.drinkable_end %>" />
+                  <span class='delete_special_comment'>删除</span>
+                </li>    
+             <% end %>
+          </ul>
           </td>
         </tr>
         <tr><td></td><td><%= f.button "提交信息" %></td></tr>

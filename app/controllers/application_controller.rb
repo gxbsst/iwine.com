@@ -1,4 +1,4 @@
-
+# encoding: UTF-8
 class ApplicationController < ActionController::Base
   # layout "waterfall"
   layout  proc { |controller|
@@ -27,4 +27,8 @@ class ApplicationController < ActionController::Base
     I18n.locale = params[:locale] || I18n.default_locale
   end
 
+  private
+   def require_user
+     redirect_to root_url, :notice => "登录后才能执行此操作" unless current_user
+   end
 end
