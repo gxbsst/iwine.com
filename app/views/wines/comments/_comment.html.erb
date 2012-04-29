@@ -1,14 +1,12 @@
-<% (1..3).each do |i| %>
 <div class="item">
   <div class="pic">
-    <%= image_tag "v2/test/m_w_3.png", :title => "title", :class => "class" %>
+    <%= image_tag comment.detail.cover, :width => 100 , :height => 100, :title => "title", :class => "class" %>
   </div>
   <p class="comment_info">
-    评论 <a href="#"> 2001拉非</a> 2011-12-23
-    <% 5.times do |i| %>
-      <%= image_tag 'base/star_red.jpg', :width=>15, :height=>14 %>
+    评论 <a href="#"> <%= comment.detail.cname %></a> <%= comment.updated_at.strftime '%Y-%m-%d' %>
+    <% if comment.point.present? %>
+      <span class="star_s<%=(comment.point/2).to_s%>"></span>
     <% end %>
   </p>
-  <p class="description"> 味道确实好 </p>
+  <p class="description"> <%= comment.content %> </p>
 </div>
-<% end %>

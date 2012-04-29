@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
 
+ init_resources "Users::Profile", "Users::WineCellar", "Album"
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -167,6 +168,18 @@ class User < ActiveRecord::Base
     token
   end
 
+  def remove_followings_from_user data
+    users = []
+
+    data.each do |f|
+      if !is_following f.id
+        users.push( f )
+      end
+    end
+
+    users
+  end
+
   def remove_followings sns_friends
     users = []
 
@@ -183,6 +196,26 @@ class User < ActiveRecord::Base
     Friendship.first :conditions => { :user_id => user_id , :follower_id => id }
   end
 
+  def mail_contacts email, login, password
+
+    if email == 'gmail'
+      email_list = []
+      data = Contacts::Gmail.new( login , password ).contacts
+
+      data.each do |email|
+        email_list.push( email[1] )
+      end
+
+      return User.all :conditions => { :email => email_list }
+
+    elsif email == 'sina'
+      #TODO
+    elsif email == 'qq'
+      #TODO
+    end
+
+  end
+
   private
 
   def resize_avatar(from_version, to_version)
@@ -194,7 +227,7 @@ class User < ActiveRecord::Base
     image.write(target_path)
   end
 
-   def crop_avatar
+  def crop_avatar
     if crop_x.present?
       avatar.recreate_versions!
 
@@ -203,5 +236,4 @@ class User < ActiveRecord::Base
       resize_avatar(:large, :thumb)
     end
   end
-
 end

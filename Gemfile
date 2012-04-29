@@ -6,7 +6,6 @@ gem 'rails', '3.2.0'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-gem 'mysql'
 gem 'jquery-rails'
 gem 'devise', "~> 2.0.4"
 gem 'cancan'
@@ -53,6 +52,11 @@ gem 'store_configurable', '~> 3.2.0'
 ## Message
 gem 'mailboxer'
 
+## Comment
+gem 'acts_as_commentable_with_threading', :path => "lib/gems"
+# Vote
+gem 'acts_as_votable', :path => "lib/gems"
+
 group :development, :test do
   gem 'i18n'
   gem 'pry'  # "binding.pry" in action
@@ -90,3 +94,5 @@ group :test do
 
   gem 'turn', :require => false
 end
+
+gem 'user_resource_init', :path => 'lib/patrick/user_resource_init'

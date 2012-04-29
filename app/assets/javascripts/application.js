@@ -25,6 +25,7 @@
 $(document).ready(function(){
 
     // 下拉菜单
+
     $('a.arrow_down').click(function (event) {
         // $(this).preventDefault();
         event.preventDefault();
@@ -103,6 +104,12 @@ $(document).ready(function(){
 
     // Mine 鼠标滑动显示编辑、删除按钮
     $(".mine.wine_follows .left  .box .item ").hover(function(){
+        $(this).children(".delete").toggle();
+        $(this).children(".edit").toggle();
+    });
+
+
+    $(".mine.simple_comments .left  .box .item ").hover(function(){
         $(this).children(".delete").toggle();
         $(this).children(".edit").toggle();
     });

@@ -1,16 +1,24 @@
 # -*- coding: utf-8 -*-
 class MineController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :get_user
 
   def index
-    ## TODO
-    # 喜欢的， 喝过的
-    @simple_comments = Wines::Comment.all
-    # 藏酒
-    @wine_collections = ""
-    # 关注的酒
-    @wine_follows = ""
 
+    @followers = current_user.followers
+    @followings = current_user.followings
+    @comments = current_user.comments
+
+  end
+
+  def unfollow
+    friendship = Friendship.first :conditions => { :user_id => params[:user_id] , :follower_id => current_user.id }
+
+    if friendship.present?
+      friendship.destroy
+    end
+
+    redirect_to request.referer
   end
 
   # 关注的酒
@@ -19,12 +27,34 @@ class MineController < ApplicationController
   end
 
   # 我的评论
-  def simple_comments
+  def comments
+    @comments = Wines::Comment.all
+  end
+
+  def testing_notes
 
   end
 
-  def user_follows
+  def followings
+    
+    @followings = Friendship
+      .includes([:user])
+      .where(["follower_id = ?", current_user.id])
+      .order("id DESC")
+      .page params[:page] || 1
 
+    @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
+
+  end
+
+  def followers
+    @followers = Friendship
+      .includes([:follower])
+      .where(["user_id = ?", current_user.id])
+      .order("id DESC")
+      .page params[:page] || 1
+
+    @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
   end
 
   def wish
@@ -41,6 +71,12 @@ class MineController < ApplicationController
 
   def status
 
+  end
+
+  private
+
+  def get_user
+    @user = current_user
   end
 
 end

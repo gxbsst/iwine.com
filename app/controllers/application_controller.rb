@@ -2,14 +2,14 @@
 class ApplicationController < ActionController::Base
   # layout "waterfall"
   layout  proc { |controller|
-    span_950 = ["static", "wines"]
+    #span_950 = ["static", "wines"]
     # span_860 = ["settings"]
-    if params[:controller].include? "static"
-      "waterfall_950"
-    elsif params[:controller].include? "mine"
-      "span_950"
+    if params[:controller] == "static" && params[:action] == "index"
+     "waterfall"
+    elsif params[:controller] == "settings"
+      "span_860"
     else
-      "waterfall"
+      "span_950"
     end
   }
 
