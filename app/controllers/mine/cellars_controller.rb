@@ -1,7 +1,6 @@
 # encoding: UTF-8
+
 class Mine::CellarsController < ApplicationController
-
-
 
   def index
     @cellar_items = Users::WineCellarItem.includes(:wine_cellar, {:wine_detail => [:covers, :wine]}).page params[:page] || 1
