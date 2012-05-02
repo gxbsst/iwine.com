@@ -53,5 +53,7 @@ module Patrick
     ## Fixed
     # DEPRECATION WARNING: ActiveSupport::Memoizable is deprecated...
     ActiveSupport::Deprecation.silenced = true
+
+    Time::DATE_FORMATS[:normal] = "%Y-%m-%d"
   end
 end

@@ -1,0 +1,12 @@
+<h3>
+  所有图片
+  <span class="font_12">
+    <%= link_to "(12支, 更多)", :controller => "/mine/cellars" %>
+  </span>
+</h3>
+
+<div class="items">
+  <% @wine_detail.photos.each do |photo| %>
+    <%= link_to image_tag(photo.image_url(:w_thumb), :width => 90, :height => 90), "/" %>
+  <% end %>
+</div>

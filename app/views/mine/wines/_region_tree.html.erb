@@ -1,0 +1,33 @@
+
+    <div id="region_tree" style="<%= "display:none;" if @wines_register && @wines_register.region_tree_id %>">
+        <span id="tree_one">
+	        <%= select_tag "region[one]",  options_for_select(Wines::RegionTree.region(0).collect{ |l| [l.name_en + "/" + l.name_zh, l.id] }), :prompt => '-请选择-', :class => "select_region" %>
+        </span>
+
+        <span id="tree_two" class="tree" style="display: none" >
+	        <%= select_tag "region[two]", [], :prompt => '-请选择-', :class => "select_region" %>
+        </span>
+
+        <span id="tree_three" class="tree"  style="display: none">
+            <%= select_tag "region[three]", [], :prompt => '-请选择-', :class => "select_region"%>
+        </span>
+
+        <span id="tree_four" class="tree" style="display: none">
+            <%= select_tag "region[four]", [], :prompt => '-请选择-', :class => "select_region" %>
+        </span>
+
+        <span id="tree_five" class="tree"  style="display: none">
+            <%= select_tag "region[five]", [], :prompt => '-请选择-', :class => "select_region" %>
+        </span>
+
+        <span id="tree_six" class="tree"  style="display: none">
+            <%= select_tag "region[six]", [], :prompt => '-请选择-', :class => "select_region"%>
+        </span>
+       <% if @wines_register %> <%= link_to "取消编辑", "javascript: void(0)", :id => "cancel_edit" %><% end %>
+    </div>
+    <% if @wines_register && @wines_register.region_tree %>
+    <div id="region_tree_text" style="<%= "display:none;" unless @wines_register.region_tree_id %>">
+        <%= render 'share/region_tree', :region_tree => @wines_register.get_region_path(@wines_register.region_tree_id) %>
+        <%= link_to "编辑", "javascript: void(0)", :id => "edit_region_tree" %>
+    </div>
+    <% end %>

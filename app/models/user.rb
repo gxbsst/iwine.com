@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
 
+ init_resources "Users::Profile", "Users::WineCellar", "Album"
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -167,7 +168,7 @@ class User < ActiveRecord::Base
     token
   end
 
-  def remove_followings_from_user data 
+  def remove_followings_from_user data
     users = []
 
     data.each do |f|
@@ -206,7 +207,7 @@ class User < ActiveRecord::Base
       end
 
       return User.all :conditions => { :email => email_list }
-      
+
     elsif email == 'sina'
       #TODO
     elsif email == 'qq'

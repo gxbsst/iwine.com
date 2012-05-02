@@ -3,9 +3,14 @@ zh-CN:
   activerecord:
     models:
       register: '酒款'
+      special_comment: "专家评论"
 
   helpers:
     label:
+      wines_special_comment:
+        name: "评论家"
+        score: "得分"
+        drinkable_begin: "适饮年份"
       wines_register:
         name_zh: "名称(中文)"
         name_en: "名称(英文)"

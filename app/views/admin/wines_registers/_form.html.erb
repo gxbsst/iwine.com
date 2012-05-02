@@ -1,0 +1,116 @@
+<h2>添加酒款</h2>
+<div class='admin_wine_register'>
+  <%= javascript_include_tag 'wine_registers_variety', 'region_world' %>
+  <h2>请添加<%= "#{@wines_register.show_vintage} #{@wines_register.name_en}"%>的详细信息</h2>
+
+  <%= form_for @wines_register, :url => {:action => :update},  :html => { :class => 'form-horizontal'} do |f| %>
+      <%= render 'share/error_messages', :target => @wines_register %>
+
+      <table  cellspacing="10" cellpadding="5">
+        <tr>
+          <td><%= f.label :name_en %></td>
+          <td><%= f.text_field :name_en %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :name_zh %></td>
+          <td><%= f.text_field :name_zh, :size => 30 %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :other_cn_name %></td>
+          <td><%= f.text_field :other_cn_name %> <span class="hint"> 多个名称用逗号隔开.</span></td>
+        </tr>
+        <tr>
+          <td><%= f.label :region_tree_id %></td>
+
+          <td><%= render "mine/wines/region_tree", :object =>  @wines_register %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :wine_style_id %></td>
+          <td><%= f.select :wine_style_id, Wines::Style.all.collect{ |s| [s.name_zh + '/' + s.name_en, s.id] } %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :official_site %></td>
+          <td>http://<%= f.text_field :official_site %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :vintage %></td>
+          <td><%= f.date_select :vintage, :discard_day => true, :discard_month => true, :start_year => 1990, :end_year => Time.now.year + 150 %>年</td>
+        </tr>
+        <tr>
+          <td><%= f.label :drinkable_begin %></td>
+          <td>
+            <%= f.date_select :drinkable_begin, :discard_day => true, :discard_month => true, :start_year =>  1990, :end_year => Time.now.year + 150  %>
+
+            年到
+            <%= f.date_select :drinkable_end, :discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150 %>
+
+            年
+
+          </td>
+        </tr>
+        <tr>
+          <td><%= f.label :variety_name %></td>
+          <td>
+            <%= f.text_field :variety_name_value, :name => "wines_register[variety_name_value][]", data: { autocomplete_source: '/api/wine_varieties/index' }, :value => nil  %>
+
+            <%= f.label :variety_percentage_value %> <%= f.text_field :variety_percentage_value, :name => "wines_register[variety_percentage_value][]", :id => 'new_variety', :size => 10, :value => nil %>% <span id="create_variety"><%= t :add %></span> <span class="variety_percentage_error"></span>
+
+            <ul id="variety_items">
+              <% percentage_arr =  @wines_register.variety_percentage %>
+              <% @wines_register.variety_name.each_with_index do |variety_name, index| %>
+                <% next if variety_name.blank? %>
+                <li>
+                  <span class="extra_attribute"><%= variety_name %></span>
+                  <span class="extra_attribute"><%= percentage_arr[index] %></span>
+                  <input type="hidden" name="wines_register[variety_name_value][]" value="<%= variety_name %>"/>
+                  <input type="hidden" name="wines_register[variety_percentage_value][]" value="<%= percentage_arr[index] %>"/>
+                  <span class="delete_variety">&nbsp;&nbsp;删除</span>
+                </li>
+              <% end %>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><%= f.label :alcoholicity %></td>
+          <td><%= f.text_field :alcoholicity, :size => 10 %>%</td>
+        </tr>
+        <tr>
+          <td><%= f.label :capacity %></td>
+          <td><%= f.select :capacity, APP_DATA['wines']['capacity'].collect{|i| [i, i]}, {:include_blank => true } %></td>
+        </tr>
+        <tr>
+          <td>评分</td>
+          <td>
+            <%= f.fields_for :special_comments do |s| %>
+                <label>评论家</label><%= s.text_field :name, :name => "special_comment[name][]", :id => "special_comment_name", :size => 20%>
+                <label>得分</label><%= s.text_field :score, :name => "special_comment[score][]", :id => "special_comment_score", :size => 10%>
+                <label>适饮年限</label>
+                <%= s.date_select :drinkable_begin, {:discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150}, {:name => "special_comment[drinkable_begin][]"} %><span class="gray">年至</span>
+                <%= s.date_select :drinkable_end, {:discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150}, {:name => "special_comment[drinkable_end][]"}%><span class="gray">年</span>
+                <span id="create_special_comment">添加</span>
+            <% end %>
+            <ul id="special_comment_items">
+              <% @wines_register.special_comments.each do |s| %>
+                  <% next if s.name.blank? %>
+                  <li>
+                    <span class="extra_attribute"><%= s.name %></span>
+                    <span class="extra_attribute"><%= s.score %></span>
+                    <span class="extra_attribute"><%= s.drinkable %></span>
+                    <input name="special_comment[name][]" type="hidden" value="<%= s.name %>"/>
+                    <input name="special_comment[score][]" type="hidden" value="<%= s.score %>"/>
+                    <input name='special_comment[drinkable_begin][]' type='hidden' value="<%= s.drinkable_begin %>" />
+                    <input name='special_comment[drinkable_end][]' type='hidden' value="<%= s.drinkable_end %>" />
+                    <span class='delete_special_comment'>&nbsp;&nbsp;删除 </span>
+                  </li>
+              <% end %>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><%= f.label :photo_name %></td>
+          <td><%= f.file_field :photo_name %></td>
+        </tr>
+        <tr><td></td><td><%= f.button "提交信息" %></td></tr>
+      </table>
+  <% end %>
+</div>

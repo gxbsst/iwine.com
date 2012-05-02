@@ -31,6 +31,7 @@ gem 'rails-i18n'
 gem 'fancybox-rails', :git => 'git://github.com/sverigemeny/fancybox-rails'
 gem 'jcrop-rails'
 gem 'backbone-on-rails'
+gem "jquery-tools", "~> 0.0.3"
 
 gem 'simple_form'
 gem 'client_side_validations'
@@ -51,6 +52,11 @@ gem 'store_configurable', '~> 3.2.0'
 
 ## Message
 gem 'mailboxer'
+
+## Comment
+gem 'acts_as_commentable_with_threading', :path => "lib/gems"
+# Vote
+gem 'acts_as_votable', :path => "lib/gems"
 
 group :development, :test do
   gem 'i18n'
@@ -89,3 +95,5 @@ group :test do
 
   gem 'turn', :require => false
 end
+
+gem 'user_resource_init', :path => 'lib/patrick/user_resource_init'

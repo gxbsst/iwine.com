@@ -1,1 +1,10 @@
-<%= render "mine/sub_nav", :action => params[:action] %>
+<h2>添加酒款</h2>
+<div class="wine_register">
+   <%=  render_stickies %>
+  <div id="success_upload_wine">
+    <p>信息提交成功</p>
+    <p>我们将会对您添加和上传的内容进行正确性审核，这可能需要一定的时间，请耐心等待。一旦审核通过，该酒款就会收录，以供所有用户浏览。</p>
+    <p>感谢您的参与！</p>
+    <p><%= link_to "继续添加酒款", mine_wines_add_path(:step => 1) %> <%= link_to "返回首页", root_url %></p>
+  </div>
+ </div>

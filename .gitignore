@@ -23,3 +23,8 @@ db/schema.rb
 #*#
 
 lib/tasks/data
+
+/app/assets/javascripts/region_world.js
+/.gitignore
+/.idea/workspace.xml
+/db/wine_variety_i18n.csv

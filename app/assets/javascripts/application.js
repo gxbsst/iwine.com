@@ -21,6 +21,9 @@
 //= require stickies
 //= require settings
 //= require kissy
+//= require jquery-tools/tabs/tabs
+//= require jquery-tools/tabs/tabs.slideshow
+
 
 $(document).ready(function(){
 
@@ -101,6 +104,28 @@ $(document).ready(function(){
 
     });
 
+    // 评论
+    $(".wine_profile .follow_wine1").fancybox({
+        maxWidth        : 500,
+        maxHeight       : 260,
+        fitToView       : false,
+        width           : '70%',
+        height          : '100%',
+        autoSize        : false,
+        closeClick      : false,
+        openEffect      : 'none',
+        closeEffect     : 'none',
+        helpers : {
+            overlay : {
+                opacity : 0.8,
+                css : {
+                    'background-color' : '#FFF'
+                }
+            }
+        } // end helper
+
+    });
+
 
     // Mine 鼠标滑动显示编辑、删除按钮
     $(".mine.wine_follows .left  .box .item ").hover(function(){
@@ -112,6 +137,18 @@ $(document).ready(function(){
     $(".mine.simple_comments .left  .box .item ").hover(function(){
         $(this).children(".delete").toggle();
         $(this).children(".edit").toggle();
+    });
+
+    // 当使用ajax调用时， 显示laoding
+    $(".ajax").bind("ajax:before", function(et, e){
+        $("#loading").toggle();
+        // 这里也可以触发fancybox
+    });
+    $(".ajax").bind("ajax:success", function(et, e){
+        $("#loading").toggle();
+    });
+    $(".ajax").bind("ajax:failure", function(et, e){
+        $("#loading").html("由于网络故障， 请稍后重试");
     });
 
 });

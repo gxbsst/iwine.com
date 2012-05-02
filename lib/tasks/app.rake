@@ -48,8 +48,6 @@ namespace :app do
     end
   end
 
-
-
   desc "TODO"
   task :upload_all_wines => :environment do
 
@@ -79,7 +77,7 @@ namespace :app do
           variety_percentage.push value
         end
 
-        wine_register = WineRegister.find_or_initialize_by_origin_name_and_vintage(item[1].to_s.force_encoding('utf-8'), item[10])
+        wine_register = Wines::Register.find_or_initialize_by_origin_name_and_vintage(item[1].to_s.force_encoding('utf-8'), item[10])
         if wine_register.new_record?
           wine_register.name_zh = item[2].to_s.force_encoding('utf-8').split('/').last
           wine_register.name_en = item[1].to_s.force_encoding('utf-8').to_ascii_brutal
@@ -88,7 +86,7 @@ namespace :app do
           wine_register.wine_style_id =  1 #需要更改数据
           wine_register.region_tree_id = region_tree.id
           wine_register.winery_id = 1 #暂无数据
-          wine_register.vintage = item[10]
+          wine_register.vintage = DateTime.parse "#{item[10]}-01-01" unless item[10].blank?
           wine_register.drinkable_begin = drinkable_begin.to_i == 0 ? nil : drinkable_begin.to_i
           wine_register.drinkable_end = drinkable_end.to_i == 0 ? nil : drinkable_end.to_i
           wine_register.alcoholicity =item[12]
@@ -141,7 +139,7 @@ namespace :app do
     Dir.mkdir "#{Rails.root}/public/uploads/photo" unless Dir.exist? "#{Rails.root}/public/uploads/photo"
     Dir.mkdir "#{Rails.root}/public/uploads/photo/wine" unless Dir.exist? "#{Rails.root}/public/uploads/photo/wine"
 
-    WineRegister.where("status = ? ", 0).each do |wine_register|
+    Wines::Register.where("status = ? ", 0).each do |wine_register|
       begin
         Wine.transaction do
           #添加记录
@@ -177,11 +175,10 @@ namespace :app do
             wine_detail.save!
           end
           #添加酒的品种信息
-          variety_percentage_arr = wine_register.variety_percentage.gsub(/\n/, '').split('-')
-          wine_register.variety_name.gsub(/\n/, '').split('-').each_with_index do |value, index|
+          wine_register.variety_name.each_with_index do |value, index|
             next if value.blank?
             if wine_variety = Wines::Variety.where("origin_name = ? ", value.strip).first
-               wine_variety.variety_percentages.create(:wine_detail_id => wine_detail.id, :percentage => variety_percentage_arr[index])
+               wine_variety.variety_percentages.create(:wine_detail_id => wine_detail.id, :percentage => wine_register.variety_percentage[index])
             end
           end
           #上传图片

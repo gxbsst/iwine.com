@@ -263,8 +263,22 @@ $h4_font_size: 14px;
 
 /* users */
 .users {
-    a.cancle_follow, a.follow {
+    .item a.cancle_follow, .item a.follow {
         display: none;
+    }
+    #cu_user_menu {
+        .buttons {
+            margin-top: 20px;
+            .button.follow, .button.cancle_follow {
+                background: none;
+            }
+            .button.send_message {
+                background: none;
+            }
+            .button.cancle_follow {
+                background: none;
+            }
+        }
     }
 
 }
