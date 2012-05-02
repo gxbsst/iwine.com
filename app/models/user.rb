@@ -180,6 +180,10 @@ class User < ActiveRecord::Base
     users
   end
 
+  def following_wines
+    Comment.all :conditions => { :user_id => id , :do => 'follow', :commentable_type => 'Wines::Detail' } 
+  end
+
   def remove_followings sns_friends
     users = []
 

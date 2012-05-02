@@ -3,16 +3,14 @@
   <div class="clear"></div>
   <div class="left">
     <div class="box box_1 cellar">
-      <h3>藏酒 <span class="font_12"><%= link_to "(12支, 更多)", :controller => "/mine/cellars" %></span> </h3>
+      <h3>藏酒 <span class="font_12"><%= link_to "("+@cellar.items.length.to_s+"支, 更多)", :controller => "/mine/cellars" %></span> </h3>
       <!-- .box end -->
-      <%= render "mine/share/wine_image_list", :wine => @wine_collections %>
+      <%= render "mine/share/favorite_wines", :wine => @wine_collections %>
     </div>
-
     <div class="clear"></div>
-
     <div class="box box_2 wine_follows">
-      <h3>关注的酒<span class="font_12"><%= link_to "(12支, 更多)", :controller => "/mine/cellars" %></span> </h3>
-      <%= render "mine/share/wine_image_list", :wine => @wine_follows %>
+      <h3>关注的酒<span class="font_12"><%= link_to "("+@cellar.items.length.to_s+"支, 更多)", :controller => "/mine/cellars" %></span> </h3>
+      <%= render "mine/share/following_wines", :wine => @wine_follows %>
       <!-- .box end -->
     </div>
 
