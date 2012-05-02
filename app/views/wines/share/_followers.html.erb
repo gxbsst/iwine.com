@@ -1,0 +1,13 @@
+<h3>
+  他们关注
+  <span class="font_12">
+    <%= link_to "（共21人，更多...)", :controller => "/mine/cellars" %>
+  </span>
+</h3>
+
+<% @wine_detail.followers.each do |user| %>
+  <div class="item">
+      <%= link_to_user user, users_path(user), :with_avatar => true, :avatar_version => :middle %>
+  </div>
+<% end %>
+

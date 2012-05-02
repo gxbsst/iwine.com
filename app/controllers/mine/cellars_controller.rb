@@ -4,7 +4,7 @@ class Mine::CellarsController < ApplicationController
 
 
   def index
-    @cellar_items = Users::WineCellarItem.includes(:wine_cellar, {:wine_detail => [:cover, :wine]}).page params[:page] || 1
+    @cellar_items = Users::WineCellarItem.includes(:wine_cellar, {:wine_detail => [:covers, :wine]}).page params[:page] || 1
   end
 
   def edit
@@ -78,16 +78,16 @@ class Mine::CellarsController < ApplicationController
       redirect_to :action => :index
     end
   end
-  
+
   def add
     if params[:step].to_i == 1
       @search = ::Search.new
       render :template => "mine/cellars/add_step_one"
     elsif params[:step].to_i == 2
       @search = Search.find(params[:id])
-       render :template => "mine/cellars/add_step_two" 
+       render :template => "mine/cellars/add_step_two"
     end
-    
+
   end
 
 end
