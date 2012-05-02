@@ -5,9 +5,9 @@
   </span>
 </h3>
 
-<% (1..11).each do |i| %>
+<% @wine_detail.followers.each do |user| %>
   <div class="item">
-      <%= link_to (image_tag "v2/test/u_2.png", :align => "left" ), :controller => "items", :action => "edit", :id => @item %>
+      <%= link_to_user user, users_path(user), :with_avatar => true, :avatar_version => :middle %>
   </div>
 <% end %>
 

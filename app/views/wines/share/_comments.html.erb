@@ -6,22 +6,39 @@
 </h3>
 
 <!-- 酒评论带评分 -->
-<% (1..2).each do |i| %>
+<% @wine_detail.comments.each do |comment| %>
 <div class="item relative dotted">
   <div class="pic">
-    <%= image_tag "v2/test/m_w_3.png", :title => "title", :class => "class" %>
+    <%= link_to_user comment.user, users_path(comment.user), :with_avatar => true, :avatar_version => :middle %>
   </div>
   <p class="comment_info">
-    评论 <a href="#"> 2001拉非</a> <%= link_to_icon "wine_comment", "/" %>
-    <br />2011-12-23
+    <%= link_to_user comment.user, users_path(comment.user) %>
+    <%= comment.created_at.to_s(:normal) %>
+    <%= time_ago_in_words(comment.created_at) %>以前
     <% 5.times do |i| %>
       <%= image_tag 'base/star_red.jpg', :width=>15, :height=>14 %>
     <% end %>
   </p>
-  <p class="description"> 味道确实好 </p>
+  <p class="description"> <%= comment.body %> </p>
+  <p class="vote">
+    <%= link_to  "comment_vote?comment_id=#{comment.id}" , :remote => true do %>
+      有用(<span><%=comment.likes.size %></span>)
+    <% end %>
+  </p>
   <%= link_to_icon "delete", "/", :style => "display: none", :class => "delete" %>
   <%= link_to_icon "edit", "/", :style => "display: none", :class => "edit" %>
+
 </div>
 <div class="clear"></div>
 <% end %>
 
+<script type="text/javascript">
+  $(document).ready(function(){
+  // "有用" 成功时，更新有用的数量
+  $(".vote a").bind("ajax:success", function(event, data, textStatus, jqXHR){
+  console.log(data);
+  $(this).find("span").text(data);
+  });
+
+  });
+</script>

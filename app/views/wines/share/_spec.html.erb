@@ -2,36 +2,47 @@
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td class="l">酒庄:</td>
-    <td class="c">DRC</td>
+    <td class="c">
+      <%= link_to @wine.winery.name, :controller => "wineries", :action => 'show', :id => @wine.winery.id %>
+      </td>
   </tr>
   <tr>
     <td class="l">官方网站:</td>
-    <td class="c">http://www.romanee-conti.fr/</td>
+    <td class="c">
+      <%= link_to @wine.official_site, 'http://' + @wine.official_site, :target => '_blank' %>
+      </td>
   </tr>
   <tr>
     <td class="l">产区:</td>
     <td class="c">
-      法国>勃艮第>夜丘>维森-罗曼尼>罗曼尼-康帝（特级田） <br />
-      France>Burgundy>Côte de Nuits>Vosne-Romanée>Romanée-Conti (Grand Cru AOC)
+       <%= render 'share/region_tree', :region_tree => @wine_detail.get_region_path %>
     </td>
   </tr>
   <tr>
     <td class="l">类型: </td>
-    <td class="c">红葡萄酒</td>
+    <td class="c">
+      <%= image_tag "base/" + @wine.style.name_en + '.gif' %><%= link_to @wine.style.name_zh, :controller => :searh, :action => :wine, :style => @wine.style.name_en %>
+    </td>
   </tr>
   <tr>
     <td class="l">容量: </td>
-    <td class="c">750ml</td>
+    <td class="c">
+      <%= @wine_detail.capacity %>
+    </td>
   </tr>
   <tr>
     <td class="l">酒精度:</td>
-    <td class="c">13％Vol</td>
+    <td class="c">
+      <%= @wine_detail.alcoholicity %>
+      Vol
+    </td>
   </tr>
   <tr>
     <td class="l">葡萄品种: </td>
     <td class="c">
-      Noir (75%)<br />
-      Pinot Noir(25%)
+       <% @wine_detail.variety_percentages.each do |i| %>
+       <%= i.name_zh %> (<%= i.percentage %>)、
+      <% end %>
     </td>
   </tr>
 </table>

@@ -10,6 +10,20 @@ $text_color_grey: #333;
 #comment_form {
     width: 500px;
     height: 290px;
+    #wine_profile_star_bar {
+        padding: 10px 0 10px 10px;
+    }
+    .text_area, .private, .share {
+        padding: 0px 0 10px 17px;
+    }
+    .share {
+        padding-top: 10px;
+        border-top: 1px solid #CCC;
+        .absolute {
+            right: 10px;
+            top: 7px;
+        }
+    }
     ul {
         display: inline;
         li {
@@ -41,6 +55,10 @@ $text_color_grey: #333;
         }
     }
     .left {
+        .box {
+            padding-left: 20px;
+        }
+        margin: 5px;
         @include single-box-shadow;
         /* height: 400px; */
         float: left;
@@ -86,6 +104,18 @@ $text_color_grey: #333;
         } //Buttons end
         .cover {
             text-align: center;
+            .large {
+                height: 400px;
+                a {
+                    width: 500px;
+                    height: 400px;
+                    overflow: hidden;
+                    display: block;
+                    position: absolute;
+                    left: 50px;
+                    top: 0;
+                }
+            }
             .thumbs {
                 overflow: auto;
                 width: 240px;
@@ -143,7 +173,7 @@ $text_color_grey: #333;
                 overflow: auto;
                 .pic {
                     margin-right: 20px;
-                    width: 90px;
+                    /* width: 90px; */
                     float: left;
                 }
             }

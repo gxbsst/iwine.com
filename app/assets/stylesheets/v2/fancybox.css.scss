@@ -1,3 +1,4 @@
+
 /*! fancyBox v2.0.4 fancyapps.com | fancyapps.com/fancybox/#license */
 .fancybox-tmp iframe, .fancybox-tmp object {
         vertical-align: top;
@@ -41,6 +42,11 @@
         position: relative;
         outline: none;
         overflow: hidden;
+        h3.title {
+            background: #f2f2f2;
+            padding: 18px 0 18px 20px;
+            border-bottom: 1px solid #CCC;
+        }
 }
 
 .fancybox-error {

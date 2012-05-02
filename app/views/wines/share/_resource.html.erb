@@ -1,16 +1,19 @@
-<% sub_menu = {
-     "follows"     => "wine_follows",
-     "owner"   => "winery_follows",
-     "comments"  => "comments",
-     "testing_notes"  => "testing_notes",
-     "albums"           => "albums" } %>
-
 
 <ul class="clearfix">
-  <% sub_menu.each do |action_name, url| %>
     <li>
-      <%= link_to "2" , url %> <br />
-      <%= link_to t("nav.sub_nav.mine.#{action_name}"), url %>
+      <%= raw link_to "#{@wine_detail.followers.size}<br /> 关注".html_safe, "followers" %>
     </li>
-  <% end %>
+    <li>
+      <a href="#">2 <br /> 品酒辞 </a>
+     </li>
+    <li>
+      <%= raw link_to "#{@wine_detail.comments.size}<br /> 评论".html_safe, "followers" %>
+    </li>
+    <li>
+      <a href="#">2 <br /> 品酒辞 </a>
+     </li>
+    <li>
+      <%= raw link_to "#{@wine_detail.photos.size}<br /> 评论".html_safe, "followers" %>
+    </li>
+
 </ul>

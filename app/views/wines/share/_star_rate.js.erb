@@ -1,4 +1,6 @@
 $.fancybox({
+    // title: "aaa",
+    padding: 0,
     maxWidth                : 700,
     maxHeight               : 400,
     fitToView               : false,
@@ -9,6 +11,9 @@ $.fancybox({
     'transitionOut'         : 'fade',
     'href'                  : '#comment_form',
     helpers                :{
+        title: {
+            type: 'insite'
+        },
         overlay                      : {
             opacity                 : 0.8,
             css                     : {
@@ -34,7 +39,7 @@ $(function(){
         },
         setDefaultRateStar: function(){
             var default_num = this.itemView.input.val();
-            var items = $(this.el).find("ul").children().slice(0, default_num);
+            var items = $(this.el).find("ul#stars").children().slice(0, default_num);
             _.each(items, function(item){
                 $(item).find("img").attr("src", "/assets/base/star_red.jpg");
             });

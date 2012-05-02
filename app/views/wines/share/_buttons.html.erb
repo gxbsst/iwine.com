@@ -5,15 +5,16 @@
   <ul>
     <li>
       <%  if @wine_detail.is_followed? current_user %>
-      <%= link_to "已关注", { :action => "comment",
-                        :wine_detail_id => params[:wine_detail_id],
-                        :do => "follow"},
+      <%= link_to "取消关注", { :action => "cancle_follow",
+                        :wine_detail_id => params[:wine_detail_id]},
+                        :class => "follow_wine ajax" %>
+      <%= link_to "编辑", { :action => "follow",
+                        :wine_detail_id => params[:wine_detail_id]},
                         :remote => true,
                         :class => "follow_wine ajax" %>
         <% else %>
-      <%= link_to "", { :action => "comment",
-                        :wine_detail_id => params[:wine_detail_id],
-                        :do => "follow"},
+      <%= link_to "", { :action => "follow",
+                        :wine_detail_id => params[:wine_detail_id]},
                         :remote => true,
                         :class => "follow_wine compass_buttons-follow_wine ajax" %>
       <% end %>
@@ -25,7 +26,9 @@
                           :class => "comment compass_buttons-comment ajax"%></li>
     <li><%= link_to "", { :action => :follow_wine },
                           :class => "testint_note compass_buttons-testing_note ajax"%></li>
-    <li><%= link_to "", { :action => :follow_wine },
+    <li><%= link_to "", { :action => :add_to_cellar,
+                        :wine_detail_id => params[:wine_detail_id]},
+                          :remote => true,
                           :class => "add_to_cellar compass_buttons-add_to_cellar ajax"%></li>
   </ul>
   <!-- add end -->

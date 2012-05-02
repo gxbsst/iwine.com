@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 class Comment < ActiveRecord::Base
+  default_scope where('deleted_at IS NULL')
+
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
   validates_presence_of :body
   validates_presence_of :user

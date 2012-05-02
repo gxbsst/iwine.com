@@ -31,6 +31,7 @@ gem 'rails-i18n'
 gem 'fancybox-rails', :git => 'git://github.com/sverigemeny/fancybox-rails'
 gem 'jcrop-rails'
 gem 'backbone-on-rails'
+gem "jquery-tools", "~> 0.0.3"
 
 gem 'simple_form'
 gem 'client_side_validations'

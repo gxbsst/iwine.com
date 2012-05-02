@@ -21,6 +21,9 @@
 //= require stickies
 //= require settings
 //= require kissy
+//= require jquery-tools/tabs/tabs
+//= require jquery-tools/tabs/tabs.slideshow
+
 
 $(document).ready(function(){
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120428075833) do
+ActiveRecord::Schema.define(:version => 20120430023220) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(:version => 20120428075833) do
     t.boolean  "is_share",         :default => true
     t.text     "_config"
     t.string   "do",               :default => "comment"
+    t.datetime "deleted_at"
   end
 
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
