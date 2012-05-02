@@ -87,7 +87,5 @@ class Mine::CellarsController < ApplicationController
       @search = Search.find(params[:id])
        render :template => "mine/cellars/add_step_two" 
     end
-    
   end
-
 end

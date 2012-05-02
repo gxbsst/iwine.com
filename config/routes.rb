@@ -36,6 +36,7 @@ Patrick::Application.routes.draw do
     get :logout , :to => 'devise/sessions#destroy'
     get :register , :to => 'devise/registrations#new'
   end
+
   namespace :users do
     match ":user_id/" => "users#index"
     match ":user_id/wine_follows" => "users#wine_follows"
