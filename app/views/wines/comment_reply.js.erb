@@ -1,0 +1,1 @@
+$("#reply_comment_<%= @comment.id %>").html("<%= escape_javascript(render('wines/share/comment_reply_fom', :comment => @comment)) %>");

@@ -6,7 +6,7 @@
 </h3>
 
 <!-- 酒评论带评分 -->
-<% @wine_detail.comments.each do |comment| %>
+<% @comments.each do |comment| %>
 <div class="item relative dotted">
   <div class="pic">
     <%= link_to_user comment.user, users_path(comment.user), :with_avatar => true, :avatar_version => :middle %>
@@ -22,9 +22,20 @@
   <p class="description"> <%= comment.body %> </p>
   <p class="vote">
     <%= link_to  "comment_vote?comment_id=#{comment.id}" , :remote => true do %>
-      有用(<span><%=comment.likes.size %></span>)
+      有用(<span><%=comment.votes_count %></span>)
     <% end %>
+	|
+	<%= link_to  "comment_reply?comment_id=#{comment.id}" , :remote => true, :class => "reply_comment_button", :id => "reply_#{comment.id}" do %>
+      回复
+    <% end %>
+	<span class="reply_comment_count">
+		
+	</span>
+    
   </p>
+  <div id=<%= "reply_comment_#{comment.id}" %> class ="reply_comment_outer" style="display: none">
+11  
+</div>
   <%= link_to_icon "delete", "/", :style => "display: none", :class => "delete" %>
   <%= link_to_icon "edit", "/", :style => "display: none", :class => "edit" %>
 
@@ -36,9 +47,23 @@
   $(document).ready(function(){
   // "有用" 成功时，更新有用的数量
   $(".vote a").bind("ajax:success", function(event, data, textStatus, jqXHR){
-  console.log(data);
+  // console.log(data);
   $(this).find("span").text(data);
   });
+  // 评论
+  $("a.reply_comment_button").click(function(){
+	// $(".reply_comment_outer").html("");
+  });
+$("a.reply_comment_button").bind("ajax:success", function(event, data, textStatus, jqXHR){
+	$comment_outer = $(this).parent().parent().children(".reply_comment_outer");
+	if($comment_outer.is(":hidden")){
+		$comment_outer.slideDown("slow");
+	}
+	else 
+	{
+		$comment_outer.slideUp("slow");	
+	}
+});
 
   });
 </script>
