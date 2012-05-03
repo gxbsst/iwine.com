@@ -9,6 +9,9 @@ class MineController < ApplicationController
     @comments = current_user.comments
     @cellar = current_user.cellar
     @following_wines = current_user.following_wines
+
+
+    binding.pry
   end
 
   def unfollow
