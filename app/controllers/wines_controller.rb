@@ -18,6 +18,21 @@ class WinesController < ApplicationController
     @wine_detail = Wines::Detail.includes( :covers, :photos, :statistic,  { :wine => [:style, :winery]} ).find( params[:wine_detail_id].to_i )
     @wine = @wine_detail.wine
     @wine_statistic = @wine_detail.statistic || @wine_detail.build_statistic
+    # @comments =  Comment.all(:include => [:user], 
+    #    :joins => :votes, 
+    #    :select => "comments.*, count(votes.id) as votes_count", 
+    #    :conditions => "commentable_id=#{@wine_detail_id}", 
+    #    :group => "comments.id", 
+    #    :order => "votes_count DESC")
+    @comments  =  Comment.all(:include => [:user], 
+    :joins => :votes,  
+    :select => "comments.*, count(votes.id) as votes_count", 
+    :conditions => ["commentable_id=?", @wine_detail.id ], :group => "comments.id", 
+    :order => "votes_count DESC, created_at DESC", :limit => 6)
+    @owners = Users::WineCellarItem.all(:include => [:user], 
+    :conditions => ["wine_detail_id = ?", @wine_detail.id], 
+    :order => "number DESC, created_at DESC", :limit => 4)
+    
     # @wine_comments = @wine_detail.best_comments( 6 )
     # @user_comment = @wine_detail.comment current_user.id
   end
@@ -178,6 +193,22 @@ class WinesController < ApplicationController
     @cellar =  Users::WineCellar.new
     @cellar_item = Users::WineCellarItem.new
   end
+  
+  # 回复评论
+  def comment_reply
+    @comment = Comment.find(params[:comment_id])
+    if request.post?
+      @comment = Comment.find(params[:comment_id])
+      @reply_comment = Comment.build_from(@wine_detail, current_user.id, params[:comment][:body], :do => "comment")
+      @reply_comment.save
+      @reply_comment.move_to_child_of(@comment)
+      # render :json => @reply_comment.to_json
+      render :json => @comment.children.size.to_json
+      # respond_to do |format|
+      #   format.js { render :json => @comment }
+      # end
+    end
+  end
 
   private
 
@@ -197,6 +228,7 @@ class WinesController < ApplicationController
       @comment.attributes =  params[:comment]
       @comment.commentable_type = @wine_detail.class.base_class.name
       @comment.commentable_id = @wine_detail.id
+      @comment.point = params[:rate_value]
       @comment.user_id = current_user.id
       return @comment
     end
