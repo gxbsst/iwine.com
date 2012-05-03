@@ -1,5 +1,6 @@
 <%= form_for @comment, :url => {:action => "comment_reply", :comment_id => @comment.id }, :method => :post, :remote => true do |f| -%>
-  <p> 回复: </p>
+<%= hidden_field_tag "wine_detail_id", @wine_detail.id %> 
+ <p> 回复: </p>
   <p><%= text_area_tag "comment[body]" %></p>
   <p><%= image_submit_tag "保存" %>
 <% end -%>

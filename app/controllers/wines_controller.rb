@@ -2,7 +2,7 @@
 class WinesController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show]
   before_filter :set_current_user
-  before_filter :get_wine_detail, :except => [:comment_vote, :comment_reply]
+  before_filter :get_wine_detail, :except => [:comment_vote]
 
   ## TODO: 这个action为演示用， 使用后可以删除
   def preview
@@ -199,7 +199,14 @@ class WinesController < ApplicationController
     @comment = Comment.find(params[:comment_id])
     if request.post?
       @comment = Comment.find(params[:comment_id])
-      @reply_comment = Comment.new(params[:comment])
+      @reply_comment = Comment.build_from(@wine_detail, current_user.id, params[:comment][:body], :do => "comment")
+      @reply_comment.save
+      @reply_comment.move_to_child_of(@comment)
+      # render :json => @reply_comment.to_json
+      render :json => @comment.children.size.to_json
+      # respond_to do |format|
+      #   format.js { render :json => @comment }
+      # end
     end
   end
 

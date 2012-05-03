@@ -25,22 +25,21 @@
       有用(<span><%=comment.votes_count %></span>)
     <% end %>
 	|
-	<%= link_to  "comment_reply?comment_id=#{comment.id}" , :remote => true, :class => "reply_comment_button", :id => "reply_#{comment.id}" do %>
+	<%= link_to  "comment_reply?comment_id=#{comment.id}&wine_detail_id=#{@wine_detail.id}" , :remote => true, :class => "reply_comment_button", :id => "reply_#{comment.id}" do %>
       回复
     <% end %>
 	<span class="reply_comment_count">
-		
+		(<%= comment.children.size %>)
 	</span>
     
   </p>
   <div id=<%= "reply_comment_#{comment.id}" %> class ="reply_comment_outer" style="display: none">
-11  
 </div>
   <%= link_to_icon "delete", "/", :style => "display: none", :class => "delete" %>
   <%= link_to_icon "edit", "/", :style => "display: none", :class => "edit" %>
-
 </div>
 <div class="clear"></div>
+
 <% end %>
 
 <script type="text/javascript">
@@ -50,7 +49,7 @@
   // console.log(data);
   $(this).find("span").text(data);
   });
-  // 评论
+  // 评论按钮
   $("a.reply_comment_button").click(function(){
 	// $(".reply_comment_outer").html("");
   });
@@ -64,6 +63,9 @@ $("a.reply_comment_button").bind("ajax:success", function(event, data, textStatu
 		$comment_outer.slideUp("slow");	
 	}
 });
+
+
+
 
   });
 </script>
