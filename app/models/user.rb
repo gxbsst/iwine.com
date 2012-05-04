@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   has_one  :profile, :class_name => 'Users::Profile', :dependent => :destroy
   has_many :albums, :class_name => 'Album', :foreign_key => 'created_by'
   has_many :registers, :class_name => 'Wines::Register'
-  has_many :comments, :class_name => 'Wines::Comment'
+  has_many :comments, :class_name => "::Comment", :foreign_key => 'user_id', :include => [:user]
   has_one  :good_hit_comment, :class_name => 'Users::GoodHitComment'
   has_many :photo_comments
   has_many :photos, :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_USER }
@@ -217,6 +217,10 @@ class User < ActiveRecord::Base
     elsif email == 'qq'
       #TODO
     end
+
+  end
+
+  def all_comments
 
   end
 

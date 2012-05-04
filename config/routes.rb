@@ -87,6 +87,7 @@ Patrick::Application.routes.draw do
     # CELLARS
     match "cellars/add", :to => "cellars#add"
     resources :cellars
+    match "albums", :to => 'albums#index'
 
     # ALBUMS
     match "albums(/:album_id)/upload", :to => "albums#upload", :via => [:get, :post]
@@ -110,7 +111,7 @@ Patrick::Application.routes.draw do
 
   ## WINERIES
   resources :wineries
-  resources :wines
+# resources :wines
   ## STATIC
   match "/about_us", :to => "static#about_us"
   match "/contact_us", :to => "static#contact_us"

@@ -133,6 +133,7 @@ class WinesController < ApplicationController
 
   # 关注
   def follow
+
     if request.get?
       @comment = @wine_detail.current_user_follow(current_user)
       @comment = @comment.blank? ?  Comment.new : @comment.first
