@@ -22,7 +22,7 @@ Patrick::Application.routes.draw do
     # ALBUMS
     match "albums(/:album_id)/upload", :to => "albums#upload", :via => [:get, :post]
     # WINES
-    resource :wines
+    # resource :wines
     # Message
     resources :messages
     resources :conversations
@@ -72,10 +72,14 @@ Patrick::Application.routes.draw do
 
   ## WINE
   match "/wines/register", :to => "wines#register"
-
+  match "/wines/:wine_detail_id", :to => "wines#show", :as => "wine_detail", :constraints => {:wine_detail_id => /\d+/ }
+  match ':controller(/:action(/:id))', :controller => /wines\/[^\/]+/
   namespace :wines do
     match ':wine_detail_id/:photos/:id' => "photos#show", :constraints => { :id => /\d+/, :wine_detail_id => /\d+/ }
+    match 'comments/comment', :to => "comments#create"
   end
+
+
 
   # resources :photos
   resources :events

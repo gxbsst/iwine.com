@@ -4,7 +4,9 @@ $text_color_grey: #333;
 @import "v2/compass_buttons/*.png";;
 @include all-compass_icons-sprites;
 @include all-compass_buttons-sprites;
-.span_950.fixed_width.wines.show #main{
+.span_950.fixed_width.wines.show #main, .span_950.fixed_width.comments #main,
+.span_950.fixed_width.wines #main
+{
     @include box-shadow(#FFFFFF 0 0 0 0);
 }
 #comment_form {
@@ -176,6 +178,39 @@ $text_color_grey: #333;
                     /* width: 90px; */
                     float: left;
                 }
+                .reply_comment_outer {
+                    padding-left: 80px;
+                    /* margin-top: -10px; */
+                    /* margin-left: 60px; */
+                    .top {
+                        width: 540px;
+                        height: 12px;
+                        background: url("reply_top.png") no-repeat left top;
+                    }
+                    .middle {
+                        background: url("reply_middle.png") repeat-y left top;
+                        /* overflow: auto; */
+                        width: 520px;
+                        padding: 10px;
+                    }
+                    .bottom{
+                        width: 540px;
+                        height: 12px;
+                        background: url("reply_bottom.png") no-repeat left bottom;
+                    }
+                    .item .pic {
+                        margin-right: 10px;
+                    }
+                    .td_1 {
+                        padding-right: 10px;
+                        padding-bottom: 10px;
+                        textarea {
+                            width: 400px;
+                            height: 100px;
+                        }
+
+                    }
+                }
             }
         } // comments end
         .followers {
@@ -249,5 +284,17 @@ $text_color_grey: #333;
         }
     }
 
+}
+
+
+// wines/followers/
+.span_950.wines.followers {
+  .title {
+      .button.back {
+          position: absolute;
+          right: 10px;
+          top: 15px;
+      }
+  }
 }
 

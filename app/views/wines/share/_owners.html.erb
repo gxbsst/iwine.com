@@ -1,14 +1,20 @@
 <h3>
   他们拥有，或许也愿意出售
   <span class="font_12">
-    <%= link_to "（共6人，更多...)", "/mine/cellars" %>
+    <%= link_to "（共#{@wine_detail.owners_count}人，更多...)",
+                 :controller => "wines",
+                 :action => "owners",
+                 :wine_detail_id => @wine_detail.id %>
   </span>
 </h3>
 
 <% @owners.each do |cellar_item| %>
   <div class="item">
     <div class="pic">
-      <%= link_to_user cellar_item.user, users_path(cellar_item.user), :with_avatar => true, :avatar_version => :middle %>
+      <%= link_to_user cellar_item.user,
+          users_path(cellar_item.user),
+          :with_avatar => true,
+          :avatar_version => :middle %>
     </div>
     <div class="text">
       <h4><%= link_to_user cellar_item.user,  users_path(cellar_item.user) %></h4>

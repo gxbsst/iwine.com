@@ -15,20 +15,21 @@ class Wines::Detail < ActiveRecord::Base
   has_many :variety_percentages, :class_name => 'VarietyPercentage', :foreign_key => 'wine_detail_id', :dependent => :destroy
   belongs_to :audit_log, :class_name => "AuditLog", :foreign_key => "audit_id"
 
-  def comment( user_id )
-    Wines::Comment.find_by_user_id user_id
-  end
+  # def comment( user_id )
+  #   Wines::Comment.find_by_user_id user_id
+  # end
 
-  def best_comments( limit = 5 )
-    # Wines::Comment.find(:all, :include => [:user, :avatar, :user_good_hit], :limit => limit, :conditions => ["wine_detail_id = ?", id])
-  end
+
+  # def best_comments( limit = 5 )
+  #   # Wines::Comment.find(:all, :include => [:user, :avatar, :user_good_hit], :limit => limit, :conditions => ["wine_detail_id = ?", id])
+  # end
 
   def cname
-    year.to_s + wine.name_zh
+    year.to_s + "&nbsp;" + wine.name_zh
   end
 
   def ename
-    year.to_s + wine.origin_name
+    year.to_s + "&nbsp;" + wine.origin_name
   end
 
   def name
@@ -50,10 +51,12 @@ class Wines::Detail < ActiveRecord::Base
     path.reverse!
   end
 
+  # 获取产区
   def get_region_path_html( symbol = " > " )
     get_region_path.reverse!.collect { |region| region.name_en + '/' + region.name_zh }.join( symbol )
   end
 
+  # 适饮年限
   def drinkable
     drinkable_begin.to_s + ' - ' + drinkable_end.to_s
   end
@@ -74,13 +77,46 @@ class Wines::Detail < ActiveRecord::Base
   end
 
   # 当前关注该支酒的用户列表
-  def followers
-    comments = Comment.includes([:user]).where(["commentable_id = ? AND do = ?", self.id, "follow"])
+  def followers(options = { })
+    comments = Comment.includes([:user]).where(["commentable_id = ? AND do = ?", self.id, "follow"]).limit(options[:limit])
     users = comments.map{|comment| comment.user }
   end
 
   # 谁拥有这些酒
-  def owners
-
+  def owners(options = {})
+     Users::WineCellarItem.all(:include => [:user],
+                               :conditions => ["wine_detail_id = ?", id],
+                               :order => "number DESC, created_at DESC", :limit => options[:limit])
   end
+
+  # 所有评论， 不包含子评论
+  def all_comments(options = { })
+    @comments  =  ::Comment.all(:include => [:user],
+                                # :joins => :votes,
+                                :joins => "LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id",
+                                :select => "comments.*, count(votes.id) as votes_count",
+                                :conditions => ["commentable_id=? AND parent_id IS NULL", id ], :group => "comments.id",
+                                :order => "votes_count DESC, created_at DESC", :limit => options[:limit] )
+  end
+
+  # 评论总数
+  def comments_count
+    all_comments.size
+  end
+
+  # 拥有者总数
+  def owners_count
+    owners.size
+  end
+
+  # 关注总数
+  def followers_count
+    followers.size
+  end
+
+  # 图片总数
+  def photos_count
+    photos.size
+  end
+
 end

@@ -97,3 +97,8 @@ group :test do
 end
 
 gem 'user_resource_init', :path => 'lib/patrick/user_resource_init'
+
+# 优化
+#gem "query_reviewer", :git => "git://github.com/nesquena/query_reviewer.git"
+
+

@@ -9,37 +9,12 @@
   <%= render_stickies %>
   <div class="left">
     <div class="box title">
-     <h2>
-       <%= raw @wine_detail.cname %>
-       <br />
-       <span> <%= raw @wine_detail.ename %></span>
+          <h2>
+               <%= raw @wine_detail.cname %>
+               <br />
+               <span> <%= raw @wine_detail.ename %></span>
      </h2>
      <!-- title end -->
-    </div>
-
-    <div class="box buttons relative">
-      <%= render "wines/share/buttons" %>
-         <!-- buttons end -->
-    </div>
-    <div class="clear"></div>
-
-    <div class="box cover">
-      <%= render "wines/share/cover" %>
-    </div>
-    <div class="clear"></div>
-
-    <div class="box winery_description">
-      <%= render "wines/share/winery_description" %>
-    </div>
-    <div class="clear"></div>
-
-    <div class="box photos">
-      <%= render "wines/share/photos" %>
-    </div>
-    <div class="clear"></div>
-
-    <div class="box likers">
-      <%= render "wines/share/likers" %>
     </div>
     <div class="clear"></div>
 
@@ -48,25 +23,10 @@
     </div>
     <div class="clear"></div>
 
-    <div class="box testing_notes">
-      <%= render "wines/testing_notes/testing_note" %>
-    </div>
-    <div class="clear"></div>
+  <div class="pagination">
+<%= paginate @comments %>
 
-    <div class="box followers">
-      <%= render "wines/share/followers" %>
-    </div>
-    <div class="clear"></div>
-
-    <div class="box owners">
-      <%= render "wines/share/owners" %>
-    </div>
-    <div class="clear"></div>
-
-    <div class="box events">
-      <%= render "wines/share/events" %>
-    </div>
-    <div class="clear"></div>
+  </div>
     <!-- left end -->
   </div>
 
@@ -105,7 +65,10 @@
     <!-- right end -->
     </div>
 
+
   <!-- wine_profile end -->
  </div>
 
 <div class="clear"></div>
+
+

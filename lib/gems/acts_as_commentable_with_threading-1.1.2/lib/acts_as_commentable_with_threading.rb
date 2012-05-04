@@ -44,7 +44,7 @@ module Acts #:nodoc:
 
     # Helper method to display only root threads, no children/replies
     def root_comments
-      self.comment_threads.where(:parent_id => nil)
+      self.comment_threads.where(:parent_id => nil, :deleted_at => nil)
     end
 
     # Helper method to sort comments by date

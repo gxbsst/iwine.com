@@ -92,9 +92,12 @@ class UsersController < ApplicationController
   end
 
   def direct_current_user
-    if @user == current_user
-      redirect_to :controller => "mine"
+    unless user_signed_in?
+      if @user == current_user
+        redirect_to :controller => "/mine"
+      end
     end
+    true
   end
 
 end

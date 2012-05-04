@@ -1,19 +1,32 @@
 
 <ul class="clearfix">
     <li>
-      <%= raw link_to "#{@wine_detail.followers.size}<br /> 关注".html_safe, "followers" %>
+      <%= link_to "#{@wine_detail.followers_count}<br /> 关注".html_safe,
+          :controller => "/wines",
+          :action => "followers",
+          :wine_detail_id => @wine_detail.id %>
+    </li>
+    <li>
+      <%= link_to "#{@wine_detail.owners_count}<br /> 拥有".html_safe,
+          :controller => "/wines",
+          :action => "owners",
+          :wine_detail_id => @wine_detail.id %>
+    </li>
+    <li>
+      <%= link_to "#{@wine_detail.comments_count}<br /> 评论".html_safe,
+                  {:controller => "/wines/comments",
+                   :action => "list",
+                   :wine_detail_id => @wine_detail.id } %>
+
     </li>
     <li>
       <a href="#">2 <br /> 品酒辞 </a>
      </li>
     <li>
-      <%= raw link_to "#{@wine_detail.comments.size}<br /> 评论".html_safe, "followers" %>
-    </li>
-    <li>
-      <a href="#">2 <br /> 品酒辞 </a>
-     </li>
-    <li>
-      <%= raw link_to "#{@wine_detail.photos.size}<br /> 评论".html_safe, "followers" %>
+      <%= link_to "#{@wine_detail.photos_count}<br /> 相册".html_safe,
+                  { :controller => "/wines/photos",
+                   :action => "list",
+                   :wine_detail_id => @wine_detail.id } %>
     </li>
 
 </ul>

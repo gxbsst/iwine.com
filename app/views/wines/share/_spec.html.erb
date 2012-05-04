@@ -3,7 +3,10 @@
   <tr>
     <td class="l">酒庄:</td>
     <td class="c">
-      <%= link_to @wine.winery.name, :controller => "wineries", :action => 'show', :id => @wine.winery.id %>
+      <%= link_to @wine.winery.name,
+                  :controller => "wineries",
+                  :action => 'show',
+                  :id => @wine.winery.id %>
       </td>
   </tr>
   <tr>
@@ -21,7 +24,11 @@
   <tr>
     <td class="l">类型: </td>
     <td class="c">
-      <%= image_tag "base/" + @wine.style.name_en + '.gif' %><%= link_to @wine.style.name_zh, :controller => :searh, :action => :wine, :style => @wine.style.name_en %>
+      <%= image_tag "base/" + @wine.style.name_en + '.gif' %>
+      <%= link_to @wine.style.name_zh,
+                  :controller => :searh,
+                  :action => :wine,
+                  :style => @wine.style.name_en %>
     </td>
   </tr>
   <tr>

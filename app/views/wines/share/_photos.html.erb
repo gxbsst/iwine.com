@@ -1,7 +1,10 @@
 <h3>
   所有图片
   <span class="font_12">
-    <%= link_to "(12支, 更多)", :controller => "/mine/cellars" %>
+    <%= link_to "(共#{@wine_detail.photos_count}张, 更多)",
+        :controller => "/wines/photos/",
+        :action => "list",
+        :wine_detail_id => @wine_detail.id %>
   </span>
 </h3>
 

@@ -35,6 +35,9 @@ class Comment < ActiveRecord::Base
     end
     c
   end
+  
+  # paginate config
+  paginates_per 10
 
   #helper method to check if a comment has children
   def has_children?
