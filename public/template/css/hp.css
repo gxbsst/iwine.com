@@ -9,11 +9,11 @@
 .hp_info .mystatu span {display:inline-block;margin-left:20px;}
 .hp_info ul.hp_navi{position:absolute; width:550px;top:100px;}
 .hp_navi li {float:left;height:50px}
-.hp_navi li a {display:block;height:38px;padding:7px 15px 0 15px;text-align:center;color:#333;}
+.hp_navi li a {display:block;height:38px;padding:7px 15px 0 15px;text-align:center;color:#333;float:left;}
 .hp_navi li a:hover {background:url(../image/bg/bg_navi.gif) repeat-x left top;text-decoration:none;}
 .hp_navi li.current a {background:url(../image/bg/bg_navi.gif) repeat-x left top;}
 .btn_action, .share_btn .btn {float:right;}
-.title_btn {margin:0 0 30px 0;}
+#hp .title_btn {margin:0 0 30px 0;}
 .title_btn h1 {font-size:18px;}
 .album_right h2 {font-size:14px;}
 .side_album_list h3 {font-size:12px;}
@@ -51,9 +51,9 @@ li.photo_des p {margin: 0 0 5px 0;}
 /*------------cellar style--------------*/
 .sort_search { vertical-align:middle;}
 .sort {float:left;margin:0 15px 0 0;}
-.search {float:left;width:}
+.sort_search .search {float:left;width:}
 #cellar .search input {width:250px;}
-.wine_data table {border-top:1px solid #ccc;}
+.wine_data table {border-top:1px solid #ccc;margin: 0 0 30px 0;}
 .wine_data th, .wine_data td {padding:15px;border-bottom:1px solid #ccc;}
 .wine_data th {background-color:#f3f3f3;font-size:13px;}
 .wine_data td.img, .wine_data td.year , .wine_data td.count, .wine_data td.price, .wine_data td.place{text-align:center;}
@@ -62,3 +62,14 @@ li.photo_des p {margin: 0 0 5px 0;}
 .wine_data th.des, .wine_data th.info {text-align:left;}
 .wine_data td.des {width:150px;}
 .wine_data td.info {width:150px;}
+#cellar .step {margin: 0 0 40px 0;}
+.step_fir, .step_sec, .step_thr {background:url(../image/common/step_cellar_addwine.jpg) no-repeat;height:40px;}
+.step .step_fir {background-position:0 0;}
+.step .step_sec {background-position:0 -40px;}
+.step .step_thr {background-position:0 -80px;}
+.wine_list li {background:url(../image/bg/wine_search_bg.jpg) no-repeat left top;height:76px;padding:20px 30px;margin:0 0 20px 0;}
+.wine_list .wine_img {float:left;width:70px;margin: 0 20px 0 0;}
+.wine_list .add_to_cellar {float:right;padding: 20px 0 0 0;}
+.wine_list .wine_info {float:left;width:600px;}
+.wine_list .wine_info h2 {font-size:14px;}
+.wine_list .wine_info h3 {font-size:12px;font-weight:normal;color:#666;}

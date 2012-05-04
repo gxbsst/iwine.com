@@ -1,0 +1,15 @@
+@charset "UTF-8";
+.addwine {padding:0 60px;}
+.addwine h1 {margin: 0 0 20px 0;}
+.step_fir, .step_sec, .step_thr {background:url(../image/common/step_cellar_addwine.jpg) no-repeat;height:40px;}
+.addwine .step {margin: 0 0 40px 0;}
+.addwine .step .step_fir {background-position:0 -130px;}
+.addwine .step .step_sec {background-position:0 -170px;}
+.addwine .step .step_thr {background-position:0 -210px;}
+.box  {background:url(../image/bg/bg_box_m.gif) repeat-y ;margin: 0 0 20px 0;}
+.box_t {width:680px;height:10px;background:url(../image/bg/bg_box_t.gif) no-repeat left top;}
+.box_b {width:680px;height:25px;background:url(../image/bg/bg_box_b.gif) no-repeat left top;}
+.box_main {padding:15px 30px 0 30px;}
+.addwine .box .wine_img {float:left;widht:70px;margin: 0 20px 0 0;}
+.addwine .box .wine_info {float:left;width:530px;}
+.addwine .box .year span a {margin:0 5px 0 0;text-decoration:underline;display:inline-block;}
