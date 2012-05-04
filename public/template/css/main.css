@@ -5,6 +5,7 @@ body {line-height:18px;}
 h1, h2, h3, h4, h5, h6, ul, li, p, dl, dd, dt {margin:0;padding:0;}
 h1 a, h2 a, h3 a, h4 a {color:#333;}
 h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover {color:#cc3333;text-decoration:none;}
+h1.main_title {font-size:18px;}
 li {list-style:none;}
 a {color:#cc3333;text-decoration:none;}
 a:hover {text-decoration:underline;}
@@ -12,6 +13,9 @@ img {border:none;}
 i {color:#ccc;}
 .mr5 {margin-right:5px;}
 .mb10 {margin-bottom:10px;}
+.mt10 {margin-top:10px;}
+.mt20 {margin-top:20px;}
+.mt30 {margin-top:30px;}
 .mb20 {margin-bottom:20px;}
 .mb40 {margin-bottom:40px;}
 .ptb10 {padding-top:10px;padding-bottom:10px;}
@@ -61,28 +65,32 @@ input.common_search {width:250px;}
 .myform .left {width:500px;float:left;margin-right:20px;}
 .myform .right {float:left;}
 /*--------- stylized ---------- */
-.left div {float:left;display:block;margin:0 0 10px 0;width:500px;}
+.left div {float:left;display:block;margin-bottom:10px;width:500px;} 
+.main div {float:left;display:block;margin-bottom:10px;width:680px;}
 #stylized{}
 #stylized h1 {font-size:14px;font-weight:bold;margin-bottom:8px;}
-#stylized p{font-size:11px;color:#666666;margin-bottom:20px;border-bottom:solid 1px #b7ddf2;padding-bottom:10px;}
 #stylized .required label span {color:#F00;}
 #stylized label{display:block; font-weight:bold;text-align:right;width:100px;float:left;margin: 0 20px 10px 0;}
 #stylized .small{color:#666666;display:block;font-size:11px;font-weight:normal;text-align:right;width:140px;}
 #stylized input{margin-right:5px;}
 #stylized .content {float:left;width:380px;}
+#stylized .content2 {float:left;width:560px;}
 #stylized button{clear:both;margin-left:150px;width:125px;height:31px;background:#666666 url(img/button.png) no-repeat;text-align:center;line-height:31px;color:#FFFFFF;font-size:11px; font-weight:bold;}
-input.trader {width:250px;}
-input.price {width:70px;}
-input.count {width:30px;}
-input.year {width:50px;}
+input.trader, input.name {width:250px;}
+input.price, input.g_type {width:70px;}
+input.count{width:30px;}
+input.year, input.percent  {width:50px;}
+textarea.wine_intro {width:500px;height:200px;}
 
 /*icon*/
-.icon_mail, .icon_like, .icon_add_album, .icon_delet, .icon_edit {background:url(../image/icon/icon_all.gif) no-repeat;display:inline-block;}
+.icon_mail, .icon_like, .icon_add_album, .icon_delet, .icon_edit, .icon_add, .icon_delet2 {background:url(../image/icon/icon_all.gif) no-repeat;display:inline-block;}
 a.icon_mail {background-position: 0 2px;display:inline-block;padding:0 0 0 20px;}
 a.icon_like {background-position: 0 -16px;padding:0 0 0 20px;}
 a.icon_add_album {background-position: 0 -35px;padding:0 0 0 20px;height:17px;line-height:17px;}
 a.icon_delet {background-position:0 -56px;text-indent: -9999px;height:13px;width:13px;display:inline-block;}
 a.icon_edit {background-position:0 -74px; text-indent:-9999px;height:13px;width:13px;display:inline-block;}
+a.icon_add {background-position:0 -92px; text-indent:-9999px;height:14px;width:14px;display:inline-block;}
+a.icon_delet2 {background-position:0 -115px; text-indent:-9999px;height:13px;width:13px;display:inline-block;}
 
 /*--------------star style---------------*/
 .star_s0, .star_s1, .star_s2, .star_s3, .star_s4, .star_s5 {background:url(../images/star.jpg) no-repeat;display:inline-block;width:65px;height:12px;margin-top:2px;}
@@ -127,9 +135,13 @@ a.icon_edit {background-position:0 -74px; text-indent:-9999px;height:13px;width:
 .comment_post .reply_text {margin:0 0 10px 0;color:#999;}
 .comment_post .reply_text span {margin-right:10px;}
 
+/*---------table style-----------*/
+.data_style1 td {background-color:#f3f3f3;border-right:2px solid #fff;border-bottom:2px solid #fff;padding:2px 10px;}
+
 /*header*/
 #header {background:url(../image/bg/header_bg.png) repeat-x top left; height:53px;color:#fff; position:relative;padding:12px 0 0 0;margin:0 0 20px 0;}
 #header .main950 {width:950px;margin:0 auto;}
+#header .main860 {width:860px;margin:0 auto;}
 #header #logo {position:absolute;width:270px;}
 #header #top_search {float:left;width:350px;margin:3px 0 0 280px;}
 #header #top_right {float:right;}
@@ -191,12 +203,14 @@ a.btn_blue_b span {background-position:right -300px;display:inline-block;height:
 a.btn_blue_b:hover {background-position:left -330px;}
 a.btn_blue_b:hover span {background-position:right -330px;}
 
-
 a.btn_add {background-position:0 0;width:62px;height:32px;line-height:30px;display:inline-block;color:#fff;text-decoration:none;padding:0 0 0 10px;font-size:14px;}
 a.btn_add:hover {background-position:left -32px;}
 
-/*pagination style*/
+/*------------box style---------------*/
+.wine_list .wine_info h2, .addwine .box .wine_info h2 {font-size:14px;}
+.wine_list .wine_info h3, .addwine .box .wine_info h3 {font-size:12px;font-weight:normal;color:#666;}
 
+/*pagination style*/
 div.pagination {padding-right: 3px; padding-left: 3px; padding-bottom: 3px; margin: 3px; padding-top: 3px; text-align: center; clear:both;}
 div.pagination a {border-right: #dedfde 1px solid; padding-right: 6px; background-position: 50% bottom; border-top: #dedfde 1px solid; padding-left: 6px; padding-bottom: 2px; border-left: #dedfde 1px solid; color: #99210b; margin-right: 3px; padding-top: 2px; border-bottom: #dedfde 1px solid; text-decoration: none}
 div.pagination a:hover {border-right: #000 1px solid; border-top: #000 1px solid; background-image: none; border-left: #000 1px solid; color: #fff; border-bottom: #000 1px solid; background-color: #777777}
