@@ -4,11 +4,11 @@ class MineController < ApplicationController
   before_filter :get_user
 
   def index
-
     @followers = current_user.followers
     @followings = current_user.followings
     @comments = current_user.comments
-
+    @cellar = current_user.cellar
+    @following_wines = current_user.following_wines
   end
 
   def unfollow
@@ -36,7 +36,6 @@ class MineController < ApplicationController
   end
 
   def followings
-    
     @followings = Friendship
       .includes([:user])
       .where(["follower_id = ?", current_user.id])
@@ -44,7 +43,6 @@ class MineController < ApplicationController
       .page params[:page] || 1
 
     @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
-
   end
 
   def followers
@@ -61,10 +59,6 @@ class MineController < ApplicationController
 
   end
 
-  def do
-
-  end
-
   def feeds
 
   end
@@ -78,5 +72,4 @@ class MineController < ApplicationController
   def get_user
     @user = current_user
   end
-
 end

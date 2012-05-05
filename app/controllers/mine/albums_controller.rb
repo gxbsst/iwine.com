@@ -1,6 +1,7 @@
 class Mine::AlbumsController < ApplicationController
   
   before_filter :authenticate_user!
+  before_filter :get_user
 
   def upload
 
@@ -170,6 +171,8 @@ class Mine::AlbumsController < ApplicationController
       @index = params[:index].to_i
     end
 
+
+
     @photo = @album.photo @index
     @user = @album.user
     @top_albums = @user.top_albums 3
@@ -183,7 +186,12 @@ class Mine::AlbumsController < ApplicationController
   end
 
   def index
+    @user = current_user
     @albums = Album .where(["created_by= ?", current_user.id]).order("id DESC").page params[:page] || 1
   end
  
+
+  def get_user
+    @user = current_user
+  end
 end

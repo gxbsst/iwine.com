@@ -48,7 +48,6 @@ ActiveRecord::Schema.define(:version => 20120430023220) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",          :limit => 45,                    :null => false
-    t.integer  "user_id"
     t.text     "intro"
     t.boolean  "is_order_asc",                :default => false, :null => false
     t.integer  "cover_id",                    :default => 0
@@ -153,11 +152,9 @@ ActiveRecord::Schema.define(:version => 20120430023220) do
     t.integer  "commented_num",              :default => 0
     t.integer  "liked_num",                  :default => 0
     t.datetime "deleted_at"
-    t.boolean  "is_cover",                   :default => false
-    t.integer  "audit_id"
-    t.integer  "audit_status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_cover",                   :default => false
   end
 
   create_table "receipts", :force => true do |t|
@@ -178,8 +175,8 @@ ActiveRecord::Schema.define(:version => 20120430023220) do
     t.integer  "parent_id",   :limit => 2,   :default => 0,     :null => false
     t.string   "region_name", :limit => 120, :default => "",    :null => false
     t.boolean  "region_type",                :default => false, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
   end
 
   add_index "regions", ["parent_id"], :name => "parent_id"
@@ -273,7 +270,7 @@ ActiveRecord::Schema.define(:version => 20120430023220) do
     t.integer  "living_city"
     t.integer  "hometown"
     t.string   "gender",              :limit => 0
-    t.datetime "birthday"
+    t.date     "birthday"
     t.integer  "vocation"
     t.string   "company",             :limit => 100
     t.string   "real_name",           :limit => 100
@@ -338,6 +335,7 @@ ActiveRecord::Schema.define(:version => 20120430023220) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "password_salt"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
@@ -373,26 +371,26 @@ ActiveRecord::Schema.define(:version => 20120430023220) do
   add_index "votes", ["voter_id", "voter_type"], :name => "index_votes_on_voter_id_and_voter_type"
 
   create_table "wine_comments", :force => true do |t|
-    t.integer  "wine_detail_id",                              :null => false
-    t.integer  "user_id",                                     :null => false
+    t.integer  "wine_detail_id",                               :null => false
+    t.integer  "user_id",                                      :null => false
     t.text     "content"
-    t.integer  "good_hit",                     :default => 0
-    t.integer  "point",          :limit => 1,  :default => 0
-    t.string   "drink_status",   :limit => 40
+    t.integer  "good_hit",                     :default => 0,  :null => false
+    t.integer  "point",          :limit => 1,  :default => 0,  :null => false
+    t.string   "drink_status",   :limit => 40, :default => "", :null => false
     t.integer  "flag",           :limit => 1,  :default => 0
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
   end
 
   create_table "wine_details", :force => true do |t|
-    t.integer  "drinkable_begin"
-    t.integer  "drinkable_end"
+    t.datetime "drinkable_begin"
+    t.datetime "drinkable_end"
     t.integer  "price"
     t.string   "alcoholicity",    :limit => 45
     t.string   "capacity",        :limit => 45
     t.integer  "wine_style_id"
     t.integer  "wine_id"
-    t.integer  "year"
+    t.datetime "year"
     t.string   "unique_url",      :limit => 128
     t.integer  "audit_id"
     t.datetime "created_at",                     :null => false
@@ -437,11 +435,11 @@ ActiveRecord::Schema.define(:version => 20120430023220) do
     t.integer  "parent_id"
     t.string   "name_en",     :limit => 45
     t.string   "name_zh",     :limit => 45
-    t.integer  "tree_right",                               :null => false
-    t.integer  "tree_left",                                :null => false
-    t.integer  "scope",                                    :null => false
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.integer  "tree_right"
+    t.integer  "tree_left"
+    t.integer  "scope"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "level",       :limit => 1,  :default => 1, :null => false
     t.string   "origin_name", :limit => 45
     t.string   "doc",         :limit => 30
@@ -452,13 +450,13 @@ ActiveRecord::Schema.define(:version => 20120430023220) do
     t.string   "name_en",            :limit => 128
     t.string   "official_site",      :limit => 100
     t.integer  "wine_style_id"
-    t.integer  "region_tree_id"
+    t.integer  "region_tree_id",                                   :null => false
     t.integer  "winery_id"
     t.string   "photo_name",         :limit => 100
     t.string   "photo_origin_name"
-    t.integer  "vintage"
-    t.integer  "drinkable_begin"
-    t.integer  "drinkable_end"
+    t.datetime "vintage"
+    t.datetime "drinkable_begin"
+    t.datetime "drinkable_end"
     t.string   "alcoholicity",       :limit => 45
     t.string   "variety_percentage", :limit => 128
     t.string   "variety_name"
@@ -467,10 +465,21 @@ ActiveRecord::Schema.define(:version => 20120430023220) do
     t.integer  "audit_log_id"
     t.integer  "user_id"
     t.integer  "result"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
     t.string   "other_cn_name"
     t.string   "origin_name",        :limit => 45
+  end
+
+  create_table "wine_special_comments", :force => true do |t|
+    t.integer  "special_commentable_id"
+    t.string   "special_commentable_type"
+    t.string   "name"
+    t.string   "score",                    :limit => 11
+    t.datetime "drinkable_begin"
+    t.datetime "drinkable_end"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
   end
 
   create_table "wine_statistics", :force => true do |t|
@@ -535,7 +544,7 @@ ActiveRecord::Schema.define(:version => 20120430023220) do
     t.string   "name_en",        :limit => 128
     t.string   "official_site",  :limit => 100
     t.integer  "wine_style_id"
-    t.integer  "winery_id",                     :null => false
+    t.integer  "winery_id"
     t.integer  "region_tree_id",                :null => false
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
@@ -545,9 +554,5 @@ ActiveRecord::Schema.define(:version => 20120430023220) do
 
   add_index "wines", ["region_tree_id"], :name => "fk_wine_region_tree1"
   add_index "wines", ["winery_id"], :name => "fk_wine_winery1"
-
-  add_foreign_key "notifications", "conversations", :name => "notifications_on_conversation_id"
-
-  add_foreign_key "receipts", "notifications", :name => "receipts_on_notification_id"
 
 end

@@ -19,4 +19,3 @@ class Users::WineCellarItem < ActiveRecord::Base
     paginates_per 6
   
 end
- 

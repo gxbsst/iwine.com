@@ -125,4 +125,5 @@ module ApplicationHelper
       "#{s.name} #{s.score} #{s.drinkable_begin.strftime('%Y') if s.drinkable_begin} - #{s.drinkable_end.strftime('%Y') if s.drinkable_end}"
     end
   end
+
 end

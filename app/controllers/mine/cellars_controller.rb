@@ -1,7 +1,6 @@
 # encoding: UTF-8
+
 class Mine::CellarsController < ApplicationController
-
-
 
   def index
     @cellar_items = Users::WineCellarItem.includes(:wine_cellar, {:wine_detail => [:covers, :wine]}).page params[:page] || 1
@@ -87,7 +86,5 @@ class Mine::CellarsController < ApplicationController
       @search = Search.find(params[:id])
        render :template => "mine/cellars/add_step_two"
     end
-
   end
-
 end

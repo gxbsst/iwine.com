@@ -1,4 +1,4 @@
-<div class="<%= controller_name  %> index user_follows">
+<div class="<%= controller_name %> index user_follows">
   <%= render "mine/sub_nav", :action => params[:action] %>
   <div class="clear"></div>
   <div class="left">
@@ -11,13 +11,11 @@
       <%= paginate @followings, :outer_window => 2 %> 
       <!-- pagination  end   -->
       </div>
-
       <!-- .box end -->
     </div>
     <div class="clear"></div>
     <!-- left end -->
   </div>
-
   <div class="right">
     <div class="box box_1  user_follows" >
       <h3>可能感兴趣的人</h3>
@@ -26,7 +24,6 @@
       <%= link_to "添加或邀请好友", "/friends/find", :class => "button block find_friends" %>
       <!-- .box end -->
     </div>
-
     <div class="clear"></div>
     <!-- right end -->
   </div>

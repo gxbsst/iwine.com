@@ -9,22 +9,9 @@
       <div class="clear"></div>
       <!-- pagination start  -->
       <div class="pagination">
-        <nav class="pagination">
-          <span class="page current">1</span>
-          <span class="page">
-            <a href="/mine/conversations?page=2" rel="next">2</a>
-          </span>
-          <span class="next">
-            <a href="/mine/conversations?page=2" rel="next">&gt;</a>
-          </span>
-          <span class="last">
-            <a href="/mine/conversations?page=2">最后</a>
-          </span>
-
-        </nav>
+      <%= paginate @followers, :outer_window => 2 %> 
       <!-- pagination  end   -->
       </div>
-
 
       <!-- .box end -->
     </div>

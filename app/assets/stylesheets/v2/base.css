@@ -101,7 +101,7 @@ ul, li {
 ul, li {
   list-style: none outside none;
 }
-.error, .alert, .notice, .success, .info, .flash_notice {
+.error, .alert, .notice, .success, .flash_notice {
   border: 2px solid #DDDDDD;
   margin-bottom: 1em;
   padding: 0.8em;
@@ -122,11 +122,12 @@ ul, li {
   border-color: #C6D880;
   color: #264409;
 }
+/*
 .info {
   background: none repeat scroll 0 0 #D5EDF8;
   border-color: #92CAE4;
   color: #205791;
-}
+}*/
 .error a, .alert a {
   color: #8A1F11;
 }

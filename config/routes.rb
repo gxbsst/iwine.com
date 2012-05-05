@@ -21,14 +21,15 @@ Patrick::Application.routes.draw do
     get :logout , :to => 'devise/sessions#destroy'
     get :register , :to => 'devise/registrations#new'
   end
+
   namespace :users do
     match ":user_id/" => "users#index"
     match ":user_id/wine_follows" => "users#wine_follows"
     match ":user_id/winery_follows" => "users#winery_follows"
     match ":user_id/comments" => "users#comments"
     match ":user_id/testing_notes" => "users#testing_notes"
-    match ":user_id/user_follows" => "users#user_follows"
-    match ":user_id/user_followers" => "users#user_followers"
+    match ":user_id/followings" => "users#followings"
+    match ":user_id/followers" => "users#followers"
 
     ## CELLAR
     match ":user_id/cellars/" => "cellars#index", :via => [:get]
@@ -71,6 +72,7 @@ Patrick::Application.routes.draw do
     # CELLARS
     match "cellars/add", :to => "cellars#add"
     resources :cellars
+    match "albums", :to => 'albums#index'
 
     # ALBUMS
     match "albums(/:album_id)/upload", :to => "albums#upload", :via => [:get, :post]
@@ -94,7 +96,7 @@ Patrick::Application.routes.draw do
 
   ## WINERIES
   resources :wineries
-  resources :wines
+# resources :wines
   ## STATIC
   match "/about_us", :to => "static#about_us"
   match "/contact_us", :to => "static#contact_us"
