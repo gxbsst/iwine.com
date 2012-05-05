@@ -9,8 +9,11 @@ ActiveAdmin.register Wines::Detail do
       Wines::VarietyPercentage.build_variety_and_percentage(@wines_detail, params[:variety_percentage])
       region_tree_id = params[:region].values.delete_if{|a| a == ''}.pop
       @wines_detail.wine.update_attribute(:region_tree_id,  region_tree_id) unless region_tree_id.blank?
-      @wines_detail.update_attributes(params[:wines_detail])
-      redirect_to admin_wines_detail_path(@wines_detail)
+      if @wines_detail.update_attributes(params[:wines_detail])
+        redirect_to admin_wines_detail_path(@wines_detail)
+      else
+        render :action => :edit
+      end
     end
   end
 
@@ -35,7 +38,6 @@ ActiveAdmin.register Wines::Detail do
       row "酒的类型" do
         detail.style.name
       end
-
       row "酒区" do
         render "share/region_tree", :region_tree => detail.get_region_path(detail.wine.region_tree_id)
       end
