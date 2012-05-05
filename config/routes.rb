@@ -14,21 +14,6 @@ Patrick::Application.routes.draw do
   match "/friends/:type/sync" => "friends#new", :as => :sync_new
   match "/friends/:type/callback" => "friends#callback", :as => :sync_callback
 
-  ## MINE
-  namespace :mine do
-    # CELLARS
-    match "cellars/add", :to => "cellars#add"
-    resources :cellars
-    # ALBUMS
-    match "albums(/:album_id)/upload", :to => "albums#upload", :via => [:get, :post]
-    # WINES
-    resource :wines
-    # Message
-    resources :messages
-    resources :conversations
-  end
-  match ':controller(/:action(/:id))', :controller => /mine\/[^\/]+/
-
   ## USER
   devise_for :users, :controllers => { :registrations => "registrations" }
   devise_scope :user do

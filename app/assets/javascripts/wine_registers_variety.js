@@ -14,6 +14,21 @@ $(document).ready(function(){
      $("#new_variety").attr('value', null);
    });
 
+    $("#add_detail_variety").click(function(){
+        if ($("#variety_name").attr('value') == '' || $("#variety_percentage").attr('value') == ''){
+            alert('葡萄品种或成分未填写值！');
+            return false;
+        }
+        var name = $("#variety_name").attr('value');
+        var value = $("#variety_percentage").attr('value');
+        var input_name = "<input type='hidden' name='variety_percentage[variety_name][]' value='" + name + "'/>";
+        var input_value = "<input type='hidden' name='variety_percentage[variety_percentage][]' value='" + value + "'/>";
+        var append_html= "<li><span class='extra_attribute'>" + name + "</span><span class='extra_attribute'>" + value + "%</span>"+ input_name + input_value +"<span class='delete_variety'>删除</span></li>";
+        $("#variety_items").append(append_html);
+        $("#variety_name").attr('value', null);
+        $("#variety_percentage").attr('value', null);
+    });
+
   $("#create_special_comment").click(function(){
       if ($("#special_comment_name").attr('value') == '' || $("#special_comment_score").attr('value') == ''){
           alert('评论家或得分未填写！');
@@ -21,8 +36,8 @@ $(document).ready(function(){
       }
       var name = $("#special_comment_name").attr("value");
       var score = $("#special_comment_score").attr("value");
-      var drinkable_begin = $("#wines_register_special_comments_drinkable_begin_1i").attr('value');
-      var drinkable_end = $("#wines_register_special_comments_drinkable_end_1i").attr('value')
+      var drinkable_begin = $("#special_drinkable_begin").attr('value');
+      var drinkable_end = $("#special_drinkable_end").attr('value')
       var input_name = "<input name='special_comment[name][]' type='hidden' value='" + name + "'/>";
       var input_score = "<input name='special_comment[score][]' type='hidden' value='" + score + "'/>";
       var input_drinkable_begin = "<input name='special_comment[drinkable_begin][]' type='hidden' value='" + drinkable_begin + "'/>";

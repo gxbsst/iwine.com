@@ -1,5 +1,4 @@
 class Wine < ActiveRecord::Base
-
   has_many :details, :class_name => '::Wines::Detail'
   has_many :special_comments, :as => :special_commentable
   belongs_to :winery
@@ -33,5 +32,19 @@ class Wine < ActiveRecord::Base
 	#   end
   # has_many :contact_people, :foreign_key => "erp_customer_id"
   # has_many :addresses, :foreign_key => "parent_id", :class_name => "ERP::CustomerAddress"
-  
+
+  def self.approve_wine(register)
+    wine = Wine.find_or_initialize_by_name_en(register.name_en)
+    if wine.new_record?
+      wine.update_attributes!(
+        :origin_name => register.origin_name,
+        :name_zh => register.name_zh,
+        :official_site => register.official_site,
+        :wine_style_id => register.wine_style_id,
+        :region_tree_id => register.region_tree_id,
+        :winery_id => register.winery_id
+      )
+    end
+    return wine
+  end
 end

@@ -119,4 +119,10 @@ module ApplicationHelper
   def messages_path(m)
     mine_messages_path(m)
   end
+
+  def special_comments_list(parent)
+    parent.special_comments.each do |s|
+      "#{s.name} #{s.score} #{s.drinkable_begin.strftime('%Y') if s.drinkable_begin} - #{s.drinkable_end.strftime('%Y') if s.drinkable_end}"
+    end
+  end
 end

@@ -142,59 +142,11 @@ namespace :app do
     Wines::Register.where("status = ? ", 0).each do |wine_register|
       begin
         Wine.transaction do
-          #添加记录
-          audit_log = AuditLog.find_or_initialize_by_business_id_and_owner_type(wine_register.id, 4)
-          if audit_log.new_record?
-            audit_log.result = 1
-            audit_log.created_by = 4
-            audit_log.save!
-          end
-          #更新wine_register记录
-          wine_register.update_attributes!(:audit_log_id => audit_log.id, :status => 1, :result => 1)
-          #添加酒
-          wine = Wine.find_or_initialize_by_origin_name(wine_register.origin_name)
-          if wine.new_record?
-            wine.name_en = wine_register.name_en
-            wine.origin_name = wine_register.origin_name
-            wine.name_zh = wine_register.name_zh
-            wine.official_site = wine_register.official_site
-            wine.wine_style_id = wine_register.wine_style_id
-            wine.region_tree_id =  wine_register.region_tree_id
-            wine.winery_id = wine_register.winery_id
-            wine.save!
-          end
-          #添加酒的详细信息
-          wine_detail = Wines::Detail.find_or_initialize_by_wine_id_and_year(wine.id, wine_register.vintage)
-          if wine_detail.new_record?
-            wine_detail.drinkable_begin = wine_register.drinkable_begin
-            wine_detail.drinkable_end = wine_register.drinkable_end
-            wine_detail.alcoholicity = wine_register.alcoholicity
-            wine_detail.capacity = wine_register.capacity
-            wine_detail.wine_style_id = wine_register.wine_style_id
-            wine_detail.audit_id = audit_log.id
-            wine_detail.save!
-          end
-          #添加酒的品种信息
-          wine_register.variety_name.each_with_index do |value, index|
-            next if value.blank?
-            if wine_variety = Wines::Variety.where("origin_name = ? ", value.strip).first
-               wine_variety.variety_percentages.create(:wine_detail_id => wine_detail.id, :percentage => wine_register.variety_percentage[index])
-            end
-          end
-          #上传图片
-          Dir.mkdir("#{Rails.root}/public/uploads/photo/wine/#{wine_detail.id}")
-          FileUtils.cp_r Dir.glob("#{Rails.root}/public/uploads/wine_register/#{wine_register.id}/*"), "#{Rails.root}/public/uploads/photo/wine/#{wine_detail.id}"
-          photo_path = Rails.root.join 'public', 'uploads', 'photo', 'wine', wine_detail.id.to_s, Dir.entries(Rails.root.join('public', 'uploads','photo', 'wine', wine_detail.id.to_s)).select{|x| x != '.' && x != '..' && x != '.DS_Store'}.first
-          Photo.create(
-              :owner_type => 2,
-              :business_id => wine_detail.id,
-              :category => 1,
-              :album_id => 1,
-              :is_cover => 1,
-              :image => open(photo_path))
-          puts wine.id
+          wine_register.approve_wine
+          puts wine_register.id
         end
       rescue Exception => e
+        wine_register.update_attribute(:status, -1)
         puts e
       end
     end

@@ -5,7 +5,7 @@
 
   <div class="wine_img">
     <!-- <img src="/assets/base/test/win_130p.jpg" width="130" height="140" alt="2001拉菲珍宝" /> -->
-    <%= image_tag @wine_detail.cover.image_url( :w_thumb ), :title => @wine_detail.name, :width => 130, :height => 140, :alt => @wine_detail.name %>
+    <%= image_tag( @wine_detail.cover.image_url( :w_thumb ), :title => @wine_detail.name, :width => 130, :height => 140, :alt => @wine_detail.name) if @wine_detail.cover %>
   </div>
   <div class="star_score mb30">
     <span class="star_b_s<%= @wine_statistic.avarage_score.round*10/2%>  mr10 float_l">
@@ -118,8 +118,10 @@
 		<% end %>
 		<%= @wine_detail.cname %>的图片<span class="count_more">(<%= link_to @wine_detail.photos.count, :controller => 'photos' %>)<a href="#">更多...</a></span></h2>
     <ul class="pic_col5 clearfix">
-    <% @wine_detail.photos[1..5].each do |photo| %>
-      <li><%= link_to (image_tag photo.image_url( :w_thumb ), :width => 90, :height => 108, :alt => @wine_detail.name), "/wines/#{@wine_detail.id}/photos/#{photo.id}" %>
+    <% if @wine_detail.photos.size > 0 %>
+        <% @wine_detail.photos[1..5].each do |photo| %>
+            <li><%= link_to (image_tag photo.image_url( :w_thumb ), :width => 90, :height => 108, :alt => @wine_detail.name), "/wines/#{@wine_detail.id}/photos/#{photo.id}" %>
+        <% end %>
     <% end %>
       <div class="clear"></div>
     </ul>
@@ -135,7 +137,7 @@
     <h2 class="clearfix">
       <a class="new_short_comment fancybox.ajax button_gray float_r" href="<%= url_for :action=>'new_short_comment',:type=>'comment',:wine_detail_id=>@wine_detail.id %>">
         <span><%= @user_comment.present? ? '修改':'我来'%>评论</span>
-      </a><%= @wine_detail.year.to_s + @wine.name_zh%>的评论
+      </a><%= @wine_detail.cname %>的评论
       <span class="count_more">
         <% if @wine_statistic.comment_count > 0 %>
           <% if @wine_statistic.comment_count > 5 %>

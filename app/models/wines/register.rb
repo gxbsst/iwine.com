@@ -1,4 +1,4 @@
-# encoding UTF-8
+# encoding: UTF-8
 class Wines::Register < ActiveRecord::Base
 
   include Wines::WineSupport
@@ -29,4 +29,21 @@ class Wines::Register < ActiveRecord::Base
     vintage.blank? ? "-" : vintage.strftime("%Y")
   end
 
+  def approve_wine
+    audit_log = AuditLog.build_log(id, 4)
+    self.update_attributes!(:audit_log_id => audit_log.id, :status => 1, :result => 1)
+    wine = Wine.approve_wine(self)
+    wine_detail = Wines::Detail.approve_wine_detail(wine.id, self, audit_log.id)
+    Wines::VarietyPercentage.build_variety_percentage(variety_name, variety_percentage, wine_detail.id)
+    Wines::SpecialComment.change_special_comment_to_wine(wine_detail, self)
+    Photo.build_wine_photo(wine_detail.id, id) unless photo_name.blank?
+  end
+
+  def show_status
+    status.to_i == 0 ? "未发布" : (status.to_i == 1 ? "已发布" : "发布失败")
+  end
+
+  def show_result
+    result.to_i == 0 ? "未发布" : (result.to_i == 1 ? "已发布" : "发布失败")
+  end
 end

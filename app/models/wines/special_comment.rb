@@ -13,7 +13,13 @@ class Wines::SpecialComment  < ActiveRecord::Base
         :drinkable_end => DateTime.parse("#{attributes[:drinkable_end][index]}0101")
       )
     end
+    Wines::SpecialComment.delete(attributes[:destroy]) if attributes[:destroy]
 
   end
 
+  def self.change_special_comment_to_wine(detail, register)
+    register.special_comments.each do |s|
+      detail.special_comments.create(:name => s.name, :score => s.score, :drinkable_begin => s.drinkable_begin, :drinkable_end => s.drinkable_end)
+    end
+  end
 end

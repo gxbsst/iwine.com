@@ -1,0 +1,27 @@
+<div class="admin_wine_register">
+  <%= form_for @wine, :url => {:action => :update} do |w| %>
+     <table cellpadding="5" cellspacing="10">
+        <tr>
+          <td><label>中文名</label></td>
+          <td><%= w.text_field  :name_zh %></td>
+        </tr>
+        <tr>
+          <td><label>英文名</label></td>
+          <td><%= w.text_field :name_en %></td>
+        </tr>
+        <tr>
+          <td><label>英文原名</label></td>
+          <td><%= w.text_field :origin_name %></td>
+        </tr>
+        <tr>
+          <td><label>其它中文名</label></td>
+          <td><%= w.text_field :other_cn_name %></td>
+        </tr>
+        <tr>
+          <td><label>官方网址</label></td>
+          <td><%= w.text_field :official_site %></td>
+        </tr>
+       <tr><td></td><td><%= w.submit "提交" %></td></tr>
+     </table>
+  <% end %>
+</div>

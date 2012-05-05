@@ -22,7 +22,7 @@
         <tr>
           <td><%= f.label :region_tree_id %></td>
 
-          <td><%= render "mine/wines/region_tree", :object =>  @wines_register %></td>
+          <td><%= render "mine/wines/region_tree", :wine_parent => @wines_register, :region_tree_id => @wines_register.region_tree_id %></td>
         </tr>
         <tr>
           <td><%= f.label :wine_style_id %></td>
@@ -85,8 +85,8 @@
                 <label>评论家</label><%= s.text_field :name, :name => "special_comment[name][]", :id => "special_comment_name", :size => 20%>
                 <label>得分</label><%= s.text_field :score, :name => "special_comment[score][]", :id => "special_comment_score", :size => 10%>
                 <label>适饮年限</label>
-                <%= s.date_select :drinkable_begin, {:discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150}, {:name => "special_comment[drinkable_begin][]"} %><span class="gray">年至</span>
-                <%= s.date_select :drinkable_end, {:discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150}, {:name => "special_comment[drinkable_end][]"}%><span class="gray">年</span>
+                <%= s.date_select :drinkable_begin, {:discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150}, {:id => "special_drinkable_begin", :name => "special_comment[drinkable_begin][]"} %><span class="gray">年至</span>
+                <%= s.date_select :drinkable_end, {:discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150}, {:id => "special_drinkable_end", :name => "special_comment[drinkable_end][]"}%><span class="gray">年</span>
                 <span id="create_special_comment">添加</span>
             <% end %>
             <ul id="special_comment_items">
@@ -100,7 +100,7 @@
                     <input name="special_comment[score][]" type="hidden" value="<%= s.score %>"/>
                     <input name='special_comment[drinkable_begin][]' type='hidden' value="<%= s.drinkable_begin %>" />
                     <input name='special_comment[drinkable_end][]' type='hidden' value="<%= s.drinkable_end %>" />
-                    <span class='delete_special_comment'>&nbsp;&nbsp;删除 </span>
+                    <input type="checkbox" name="special_comment[destroy][]" value="<%=s.id%>"/>删除
                   </li>
               <% end %>
             </ul>

@@ -19,7 +19,7 @@ module Wines
      def get_region_path(region_tree_id)
        region = Wines::RegionTree.find(region_tree_id)
        parent = region.parent
-       path = []
+       path = [region]
        until parent == nil
          path << parent
          parent = parent.parent

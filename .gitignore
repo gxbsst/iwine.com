@@ -28,3 +28,5 @@ lib/tasks/data
 /.gitignore
 /.idea/workspace.xml
 /db/wine_variety_i18n.csv
+.rakeTasks
+/.idea/.rakeTasks
