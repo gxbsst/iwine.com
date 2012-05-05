@@ -1,4 +1,5 @@
-#encoding: UTF-8
+# -*- coding: utf-8 -*-
+
 class Wines::Detail < ActiveRecord::Base
 
   paginates_per 10
@@ -7,11 +8,11 @@ class Wines::Detail < ActiveRecord::Base
   acts_as_commentable
 
   belongs_to :wine
-  # has_many :comments, :foreign_key => 'wine_detail_id'
+  has_many :comments, :class_name => "::Comment", :foreign_key => 'commentable_id', :include => [:user], :conditions => {:commentable_type => self.to_s }
   #  has_many :good_comments, :foreign_key => 'wine_detail_id', :class_name => 'Wines::Comment', :order => 'good_hit DESC, id DESC', :limit => 5, :include => [:user_good_hit]
   has_one :statistic, :foreign_key => 'wine_detail_id'
-  has_one :cover, :class_name => 'Photo',  :foreign_key => 'business_id', :conditions => { :is_cover => true, :owner_type => OWNER_TYPE_WINE }
   has_one :label
+  has_many :covers, :class_name => 'Photo',  :foreign_key => 'business_id', :conditions => { :is_cover => true, :owner_type => OWNER_TYPE_WINE }
   has_many :photos, :class_name => 'Photo',  :foreign_key => 'business_id', :limit => 5, :order => 'created_at DESC', :conditions => { :owner_type => OWNER_TYPE_WINE }
   has_many :prices, :class_name => "Price", :foreign_key => "wine_detail_id"
   has_many :variety_percentages, :class_name => 'VarietyPercentage', :foreign_key => 'wine_detail_id', :dependent => :destroy
@@ -25,7 +26,7 @@ class Wines::Detail < ActiveRecord::Base
   end
 
   def best_comments( limit = 5 )
-    Wines::Comment.find(:all, :include => [:user, :avatar, :user_good_hit], :limit => limit, :conditions => ["wine_detail_id = ?", id])
+    # Wines::Comment.find(:all, :include => [:user, :avatar, :user_good_hit], :limit => limit, :conditions => ["wine_detail_id = ?", id])
   end
 
   def cname
@@ -64,7 +65,6 @@ class Wines::Detail < ActiveRecord::Base
     get_region_path.reverse!.collect { |region| region.name_en + '/' + region.name_zh }.join( symbol )
   end
 
-
   def self.approve_wine_detail(wine_id, register, audit_log_id)
     wine_detail = Wines::Detail.find_or_initialize_by_wine_id_and_year(wine_id, register.vintage)
     if wine_detail.new_record?
@@ -87,5 +87,30 @@ class Wines::Detail < ActiveRecord::Base
     end
     return show_percentage
   end
+  
+  # 当前用户关注记录
+  def current_user_follow(user_object)
+    Comment.where(["commentable_id = ? AND commentable_type = ? AND do = ? AND user_id = ? AND deleted_at IS NULL",
+                   self.id,
+                   "Wines::Detail",
+                   "follow",
+                   user_object.id])
+  end
 
+  # 是否已经关注
+  def is_followed? user_object
+    comment = self.current_user_follow(user_object)
+    return comment.blank? ? false : true
+  end
+
+  # 当前关注该支酒的用户列表
+  def followers
+    comments = Comment.includes([:user]).where(["commentable_id = ? AND do = ?", self.id, "follow"])
+    users = comments.map{|comment| comment.user }
+  end
+
+  # 谁拥有这些酒
+  def owners
+
+  end
 end

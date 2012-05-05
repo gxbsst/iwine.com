@@ -37,8 +37,8 @@ module ApplicationHelper
 
   ## 显示酒的封面
   def wine_cover_tag(object, options = {} )
-    if object.cover.respond_to? "image_url"
-      image_tag object.cover.image_url( options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt]
+    if object.covers.first.respond_to? "image_url"
+      image_tag object.covers.first.image_url( options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt]
     else
       image_tag "base/test/win_50p.jpg"
     end
