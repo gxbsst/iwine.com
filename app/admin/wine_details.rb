@@ -48,7 +48,7 @@ ActiveAdmin.register Wines::Detail do
         image_tag(detail.photos.first.image_url(:w_thumb)) if detail.photos.first
       end
       row "标签" do
-        image_tag(detail.label.filename) if detail.label
+        image_tag(detail.label.filename_url(:middle)) if detail.label
       end
     end
   end

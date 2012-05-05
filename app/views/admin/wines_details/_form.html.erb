@@ -125,7 +125,7 @@
         </tr>
         <tr>
           <td><label>酒标</label></td>
-          <td><%= image_tag @wines_detail.label.filename if @wines_detail.label %></td>
+          <td><%= image_tag @wines_detail.label.filename_url(:thumb) if @wines_detail.label %></td>
         </tr>
         <tr>
           <td></td>
