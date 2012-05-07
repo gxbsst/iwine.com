@@ -46,7 +46,61 @@
       </div>
       <div><%= @photo.viewed_num %>浏览 | <%= @photo.commented_num %>评论</div>
     </div>
-    <div class="comment" >
+      <div class="comment">
+    <a href="#add_comment" onclick="$('#photo_comment_comment').focus();" class="button_gray float_r"><span>添加评论</span></a><h3>评论</h3>
+    <div class="comment_list">
+      <ul>
+        <% @photo_comments.each do |comment| %>
+        <li class="clearfix">
+          <div class="user_img">
+            <a href="#">
+              <% if comment.user.avatar.present? %>
+              <%= image_tag comment.user.avatar, :width => 50, :height => 50 %>
+              <% else %>
+              <img src="/images/test/user_img50.jpg" width="50" height="50" alt="user name" />
+              <% end %>
+            </a>
+          </div>
+          <div class="comment_main">
+            <div class="name_time_score">
+              <div class="mr5">
+                <a href="#" id="comment_user_<%= comment.id %>"><%= comment.user.username %> </a> 
+                <span class="time"><%= comment.created_at.strftime '%Y-%m-%d'%></span>
+                <a href="javascript:;" onclick="reply_to(<%= comment.id %>);">回复</a>
+              </div>
+            </div>
+            <% if comment.reply_id > 0 %>
+            <div class="reply_content"><%= comment.reply_to.comment %></div>
+            <% end %>
+            <div class="comment_content" id="comment_content_<%= comment.id %>"><%= comment.comment %></div>
+          </div>
+          <div class="clear"></div>
+        </li>
+        <% end %>
+      </ul>
+      <div class="comment_form mt20">
+        <%= form_for @photo_comment, :url => '/users/albums/photo_comment' do |f| %>
+        <input type="hidden" name="photo_comment[photo_id]" value="<%= @photo.id %>" />
+        <%= f.hidden_field :reply_id %>
+        <div class="user_img">
+            <% if current_user.avatar.present? %>
+            <%= image_tag current_user.avatar, :width => 50, :height => 50 %>
+            <% else %>
+            <img src="/images/test/user_img50.jpg" width="50" height="50" alt="user name" />
+            <% end %>
+        </div>
+        <div class="comment_input">
+          <a name="add_comment" id="add_comment"></a>
+          <div style="display: none;" id="reply_comment_content" class="reply_content2">
+          </div>
+          <%= f.text_area :comment, :class => 'comment' %>
+          <a href="javascript:;" onclick="$(this).parent().parent().submit();" class="button_gray float_l mt10"><span>OK, 加上去</span></a>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+    <div class="comment" style="display: none">
       <div class="mb20 clearfix">
         <a href="#01" class="btn_gray float_r">
           <span>添加评论</span>
