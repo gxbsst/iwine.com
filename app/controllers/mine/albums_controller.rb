@@ -190,7 +190,6 @@ class Mine::AlbumsController < ApplicationController
     @albums = Album .where(["created_by= ?", current_user.id]).order("id DESC").page params[:page] || 1
   end
  
-
   def get_user
     @user = current_user
   end
