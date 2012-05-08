@@ -171,8 +171,6 @@ class Mine::AlbumsController < ApplicationController
       @index = params[:index].to_i
     end
 
-
-
     @photo = @album.photo @index
     @user = @album.user
     @top_albums = @user.top_albums 3

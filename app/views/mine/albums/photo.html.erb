@@ -190,3 +190,10 @@
   </div>
   <div class="clear"></div>
 </div>
+<script type="text/javascript">
+function reply_to( comment_id ){
+  $('#reply_comment_content').css('display' , 'block');
+  $('#reply_comment_content').html( $('#comment_content_' + comment_id).text() + ' <span class="reply_to">by '+ $('#comment_user_'+comment_id).text() +'</span>');
+  $('#photo_comment_reply_id').val(comment_id);
+};
+</script>
