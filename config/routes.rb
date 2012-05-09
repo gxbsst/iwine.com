@@ -38,6 +38,7 @@ Patrick::Application.routes.draw do
     match ":user_id/bid/mine" => "bid#mine", :via => [:get]
     match ":user_id/bid/list" => "bid#list"
     ## ALBUMS
+    match ":user_id/albums" => "albums#list"
     match ":user_id/albums/list" => "albums#list"
     match ":user_id/albums/show" => "albums#show"
     match ":user_id/albums/photo" => "albums#photo"

@@ -157,7 +157,6 @@ class Mine::AlbumsController < ApplicationController
   end
 
   def photo
-
     @album = Album.find params[:album_id]
     if @album.blank?
       redirect_to request.referer
