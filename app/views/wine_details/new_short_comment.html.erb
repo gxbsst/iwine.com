@@ -1,0 +1,82 @@
+<div class="popup_header">
+  <a href="javascript:void(0);" onclick="$.fancybox.close(true);" class="close"></a>
+  <h1 class="title">
+    <% if params[:type] == 'want' %>
+      我想喝这支酒
+    <% elsif params[:type] == 'drank' %>
+      我喝过这支酒
+    <% else %>
+      <%= @user_comment.present? ? '修改':'我来'%>评论
+    <% end %>
+  </h1>
+</div>
+<%= form_tag '/wines/new_short_comment?wine_detail_id='+@wine_detail.id.to_s, :id=>'comment_form' do %>
+<div class="popup_content">
+  <% if params[:type] == 'want' %>
+    <input type="hidden" name="drink_status" value="want"/>
+  <% else %>
+    <% if params[:type] == 'drank' %>
+      <input type="hidden" name="drink_status" value="drank"/>
+    <% end %>
+  <div class="comment_star clearfix">
+    <% if params[:type] == 'comment' %>
+    <label><input class="radio" type="radio" name="drink_status" id="drink_status_want" value="want" <%= @user_comment.drink_status == 'want' && 'checked'%>/>想喝</label>
+    <label><input class="radio" type="radio" name="drink_status" id="drink_status_drank" value="drank"<%= @user_comment.drink_status == 'drank' && 'checked'%> />喝过</label>
+    <% end %>
+    <span class="float_l">评价：</span>
+    <div class="star_rate" id="new_short_comment_star_bar">
+      <% 5.times do |i| %>
+      <%= image_tag 'base/star_'+(i<@user_comment.point.to_i/2?'red':'gray')+'.jpg',:width=>15,:height=>14,:id=>'star_' + (i+1).to_s %>
+      <% end %>
+      <input type="hidden" id="new_short_comment_star_bar" name="point" value="<%= @user_comment.point.to_s %>"/> 
+      <span></span>
+    </div>
+  </div>
+  <% end %>
+  <p class="clearfix mb5"><span class="float_r" id="comment_length"><%= 350 - @user_comment.content.to_s.length %></span>简短评论</p>
+  <div>
+    <textarea class="popup_comment" name="content" id="comment_content"><%= @user_comment.content%></textarea>
+  </div>
+</div>
+<% end %>
+<div class="popup_footer">
+  <div class="wine_bid_btn">
+    <a href="javascript:;" onclick="$.fancybox.close(true);" class="button_gray float_r" ><span>取消</span></a>
+    <a href="javascript:;" onclick="$('#comment_form').submit();" class="button_gray float_r mr5"><span>保存</span></a>
+    <div class="clear"></div>
+  </div>
+</div>
+<script type="text/javascript">
+var starBar = $('#new_short_comment_star_bar');
+
+<% if params[:type] == 'comment' && @user_comment.drink_status == 'want' %>
+starBar.css('display', 'none').prev().css('display', 'none');
+<% end %>
+
+$('#drink_status_want').click(function()
+{
+  starBar.css('display', 'none').prev().css('display', 'none');
+});
+
+$('#drink_status_drank').click(function()
+{
+  starBar.css('display', '').prev().css('display', '');
+});
+
+initStarBar(starBar);
+
+$('#comment_content').keyup(function()
+{
+  var content = this.value;
+  var contentLengthEl = $('#comment_length');
+  var restLength = 350 - content.length;
+
+  if( restLength < 0 )
+  {
+    this.value = content.substr(0, 350);
+    restLength = 0;
+  }
+  
+  contentLengthEl.text(restLength);
+});
+</script>

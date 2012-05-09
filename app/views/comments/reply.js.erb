@@ -1,0 +1,18 @@
+$("#reply_comment_<%= @comment.id %>")
+.html("<%= escape_javascript(render('comment_reply_form', :comment => @comment)) %>");
+
+
+ // 评论表单
+$("#reply_comment_<%= @comment.id %> form")
+.bind("ajax:success", function(evt, data, status, xhr){
+  self = this;
+  $(this).parent().parent().slideUp("slow", function(){
+});
+  $(this).parent().parent().parent()
+  .children("p.vote")
+  .find("span.reply_comment_count").text("(" + data + ")") ;
+
+  $(this).parent().parent().parent()
+  .children("p.vote")
+  .find("span.reply_result").text("回复成功.");
+});
