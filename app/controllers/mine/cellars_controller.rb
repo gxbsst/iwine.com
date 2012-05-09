@@ -3,12 +3,13 @@
 class Mine::CellarsController < ApplicationController
 
   def index
-    @cellar_items = Users::WineCellarItem.includes(:wine_cellar, {:wine_detail => [:covers, :wine]}).page params[:page] || 1
+    @cellar_items = current_user.cellar.items.includes(:wine_cellar, {:wine_detail => [:covers, :wine]}).page params[:page] || 1
+
   end
 
   def edit
     @cellar_item = Users::WineCellarItem.where(["id = ? AND user_id = ? ", params[:id], current_user.id ]).first
-    @wine_detail = Wines::Detail.includes( :cover, :photos, :statistic,  { :wine => [:style, :winery]} ).find(  @cellar_item.wine_detail_id )
+    @wine_detail = Wines::Detail.includes( :covers, :photos, :statistic,  { :wine => [:style, :winery]} ).find(  @cellar_item.wine_detail_id )
     @wine = @wine_detail.wine
 
     @cellar_item.wine_detail_id = @wine_detail.id
@@ -17,7 +18,7 @@ class Mine::CellarsController < ApplicationController
   end
 
   def new
-    @wine_detail = Wines::Detail.includes( :cover, :photos, :statistic,  { :wine => [:style, :winery]} ).find( params[:wine_detail_id].to_i )
+    @wine_detail = Wines::Detail.includes( :covers, :photos, :statistic,  { :wine => [:style, :winery]} ).find( params[:wine_detail_id].to_i )
     @wine = @wine_detail.wine
     @cellar_item = Users::WineCellarItem.new
     @cellar_item.year = @wine_detail.year
@@ -27,7 +28,7 @@ class Mine::CellarsController < ApplicationController
   end
 
   def create
-    @wine_detail = Wines::Detail.includes( :cover, :photos, :statistic,  { :wine => [:style, :winery]} ).find( params[:wine_detail_id].to_i )
+    @wine_detail = Wines::Detail.includes( :covers, :photos, :statistic,  { :wine => [:style, :winery]} ).find( params[:wine_detail_id].to_i )
     @wine = @wine_detail.wine
 
     @cellar = Users::WineCellar.find_by_user_id(current_user.id)
@@ -53,7 +54,7 @@ class Mine::CellarsController < ApplicationController
 
   def update
     @cellar_item = Users::WineCellarItem.where(["id = ? AND user_id = ? ", params[:id], current_user.id ]).first
-    @wine_detail = Wines::Detail.includes( :cover, :photos, :statistic,  { :wine => [:style, :winery]} ).find(  @cellar_item.wine_detail_id )
+    @wine_detail = Wines::Detail.includes( :covers, :photos, :statistic,  { :wine => [:style, :winery]} ).find(  @cellar_item.wine_detail_id )
     @wine = @wine_detail.wine
 
     @cellar_item.capacity = @wine_detail.capacity

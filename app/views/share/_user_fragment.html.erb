@@ -9,7 +9,7 @@
         <li><%= link_to "设置", :controller => "/settings", :action => "basic" %></li>
         <li><%= link_to "找朋友", :controller => "/friends", :action => "find" %></li>
         <li><%= link_to "我的Patrick", :controller => "/mine" %></li>
-        <li><%= link_to "我的酒窖", :controller => "/mine", :action => "cellars" %></li>
+        <li><%= link_to "我的酒窖", user_cellar_path(current_user, current_user.cellar) %></li>
                 <li><%= link_to "私信", :controller => "/mine/conversations" %></li>
 
         <li><%= link_to "登出",  logout_path %></li>

@@ -1,20 +1,35 @@
-<%= render "sub_nav"%>
+<div id="span950">
+  <div id="hp">
+    <%= render "share/user_cellar" %>
+    <div id="cellar">
+      <div class="title_btn">
+        <h1>添加藏酒</h1>
+      </div>
+      <div class="step">
+        <div class="step_thr"></div>
+      </div>
+      <div id="stylized" class="myform">
+        <%= form_for @cellar_item, :validate => true, :url => mine_cellars_path do |f| %>
+            <% render "form", :f => f %>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="winery_main">
 	<div class="content">
 		<div class="wine_add_step3 mb30">第二步：选择你想收藏的酒</div>
 		<%= form_for @cellar_item, :validate => true, :url => mine_cellars_path do |f| %>
 		
 		<%= render "form", :f => f %>
-			
+
 		<div class="clearfix">
 			<a href="#" class="button_gray_b float_r"  title="OK，收藏到我的酒窖"><span>OK, 收藏到我的酒窖</span></a>
-			<script type="text/javascript" charset="utf-8">
-				$('a.button_gray_b').click(function(){
-				    $('form#new_users_wine_cellar_item').submit();
-				    return false;
-				});
-			</script>
-		</div>	
+
+		</div>
 		
 		<% end -%>
 				

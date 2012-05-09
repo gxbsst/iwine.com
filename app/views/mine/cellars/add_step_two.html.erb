@@ -1,51 +1,54 @@
-<div class="winery_main">
-	<div class="content">
-		<div class="wine_add_step2 mb30">第二步：选择你想收藏的酒</div>
-		<div class="add_wine_search mb20">
-			<input type="text" class="text wine_search float_l mr5" placeholder="请输入酒的中文或英文名称" />
-			<a href="cellar_add_step2.html" class="button_gray" onclick="this.blur();" title="搜索藏酒"><span>搜索藏酒</span></a></div>
-			
-			<%= form_for @search, :url => '/mine/cellars/new/', :method => 'get' do |f| -%>
-			  
-			
-			<table class="winery_list mb30" width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<th class="select_wine">&nbsp;</th>
-					<th>酒标</th>
-					<th>名称&amp;描述</th>
-				</tr>
-				<% for detail in @search.wines %>
-				<tr>
-					<td class="select_wine">
-						
-						<input class="radio" type="radio" name="wine_detail_id"  value="<%= detail.id %>" />
-					</td>
-					<td>
-						<div class="wine_img">
-							<%= wine_cover_tag( detail, :thumb_name => "w_thumb", :width => "50", :height => "63" )%>
-						</div>
-					</td>
-					<td><%= detail.cname %><br />
-						<%= detail.ename %><br />
-						法国-波尔多-波亚克<br />
-						拉菲古堡<br />
-						<img src="/images/wine_red.gif" width="18" height="7" alt="红葡萄酒" /> 红葡萄酒
-					</td>
-				</tr>
-				<% end %>
-						
-				</table>
-				
-					<div class="clearfix"><a href="#" class="button_gray_b float_r next" id="next" title="去填写相关信息"><span>去填写相关信息</span></a></div> 
-						<script type="text/javascript" charset="utf-8">
-							$('a#next').click(function(){
-							    $("form.edit_search").submit();
-							    return false;
-							});
-						</script>
-					 
-				</div>
-				<% end -%>
-				
-				<div class="clear"></div>
-			</div>
+<div id="span950">
+  <div id="hp">
+    <%=  render "share/user_cellar" %>
+    <div id="cellar">
+      <div class="title_btn">
+        <h1>添加藏酒</h1>
+      </div>
+      
+      <div class="step">
+        <div class="step_sec"></div>
+      </div>
+      
+      <% unless @search.wines.blank? %>
+          <div class="mb20">
+            <div class="float_r">
+              <span class="notice_b">这些都不是您要找的酒？</span>
+              <%= link_to mine_cellars_add_path(:step => 1), :class => "btn_gray" do %>
+                  <span>添加酒款</span>
+              <% end %>
+            </div>
+            <%= render "search_cellar", :object => @search %>
+            <div class="clear"></div>
+          </div>
+          <ul class="wine_list">
+            <% @search.wines.each do |wine_detail| %>
+                <li>
+                  <div class="add_to_cellar">
+                    <%= link_to new_mine_cellar_path(:wine_detail_id => wine_detail.id), :class => "btn_blue" do %>
+                        <span>添加相关信息</span>
+                    <% end %>
+                  </div>
+                  <div class="wine_img"><%= wine_cover_tag( wine_detail, :thumb_name => "w_thumb", :width => "50", :height => "63" ) %></div>
+                  <div class="wine_info">
+                    <h2><a href="wine_profile.html"><%= wine_detail.cname %></a></h2>
+                    <h3><%= wine_detail.ename %></h3>
+                    <p><%= render "share/region_tree", :region_tree => wine_detail.get_region_path(wine_detail.id) %></p>
+                    <p><%= wine_detail.wine.style.name_zh %></p>
+                  </div>
+                  <div class="clear"></div>
+                </li>
+            <% end %>
+          </ul>
+      <% else %>
+        <p class="notice_b mb20">对不起，没有找到关于“<%= @search.keywords %>”的信息，您是否愿意帮助我们添加酒款？</p>
+        <p>
+          <a href="#" class="btn_gray mr5"><span>我来添加</span></a>
+          <%= link_to mine_cellars_add_path(:step => 1), :class => "btn_gray" do %>
+            <span>重新搜索</span>
+          <% end %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>

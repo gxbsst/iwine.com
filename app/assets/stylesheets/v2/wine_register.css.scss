@@ -15,21 +15,10 @@ ul.ui-autocomplete{
     color:black;
   }
 }
+#region_tree{
+  span{float:left;}
+}
 
-.wine_register {
-  padding:40px;
-  min-height:500px;
-  ul li a{
-    text-decoration: underline;
-  }
-  h2{
-    margin: 0 0 20px 0;
-    font-size: 16px;
-  }
-  #new_wine_register{
-    padding:15px 0;
-    overflow:hidden;
-  }
   ul.wine_list{
     border: 1px solid gray;
     overflow:hidden;
@@ -62,7 +51,6 @@ ul.ui-autocomplete{
     padding:15px;
     background-color:#E9E9E9;
   }
-}
 .admin_wine_register{
   form input{
     padding:3px 10px 3px;

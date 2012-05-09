@@ -23,6 +23,7 @@ Patrick::Application.routes.draw do
   end
 
   namespace :users do
+    resources :cellars
     match ":user_id/" => "users#index"
     match ":user_id/wine_follows" => "users#wine_follows"
     match ":user_id/winery_follows" => "users#winery_follows"
@@ -30,9 +31,9 @@ Patrick::Application.routes.draw do
     match ":user_id/testing_notes" => "users#testing_notes"
     match ":user_id/followings" => "users#followings"
     match ":user_id/followers" => "users#followers"
-
     ## CELLAR
     match ":user_id/cellars/" => "cellars#index", :via => [:get]
+    match ":user_id/cellars/:id" => "cellars#show"
     match ":user_id/cellars/edit" => "cellars#edit"
     ## BID
     match ":user_id/bid/mine" => "bid#mine", :via => [:get]

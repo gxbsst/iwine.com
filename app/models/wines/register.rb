@@ -46,4 +46,12 @@ class Wines::Register < ActiveRecord::Base
   def show_result
     result.to_i == 0 ? "未发布" : (result.to_i == 1 ? "已发布" : "发布失败")
   end
+
+  def ename
+    "#{show_vintage} #{name_en.to_s}"
+  end
+
+  def show_vintage
+    vintage.strftime("%Y") unless vintage.blank?
+  end
 end

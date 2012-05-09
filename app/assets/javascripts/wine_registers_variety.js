@@ -8,7 +8,7 @@ $(document).ready(function(){
      var value = $("#new_variety").attr('value');
      var input_name = "<input type='hidden' name='wines_register[variety_name_value][]' value='" + name + "'/>";
      var input_value = "<input type='hidden' name='wines_register[variety_percentage_value][]' value='" + value + "'/>";
-     var append_html= "<li><span class='extra_attribute'>" + name + "</span><span class='extra_attribute'>" + value + "%</span>"+ input_name + input_value +"<span class='delete_variety'>删除</span></li>";
+     var append_html= "<li><span class='extra_attribute'>" + name + "</span><span class='extra_attribute'>" + value + "%</span>"+ input_name + input_value +"<a href='#' class='delete_variety icon_delet2'></a></li>";
      $("#variety_items").append(append_html);
      $("#wines_register_variety_name_value").attr('value', null);
      $("#new_variety").attr('value', null);
@@ -23,7 +23,7 @@ $(document).ready(function(){
         var value = $("#variety_percentage").attr('value');
         var input_name = "<input type='hidden' name='variety_percentage[variety_name][]' value='" + name + "'/>";
         var input_value = "<input type='hidden' name='variety_percentage[variety_percentage][]' value='" + value + "'/>";
-        var append_html= "<li><span class='extra_attribute'>" + name + "</span><span class='extra_attribute'>" + value + "%</span>"+ input_name + input_value +"<span class='delete_variety'>删除</span></li>";
+        var append_html= "<li><span class='extra_attribute'>" + name + "</span><span class='extra_attribute'>" + value + "%</span>"+ input_name + input_value +"<a href='#' class='delete_variety icon_delet2'></a></li>";
         $("#variety_items").append(append_html);
         $("#variety_name").attr('value', null);
         $("#variety_percentage").attr('value', null);
@@ -42,7 +42,7 @@ $(document).ready(function(){
       var input_score = "<input name='special_comment[score][]' type='hidden' value='" + score + "'/>";
       var input_drinkable_begin = "<input name='special_comment[drinkable_begin][]' type='hidden' value='" + drinkable_begin + "'/>";
       var input_drinkable_end = "<input name='special_comment[drinkable_end][]' type='hidden' value='" + drinkable_end + "'/>";
-      var append_html = "<li><span class='extra_attribute'>" + name + "</span><span class='extra_attribute'>" + score + "</span><span class='extra_attribute'>" + drinkable_begin + ' - '+ drinkable_end + "</span>" + input_name + input_score + input_drinkable_begin + input_drinkable_end + "<span class='delete_special_comment'>删除</span></li>";
+      var append_html = "<li><span class='extra_attribute'>" + name + "</span><span class='extra_attribute'>" + score + "</span><span class='extra_attribute'>" + drinkable_begin + ' - '+ drinkable_end + "</span>" + input_name + input_score + input_drinkable_begin + input_drinkable_end + "<a class='delete_special_comment icon_delet2'></a></li>";
       $("#special_comment_items").append(append_html);
       $("#special_comment_name").attr('value', null);
       $("#special_comment_score").attr('value', null);

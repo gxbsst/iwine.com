@@ -1,3 +1,7 @@
+<div class="left"></div>
+<div class="right"></div>
+<di
+
 <%= hidden_field_tag :wine_detail_id, params[:wine_detail_id]%>
 
 <table class="winery_list mb30 winery_add" width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -88,3 +92,9 @@
 				</label></td>
 			</tr>
 		</table>
+<script type="text/javascript" charset="utf-8">
+    $('a.button_gray_b').click(function(){
+        $('form#new_users_wine_cellar_item').submit();
+        return false;
+    });
+</script>

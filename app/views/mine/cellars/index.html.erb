@@ -1,69 +1,80 @@
-<%= render "sub_nav"%>
-<div class="winery_main">
+<div id="span950">
+  <div id="hp">
+    <%=  render "share/user_cellar" %>
+    <div id="cellar">
+      <div class="title_btn">
+        <h1>我的酒窖 <span class="font12">(共<%= @cellar_items.size %>支)</span></h1>
+      </div>
 
-  <%= link_to  "/mine/cellars/add?step=1", :class => "button_red float_r" do %>
-  <span>添加藏酒</span>
-<% end %>
-<div class="sort_item clearfix">
-  <div class="float_l">共<%= @cellar_items.count %>支 | 排序：</div>
-  <select class="mr10 float_l" id="select" name="select">
-    <option selected="selected">默认</option>
-    <option>年份</option>
-    <option>库存</option>
-    <option>购入价格</option>
-  </select>
-  <input type="text" name="" class="text wine_search float_l mr5">
-  <a title="搜索藏酒" onclick="this.blur();" class="button_gray" href="#"><span>搜索藏酒</span></a>
+      <div class="sort_search mb20">
+        <div class="float_r">
+          <%= link_to mine_cellars_add_path(:step => 1), :class => "btn_blue_b" do %>
+            <span>添加藏酒</span>
+          <% end %>
+        </div>
+        <div class="sort pt5">排序 <select name="">
+          <option>价格</option>
+          <option>数量</option>
+        </select>
+        </div>
+        <div class="search"><input class="text mr5 common_search" name="" type="text" /><a href="#" class="btn_gray"><span>搜索</span></a></div>
+        <div class="clear"></div>
+      </div>
+
+      <div class="wine_data">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <th class="img">酒标</th>
+            <th class="year">年份</th>
+            <th class="des">名称&描述</th>
+            <th class="info">相关信息</th>
+            <th class="count">数量</th>
+            <th class="price">购入价格</th>
+            <th class="place">所在地</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+          </tr>
+          <% @cellar_items.each do |item| %>
+              <% wine_detail = item.wine_detail %>
+              <tr>
+                <td class="img">
+                  <%= link_to (wine_cover_tag wine_detail, :thumb_name => :w_thumb, :title => wine_detail.name, :width => 50, :height => 63, :alt => wine_detail.name), { :controller => "/wines" ,:action => "show", :wine_detail_id => wine_detail.id} %>
+                </td>
+                <td class="year">
+                  <%= wine_detail.show_year %>
+                </td>
+                <td class="des">
+                  <%= wine_detail.wine.name_zh %><br/>
+                  <%= wine_detail.wine.name_en %><br/>
+                  <%= render 'share/region_tree', :region_tree => wine_detail.get_region_path(wine_detail.id) %><br/>
+                  <%= wine_detail.wine.winery.name_zh %><br/>
+                  <%= wine_detail.wine.style.name_zh %>
+                </td>
+                <td class="info">
+                  容量:<%= wine_detail.show_capacity %><br/>
+                  购买时间:<%= item.buy_date.strftime("%Y年") unless item.buy_date.blank? %><br/>
+                  酒商:<%= item.buy_from %><br/>
+                  适饮年限:<%= "#{item.drinkable_begin.strftime('%Y年') if item.drinkable_begin} - #{item.drinkable_end.strftime('%Y年') if item.drinkable_end}年" %>
+                </td>
+                <td class=“count”><%= item.number %></td>
+                <td class="price"><%= number_to_currency(item.price) %></td>
+                <td class="place"><%= item.location %></td>
+                <td>
+                  <a href="#" class="btn_edit float_l mr10">修改</a>
+                  <a href=“#”>删除</a>
+                </td>
+              </tr>
+          <% end %>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <%= paginate @cellar_items, :outer_window => 2 %>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="content">
-  <%#= render "share/flash_notice" %>
-  <%= render_stickies %>
-  <table width="100%" cellspacing="0" cellpadding="0" border="0" class="winery_list mb30">
-    <tbody>
-      <tr>
-        <th>酒标</th>
-        <th>年份</th>
-        <th>名称&amp;描述</th>
-        <th>相关信息</th>
-        <th>容量</th>
-        <th>库存</th>
-        <th>购入价格</th>
-        <th>总值</th>
-        <th>所在地</th>
-        <th>&nbsp;</th>
-      </tr>
-      <% for cellar_item in @cellar_items %>
-        <% wine_detail = cellar_item.wine_detail %>
-        <tr>
-          <td><div class="wine_img">
-              <%= link_to (wine_cover_tag wine_detail, :thumb_name => :w_thumb, :title => wine_detail.name, :width => 50, :height => 63, :alt => wine_detail.name), { :controller => "/wines" ,:action => "show", :wine_detail_id => wine_detail.id} %>
-          </td>
-          <td><%= cellar_item.year %></td>
-          <td><%= wine_detail.name %><br>
-            <br>
-            <%= render 'share/region_tree', :region_tree => wine_detail.get_region_path %> <br>
-            <%= wine_detail.wine.winery.name %><br>
-            <%= image_tag "base/" + wine_detail.wine.style.name_en + '.gif' %><%= link_to wine_detail.wine.style.name_zh, :controller => :searh, :action => :wine, :style => wine_detail.wine.style.name_en %>
-          </td>
-          <td>购买时间: <%= time_tag cellar_item.buy_date, :format => "%Y年%b" %><br>
-            酒商: <%= cellar_item.buy_from %><br>
-            适饮年限: <%= time_tag cellar_item.drinkable_begin, :format => "%Y" %> - <%= time_tag cellar_item.drinkable_end, :format => "%Y年" %>
-          </td>
-          <td><%= wine_detail.capacity %></td>
-          <td><%= cellar_item.number %></td>
-          <td><%= number_to_currency( cellar_item.price ) %></td>
-          <td><%= number_to_currency(cellar_item.price * cellar_item.number) %></td>
-          <td><%= cellar_item.location %></td>
-          <td>
-            <%= link_to "编辑藏酒", { :action => 'edit', :id => cellar_item.id }, :html_options => {:class => 'btn_edit float_l mr10'} %>
-            <a class="fancybox fancybox.ajax btn_delete float_l" href="cellar_delete_confirm.html">删除</a>
-            <%= link_to '删除', { :action => 'destroy', :id => cellar_item.id }, {confirm: '确定删除?', method: :delete} %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody></table>
-  <div class="pagination">
-    <%= paginate @cellar_items, :outer_window => 2 %>
-  </div>                           </div>
-  <div class="clear"></div>
-</div>
+
+
+
+

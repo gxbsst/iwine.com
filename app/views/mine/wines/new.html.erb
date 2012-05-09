@@ -1,61 +1,24 @@
-<h2>添加酒款</h2>
-<div class="wine_register">
 <% content_for :wine_register do %>
     <%= javascript_include_tag 'wine_registers_variety' %>
     <%= javascript_include_tag 'region_world' %>
 <% end %>
-  <h2>请填写<%= "#{@register.show_vintage} #{@register.name_en}" %>的基本信息</h2>
-  <%= form_for @register, :validate => true, :url => {:action => :create}, :method => :post ,:html => { :class => 'form-horizontal', :multipart => true } do |f| %>
-      <% unless @register.new_record? %><input type="hidden" name="register_id" value="<%= @register.id %>"/><% end %>
-      <%= render 'share/error_messages', :target => @register %>
-		
-      <table  cellspacing="10" cellpadding="5">
-        <tr>
-          <td><%= f.label :name_en %></td>
-          <td><% if @read_only %> <%= f.text_field :name_en, "readonly" => "readonly" %> <% else %><%= f.text_field :name_en %><% end %></td>
-        </tr>
+<div id="mainspace860" class="addwine">
+  <div class="addwine">
+    <h1 class="main_title">添加藏酒</h1>
+    <div class="step">
+      <div class="step_sec"></div>
+    </div>
+    <div class="notice_b mb20">请填写<%= @register.name_en.blank? ? "该酒款的" : @register.ename %>基本信息的基本信息</div>
+    <div id="stylized" class="myform">
 
-		<tr>
-			<td><%= f.label :region_tree_id %></td>
-			<td><% if @read_only %><%= render 'share/region_tree', :region_tree => @register.get_region_path(@wine.region_tree_id) %> <% else %><%= render "region_tree" %><% end %></td>
-		</tr>
-        <tr>
-          <td><%= f.label :wine_style_id %></td>
-          <td><% if @read_only %> <%= @register.style.name %> <% else %> <%= f.select :wine_style_id, Wines::Style.all.collect{ |s| [s.name_zh + '/' + s.name_en, s.id] } %><% end %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :vintage %></td>
-          <td><%= f.date_select :vintage, :discard_day => true, :discard_month => true, :start_year => 1990, :end_year => Time.now.year + 150 %>年</td>
-        </tr>
-        <tr>
-          <td><%= f.label :capacity %></td>
-          <td><%= f.select :capacity, APP_DATA['wines']['capacity'].collect{|i| [i, i]}, {:include_blank => true } %></td>
-        </tr>
-        <tr>
-          <td><%= f.label :photo_name %></td>
-          <td><%= f.file_field :photo_name %></td>
-        </tr>
-        <tr><td></td><td><%= f.button "下一步" %></td></tr>
-      </table>
-
-  <% end %>
-
-  <!--end .left -->
+    <%= render "new_form", :objet => @register %>
+    </div>
+  </div>
 </div>
+<script type="text/javascript" charset="utf-8">
+    $('#submit_register').click(function(){
+        $("form.form-horizontal").submit();
+        return false;
+    });
+</script>
 
-<div class="right">
-  <p>
-    我们将对您上传的内容进行审核,这可能需要一定时间，请耐心等候。
-  </p>
-  <p> 一旦审核通过， 该条目会收录到我们的网站， 以供用户浏览。 </p>
-  <p> 感谢您的参与! </p>
-
-
-  <%= link_to t(:back_to_home), '/'%>
-  <!--end .right-->
-</div>
-
-<div class="clear"></div>
-
-  <!--wine_regiseter end-->
-</div>

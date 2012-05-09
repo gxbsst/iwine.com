@@ -1,22 +1,16 @@
-<%= render "sub_nav"%>
-<div class="winery_main" style="min-height:500px;">
-	<div class="content">
-		<div class="wine_add_step1 mb30">第一步：搜索你想收藏的酒</div>
-		<div class="add_wine_search">
-			<%= form_for @search do |f| %>
-			  <div class="field">
-			    <%= f.text_field :keywords, :class => "text wine_search float_l mr5", :placeholder => "请输入酒的中文或英文名称" %>
-			  </div>
-				<a href="#" class="search button_gray" onclick="this.blur();" title="搜索藏酒"><span>搜索藏酒</span></a>
-				<script type="text/javascript" charset="utf-8">
-					$('a.search').click(function(){
-					    $("form#new_search").submit();
-					    return false;
-					});
-				</script>
-			<% end %>
-			
-		</div>  
-	</div>
-	<div class="clear"></div>
+<div id="span950">
+  <div id="hp">
+    <%=  render "share/user_cellar" %>
+    
+    <div id="cellar">
+      <div class="title_btn">
+        <h1>添加藏酒</h1>
+      </div>
+      <div class="step">
+        <div class="step_fir"></div>
+      </div>
+      <%=  render "search_cellar", :object => @search %>
+    </div>
+    
+  </div>
 </div>

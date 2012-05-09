@@ -1,0 +1,32 @@
+<div class="hp_header">
+  <div class="hp_right">
+    <%= link_to  mine_cellars_path, :class => "btn_red_sb" do %>
+        <span>我的酒窖</span>
+    <% end %>
+  </div>
+  <div class="hp_userimg">
+    <%= link_to_user current_user, { :controller => "/mine" }, {:class => "avatar", :with_avatar => true, :avatar_version => :large, :alt => current_user.username }  %>
+  </div>
+  <div class="hp_info">
+    <div class="username"><%= current_user.username %></div>
+    <div class="mystatu"><%= current_user.profile.bio %><span><a href="#">修改</a></span></div>
+    <div class="item">
+      <%= link_to "私信", mine_conversations_path, :class => "icon_mail" %> |
+      <%= link_to "设置", settings_path %>
+    </div>
+    <ul class="hp_navi">
+      <li class="current"><a href="cellar.html">12<br/>藏酒</a></li>
+      <li><a href="hp_wine_following.html">12<br/>
+        关注的酒</a></li>
+      <li><a href="hp_winery_following.html">12<br/>
+        关注的酒庄</a></li>
+      <li><a href="hp_comment_list.html">12<br/>评论</a></li>
+      <li><a href="hp_testing_list.html">12<br/>品酒辞</a></li>
+      <li><a href="hp_people_following.html">12<br/>关注的人</a></li>
+      <li><a href="hp_people_follower.html">12<br/>粉丝</a></li>
+      <li><a href="album.html">12<br/>相册</a></li>
+    </ul>
+    <div class="clear"></div>
+  </div>
+  <div class="clear"></div>
+</div>

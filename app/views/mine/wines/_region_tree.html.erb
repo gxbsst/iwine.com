@@ -1,5 +1,5 @@
 
-    <div id="region_tree" style="<%= "display:none;" if @wines_register && @wines_register.region_tree_id %>">
+    <span id="region_tree" style="<%= "display:none;" if @wines_register && @wines_register.region_tree_id %>">
         <span id="tree_one">
 	        <%= select_tag "region[one]",  options_for_select(Wines::RegionTree.region(0).collect{ |l| [l.name_en + "/" + l.name_zh, l.id] }), :prompt => '-请选择-', :class => "select_region" %>
         </span>
@@ -24,7 +24,7 @@
             <%= select_tag "region[six]", [], :prompt => '-请选择-', :class => "select_region"%>
         </span>
        <% if @wines_register %> <%= link_to "取消编辑", "javascript: void(0)", :id => "cancel_edit" %><% end %>
-    </div>
+    </span>
     <% if @wines_register && @wines_register.region_tree %>
     <div id="region_tree_text" style="<%= "display:none;" unless @wines_register.region_tree_id %>">
         <%= render 'share/region_tree', :region_tree => @wines_register.get_region_path(@wines_register.region_tree_id) %>

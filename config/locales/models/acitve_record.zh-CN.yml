@@ -27,6 +27,7 @@ zh-CN:
         variety_percentage_value: "成分百分比"
         variety_name: "葡萄品种"
         capacity: "容量"
+        description: "简介"
       user:
         email: "邮箱"
         username: "用户名"
