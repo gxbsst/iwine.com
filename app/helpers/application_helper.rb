@@ -40,7 +40,7 @@ module ApplicationHelper
     if object.covers.first.respond_to? "image_url"
       image_tag object.covers.first.image_url( options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt]
     else
-      image_tag "base/test/win_50p.jpg"
+      image_tag "base/test/win_50p.jpg", :width => options[:width], :height => options[:height], :alt => options[:alt]
     end
   end
 
@@ -104,9 +104,14 @@ module ApplicationHelper
     if options[:with_avatar]
       link_to(image_tag(avatar(user_object,avatar_version), :align => "left"), url_or_object, options)
     else
-      if current_user.id == user_object.id
-        link_to("我", url_or_object, options)
-      else
+      if user_signed_in? # 已登录用户
+        if current_user.id == user_object.id
+          link_to("我", url_or_object, options)
+        else
+          link_to(user_object.username, url_or_object, options)
+        end
+
+      else # 非登录用户
         link_to(user_object.username, url_or_object, options)
       end
     end
@@ -126,4 +131,18 @@ module ApplicationHelper
     end
   end
 
+  
+  # 显示评星
+  def star_rate_tag(point)
+    gray_num = 5 - point
+    html = ""
+    point.times do |i|
+      html << (image_tag 'base/star_red.jpg', :width=>15, :height=>14)
+    end
+    gray_num.times do |i|
+      html << (image_tag 'base/star_gray.jpg', :width=>15, :height=>14)
+    end
+    return html.html_safe
+  end
+  
 end

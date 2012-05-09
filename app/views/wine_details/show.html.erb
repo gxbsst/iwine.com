@@ -1,0 +1,111 @@
+<div id="comment_form"  style="display: none" >
+
+</div>
+<div id="add_to_cellar_form"  style="display: none" >
+
+</div>
+
+<div class="wine_profile">
+  <%= render_stickies %>
+  <div class="left">
+    <div class="box title">
+     <h2>
+       <%= raw @wine_detail.cname %>
+       <br />
+       <span> <%= raw @wine_detail.ename %></span>
+     </h2>
+     <!-- title end -->
+    </div>
+
+    <div class="box buttons relative">
+      <%= render "wine_details/share/buttons" %>
+         <!-- buttons end -->
+    </div>
+    <div class="clear"></div>
+
+    <div class="box cover">
+      <%= render "wine_details/share/cover" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box winery_description">
+      <%= render "wine_details/share/winery_description" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box photos">
+      <%= render "wine_details/share/photos" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box likers">
+      <%= render "wine_details/share/likers" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box comments">
+      <%= render "wine_details/share/comments" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box testing_notes">
+      <%= render "wine_details/testing_notes/testing_note" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box followers">
+      <%= render "wine_details/share/followers" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box owners">
+      <%= render "wine_details/share/owners" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box events">
+      <%= render "wine_details/share/events" %>
+    </div>
+    <div class="clear"></div>
+    <!-- left end -->
+  </div>
+
+  <div  class="right">
+    <div class="box resource">
+      <%= render "wine_details/share/resource" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box spec">
+      <%= render "wine_details/share/spec" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box score">
+      <%= render "wine_details/share/score" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box special_comments">
+      <%= render "wine_details/share/special_comments" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box price">
+      <%= render "wine_details/share/price" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box vintage">
+      <%= render "wine_details/share/vintage" %>
+    </div>
+    <div class="clear"></div>
+
+    <%= link_to_button "feedback", "/" %>
+    <!-- right end -->
+    </div>
+
+  <!-- wine_profile end -->
+ </div>
+
+<div class="clear"></div>

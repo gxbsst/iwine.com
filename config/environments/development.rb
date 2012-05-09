@@ -33,4 +33,37 @@ Patrick::Application.configure do
   config.action_mailer.delivery_method = :smtp
 
   config.action_controller.perform_caching = true
+
+  # Bullet
+  Bullet.enable = true
+  Bullet.alert = true
+  Bullet.bullet_logger = true
+  Bullet.console = true
+  # Bullet.growl = true
+  # Bullet.xmpp = { :account => 'gxbsst@jabber.org',
+  #   :password => '51448888',
+  #   :receiver => 'gxbsst@jabber.org',
+  #   :show_online_status => true }
+  Bullet.rails_logger = true
+  # Bullet.disable_browser_cache = true
+
+  # javascript alert
+  UniformNotifier.alert = true
+
+  # javascript console (Safari/Webkit browsers or Firefox w/Firebug installed)
+  # UniformNotifier.console = true
+
+  # rails logger
+  UniformNotifier.rails_logger = true
+
+  # customized logger
+  logger = File.open('notify.log', 'a+')
+  logger.sync = true
+  UniformNotifier.customized_logger = logger
+
+  # growl without password
+  # UniformNotifier.growl = true
+
+  config.slowgrowl.warn = 1000    # growl any action which takes > 1000ms (1s)
+  config.slowgrowl.sticky = true  # make really slow (2x warn) alerts sticky
 end

@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
   has_many :oauths, :class_name => 'Users::Oauth'
   has_many :followers, :class_name => 'Friendship', :include => :follower
   has_many :followings, :class_name => 'Friendship', :foreign_key => 'follower_id', :include => :user
+  
+  has_many :time_events
 
   accepts_nested_attributes_for :profile, :allow_destroy => true
 

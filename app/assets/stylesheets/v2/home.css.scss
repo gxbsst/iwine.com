@@ -1,0 +1,44 @@
+.span_950.fixed_width.home #main
+{
+    @include box-shadow(#FFFFFF 0 0 0 0);
+    .ks-waterfall, .item {
+        a {
+          color: #333;
+        }
+        h3 {
+          line-height: 140%;
+          span {
+            margin: 0;
+          }
+        }
+        overflow: hidden;
+        margin: 8px 8px;
+//        position: absolute;
+        width: 200px;
+        @include box-shadow(#AAA 0 0 2px 0);
+        float: left;
+        padding: 10px;
+        .wine_cover {
+          text-align: center;
+        }
+        .pic {
+          width: 40px;
+          float: left;
+        }
+        p {
+          padding: 0 0 0 0;
+        }
+    }
+    .about_with_wine .event_type {
+        border-bottom: 1px dotted #CCC;
+        padding: 0 0 5px 0;
+        margin-bottom: 5px;
+        
+    }
+    .about_with_user .body {
+        border-top: 1px dotted #CCC;
+        padding: 5px 0 0 0;
+        margin-top: 5px;
+    }
+    
+}

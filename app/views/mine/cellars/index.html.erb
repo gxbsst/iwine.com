@@ -55,9 +55,9 @@
           <td><%= number_to_currency(cellar_item.price * cellar_item.number) %></td>
           <td><%= cellar_item.location %></td>
           <td>
-            <%= link_to "编辑藏酒", { :action => 'edit', :id => cellar_item.id }, :html_options => {:class => 'btn_edit float_l mr10'} %>
+            <%= link_to "编辑藏酒", edit_mine_cellar_item_path(@cellar.id, cellar_item.id), :html_options => {:class => 'btn_edit float_l mr10'} %>
             <a class="fancybox fancybox.ajax btn_delete float_l" href="cellar_delete_confirm.html">删除</a>
-            <%= link_to '删除', { :action => 'destroy', :id => cellar_item.id }, {confirm: '确定删除?', method: :delete} %>
+            <%= link_to '删除', mine_cellar_item_path(@cellar.id, cellar_item.id), {confirm: '确定删除?', method: :delete} %>
           </td>
         </tr>
       <% end %>

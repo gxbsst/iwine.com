@@ -1,0 +1,97 @@
+<% content_for :wine_register do %>
+    <%= javascript_include_tag 'wine_registers' %>
+<% end %>
+<div class="left">
+  <h3><%= t :create_wine_item %></h3>
+
+  <%= form_for @register, :validate => true, :url => 'register', :html => { :class => 'form-horizontal', :multipart => true } do |f| %>
+
+      <%= render 'share/error_messages', :target => @register %>
+      <table  cellspacing="10" cellpadding="5">
+        <tr>
+          <td><%= f.label :name_en %></td>
+          <td><%= f.text_field :name_en %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :name_zh %></td>
+          <td><%= f.text_field :name_zh %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :other_cn_name %></td>
+          <td><%= f.text_field :other_cn_name %> <span class="hint"> 多个名称用逗号隔开.</span></td>
+        </tr>
+        <tr>
+          <td><%= f.label :wine_style_id %></td>
+          <td><%= f.select :wine_style_id, Wines::Style.all.collect{ |s| [s.name_zh + '/' + s.name_en, s.id] } %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :vintage %></td>
+          <td><%= f.text_field :vintage, :placeholder => '2012' %></td>
+        </tr>
+
+        <tr>
+          <td><%= f.label :winery_id %></td>
+          <td><%= f.text_field :winery_id, data: { autocomplete_source: '/api/wineries/names'} %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :official_site %></td>
+          <td><%= f.text_field :official_site %></td>
+        </tr>
+
+
+        <tr>
+          <td><%= f.label :drinkable_begin %></td>
+          <td><%= f.text_field :drinkable_begin %> - <%= f.text_field :drinkable_end %></td>
+        </tr>
+
+        <tr>
+          <td><%= f.label :variety_name %></td>
+          <td>
+            <%= f.text_field :variety_name_value, data: { autocomplete_source: '/api/wine_varieties/index' }  %>
+            <%= f.label :variety_percentage_value %> <%= f.text_field :variety_percentage_value, :id => 'new_variety' %> <span id="create_variety"><%= t :add %></span> <span class="variety_percentage_error"></span>
+            <ul id="variety_items">
+
+            </ul>
+          </td>
+        </tr>
+
+        <tr>
+          <td><%= f.label :capacity %></td>
+          <td><%= f.select :capacity, APP_DATA['wines']['capacity'].collect{|i| [i, i]}, {:include_blank => true } %></td>
+        </tr>
+
+        <tr>
+          <td><%= f.label :photo_name %></td>
+          <td><%= f.file_field :photo_name %></td>
+        </tr>
+
+      </table>
+      <%= f.button :submit %>
+
+  <% end %>
+
+  <script type="text/template" id="variety_item">
+    <span class="variety_name"></span>
+    <span class="variety_percentage"></span>
+    <span class="variety_destroy">x</span>
+    <input type="hidden" name = "wines_register[variety_name][]" class="variety_name_hidden" />
+    <input type="hidden" name = "wines_register[variety_percentage][]" class="variety_percentage_hidden" />
+  </script>
+  <!--end .left -->
+</div>
+
+<div class="right">
+  <p>
+    我们将对您上传的内容进行审核,这可能需要一定时间，请耐心等候。
+  </p>
+  <p> 一旦审核通过， 该条目会收录到我们的网站， 以供用户浏览。 </p>
+  <p> 感谢您的参与! </p>
+
+
+  <%= link_to t(:back_to_home), '/'%>
+  <!--end .right-->
+</div>
+
+<div class="clear"></div>
+
+
