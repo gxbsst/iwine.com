@@ -1,8 +1,8 @@
-<%= render "sub_nav"%>
+<%= render "mine/cellars/sub_nav"%>
 <div class="winery_main">
 	<div class="content">
 		<div class="wine_add_step3 mb30">第二步：选择你想收藏的酒</div>
-		<%= form_for @cellar_item, :validate => true, :url => "/mine/cellars/update/#{@cellar_item.id}", :html => {:id => 'edit_users_wine_cellar_item'}  do |f| -%>
+		<%= form_for @cellar_item, :url => mine_cellar_item_path(@cellar, @cellar_item),  :validate => true, :html => {:id => 'edit_users_wine_cellar_item'}  do |f| -%>
 	      
 			<%= render "form", :f => f %>
 			

@@ -3,6 +3,12 @@ class UsersController < ApplicationController
   before_filter :get_user, :except => [:register_success]
   before_filter :direct_current_user, :except => [:register_success]
 
+  def show
+    @followers = @user.followers
+    @followings =@user.followings
+    @comments = @user.comments
+    render "mine/index"
+  end
   def index
     @followers = @user.followers
     @followings =@user.followings
@@ -88,7 +94,7 @@ class UsersController < ApplicationController
   private
 
   def get_user
-    @user = User.find(params[:user_id])
+    @user = User.find(params[:id])
   end
 
   def direct_current_user

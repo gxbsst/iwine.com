@@ -40,7 +40,7 @@ module ApplicationHelper
     if object.covers.first.respond_to? "image_url"
       image_tag object.covers.first.image_url( options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt]
     else
-      image_tag "base/test/win_50p.jpg"
+      image_tag "base/test/win_50p.jpg", :width => options[:width], :height => options[:height], :alt => options[:alt]
     end
   end
 

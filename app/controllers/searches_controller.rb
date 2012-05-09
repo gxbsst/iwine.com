@@ -7,7 +7,7 @@ class SearchesController < ApplicationController
 
   def create
     @search = Search.create!(params[:search])
-    redirect_to "/mine/cellars/add?step=2&id=#{@search.id}"
+    redirect_to add_mine_cellar_path(current_user.cellar.id, :step => 2, :search_id => @search.id)
   end
 
 end

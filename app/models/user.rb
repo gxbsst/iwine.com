@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   has_one  :profile, :class_name => 'Users::Profile', :dependent => :destroy
   has_many :albums, :class_name => 'Album', :foreign_key => 'created_by'
   has_many :registers, :class_name => 'Wines::Register'
-  has_many :comments, :class_name => 'Wines::Comment'
+  has_many :comments, :class_name => '::Comment'
   has_one  :good_hit_comment, :class_name => 'Users::GoodHitComment'
   has_many :photo_comments
   has_many :photos, :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_USER }
@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
   has_many :oauths, :class_name => 'Users::Oauth'
   has_many :followers, :class_name => 'Friendship', :include => :follower
   has_many :followings, :class_name => 'Friendship', :foreign_key => 'follower_id', :include => :user
+  
+  has_many :time_events
 
   accepts_nested_attributes_for :profile, :allow_destroy => true
 

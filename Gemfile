@@ -58,11 +58,21 @@ gem 'acts_as_commentable_with_threading', :path => "lib/gems"
 # Vote
 gem 'acts_as_votable', :path => "lib/gems"
 
+## Timeline
+gem "timeline_fu", :path => "lib/gems"
+
 group :development, :test do
   gem 'i18n'
   gem 'pry'  # "binding.pry" in action
   gem 'wirble'
   gem 'rspec-rails'
+  # 优化
+  #gem "query_reviewer", :git => "git://github.com/nesquena/query_reviewer.git"
+  gem "bullet"
+  #gem 'growl'
+  #gem 'ruby-growl'
+  gem "uniform_notifier"
+  gem 'slowgrowl'
 end
 # Gems used only for assets and not required
 # in production environments by default.
@@ -98,7 +108,5 @@ end
 
 gem 'user_resource_init', :path => 'lib/patrick/user_resource_init'
 
-# 优化
-#gem "query_reviewer", :git => "git://github.com/nesquena/query_reviewer.git"
 
 

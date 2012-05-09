@@ -1,0 +1,55 @@
+<p> <%= image_tag "v2/test/label.png", :title => "title", :class => "class" %> </p>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="l">酒庄:</td>
+    <td class="c">
+      <%= link_to @wine.winery.name,
+                  :controller => "wineries",
+                  :action => 'show',
+                  :id => @wine.winery.id %>
+      </td>
+  </tr>
+  <tr>
+    <td class="l">官方网站:</td>
+    <td class="c">
+      <%= link_to @wine.official_site, 'http://' + @wine.official_site, :target => '_blank' %>
+      </td>
+  </tr>
+  <tr>
+    <td class="l">产区:</td>
+    <td class="c">
+       <%= render 'share/region_tree', :region_tree => @wine_detail.get_region_path %>
+    </td>
+  </tr>
+  <tr>
+    <td class="l">类型: </td>
+    <td class="c">
+      <%= image_tag "base/" + @wine.style.name_en + '.gif' %>
+      <%= link_to @wine.style.name_zh,
+                  :controller => :searh,
+                  :action => :wine,
+                  :style => @wine.style.name_en %>
+    </td>
+  </tr>
+  <tr>
+    <td class="l">容量: </td>
+    <td class="c">
+      <%= @wine_detail.capacity %>
+    </td>
+  </tr>
+  <tr>
+    <td class="l">酒精度:</td>
+    <td class="c">
+      <%= @wine_detail.alcoholicity %>
+      Vol
+    </td>
+  </tr>
+  <tr>
+    <td class="l">葡萄品种: </td>
+    <td class="c">
+       <% @wine_detail.variety_percentages.each do |i| %>
+       <%= i.name_zh %> (<%= i.percentage %>)、
+      <% end %>
+    </td>
+  </tr>
+</table>

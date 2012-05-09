@@ -4,22 +4,26 @@
 
 <div class="title_btn clearfix">
   <a href="<%= url_for :action => 'new' %>" class="new_album fancybox.ajax button_gray float_r"><span>新建相册</span></a>
-  <a href="<%= url_for :action => 'upload' %>" class="button_gray float_r mr5"><span>添加照片</span></a>
+  <%= link_to upload_mine_albums_path(), :class => "button_gray float_r mr5" do %>
+	<span>添加照片</span>
+  <% end %>
   <h2><%= current_user.username %>的相册 <span class="count_b">(共<%= @albums.total_count %>个)</span></h2>
 </div>
 <ul class="album_list clearfix">
   <% @albums.each do |album| %>
   <li>
     <div class="pic">
-      <a href="<%= url_for :action => 'show', :album_id => album.id %>">
+      
+	
         <% if album.cover.present? %>
-        <%= image_tag album.cover.image_url :normal %>
+        <%= link_to image_tag(album.cover.image_url :normal), mine_album_path(album)  %>
         <% else %>
-        <img src="/assets/base/test/album_cover1.jpg" alt="木有图片" width="190" height="190" />
+		<%= link_to image_tag("base/test/album_cover1.jpg", :alt => "木有图片", :width => 190, :height => 190), 
+			mine_album_path(album)  %>
         <% end %>
       </a>
     </div>
-    <h3><%= link_to album.name , {:action => :show, :album_id => album.id } %></h3>
+    <h3><%= link_to album.name , mine_album_path(album) %></h3>
     <div class="album_info"><%= album.photos_num %>张照片 2012-1-28更新<br/><%= album.viewed_num %>浏览 | <%= album.commented_num %>评论 | <%= album.liked_num %>喜欢</div>
   </li>
   <% end %>

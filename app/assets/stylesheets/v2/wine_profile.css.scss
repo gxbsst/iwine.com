@@ -4,7 +4,7 @@ $text_color_grey: #333;
 @import "v2/compass_buttons/*.png";;
 @include all-compass_icons-sprites;
 @include all-compass_buttons-sprites;
-.span_950.fixed_width.wines.show #main, .span_950.fixed_width.comments #main,
+.span_950.fixed_width.wine_details.show #main, .span_950.fixed_width.comments #main,
 .span_950.fixed_width.wines #main
 {
     @include box-shadow(#FFFFFF 0 0 0 0);
@@ -288,7 +288,7 @@ $text_color_grey: #333;
 
 
 // wines/followers/
-.span_950.wines.followers {
+.span_950.wines.followers{
   .title {
       .button.back {
           position: absolute;
@@ -297,4 +297,55 @@ $text_color_grey: #333;
       }
   }
 }
+
+ .span_950.comments.index {
+     .title {
+         .button.back {
+             position: absolute;
+             right: 10px;
+             top: 15px;
+         }
+         .button.add_comment{
+             position: absolute;
+             right: 60px;
+             top: 15px;
+         }
+     }
+     .sort {
+         ul li {
+             @include horizontal-list-item;
+         }
+     }
+
+     .box.form {
+
+         .top {
+             width: 611px;
+             height: 12px;
+             background: url("top_611.png") no-repeat left top;
+         }
+         .middle {
+             background: url("middle_611.png") repeat-y left top;
+             /* overflow: auto; */
+             width: 611px;
+             padding: 10px;
+             .td_3 {
+                 ul li {
+                     @include horizontal-list-item;
+                 }
+             }
+             .td_2 {
+                 textarea {
+                     width:400px;
+                     height:100px;
+                 }
+             }
+         }
+         .bottom{
+             width: 611px;
+             height: 12px;
+             background: url("bottom_611.png") no-repeat left bottom;
+         }
+     }
+ }
 

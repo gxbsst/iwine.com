@@ -18,6 +18,17 @@ class Comment < ActiveRecord::Base
   # NOTE: Comments belong to a user
   belongs_to :user
 
+  # 人做了什么事情
+  fires :new_comment,
+                 :on => :create,
+                 :actor => :user,
+                 :secondary_actor => :commentable
+
+  # 酒做了什么事情
+  #fires_for_wine :new_comment,
+  #               :on => :create,
+  #               :actor => :commentable
+
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text
   # example in readme
@@ -35,7 +46,7 @@ class Comment < ActiveRecord::Base
     end
     c
   end
-  
+
   # paginate config
   paginates_per 10
 
