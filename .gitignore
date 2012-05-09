@@ -30,3 +30,4 @@ lib/tasks/data
 /db/wine_variety_i18n.csv
 .rakeTasks
 /.idea/.rakeTasks
+schema.rb
