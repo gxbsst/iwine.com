@@ -20,7 +20,7 @@
 <ul class="photo_list">
   <% @photos.each_with_index do |photo, i| %>
     <li>
-      <a href="<%= url_for :action => 'photo', :album_id => @album.id, :index => i %>">
+      <a href="<%= url_for @album.id.to_s+'/photo?index='+i.to_s %>">
         <%= image_tag photo.image_url( :normal ), :class => 'cover' %>
       </a>
       <% if photo.intro.present? %>

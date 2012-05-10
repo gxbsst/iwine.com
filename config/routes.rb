@@ -50,7 +50,7 @@ Patrick::Application.routes.draw do
       end
 
       member do
-        match "/:album_id/upload_list", :via => [:get, :post]
+        match 'photo', :via => [:get, :post]
       end
     end
     # 酒窖
