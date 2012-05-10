@@ -21,7 +21,7 @@
 <ul class="album_list">
   <% @albums.each do |album| %>
        	<li> 
-          <a href="<%= url_for :action => 'show', :album_id => album.id %>">
+          <a href="<%= album.id %>">
             <% if album.cover.present? %>
         <%= image_tag album.cover.image_url( :normal), :class => 'cover' %>
         <% else %>
@@ -29,7 +29,7 @@
         <% end %>
           </a>
           <h2>
-            <%= link_to album.name , {:action => :show, :album_id => album.id } %>
+            <%= link_to album.name , "#{album.id}"  %>
           </h2>
           <p class="info"><%= album.photos_num %>张照片 2012-1-28更新<br/>
           <%= album.viewed_num %>浏览 | <%= album.commented_num %>评论 | 2赞</p>

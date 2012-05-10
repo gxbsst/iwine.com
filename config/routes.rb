@@ -13,31 +13,6 @@ Patrick::Application.routes.draw do
     get :register , :to => 'devise/registrations#new'
   end
 
-  namespace :users do
-    match ":user_id/" => "users#index"
-    match ":user_id/wine_follows" => "users#wine_follows"
-    match ":user_id/winery_follows" => "users#winery_follows"
-    match ":user_id/comments" => "users#comments"
-    match ":user_id/testing_notes" => "users#testing_notes"
-    match ":user_id/followings" => "users#followings"
-    match ":user_id/followers" => "users#followers"
-
-    ## CELLAR
-    match ":user_id/cellars/" => "cellars#index", :via => [:get]
-    match ":user_id/cellars/edit" => "cellars#edit"
-    ## BID
-    match ":user_id/bid/mine" => "bid#mine", :via => [:get]
-    match ":user_id/bid/list" => "bid#list"
-    ## ALBUMS
-    match ":user_id/albums" => "albums#list"
-    match ":user_id/albums/list" => "albums#list"
-    match ":user_id/albums/show" => "albums#show"
-    match ":user_id/albums/photo" => "albums#photo"
-    # Syncs
-    match "syncs/:type/new" => "syncs#new", :as => :sync_new
-    match "syncs/:type/callback" => "syncs#callback", :as => :sync_callback
-  end
-  
   # WINE
   resources :wine_details, :controller => "wine_details", :as => :wines, :path => :wines  do
     member do
@@ -70,6 +45,12 @@ Patrick::Application.routes.draw do
       # 自定义actions,albums后面不带id 
       collection do 
         match "upload", :via => [:get, :post]
+        match 'upload_list', :via => [:get, :post]
+        match 'save_upload_list', :via => [:get, :post]
+      end
+
+      member do
+        match "/:album_id/upload_list", :via => [:get, :post]
       end
     end
     # 酒窖
