@@ -9,7 +9,6 @@ class MineController < ApplicationController
     @comments = current_user.comments
     @cellar = current_user.cellar
     @following_wines = current_user.following_wines
-
   end
 
   def unfollow
@@ -24,7 +23,7 @@ class MineController < ApplicationController
 
   # 关注的酒
   def wine_follows
-
+    # @user.wine_follows.with_wine_detail
   end
 
   # 我的评论

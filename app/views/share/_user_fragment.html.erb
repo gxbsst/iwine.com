@@ -6,7 +6,7 @@
       <%= link_to_user current_user, { :controller => "/mine" }, {:class => "avatar", :with_avatar => true, :avatar_version => :thumb }  %>
       <%= link_to_icon "arrow_down", "#" %>
       <ul class="drop_down_menu">
-        <li><%= link_to "设置", :controller => "/settings", :action => "basic" %></li>
+        <li><%= link_to "设置", basic_settings_path() %></li>
         <li><%= link_to "找朋友", :controller => "/friends", :action => "find" %></li>
         <li><%= link_to "我的Patrick", :controller => "/mine" %></li>
         <li><%= link_to "我的酒窖", :controller => "/mine", :action => "cellars" %></li>
