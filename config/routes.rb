@@ -36,6 +36,7 @@ Patrick::Application.routes.draw do
     # Syncs
     match "syncs/:type/new" => "syncs#new", :as => :sync_new
     match "syncs/:type/callback" => "syncs#callback", :as => :sync_callback
+  end
   
   # WINE
   resources :wine_details, :controller => "wine_details", :as => :wines, :path => :wines  do
