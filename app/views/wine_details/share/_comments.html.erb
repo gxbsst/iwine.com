@@ -1,9 +1,11 @@
+<% unless params[:controller] == "wine_details/comments" %>
 <h3>
   评论
   <span class="font_12">
-    <%= link_to "(#{@wine_detail.comments_count}条, 更多)", :controller => "/wines/comments", :action => "list", :wine_detail_id => @wine_detail.id %>
+    <%= link_to "(#{@wine_detail.comments_count}条, 更多)", wine_comments_path(@wine_detail.id)%>
   </span>
 </h3>
+<% end %>
 
 <!-- 酒评论带评分 -->
 <% @comments.each do |comment| %>

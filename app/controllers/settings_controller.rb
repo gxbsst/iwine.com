@@ -2,46 +2,39 @@
 class SettingsController < ApplicationController
 
   before_filter :authenticate_user!
-
+  before_filter :get_profile
+  
   def basic
-
     @title = "帐号设置"
-
     @availabe_sns = current_user.available_sns
-
-    @profile = current_user.profile || current_user.build_profile
-
+    # @profile = current_user.profile || current_user.build_profile
     if request.put?
-      @user = current_user
-      @profile = current_user.profile
-
+      # @user = current_user
+      # @profile = current_user.profile
       ## 处理配置信息
       # set_config
-
       ## 处理所在地信息
       set_living_city_id
-
-      if @user.update_attribute(:username, params[:users_profile][:username]) &&  @profile.update_attributes(params[:users_profile])
+      if current_user.update_attribute(:username, params[:users_profile][:username]) &&  @profile.update_attributes(params[:users_profile])
         notice_stickie("更新成功.")
       end
-      # redirect_to :action => 'basic'
+      redirect_to basic_settings_path
     end
   end
 
   def update_password
     @title = "修改密码"
     @user = current_user
-
     if request.put?
       @user = User.find(current_user.id)
       if @user.update_attributes(params[:user])
         # Sign in the user by passing validation in case his password changed
         sign_in @user, :bypass => true
         notice_stickie t("update_success")
-        # redirect_to root_path
+        redirect_to basic_settings_path
       else
         error_stickie t("update_failed")
-        redirect_to :action => "update_password"
+        redirect_to update_password_settings_path
       end
     end
 
@@ -55,19 +48,14 @@ class SettingsController < ApplicationController
       set_config
       if @profile.save
         notice_stickie t("update_success.")
+        redirect_to basic_settings_path
       end
     end
-
-  end
-
-  def invite
-
   end
 
   def syncs
     @sns_servers = SNS_SERVERS
     @avaliable_sns = current_user.available_sns
-
   end
 
   def sync
@@ -100,24 +88,17 @@ class SettingsController < ApplicationController
     user_oauth.refresh_token = results[:access_token_secret]
     user_oauth.save
 
-    redirect_to :action => 'syncs'
-  end
-
-  def account
-
+    redirect_to syncs_settings_path
   end
 
   def avatar
-
     @title = "设置头像"
-
     # 保存图片
     if request.put?
       if save_avatar
         notice_stickie t("save_successed")
       end
-      redirect_to :action => :avatar
-
+      redirect_to avatar_settings_path
     end
 
     # 裁剪图片
@@ -126,11 +107,8 @@ class SettingsController < ApplicationController
         crop_avatar
         notice_stickie t("save_successed")
       end
-
-      redirect_to :action => :basic
-
+      redirect_to basic_settings_path
     end
-
   end
 
   private
@@ -140,8 +118,8 @@ class SettingsController < ApplicationController
   end
 
   def set_living_city_id
-    regions = params[:region]
 
+    regions = params[:region]
     regions.reject!{ |k,v| v.blank? }
     return true if regions.blank?
 
@@ -170,5 +148,8 @@ class SettingsController < ApplicationController
   # 初始化配置信息
   def init_configs
 
+  end
+  def get_profile
+    @profile = current_user.profile
   end
 end

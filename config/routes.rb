@@ -46,24 +46,30 @@ Patrick::Application.routes.draw do
       get :owners
       get :add_to_cellar
     end 
-    resources :comments, :controller => "wine_details/comments" do 
+    
+    resources :comments, :controller => "wine_details/comments" do
       member do 
         # 自定义actions
         get :cancle_follow 
         get :vote
-        get :reply
-        post :reply     
+        match "reply", :via => [:get, :post]    
+      end
+      collection do 
+        match "follow", :via => [:get, :post]
+        match "comment", :via => [:get, :post]
+        get :add_to_cellar
       end
     end
-    resources :photos
+    resources :photos, :controller => "wine_details/photos" 
   end
   
+  # MINE
   namespace :mine do
     # 相册
-    resources :albums do 
+    resources :albums do
+      # 自定义actions,albums后面不带id 
       collection do 
-        get "upload"
-        post "upload"
+        match "upload", :via => [:get, :post]
       end
     end
     # 酒窖
@@ -78,11 +84,18 @@ Patrick::Application.routes.draw do
     resources :messages
     resources :conversations
     # 酒
-    resources :wines
+    resources :wines do 
+      collection do 
+        get :add
+      end
+    end
   end
   
   # USER
   resources :users do 
+    collection do
+      get "register_success"
+    end
     resources :comments
     # 相册
     resources :albums, :controller => "users/albums"
@@ -101,18 +114,25 @@ Patrick::Application.routes.draw do
   # WINERIES
   resources :wineries
   # SETTINGS
-  # resources :settings 
+  resources :settings do
+    collection do
+      match :basic, :via => [:get, :put]
+      match :privacy, :via => [:get, :put]
+      match :avatar, :via => [:get, :post, :put]
+      get :sync
+      get :syncs
+      match :update_password, :via => [:get, :put]
+    end
+  end
   # Search
   resources :searches
   # API
   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
   ## STATIC
-  match "/about_us", :to => "static#about_us"
-  match "/contact_us", :to => "static#contact_us"
-  match "/help", :to => "static#help"
-  match "/private", :to => "static#private"
-  match "/site_map", :to => "static#site_map"
-  match "/home", :to => "static#home"
+  statics = %w(about_us contact_us help private site_map home)
+  statics.each do |i|
+     match "/#{i}", :to => "static##{i}"
+  end
 
   ## GLOBAL
   match ':controller(/:action(/:id(.:format)))'

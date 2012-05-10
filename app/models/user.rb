@@ -73,7 +73,8 @@ class User < ActiveRecord::Base
   end
 
   # 评论
-  def simple_comment_count
+  def comments_count
+    comments.count
     ## TODO: 未实现这个功能， 实现之后请更新
   end
 
@@ -84,12 +85,13 @@ class User < ActiveRecord::Base
 
   # 关注的人
   def user_followes_count
-    followers.count
+     followings.count
   end
 
   # 粉丝
   def user_followeds_count
-    followings.count
+   
+    followers.count
   end
 
   # 相册
