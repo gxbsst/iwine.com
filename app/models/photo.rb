@@ -23,6 +23,9 @@ require 'fileutils'
 class Photo < ActiveRecord::Base
 
   belongs_to :album
+  belongs_to :user
+  belongs_to :wine_detail, :class_name => 'Wines::Detail', :foreign_key => 'business_id'
+
   acts_as_commentable
 
   delegate :user_id, :to => :album

@@ -13,7 +13,8 @@
   <%= javascript_include_tag "html5" %>
   <![endif]-->
 </head>
-<body class="span_950 fixed_width <%= params[:controller] %> <%= params[:action] %>" >
+<body class="span_950 fixed_width <%= controller.controller_name %> <%= params[:action] %>" >
+<%#= query_review_output %>
 
   <%= render "share/header" %>
 

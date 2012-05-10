@@ -2,6 +2,7 @@ class Mine::AlbumsController < ApplicationController
   
   before_filter :authenticate_user!
   before_filter :get_user
+  before_filter :get_album, :except => [:index, :upload, :new]
 
   def upload
 
@@ -26,7 +27,7 @@ class Mine::AlbumsController < ApplicationController
       default_album = Album.create :created_by => current_user.id , :name => 'other'
       @albums = [avatar_album, default_album]
     end
-
+    
     @select_album_id = params[:album_id] || @albums[0].id
   end
 
@@ -106,11 +107,10 @@ class Mine::AlbumsController < ApplicationController
   end
 
   def edit
-    @album = Album.first :conditions => { :id => params[:album_id] , :created_by => current_user.id }
     if @album.blank?
       redirect_to request.referer
     end
-
+    
     if request.put?
       @album.attributes = params[:album]
       @album.save
@@ -133,13 +133,10 @@ class Mine::AlbumsController < ApplicationController
 
   
   def show
-    @album = Album.find params[:album_id]
-
+   
     if @album.blank?
       redirect_to request.referer
     end
-
-    @user = @album.user
 
     if user_signed_in? && current_user.id == @user.id
       @is_owner = true;
@@ -158,6 +155,7 @@ class Mine::AlbumsController < ApplicationController
 
   def photo
     @album = Album.find params[:album_id]
+
     if @album.blank?
       redirect_to request.referer
     end
@@ -171,7 +169,6 @@ class Mine::AlbumsController < ApplicationController
     end
 
     @photo = @album.photo @index
-    @user = @album.user
     @top_albums = @user.top_albums 3
     @photo.viewed_num += 1
     @album.viewed_num += 1
@@ -187,7 +184,14 @@ class Mine::AlbumsController < ApplicationController
     @albums = Album .where(["created_by= ?", current_user.id]).order("id DESC").page params[:page] || 1
   end
  
+  private
+ 
   def get_user
     @user = current_user
   end
+  
+  def get_album
+    @album = @user.albums.find(params[:id])
+  end
+
 end

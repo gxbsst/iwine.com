@@ -24,15 +24,26 @@ class Users::Profile < ActiveRecord::Base
   before_save :init_configs
 
   def get_living_city_path
-    region = Region.find(living_city)
-    parent = region.parent
-    path = []
-    path << region
-    until parent == nil
-      path << parent
-      parent = parent.parent
+    if living_city.blank?
+      region = Region.find(living_city)
+      parent = region.parent
+      path = []
+      path << region
+      until parent == nil
+        path << parent
+        parent = parent.parent
+      end
+      path.reverse!
     end
-    path.reverse!
+  end
+
+  def get_living_city
+    city_path = get_living_city_path
+    if city_path.nil?
+      "未知"
+    else
+      city_path.map(:region_name)
+    end
   end
 
   # ## 定义config的默认值
