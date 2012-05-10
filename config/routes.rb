@@ -47,6 +47,7 @@ Patrick::Application.routes.draw do
         match "upload", :via => [:get, :post]
         match 'upload_list', :via => [:get, :post]
         match 'save_upload_list', :via => [:get, :post]
+        match 'photo_comment', :via => [:get, :post]
       end
 
       member do
@@ -79,7 +80,13 @@ Patrick::Application.routes.draw do
     end
     resources :comments
     # 相册
-    resources :albums, :controller => "users/albums"
+    resources :albums, :controller => "users/albums" do
+     collection do 
+        match 'photo_comment', :via => [:get, :post]
+      end 
+    end
+
+    
     # 酒窖
     resources :cellars, :controller => "users/cellars" 
   end
