@@ -1,6 +1,7 @@
 <div id="comment_form"  style="display: none" >
 
 </div>
+
 <div id="add_to_cellar_form"  style="display: none" >
 
 </div>
@@ -15,13 +16,13 @@
           </h2>
      <!-- title end -->
      <%= link_to_button "add_comment", "#comment_body" %>
-     <%= link_to_button "back", wine_detail_path(@wine_detail) %>
+     <%= link_to_button "back", wine_path(@wine_detail) %>
     </div>
     <div class="clear"></div>
     <div class="box sort">
       <ul>
-        <li><%= link_to "热门评论", {:action => 'list', :sort_by => 'hot', :wine_detail_id => @wine_detail.id }, :class => 'hot' %></li>
-        <li><%= link_to "最新评论", {:action => 'list', :sort_by => 'new', :wine_detail_id => @wine_detail.id}, :class => 'new' %></li>
+        <li><%= link_to "热门评论", wine_comments_path(@wine_detail.id, :sort_by => "hot"), :class => 'hot' %></li>
+        <li><%= link_to "最新评论", wine_comments_path(@wine_detail.id, :sort_by => "new"), :class => 'new' %></li>
     </div>
     <div class="box comments">
       <%= render "wine_details/share/comments" %>
@@ -36,7 +37,7 @@
       <div class="box form "  id="wine_profile_star_bar">
         <div class="top"></div>
         <div class="middle">
-          <%= form_for @comment, :url => '/wines/comments/create', :method => :post do |f| -%>
+          <%= form_for @comment, :url => wine_comments_path(@wine_detail.id), :method => :post do |f| -%>
           <%= hidden_field_tag "wine_detail_id", @wine_detail.id %>
           <%= hidden_field_tag "comment[do]", "comment" %>
           <%= hidden_field_tag "return_url", request.fullpath %>

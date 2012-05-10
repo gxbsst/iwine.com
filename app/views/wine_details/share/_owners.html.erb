@@ -1,10 +1,7 @@
 <h3>
   他们拥有，或许也愿意出售
   <span class="font_12">
-    <%= link_to "（共#{@wine_detail.owners_count}人，更多...)",
-                 :controller => "wines",
-                 :action => "owners",
-                 :wine_detail_id => @wine_detail.id %>
+    <%= link_to "（共#{@wine_detail.owners_count}人，更多...)", owners_wine_path(@wine_detail.id) %>
   </span>
 </h3>
 

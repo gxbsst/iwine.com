@@ -5,15 +5,15 @@
   <div class="left">
     <div class="box title relative">
       <h2>
-        关注 <%= link_to @wine_detail.name.html_safe, wine_detail_path(@wine_detail) %> 的人
+        关注 <%= link_to @wine_detail.name.html_safe, wine_path(@wine_detail) %> 的人
         (<%= @wine_detail.followers_count %> )
       </h2>
-      <%= link_to_button "back", wine_detail_path(@wine_detail) %>
+      <%= link_to_button "back", wine_path(@wine_detail) %>
       <!-- title end -->
     </div>
     <div class="clear"></div>
     <div class="box followers">
-      <%= render "/wines/share/followers_list" %>
+      <%= render "/wine_details/share/followers_list" %>
     </div>
     <div class="clear"></div>
     <div class="pagination">

@@ -1,6 +1,6 @@
 <div class="top"></div>
 <div class="middle">
-<%= form_for @comment, :url => {:action => "reply", :comment_id => @comment.id }, :method => :post, :remote => true do |f| -%>
+<%= form_for @comment, :url => reply_wine_comment_path(@wine_detail.id, @comment.id), :method => :post, :remote => true do |f| -%>
   <%= hidden_field_tag "wine_detail_id", @wine_detail.id %>
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>

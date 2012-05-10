@@ -21,7 +21,8 @@ Patrick::Application.routes.draw do
       get :owners
       get :add_to_cellar
     end 
-    resources :comments, :controller => "wine_details/comments" do 
+    
+    resources :comments, :controller => "wine_details/comments" do
       member do 
         # 自定义actions
         get :cancle_follow 
@@ -29,16 +30,25 @@ Patrick::Application.routes.draw do
         get :reply
         post :reply     
       end
+      collection do 
+        get :follow
+        post :follow
+        post :comment
+        get :comment
+        get :add_to_cellar
+      end
     end
-    resources :photos
+    resources :photos, :controller => "wine_details/photos" 
   end
   
+  # MINE
   namespace :mine do
     # 相册
-    resources :albums do 
+    resources :albums do
+      # 自定义actions,albums后面不带id 
       collection do 
-        get "upload"
-        post "upload"
+        get :upload
+        post :upload
       end
     end
     # 酒窖
@@ -53,7 +63,11 @@ Patrick::Application.routes.draw do
     resources :messages
     resources :conversations
     # 酒
-    resources :wines
+    resources :wines do 
+      collection do 
+        get :add
+      end
+    end
   end
   
   # USER
