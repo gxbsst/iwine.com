@@ -154,6 +154,7 @@ class Mine::AlbumsController < ApplicationController
   end
 
   def photo
+    @album = Album.find params[:album_id]
 
     if @album.blank?
       redirect_to request.referer
@@ -166,8 +167,6 @@ class Mine::AlbumsController < ApplicationController
     else
       @index = params[:index].to_i
     end
-
-
 
     @photo = @album.photo @index
     @top_albums = @user.top_albums 3

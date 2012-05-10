@@ -17,8 +17,6 @@
   <h1><%= @album.name %> <span class="font12">(共<%= @album.photos_num%>张)</span></h1>
   <div class="clear"></div>
 </div>
-
-
 <ul class="photo_list">
   <% @photos.each_with_index do |photo, i| %>
     <li>
@@ -47,7 +45,6 @@
   <% end %>
   <div class="clear"></div>
 </ul>
-
 <div class="pagination">
  <%= paginate @photos, :outer_window => 2 %>
 </div>
