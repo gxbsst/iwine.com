@@ -22,8 +22,9 @@
     <li><%= link_to "", comment_wine_comments_path(@wine_detail.id, :do => "comment"),
                           :remote => true,
                           :class => "comment compass_buttons-comment ajax"%></li>
-    <li><%= link_to "", follow_wine_comments_path(@wine_detail.id),
+   <!--<li><%#= link_to "", follow_wine_comments_path(@wine_detail.id),
                           :class => "testint_note compass_buttons-testing_note ajax"%></li>
+-->
     <li><%= link_to "", {:controller => "wines", :action => :add_to_cellar,
                         :wine_detail_id => params[:wine_detail_id]},
                           :remote => true,
@@ -36,8 +37,9 @@
 <li><%= link_to "", comment_wine_comments_path(@wine_detail.id, :do => "comment"),
                     :remote => true,
                     :class => "comment compass_buttons-comment ajax"%></li>
-<li><%= link_to "", comment_wine_comments_path(@wine_detail.id, :do => "comment"),
+<!--<li><%#= link_to "", comment_wine_comments_path(@wine_detail.id, :do => "comment"),
                       :class => "testint_note compass_buttons-testing_note ajax"%></li>
+-->
 <li><%= link_to "", add_to_cellar_wine_comments_path(@wine_detail.id),
                       :remote => true,
                       :class => "add_to_cellar compass_buttons-add_to_cellar ajax"%></li>

@@ -1,6 +1,6 @@
 <p><strong>更多年份</strong></p>
 <% @wine_detail.all_vintage.each do  |v| %>
-  <a href="#" <%= v == @wine_detail.year ? 'class="current"' : '' %>><%= v %></a>
+  <a href="#" <%= v == @wine_detail.year ? 'class="current"' : '' %>><%= v.strftime("%Y") %></a>
 <% end %>
 
 
