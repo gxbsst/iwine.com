@@ -21,7 +21,7 @@
       </div>
       <div class="required">
         <%= f.label :capacity %>
-        <%= f.select :capacity, APP_DATA['wines']['capacity'].collect{|i| [i, i]}, {:include_blank => true } %>
+        <%= f.select :capacity, APP_DATA['wines']['capacity'].collect{|i| [i, i]} %>
       </div>
       <div class="optional">
         <%= f.label :photo_name %>

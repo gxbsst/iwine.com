@@ -501,6 +501,15 @@ a.btn_bid:active {
   padding: 0 0 2px 20px;
 }
 
+a.btn_blue, a.btn_blue span, a.btn_blue_b, a.btn_blue_b span{background:url(../v2/messages/bg/button_bg.jpg) no-repeat;}
+a.btn_blue {background-position:left -190px;display:inline-block;padding-left:10px;color:#fff;text-decoration:none;font-size:12px;}
+a.btn_blue span {background-position:right -190px;display:inline-block;height:25px;line-height:25px;padding-right:10px;}
+a.btn_blue:hover {background-position:left -215px;}
+a.btn_blue:hover span {background-position:right -215px;}
+a.btn_blue_b {background-position:left -300px;display:inline-block;padding-left:15px;color:#fff;text-decoration:none;font-size:14px;}
+a.btn_blue_b span {background-position:right -300px;display:inline-block;height:30px;line-height:30px;padding-right:15px;}
+a.btn_blue_b:hover {background-position:left -330px;}
+a.btn_blue_b:hover span {background-position:right -330px;}
 /****************/
 /* header start */
 /****************/

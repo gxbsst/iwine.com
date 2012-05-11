@@ -20,7 +20,7 @@
 //= require best_in_place
 //= require stickies
 //= require settings
-//= require kissy
+// require kissy
 //= require jquery-tools/tabs/tabs
 //= require jquery-tools/tabs/tabs.slideshow
 
@@ -59,7 +59,6 @@ $(document).ready(function(){
         } // end helper
 
     });
-
     // 回复信息
     $("a.reply_conversation").fancybox({
         maxWidth        : 500,
@@ -140,15 +139,20 @@ $(document).ready(function(){
     });
 
     // 当使用ajax调用时， 显示laoding
-    $(".ajax").bind("ajax:before", function(et, e){
+    $(".ajax").bind("ajax:before", function(evt, data, status, xhr){
         $("#loading").toggle();
         // 这里也可以触发fancybox
     });
-    $(".ajax").bind("ajax:success", function(et, e){
+    $(".ajax").bind("ajax:success", function(evt, data, status, xhr){
         $("#loading").toggle();
     });
-    $(".ajax").bind("ajax:failure", function(et, e){
+    $(".ajax").bind("ajax:failure", function(evt, data, status, xhr){      
         $("#loading").html("由于网络故障， 请稍后重试");
+    });
+    $(".ajax").bind("ajax:error", function(evt, data, status, xhr){  
+      if (data.status == 401){
+           window.location.replace("/login");
+         }
     });
 
 });

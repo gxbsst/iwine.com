@@ -9,6 +9,7 @@ class MineController < ApplicationController
     @comments = current_user.comments
     @cellar = current_user.cellar
     @following_wines = current_user.following_wines
+
   end
 
   def unfollow
@@ -53,18 +54,6 @@ class MineController < ApplicationController
       .page params[:page] || 1
 
     @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
-  end
-
-  def wish
-
-  end
-
-  def feeds
-
-  end
-
-  def status
-
   end
 
   private

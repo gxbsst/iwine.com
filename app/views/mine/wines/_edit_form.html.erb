@@ -20,7 +20,7 @@
         <label>葡萄品种</label>
         <div class="content2">
           <%= f.text_field :variety_name_value, :name => "wines_register[variety_name_value][]", data: { autocomplete_source: '/api/wine_varieties/index' }, :class => "text"  %>
-          成分百分比 <%= f.text_field :variety_percentage_value, :name => "wines_register[variety_percentage_value][]", :id => 'new_variety', :size => 10, :class => "text percent" %>% <%= link_to "", "#", :class => "icon_add", :id => "create_variety" %><span class="variety_percentage_error"></span>
+          成分百分比 <%= f.text_field :variety_percentage_value, :name => "wines_register[variety_percentage_value][]", :id => 'new_variety', :size => 10, :class => "text percent" %>% <%= link_to "", "javascript:void(0);", :class => "icon_add", :id => "create_variety" %><span class="variety_percentage_error"></span>
           <%= render "variety_percentage", :object => @register %>
         </div>
 
@@ -38,7 +38,7 @@
               适饮年限
               <%= s.date_select :drinkable_begin, {:discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150}, {:name => "special_comment[drinkable_begin][]"} %>至
               <%= s.date_select :drinkable_end, {:discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150}, {:name => "special_comment[drinkable_end][]"}%>
-              <%= link_to "", "#", :id => "create_special_comment", :class => "icon_add" %>
+              <%= link_to "", "javascript:void(0);", :id => "create_special_comment", :class => "icon_add" %>
           <% end %>
           <%=  render "special_comment", :object => @register %>
         </div>

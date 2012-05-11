@@ -1,0 +1,14 @@
+<%= form_for @search, :url => "/searches", :method => :post, :html => {:id => "search_item"} do |f| %>
+    <div class="search">
+      <%= f.text_field :keywords, :class => "text common_search mr5", :placeholder => "请输入酒的中文或英文名称" %>
+      <%= link_to "#", :class => "btn_gray search" do %>
+          <span>搜索</span>
+      <% end %>
+    </div>
+<% end %>
+<script type="text/javascript" charset="utf-8">
+    $('a.search').click(function(){
+        $("form#search_item").submit();
+        return false;
+    });
+</script>

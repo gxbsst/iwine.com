@@ -1,0 +1,20 @@
+<div class="mine albums">
+  <%= render "/mine/sub_nav", :action => params[:action] %>
+  <div class="clear"></div>
+
+  <div id="hp">
+    <div id="cellar">
+      <div class="title_btn">
+        <h1>添加藏酒</h1>
+      </div>
+      <div class="step">
+        <div class="step_fir"></div>
+      </div>
+      <%=  render "search_item", :object => @search %>
+    </div>
+
+  </div>
+
+  <div class="clear"></div>
+  <!-- end mine -->
+</div>

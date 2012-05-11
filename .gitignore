@@ -31,4 +31,3 @@ lib/tasks/data
 .rakeTasks
 /.idea/.rakeTasks
 schema.rb
-/db/schema.rb

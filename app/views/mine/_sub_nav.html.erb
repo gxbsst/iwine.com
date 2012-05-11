@@ -11,12 +11,12 @@
   <div class="user_info">
     <div class="avatar relative">
       <%= link_to_user @user,
-                       users_path(@user),
+                       "/",
                        :with_avatar => true,
                        :avatar_version => :large %>
 
     </div>
-     <%= link_to "我的酒窖", "/mine/cellars", :class => "block button absolute" %>
+     <%= link_to "我的酒窖", "/mine/cellars/#{@user.cellar}", :class => "block button absolute" %>
     <div class="text_info">
       <%= render "mine/share/user_info" %>
     <!-- user_info end -->

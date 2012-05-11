@@ -16,6 +16,11 @@ module Wines
        # Wine 项目要用到的公共 class methods
      end
 
+     def region_path_zh(region_tree_id)
+       region_trees = get_region_path(region_tree_id)
+       region_trees.collect{|r| r.name_zh }.join('-')
+     end
+
      def get_region_path(region_tree_id)
        region = Wines::RegionTree.find(region_tree_id)
        parent = region.parent
