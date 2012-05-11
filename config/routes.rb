@@ -79,6 +79,13 @@ Patrick::Application.routes.draw do
     collection do
       get "register_success"
     end
+    member do
+      get "wine_follows"
+      get "winery_follows"
+      get "comments"
+      get "followings"
+      get "followers"
+    end
     resources :comments
     # 相册
     resources :albums, :controller => "users/albums" do
@@ -95,7 +102,8 @@ Patrick::Application.routes.draw do
   # HOME
   resources :home
   # FRIENDS
-  # resources :friends
+  # resources :friends do 
+  # end
   # oauth china
   match "/friends/:type/sync" => "friends#new", :as => :sync_new
   match "/friends/:type/callback" => "friends#callback", :as => :sync_callback
