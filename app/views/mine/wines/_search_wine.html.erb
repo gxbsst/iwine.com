@@ -1,10 +1,8 @@
-<h2>请输入酒款名称以查询该酒款是否已经存在</h2>
-<div class="add_wine_search">
-  <%= form_for @search ||= Search.new, :url => "/searches/search_wines",:html => {:class => "search_wine"} do |f| %>
-      <div class="field">
-        <%= f.text_field :keywords, :class => "text wine_search float_l mr5", :placeholder => "Chateau Faurie de Souchard" %>
-        <a href="#" class="search button_gray" onclick="this.blur();" title="搜索酒款"><span>搜索酒款</span></a>
-      </div>
+<div class="search mb20">
+  <%= form_for @search ||= Search.new, :url => "/searches/search_wines",:html => {:class => "search_wine"}, :method => :post do |f| %>
+      <p class="notice_b mb20">请输入酒款名称以查询该酒款是否已经存在</p>
+      <%= f.text_field :keywords, :class => "text common_search mr5", :placeholder => "请输入酒款名称" %>
+      <a href="#" class="search btn_gray" onclick="this.blur();" title="搜索酒款"><span>搜索</span></a>
 
       <script type="text/javascript" charset="utf-8">
           $('a.search').click(function(){

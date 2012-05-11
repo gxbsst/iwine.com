@@ -16,7 +16,7 @@
                        :avatar_version => :large %>
 
     </div>
-     <%= link_to "我的酒窖", mine_cellars_path, :class => "block button absolute" %>
+     <%= link_to "我的酒窖", mine_cellar_path(@user.cellar), :class => "block button absolute" %>
     <div class="text_info">
       <%= render "mine/share/user_info" %>
     <!-- user_info end -->

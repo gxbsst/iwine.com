@@ -18,7 +18,7 @@
   <tr>
     <td class="l">产区:</td>
     <td class="c">
-       <%= render 'share/region_tree', :region_tree => @wine_detail.get_region_path %>
+       <%= render 'share/region_tree', :region_tree => @wine_detail.get_region_path(@wine_detail.wine.region_tree_id) %>
     </td>
   </tr>
   <tr>

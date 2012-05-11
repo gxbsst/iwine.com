@@ -1,23 +1,27 @@
-<div id="span950">
+<div class="mine albums">
+  <%= render "/mine/sub_nav", :action => params[:action] %>
+  <div class="clear"></div>
   <div id="hp">
-    <%=  render "share/user_cellar" %>
     <div id="cellar">
       <div class="title_btn">
         <h1>我的酒窖 <span class="font12">(共<%= @cellar_items.size %>支)</span></h1>
       </div>
 
       <div class="sort_search mb20">
-        <div class="float_r">
-          <%= link_to mine_cellars_add_path(:step => 1), :class => "btn_blue_b" do %>
-            <span>添加藏酒</span>
-          <% end %>
-        </div>
+        <% if current_user.id == @user.id %>
+            <div class="float_r">
+              <%= link_to add_mine_cellar_items_path(@cellar, :step => 1), :class => "btn_blue_b" do %>
+                  <span>添加藏酒</span>
+              <% end %>
+            </div>
+        <% end %>
         <div class="sort pt5">排序 <select name="">
           <option>价格</option>
           <option>数量</option>
         </select>
         </div>
-        <div class="search"><input class="text mr5 common_search" name="" type="text" /><a href="#" class="btn_gray"><span>搜索</span></a></div>
+
+        <div class="search"><%=  render "mine/cellars/search_cellar_item", :object => @cellar %></div>
         <div class="clear"></div>
       </div>
 
@@ -31,14 +35,16 @@
             <th class="count">数量</th>
             <th class="price">购入价格</th>
             <th class="place">所在地</th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
+            <% if current_user.id == @user.id %>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+            <% end %>
           </tr>
           <% @cellar_items.each do |item| %>
               <% wine_detail = item.wine_detail %>
               <tr>
                 <td class="img">
-                  <%= link_to (wine_cover_tag wine_detail, :thumb_name => :w_thumb, :title => wine_detail.name, :width => 50, :height => 63, :alt => wine_detail.name), { :controller => "/wines" ,:action => "show", :wine_detail_id => wine_detail.id} %>
+                  <%= link_to (wine_cover_tag wine_detail, :thumb_name => :w_thumb, :title => wine_detail.name, :width => 50, :height => 63, :alt => wine_detail.name), wine_path(wine_detail) %>
                 </td>
                 <td class="year">
                   <%= wine_detail.show_year %>
@@ -46,7 +52,7 @@
                 <td class="des">
                   <%= wine_detail.wine.name_zh %><br/>
                   <%= wine_detail.wine.name_en %><br/>
-                  <%= render 'share/region_tree', :region_tree => wine_detail.get_region_path(wine_detail.id) %><br/>
+                  <%= wine_detail.region_path_zh(wine_detail.wine.region_tree_id)%><br/>
                   <%= wine_detail.wine.winery.name_zh %><br/>
                   <%= wine_detail.wine.style.name_zh %>
                 </td>
@@ -59,10 +65,14 @@
                 <td class=“count”><%= item.number %></td>
                 <td class="price"><%= number_to_currency(item.price) %></td>
                 <td class="place"><%= item.location %></td>
-                <td>
-                  <a href="#" class="btn_edit float_l mr10">修改</a>
-                  <a href=“#”>删除</a>
-                </td>
+                <% if current_user.id == @user.id %>
+                    <td>
+                      <%= link_to "修改", edit_mine_cellar_item_path(@cellar, item), :class => "icon_edit" %>
+                    </td>
+                    <td>
+                      <%= link_to "删除", mine_cellar_item_path(@cellar, item), :method => :delete, :confirm => "确定删除吗？", :class => "icon_delet" %>
+                    </td>
+                <% end %>
               </tr>
           <% end %>
         </table>
@@ -74,7 +84,3 @@
     </div>
   </div>
 </div>
-
-
-
-

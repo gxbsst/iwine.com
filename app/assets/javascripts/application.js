@@ -59,7 +59,6 @@ $(document).ready(function(){
         } // end helper
 
     });
-
     // 回复信息
     $("a.reply_conversation").fancybox({
         maxWidth        : 500,

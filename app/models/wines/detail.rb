@@ -12,6 +12,7 @@ class Wines::Detail < ActiveRecord::Base
   #  has_many :good_comments, :foreign_key => 'wine_detail_id', :class_name => 'Wines::Comment', :order => 'good_hit DESC, id DESC', :limit => 5, :include => [:user_good_hit]
   has_one :statistic, :foreign_key => 'wine_detail_id'
   has_one :label
+  has_one :item, :class_name => "Users::WineCellarItem", :foreign_key => "wine_detail_id"
   has_many :covers, :class_name => 'Photo',  :foreign_key => 'business_id', :conditions => { :is_cover => true, :owner_type => OWNER_TYPE_WINE }
   has_many :photos, :class_name => 'Photo',  :foreign_key => 'business_id', :limit => 5, :order => 'created_at DESC', :conditions => { :owner_type => OWNER_TYPE_WINE }
   has_many :prices, :class_name => "Price", :foreign_key => "wine_detail_id"
@@ -32,11 +33,12 @@ class Wines::Detail < ActiveRecord::Base
   # end
 
   def cname
-    year.to_s + wine.name_zh.to_s
+    "#{show_year} #{wine.name_zh.to_s}"
   end
 
+
   def ename
-    year.to_s + wine.origin_name.to_s
+    "#{show_year} #{wine.name_en.to_s}"
   end
 
   def name
@@ -45,17 +47,6 @@ class Wines::Detail < ActiveRecord::Base
 
   def other_cn_name
     wine.other_cn_name
-  end
-
-  def get_region_path
-    region = Wines::RegionTree.find( wine.region_tree_id )
-    parent = region.parent
-    path = []
-    until parent == nil
-      path << parent
-      parent = parent.parent
-    end
-    path.reverse!
   end
 
   # 获取产区
@@ -69,7 +60,7 @@ class Wines::Detail < ActiveRecord::Base
   end
 
   def show_year
-    year.blank? ? '年代未知' : year.strftime("%Y")
+    year.strftime("%Y") unless year.blank?
   end
 
   def other_cn_name
@@ -120,6 +111,9 @@ class Wines::Detail < ActiveRecord::Base
     users = comments.map{|comment| comment.user }
   end
 
+  def show_capacity
+    "#{capacity.gsub('ml', '')}ml" unless capacity.blank?
+  end
   # 谁拥有这些酒
   def owners(options = {})
      Users::WineCellarItem.all(:include => [:user],

@@ -31,4 +31,8 @@ class ApplicationController < ActionController::Base
    def require_user
      redirect_to root_url, :notice => "登录后才能执行此操作" unless current_user
    end
+
+   def get_mine
+     @user = current_user
+   end
 end

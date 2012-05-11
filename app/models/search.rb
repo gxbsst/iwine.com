@@ -9,7 +9,7 @@ class Search < ActiveRecord::Base
     wines = Wine.order(:name_en)
     # wines = Wine.includes(:winery,:style, {:details => [:cover]}).where("name_en like ? OR name_zh like ?", "%#{keywords}%", "%#{keywords}%").group(:) if keywords.present?
     # wines = Wines::Detail.includes(:cover, )
-    wines = Wines::Detail.includes( :covers, :photos, :statistic,  { :wine => [:style, :winery]} ).where( ["wines.name_en like ? OR wines.name_zh like ?", "%#{keywords}%", "%#{keywords}%"] ).group("wine_id")
+    wines = Wines::Detail.includes( :covers, :photos, :statistic,  { :wine => [:style, :winery]} ).where( ["wines.name_en like ? OR wines.name_zh like ?", "%#{keywords}%", "%#{keywords}%"] ).limit(20).group("wine_id")
     
     # wines = Wine.joins(:details => [:cover])
     # wines = Wines.where(category_id: category_id) if category_id.present?
