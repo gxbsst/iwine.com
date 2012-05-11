@@ -32,6 +32,7 @@ module  WineDetails
 
       @comment = ::Comment.new
     end
+    
     # 关注
     def follow
       if request.get?
@@ -39,8 +40,8 @@ module  WineDetails
         @comment = @comment.blank? ?  ::Comment.new : @comment.first
         @comment.do = "follow"
         respond_to do |format|
-          format.html { render "create" }
-          format.js   { render "create" }
+          format.html { render "comment" }
+          format.js   { render "comment" }
         end
       end
 
@@ -109,6 +110,7 @@ module  WineDetails
     end
 
     alias_method :create, :comment 
+    
     private
 
     def build_comment

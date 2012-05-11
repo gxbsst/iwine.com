@@ -38,9 +38,9 @@ module ApplicationHelper
   ## 显示酒的封面
   def wine_cover_tag(object, options = {} )
     if object.covers.first.respond_to? "image_url"
-      image_tag object.covers.first.image_url( options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt]
+      image_tag object.covers.first.image_url( options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt], :align => options[:align]
     else
-      image_tag "base/test/win_50p.jpg", :width => options[:width], :height => options[:height], :alt => options[:alt]
+      image_tag "base/test/win_50p.jpg", :width => options[:width], :height => options[:height], :alt => options[:alt], :align => options[:align]
     end
   end
 
@@ -134,6 +134,7 @@ module ApplicationHelper
   
   # 显示评星
   def star_rate_tag(point)
+    point ||= 0
     gray_num = 5 - point
     html = ""
     point.times do |i|
