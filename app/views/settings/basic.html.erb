@@ -6,7 +6,7 @@
 
 <div class="settings basic">
   <div class="left">
-    <%= form_for @profile, :url => settings_path, :validate => true,  :html => { :class => 'form-horizontal', :multipart => true, :method => :put } do |f| -%>
+    <%= form_for @profile, :url => basic_settings_path, :validate => true,  :html => { :class => 'form-horizontal', :multipart => true } do |f| -%>
     <table border="0" cellspacing="10" cellpadding="5">
       <tr>
         <td width="100px" class="label"><%= f.label :email %></td>

@@ -9,42 +9,36 @@
       <%  if @wine_detail.is_followed? current_user %>
       <%= link_to "取消关注", cancle_follow_wine_comment_path(@wine_detail, 45),
                         :class => "follow_wine ajax" %>
-      <%= link_to "编辑", { :controller => "wines/comments", :action => "follow",
+      <%#= link_to "编辑", { :controller => "wines/comments", :action => "follow",
                         :wine_detail_id => params[:wine_detail_id]},
                         :remote => true,
                         :class => "follow_wine ajax" %>
         <% else %>
-      <%= link_to "", {:controller => "/wines/comments", :action => "follow",
-                        :wine_detail_id => params[:wine_detail_id]},
+      <%= link_to "", follow_wine_comments_path(@wine_detail.id),
                         :remote => true,
                         :class => "follow_wine compass_buttons-follow_wine ajax" %>
       <% end %>
     </li>
-    <li><%= link_to "", {:controller => "wines/comments", :action => :create,
-                          :wine_detail_id => params[:wine_detail_id],
-                          :do => "comment"},
+    <li><%= link_to "", comment_wine_comments_path(@wine_detail.id, :do => "comment"),
                           :remote => true,
                           :class => "comment compass_buttons-comment ajax"%></li>
-    <li><%= link_to "", {:controller => "wines/comments", :action => :follow_wine },
+    <li><%= link_to "", follow_wine_comments_path(@wine_detail.id),
                           :class => "testint_note compass_buttons-testing_note ajax"%></li>
     <li><%= link_to "", {:controller => "wines", :action => :add_to_cellar,
                         :wine_detail_id => params[:wine_detail_id]},
                           :remote => true,
                           :class => "add_to_cellar compass_buttons-add_to_cellar ajax"%></li>
 <% else %>
-<li><%= link_to "", "/wines/comments/follow?wine_detail_id=#{@wine_detail.id}",
+<li><%= link_to "", follow_wine_comments_path(@wine_detail.id),
                   :remote => true,
                   :class => "follow_wine compass_buttons-follow_wine ajax" %></li>
 
-<li><%= link_to "", {:controller => "wines/comments", :action => :create,
-                      :wine_detail_id => params[:wine_detail_id],
-                      :do => "comment"},
-                      :remote => true,
-                      :class => "comment compass_buttons-comment ajax"%></li>
-<li><%= link_to "", {:controller => "wines/comments", :action => :follow_wine },
+<li><%= link_to "", comment_wine_comments_path(@wine_detail.id, :do => "comment"),
+                    :remote => true,
+                    :class => "comment compass_buttons-comment ajax"%></li>
+<li><%= link_to "", comment_wine_comments_path(@wine_detail.id, :do => "comment"),
                       :class => "testint_note compass_buttons-testing_note ajax"%></li>
-<li><%= link_to "", {:controller => "wines", :action => :add_to_cellar,
-                    :wine_detail_id => params[:wine_detail_id]},
+<li><%= link_to "", add_to_cellar_wine_comments_path(@wine_detail.id),
                       :remote => true,
                       :class => "add_to_cellar compass_buttons-add_to_cellar ajax"%></li>
 

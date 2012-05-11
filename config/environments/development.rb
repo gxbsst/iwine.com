@@ -36,9 +36,9 @@ Patrick::Application.configure do
 
   # Bullet
   Bullet.enable = true
-  Bullet.alert = true
+  # Bullet.alert = true
   Bullet.bullet_logger = true
-  Bullet.console = true
+  # Bullet.console = true
   # Bullet.growl = true
   # Bullet.xmpp = { :account => 'gxbsst@jabber.org',
   #   :password => '51448888',
@@ -48,7 +48,7 @@ Patrick::Application.configure do
   # Bullet.disable_browser_cache = true
 
   # javascript alert
-  UniformNotifier.alert = true
+  # UniformNotifier.alert = true
 
   # javascript console (Safari/Webkit browsers or Firefox w/Firebug installed)
   # UniformNotifier.console = true

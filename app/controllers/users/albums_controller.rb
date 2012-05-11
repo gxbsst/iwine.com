@@ -111,10 +111,19 @@ class Users::AlbumsController < PhotosController
       redirect_to request.referer
     end
   end
-  
+
+  private
+
   def get_user
     @user = User.find(params[:user_id])
   end
+
+  def direct_current_user
+    if @user == current_user
+      redirect_to :controller => "mine"
+    end
+  end
+  
   
   def get_album
     @album = @user.albums.find(params[:id])

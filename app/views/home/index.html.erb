@@ -14,7 +14,7 @@
 		</div>
 		<p class="wine_cover"><%= wine_cover_tag(l.timeline_event.secondary_actor, :thumb_name => :w_thumb, :width => 180) %></p>
 		<h3>
-			<%= link_to  wine_detail_path(l.timeline_event.secondary_actor) do %>
+			<%= link_to  wine_path(l.timeline_event.secondary_actor) do %>
 				<%= raw l.timeline_event.secondary_actor.cname %><br />
 				<span class="font_14"><%= raw l.timeline_event.secondary_actor.ename %></span>
 			<% end %>
@@ -25,7 +25,7 @@
 	<div class="item about_with_wine">
 		<p class="wine_cover"><%= wine_cover_tag(l.timeline_event.secondary_actor, :thumb_name => :w_thumb, :width => 180) %></p>
 		<h3>
-			<%= link_to  wine_detail_path(l.timeline_event.secondary_actor) do %>
+			<%= link_to  wine_path(l.timeline_event.secondary_actor) do %>
 				<%= raw l.timeline_event.secondary_actor.cname %><br />
 				<span class="font_14"><%= raw l.timeline_event.secondary_actor.ename %></span>
 			<% end %>

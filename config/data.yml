@@ -20,7 +20,7 @@ user_profile:
       4: 只显示月日
       5: 保密
     message:
-      1: <strong>所有人</strong><span>aaa</span>
+      1: <strong>所有人</strong><span></span>
       2: 可信用户
       3: 我关注的人
     recommend:

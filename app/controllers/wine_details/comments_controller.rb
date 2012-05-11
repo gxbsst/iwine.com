@@ -1,9 +1,9 @@
 # encoding: utf-8
-module  Wines
+module  WineDetails
   class CommentsController < ApplicationController
     before_filter :authenticate_user!, :except => [:index, :show, :list]
     before_filter :get_wine_detail, :except => [:comment_vote]
-
+      
     def index
       case params[:sort_by]
       when "hot"
@@ -51,13 +51,13 @@ module  Wines
           # 1. 广播
           # 2. 分享到SNS
           notice_stickie("取消关注成功.")
-          redirect_to "/wines/show?wine_detail_id=#{@wine_detail.id}"
+          redirect_to wine_path(@wine_detail.id)
         end
       end
     end
 
     # 评论
-    def create
+    def comment
       @comment = ::Comment.new
       @comment.do = "comment"
       if request.post?
@@ -67,7 +67,7 @@ module  Wines
           # 1. 广播
           # 2. 分享到SNS
           notice_stickie("评论成功.")
-          redirect_to params[:return_url] ?  params[:return_url] : wine_detail_path(@wine_detail)
+          redirect_to params[:return_url] ?  params[:return_url] : wine_path(@wine_detail)
         end
       end
     end
@@ -108,6 +108,7 @@ module  Wines
       end
     end
 
+    alias_method :create, :comment 
     private
 
     def build_comment

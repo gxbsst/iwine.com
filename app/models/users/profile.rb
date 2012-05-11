@@ -24,7 +24,7 @@ class Users::Profile < ActiveRecord::Base
   before_save :init_configs
 
   def get_living_city_path
-    if living_city.blank?
+    unless living_city.blank?
       region = Region.find(living_city)
       parent = region.parent
       path = []

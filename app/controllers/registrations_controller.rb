@@ -7,7 +7,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
   
   def after_inactive_sign_up_path_for(resource)
-    "/users/register/success?email=#{resource.email}"
+    "/users/register_success?email=#{resource.email}"
   end
 end
 

@@ -36,8 +36,8 @@ class Mine::AlbumsController < ApplicationController
   end
 
   def save_upload_list
-    photos = Photo.all :conditions => { :id => params[:photo].keys , :album_id => params[:album_id] }
-    cover = Photo.first :conditions => { :album_id => params[:album_id] , :is_cover => true }
+    photos = Photo.all :conditions => { :id => params[:photo].keys , :album_id => params[:id] }
+    cover = Photo.first :conditions => { :album_id => params[:id] , :is_cover => true }
 
     photos.each do |photo|
       if params[:photo][photo.id.to_s].present?
@@ -58,7 +58,7 @@ class Mine::AlbumsController < ApplicationController
       Photo.delete params[:deleted_ids].split(',')
     end
 
-    redirect_to :action => 'show', :album_id => params[:album_id]
+    redirect_to '/mine/albums/'+params[:id]
   end
 
   def new
@@ -145,15 +145,16 @@ class Mine::AlbumsController < ApplicationController
     end
 
     order = params[:order] === 'time' ? 'created_at' : 'liked_num';
-    
+
     @photos = Photo
-      .where(["album_id= ?", params[:album_id]])
+      .where(["album_id= ?", params[:id]])
       .order("#{order} DESC,id DESC")
       .page params[:page] || 1
     
   end
 
   def photo
+    @album = Album.find params[:id]
 
     if @album.blank?
       redirect_to request.referer
@@ -166,8 +167,6 @@ class Mine::AlbumsController < ApplicationController
     else
       @index = params[:index].to_i
     end
-
-
 
     @photo = @album.photo @index
     @top_albums = @user.top_albums 3
