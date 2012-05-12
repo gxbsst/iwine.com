@@ -61,7 +61,7 @@
     评论 <a href="#">某某酒庄</a> <%= link_to_icon "reply_comment", "/" %>
     <br />2011-12-23
   </p>
-  <p>回复<%= link_to_user current_user, "/", %>:<i> 这里是被评论的内容</i> </p>
+  <p>回复<%= link_to_user @user, user_path(@user.id) %>:<i> 这里是被评论的内容</i> </p>
   <p class="description"> 味道确实好 </p>
   <%= link_to_icon "delete", "/", :style => "display: none", :class => "delete" %>
   <%= link_to_icon "edit", "/", :style => "display: none", :class => "edit" %>
