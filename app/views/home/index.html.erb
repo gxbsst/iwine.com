@@ -1,47 +1,46 @@
 <div id="waterfall_outer_bak">
-
-
-<% @timelines.each do |l| %>
-	<% if l.about_with == "User" %>
-	<div class="item about_with_user">
-		<div class="user_info">
-			<div class="pic">
-				<%= link_to_user l.timeline_event.actor, "/", :with_avatar => true, :avatar_version => :thumb %>	
-				
-			</div>
-			<p><%= link_to_user l.timeline_event.actor, "/" %> <%= l.timeline_event.created_at.to_s(:normal) %> </p>
-			<p class="event_type"><%= APP_DATA["timeline"]["event"]["user"][l.timeline_event.event_type] %></p>
-		</div>
-		<p class="wine_cover"><%= wine_cover_tag(l.timeline_event.secondary_actor, :thumb_name => :w_thumb, :width => 180) %></p>
-		<h3>
-			<%= link_to  wine_path(l.timeline_event.secondary_actor) do %>
-				<%= raw l.timeline_event.secondary_actor.cname %><br />
-				<span class="font_14"><%= raw l.timeline_event.secondary_actor.ename %></span>
-			<% end %>
-		</h3>
-		<p class="body"><%= l.timeline_event.subject.body %></p>
-	</div>
-	<% else %>
-	<div class="item about_with_wine">
-		<p class="wine_cover"><%= wine_cover_tag(l.timeline_event.secondary_actor, :thumb_name => :w_thumb, :width => 180) %></p>
-		<h3>
-			<%= link_to  wine_path(l.timeline_event.secondary_actor) do %>
-				<%= raw l.timeline_event.secondary_actor.cname %><br />
-				<span class="font_14"><%= raw l.timeline_event.secondary_actor.ename %></span>
-			<% end %>
-		</h3>
-		<p class="event_type"><%= APP_DATA["timeline"]["event"]["user"][l.timeline_event.event_type] %></p>
-		<div class="sub_item">
-			<div class="pic">
-				<%= link_to_user l.timeline_event.actor, "/", :with_avatar => true, :avatar_version => :thumb %>	
-			</div>
-			<p><%= link_to_user l.timeline_event.actor, "/" %> <%= l.timeline_event.created_at.to_s(:normal) %> </p>
-			<p class="body"><%= l.timeline_event.subject.body %></p>
-		</div>
-	</div>
-	<% end %>
-	<% end %>
-	
+  <% @timelines.each do |l| %>
+    <% if l.ownerable_type == "User" %>
+      <div class="item about_with_user">
+        <div class="user_info">
+          <div class="pic">
+            <%= link_to_user l.timeline_event.actor, "/", :with_avatar => true, :avatar_version => :thumb %>
+          </div>
+          <p><%= link_to_user l.timeline_event.actor, "/" %> <%= l.timeline_event.created_at.to_s(:normal) %> </p>
+          <p class="event_type"><%= APP_DATA["timeline"]["event"]["user"][l.timeline_event.event_type] %></p>
+        </div>
+        <p class="wine_cover"><%= wine_cover_tag(l.timeline_event.secondary_actor, :thumb_name => :w_thumb, :width => 180) %></p>
+        <h3>
+          <%= link_to  wine_path(l.timeline_event.secondary_actor) do %>
+            <%= raw l.timeline_event.secondary_actor.cname %><br />
+            <span class="font_14"><%= raw l.timeline_event.secondary_actor.ename %></span>
+          <% end %>
+        </h3>
+        <p class="body"><%= l.timeline_event.subject.body %></p>
+      </div>
+    <% else %>
+      <div class="item about_with_wine">
+        <p class="wine_cover">
+          <%= wine_cover_tag(l.timeline_event.secondary_actor, :thumb_name => :w_thumb, :width => 180) %>
+        </p>
+        <h3>
+          <%= link_to  wine_path(l.timeline_event.secondary_actor) do %>
+            <%= raw l.timeline_event.secondary_actor.cname %><br />
+            <span class="font_14"><%= raw l.timeline_event.secondary_actor.ename %></span>
+          <% end %>
+        </h3>
+        <p class="event_type">
+          <%= APP_DATA["timeline"]["event"]["user"][l.timeline_event.event_type] %>
+        </p>
+        <div class="sub_item">
+          <div class="pic">
+            <%= link_to_user l.timeline_event.actor, "/", :with_avatar => true, :avatar_version => :thumb %>
+          </div>
+          <p><%= link_to_user l.timeline_event.actor, "/" %> <%= l.timeline_event.created_at.to_s(:normal) %> </p>
+          <p class="body"><%= l.timeline_event.subject.body %></p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 </div>
-
 <div class="clear"></div>
