@@ -14,4 +14,18 @@ class SearchesController < ApplicationController
     @search = Search.create!(params[:search])
     redirect_to add_mine_wines_path(:step => 2, :id => @search.id)
   end
+
+  def hot_words 
+    server = HotSearch.new
+    words = server.hot_words params[:word]
+
+    wines = words['wines']
+    wineries = words['wineries']
+
+    render :json => { 'wines' => wines[0..4] , 'wineries' => wineries[0..4] }
+  end
+
+  def hot_entries
+
+  end
 end

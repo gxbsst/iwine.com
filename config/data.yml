@@ -80,3 +80,8 @@ timeline:
       new_follow: "关注这支酒"
       new_photo: "上传了新的图片"
        
+search_server:
+  host: www.sidways.com
+  port: 8080
+  entry_url: /patrick/query/
+  word_url: /patrick/associate

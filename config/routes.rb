@@ -122,7 +122,14 @@ Patrick::Application.routes.draw do
     end
   end
   # Search
-  resources :searches
+  resources :searches do
+    collection do
+      get :hot_words, :via => [:get , :put]
+      get :hot_entries, :via => [:get , :put]
+    end
+  end
+
+
   # API
   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
   ## STATIC

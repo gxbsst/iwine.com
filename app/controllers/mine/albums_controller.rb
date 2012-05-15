@@ -1,5 +1,4 @@
 class Mine::AlbumsController < ApplicationController
-  
   before_filter :authenticate_user!
   before_filter :get_user
   before_filter :get_album, :except => [:index, :upload, :new]
@@ -91,7 +90,6 @@ class Mine::AlbumsController < ApplicationController
   end
 
   def delete_photo
-
     if request.post?
 
       photo = Photo.find params[:photo_id]
@@ -131,7 +129,6 @@ class Mine::AlbumsController < ApplicationController
     render :json => photo
   end
 
-  
   def show
    
     if @album.blank?
@@ -193,5 +190,4 @@ class Mine::AlbumsController < ApplicationController
   def get_album
     @album = @user.albums.find(params[:id])
   end
-
 end

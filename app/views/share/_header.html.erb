@@ -18,3 +18,13 @@
   </div>
 
 </header>
+<script type="text/javascript" >
+  $('#search').bind( 'keyup' , function(){
+    $.ajax({
+      url: '/searches/hot_words?word='+this.value,
+      success: function( data ){
+        console.log( data.wines , data.wineries );
+      }
+    });
+  });
+</script>
