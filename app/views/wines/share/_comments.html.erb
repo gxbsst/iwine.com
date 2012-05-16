@@ -1,0 +1,65 @@
+<h3>
+  评论
+  <span class="font_12">
+    <%= link_to "(#{@wine_detail.comments_count}条, 更多)", :controller => "/wines/comments", :action => "list", :wine_detail_id => @wine_detail.id %>
+  </span>
+</h3>
+
+<!-- 酒评论带评分 -->
+<% @comments.each do |comment| %>
+  <div class="item relative dotted">
+    <div class="pic">
+      <%= link_to_user comment.user, users_path(comment.user), :with_avatar => true, :avatar_version => :middle %>
+    </div>
+    <p class="comment_info">
+      <%= link_to_user comment.user, users_path(comment.user) %>
+      <%= comment.created_at.to_s(:normal) %>
+      <%= time_ago_in_words(comment.created_at) %>以前
+	  <%=  star_rate_tag(comment.point.to_i) %>
+    </p>
+    <p class="description"> <%= comment.body %> </p>
+    <p class="vote">
+      <%= link_to  vote_wine_comment_path(@wine_detail.id, comment.id), :remote => true, :class => "ajax"  do %>
+        有用(<span class="likes_count"><%=comment.votes_count %></span>)
+      <% end %>
+      |
+      <%= link_to  reply_wine_comment_path(@wine_detail.id, comment.id),
+          :remote => true,
+          :class => "ajax reply_comment_button",
+          :id => "reply_#{comment.id}" do %>
+      回复<span class="reply_comment_count">(<%= comment.children.size %>)</span>
+      <% end %> <span class="reply_result"> </span>
+     </p>
+    <div id=<%= "reply_comment_#{comment.id}" %> class ="reply_comment_outer" style="display: none"> </div>
+    <%= link_to_icon "delete", "/", :style => "display: none", :class => "delete" %>
+    <%= link_to_icon "edit", "/", :style => "display: none", :class => "edit" %>
+   </div>
+  <div class="clear"></div>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+  // "有用" 成功时，更新有用的数量
+  $(".vote a").bind("ajax:success", function(event, data, textStatus, jqXHR){
+    $(this).find("span.likes_count").text(data);
+  });
+  // 评论按钮
+  $("a.reply_comment_button").click(function(){
+  // $(".reply_comment_outer").html("");
+  });
+  $("a.reply_comment_button").bind("ajax:success", function(event, data, textStatus, jqXHR){
+  $comment_outer = $(this).parent().parent().children(".reply_comment_outer");
+  if($comment_outer.is(":hidden")){
+  $comment_outer.slideDown("slow");
+  }
+  else
+  {
+  $comment_outer.slideUp("slow");
+  }
+  });
+
+
+
+
+  });
+</script>

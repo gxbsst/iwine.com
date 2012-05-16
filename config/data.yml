@@ -20,7 +20,7 @@ user_profile:
       4: 只显示月日
       5: 保密
     message:
-      1: <strong>所有人</strong><span>aaa</span>
+      1: <strong>所有人</strong><span></span>
       2: 可信用户
       3: 我关注的人
     recommend:
@@ -58,3 +58,25 @@ image:
       width: 30
       height: 30
 
+  wine_label:
+    thumb:
+      width: 100
+      height: 100
+    middle:
+      width: 200
+      height: 200
+    large:
+      width: 300
+      height: 300
+      
+timeline:
+   event:
+    user:
+      new_comment: "发表了一条评论"
+      new_follow: "关注这支酒"
+      new_photo: "上传了新的图片"
+    wine:
+      new_comment: "有了新的评论" 
+      new_follow: "关注这支酒"
+      new_photo: "上传了新的图片"
+       

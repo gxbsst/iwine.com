@@ -2,6 +2,7 @@
 class WinesController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show]
   before_filter :set_current_user
+  before_filter :get_wine_detail, :except => [:comment_vote]
 
   ## TODO: 这个action为演示用， 使用后可以删除
   def preview
@@ -13,106 +14,31 @@ class WinesController < ApplicationController
     @wines = Wines::Detail.includes(:wine, :cover).order("created_at ASC").page params[:page] || 1
   end
 
+  # Wine Profile
   def show
-    @wine_detail = Wines::Detail.includes( :cover, :photos, :statistic,  { :wine => [:style, :winery]} ).find( params[:wine_detail_id].to_i )
-    @wine = @wine_detail.wine
-    @wine_statistic = @wine_detail.statistic || @wine_detail.build_statistic
-    @wine_comments = @wine_detail.best_comments( 6 )
-    @user_comment = @wine_detail.comment current_user.id
+    @wine             = @wine_detail.wine
+    @comments         = @wine_detail.all_comments(:limit => 6)
+    @owners           = @wine_detail.owners(:limit => 4)
+    @followers        = @wine_detail.followers(:limit => 11)
+    # @wine_statistic = @wine_detail.statistic || @wine_detail.build_statistic
   end
 
-  def upload_photo
-
+  # 关注者
+  def followers
+    @wine             = @wine_detail.wine
+    @followers = @wine_detail.followers
   end
 
-  def photos
-
+  # 拥有者
+  def owners
+    @wine             = @wine_detail.wine
+    @owners = @wine_detail.owners
   end
 
-  def new_short_comment
-    @wine_detail = Wines::Detail.find params[:wine_detail_id]
-
-    if @wine_detail.blank?
-      return
-    end
-
-    @wine = @wine_detail.wine
-    @wine_statistic = @wine_detail.statistic
-    @user_comment = @wine_detail.comment current_user.id
-
-    if @user_comment.blank?
-      @user_comment = Wines::Comment.new
-      @user_comment.drink_status = 'drank'
-      @user_comment.wine_detail_id = @wine_detail.id
-      @user_comment.user_id = current_user.id
-    end
-
-    if request.post?
-      @user_comment.prepare_update
-      @user_comment.drink_status = params[:drink_status]
-      @user_comment.point = params[:point] || 0
-      @user_comment.content = params[:content]
-      @user_comment.save
-      redirect_to request.referer
-      return
-    end
-    render :layout => false
-  end
-
-  def set_short_comment_point
-    comment = Wines::Comment.find params[:comment_id]
-    if comment.present? && comment.user_id == current_user.id
-      comment.prepare_update
-      comment.point = params[:point]
-      comment.save
-    end
-    redirect_to request.referer
-  end
-
-  def delete_short_comment
-    if request.post?
-      comment = Wines::Comment.find params[:comment_id]
-      if comment.present? && comment.user_id == current_user.id
-        comment.prepare_update
-        comment.destroy
-      end
-    end
-    redirect_to :action => 'show', :wine_detail_id => comment.wine_detail_id
-  end
-
-  def good_short_comment
-    comment = Wines::Comment.find params[:comment_id]
-
-    if comment.present? && Users::GoodHitComment.where( :user_id=>current_user.id, :comment_id=>comment.id ).length == 0
-      goodhit = Users::GoodHitComment.new :user_id=>current_user.id, :comment_id=>comment.id
-      comment.good_hit +=1
-      comment.save
-      goodhit.save
-    end
-
-    redirect_to request.referer
-  end
-
-  def short_comments
-    order = params[:order] == 'time' ? 'created_at' : 'good_hit'
-
-    @wine_comments = Wines::Comment
-    .includes([:user, :avatar, :user_good_hit])
-    .where(["wine_detail_id = ?", params[:wine_detail_id]])
-    .order("#{order} DESC,id DESC")
-    .page params[:page] || 1
-
-    @wine_detail = Wines::Detail.find params[:wine_detail_id]
-    @wine = @wine_detail.wine
-    @user_comment = @wine_detail.comment current_user.id
-  end
-
-  def long_comments
-
-  end
-
-  def list
-
+  # 添加到酒窖
+  def add_to_cellar
+    @cellar =  Users::WineCellar.new
+    @cellar_item = Users::WineCellarItem.new
   end
 
   private
@@ -120,4 +46,31 @@ class WinesController < ApplicationController
   def set_current_user
     User::current_user = current_user || 0
   end
+
+  def get_wine_detail
+    wine_detail_id = params[:wine_detail_id]
+    @wine_detail = Wines::Detail.find(wine_detail_id)
+  end
+
+  def build_comment
+    if params[:comment][:do] == "follow"
+      @comment = @wine_detail.current_user_follow(current_user)
+      @comment = @comment.blank? ?  Comment.new : @comment.first
+      @comment.attributes =  params[:comment]
+      @comment.commentable_type = @wine_detail.class.base_class.name
+      @comment.commentable_id = @wine_detail.id
+      @comment.point = params[:rate_value]
+      @comment.user_id = current_user.id
+      return @comment
+    end
+    @comment = Comment.build_from(@wine_detail,
+                                  current_user.id ,
+                                  params[:comment][:body],
+                                  :point => params[:rate_value],
+                                  :do => params[:comment][:do],
+                                  :is_share => params[:comment][:is_share],
+                                  :private => params[:comment][:private])
+  end
+
 end
+

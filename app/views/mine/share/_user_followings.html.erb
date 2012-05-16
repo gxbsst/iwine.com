@@ -1,12 +1,15 @@
-<% @followings.each do |friendship| %>
+<% @followings.map_user.each do |user| %>
   <div class="item">
     <div class="pic">
-      <%= link_to (image_tag friendship.user.avatar, :width => 50, :height => 50, :align => "left" ), :controller => "items", :action => "edit", :id => @item %>
+	  <%= link_to_user user, 
+		user_path(user.id,:trailing_slash => true), 
+		:with_avatar => true, 
+		:avatar_version => :large, 
+		:class => "w_100" %>
     </div>
-    <h4> <%= friendship.user.username %> </h4>
-
-    <p><%= link_to_button "cancle_follow", "/mine/unfollow?user_id="+friendship.user_id.to_s %> </p>
-    <% if friendship.user.is_following current_user.id %>
+    <h4> <%= user.username %> </h4>
+    <p><%= link_to_button "cancle_follow", "/mine/unfollow?user_id="+user.id.to_s  %> </p>
+    <% if user.is_following current_user.id %>
       <p> 互相关注 </p>
     <% end %>
   </div>

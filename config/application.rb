@@ -49,9 +49,12 @@ module Patrick
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    config.active_record.observers = :timeline_event_observer
 
     ## Fixed
     # DEPRECATION WARNING: ActiveSupport::Memoizable is deprecated...
     ActiveSupport::Deprecation.silenced = true
+
+    Time::DATE_FORMATS[:normal] = "%Y-%m-%d"
   end
 end

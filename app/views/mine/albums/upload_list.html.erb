@@ -1,4 +1,4 @@
-<%= render "mine/sub_nav", :action => params[:action] %>
+<%#= render "mine/sub_nav", :action => params[:action] %>
 <div id="cu_user_menu" class="clearfix">
   <span class="f14">《 <a href="community_albmu_list.html">返回相册首页</a></span>
 </div>
@@ -24,7 +24,7 @@
   <% end %>
   <div class="clear"></div>
 </div>
-<input type="hidden" name="album_id" value="<%= params[:album_id] %>"/>
+<input type="hidden" name="id" value="<%= params[:id] %>"/>
 <input type="hidden" name="deleted_ids" id="deleted_photo_ids"/>
 <div class="align_c"><a href="javascript:save();" class="button_gray"><span>保存</span></a></div>
 <% end %>

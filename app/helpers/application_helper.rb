@@ -37,10 +37,10 @@ module ApplicationHelper
 
   ## 显示酒的封面
   def wine_cover_tag(object, options = {} )
-    if object.cover.respond_to? "image_url"
-      image_tag object.cover.image_url( options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt]
+    if object.covers.first.respond_to? "image_url"
+      image_tag object.covers.first.image_url( options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt], :align => options[:align]
     else
-      image_tag "base/test/win_50p.jpg"
+      image_tag "base/test/win_50p.jpg", :width => options[:width], :height => options[:height], :alt => options[:alt], :align => options[:align]
     end
   end
 
@@ -104,9 +104,14 @@ module ApplicationHelper
     if options[:with_avatar]
       link_to(image_tag(avatar(user_object,avatar_version), :align => "left"), url_or_object, options)
     else
-      if current_user.id == user_object.id
-        link_to("我", url_or_object, options)
-      else
+      if user_signed_in? # 已登录用户
+        if current_user.id == user_object.id
+          link_to("我", url_or_object, options)
+        else
+          link_to(user_object.username, url_or_object, options)
+        end
+
+      else # 非登录用户
         link_to(user_object.username, url_or_object, options)
       end
     end
@@ -119,4 +124,26 @@ module ApplicationHelper
   def messages_path(m)
     mine_messages_path(m)
   end
+
+  def special_comments_list(parent)
+    parent.special_comments.each do |s|
+      "#{s.name} #{s.score} #{s.drinkable_begin.strftime('%Y') if s.drinkable_begin} - #{s.drinkable_end.strftime('%Y') if s.drinkable_end}"
+    end
+  end
+
+  
+  # 显示评星
+  def star_rate_tag(point)
+    point ||= 0
+    gray_num = 5 - point
+    html = ""
+    point.times do |i|
+      html << (image_tag 'base/star_red.jpg', :width=>15, :height=>14)
+    end
+    gray_num.times do |i|
+      html << (image_tag 'base/star_gray.jpg', :width=>15, :height=>14)
+    end
+    return html.html_safe
+  end
+  
 end

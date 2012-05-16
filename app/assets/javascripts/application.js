@@ -20,7 +20,10 @@
 //= require best_in_place
 //= require stickies
 //= require settings
-//= require kissy
+// require kissy
+//= require jquery-tools/tabs/tabs
+//= require jquery-tools/tabs/tabs.slideshow
+
 
 $(document).ready(function(){
 
@@ -56,7 +59,6 @@ $(document).ready(function(){
         } // end helper
 
     });
-
     // 回复信息
     $("a.reply_conversation").fancybox({
         maxWidth        : 500,
@@ -101,6 +103,28 @@ $(document).ready(function(){
 
     });
 
+    // 评论
+    $(".wine_profile .follow_wine1").fancybox({
+        maxWidth        : 500,
+        maxHeight       : 260,
+        fitToView       : false,
+        width           : '70%',
+        height          : '100%',
+        autoSize        : false,
+        closeClick      : false,
+        openEffect      : 'none',
+        closeEffect     : 'none',
+        helpers : {
+            overlay : {
+                opacity : 0.8,
+                css : {
+                    'background-color' : '#FFF'
+                }
+            }
+        } // end helper
+
+    });
+
 
     // Mine 鼠标滑动显示编辑、删除按钮
     $(".mine.wine_follows .left  .box .item ").hover(function(){
@@ -112,6 +136,23 @@ $(document).ready(function(){
     $(".mine.simple_comments .left  .box .item ").hover(function(){
         $(this).children(".delete").toggle();
         $(this).children(".edit").toggle();
+    });
+
+    // 当使用ajax调用时， 显示laoding
+    $(".ajax").bind("ajax:before", function(evt, data, status, xhr){
+        $("#loading").toggle();
+        // 这里也可以触发fancybox
+    });
+    $(".ajax").bind("ajax:success", function(evt, data, status, xhr){
+        $("#loading").toggle();
+    });
+    $(".ajax").bind("ajax:failure", function(evt, data, status, xhr){      
+        $("#loading").html("由于网络故障， 请稍后重试");
+    });
+    $(".ajax").bind("ajax:error", function(evt, data, status, xhr){  
+      if (data.status == 401){
+           window.location.replace("/login");
+         }
     });
 
 });

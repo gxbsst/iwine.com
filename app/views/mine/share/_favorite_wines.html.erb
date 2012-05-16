@@ -1,0 +1,11 @@
+
+<div class="large_list">
+  <%= link_to (image_tag "v2/test/m_w_1.png", :align => "left" ), :controller => "items", :action => "edit", :id => @item %>
+  <%= link_to (image_tag "v2/test/m_w_1.png", :align => "left" ), :controller => "items", :action => "edit", :id => @item %>
+</div>
+
+<div class="small_list">
+<% (2..5).each do |i| %>
+  <%= link_to (image_tag "v2/test/m_w_2.png", :align => "center"), :controller => "items", :action => "edit", :id => @item %>
+<% end %>
+</div>

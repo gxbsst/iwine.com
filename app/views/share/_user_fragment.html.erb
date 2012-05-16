@@ -3,37 +3,21 @@
 
   <ul class="user_nav">
     <li class="user_center">
-      <%= link_to_user current_user, { :controller => "/mine" }, {:class => "avatar", :with_avatar => true, :avatar_version => :thumb }  %>
+      <%= link_to_user current_user, { :controller => "/mine/"}, {:class => "avatar", :with_avatar => true, :avatar_version => :thumb }  %>
       <%= link_to_icon "arrow_down", "#" %>
       <ul class="drop_down_menu">
-        <li><%= link_to "设置", :controller => "/settings", :action => "basic" %></li>
+        <li><%= link_to "设置", basic_settings_path() %></li>
         <li><%= link_to "找朋友", :controller => "/friends", :action => "find" %></li>
         <li><%= link_to "我的Patrick", :controller => "/mine" %></li>
-        <li><%= link_to "我的酒窖", :controller => "/mine", :action => "cellars" %></li>
-                <li><%= link_to "私信", :controller => "/mine/conversations" %></li>
-
+        <li><%= link_to "我的酒窖", mine_cellar_path(current_user.cellar) %></li>
+        <li><%= link_to "私信", mine_conversations_path %></li>
         <li><%= link_to "登出",  logout_path %></li>
-
       </ul>
     </li>
     <li class="user_add">
       <%= link_to_icon "add_green","#add_data", :class => "fancybox"  %>
     </li>
   </ul>
-
-<% else %>
-
-  <ul class="user_nav not_sign_in">
-    <li class="sign_up">
-      <%= link_to_icon "sign_up", new_user_registration_path  %>
-
-    </li>
-    <li class="sign_in">
-      <%= link_to_icon "sign_in",  new_user_session_path  %>
-    </li>
-  </ul>
-
-<% end %>
 
 <div style="display:none">
   <div id="add_data">
@@ -53,13 +37,13 @@
 
       </li>
       <li>
-        <%= link_to_icon "add_wine", {:controller => "/wines", :action => "detail_comment" }  %> <br />
-        <%= link_to "添加红酒", :controller => "/wines", :action => "detail_comment" %>
+        <%= link_to_icon "add_wine", add_mine_wines_path(:step => 1)  %> <br />
+        <%= link_to "添加红酒", add_mine_wines_path(:step => 1) %>
 
       </li>
       <li>
-        <%= link_to_icon "add_to_cellar", "/mine/cellars/add?step=1"  %> <br />
-        <%= link_to "添加藏酒", "/mine/cellars/add?step=1" %>
+        <%= link_to_icon "add_to_cellar", add_mine_cellar_items_path(current_user.cellar, :step => 1) %> <br />
+        <%= link_to "添加藏酒", add_mine_cellar_items_path(current_user.cellar, :step => 1) %>
 
       </li>
       <li>
@@ -70,3 +54,15 @@
     </ul>
   </div>
 </div>
+
+<% else %>
+    <ul class="user_nav not_sign_in">
+      <li class="sign_up">
+        <%= link_to_icon "sign_up", new_user_registration_path  %>
+
+      </li>
+      <li class="sign_in">
+        <%= link_to_icon "sign_in",  new_user_session_path  %>
+      </li>
+    </ul>
+<% end %>

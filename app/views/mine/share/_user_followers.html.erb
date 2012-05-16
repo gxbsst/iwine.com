@@ -1,22 +1,10 @@
-<!-- 如果只是粉丝 -->
-<% (1..2).each do |i| %>
-  <div class="item">
-    <div class="pic">
-      <%= link_to (image_tag "v2/test/u_2.png", :align => "left" ), :controller => "items", :action => "edit", :id => @item %>
-    </div>
-    <h4> 铃木食堂 </h4>
-    <p><%= link_to_button "follow", "/" %> </p>
-    <p> <%= link_to "移除粉丝", {:controller => "items"}, :class => "cancle_follower" %> </p>
-  </div>
-<% end %>
-
 <!-- 如果是相互关注 -->
-<% @followers.each do |friendship| %>
+<% @followers.map_user.each do |user| %>
   <div class="item">
     <div class="pic">
-      <%= link_to (image_tag "v2/test/u_2.png", :align => "left" ), :controller => "items", :action => "edit"%>
+      <%= link_to_user user, user_path(user.id, :trailing_slash => true), :with_avatar => true, :avatar_version => :thumb, :class => "w_50" %>
     </div>
-    <h4> <%= friendship.follower.username %> </h4>
+    <h4> <%= user.username %> </h4>
     <% if current_user.is_following friendship.follower_id %>
       <p> 互相关注 </p>
       <p> <%= link_to "取消关注", '/friends/unfollower?user_id='+friendship.follower_id.to_s %> </p>

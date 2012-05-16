@@ -1,9 +1,15 @@
 class Users::AlbumsController < PhotosController
   # before_filter :authenticate_user!, :except => ['show' , 'list' , 'photo']
-
+  before_filter :get_user
+  before_filter :get_album, :except => [:index, :upload, :new]
+  
+  def index
+    # @albums = Album .where(["created_by= ?", current_user.id]).order("id DESC").page params[:page] || 1
+    @albums = @user.albums.order("id DESC").page params[:page] || 1
+    
+  end
+  
   def show
-    @album = Album.find params[:album_id]
-
     if @album.blank?
       redirect_to request.referer
     end
@@ -106,4 +112,21 @@ class Users::AlbumsController < PhotosController
     end
   end
 
+  private
+
+  def get_user
+    @user = User.find(params[:user_id])
+  end
+
+  def direct_current_user
+    if @user == current_user
+      redirect_to :controller => "mine"
+    end
+  end
+  
+  
+  def get_album
+    @album = @user.albums.find(params[:id])
+  end
+  
 end

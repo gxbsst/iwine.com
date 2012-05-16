@@ -1,6 +1,8 @@
 class Mine::AlbumsController < ApplicationController
   
   before_filter :authenticate_user!
+  before_filter :get_user
+  before_filter :get_album, :except => [:index, :upload, :new]
 
   def upload
 
@@ -25,7 +27,7 @@ class Mine::AlbumsController < ApplicationController
       default_album = Album.create :created_by => current_user.id , :name => 'other'
       @albums = [avatar_album, default_album]
     end
-
+    
     @select_album_id = params[:album_id] || @albums[0].id
   end
 
@@ -34,8 +36,8 @@ class Mine::AlbumsController < ApplicationController
   end
 
   def save_upload_list
-    photos = Photo.all :conditions => { :id => params[:photo].keys , :album_id => params[:album_id] }
-    cover = Photo.first :conditions => { :album_id => params[:album_id] , :is_cover => true }
+    photos = Photo.all :conditions => { :id => params[:photo].keys , :album_id => params[:id] }
+    cover = Photo.first :conditions => { :album_id => params[:id] , :is_cover => true }
 
     photos.each do |photo|
       if params[:photo][photo.id.to_s].present?
@@ -56,7 +58,7 @@ class Mine::AlbumsController < ApplicationController
       Photo.delete params[:deleted_ids].split(',')
     end
 
-    redirect_to :action => 'show', :album_id => params[:album_id]
+    redirect_to '/mine/albums/'+params[:id]
   end
 
   def new
@@ -105,11 +107,10 @@ class Mine::AlbumsController < ApplicationController
   end
 
   def edit
-    @album = Album.first :conditions => { :id => params[:album_id] , :created_by => current_user.id }
     if @album.blank?
       redirect_to request.referer
     end
-
+    
     if request.put?
       @album.attributes = params[:album]
       @album.save
@@ -132,13 +133,10 @@ class Mine::AlbumsController < ApplicationController
 
   
   def show
-    @album = Album.find params[:album_id]
-
+   
     if @album.blank?
       redirect_to request.referer
     end
-
-    @user = @album.user
 
     if user_signed_in? && current_user.id == @user.id
       @is_owner = true;
@@ -147,17 +145,17 @@ class Mine::AlbumsController < ApplicationController
     end
 
     order = params[:order] === 'time' ? 'created_at' : 'liked_num';
-    
+
     @photos = Photo
-      .where(["album_id= ?", params[:album_id]])
+      .where(["album_id= ?", params[:id]])
       .order("#{order} DESC,id DESC")
       .page params[:page] || 1
     
   end
 
   def photo
+    @album = Album.find params[:id]
 
-    @album = Album.find params[:album_id]
     if @album.blank?
       redirect_to request.referer
     end
@@ -171,7 +169,6 @@ class Mine::AlbumsController < ApplicationController
     end
 
     @photo = @album.photo @index
-    @user = @album.user
     @top_albums = @user.top_albums 3
     @photo.viewed_num += 1
     @album.viewed_num += 1
@@ -183,7 +180,18 @@ class Mine::AlbumsController < ApplicationController
   end
 
   def index
+    @user = current_user
     @albums = Album .where(["created_by= ?", current_user.id]).order("id DESC").page params[:page] || 1
   end
  
+  private
+ 
+  def get_user
+    @user = current_user
+  end
+  
+  def get_album
+    @album = @user.albums.find(params[:id])
+  end
+
 end

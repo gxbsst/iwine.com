@@ -12,4 +12,10 @@ jQuery ->
   $('#wines_register_winery_id').autocomplete
     source: $('#wines_register_winery_id').data('autocomplete-source')
 
+  $('#variety_name').autocomplete
+    source: $('#variety_name').data('autocomplete-source')
+
+
+
+
 

@@ -2,6 +2,7 @@
 class Users::WineCellarItem < ActiveRecord::Base
     include Users::UserSupport
     belongs_to :wine_cellar
+    belongs_to :user
     belongs_to :wine_detail, :class_name => 'Wines::Detail', :foreign_key => 'wine_detail_id'
     
     attr_accessor :year, :capacity
@@ -18,4 +19,3 @@ class Users::WineCellarItem < ActiveRecord::Base
     paginates_per 6
   
 end
- 

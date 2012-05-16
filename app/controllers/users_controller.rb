@@ -3,6 +3,14 @@ class UsersController < ApplicationController
   before_filter :get_user, :except => [:register_success]
   before_filter :direct_current_user, :except => [:register_success]
 
+  def show
+    @followers = @user.followers
+    @followings =@user.followings
+    @comments = @user.comments.limit(6)
+    @following_wines = @user.wine_followings.limit(6)
+    render "mine/index"
+  end
+  
   def index
     @followers = @user.followers
     @followings =@user.followings
@@ -12,12 +20,19 @@ class UsersController < ApplicationController
 
   # 关注的酒
   def wine_follows
+    @comments = @user.wine_followings.page(params[:page] || 1).per(10) 
+    render "mine/wine_follows"
+  end
+  
+  # 关注的酒庄
+  def winery_follows
+    @comments = @user.wine_followings.page(params[:page] || 1).per(10) 
     render "mine/wine_follows"
   end
 
   # 我的评论
   def comments
-    @comments = Wines::Comment.all
+    @comments = @user.comments.page(params[:page] || 1).per(10) 
     render "mine/comments"
   end
 
@@ -25,12 +40,23 @@ class UsersController < ApplicationController
     render "mine/testing_notes"
   end
 
-  def user_follows
-    render "mine/user_follows"
+  def followings
+    @followings = @user.followings.page(params[:page] || 1).per(10)
+    @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
+
+    render "mine/followings"
   end
 
-  def user_followers
-    render "mine/user_followers"
+  def followers
+    @followers = Friendship
+      .includes([:follower])
+      .where(["user_id = ?", current_user.id])
+      .order("id DESC")
+      .page params[:page] || 1
+
+    @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
+
+    render "mine/followers"
   end
 
   # before_filter :authenticate_user!, :except => [:index, :show, :register_success]
@@ -88,13 +114,16 @@ class UsersController < ApplicationController
   private
 
   def get_user
-    @user = User.find(params[:user_id])
+    @user = User.find(params[:id])
   end
 
   def direct_current_user
-    if @user == current_user
-      redirect_to :controller => "mine"
+    unless user_signed_in?
+      if @user == current_user
+        redirect_to :controller => "/mine"
+      end
     end
+    true
   end
 
 end

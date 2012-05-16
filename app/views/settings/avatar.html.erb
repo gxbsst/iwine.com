@@ -27,7 +27,7 @@
 
     <% end %>
 
-    <%= form_for current_user, :url => url_for(:action => :avatar), :method => :post  do |f| %>
+    <%= form_for current_user, :url => avatar_settings_path, :method => :post  do |f| %>
       <% %w[x y w h].each do |attribute| %>
         <%= f.hidden_field "crop_#{attribute}" %>
       <% end %>
@@ -70,7 +70,7 @@
   </table>
 
 </div>
-
+<div class="clear"></div>
 <!-- settings end -->
 </div>
 

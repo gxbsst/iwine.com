@@ -1,0 +1,44 @@
+<%= form_for @register, :validate => true, :url => {:action => :create}, :method => :post ,:html => { :class => 'form-horizontal', :multipart => true } do |f| %>
+    <% unless @register.new_record? %><input type="hidden" name="register_id" value="<%= @register.id %>"/><% end %>
+    <%= render 'share/error_messages', :target => @register %>
+    <div class="left">
+      <div class="required">
+        <%= f.label :name_en %>
+        <% if @read_only %> <%= @register.name_en %> <% else %><%= f.text_field :name_en %><% end %>
+      </div>
+      <div class="required">
+        <%= f.label :wine_style_id %>
+        <% if @read_only %> <%= @register.style.name %> <% else %> <%= f.select :wine_style_id, Wines::Style.all.collect{ |s| [s.name_zh + '/' + s.name_en, s.id] } %><% end %>
+      </div>
+      <div class="required">
+        <%= f.label :region_tree_id %>
+        <% if @read_only %><%= render 'share/region_tree', :region_tree => @register.get_region_path(@wine.region_tree_id) %> <% else %><%= render "region_tree" %><% end %>
+      </div>
+
+      <div class="required">
+        <%= f.label :vintage %>
+        <%= f.date_select :vintage, :discard_day => true, :discard_month => true, :start_year => 1990, :end_year => Time.now.year + 150 %>年
+      </div>
+      <div class="required">
+        <%= f.label :capacity %>
+        <%= f.select :capacity, APP_DATA['wines']['capacity'].collect{|i| [i, i]} %>
+      </div>
+      <div class="optional">
+        <%= f.label :photo_name %>
+        <%= f.file_field :photo_name %>
+      </div>
+      <div class="mt10">
+        <label>&nbsp;</label>
+        <div class="content">
+          <%= link_to "#", :class => "btn_gray mr5", :id => "submit_register" do %>
+              <span>下一步</span>
+          <% end %>
+          <%= link_to root_url, :class => "btn_gray" do %>
+              <span>取消</span>
+          <% end %>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+<% end %>

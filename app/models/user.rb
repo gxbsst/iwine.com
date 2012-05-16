@@ -13,16 +13,26 @@ class User < ActiveRecord::Base
   has_one  :profile, :class_name => 'Users::Profile', :dependent => :destroy
   has_many :albums, :class_name => 'Album', :foreign_key => 'created_by'
   has_many :registers, :class_name => 'Wines::Register'
-  has_many :comments, :class_name => 'Wines::Comment'
+  has_many :comments, :class_name => "::Comment", :foreign_key => 'user_id', :include => [:user, :commentable]
   has_one  :good_hit_comment, :class_name => 'Users::GoodHitComment'
   has_many :photo_comments
   has_many :photos, :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_USER }
   # has_one  :avatar, :class_name => 'Photo', :foreign_key => 'business_id', :conditions => { :is_cover => true }
   has_one :cellar, :class_name => 'Users::WineCellar'
   has_many :oauths, :class_name => 'Users::Oauth'
-  has_many :followers, :class_name => 'Friendship', :include => :follower
-  has_many :followings, :class_name => 'Friendship', :foreign_key => 'follower_id', :include => :user
-
+  has_many :followers, :class_name => 'Friendship', :include => :follower do
+    def map_user
+      map {|f| f.user }
+    end
+  end
+  has_many :followings, :class_name => 'Friendship', :foreign_key => 'follower_id', :include => :user do
+    def map_user
+      map {|f| f.user }
+    end
+  end
+  
+  has_many :time_events
+  has_many :wine_followings, :include => :commentable, :class_name => "Comment", :conditions => {:commentable_type => "Wines::Detail", :do => "follow"}
   accepts_nested_attributes_for :profile, :allow_destroy => true
 
   # validates :username, :presence => false, :allow_blank => true, :numericality => true
@@ -62,7 +72,7 @@ class User < ActiveRecord::Base
   # 关注的酒
   def wine_follows_count
     ## TODO 更改用户评论操作之后，更新以下计算代码
-    comments.count
+    wine_followings.count
   end
 
   # 关注的酒庄
@@ -71,7 +81,8 @@ class User < ActiveRecord::Base
   end
 
   # 评论
-  def simple_comment_count
+  def comments_count
+    comments.count
     ## TODO: 未实现这个功能， 实现之后请更新
   end
 
@@ -82,12 +93,13 @@ class User < ActiveRecord::Base
 
   # 关注的人
   def user_followes_count
-    followers.count
+     followings.count
   end
 
   # 粉丝
   def user_followeds_count
-    followings.count
+   
+    followers.count
   end
 
   # 相册
@@ -180,6 +192,10 @@ class User < ActiveRecord::Base
     users
   end
 
+  def following_wines
+    Comment.all :conditions => { :user_id => id , :do => 'follow', :commentable_type => 'Wines::Detail' } 
+  end
+
   def remove_followings sns_friends
     users = []
 
@@ -213,6 +229,10 @@ class User < ActiveRecord::Base
     elsif email == 'qq'
       #TODO
     end
+
+  end
+
+  def all_comments
 
   end
 

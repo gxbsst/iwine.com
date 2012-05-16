@@ -1,0 +1,7 @@
+<p><strong>更多年份</strong></p>
+<% @wine_detail.all_vintage.each do  |v| %>
+  <a href="#" <%= v == @wine_detail.year ? 'class="current"' : '' %>><%= v.strftime("%Y") %></a>
+<% end %>
+
+
+<%= link_to "显示更多年份", { :controller => "wines", :action => "list", :wine_id => @wine_detail.wine_id }, { :class => "year_more" }  %>

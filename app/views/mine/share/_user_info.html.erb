@@ -3,9 +3,9 @@
   <div class="edit_signature">
     <p class="bio"> <%= @user.profile.bio %> （<a href="#">修改</a>）</p>
     <br />
-    <%= link_to_icon "message", {:controller => 'mine/conversations'} %>
-    <%= link_to "私信(0)", {:controller => 'mine/conversations'} %> |
-    <%= link_to "设置", :controller => "/settings" %>
+    <%= link_to_icon "message",mine_conversations_path %>
+    <%= link_to "私信(0)", mine_conversations_path %> |
+    <%= link_to "设置", basic_settings_path %>
   </div>
 </div>
 

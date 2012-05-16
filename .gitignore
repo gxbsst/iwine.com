@@ -20,6 +20,12 @@ Capfile
 Gemfile.lock
 .idea/workspace.xml
 db/schema.rb
-#*#
 
 lib/tasks/data
+.idea/workspace.xml
+db/wine_variety_i18n.csv
+.rakeTasks
+.idea/.rakeTasks
+schema.rb
+notify.log
+lib/wines_photos

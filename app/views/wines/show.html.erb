@@ -1,337 +1,112 @@
-<%= content_for :wine_title do  %>
-  <div class="wineprofile_name"><h1><%= @wine_detail.cname %></h1><h2><%= @wine_detail.ename %></h2></div>
-<% end %>
-<div id="wp_left">
+<div id="comment_form"  style="display: none" >
 
-  <div class="wine_img">
-    <!-- <img src="/assets/base/test/win_130p.jpg" width="130" height="140" alt="2001拉菲珍宝" /> -->
-    <%= image_tag @wine_detail.cover.image_url( :w_thumb ), :title => @wine_detail.name, :width => 130, :height => 140, :alt => @wine_detail.name %>
-  </div>
-  <div class="star_score mb30">
-    <span class="star_b_s<%= @wine_statistic.avarage_score.round*10/2%>  mr10 float_l">
-    </span>
-    <%= @wine_statistic.avarage_score %>分<br/>
-    <%= @wine_statistic.score_user_count %>人评价
-  </div>
-  <h2 class="sidebar">更多年份</h2>
-  <div class="wine_year">
-  <ul class="clearfix">
-    <% @wine_detail.all_vintage.each do  |v| %>
-      <li><a href="#" <%= v == @wine_detail.year ? 'class="current"' : '' %>><%= v %></a></li>
-    <% end %>
-  </ul>
-  <%= link_to "显示更多年份", { :controller => "wines", :action => "list", :wine_id => @wine_detail.wine_id }, { :class => "year_more" }  %>
-  </div>
 </div>
-<div id="wp_middle">
-  <div class="wine_info">
-    <div class="score_price">
-      <ul class="wui_rating clearfix">
-        <li>
-          <div class="wui_rating_rp">RP</div>
-          <div class="wui_rating_score">89</div>
-        </li>
-        <li>
-          <div class="wui_rating_iwd">IWD</div>
-          <div class="wui_rating_score">92</div>
-        </li>
-        <li class="last">
-          <div class="wui_rating_ws">WS</div>
-          <div class="wui_rating_score">90</div>
-        </li>
-      </ul>
-      <p>价格：¥2580 起</p>
-      <a class="moreprice" href="#">更多价格信息</a>
-    </div>
-    <p>其他中文名：<%= @wine_detail.other_cn_name %><br/>
-      酒庄：<%= link_to @wine.winery.name, :controller => "wineries", :action => 'show', :id => @wine.winery.id %><br/>
-      官方网站：<%= link_to @wine.official_site, 'http://' + @wine.official_site, :target => '_blank' %><br/>
-      产区： <%= render 'share/region_tree', :region_tree => @wine_detail.get_region_path %> <br/>
-      类型：<%= image_tag "base/" + @wine.style.name_en + '.gif' %><%= link_to @wine.style.name_zh, :controller => :searh, :action => :wine, :style => @wine.style.name_en %>
-   <br/>
-      酒精度：<%= @wine_detail.alcoholicity %><br/>
-      容量： <%= @wine_detail.capacity %><br/>
-      葡萄品种：<br/>
-    <% @wine_detail.variety_percentages.each do |i| %>
-       <%= i.name_zh %> (<%= i.percentage %>)、
-      <% end %>
-    <br/>
-      适饮年限: <%= @wine_detail.drinkable %></p>
-  </div>
-  <div class="interest_add clearfix">
-  <%= link_to "/mine/cellars/new/?wine_detail_id=#{@wine_detail.id}",  :class => "button_brown float_r" do %>
-    <span>加入我的酒窖</span>
-  <% end %>
-    <% if @user_comment.present? %>
-    <div class="comment_score_display">
-      <p><span class="mr30">我<%= @user_comment.drink_status == 'want' ? '想喝' : '喝过' %>这支酒</span>
-        <a href="javascript:deleteComment();" >删除</a>
-        <%= form_tag '/wines/delete_short_comment', :id=>'wine_profile_delete_short_comment' do %>
-          <input type="hidden" name="comment_id" value="<%= @user_comment.id%>" />
-        <% end %>
-      </p>
-      <% if @user_comment.point.to_i > 0 %>
-      <div class="score clearfix">
-        <span class="float_l">我的评价：</span>
-        <div class="star_rate" id="wine_profile_star_bar">
-          <% 5.times do |i| %>
-          <%= image_tag 'base/star_'+(i<@user_comment.point.to_i/2?'red':'gray')+'.jpg',:width=>15,:height=>14,:id=>'star_' + (i+1).to_s %>
-          <% end %>
-          <input type="hidden" name="form" value="<%= @user_comment.point.to_s %>"/>
-          <span></span>
-        </div>
-      </div>
-      <% end %>
-      <p class="comment_content"><%= @user_comment.content %></p>
-    </div>
-    <% else %>
-    <a class="new_short_comment fancybox.ajax button_gray float_l mr5" href="<%= url_for :action=>'new_short_comment',:type=>'want',:wine_detail_id=>@wine_detail.id %>">
-      <span>想喝</span>
-    </a>
-    <a class="new_short_comment fancybox.ajax button_gray float_l" href="<%= url_for :action=>'new_short_comment',:type=>'drank',:wine_detail_id=>@wine_detail.id %>">
-      <span>喝过</span>
-    </a>
-    <% end %>
+<div id="add_to_cellar_form"  style="display: none" >
 
-  </div>
-  <div class="subject_menu">
-    <ul class="clearfix">
-      <li class="comment_add">
-        <a class="new_short_comment fancybox.ajax" href="<%= url_for :action=>'new_short_comment',:type=>'comment',:wine_detail_id=>@wine_detail.id %>">
-          <%= @user_comment.present? ? '修改':'我来'%>评论
-        </a>
-      </li>
-      <li class="tasting_note_add"><a href="#">撰写酒评</a></li>
-      <li class="share"><a href="#">分享</a></li>
-    </ul>
-  </div>
-
-  <div class="related_info">
-
-    <h2>关于<%= @wine_detail.cname %>介绍</h2>
-    <div class="indent">
-      <span class="short"><%= simple_format(@wine.winery.history.scan(/./mu)[0,320].join) %> </span><a  href="">阅读全部</a>
-    </div>
-    <h2 class="clearfix">
-		<%= link_to  url_for( :controller => "mine/albums", :action => "upload", :owner_type => OWNER_TYPE_WINE, :business_id => @wine_detail.id), :class => "button_gray float_r" do  %>
-			<span>添加图片</span>
-		<% end %>
-		<%= @wine_detail.cname %>的图片<span class="count_more">(<%= link_to @wine_detail.photos.count, :controller => 'photos' %>)<a href="#">更多...</a></span></h2>
-    <ul class="pic_col5 clearfix">
-    <% @wine_detail.photos[1..5].each do |photo| %>
-      <li><%= link_to (image_tag photo.image_url( :w_thumb ), :width => 90, :height => 108, :alt => @wine_detail.name), "/wines/#{@wine_detail.id}/photos/#{photo.id}" %>
-    <% end %>
-      <div class="clear"></div>
-    </ul>
-    <h2 class="clearfix">喜欢这支酒的人还喜欢</h2>
-    <ul class="pic_col5 clearfix">
-      <li><a href="#"><img src="/assets/base/test/wine_90p_1.jpg" width="90" height="108" alt="酒名" /></a></li>
-      <li><a href="#"><img src="/assets/base/test/wine_90p_2.jpg" width="90" height="108" alt="酒名" /></a></li>
-      <li><a href="#"><img src="/assets/base/test/wine_90p_3.jpg" width="90" height="108" alt="酒名" /></a></li>
-      <li><a href="#"><img src="/assets/base/test/wine_90p_4.jpg" width="90" height="108" alt="酒名" /></a></li>
-      <li class="la"><a href="#"><img src="/assets/base/test/wine_90p_5.jpg" width="90" height="108" alt="酒名" /></a></li>
-      <div class="clear"></div>
-    </ul>
-    <h2 class="clearfix">
-      <a class="new_short_comment fancybox.ajax button_gray float_r" href="<%= url_for :action=>'new_short_comment',:type=>'comment',:wine_detail_id=>@wine_detail.id %>">
-        <span><%= @user_comment.present? ? '修改':'我来'%>评论</span>
-      </a><%= @wine_detail.year.to_s + @wine.name_zh%>的评论
-      <span class="count_more">
-        <% if @wine_statistic.comment_count > 0 %>
-          <% if @wine_statistic.comment_count > 5 %>
-            (<%= link_to @wine_statistic.comment_count,:action=>'short_comments',:wine_detail_id=>@wine_detail.id%>)
-            <%= link_to '更多...',:action=>'short_comments',:wine_detail_id=>@wine_detail.id%>
-          <% else %>
-            (<%= @wine_statistic.comment_count %>)
-          <% end %>
-        <% else %>
-        (暂无评论)
-        <% end %>
-      </span>
-    </h2>
-    <div class="comment_list">
-      <% if @wine_comments.length > 0 %>
-      <ul>
-        <% @wine_comments.each do |comment| %>
-        <li class="clearfix">
-          <div class="user_img">
-            <a href="#">
-              <%=  image_tag comment.avatar.image_url, :width=>50, :height=>50, :alt=>comment.user.username %>
-            </a>
-          </div>
-          <div class="comment_main_profile clearfix">
-            <div class="name_time_score clearfix">
-              <div class="help_count"><%= comment.good_hit.to_i %>
-                <% if comment.user_good_hit.present? && user_signed_in? %>
-                有用
-                <% else %>
-                <%= link_to '有用', :action => 'good_short_comment', :comment_id => comment.id %>
-                <% end %>
-              </div>
-              <div class="float_l mr5">
-                <a href="#"><%= comment.user.username %></a>
-                <span class="time"><%= comment.updated_at.strftime '%Y-%m-%d' %></span>
-              </div>
-              <% if comment.point.present? %>
-              <span class="star_s<%=(comment.point/2).to_s%>"></span>
-              <% end %>
-            </div>
-            <div class="comment_content"><%= comment.content%></div>
-          </div>
-          <div class="clear"></div>
-        </li>
-        <% end %>
-      </ul>
-      <% end %>
-    </div>
-  </div>
 </div>
-<div id="wp_right">
-  <div class="wp_count">
-    <ul class="clearfix">
-      <li><span><%= @wine_statistic.to_drink_user_count%></span>想喝</li>
-      <li><span><%= @wine_statistic.drank_user_count%></span>喝过</li>
-      <li><span>78</span>拥有</li>
-      <li><span><%= @wine_statistic.comment_count%></span>短评</li>
-      <li><span>15</span>酒评</li>
-      <div class="clear"></div>
-    </ul>
-  </div>
-  <div class="mt20 mb30">
-    <img src="/assets/base/test/good.jpg" width="250" height="183" />
-  </div>
-  <h2 class="sidebar">喝过这支酒的人 <span class="count_more">(<a href="#">8</a>)<a href="#">更多...</a></span></h2>
-  <ul class="userimg_col4 clearfix">
-    <li><img src="/assets/base/test/user_img50.jpg" width="50" height="50" alt="xiaoying" /><span><a href="#">不良夏生</a></span></li>
-    <li><img src="/assets/base/test/user_img50.jpg" width="50" height="50" alt="xiaoying" /><span><a href="#">不良夏生</a></span></li>
-    <li><img src="/assets/base/test/user_img50.jpg" width="50" height="50" alt="xiaoying" /><span><a href="#">不良夏生</a></span></li>
-    <li><img src="/assets/base/test/user_img50.jpg" width="50" height="50" alt="xiaoying" /><span><a href="#">不良夏生</a></span></li>
-    <li><img src="/assets/base/test/user_img50.jpg" width="50" height="50" alt="xiaoying" /><span><a href="#">不良夏生</a></span></li>
-    <li><img src="/assets/base/test/user_img50.jpg" width="50" height="50" alt="xiaoying" /><span><a href="#">不良夏生</a></span></li>
-    <li><img src="/assets/base/test/user_img50.jpg" width="50" height="50" alt="xiaoying" /><span><a href="#">不良夏生</a></span></li>
-    <li><img src="/assets/base/test/user_img50.jpg" width="50" height="50" alt="xiaoying" /><span><a href="#">不良夏生</a></span></li>
+
+<div class="wine_profile">
+  <%= render_stickies %>
+  <div class="left">
+    <div class="box title">
+     <h2>
+       <%= raw @wine_detail.cname %>
+       <br />
+       <span> <%= raw @wine_detail.ename %></span>
+     </h2>
+     <!-- title end -->
+    </div>
+
+    <div class="box buttons relative">
+      <%= render "wine_details/share/buttons" %>
+         <!-- buttons end -->
+    </div>
     <div class="clear"></div>
-  </ul>
-  <h2 class="sidebar">拥有这支酒的人，<br/>
-    或许他们愿意出售<span class="count_more"> (<a href="#">8</a>)<a href="#">更多...</a></span></h2>
-  <ul class="side_user_have">
-    <li class="clearfix">
-      <div class="user_img"><a href="#"><img src="/assets/base/test/user_img50.jpg" width="50" height="50" /></a></div>
-      <div class="have_info">
-        <a class="fancybox fancybox.ajax button_gray float_r" href="cellar_bid_box.html"><span>拍</span></a>
-        <span><a href="#">不良夏生</a></span>
-        <p>2支 | 单价: ¥240.00<br/><span class="l_price">当前最低价</span></p>
-      </div>
-      <div class="clear"></div>
-    </li>
-    <li class="clearfix">
-      <div class="user_img"><a href="#"><img src="/assets/base/test/user_img50.jpg" width="50" height="50" /></a></div>
-      <div class="have_info">
-        <a class="button_gray float_r"><span>拍</span></a>
-        <span><a href="#">不良夏生</a></span>
-        <p>2支 | 单价: ¥240.00</p>
-      </div>
-      <div class="clear"></div>
-    </li>
-    <li class="clearfix">
-      <div class="user_img"><a href="#"><img src="/assets/base/test/user_img50.jpg" width="50" height="50" /></a></div>
-      <div class="have_info">
-        <a class="button_gray float_r"><span>拍</span></a>
-        <span><a href="#">不良夏生</a></span>
-        <p>2支 | 单价: ¥240.00</p>
-      </div>
-      <div class="clear"></div>
-    </li>
-  </ul>
-  <h2 class="sidebar">关于2011拉菲珍宝的资讯<span class="count_more"><a href="#">更多...</a></span></h2>
-  <ul class="side_wine_news">
-    <li><a href="#">在美国，1998年利达民被极具影响力的IMPACT杂志评选为连续10年畅销的热门品牌。</a></li>
-    <li><a href="#">包括了皮埃蒙特产区特有的产品，如: Barolo, Barbaresco 和 Barbera.等著名产品。</a></li>
-    <li><a href="#">酒庄的西拉是采摘于巴洛莎山谷最好的收成年份的葡萄，并且只有那些被鉴定为完全符合标准。</a></li>
-  </ul>
-  <h2 class="sidebar">相关活动<span class="count_more"><span class="count_more"> (<a href="#">8</a>)<a href="#">更多...</a></span></span></h2>
-  <ul class="side_user_have">
-    <li class="clearfix">
-      <div class="user_img"><a href="#"><img src="/assets/base/test/event_50p.jpg" width="50" height="50" /></a></div>
-      <div class="have_info">
-        <span><a href="#">北京勃艮第品酒会</a></span>
-        <p>时间: 2012-1-14<br/>
-          地点: 上海 徐汇区美罗城5楼超极电影院<br/>
-          <a href="＃">14</a>个人关注 </p>
-      </div>
-      <div class="clear"></div>
-    </li>
-    <li class="clearfix">
-      <div class="user_img"><a href="#"><img src="/assets/base/test/event_50p.jpg" alt="" width="50" height="50" /></a></div>
-      <div class="have_info">
-        <span><a href="#">欧美红酒品鉴活动</a></span>
-        <p>时间: 2012-3-21<br/>
-          地点: 北京国贸建外SOHO3号楼2504<br/>
-          <a href="#">6</a>个人关注 </p>
-      </div>
-      <div class="clear"></div>
-    </li>
-  </ul>
-</div>
+
+    <div class="box cover">
+      <%= render "wine_details/share/cover" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box winery_description">
+      <%= render "wine_details/share/winery_description" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box photos">
+      <%= render "wine_details/share/photos" %>
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="box likers">
+      <%= render "wine_details/share/likers" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box comments">
+      <%= render "wine_details/share/comments" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box testing_notes">
+      <%= render "wine_details/testing_notes/testing_note" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box followers">
+      <%= render "wine_details/share/followers" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box owners">
+      <%= render "wine_details/share/owners" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box events">
+      <%= render "wine_details/share/events" %>
+    </div>
+    <div class="clear"></div>
+    <!-- left end -->
+  </div>
+
+  <div  class="right">
+    <div class="box resource">
+      <%= render "wine_details/share/resource" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box spec">
+      <%= render "wine_details/share/spec" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box score">
+      <%= render "wine_details/share/score" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box special_comments">
+      <%= render "wine_details/share/special_comments" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box price">
+      <%= render "wine_details/share/price" %>
+    </div>
+    <div class="clear"></div>
+
+    <div class="box vintage">
+      <%= render "wine_details/share/vintage" %>
+    </div>
+    <div class="clear"></div>
+
+    <%= link_to_button "feedback", "/" %>
+    <!-- right end -->
+    </div>
+
+  <!-- wine_profile end -->
+ </div>
+
 <div class="clear"></div>
-<script type="text/javascript">
-function initStarBar(starBar){
-  var starSrc = '/assets/base/star_gray.jpg';
-  var starOverSrc = '/assets/base/star_yellow.jpg';
-  var starSelectSrc = '/assets/base/star_red.jpg';
-  var stars = starBar.children('img');
-  var resultElement = starBar.children('input');
-  var value = resultElement.val()/2;
-  var desEl = starBar.children('span');
-  var descriptions = ['欠佳',	'可接受','出色','非常不错	','质量一流'];
-  var url = false;
-
-  <% if @user_comment.present? %>
-    url = '<%= url_for :action => 'set_short_comment_point', :comment_id => @user_comment.id %>';
-  <% end %>
-
-  starBar.bind('mouseleave', function(){
-    stars.each(function(i, el){
-      el.src = i < value ? starSelectSrc: starSrc;
-    });
-    value > 0 ? desEl.text(descriptions[value - 1]) : desEl.text('');
-  });
-
-  stars.bind({
-
-    mouseenter: function(){
-      var n =this.id.replace( /[a-z_]/g, '');
-      stars.each(function(i, el){
-          el.src = i < n ? starOverSrc : ( i < value ? starSelectSrc: starSrc );
-      });
-
-      desEl.text(descriptions[n - 1]);
-    },
-
-    click: function(){
-      value = this.id.replace(/[a-z_]/g, '');
-      resultElement.val(value * 2);
-
-      if(resultElement.attr('name') == 'form' && url)
-      {
-        window.location.href = url + '&point=' + (value*2);
-      }
-    }
-  });
-
-  if(value > 0)
-  {
-    desEl.text(descriptions[value - 1]);
-  }
-};
-
-function deleteComment(){
-  if(confirm('Sure?')){
-    $('#wine_profile_delete_short_comment').submit();
-  }
-};
-
-var profileStarBar = $('#wine_profile_star_bar');
-initStarBar(profileStarBar);
-$('.new_short_comment').fancybox({padding:0, margin: 0, width: 450, height: 'auto', autoSize: false, modal: true});
-</script>

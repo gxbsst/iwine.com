@@ -48,8 +48,6 @@ namespace :app do
     end
   end
 
-
-
   desc "TODO"
   task :upload_all_wines => :environment do
 
@@ -79,7 +77,7 @@ namespace :app do
           variety_percentage.push value
         end
 
-        wine_register = WineRegister.find_or_initialize_by_origin_name_and_vintage(item[1].to_s.force_encoding('utf-8'), item[10])
+        wine_register = Wines::Register.find_or_initialize_by_origin_name_and_vintage(item[1].to_s.force_encoding('utf-8'), item[10])
         if wine_register.new_record?
           wine_register.name_zh = item[2].to_s.force_encoding('utf-8').split('/').last
           wine_register.name_en = item[1].to_s.force_encoding('utf-8').to_ascii_brutal
@@ -88,7 +86,7 @@ namespace :app do
           wine_register.wine_style_id =  1 #需要更改数据
           wine_register.region_tree_id = region_tree.id
           wine_register.winery_id = 1 #暂无数据
-          wine_register.vintage = item[10]
+          wine_register.vintage = DateTime.parse "#{item[10]}-01-01" unless item[10].blank?
           wine_register.drinkable_begin = drinkable_begin.to_i == 0 ? nil : drinkable_begin.to_i
           wine_register.drinkable_end = drinkable_end.to_i == 0 ? nil : drinkable_end.to_i
           wine_register.alcoholicity =item[12]
@@ -141,63 +139,14 @@ namespace :app do
     Dir.mkdir "#{Rails.root}/public/uploads/photo" unless Dir.exist? "#{Rails.root}/public/uploads/photo"
     Dir.mkdir "#{Rails.root}/public/uploads/photo/wine" unless Dir.exist? "#{Rails.root}/public/uploads/photo/wine"
 
-    WineRegister.where("status = ? ", 0).each do |wine_register|
+    Wines::Register.where("status = ? ", 0).each do |wine_register|
       begin
         Wine.transaction do
-          #添加记录
-          audit_log = AuditLog.find_or_initialize_by_business_id_and_owner_type(wine_register.id, 4)
-          if audit_log.new_record?
-            audit_log.result = 1
-            audit_log.created_by = 4
-            audit_log.save!
-          end
-          #更新wine_register记录
-          wine_register.update_attributes!(:audit_log_id => audit_log.id, :status => 1, :result => 1)
-          #添加酒
-          wine = Wine.find_or_initialize_by_origin_name(wine_register.origin_name)
-          if wine.new_record?
-            wine.name_en = wine_register.name_en
-            wine.origin_name = wine_register.origin_name
-            wine.name_zh = wine_register.name_zh
-            wine.official_site = wine_register.official_site
-            wine.wine_style_id = wine_register.wine_style_id
-            wine.region_tree_id =  wine_register.region_tree_id
-            wine.winery_id = wine_register.winery_id
-            wine.save!
-          end
-          #添加酒的详细信息
-          wine_detail = Wines::Detail.find_or_initialize_by_wine_id_and_year(wine.id, wine_register.vintage)
-          if wine_detail.new_record?
-            wine_detail.drinkable_begin = wine_register.drinkable_begin
-            wine_detail.drinkable_end = wine_register.drinkable_end
-            wine_detail.alcoholicity = wine_register.alcoholicity
-            wine_detail.capacity = wine_register.capacity
-            wine_detail.wine_style_id = wine_register.wine_style_id
-            wine_detail.audit_id = audit_log.id
-            wine_detail.save!
-          end
-          #添加酒的品种信息
-          variety_percentage_arr = wine_register.variety_percentage.gsub(/\n/, '').split('-')
-          wine_register.variety_name.gsub(/\n/, '').split('-').each_with_index do |value, index|
-            next if value.blank?
-            if wine_variety = Wines::Variety.where("origin_name = ? ", value.strip).first
-               wine_variety.variety_percentages.create(:wine_detail_id => wine_detail.id, :percentage => variety_percentage_arr[index])
-            end
-          end
-          #上传图片
-          Dir.mkdir("#{Rails.root}/public/uploads/photo/wine/#{wine_detail.id}")
-          FileUtils.cp_r Dir.glob("#{Rails.root}/public/uploads/wine_register/#{wine_register.id}/*"), "#{Rails.root}/public/uploads/photo/wine/#{wine_detail.id}"
-          photo_path = Rails.root.join 'public', 'uploads', 'photo', 'wine', wine_detail.id.to_s, Dir.entries(Rails.root.join('public', 'uploads','photo', 'wine', wine_detail.id.to_s)).select{|x| x != '.' && x != '..' && x != '.DS_Store'}.first
-          Photo.create(
-              :owner_type => 2,
-              :business_id => wine_detail.id,
-              :category => 1,
-              :album_id => 1,
-              :is_cover => 1,
-              :image => open(photo_path))
-          puts wine.id
+          wine_register.approve_wine
+          puts wine_register.id
         end
       rescue Exception => e
+        wine_register.update_attribute(:status, -1)
         puts e
       end
     end

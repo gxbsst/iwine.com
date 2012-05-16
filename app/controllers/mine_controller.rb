@@ -4,11 +4,11 @@ class MineController < ApplicationController
   before_filter :get_user
 
   def index
-
-    @followers = current_user.followers
-    @followings = current_user.followings
-    @comments = current_user.comments
-
+    @followers = @user.followers
+    @followings = @user.followings
+    @comments = @user.comments.limit(6)
+    @cellar = @user.cellar
+    @following_wines = @user.wine_followings.limit(6)
   end
 
   def unfollow
@@ -23,12 +23,18 @@ class MineController < ApplicationController
 
   # 关注的酒
   def wine_follows
-
+    @comments = @user.wine_followings.page(params[:page] || 1).per(10) 
   end
-
+  
+  # 关注的酒庄
+   def winery_follows
+     @comments = @user.wine_followings.page(params[:page] || 1).per(10) 
+     render "mine/wine_follows"
+   end
+   
   # 我的评论
   def comments
-    @comments = Wines::Comment.all
+    @comments = @user.comments.page(params[:page] || 1).per(10) 
   end
 
   def testing_notes
@@ -36,47 +42,17 @@ class MineController < ApplicationController
   end
 
   def followings
-    
-    @followings = Friendship
-      .includes([:user])
-      .where(["follower_id = ?", current_user.id])
-      .order("id DESC")
-      .page params[:page] || 1
-
+    @followings = @user.followings.page(params[:page] || 1).per(10)
     @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
-
   end
 
   def followers
-    @followers = Friendship
-      .includes([:follower])
-      .where(["user_id = ?", current_user.id])
-      .order("id DESC")
-      .page params[:page] || 1
-
+    @followers = @user.followers.page(params[:page] || 1).per(10)
     @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
   end
 
-  def wish
-
-  end
-
-  def do
-
-  end
-
-  def feeds
-
-  end
-
-  def status
-
-  end
-
   private
-
   def get_user
     @user = current_user
   end
-
 end
