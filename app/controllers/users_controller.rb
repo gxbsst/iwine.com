@@ -48,12 +48,7 @@ class UsersController < ApplicationController
   end
 
   def followers
-    @followers = Friendship
-      .includes([:follower])
-      .where(["user_id = ?", current_user.id])
-      .order("id DESC")
-      .page params[:page] || 1
-
+    @followers = @user.followers.page(params[:page] || 1).per(10)
     @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
 
     render "mine/followers"

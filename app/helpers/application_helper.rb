@@ -36,12 +36,24 @@ module ApplicationHelper
   end
 
   ## 显示酒的封面
-  def wine_cover_tag(object, options = {} )
-    if object.covers.first.respond_to? "image_url"
-      image_tag object.covers.first.image_url( options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt], :align => options[:align]
+  def wine_cover_tag(object, options = {})
+    unless object.covers.first.nil?
+      image_tag object.covers.first.image_url(options[:thumb_name]), options
     else
-      image_tag "base/test/win_50p.jpg", :width => options[:width], :height => options[:height], :alt => options[:alt], :align => options[:align]
+      image_tag "base/test/win_50p.jpg", options
     end
+  end
+  
+  def wine_waterfall_image_tag(object, options = {})
+    unless object.covers.first.nil?
+       options[:width] = object.covers.first.width
+       options[:height] = object.covers.first.height
+       image_tag object.covers.first.image_url(options[:thumb_name]), options
+     else
+       options[:width] = 200
+       options[:height] = 200
+       image_tag "v2/avatar_default_bg.png", options
+     end
   end
 
   ## 显示用户头像
@@ -55,7 +67,7 @@ module ApplicationHelper
 
   ## 更改用户登录后跳转的URL
   def after_sign_in_path_for(resource)
-    return request.env['omniauth.origin'] || stored_location_for(resource) || mine_path
+    return request.env['omniauth.origin'] || stored_location_for(resource) || home_path
   end
 
   def link_to_icon(icon_name, url_or_object, options={})

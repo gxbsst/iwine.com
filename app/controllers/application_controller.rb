@@ -35,4 +35,8 @@ class ApplicationController < ActionController::Base
    def get_mine
      @user = current_user
    end
+   
+   def after_sign_in_path_for(resource)
+     return request.env['omniauth.origin'] || stored_location_for(resource) || home_index_path
+   end
 end

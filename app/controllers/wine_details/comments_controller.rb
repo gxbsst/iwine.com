@@ -65,6 +65,9 @@ module  WineDetails
         @comment = build_comment
         if @comment.save
           # TODO
+          # OPTIMIZE
+          # FIXME
+          # TODO 
           # 1. 广播
           # 2. 分享到SNS
           notice_stickie("评论成功.")

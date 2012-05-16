@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
-  root :to => 'static#index'
+  root :to => 'wine_details#index'
   ## ADMIN
   ActiveAdmin.routes(self)
   devise_for :admin_users, ActiveAdmin::Devise.config

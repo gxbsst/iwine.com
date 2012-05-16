@@ -21,6 +21,7 @@ class Wines::Detail < ActiveRecord::Base
 
   belongs_to :style, :foreign_key => "wine_style_id"
   has_many :special_comments, :as => :special_commentable
+
   accepts_nested_attributes_for :photos, :reject_if => proc { |attributes| attributes['image'].blank? }
   accepts_nested_attributes_for :label, :reject_if => proc { |attributes| attributes['filename'].blank? }
   def comment( user_id )
@@ -150,5 +151,7 @@ class Wines::Detail < ActiveRecord::Base
   def photos_count
     photos.size
   end
+  
+
 
 end

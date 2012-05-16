@@ -11,7 +11,7 @@
 } %>
 <% else %>
 <% sub_menu = {
-	"wine_favorite"     => [user_cellar_path(@user.cellar.id), @user.wine_cellar_count],
+	"wine_favorite"     => [user_cellar_path(@user.id), @user.wine_cellar_count],
      "wine_follows"     => [wine_follows_user_path(@user.id), @user.wine_follows_count],
      "winery_follows"   => [winery_follows_user_path(@user.id), @user.wine_follows_count],
      "comments"  => [comments_user_path(@user.id), @user.comments_count],

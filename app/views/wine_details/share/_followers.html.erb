@@ -8,7 +8,7 @@
 <% @followers.each do |user| %>
   <div class="item">
       <%= link_to_user user,
-                       users_path(user),
+                       user_path(user, :trailing_slash => true),
                        :with_avatar => true,
                        :avatar_version => :middle %>
   </div>

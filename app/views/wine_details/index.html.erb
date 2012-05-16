@@ -1,15 +1,23 @@
-<div class="wines">
-	<% for detail in @wines %>
-	<div class="wine">
-		<div class="image">
-			<%= image_tag detail.cover.image_url(:w_thumb), :title => "title", :class => "class" if detail.cover.respond_to? 'image_url' %>
-		</div>
-		 <h3> <%= link_to detail.name, :controller => "wines", :action => "show", :wine_detail_id => detail %></h3>
-		<ul>
-			<li></li>
-	    </ul>
-	<!-- end .wine -->
-   </div>
-  <% end %>
-<!-- end .wines -->
+<div id="container" style="position: relative; ">
+<%= render "timeline" %>
+<div style="display: none">
+<%= paginate @timelines %>
 </div>
+<div class="clear"></div>
+</div>
+
+<script type="text/javascript">
+$('#container').masonry({
+		itemSelector: '.item',
+		resizeable: true
+	}).on('mouseenter', 'div.gulu', function(){
+		$(this).addClass('ghover');
+	}).on('mouseleave', 'div.gulu', function(){
+		$(this).removeClass('ghover');
+	});
+	// setTimeout(function(){
+	// 	$('#container').masonry();
+	// }, 200);
+
+</script>
+

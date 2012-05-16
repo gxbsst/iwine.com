@@ -11,10 +11,10 @@
 <% @comments.each do |comment| %>
   <div class="item relative dotted">
     <div class="pic">
-      <%= link_to_user comment.user, users_path(comment.user), :with_avatar => true, :avatar_version => :middle %>
+      <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true), :with_avatar => true, :avatar_version => :middle %>
     </div>
     <p class="comment_info">
-      <%= link_to_user comment.user, users_path(comment.user) %>
+      <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true ) %>
       <%= comment.created_at.to_s(:normal) %>
       <%= time_ago_in_words(comment.created_at) %>以前
 	  <%=  star_rate_tag(comment.point.to_i) %>
