@@ -91,7 +91,7 @@ input.year, input.percent  {width:50px;}
 textarea.wine_intro {width:500px;height:200px;}
 
 /*icon*/
-.icon_mail, .icon_like, .icon_add_album, .icon_delet, .icon_edit, .icon_add, .icon_delet2 {background:url(../image/icon/icon_all.gif) no-repeat;display:inline-block;}
+.icon_mail, .icon_like, .icon_add_album, .icon_delet, .icon_edit, .icon_add, .icon_delet2, .icon_comment {background:url(../image/icon/icon_all.gif) no-repeat;display:inline-block;}
 a.icon_mail {background-position: 0 2px;display:inline-block;padding:0 0 0 20px;}
 a.icon_like {background-position: 0 -16px;padding:0 0 0 20px;}
 a.icon_add_album {background-position: 0 -35px;padding:0 0 0 20px;height:17px;line-height:17px;}
@@ -99,10 +99,11 @@ a.icon_delet {background-position:0 -56px;text-indent: -9999px;height:13px;width
 a.icon_edit {background-position:0 -74px; text-indent:-9999px;height:13px;width:13px;display:inline-block;}
 a.icon_add {background-position:0 -92px; text-indent:-9999px;height:14px;width:14px;display:inline-block;}
 a.icon_delet2 {background-position:0 -115px; text-indent:-9999px;height:13px;width:13px;display:inline-block;}
-.icon_fb, .icon_tt, .icon_sina {background:url(../image/icon/sns_link.png) no-repeat;display:inline-block;height:23px;width:23px; text-indent:-9999px;}
+.icon_fb, .icon_tt, .icon_sina {background:url(../image/icon/sns_link.gif) no-repeat ;display:inline-block;height:23px;width:23px; text-indent:-9999px;}
 a.icon_fb {background-position: 0 0;}
 a.icon_tt {background-position:-28px 0;}
 a.icon_sina {background-position:-56px 0;}
+a.icon_comment {background-position:0 -143px;padding-left:15px;}
 
 /*--------------star style---------------*/
 .star_s0, .star_s1, .star_s2, .star_s3, .star_s4, .star_s5 {background:url(../image/star.jpg) no-repeat;display:inline-block;width:65px;height:12px;margin-top:2px;}
@@ -128,7 +129,6 @@ a.icon_sina {background-position:-56px 0;}
 .star_rate img {margin-right:1px;}
 
 /*common style*/
-.title {font-size:14px;font-weight:bold;}
 .username a {color:#333;}
 .date {font-size:11px;color:#999;}
 .username a:hover {color:#cc3333;text-decoration:none;}
@@ -157,6 +157,9 @@ a.icon_sina {background-position:-56px 0;}
 #header #top_search {float:left;width:350px;margin:5px 0 0 20px;}
 #header #top_right {float:right;padding-top:5px;}
 #header #top_right ul li {float:right;margin-left:5px;}
+#header #top_right .userbox .userpic {width:20px;height:20px;border:5px solid #f5f3f3;}
+#header #top_right .userbox .userpic img {width:20px;height:20px;}
+#header #top_right .userbox a {float:left;}
 
 /*main space*/
 #span950 {width:950px;margin:0 auto;background-color:#fff;box-shadow: 0 1px 2px 1px #E0E0E0;border:1px solid #dddddd;}
@@ -231,9 +234,9 @@ a.btn_green:hover span {background-position:right -92px;}
 
 /*pagination style*/
 div.pagination {padding-right: 3px; padding-left: 3px; padding-bottom: 3px; margin: 3px; padding-top: 3px; text-align: center; clear:both;}
-div.pagination a {border-right: #dedfde 1px solid; padding-right: 6px; background-position: 50% bottom; border-top: #dedfde 1px solid; padding-left: 6px; padding-bottom: 2px; border-left: #dedfde 1px solid; color: #99210b; margin-right: 3px; padding-top: 2px; border-bottom: #dedfde 1px solid; text-decoration: none}
-div.pagination a:hover {border-right: #000 1px solid; border-top: #000 1px solid; background-image: none; border-left: #000 1px solid; color: #fff; border-bottom: #000 1px solid; background-color: #777777}
-div.pagination a:active {border-right: #000 1px solid; border-top: #000 1px solid; background-image: none; border-left: #000 1px solid; color: #fff; border-bottom: #000 1px solid; background-color: #777777}
+div.pagination a {border: #dedfde 1px solid;padding:2px 6px 2px 6px;background-position: 50% bottom;color: #99210b; margin-right: 3px;text-decoration: none}
+div.pagination a:hover {border: #99210b 1px solid; background-image: none;background-color: #99210b;color:#fff;}
+div.pagination a:active {border: #99210b 1px solid; background-image: none;background-color: #99210b;color:#fff;}
 div.pagination span.current {padding-right: 6px; padding-left: 6px; font-weight: bold; padding-bottom: 2px; color: #99210b; margin-right: 3px; padding-top: 2px}
 div.pagination span.disabled {padding-right: 6px; padding-left: 6px; padding-bottom: 2px; color: #adaaad; margin-right: 3px; padding-top: 2px}
 
