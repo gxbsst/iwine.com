@@ -1,0 +1,16 @@
+  <% (1..5).each do |i| %>
+        <div class="item">
+          <div class="pic">
+            <%= image_tag "v2/test/m_w_3.png", :title => "title", :class => "class", :width => 70, :height => 70 %>
+          </div>
+          <p class="wine_info">
+            <h4> <a href="#"> 2001拉非</a> <br /> <a href="#" class="font_12"> 2001 Carruades de Lafite </a> </h4>
+          <p> <%= link_to_icon "red_wine", "/search/{葡萄酒的类型}" %> 红葡萄酒</p>
+          <% 5.times do |i| %>
+             <%= image_tag 'base/star_yellow.jpg', :width=>12, :height=>12 %>
+         <% end %>
+          </p>
+        </div>
+        <div class="clear"></div>
+
+      <% end %>

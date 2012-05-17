@@ -42,7 +42,8 @@ user_profile:
 friends:
   oauth:
     sync_url: /friends/sync
-
+    
+# 图片缩略图
 image:
   user:
     origin:
@@ -51,6 +52,9 @@ image:
     large:
       width: 130
       height: 130
+    x_middle:
+      width: 100
+      height: 100
     middle:
       width: 50
       height: 50
@@ -66,19 +70,61 @@ image:
       width: 200
       height: 200
     large:
-      width: 300
-      height: 300
+      width: 400
+      height: 400
       
+  wine:
+    xxx_thumb: 
+      width: 50
+      height: 50
+    xx_thumb:
+      width: 70
+      height: 70
+    x_thumb: 
+      width: 100
+      height: 100
+    thumb: 
+      width: 130
+      height: 130
+    middle:
+      width: 200
+      height: 200
+    large:
+      width: 440
+      height: 440
+      
+  winery:
+    xxx_thumb: 
+       width: 50
+       height: 50
+    xx_thumb:
+       width: 70
+       height: 70
+    x_thumb:
+       width: 100
+       height: 100
+    thumb: 
+       width: 130
+       height: 130
+    middle:
+       width: 200
+       height: 200
+    large:
+       width: 440
+       height: 440
+        
 timeline:
    event:
     user:
       new_comment: "发表了一条评论"
       new_follow: "关注这支酒"
       new_photo: "上传了新的图片"
+      add_to_cellar: "有人把它加入了酒窖"
     wine:
       new_comment: "有了新的评论" 
       new_follow: "关注这支酒"
       new_photo: "上传了新的图片"
+     
        
 search_server:
   host: 192.168.11.76

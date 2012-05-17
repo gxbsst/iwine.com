@@ -1,0 +1,6 @@
+<h1>User Profile</h1>
+<%= form_for :photo, :html => { :multipart => true } do |f| %>
+<%= f.file_field :raw_name %>
+                          <br />
+    <%= submit_tag('submit') %>
+<% end %>

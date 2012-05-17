@@ -1,9 +1,9 @@
 class HomeController < ApplicationController
   before_filter :authenticate_user!
   before_filter :get_user
-  
+
   def index
-    @timelines = Users::Timeline.where("user_id=#{@user.id}").includes(:timeline_event => [:actor, :subject]).order("created_at DESC")
+      @timelines = @user.feeds.page(params[:page] || 1 ).per(12)
   end
 
   def show
@@ -21,7 +21,7 @@ class HomeController < ApplicationController
   def new
 
   end
-  
+
   private 
   def get_user
     @user = current_user

@@ -36,7 +36,10 @@ class Wines::Register < ActiveRecord::Base
     wine_detail = Wines::Detail.approve_wine_detail(wine.id, self, audit_log.id)
     Wines::VarietyPercentage.build_variety_percentage(variety_name, variety_percentage, wine_detail.id)
     Wines::SpecialComment.change_special_comment_to_wine(wine_detail, self)
-    Photo.build_wine_photo(wine_detail.id, id) unless photo_name.blank?
+    Photo.build_wine_photo(:wine_register_id => id, 
+      :wine_detail_id => wine_detail.id, 
+      :width => width , 
+      :height => height) unless photo_name.blank?
   end
 
   def show_status

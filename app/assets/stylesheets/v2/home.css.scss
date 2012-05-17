@@ -1,7 +1,7 @@
-.span_950.fixed_width.home #main
+.span_950.fixed_width.home #main, .span_950.fixed_width.wine_details.index #main
 {
     @include box-shadow(#FFFFFF 0 0 0 0);
-    .ks-waterfall, .item {
+    .ks-waterfall, .item, .box {
         a {
           color: #333;
         }
@@ -20,6 +20,10 @@
         padding: 10px;
         .wine_cover {
           text-align: center;
+         img {
+           width: 180px;
+//           height: 180px;
+         }
         }
         .pic {
           width: 40px;
