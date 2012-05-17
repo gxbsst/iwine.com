@@ -3,29 +3,35 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>iWine</title>
-<link href="css/main.css" rel="stylesheet" type="text/css" />
-<link href="css/hp.css" rel="stylesheet" type="text/css" />
+<link href="stylesheets/main.css" rel="stylesheet" type="text/css" />
+<link href="stylesheets/hp.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 	<div id="header">
     <div class="main950">
-        	<div id="logo"><img src="image/common/logo.png" alt="iWine" /></div>
-            <div id="top_search"><input class="search" name="" type="text" /><button type="submit" class="search_submit"><span><img src="image/icon/search_white.png" width="13" height="13" alt="搜索" /></span></button></div>
+        	<div id="logo"><img src="images/common/logo.gif" alt="iWine" width="299" height="43" /></div>
+            <div id="top_search">
+           		<input class="search_btn" name="" type="image" src="images/icon/search.gif"/>
+                <input class="search" name="" type="text" />
+            </div>
             <div id="top_right">
             	<ul>
-                	<li class="userbox">user</li>
+                	<li class="userbox">
+                    	<a class="userpic" href="#"><img src="images/userimage/06.jpg" width="20" height="20" /></a><a href="#"><img src="images/common/userbox_arrow.jpg" width="22" height="30" /></a>
+                    </li>
                     <li class="top_add"><a href="#" class="btn_add">添加</a></li>
                 </ul>
             </div>
             <div class="clear"></div>
         </div>
     </div>
-    <div id="span950">
-    <div id="hp">
+    <div id="wrapper950">
+    	<div class="whitespace">
+        <div id="hp">
           <div class="hp_header">
             <div class="hp_right"><a href="cellar.html" class="btn_red_sb"><span>我的酒窖</span></a></div>
-            <div class="hp_userimg"><a href="#"><img src="image/userimage/p130.jpg" width="130" height="130" alt="usrename" /></a></div>
+            <div class="hp_userimg"><a href="#"><img src="images/userimage/p130.jpg" width="130" height="130" alt="usrename" /></a></div>
             <div class="hp_info">
                 <div class="username">不良夏生</div>
                 <div class="mystatu">准备小宇宙爆发...<span><a href="#">修改</a></span></div>
@@ -51,14 +57,14 @@
             <div class="clear"></div>
       </div>
       <ul class="photo_list">
-       	<li class="photo_des"> <img class="cover" src="image/test/pic190_1.jpg" width="191" height="128" alt="cover" />
+       	<li class="photo_des"> <img class="cover" src="images/test/pic190_1.jpg" width="191" height="128" alt="cover" />
           <p>标题</p>
           <p><input class="text photo_name" name="" type="text" /></p>
           <p>描述</p>
           <p><textarea class="photo_des" name="" cols="" rows=""></textarea></p>
           <p><a href="#" class="icon_delet float_r">删除</a><label><input class="radio" name="社会封面" type="radio" checked="checked" /> 设为封面</label></p>
         </li>
-        <li class="photo_des"> <img class="cover" src="image/test/pic190_1.jpg" width="191" height="128" alt="cover" />
+        <li class="photo_des"> <img class="cover" src="images/test/pic190_1.jpg" width="191" height="128" alt="cover" />
           <p>标题</p>
           <p><input class="text photo_name" name="" type="text" /></p>
           <p>描述</p>
@@ -66,7 +72,7 @@
           <p><a href="#" class="icon_delet float_r">删除</a>
             <label><input class="radio" name="社会封面" type="radio" /> 设为封面</label></p>
         </li>
-        <li class="photo_des"> <img class="cover" src="image/test/pic190_1.jpg" width="191" height="128" alt="cover" />
+        <li class="photo_des"> <img class="cover" src="images/test/pic190_1.jpg" width="191" height="128" alt="cover" />
           <p>标题</p>
           <p><input class="text photo_name" name="" type="text" /></p>
           <p>描述</p>
@@ -74,7 +80,7 @@
           <p><a href="#" class="icon_delet float_r">删除</a>
             <label><input class="radio" name="社会封面" type="radio" /> 设为封面</label></p>
         </li>
-        <li class="last photo_des"> <img class="cover" src="image/test/pic190_1.jpg" width="191" height="128" alt="cover" />
+        <li class="last photo_des"> <img class="cover" src="images/test/pic190_1.jpg" width="191" height="128" alt="cover" />
           <p>标题</p>
           <p><input class="text photo_name" name="" type="text" /></p>
           <p>描述</p>
@@ -82,7 +88,7 @@
           <p><a href="#" class="icon_delet float_r">删除</a>
             <label><input class="radio" name="社会封面" type="radio" /> 设为封面</label></p>
         </li>
-        <li class="photo_des"> <img class="cover" src="image/test/pic190_1.jpg" width="191" height="128" alt="cover" />
+        <li class="photo_des"> <img class="cover" src="images/test/pic190_1.jpg" width="191" height="128" alt="cover" />
           <p>标题</p>
           <p><input class="text photo_name" name="" type="text" /></p>
           <p>描述</p>
@@ -90,7 +96,7 @@
           <p><a href="#" class="icon_delet float_r">删除</a>
             <label><input class="radio" name="社会封面" type="radio" /> 设为封面</label></p>
         </li>
-        <li class="photo_des"> <img class="cover" src="image/test/pic190_1.jpg" width="191" height="128" alt="cover" />
+        <li class="photo_des"> <img class="cover" src="images/test/pic190_1.jpg" width="191" height="128" alt="cover" />
           <p>标题</p>
           <p><input class="text photo_name" name="" type="text" /></p>
           <p>描述</p>
@@ -101,7 +107,11 @@
       </ul>
       <div class="align_c"><a href="album_photo_list.html" class="btn_gray"><span>保存</span></a></div>
       </div>
+      </div>
     </div>
-    <div id="footer">footer text</div>
+    <div id="footer">
+        <div class="link"><a href="#">关于我们</a> | <a href="#">联系我们</a> | <a href="#">帮助中心</a> | <a href="#">隐私条款</a> | <a href="#">用户协议</a> | <a href="#">网站地图</a> | <a href="#">意见反馈</a></div>
+        <div class="copyright">Copyright © 2011 iWine, Inc. All rights reserved. <a href="#">沪ICP备12345678号</a></div>
+    </div>
 </body>
 </html>
