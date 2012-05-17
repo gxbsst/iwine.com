@@ -1,0 +1,61 @@
+<% if params[:controller].include? "mine" %>
+<% sub_menu = {
+	 "wine_favorite"     => [mine_cellar_path(@user.cellar.id), @user.wine_cellar_count],
+     "wine_follows"     => ["/mine/wine_follows", @user.wine_follows_count],
+     "winery_follows"   => ["/mine/winery_follows", @user.wine_follows_count],
+     "comments"  => ["/mine/comments", @user.comments_count],
+     # "testing_notes"  => ["testing_notes", 0],
+     "followings"     => ["/mine/followings", @user.user_followes_count],
+     "followers"    => ["/mine/followers", @user.user_followeds_count]
+   #  "albums"           => ["/mine/albums", @user.albums_count] 
+} %>
+<% else %>
+<% sub_menu = {
+	"wine_favorite"     => [user_cellar_path(@user.id), @user.wine_cellar_count],
+     "wine_follows"     => [wine_follows_user_path(@user.id), @user.wine_follows_count],
+     "winery_follows"   => [winery_follows_user_path(@user.id), @user.wine_follows_count],
+     "comments"  => [comments_user_path(@user.id), @user.comments_count],
+     # "testing_notes"  => ["testing_notes", 0],
+     "followings"     => [followings_user_path(@user.id), @user.user_followes_count],
+     "followers"    => [followers_user_path(@user.id), @user.user_followeds_count]
+     #"albums"           => [user_albums_path(@user.id), @user.albums_count]
+ } %>
+<% end %>
+
+<div id="cu_user_menu" class="clearfix relative">
+  <div class="user_info">
+    <div class="avatar relative">
+      <%= link_to_user @user,
+                       "/",
+                       :with_avatar => true,
+                       :avatar_version => :large %>
+
+    </div>
+     <%= link_to "我的酒窖", mine_cellar_path(@user.cellar), :class => "block button absolute" %>
+    <div class="text_info">
+      <%= render "mine/share/user_info" %>
+    <!-- user_info end -->
+  </div>
+  <div class="clear">
+  </div>
+  <div class="sub_nav absolute">
+    <ul class="clearfix">
+      <% sub_menu.each do |action_name, url| %>
+        <% if action == action_name %>
+          <li  class="current" >
+            <%= link_to url[1] , url[0] %> <br />
+            <%= link_to t("nav.sub_nav.mine.#{action_name}"),  url[0] %>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to url[1] , url[0] %> <br />
+            <%= link_to t("nav.sub_nav.mine.#{action_name}"), url[0] %>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+    <!-- sub_nav end -->
+  </div>
+  <div class="clear"></div>
+  <!-- cu_user_menu end -->
+</div>

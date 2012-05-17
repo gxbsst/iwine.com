@@ -1,0 +1,29 @@
+<div class="<%= controller_name  %> index simple_comments">
+  <%= render "mine/sub_nav", :action => params[:action] %>
+  <div class="clear"></div>
+
+  <div class="left">
+    <div class="box box_1">
+      <h3>评论</h3>
+
+      <%= render "mine/share/comments" %>
+
+	 <!-- pagination start  -->
+      <div class="pagination">
+	 <%= paginate @comments %>
+      <!-- pagination  end   -->
+      </div>
+
+      <!-- .box end -->
+    </div>
+
+    <div class="clear"></div>
+
+    <!-- left end -->
+  </div>
+
+  <!-- .mine end -->
+</div>
+
+<div class="clear"></div>
+

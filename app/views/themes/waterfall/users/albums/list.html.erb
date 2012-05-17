@@ -1,0 +1,28 @@
+
+<div class="title_btn clearfix">
+  <h2><%= @user.username %>的相册 <span class="count_b">(共<%= @albums.total_count %>个)</span></h2>
+</div>
+<ul class="album_list clearfix">
+  <% @albums.each do |album| %>
+  <li>
+    <div class="pic">
+      <a href="<%= url_for :action => 'show', :album_id => album.id %>">
+        <% if album.cover.present? %>
+        <%= image_tag album.cover.image_url :normal %>
+        <% else %>
+        <img src="/assets/base/test/album_cover1.jpg" alt="木有图片" width="190" height="190" />
+        <% end %>
+      </a>
+    </div>
+    <h3><a href="<%= url_for :action => 'show', :album_id => album.id %>"><%= album.name %></a></h3>
+    <div class="album_info"><%= album.photos_num %>张照片 2012-1-28更新<br/><%= album.viewed_num %>浏览 | <%= album.commented_num %>评论 | <%= album.liked_num %>喜欢</div>
+  </li>
+  <% end %>
+</ul>
+<div class="clear"></div>
+<div class="pagination">
+ <%= paginate @albums, :outer_window => 2 %> 
+</div>
+<script type="text/javascript">
+$('.new_album').fancybox({padding:0, margin: 0, width: 450, height: 'auto', autoSize: false, modal: true});
+</script>

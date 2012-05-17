@@ -1,0 +1,26 @@
+<div class="mine albums">
+  <%= render "/mine/sub_nav", :action => params[:action] %>
+  <div id="hp">
+    <div id="cellar">
+      <div class="title_btn">
+        <h1>修改藏酒相关信息</h1>
+      </div>
+        <div class="clear"></div>
+        <div id="stylized" class="myform">
+          <%= form_for @cellar_item, :url => mine_cellar_item_path(@cellar, @cellar_item),  :validate => true, :html => {:id => 'edit_users_wine_cellar_item'}  do |f| -%>
+              <%= render "form", :f => f, :object => @cellar, :button_name => "保存修改" %>
+          <% end %>
+          <div class="clear"></div>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+</div>
+<script type="text/javascript" charset="utf-8">
+    $('a.save').click(function(){
+        $('form#edit_users_wine_cellar_item').submit();
+        return false;
+    });
+</script>

@@ -1,0 +1,23 @@
+<div id="container" style="position: relative; ">
+<%= render "timeline" %>
+<div style="display: none">
+<%= paginate @timelines %>
+</div>
+<div class="clear"></div>
+</div>
+
+<script type="text/javascript">
+$('#container').masonry({
+		itemSelector: '.item',
+		resizeable: true
+	}).on('mouseenter', 'div.gulu', function(){
+		$(this).addClass('ghover');
+	}).on('mouseleave', 'div.gulu', function(){
+		$(this).removeClass('ghover');
+	});
+	// setTimeout(function(){
+	// 	$('#container').masonry();
+	// }, 200);
+
+</script>
+

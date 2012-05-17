@@ -1,0 +1,56 @@
+<div class="mine albums">
+  <%= render "/mine/sub_nav", :action => params[:action] %>
+  <div id="hp">
+    <div id="cellar">
+      <div class="title_btn">
+        <h1>添加藏酒</h1>
+      </div>
+      
+      <div class="step">
+        <div class="step_sec"></div>
+      </div>
+      
+      <% unless @search.wines.blank? %>
+          <div class="mb20">
+            <div class="float_r">
+              <span class="notice_b">这些都不是您要找的酒？</span>
+              <%= link_to add_mine_cellar_items_path(current_user.cellar, :step => 1), :class => "btn_gray" do %>
+                  <span>添加酒款</span>
+              <% end %>
+            </div>
+            <%= render "search_item", :object => @search %>
+            <div class="clear"></div>
+          </div>
+          <ul class="wine_list">
+            <% @search.wines.each do |wine_detail| %>
+                <li>
+                  <div class="add_to_cellar">
+                    <%= link_to new_mine_cellar_item_path(current_user.cellar, :wine_detail_id => wine_detail.id), :class => "btn_blue" do %>
+                        <span>加入酒窖</span>
+                    <% end %>
+                  </div>
+                  <div class="wine_img"><%= wine_cover_tag( wine_detail, :thumb_name => "w_thumb", :width => "50", :height => "63" ) %></div>
+                  <div class="wine_info">
+                    <h2><a href="wine_profile.html"><%= wine_detail.cname %></a></h2>
+                    <h3><%= wine_detail.ename %></h3>
+                    <p><%= wine_detail.region_path_zh(wine_detail.wine.region_tree_id) %></p>
+                    <p><%= wine_detail.wine.style.name_zh %></p>
+                  </div>
+                  <div class="clear"></div>
+                </li>
+            <% end %>
+          </ul>
+      <% else %>
+        <p class="notice_b mb20">对不起，没有找到关于“<%= @search.keywords %>”的信息，您是否愿意帮助我们添加酒款？</p>
+        <p>
+          <%= link_to new_mine_wine_path, :class => "btn_gray mr5" do %>
+            <span>我来添加</span>
+          <% end %>
+          <%= link_to add_mine_cellar_items_path(current_user.cellar, :step => 1), :class => "btn_gray" do %>
+            <span>重新搜索</span>
+          <% end %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>

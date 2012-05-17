@@ -1,0 +1,10 @@
+<!-- 如果是相互关注 -->
+<% @followers.each do |user| %>
+  <div class="item">
+    <div class="pic">
+      <%= link_to_user user, user_path(user, :trailing_slash => true), :with_avatar => true, :avatar_version => :middle %>
+    </div>
+    <h4> <%= user.username %> </h4>
+    <p> <%#= user.profile.get_living_city %></p>
+  </div>
+<% end %>

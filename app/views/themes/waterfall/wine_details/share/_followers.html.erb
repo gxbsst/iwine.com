@@ -1,0 +1,16 @@
+<h3>
+  他们关注
+  <span class="font_12">
+    <%= link_to "（共#{@wine_detail.followers_count}人，更多...)", followers_wine_path(@wine_detail.id) %>
+  </span>
+</h3>
+
+<% @followers.each do |user| %>
+  <div class="item">
+      <%= link_to_user user,
+                       user_path(user, :trailing_slash => true),
+                       :with_avatar => true,
+                       :avatar_version => :middle %>
+  </div>
+<% end %>
+

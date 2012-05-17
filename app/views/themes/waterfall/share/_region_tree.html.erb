@@ -1,0 +1,3 @@
+<%= raw region_tree.collect {|r| link_to r.name_zh + '/' + r.name_en , :controller => :search, :action => :wine, :region => r.name_en }.join(" < ")  %>
+
+

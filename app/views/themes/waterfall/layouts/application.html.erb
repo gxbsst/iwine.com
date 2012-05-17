@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title><%= content_for?(:title) ? content_for(:title) : 'Patrick' %></title>
+	<%= theme_stylesheet_link_tag    "application" %>
+	<%= theme_javascript_include_tag "application" %>
+	<%= csrf_meta_tags %>
+	<%= yield :css %>
+	<%= yield :j %>
+</head>
+<body>
+	<div id="header">
+		<div class="main950">
+			<div id="logo">
+				<%= theme_image_tag "common/logo.gif", :width => 299, :height => 43 %>
+			</div>
+			<div id="top_search">
+				<%= theme_image_submit_tag "icon/search.gif", :class => :search_btn %>
+				<input class="search" name="" type="text" />
+			</div>
+			<div id="top_right">
+				<%= render "layouts/user_fragment" %>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div id="wrapper950">
+			<%= yield %>
+	</div>
+	<%= render "layouts/footer" %>
+</body>
+</html>
