@@ -1,0 +1,30 @@
+<div class="mail_form">
+  <table width="100%" cellspacing="0" cellpadding="0" border="0">
+    <tr>
+      <td valign="middle" width="100px" >
+        共找到{x}个好友
+      </td>
+      <td valign="top" align="left">
+        <%= link_to_button "add_all_friends", "/" %>
+        <%= link_to_button "chose_another_method", "/" %>
+      </td>
+    </tr>
+  </table>
+
+  <%= form_tag("/gmail") do %>
+    <table border="0" cellspacing="10" cellpadding="5">
+      <tr>
+        <td>Gmail帐号</td>
+        <td class="text_input"><%= text_field_tag "mail" %></td>
+      </tr>
+      <tr>
+        <td align="right">密码</td>
+        <td class="text_input"><%= password_field_tag "mail" %></td>
+      </tr>
+      <tr>
+        <td> </td>
+        <td> <%= image_submit_tag("v2/button/find_email_friend.png") %> </td>
+     </tr>
+    </table>
+  <% end -%>
+</div>

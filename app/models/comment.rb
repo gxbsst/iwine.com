@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class Comment < ActiveRecord::Base
   default_scope where('deleted_at IS NULL')
+  scope :with_wine_follows, where(:commentable_type => "Wines::Detail", :do => "follow")
 
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
   validates_presence_of :body
@@ -10,6 +11,11 @@ class Comment < ActiveRecord::Base
   # want user to vote on the quality of comments.
   # acts_as_voteable
   acts_as_votable
+
+ fires :new_comment, :on                 => :create,
+                     :actor              => :user,
+                     :secondary_actor => :commentable,
+                     :if => lambda { |comment| comment.commentable_type == "Wines::Detail" }
 
   # 保存分享信息， 如新浪微博等
   store_configurable

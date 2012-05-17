@@ -7,13 +7,17 @@ module Wines
      end
     
      def all_vintage
-       Wines::Detail.where(["wine_id = ?", id]).select(:year).collect{|i| i.year }
+       Wines::Detail.where(["wine_id = ?", id])
      end
 
      # Class Methods
      module ClassMethods
 
        # Wine 项目要用到的公共 class methods
+       def timeline_events
+         TimelineEvent.wine_details
+       end
+       
      end
 
      def region_path_zh(region_tree_id)
@@ -35,7 +39,6 @@ module Wines
      def drinkable
        "#{drinkable_begin.strftime('%Y') if drinkable_begin}-#{drinkable_end.strftime('%Y') if drinkable_end}"
      end
-
-
+     
    end
 end

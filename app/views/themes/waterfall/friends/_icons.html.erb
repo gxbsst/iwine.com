@@ -1,0 +1,11 @@
+
+  <% SNS_SERVERS.each do |sns_name| %>
+    
+    <% if @availabe_sns[sns_name].present? %>
+      <%= link_to_sns_icon true, sns_name, '/friends/sync?sns_name=' + sns_name %>
+    <% else %>
+      <%= link_to_sns_icon false, sns_name, '/friends/sync?sns_name=' + sns_name %>
+    <% end %>
+    
+  <% end %>
+  

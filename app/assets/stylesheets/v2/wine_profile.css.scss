@@ -4,7 +4,7 @@ $text_color_grey: #333;
 @import "v2/compass_buttons/*.png";;
 @include all-compass_icons-sprites;
 @include all-compass_buttons-sprites;
-.span_950.fixed_width.wine_details.show #main, .span_950.fixed_width.comments #main,
+.span_950.fixed_width.wine_details.show #main, .span_950.fixed_width.comments #main, .span_950.fixed_width.wine_details #main,
 .span_950.fixed_width.wines #main
 {
     @include box-shadow(#FFFFFF 0 0 0 0);
@@ -57,6 +57,7 @@ $text_color_grey: #333;
         }
     }
     .left {
+        background: #FFF;
         .box {
             padding-left: 20px;
         }

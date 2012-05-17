@@ -1,0 +1,9 @@
+<footer class="footer">
+
+
+<% foot_nav = { :about_us => '/about_us', :contact_us => '/contact_us', :help => '/help', :private => '/private', :site_map => '/site_map'} %>
+        <div class="copyright">Copyright © 2011 Patrick, Inc. All rights reserved. </div>
+        <%= raw foot_nav.collect { |k, v| link_to t("nav.#{k}"), v }.join(" | ") %>
+
+</footer>
+

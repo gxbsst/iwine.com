@@ -61,6 +61,13 @@ gem 'acts_as_votable', :path => "lib/gems"
 ## Timeline
 gem "timeline_fu", :path => "lib/gems"
 
+## redis_search
+gem 'redis','>= 2.1.1'
+gem 'chinese_pinyin', '0.4.1'
+gem 'rmmseg-cpp-huacnlee', '0.2.9'
+gem 'redis-namespace','~> 1.1.0'
+gem 'redis-search', '0.8.0'
+
 group :development, :test do
   gem 'i18n'
   gem 'pry'  # "binding.pry" in action
@@ -107,6 +114,9 @@ group :test do
 end
 
 gem 'user_resource_init', :path => 'lib/patrick/user_resource_init'
+
+# 模板
+gem 'themes_for_rails', :path => "lib/gems"
 
 
 

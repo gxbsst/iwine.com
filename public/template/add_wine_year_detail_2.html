@@ -3,31 +3,36 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>iWine</title>
-<link href="css/main.css" rel="stylesheet" type="text/css" />
-<link href="css/hp.css" rel="stylesheet" type="text/css" />
-<link href="css/add.css" rel="stylesheet" type="text/css" />
+<link href="stylesheets/main.css" rel="stylesheet" type="text/css" />
+<link href="stylesheets/hp.css" rel="stylesheet" type="text/css" />
+<link href="stylesheets/add.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 	<div id="header">
-    <div class="main860">
-        	<div id="logo"><img src="image/common/logo.png" alt="iWine" /></div>
-            <div id="top_search"><input class="search" name="" type="text" /><button type="submit" class="search_submit"><span><img src="image/icon/search_white.png" width="13" height="13" alt="搜索" /></span></button></div>
+    <div class="main950">
+        	<div id="logo"><img src="images/common/logo.gif" alt="iWine" width="299" height="43" /></div>
+            <div id="top_search">
+           		<input class="search_btn" name="" type="image" src="images/icon/search.gif"/>
+                <input class="search" name="" type="text" />
+            </div>
             <div id="top_right">
             	<ul>
-                	<li class="userbox">user</li>
+                	<li class="userbox">
+                    	<a class="userpic" href="#"><img src="images/userimage/06.jpg" width="20" height="20" /></a><a href="#"><img src="images/common/userbox_arrow.jpg" width="22" height="30" /></a>
+                    </li>
                     <li class="top_add"><a href="#" class="btn_add">添加</a></li>
                 </ul>
             </div>
             <div class="clear"></div>
         </div>
     </div>
-    <div id="mainspace860" class="addwine">
-    	<div class="addwine">
+    <div id="wrapper950" >
+    	<div class="whitespace addwine">
             <h1 class="main_title">添加藏酒</h1>
             <div class="step">
                 <div class="step_thr"></div>
-              </div>
+          </div>
               <div class="notice_b mb20">请完善 2005 PORTER MILL STATION Cabemet Sauvignon 的详细信息</div>
             <div id="stylized" class="myform">
             <form id="form" name="form" method="post" action="#">
@@ -40,7 +45,7 @@
                        <label>其他酒款中文名</label>
                        <input name="text" type="text" class="text name" value="" /> 
                        多个名称用“；”隔开
-                       </div>
+             </div>
                    <div class="required">
                      <label>官方网站</label>
                      http://www.romanee-conti.fr/  
@@ -48,7 +53,7 @@
                    <div class="required">
                        <label>酒庄英文名</label>
                        Champagne
-                       </div>
+             </div>
                    <div class="required">
                        <label>酒庄中文名</label>
                        某某酒庄
@@ -89,7 +94,7 @@
                            </tr>
                       </table>
                     </div>
-                   </div>
+             </div>
                    <div class="optional">
                    		<label>酒精度</label>
                         <input type="text" name="textfield" class="text percent"/> %
@@ -123,7 +128,7 @@
                              <th><a href="#" class="icon_delet2">删除</a></th>
                            </tr>
                          </table>
-                         <p class="mt10"><img src="image/common/ex_score.jpg" width="278" height="76" alt="评分例子" /></p>
+                         <p class="mt10"><img src="images/common/ex_score.jpg" width="278" height="76" alt="评分例子" /></p>
                       </div>
                    </div>
                    <div class="optional">
@@ -136,11 +141,15 @@
                        <div class="content"><a href="add_wine_success.html" class="btn_gray mr5"><span>提交信息</span></a></div>
                     </div>
                    <div class="clear"></div>
-               </div>
+              </div>
                <div class="clear"></div>
             </form>
         </div>
-       </div>
+      </div>
+    </div>
+    <div id="footer">
+        <div class="link"><a href="#">关于我们</a> | <a href="#">联系我们</a> | <a href="#">帮助中心</a> | <a href="#">隐私条款</a> | <a href="#">用户协议</a> | <a href="#">网站地图</a> | <a href="#">意见反馈</a></div>
+        <div class="copyright">Copyright © 2011 iWine, Inc. All rights reserved. <a href="#">沪ICP备12345678号</a></div>
     </div>
 </body>
 </html>
