@@ -186,4 +186,61 @@ namespace :app do
       end
     end
   end
+
+  task :init_wineries => :environment do
+    require 'csv'
+    winery_path = Rails.root.join("lib", "tasks", "data", "winery.csv")
+    csv  = CSV.read(winery_path)
+    csv.each_with_index do |item, index|
+      next if index == 0 # 跳过csv文件标题
+      # find region_tree_id
+      region_tree = Wines::RegionTree.where("name_en = ?", item[12].to_s.force_encoding('utf-8').to_ascii_brutal).order("level desc").first
+      next unless region_tree
+      Winery.transaction do
+        begin
+        name_en = item[1].to_s.force_encoding('utf-8').to_ascii_brutal
+          winery = Winery.where("name_en = ?", name_en).
+              first_or_create!(
+              :name_en => name_en,
+              :name_zh => item[2],
+              :cellphone => item[3].to_s.gsub(" ", ''),
+              :fax => item[4],
+              :email => item[5],
+              :official_site => item[6],
+              :address => item[7].to_s.force_encoding('utf-8').to_ascii_brutal,
+              :config => {"Facebook" => item[8], "Twitter" => item[8], "Sina" => item[9]},
+              :region_tree_id => region_tree.id)
+          #save_logo_and_photos
+          if !item[0].blank? && Dir.exist?(Rails.root.join("lib", "tasks", "data", item[0]))
+            if logo_path = Dir.glob(Rails.root.join("lib", "tasks", "data", item[0], "logo.*")).first
+              winery.update_attribute("logo", open(logo_path))
+            end
+            Dir.glob(Rails.root.join("lib", "tasks", "data", item[0], "*")).each do |photo_path|
+              next if photo_path.include?("logo")
+              winery.photos.create!(
+                  :category => 1,
+                  :album_id => -1,
+                  :is_cover => 1,
+                  :image => open(photo_path)
+              )
+            end
+          end
+          #save_info_items
+          unless item[13].blank?
+            info_arr = item[13].split('#').collect{|i| i.force_encoding('utf-8').to_ascii_brutal}
+            info_arr.delete("") #delete ""
+            info_hash = Hash[*info_arr]
+            info_hash.each do |key, value|
+              winery.info_items.where("title = ?", key).first_or_create!(:title => key, :description => value)
+            end
+          end
+          puts winery.id
+        rescue Exception => e
+          puts e
+        end
+
+      end
+    end
+
+  end
 end

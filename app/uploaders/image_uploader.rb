@@ -79,12 +79,12 @@ class ImageUploader < CarrierWave::Uploader::Base
     resize_to_limit(600, 600)
   end
 
-  version :normal, :if => :is_user? do
+  version :normal, :from_version => :large, :if => :is_user? do
     resize_to_limit(190, 190)
   end
 #  ## USER
 
-  version :thumb, :if => :is_user? do
+  version :thumb, :from_version => :normal, :if => :is_user? do
     resize_to_limit(100, 100)
   end
 
@@ -106,7 +106,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   #  end
 
   ## WINE
-  version :w_thumb, :if => :is_wine?  do
+  version :w_thumb, :from_version => :w_large, :if => :is_wine?  do
     process :resize_to_limit => [200, 200]
   end
 
@@ -115,7 +115,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   ## WINERY
-  version :wy_thumb, :if => :is_winery?  do
+  version :wy_thumb, :from_version => :wy_large, :if => :is_winery?  do
     process :resize_to_limit => [100, 100]
   end
 

@@ -1,0 +1,79 @@
+<div class="admin_wine_register">
+  <%= javascript_include_tag "wine_registers_variety", "region_world" %>
+  <%= form_for [:admin, @winery], :mutipart => true do |w| %>
+    <table cellspacing="10" cellpadding="5">
+      <h3>酒庄得信息</h3>
+      <tr>
+        <td><label>英文名</label></td>
+        <td><%= w.text_field :name_en %></td>
+      </tr>
+      <tr>
+        <td><label>中文名</label></td>
+        <td><%= w.text_field :name_zh %></td>
+      </tr>
+      <tr>
+        <td><label>区域</label></td>
+        <td><%= render :partial => "region_tree", :object => @winery %></td>
+      </tr>
+      <tr>
+        <td><label>地址</label></td>
+        <td><%= w.text_field :address %></td>
+      </tr>
+      <tr>
+        <td><label>官方网址</label></td>
+        <td><%= w.text_field :official_site %></td>
+      </tr>
+      <tr>
+        <td><label>Email</label></td>
+        <td><%= w.text_field :email %></td>
+      </tr>
+      <tr>
+        <td><label>联系电话</label></td>
+        <td><%= w.text_field :cellphone %></td>
+      </tr>
+      <tr>
+        <td><label>传真</label></td>
+        <td><%= w.text_field :fax %></td>
+      </tr>
+      <tr>
+        <td><label>微博或博客网址</label></td>
+        <td>
+          <%= w.fields_for :config do |c| %>
+            <label>Twitter</label>
+            <%= c.text_field :Twitter, :value => @winery.config["Twitter"] %><br/><br/>
+            <label>Facebook</label>
+            <%= c.text_field :Facebook, :value => @winery.config["Facebook"] %><br/><br/>
+            <label>Sina</label>
+            <%= c.text_field :Sina, :value => @winery.config["Sina"] %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td><label>标志</label></td>
+        <td>
+          <% unless @winery.new_record? %> <%= image_tag(@winery.logo_url(:thumb)) %> <br/><% end %>
+          <%= w.file_field :logo %>
+          <%= w.hidden_field :logo_cache %>
+        </td>
+      </tr>
+      <tr>
+        <td><label>酒庄图片</label></td>
+        <td>
+          <% unless @winery.photos.blank? %><%= render "show_photos", :photos => @winery.photos %> <br/><% end %>
+          <%= w.fields_for :photos do |p| %>
+            <%= render "photo", :p => p %>
+          <% end %>
+        </td>
+      </tr>
+      <%#= @info_items = @winery.info_items.blank? ? @winery.info_items.build : @winery.info_items %>
+      <%= w.fields_for :info_items do |item| %>
+         <%= render "update_info_items", :item => item %>
+      <% end %>
+      <tr><td></td><td><%= link_to_add_fields "增加新条目", w, :info_items %></td></tr>
+      <tr>
+        <td></td>
+        <td><%= w.button "提交" %></td>
+      </tr>
+    </table>
+  <% end %>
+</div>
