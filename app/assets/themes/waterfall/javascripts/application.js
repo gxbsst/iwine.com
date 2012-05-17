@@ -10,21 +10,19 @@
 //= require jquery_ujs
 //= require underscore
 //= require backbone
-// require backbone-localstorage
 //= require fancybox
 //= require jcrop
-//= require wines
+//= require waterfall/javascripts/wines
 //= require rails.validations
-//= require swfobject
+//= require waterfall/javascripts/swfobject
 //= require jquery.uploadify.v2.1.4
 //= require best_in_place
 //= require stickies
-//= require settings
-// require kissy
+//= require waterfall/javascripts/settings
 //= require jquery-tools/tabs/tabs
 //= require jquery-tools/tabs/tabs.slideshow
-//= require waterfall
-//= require home
+//= require waterfall/javascripts/waterfall
+//= require waterfall/javascripts/home
 
 
 $(document).ready(function(){

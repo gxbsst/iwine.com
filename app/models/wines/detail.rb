@@ -24,6 +24,7 @@ class Wines::Detail < ActiveRecord::Base
 
   accepts_nested_attributes_for :photos, :reject_if => proc { |attributes| attributes['image'].blank? }
   accepts_nested_attributes_for :label, :reject_if => proc { |attributes| attributes['filename'].blank? }
+  # scope :with_recent_comment, joins(:comments) & ::Comment.recent(6) 
   def comment( user_id )
     Wines::Comment.find_by_user_id user_id
   end
