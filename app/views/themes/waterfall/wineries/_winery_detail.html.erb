@@ -1,0 +1,41 @@
+<div class="winery_header">
+   <div class="cover">
+     <%= image_tag(@winery.photos.where("is_cover = 1").first.image_url(:wy_large), :width => 360, :height => 320, :alt => @winery.name_en) %>
+   </div>
+
+   <div class="info">
+     <div class="float_r"></div>
+     <div class="logo"><%= image_tag(@winery.logo_url(:thumb), :width => 100, :height => 50, :alt => @winery.name_en) %></div>
+     <h1 class="winery_name_ch"><%= @winery.name_zh %></h1>
+     <h1 class="winery_name_en"><%= @winery.name_en %></h1>
+     <div class="baseinfo">
+       地区：<%= @winery.region_path_zh(@winery.region_tree_id) %><br/>
+       地址：<%= @winery.address %><br/>
+       官网网站：<%= @winery.official_site %><br/>
+       电子邮件：<%= @winery.email %> <br/>
+       电话：<%= @winery.cellphone %><br/>
+       传真：<%= @winery.fax %><br/>
+     </div>
+     <div class="mt20">
+       <ul class="count">
+         <li class="follow"><%= link_to "120个关注", "#" %></li>
+         <li class="comment"><%= link_to "45条评论", "#" %></li>
+       </ul>
+       <%= link_to "#", :class => "btn_gray_b mr5" do %>
+        <span>关注</span>
+       <% end %>
+       <%=  link_to "#", :class => "btn_gray_b mr5" do %>
+        <span>评论</span>
+       <% end %>
+     </div>
+   </div>
+
+   <div class="right">
+     <div class="share">分享到：
+        <%= link_to "#" do %>
+            <%= image_tag("/icon/sina_s_on.png", :alt => "新浪", :width => 17, :height => 17, :align => "") %>
+        <% end %>
+       
+     </div>
+   </div>
+</div>
