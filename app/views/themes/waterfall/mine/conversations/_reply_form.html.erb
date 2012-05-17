@@ -1,0 +1,15 @@
+<h3>发送私信</h3>
+<%= form_for message, :url => mine_messages_path(), :method => :post, :validate => true do |f| %>
+
+	<%= f.hidden_field :conversation_id %>
+	<table border="0" cellspacing="10" cellpadding="5">
+		<tr>
+			<td valign="top"><%= f.label "内容:" %></td>
+			<td><%= f.text_area :body %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><%= f.submit "发送" %></td>
+		</tr>
+	</table>
+<% end -%>

@@ -1,0 +1,43 @@
+<div class="<%= controller_name  %> index testing_notes">
+  <%= render "mine/sub_nav", :action => params[:action] %>
+  <div class="clear"></div>
+
+  <div class="left">
+    <div class="box box_3 detail_comments">
+      <h3>品酒辞</h3>
+
+      <%= render "wines/testing_notes/testing_note" %>
+
+      <!-- pagination start  -->
+
+      <div class="pagination">
+        <nav class="pagination">
+          <span class="page current">1</span>
+          <span class="page">
+            <a href="/mine/conversations?page=2" rel="next">2</a>
+          </span>
+          <span class="next">
+            <a href="/mine/conversations?page=2" rel="next">&gt;</a>
+          </span>
+          <span class="last">
+            <a href="/mine/conversations?page=2">最后</a>
+          </span>
+
+        </nav>
+      <!-- pagination  end   -->
+      </div>
+
+
+      <!-- .box end -->
+    </div>
+
+    <div class="clear"></div>
+
+    <!-- left end -->
+  </div>
+
+  <!-- .mine end -->
+</div>
+
+<div class="clear"></div>
+

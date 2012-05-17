@@ -6,9 +6,11 @@ class UsersController < ApplicationController
   def show
     @followers = @user.followers
     @followings =@user.followings
-    @comments = @user.comments
+    @comments = @user.comments.limit(6)
+    @following_wines = @user.wine_followings.limit(6)
     render "mine/index"
   end
+  
   def index
     @followers = @user.followers
     @followings =@user.followings
@@ -18,12 +20,19 @@ class UsersController < ApplicationController
 
   # 关注的酒
   def wine_follows
+    @comments = @user.wine_followings.page(params[:page] || 1).per(10) 
+    render "mine/wine_follows"
+  end
+  
+  # 关注的酒庄
+  def winery_follows
+    @comments = @user.wine_followings.page(params[:page] || 1).per(10) 
     render "mine/wine_follows"
   end
 
   # 我的评论
   def comments
-    @comments = Wines::Comment.all
+    @comments = @user.comments.page(params[:page] || 1).per(10) 
     render "mine/comments"
   end
 
@@ -32,24 +41,14 @@ class UsersController < ApplicationController
   end
 
   def followings
-    @followings = Friendship
-      .includes([:user])
-      .where(["follower_id = ?", current_user.id])
-      .order("id DESC")
-      .page params[:page] || 1
-
-    @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
+    @followings = @user.followings.page(params[:page] || 1).per(10)
+    @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
 
     render "mine/followings"
   end
 
   def followers
-    @followers = Friendship
-      .includes([:follower])
-      .where(["user_id = ?", current_user.id])
-      .order("id DESC")
-      .page params[:page] || 1
-
+    @followers = @user.followers.page(params[:page] || 1).per(10)
     @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
 
     render "mine/followers"

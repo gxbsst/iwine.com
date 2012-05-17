@@ -1,0 +1,10 @@
+<% if target.errors.any? %>
+    <div class="error">
+      <h4>错误信息</h4>
+      <ul>
+        <% target.errors.full_messages.each do |m| %>
+            <li><%= m %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>

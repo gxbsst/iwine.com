@@ -13,7 +13,7 @@
   <%= javascript_include_tag "html5" %>
   <![endif]-->
 </head>
-<body class="span_950 fixed_width <%= controller.controller_name %> <%= params[:action] %>" >
+<body class="span_950 fixed_width <%= "waterfall" if (controller.controller_name=="wineris" || controller.controller_name=="home" || controller.controller_name == "wine_details" && params[:action] == "index") %>  <%= controller.controller_name %> <%= params[:action] %>" >
 <%#= query_review_output %>
 
   <%= render "share/header" %>

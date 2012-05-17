@@ -23,6 +23,8 @@
 // require kissy
 //= require jquery-tools/tabs/tabs
 //= require jquery-tools/tabs/tabs.slideshow
+//= require waterfall
+//= require home
 
 
 $(document).ready(function(){

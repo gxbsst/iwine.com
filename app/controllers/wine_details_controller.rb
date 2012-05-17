@@ -2,10 +2,12 @@
 class WineDetailsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show]
   before_filter :set_current_user
-  before_filter :get_wine_detail, :except => [:comment_vote]
-
+  before_filter :get_wine_detail, :except => [:comment_vote, :index]
+  theme "waterfall"
+  
   def index
-    @wines = Wines::Detail.includes(:wine, :cover).order("created_at ASC").page params[:page] || 1
+    # @wines = Wines::Detail.includes(:wine, :cover).order("created_at ASC").page params[:page] || 1
+    @timelines = Wines::Detail.timeline_events.page(params[:page] || 1 ).per(10)
   end
 
   # Wine Profile
@@ -19,14 +21,22 @@ class WineDetailsController < ApplicationController
 
   # 关注者
   def followers
-    @wine             = @wine_detail.wine
+    @wine      = @wine_detail.wine
     @followers = @wine_detail.followers
   end
 
   # 拥有者
   def owners
-    @wine             = @wine_detail.wine
+    @wine   = @wine_detail.wine
     @owners = @wine_detail.owners
+    if !(@owners.nil?)
+      unless @owners.kind_of?(Array)
+        @owners = @owners.page(params[:page]).per(8)
+      else
+        @owners = Kaminari.paginate_array(@owners).page(params[:page]).per(8)
+      end
+    end
+    
   end
 
   # 添加到酒窖

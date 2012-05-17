@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
-  root :to => 'static#index'
+  themes_for_rails
+
+  root :to => 'wine_details#index'
   ## ADMIN
   ActiveAdmin.routes(self)
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   ## USER
-  devise_for :users, :controllers => { :registrations => "registrations" }
+  devise_for :users, :controllers => {  }
+  devise_for :users, :controllers => { :sessions => "devise/sessions", :registrations => "devise/registrations" }
+  
   devise_scope :user do
     get :login , :to => "devise/sessions#new"
     get :logout , :to => 'devise/sessions#destroy'
@@ -79,6 +83,13 @@ Patrick::Application.routes.draw do
     collection do
       get "register_success"
     end
+    member do
+      get "wine_follows"
+      get "winery_follows"
+      get "comments"
+      get "followings"
+      get "followers"
+    end
     resources :comments
     # 相册
     resources :albums, :controller => "users/albums" do
@@ -95,7 +106,8 @@ Patrick::Application.routes.draw do
   # HOME
   resources :home
   # FRIENDS
-  # resources :friends
+  # resources :friends do 
+  # end
   # oauth china
   match "/friends/:type/sync" => "friends#new", :as => :sync_new
   match "/friends/:type/callback" => "friends#callback", :as => :sync_callback
