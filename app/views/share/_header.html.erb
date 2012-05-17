@@ -17,13 +17,28 @@
     <!-- header-content end -->
   </div>
 
+
+</div>
+
 </header>
 <script type="text/javascript" >
   $('#search').bind( 'keyup' , function(){
     $.ajax({
       url: '/searches/hot_words?word='+this.value,
       success: function( data ){
-        console.log( data.wines , data.wineries );
+        var i , html =  '<ul>';
+
+        for( i = 0 ; i < data.wines.length ; i++ ){
+          html += '<li>' + data.wines[i] + '</li>';
+        }
+
+        html += '</ul>';
+
+        for( i = 0 ; i< data.wineries.length ; i++ ){
+          html += '<li>' + data.wineries[i] + '</li>';
+        }
+
+        $('#hot-search-list').html( html );
       }
     });
   });

@@ -81,7 +81,7 @@ timeline:
       new_photo: "上传了新的图片"
        
 search_server:
-  host: www.sidways.com
+  host: 192.168.11.76
   port: 8080
   entry_url: /patrick/query/
   word_url: /patrick/associate
