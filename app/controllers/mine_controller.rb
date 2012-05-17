@@ -7,7 +7,7 @@ class MineController < ApplicationController
     @followers = @user.followers
     @followings = @user.followings
     @comments = @user.comments.limit(6)
-    @cellar = @user.cellar
+    @cellar_items = @user.cellar.items.limit(6)
     @following_wines = @user.wine_followings.limit(6)
   end
 

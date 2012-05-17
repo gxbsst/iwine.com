@@ -1,10 +1,4 @@
 @charset "UTF-8";
-body {
-  font-size: 12px;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #333;
-  background: url(message/bg/body_bg.jpg) repeat;
-}
 h1, h2, h3, h4, h5, h6, ul, li, p, dl, dd, dt {
   margin: 0;
   padding: 0;

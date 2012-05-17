@@ -1,0 +1,12 @@
+<div class="item">
+  <div class="pic">
+    <%= image_tag comment.detail.cover, :width => 100 , :height => 100, :title => "title", :class => "class" %>
+  </div>
+  <p class="comment_info">
+    评论 <a href="#"> <%= comment.detail.cname %></a> <%= comment.updated_at.strftime '%Y-%m-%d' %>
+    <% if comment.point.present? %>
+      <span class="star_s<%=(comment.point/2).to_s%>"></span>
+    <% end %>
+  </p>
+  <p class="description"> <%= comment.content %> </p>
+</div>

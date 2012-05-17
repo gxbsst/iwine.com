@@ -1,0 +1,12 @@
+<h3>
+  所有图片
+  <span class="font_12">
+    <%= link_to "(共#{@wine_detail.photos_count}张, 更多)", wine_photos_path(@wine_detail.id) %>
+  </span>
+</h3>
+
+<div class="items">
+  <% @wine_detail.photos.each do |photo| %>
+    <%= link_to image_tag(photo.image_url(:w_thumb), :width => 90, :height => 90), wine_photo_path(photo.id) %>
+  <% end %>
+</div>

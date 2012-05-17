@@ -8,5 +8,6 @@ class Users::WineCellar < ActiveRecord::Base
   include Users::UserSupport
 
   belongs_to :user
-  has_many :items, :class_name => "Users::WineCellarItem", :foreign_key => "user_wine_cellar_id"
+  has_many :items, :class_name => "Users::WineCellarItem", :foreign_key => "user_wine_cellar_id", :include => [:wine_detail]
+
 end

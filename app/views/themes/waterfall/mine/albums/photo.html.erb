@@ -1,0 +1,199 @@
+<div class="content">
+  <div class="album_left">
+    <div class="title_btn">
+      <h1><%= @album.name %> <span class="font12">(共<%= @album.photos_num %>张)</span></h1>
+    </div>
+    <div class="mb20">
+      <div class="btn_action">
+        <a href="<%=  %><%= url_for :action => 'show', :album_id => @album.id %>" class="btn_gray">
+          <span>返回该相册</span>
+        </a>
+      </div>
+      <div class="pre_next">
+        <a href="<%= url_for :action => 'photo', :album_id => @album.id, :index => @index - 1%>" class="btn_gray mr5">
+          <span>前一张</span>
+        </a>
+        <a href="<%= url_for :action => 'photo', :album_id => @album.id, :index => @index + 1%>" class="btn_gray">
+          <span>后一张</span>
+        </a>
+      </div>
+    </div>
+    <div class="photo">
+      <%= image_tag @photo.image_url :large %>
+      <p class="intro"><%= @photo.intro %></p>
+    </div>
+
+    <div class="info">
+      <div class="like float_r">
+        <a href="#" class="icon_like">赞 (3)</a>
+      </div>
+      <div class="share float_r">分享到：
+        <a href=" #">
+          <img src="/assets/v2/icon/sina_s_on.png" alt="新浪" width="17" height="17" align="absmiddle" />
+        </a>
+        <a href="#">
+          <img src="/assets/v2/icon/tencen_s_on.png" alt="腾讯" width="17" height="17" align="absmiddle" />
+        </a>
+        <a href="#">
+          <img src="/assets/v2/icon/douban_s_on.png" alt="豆瓣" width="17" height="17" align="absmiddle" />
+        </a>
+        <a href="#">
+          <img src="/assets/v2/icon/kaixin_s_on.png" alt="开心网" width="17" height="17" align="absmiddle" />
+        </a>
+        <a href="#">
+          <img src="/assets/v2/icon/renren_s_on.png" alt="人人网" width="17" height="17" align="absmiddle" />
+        </a> 
+      </div>
+      <div><%= @photo.viewed_num %>浏览 | <%= @photo.commented_num %>评论</div>
+    </div>
+      <div class="comment">
+    <a href="#add_comment" onclick="$('#photo_comment_comment').focus();" class="button_gray float_r"><span>添加评论</span></a><h3>评论</h3>
+    <div class="comment" style="display: none">
+      <ul>
+        <% @photo_comments.each do |comment| %>
+        <li class="clearfix">
+          <div class="user_img">
+            <a href="#">
+              <% if comment.user.avatar.present? %>
+              <%= image_tag comment.user.avatar, :width => 50, :height => 50 %>
+              <% else %>
+              <img src="/images/test/user_img50.jpg" width="50" height="50" alt="user name" />
+              <% end %>
+            </a>
+          </div>
+          <div class="comment_main">
+            <div class="name_time_score">
+              <div class="mr5">
+                <a href="#" id="comment_user_<%= comment.id %>"><%= comment.user.username %> </a> 
+                <span class="time"><%= comment.created_at.strftime '%Y-%m-%d'%></span>
+                <a href="javascript:;" onclick="reply_to(<%= comment.id %>);">回复</a>
+              </div>
+            </div>
+            <% if comment.reply_id > 0 %>
+            <div class="reply_content"><%= comment.reply_to.comment %></div>
+            <% end %>
+            <div class="comment_content" id="comment_content_<%= comment.id %>"><%= comment.comment %></div>
+          </div>
+          <div class="clear"></div>
+        </li>
+        <% end %>
+      </ul>
+      <div class="comment_form mt20">
+        <%= form_for @photo_comment, :url => '/mine/albums/photo_comment' do |f| %>
+        <input type="hidden" name="photo_comment[photo_id]" value="<%= @photo.id %>" />
+        <%= f.hidden_field :reply_id %>
+        <div class="user_img">
+            <% if current_user.avatar.present? %>
+            <%= image_tag current_user.avatar, :width => 50, :height => 50 %>
+            <% else %>
+            <img src="/images/test/user_img50.jpg" width="50" height="50" alt="user name" />
+            <% end %>
+        </div>
+        <div class="comment_input">
+          <a name="add_comment" id="add_comment"></a>
+          <div style="display: none;" id="reply_comment_content" class="reply_content2">
+          </div>
+          <%= f.text_area :comment, :class => 'comment' %>
+          <a href="javascript:;" onclick="$(this).parent().parent().submit();" class="button_gray float_l mt10"><span>OK, 加上去</span></a>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+    <div class="comment" style="display: none">
+      <div class="mb20 clearfix">
+        <a href="#01" class="btn_gray float_r">
+          <span>添加评论</span>
+        </a> 
+        <div class="title">评论</div>
+      </div>
+
+      <ul class="comment_list">
+        <li>
+          <div class="userpic"><a href="#"><img src="image/userimage/1.jpg" width="50" height="50" alt="username" /></a></div>
+          <div class="main">
+            <div class="username"><a href="#">不良夏生</a><span class="date">2012-4-28</span></div>
+            <div class="content">好诱人的咖喱啊，我也好想吃！</div>
+          </div>
+          <div class="clear"></div>
+        </li>
+        <li>
+          <div class="userpic"><a href="#"><img src="image/userimage/1.jpg" width="50" height="50" alt="username" /></a></div>
+          <div class="main">
+            <div class="username"><a href="#">不良夏生</a><span class="date">2012-4-28</span><span class="control"><a href="#">回复</a> | <a href="#">删除</a></span></div>
+            <div class="content">好诱人的咖喱啊，我也好想吃！</div>
+          </div>
+          <div class="clear"></div>
+        </li>
+        <li>
+          <div class="userpic"><a href="#"><img src="image/userimage/1.jpg" width="50" height="50" alt="username" /></a></div>
+          <div class="main">
+            <div class="username"><a href="#">不良夏生</a><span class="date">2012-4-28</span></div>
+            <div class="content">
+              <p class="reply">好诱人的咖喱啊，我也好想吃！</p>
+              好诱人的咖喱啊，我也好想吃！</div>
+          </div>
+          <div class="clear"></div>
+        </li>
+        <li>
+          <div class="userpic"><a href="#"><img src="image/userimage/1.jpg" width="50" height="50" alt="username" /></a></div>
+          <div class="main">
+            <div class="username"><a href="#">不良夏生</a><span class="date">2012-4-28</span></div>
+            <div class="content">好诱人的咖喱啊，我也好想吃！</div>
+          </div>
+          <div class="clear"></div>
+        </li>
+        <li>
+          <div class="userpic"><a href="#"><img src="image/userimage/1.jpg" width="50" height="50" alt="username" /></a></div>
+          <div class="main">
+            <div class="username"><a href="#">不良夏生</a><span class="date">2012-4-28</span></div>
+            <div class="content">好诱人的咖喱啊，我也好想吃！</div>
+          </div>
+          <div class="clear"></div>
+        </li>
+      </ul>
+      <a name="01" id="01"></a>
+      <div class="comment_post">
+        <div class="userpic"><a href="#"><img src="image/userimage/1.jpg" width="50" height="50" alt="username" /></a></div>
+        <div class="post_main">
+          <div class="reply_text">回复 xiaoying </div>
+          <div class="post">
+            <textarea class="mb10" name="" cols="" rows=""></textarea>
+            <div><a href="#" class="btn_gray"><span>加上去</span></a></div>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+  <div class="album_right pt60 pl30">
+    <h2>我的其他相册</h2>
+    <% if @top_albums.present? %>
+      <ul class="side_album_list">
+        <% @top_albums.each do |album| %>
+          <li>
+            <a href="<%= url_for :action => 'show', :album_id => album.id %>">
+              <% if album.cover.present? %>
+                <%= image_tag album.cover.image_url :thumb %>
+              <% else %>
+                <img src="/assets/base/test/album_cover1.jpg" alt="木有图片" width="190" height="190" />
+              <% end %>
+            </a>
+            <h3>
+              <a href="<%= url_for :action => 'show', :album_id => album.id %>"><% album.name %></a>
+            </h3>
+            <p class="info">2012-1-28更新</p>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+  <div class="clear"></div>
+</div>
+<script type="text/javascript">
+function reply_to( comment_id ){
+  $('#reply_comment_content').css('display' , 'block');
+  $('#reply_comment_content').html( $('#comment_content_' + comment_id).text() + ' <span class="reply_to">by '+ $('#comment_user_'+comment_id).text() +'</span>');
+  $('#photo_comment_reply_id').val(comment_id);
+};
+</script>

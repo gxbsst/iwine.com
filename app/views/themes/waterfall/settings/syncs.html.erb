@@ -1,0 +1,9 @@
+<%= render "sub_nav", :action => params[:action]  %>
+
+<%  @sns_servers.each_with_index do |server, i| %>
+  <% if @avaliable_sns[ server ] %>
+    <%= server %>
+  <% else %>
+    <%= link_to server, '/settings/sync?sns_name=' + server %>
+  <% end %>
+<% end %>

@@ -17,5 +17,11 @@ class Users::WineCellarItem < ActiveRecord::Base
     
     # paginate config
     paginates_per 6
+    
+    fires :add_to_cellar, :on                 => :create,
+                        :actor              => :user,
+                        :secondary_actor => :wine_detail,
+
+    
   
 end

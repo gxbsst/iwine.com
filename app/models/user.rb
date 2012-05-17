@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, :timeoutable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :crop_x, :crop_y, :crop_w, :crop_h, :agree_term
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :crop_x, :crop_y, :crop_w, :crop_h, :agree_term, :width, :height
 
   has_one  :profile, :class_name => 'Users::Profile', :dependent => :destroy
   has_many :albums, :class_name => 'Album', :foreign_key => 'created_by'
@@ -50,6 +50,16 @@ class User < ActiveRecord::Base
 
   ## crop avatar
   after_update :crop_avatar
+  
+  # before_save :set_avatar_width
+  # 
+  # def set_avatar_width
+  #   geometry = self.avatar.thumb.geometry
+  #   if (! geometry.nil?)
+  #     self.width = geometry[0]
+  #     self.height = geometry[1]
+  #   end
+  # end
 
   def name
     self.to_s
@@ -234,6 +244,12 @@ class User < ActiveRecord::Base
 
   def all_comments
 
+  end
+  
+  def feeds
+    Users::Timeline.where("user_id=#{id}").
+     includes(:timeline_event => [:actor, :subject]).
+     order("created_at DESC")
   end
 
   private

@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
-  root :to => 'static#index'
+  themes_for_rails
+
+  root :to => 'wine_details#index'
   ## ADMIN
   ActiveAdmin.routes(self)
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   ## USER
-  devise_for :users, :controllers => { :registrations => "registrations" }
+  devise_for :users, :controllers => {  }
+  devise_for :users, :controllers => { :sessions => "devise/sessions", :registrations => "devise/registrations" }
+  
   devise_scope :user do
     get :login , :to => "devise/sessions#new"
     get :logout , :to => 'devise/sessions#destroy'
