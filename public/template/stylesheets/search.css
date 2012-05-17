@@ -1,0 +1,16 @@
+@charset "UTF-8";
+.searchbox input {width:495px;background-color:#fff;}
+.winery_result {border:3px solid #e6d2d2;padding:15px;margin-top:20px;}
+.winery_result a img {width:70px;float:left;margin-right:10px;}
+.winery_result li {width:245px;float:left;margin-right:10px;}
+.winery_result li.more {width:35px;margin-right:0;padding-top:50px;}
+.winery_result .meta {width:145px;float:left;}
+.winery_result .meta h3.zh a {color:#333;font-size:14px;font-weight:normal;}
+.winery_result .meta h3.en a {color:#999;font-size:12px;font-weight:normal;}
+.search .wine_list li {margin:0 0 20px 0;}
+.search .wine_list a img{width:70px;float:left;margin-right:20px;}
+.search .wine_list .info {width:470px;float:left;}
+.search .wine_list .info p {margin-bottom:0;}
+.search .wine_list .info h3.en a{color:#999;font-weight:normal;}
+.search .wine_list .year span a {margin:0 5px 0 0;color:#993333;text-decoration:underline;display:inline-block;}
+.search .wine_list .year span a:hover {text-decoration:none;color:#993333;}

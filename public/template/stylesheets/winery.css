@@ -31,8 +31,8 @@ h1.winery_name_en {font-size:14px;color:#666;font-weight:normal;margin: 0 0 15px
 .winerymain .wine_list .info {width:470px;float:left;}
 .winerymain .wine_list .info p {margin-bottom:0;}
 .winerymain .wine_list .info h3.en a{color:#999;font-weight:normal;}
-.winerymain .wine_list .year span a {margin:0 5px 0 0;color:#6c96b2;text-decoration:underline;display:inline-block;}
-.winerymain .wine_list .year span a:hover {text-decoration:underline;color:#cc3333;}
+.winerymain .wine_list .year span a {margin:0 5px 0 0;color:#993333;text-decoration:underline;display:inline-block;}
+.winerymain .wine_list .year span a:hover {text-decoration:none;color:#993333;}
 .winerymain .sidebox {margin: 0 0 20px 0;}
 .winerymain .sidebox .title {border-radius:0;background-color:#e6e6e6;padding:5px 15px;}
 .winerymain .sidebox .title h3 {font-size:14px;}
