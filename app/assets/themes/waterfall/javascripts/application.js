@@ -41,7 +41,7 @@ $(document).ready(function(){
     $("a.wine_profile").fancybox();
 
     // 添加朋友、酒等
-    $("a.add_green").fancybox({
+    $("a.btn_add.fancybox").fancybox({
         maxWidth        : 500,
         maxHeight       : 150,
         fitToView       : false,
@@ -148,10 +148,10 @@ $(document).ready(function(){
     $(".ajax").bind("ajax:success", function(evt, data, status, xhr){
         $("#loading").toggle();
     });
-    $(".ajax").bind("ajax:failure", function(evt, data, status, xhr){      
+    $(".ajax").bind("ajax:failure", function(evt, data, status, xhr){
         $("#loading").html("由于网络故障， 请稍后重试");
     });
-    $(".ajax").bind("ajax:error", function(evt, data, status, xhr){  
+    $(".ajax").bind("ajax:error", function(evt, data, status, xhr){
       if (data.status == 401){
            window.location.replace("/login");
          }

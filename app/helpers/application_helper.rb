@@ -43,17 +43,17 @@ module ApplicationHelper
       image_tag "base/test/win_50p.jpg", options
     end
   end
-  
+
   def wine_waterfall_image_tag(object, options = {})
     unless object.covers.first.nil?
-       options[:width] = object.covers.first.width
-       options[:height] = object.covers.first.height
-       image_tag object.covers.first.image_url(options[:thumb_name]), options
-     else
-       options[:width] = 200
-       options[:height] = 200
-       image_tag "v2/avatar_default_bg.png", options
-     end
+      options[:width] = object.covers.first.width
+      options[:height] = object.covers.first.height
+      image_tag object.covers.first.image_url(options[:thumb_name]), options
+    else
+      options[:width] = 200
+      options[:height] = 200
+      image_tag "v2/avatar_default_bg.png", options
+    end
   end
 
   ## 显示用户头像
@@ -111,20 +111,19 @@ module ApplicationHelper
   end
 
   ## Link to User with avatar
-  def link_to_user(user_object, url_or_object, options={})
-    avatar_version = options[:avatar_version] || :middle
-    if options[:with_avatar]
-      link_to(image_tag(avatar(user_object,avatar_version), :align => "left"), url_or_object, options)
+  def link_to_user(user_object, url_or_object, link_opts = {}, image_opts = {})
+    avatar_version = link_opts[:avatar_version] || :middle
+    if link_opts[:with_avatar]
+      link_to(image_tag(avatar(user_object, avatar_version), image_opts), url_or_object, link_opts)
     else
       if user_signed_in? # 已登录用户
         if current_user.id == user_object.id
-          link_to("我", url_or_object, options)
+          link_to("我", url_or_object, link_opts)
         else
-          link_to(user_object.username, url_or_object, options)
+          link_to(user_object.username, url_or_object, link_opts)
         end
-
       else # 非登录用户
-        link_to(user_object.username, url_or_object, options)
+        link_to(user_object.username, url_or_object, link_opts)
       end
     end
   end
@@ -143,7 +142,7 @@ module ApplicationHelper
     end
   end
 
-  
+
   # 显示评星
   def star_rate_tag(point)
     point ||= 0
@@ -157,5 +156,9 @@ module ApplicationHelper
     end
     return html.html_safe
   end
-  
+
+  def link_to_image(path, url, link_opts = { }, image_opts = { })
+    link_to theme_image_tag(path, image_opts), url, link_opts
+  end
+
 end

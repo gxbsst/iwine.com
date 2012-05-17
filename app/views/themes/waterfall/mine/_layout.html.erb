@@ -1,4 +1,8 @@
 <% content_for :css do %>
 <%= theme_stylesheet_link_tag :hp %>
 <% end %>
-<%= render :partial => "mine/share/index", :layout => "layout" %>
+
+<div id="hp">
+	<%= render "sub_nav" %>
+  <%= yield %>
+</div>
