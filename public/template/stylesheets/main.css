@@ -66,6 +66,7 @@ input.common_search {width:250px;}
 .notice a {color:#514721;}
 .success a {color:#264409;}
 .information a {color:#205791;}
+.nor_notice {font-size:14px;}
 
 /* ------- My Form ----------*/
 .myform{}
@@ -98,10 +99,13 @@ a.icon_delet {background-position:0 -56px;text-indent: -9999px;height:13px;width
 a.icon_edit {background-position:0 -74px; text-indent:-9999px;height:13px;width:13px;display:inline-block;}
 a.icon_add {background-position:0 -92px; text-indent:-9999px;height:14px;width:14px;display:inline-block;}
 a.icon_delet2 {background-position:0 -115px; text-indent:-9999px;height:13px;width:13px;display:inline-block;}
-.icon_fb, .icon_tt, .icon_sina {background:url(../images/icon/sns_link.gif) no-repeat ;display:inline-block;height:23px;width:23px; text-indent:-9999px;}
-a.icon_fb {background-position: 0 0;}
-a.icon_tt {background-position:-28px 0;}
-a.icon_sina {background-position:-56px 0;}
+.icon_fb, .icon_tt, .icon_sina, .icon_fb_off, .icon_tt_off, .icon_sina_off {background:url(../images/icon/sns_link.gif) no-repeat ;display:inline-block;height:23px;width:23px; text-indent:-9999px;}
+.icon_fb {background-position: 0 0;}
+.icon_tt {background-position:-28px 0;}
+.icon_sina {background-position:-56px 0;}
+.icon_fb_off {background-position: 0 -27px;}
+.icon_tt_off {background-position:-28px -27px;}
+.icon_sina_off {background-position:-56px -27px;}
 a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .icon_fol {background-position:3px -172px;padding-left:15px;color:#999;}
 .icon_fol_e {background-position:1px -159px;padding-left:15px;color:#999;}
@@ -131,7 +135,7 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .star_rate img {margin-right:1px;}
 
 /*--------- Menu Tabs -------------- */
-.tabs {float:left; width:100%;border-bottom: 1px solid #ccc;line-height:normal;margin-bottom:20px;}
+.tabs {float:left; width:100%;border-bottom: 1px solid #ccc;line-height:normal;margin:20px 0;}
 .tabs ul {margin:0;padding:10px 10px 0 0;list-style:none;}
 .tabs li {display:inline; margin:0;padding:0;}
 .tabs a { float:left; margin:0 2px 0 0;padding:5px 15px 5px 15px;text-decoration:none;background-color:#eee;border-radius:5px 5px 0px 0px;color:#666;}
@@ -290,6 +294,10 @@ a.btn_green:hover span {background-position:right -92px;}
 /*------------box style---------------*/
 .wine_list .wine_info h2, .addwine .box .wine_info h2 {font-size:14px;}
 .wine_list .wine_info h3, .addwine .box .wine_info h3 {font-size:12px;font-weight:normal;color:#666;}
+.box590 {margin: 0 0 10px 0;}
+.box590_t {background:url(../images/bg/bg_box590_t.gif) no-repeat left top;height:10px;}
+.box590_b {background:url(../images/bg/bg_box590_b.gif) no-repeat left bottom;height:20px;}
+.box590_main {background:url(../images/bg/bg_box590_m.gif) repeat-y left top;padding:5px 15px 0 15px;}
 
 /*pagination style*/
 div.pagination {padding-right: 3px; padding-left: 3px; padding-bottom: 3px; margin: 3px; padding-top: 3px; text-align: center; clear:both;}
