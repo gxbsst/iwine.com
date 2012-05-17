@@ -13,7 +13,7 @@
 .search .wine_list .year span a {margin:0 5px 0 0;color:#993333;text-decoration:underline;display:inline-block;}
 .search .wine_list .year span a:hover {text-decoration:none;color:#993333;}
 .search .sidebar {margin-left:30px;}
-.search .sidebar .title {margin-bottom:20px;}
+.search .sidebar .title {margin-bottom:20px;font-size:13px;font-weight:bold;}
 .search .sidebar .username {margin-bottom:5px;}
 .search .sidebar .userlist li {margin:0 0 20px 0;}
 .search .sidebar .location {color:#999;margin-left:10px;display:inline-block;}
