@@ -3,7 +3,7 @@
 class WineRegisterUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
-  include CarrierWave::RMagick
+  include CarrierWave::MiniMagick
   # include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
@@ -18,8 +18,9 @@ class WineRegisterUploader < CarrierWave::Uploader::Base
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
+
   def default_url
-     "/images/fallback/" + [version_name, "default.png"].compact.join('_')
+    "/assets/base/" + [version_name, "wine_default.jpg"].compact.join('_')
   end
 
   # Process files as they are uploaded:
@@ -32,11 +33,18 @@ class WineRegisterUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :thumb do
-    process :resize_to_fill => [100, 100]
+    process :resize_to_limit => [APP_DATA["image"]["wine"]["thumb"]["width"], '']
   end
 
   version :middle do
-    process :resize_to_fill => [200, 200]
+    process :resize_to_limit => [APP_DATA["image"]["wine"]["middle"]["width"], '']
+                                
+   # 保存宽度到数据库                            
+   process :store_geometry                               
+  end
+  
+  version :large do
+    process :resize_to_limit => [APP_DATA["image"]["wine"]["large"]["width"], '']
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
@@ -50,5 +58,17 @@ class WineRegisterUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+  
+  # 保存图片的大小到数据库
+   def store_geometry
+     manipulate! do |img|
+       if model
+         model.width = img[:width]
+         model.height = img[:height]
+       end
+       img = yield(img) if block_given?
+       img
+     end
+   end
 
 end

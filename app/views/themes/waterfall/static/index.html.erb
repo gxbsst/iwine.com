@@ -1,0 +1,35 @@
+<script type="text/javascript" src="http://docs.kissyui.com/kissy/build/kissy.js"></script>
+<style>
+  .ks-waterfall{
+  position: absolute;
+  width: 228px;
+  overflow: hidden;
+
+  }
+</style>
+
+<div id="waterfall_outer"  style="position: relative;" >
+  <% (1..14).each do |i| %>
+    <div class="ks-waterfall">
+    <a class="wine_profile  fancybox.iframe" href="/wines/preview">
+    <%= image_tag "v2/test/w#{i}.png", :title => "title", :class => "class" %>
+    </a>
+    </div>
+  <% end %>
+  <% (1..14).each do |i| %>
+    <div class="ks-waterfall">
+    <%= image_tag "v2/test/w#{i}.png", :title => "title", :class => "class" %>
+    </div>
+  <% end %>
+</div>
+
+
+<script>
+KISSY.use("waterfall", function (S, Waterfall) {
+    new Waterfall({
+        container: "#waterfall_outer",    //节点容器
+        minColCount: 4,             //最小列数
+        colWidth: 235               //每列的宽度
+    });
+});
+</script>

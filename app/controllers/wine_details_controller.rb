@@ -2,10 +2,12 @@
 class WineDetailsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show]
   before_filter :set_current_user
-  before_filter :get_wine_detail, :except => [:comment_vote]
-
+  before_filter :get_wine_detail, :except => [:comment_vote, :index]
+  theme "waterfall"
+  
   def index
-    @wines = Wines::Detail.includes(:wine, :cover).order("created_at ASC").page params[:page] || 1
+    # @wines = Wines::Detail.includes(:wine, :cover).order("created_at ASC").page params[:page] || 1
+    @timelines = Wines::Detail.timeline_events.page(params[:page] || 1 ).per(10)
   end
 
   # Wine Profile

@@ -23,7 +23,20 @@ class AvatarUploader < CarrierWave::Uploader::Base
   def default_url
     "/assets/base/" + [version_name, "user_default.jpg"].compact.join('_')
   end
-
+  
+  # process :get_geometry
+  # def geometry
+  #     @geometry
+  # end
+  # 
+  # def get_geometry
+  #     # binding.pry
+  #     if (@file)
+  #       
+  #         img = ::MiniMagick::Image.open(@file.file)
+  #         @geometry = [ img[:width], img[:height] ]
+  #     end
+  # end
   # Process files as they are uploaded:
   # process :scale => [200, 300]
   #
@@ -51,7 +64,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   version :thumb do
     resize_to_limit( APP_DATA["image"]["user"]["thumb"]["width"],  APP_DATA["image"]["user"]["thumb"]["height"])
   end
-
+  
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   # def extension_white_list

@@ -1,0 +1,27 @@
+<div class="large relative">
+  <% @wine_detail.covers.each do |photo,index| %>
+    <%= link_to (image_tag @wine_detail.photos.first.image_url), "photo_url", :id => "large_#{index}" %>
+  <% end %>
+</div>
+<div class="clear"></div>
+<div class="thumbs relative">
+  <%= link_to "", "javascript:void(0)", :class => "absolute icon compass_icons-arrow_left backward" %>
+  <span class="slideshow">
+    <% @wine_detail.covers.each do |photo| %>
+      <%= link_to (image_tag photo.image_url(:w_thumb), :class => "pic", :width => 60, :height => 60), "javascript:void(0)" %>
+    <% end %>
+  </span>
+  <%= link_to "", "javascript:void(0)", :class => "absolute icon compass_icons-arrow_right forward" %>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+   $(".slideshow").tabs(".large > a", {
+   effect: 'fade',
+   fadeOutSpeed: "slow",
+   rotate: true
+  }).slideshow();
+
+  });
+</script>

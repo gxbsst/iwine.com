@@ -56,5 +56,8 @@ module Patrick
     ActiveSupport::Deprecation.silenced = true
 
     Time::DATE_FORMATS[:normal] = "%Y-%m-%d"
+    
+    ThemesForRails.config.default_theme = "waterfall"
+    
   end
 end

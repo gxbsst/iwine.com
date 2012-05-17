@@ -1,0 +1,56 @@
+<% if params[:controller].include? "mine" %>
+<% sub_menu = {
+     "wine_favorite"     => [mine_cellar_path(@user.cellar.id), @user.wine_cellar_count],
+     "wine_follows"     => ["/mine/wine_follows", @user.wine_follows_count],
+     "winery_follows"   => ["/mine/winery_follows", @user.wine_follows_count],
+     "comments"  => ["/mine/comments", @user.comments_count],
+     # "testing_notes"  => ["testing_notes", 0],
+     "followings"     => ["/mine/followings", @user.user_followes_count],
+     "followers"    => ["/mine/followers", @user.user_followeds_count]
+   #  "albums"           => ["/mine/albums", @user.albums_count]
+} %>
+<% else %>
+<% sub_menu = {
+        "wine_favorite"     => [user_cellar_path(@user.id), @user.wine_cellar_count],
+     "wine_follows"     => [wine_follows_user_path(@user.id), @user.wine_follows_count],
+     "winery_follows"   => [winery_follows_user_path(@user.id), @user.wine_follows_count],
+     "comments"  => [comments_user_path(@user.id), @user.comments_count],
+     # "testing_notes"  => ["testing_notes", 0],
+     "followings"     => [followings_user_path(@user.id), @user.user_followes_count],
+     "followers"    => [followers_user_path(@user.id), @user.user_followeds_count]
+     #"albums"           => [user_albums_path(@user.id), @user.albums_count]
+ } %>
+<% end %>
+
+  <div class="hp_header">
+    <div class="hp_right">
+      <%= link_to mine_cellar_path(@user.cellar), :class => "btn_red_sb" do %>
+        <span>我的酒窖</span>
+      <% end %>
+    </div>
+    <div class="hp_userimg">
+       <%= link_to_user @user,
+                        user_path(@user, :trailing_slash => true),
+                        { :with_avatar => true,
+                        :avatar_version => :large },
+                        {:width => 130, :height => 130}  %>
+    </div>
+    <div class="hp_info">
+      <div class="username"><%= @user.username %></div>
+      <div class="mystatu"><%= @user.profile.bio %> <span><a href="#">修改</a></span></div>
+      <div class="item">
+        <%= link_to "私信", mine_conversations_path, :class => :icon_mail %> |
+        <%= link_to "设置", basic_settings_path %>
+      </div>
+      <ul class="hp_navi">
+        <% sub_menu.each do |action_name, url| %>
+          <%= content_tag :li, :class => ( if params[:action] == action_name; :current; end) do %>
+            <%= link_to "#{url[1]} <br />".html_safe + t("nav.sub_nav.mine.#{action_name}"),  url[0] %>
+          <% end %>
+        <% end %>
+      </ul>
+      <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+  </div>
+
