@@ -1,4 +1,7 @@
-<div id="span950">
+<% content_for :css do %>
+<%= theme_stylesheet_link_tag :hp %>
+<% end %>
+ <div class="whitespace">
   <div id="hp">
     <%=  render "share/user_cellar" %>
     <div id="cellar">
@@ -74,7 +77,3 @@
     </div>
   </div>
 </div>
-
-
-
-

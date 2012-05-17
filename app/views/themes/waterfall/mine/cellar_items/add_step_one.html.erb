@@ -1,9 +1,9 @@
-<div class="mine albums">
-  <%= render "/mine/sub_nav", :action => params[:action] %>
-  <div class="clear"></div>
-
-  <div id="hp">
-    <div id="cellar">
+<% content_for :css do %>
+	<%= theme_stylesheet_link_tag :hp %>
+	<% end %>
+	<div id="hp">
+	<%= render "mine/sub_nav", :action => params[:action] %>
+	  <div id="cellar">
       <div class="title_btn">
         <h1>添加藏酒</h1>
       </div>
@@ -16,5 +16,4 @@
   </div>
 
   <div class="clear"></div>
-  <!-- end mine -->
-</div>
+	</div>
