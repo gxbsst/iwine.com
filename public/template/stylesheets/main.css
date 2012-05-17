@@ -90,7 +90,7 @@ input.year, input.percent  {width:50px;}
 textarea.wine_intro {width:500px;height:200px;}
 
 /*icon*/
-.icon_mail, .icon_like, .icon_add_album, .icon_delet, .icon_edit, .icon_add, .icon_delet2, .icon_comment {background:url(../images/icon/icon_all.gif) no-repeat;display:inline-block;}
+.icon_mail, .icon_like, .icon_add_album, .icon_delet, .icon_edit, .icon_add, .icon_delet2, .icon_comment, .icon_fol, .icon_fol_e {background:url(../images/icon/icon_all.gif) no-repeat;display:inline-block;}
 a.icon_mail {background-position: 0 2px;display:inline-block;padding:0 0 0 20px;}
 a.icon_like {background-position: 0 -16px;padding:0 0 0 20px;}
 a.icon_add_album {background-position: 0 -35px;padding:0 0 0 20px;height:17px;line-height:17px;}
@@ -103,7 +103,10 @@ a.icon_fb {background-position: 0 0;}
 a.icon_tt {background-position:-28px 0;}
 a.icon_sina {background-position:-56px 0;}
 a.icon_comment {background-position:0 -143px;padding-left:15px;}
-
+.icon_fol {background-position:3px -172px;padding-left:15px;color:#999;}
+.icon_fol_e {background-position:1px -159px;padding-left:15px;color:#999;}
+.cancl_fol a {color:#a8bbc6;}
+ 
 /*--------------star style---------------*/
 .star_s0, .star_s1, .star_s2, .star_s3, .star_s4, .star_s5 {background:url(../images/star.jpg) no-repeat;display:inline-block;width:65px;height:12px;margin-top:2px;}
 .star_b_s00, .star_b_s05, .star_b_s10, .star_b_s15, .star_b_s20, .star_b_s25, .star_b_s30, .star_b_s35, .star_b_s40, .star_b_s45, .star_b_s50 {background:url(../images/star.jpg) no-repeat;display:inline-block;width:79px;height:14px;}
@@ -127,6 +130,17 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .star_rate {float:left;}
 .star_rate img {margin-right:1px;}
 
+/*--------- Menu Tabs -------------- */
+.tabs {float:left; width:100%;border-bottom: 1px solid #ccc;line-height:normal;margin-bottom:20px;}
+.tabs ul {margin:0;padding:10px 10px 0 0;list-style:none;}
+.tabs li {display:inline; margin:0;padding:0;}
+.tabs a { float:left; margin:0 2px 0 0;padding:5px 15px 5px 15px;text-decoration:none;background-color:#eee;border-radius:5px 5px 0px 0px;color:#666;}
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+.tabs a span {float:none;}
+/* End IE5-Mac hack */
+.tabs a:hover {background-color:#9fc987;color:#fff;}
+.tabs .current a {background-color:#9fc987;color:#fff;}
+
 /*common style*/
 .username a {color:#333;}
 .date {font-size:11px;color:#999;}
@@ -149,11 +163,17 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .comment_list .replybox .reply_list li {width:480px;float:left;margin:20px 0 0 0;padding:0 0 0 0;}
 .comment_list .replybox .reply_list .main {width:435px;float:left;}
 .comment_list .replybox .reply_list .userpic {width:30px;float:left;margin-right:15px;}
-.comment_post {background-color:#f3f3f3;border-radius: 5px 5px 5px 5px;padding:15px;}
+.comment_post, .search .searchbox {background-color:#f3f3f3;border-radius: 5px 5px 5px 5px;padding:15px;}
 .comment_post .post_main {float:left;width:490px;}
 .comment_post .post_main textarea {width:470px;height:80px;background-color:#fff;}
 .comment_post .reply_text {margin:0 0 10px 0;color:#999;}
 .comment_post .reply_text span {margin-right:10px;}
+
+/*-------User list--------*/
+.userlist li {width:170px;float:left;margin:0 10px 30px 10px;}
+.userlist .userpic {width:50px;float:left;margin-right:15px;}
+.userlist .userinfo {width:105px;float:left;}
+.userlist .userinfo .userlocation {color:#999;}
 
 
 /*---------table style-----------*/
@@ -170,13 +190,39 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 #header #top_right .userbox .userpic {width:20px;height:20px;border:5px solid #f5f3f3;}
 #header #top_right .userbox .userpic img {width:20px;height:20px;}
 #header #top_right .userbox a {float:left;}
+.drop_down_menu {
+    /* border: 1px solid #1C1C1C; */
+    display: none;
+    width: 117px;
+    display: none;
+    position: absolute;
+    z-index: 10000;
+    background: #F5F3F3;
+    top: 42px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 2px 0 2px 2px;
+    padding-left: 10px;
+    opacity: 0.9;
+}
+.header-content ul.user_nav .drop_down_menu li {
+    float: none;
+}
+.drop_down_menu li a {
+    display: block;
+    width: 111px;
+    padding: 5px 10px;
+    text-decoration: none;
+}
 
 /*main space*/
 #wrapper950 {width:950px;margin: 30px auto;}
 #wrapper860 {width:860px;margin: 0 auto;}
 /*#span950 {width:950px;margin:0 auto;background-color:#fff;box-shadow: 0 1px 2px 1px #E0E0E0;border:1px solid #dddddd;}*/
 .whitespace {background-color:#fff;box-shadow: 0 1px 2px 1px #E0E0E0;border:1px solid #dddddd;}
-.whitespace_pd {background-color:#fff;box-shadow: 0 1px 2px 1px #E0E0E0;border:1px solid #dddddd;padding: 30px 40px;}
+.normal {background-color:#fff;box-shadow: 0 1px 2px 1px #E0E0E0;border:1px solid #dddddd;padding: 30px 40px;}
+.normal .left {width:590px;float:left;margin-right:28px;}
+.normal .right {width:250px;float:left;}
 .whitespace860 {background-color:#fff;box-shadow: 0 1px 3px rgba(34,25,25,0.4);border:1px solid #ddd;}
 #message {width:600px;margin:0 auto;}
 #message h1 {font-size:18px;font-weight:bold;color:#000;}
@@ -203,6 +249,7 @@ ul.private_list li {padding:15px 10px;border-bottom:1px solid #ccc;}
 .message_talk .content { float:left;display:inline-block;width:460px;}
 .talk_l .content {background-color:#f3f3f3;padding:10px;}
 .talk_r .content {background-color:#f9f9f9;padding:10px;}
+
 
 /*button style*/
 a.btn_gray, a.btn_gray span, a.btn_gray:hover, a.btn_gray:hover span, a.btn_red_sb, a.btn_red_sb span, a.btn_red_b, a.btn_red_b span, a.btn_blue, a.btn_blue span, a.btn_blue_b, a.btn_blue_b span, a.btn_gray_b, a.btn_gray_b span, a.btn_count, a.btn_count span {background:url(../images/bg/button_bg.jpg) no-repeat;}
