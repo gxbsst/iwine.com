@@ -219,8 +219,8 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 #wrapper950 {width:950px;margin: 30px auto;}
 #wrapper860 {width:860px;margin: 0 auto;}
 /*#span950 {width:950px;margin:0 auto;background-color:#fff;box-shadow: 0 1px 2px 1px #E0E0E0;border:1px solid #dddddd;}*/
-.whitespace {background-color:#fff;box-shadow: 0 1px 2px 1px #E0E0E0;border:1px solid #dddddd;}
-.normal {background-color:#fff;box-shadow: 0 1px 2px 1px #E0E0E0;border:1px solid #dddddd;padding: 30px 40px;}
+.whitespace {background-color:#fff;box-shadow: 0 1px 2px 1px #E0E0E0;border:1px solid #ccc;}
+.normal {background-color:#fff;box-shadow: 0 1px 2px 1px #E0E0E0;border:1px solid #ccc;padding: 30px 40px;}
 .normal .left {width:590px;float:left;margin-right:28px;}
 .normal .right {width:250px;float:left;}
 .whitespace860 {background-color:#fff;box-shadow: 0 1px 3px rgba(34,25,25,0.4);border:1px solid #ddd;}
