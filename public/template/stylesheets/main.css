@@ -194,7 +194,7 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 
 /*header*/
 #header {background:url(../images/bg/header_bg.png) repeat-x top left; height:52px;color:#fff; position:relative;padding-top:8px;}
-#header .main950 {width:950px;margin:0 auto;}
+#header .main950 {width:950px;margin:0 auto;position:relative;}
 #header .main860 {width:860px;margin:0 auto;}
 #header #logo {width:300px;float:left;}
 #header #top_search {float:left;width:350px;margin:5px 0 0 20px;}

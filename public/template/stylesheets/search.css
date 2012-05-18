@@ -20,3 +20,8 @@
 .winery_list li {margin: 0 0 40px 0;width:590px;float:left;}
 .winery_list .logo {width:100px;float:left;margin-right:20px;}
 .winery_list .meta {width:470px;float:left;}
+#top_search {position:relative;}
+.search_scroll {width:348px; position:absolute;left:320px;top:38px;border:1px solid #ccc;background-color: #fff;border-radius:3px 3px 3px 3px;}
+.search_scroll p a {display:block;border-bottom:1px solid #ccc;padding:5px 10px;color:#333;}
+.search_scroll p a:hover {background-color:#f3f3f3;text-decoration:none;}
+
