@@ -32,4 +32,8 @@ class SearchesController < ApplicationController
   def hot_entries
 
   end
+
+  def results
+
+  end
 end

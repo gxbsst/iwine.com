@@ -130,6 +130,7 @@ Patrick::Application.routes.draw do
     collection do
       get :hot_words, :via => [:get , :put]
       get :hot_entries, :via => [:get , :put]
+      get :results, :via => [:get , :put]
     end
   end
 
