@@ -4,12 +4,17 @@ body {line-height:18px;}
 * {margin:0;padding:0;}
 h1, h2, h3, h4, h5, h6, ul, li, p, dl, dd, dt {margin:0;padding:0;}
 h1 a, h2 a, h3 a, h4 a {color:#333;}
-h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover {color:#cc3333;text-decoration:none;}
+h1.zh a {font-size:14px;color:#333;}
+h1.en a {font-size:12px;color:#999;font-weight:normal;}
+h1.en a:hover {color:#999;text-decoration:none;}
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h1.zh a:hover {color:#993333;text-decoration:none;}
 h1.main_title {font-size:18px;}
 li {list-style:none;}
-a {color:#cc3333;text-decoration:none;}
+a, .username a:hover, .more a, .control a{color:#993333;text-decoration:none;}
 a:hover {text-decoration:underline;}
-.more a {color:#cc3333;}
+.username a {color:#333;}
+.control a:hover {text-decoration:underline;}
+.date {font-size:11px;color:#999;}
 img {border:none;}
 i {color:#ccc;}
 .mr5 {margin-right:5px;}
@@ -45,7 +50,7 @@ input.common_search {width:250px;}
 .float_r {float:right;}
 .font12 {font-size:12px;}
 .font14 {font-size:14px;}
-.notice_b {font-size:14px;font-weight:bold;}
+.notice_b{font-size:14px;font-weight:bold;}
 .span550 {width:550px;}
 .span520 {width:520px;}
 .span508 {width:508px;}
@@ -99,7 +104,7 @@ a.icon_delet {background-position:0 -56px;text-indent: -9999px;height:13px;width
 a.icon_edit {background-position:0 -74px; text-indent:-9999px;height:13px;width:13px;display:inline-block;}
 a.icon_add {background-position:0 -92px; text-indent:-9999px;height:14px;width:14px;display:inline-block;}
 a.icon_delet2 {background-position:0 -115px; text-indent:-9999px;height:13px;width:13px;display:inline-block;}
-.icon_fb, .icon_tt, .icon_sina, .icon_fb_off, .icon_tt_off, .icon_sina_off {background:url(../images/icon/sns_link.gif) no-repeat ;display:inline-block;height:23px;width:23px; text-indent:-9999px;}
+.icon_fb, .icon_tt, .icon_sina, .icon_fb_off, .icon_tt_off, .icon_sina_off {background:url(../images/icon/sns_link.gif) no-repeat ;display:block;float:left;height:23px;width:23px; text-indent:-9999px;}
 .icon_fb {background-position: 0 0;}
 .icon_tt {background-position:-28px 0;}
 .icon_sina {background-position:-56px 0;}
@@ -146,11 +151,6 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .tabs .current a {background-color:#9fc987;color:#fff;}
 
 /*common style*/
-.username a {color:#333;}
-.date {font-size:11px;color:#999;}
-.username a:hover {color:#cc3333;text-decoration:none;}
-.control a {color:#cc3333;}
-.control a:hover {text-decoration:underline;color:#cc3333;}
 .comment_list {margin: 0 0 20px 0;}
 .comment_list li {margin: 0 0 10px 0;padding: 0 0 10px 0;width:590px;float:left;}
 .comment_list .userpic, .comment_post .userpic {float:left;margin:0 20px 0 0;}
