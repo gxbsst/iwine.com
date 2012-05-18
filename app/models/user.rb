@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   has_many :oauths, :class_name => 'Users::Oauth'
   has_many :followers, :class_name => 'Friendship', :include => :follower do
     def map_user
-      map {|f| f.user }
+      map {|f| f.follower }
     end
   end
   has_many :followings, :class_name => 'Friendship', :foreign_key => 'follower_id', :include => :user do
@@ -31,9 +31,9 @@ class User < ActiveRecord::Base
     end
   end
   
-  has_many :time_events
   has_many :wine_followings, :include => :commentable, :class_name => "Comment", :conditions => {:commentable_type => "Wines::Detail", :do => "follow"}
   accepts_nested_attributes_for :profile, :allow_destroy => true
+  has_many :feeds, :class_name => "Users::Timeline", :include => [:ownerable, {:timeline_event => [:actor]}, {:receiverable =>  [:covers, :wine]}], :order => "created_at DESC"
 
   # validates :username, :presence => false, :allow_blank => true, :numericality => true
   validates :agree_term, :acceptance => true, :on => :create
@@ -244,12 +244,6 @@ class User < ActiveRecord::Base
 
   def all_comments
 
-  end
-  
-  def feeds
-    Users::Timeline.where("user_id=#{id}").
-     includes(:timeline_event => [:actor, :subject, :secondary_actor => [:covers, :wine]]).
-     order("created_at DESC")
   end
 
   private

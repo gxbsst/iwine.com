@@ -6,20 +6,20 @@
 		<% if l.event_type == "new_comment" %>
 		<div class="iw item">
       	<div class="iw_img">
-					<%= link_to wine_waterfall_image_tag(l.timeline_event.secondary_actor, :thumb_name => :w_middle), wine_path(l.timeline_event.secondary_actor) %>
+					<%= link_to wine_waterfall_image_tag(l.receiverable, :thumb_name => :w_middle), wine_path(l.receiverable) %>
 				</div>
           <div class="iw_info">
               <h1>
-								<%= raw link_to l.timeline_event.secondary_actor.cname, wine_path(l.timeline_event.secondary_actor) %>
+								<%= raw link_to l.receiverable.cname, wine_path(l.receiverable) %>
 							</h1>
               <h2>
-					      <%= raw link_to l.timeline_event.secondary_actor.ename, wine_path(l.timeline_event.secondary_actor) %>
+					      <%= raw link_to l.receiverable.ename, wine_path(l.receiverable) %>
 							</h2>
               <p class="iw_action">有了新评论</p>
           </div>
           <div class="iw_main">
           	<ul>
-							 <% l.timeline_event.secondary_actor.comments.recent(6).each do |comment|%>
+							 <% l.receiverable.comments.recent(6).each do |comment|%>
               	<li>
                   	<div class="left">
 											<%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true), {:with_avatar => true, :avatar_version => :thumb}, {:width => 30, :height => 30} %>
@@ -36,8 +36,8 @@
              </ul>
           </div>
           <div class="iw_more">
-						<%= link_to  wine_comments_path(l.timeline_event.secondary_actor) do %>
-						共<%= l.timeline_event.secondary_actor.comments_count %>条评论
+						<%= link_to  wine_comments_path(l.receiverable) do %>
+						共<%= l.receiverable.comments_count %>条评论
 						<% end %>
 						</div>
     </div>
@@ -45,18 +45,15 @@
 		<% elsif l.event_type == "add_to_cellar" %>
 		<div class="iw item">
       	<div class="iw_img">
-					<%= link_to wine_waterfall_image_tag(l.timeline_event.secondary_actor, :thumb_name => :w_middle), wine_path(l.timeline_event.secondary_actor) %>
+					<%= link_to wine_waterfall_image_tag(l.receiverable, :thumb_name => :w_middle), wine_path(l.receiverable) %>
 				</div>
           <div class="iw_info">
-							<h1>
-								<a href="wine_profile.html">2001拉菲珍宝</a>
-								<%= raw link_to l.timeline_event.secondary_actor.cname, wine_path(l.timeline_event.secondary_actor) %>
-							</h1>
-              
-              <h2>
-					      <%= raw link_to l.timeline_event.secondary_actor.ename, wine_path(l.timeline_event.secondary_actor) %>
-							</h2>
-							
+            <h1>
+							<%= raw link_to l.receiverable.cname, wine_path(l.receiverable) %>
+						</h1>
+            <h2>
+				      <%= raw link_to l.receiverable.ename, wine_path(l.receiverable) %>
+						</h2>							
               <p class="iw_action">有人把它加入了酒窖</div>
           <div class="iw_main">
           	<ul>
@@ -74,17 +71,88 @@
               </ul>
           </div>
           <div class="iw_more">
-          	<%= link_to "去看看他的酒窖", user_cellar_path(l.timeline_event.actor, l.timeline_event.actor.cellar)%>
+          	<%= link_to "去看看他的酒窖", user_cellar_path(l.timeline_event.actor, l.timeline_event.actor)%>
           </div>
     </div>
     
 		<% end %>
 		<!-- 如果是关注的用户 -->
 	 <% elsif l.ownerable_type == "User" %>
+
+	 <!-- 关注用户添加了评论 -->
 			<% if l.event_type == "new_comment" %>
-				bb
+	    <div class="iw item">
+      	<div class="iw_user">
+        	<div class="left">
+						<%= link_to_user l.ownerable, user_path(l.ownerable, :trailing_slash => true), :with_avatar => true, :avatar_version => :thumb%>
+						</div>
+            <div class="right">
+                <p class="username">
+                		<%= link_to_user l.ownerable, user_path(l.ownerable, :trailing_slash => true) %>
+                </p>
+                <p class="content">发表了评论</p>
+            </div>
+            <div class="clear"></div>
+        </div>
+        	<div class="iw_img">
+						<%= link_to wine_waterfall_image_tag(l.receiverable, :thumb_name => :w_middle), wine_path(l.receiverable) %>
+				 </div>
+            <div class="iw_info">
+              <h1>
+								<%= raw link_to l.receiverable.cname, wine_path(l.receiverable) %>
+							</h1>
+              <h2>
+					      <%= raw link_to l.receiverable.ename, wine_path(l.receiverable) %>
+							</h2>
+            </div>
+            <div class="iw_main">
+            	<ul>
+                	<li>
+					        	<div class="left">
+											<%= link_to_user l.ownerable, user_path(l.ownerable, :trailing_slash => true), :with_avatar => true, :avatar_version => :thumb%>
+											</div>
+                        <div class="right">
+					                <p class="username">
+					                		<%= link_to_user l.ownerable, user_path(l.ownerable, :trailing_slash => true) %>
+					                </p>
+                            <p class="content"></p>
+                        </div>
+                        <div class="clear"></div>
+                    </li>
+                 </ul>
+            </div>
+      </div>
+				<!-- 关注用户添加了酒到酒窖 -->
 			<% elsif l.event_type == "add_to_cellar" %>
-				cc
+			<div class="iw item">
+      	<div class="iw_user">
+        	<div class="left">
+		<%= link_to_user l.timeline_event.actor, user_path(l.timeline_event.actor, :trailing_slash => true), :with_avatar => true, :avatar_version => :thumb %>
+	  </div>
+            <div class="right">
+                <p class="username">
+                		<%= link_to_user l.timeline_event.actor, user_path(l.timeline_event.actor, :trailing_slash => true) %>
+                </p>
+                <p class="content">把它酒加入了酒窖</p>
+            </div>
+            <div class="clear"></div>
+        </div>
+        	<div class="iw_img">
+						<%= link_to wine_waterfall_image_tag(l.receiverable, :thumb_name => :w_middle), wine_path(l.receiverable) %>	
+					</div>
+            <div class="iw_info">
+              <h1>
+								<%= raw link_to l.receiverable.cname, wine_path(l.receiverable) %>
+							</h1>
+              <h2>
+					      <%= raw link_to l.receiverable.ename, wine_path(l.receiverable) %>
+							</h2>
+            </div>
+             <div class="iw_more">
+             	<%= link_to "去看看他的酒窖", user_cellar_path(l.timeline_event.actor, l.timeline_event.actor)%>
+             </div>
+      </div>
+      
 			<% end %>
 	 <% end # end User %> 
   <% end # end Timeline.each %>
