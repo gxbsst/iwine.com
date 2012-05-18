@@ -17,7 +17,8 @@
         </div>
         <div id="top_search">
           <%= theme_image_submit_tag "icon/search.gif", :class => :search_btn %>
-          <input class="search" name="" type="text" />
+          <input class="search" id="hot_search" name="" type="text" />
+          <div id="hot-search-list" style="color: #660000;position: absolute;background: #ddd;"></div>
         </div>
         <div id="top_right">
           <%= render "layouts/user_fragment" %>
@@ -29,5 +30,39 @@
         <%= yield %>
     </div>
     <%= render "layouts/footer" %>
+<script type="text/javascript" >
+  var getHotSerach = function(){
+    $.ajax({
+      url: '/searches/hot_words?word='+$('#hot_search').val(),
+      success: function( data ){
+        var i ,
+          wines = data.wines,
+          wineries = data.wineries,
+          html =  '<ul>';
+
+        for( i = 0 ; i < wines.length ; i++ ){
+          html += '<li>' + data.wines[i] + '</li>';
+        }
+
+        html += '</ul>';
+
+        for( i = 0 ; i< wineries.length ; i++ ){
+          html += '<li>' + data.wineries[i] + '</li>';
+        }
+
+  console.log( wines , wineries );
+
+        $('#hot-search-list').html( html );
+      }
+    });
+  };
+
+  var timer;
+
+  $('#hot_search').bind( 'keyup' , function(){
+    clearTimeout( timer );
+    timer = setTimeout( getHotSerach , 400 );
+  });
+</script>
   </body>
 </html>

@@ -26,4 +26,8 @@ N+1 Query method call stack
 localhost:3000http://localhost:3000/mine
 Unused Eager Loading detected
   Comment => [:user]
-  Remove from your finder: :include => [:user]
+  Remove from your finder: :include => [:user]2012-05-17 15:31:12[WARN] user: dongwei
+localhost:3000http://localhost:3000/settings/basic
+Unused Eager Loading detected
+  Users::WineCellarItem => [:wine_cellar]
+  Remove from your finder: :include => [:wine_cellar]

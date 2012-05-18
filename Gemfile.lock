@@ -26,6 +26,8 @@ PATH
       awesome_nested_set (>= 2.0)
     acts_as_votable (0.2.0)
       rails (>= 3.0.0)
+    themes_for_rails (0.5.0)
+      rails (>= 3.0.0)
     timeline_fu (0.3.0)
 
 PATH
@@ -375,6 +377,7 @@ DEPENDENCIES
   slowgrowl
   stickies!
   store_configurable (~> 3.2.0)
+  themes_for_rails!
   timeline_fu!
   turn
   uglifier (>= 1.0.3)

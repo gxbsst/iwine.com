@@ -127,7 +127,7 @@ timeline:
      
        
 search_server:
-  host: 192.168.11.76
+  host: www.sidways.com
   port: 8080
   entry_url: /patrick/query/
   word_url: /patrick/associate

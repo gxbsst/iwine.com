@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120507225155) do
+ActiveRecord::Schema.define(:version => 20120515064516) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -41,7 +41,6 @@ ActiveRecord::Schema.define(:version => 20120507225155) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.string   "role"
   end
 
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
@@ -49,7 +48,6 @@ ActiveRecord::Schema.define(:version => 20120507225155) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",          :limit => 45,                    :null => false
-    t.integer  "user_id"
     t.text     "intro"
     t.boolean  "is_order_asc",                :default => false, :null => false
     t.integer  "cover_id",                    :default => 0
@@ -143,22 +141,20 @@ ActiveRecord::Schema.define(:version => 20120507225155) do
   create_table "photos", :force => true do |t|
     t.string   "image"
     t.integer  "owner_type"
-    t.integer  "business_id",                                   :null => false
+    t.integer  "business_id"
     t.text     "intro"
-    t.string   "category",      :limit => 0,                    :null => false
+    t.string   "category",      :limit => 0, :default => ""
     t.integer  "size"
-    t.integer  "album_id",                                      :null => false
-    t.integer  "width",                      :default => 0,     :null => false
-    t.integer  "height",                     :default => 0,     :null => false
+    t.integer  "album_id"
+    t.integer  "width",                      :default => 0
+    t.integer  "height",                     :default => 0
     t.integer  "viewed_num",                 :default => 0
     t.integer  "commented_num",              :default => 0
     t.integer  "liked_num",                  :default => 0
     t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "is_cover",                   :default => false
-    t.integer  "audit_id"
-    t.integer  "audit_status"
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
   end
 
   create_table "receipts", :force => true do |t|
@@ -176,11 +172,11 @@ ActiveRecord::Schema.define(:version => 20120507225155) do
   add_index "receipts", ["notification_id"], :name => "index_receipts_on_notification_id"
 
   create_table "regions", :force => true do |t|
-    t.integer  "parent_id",   :limit => 2,   :default => 0,  :null => false
-    t.string   "region_name", :limit => 120, :default => "", :null => false
-    t.integer  "region_type"
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.integer  "parent_id",   :limit => 2,   :default => 0,     :null => false
+    t.string   "region_name", :limit => 120, :default => "",    :null => false
+    t.boolean  "region_type",                :default => false, :null => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
   end
 
   add_index "regions", ["parent_id"], :name => "parent_id"
@@ -227,6 +223,27 @@ ActiveRecord::Schema.define(:version => 20120507225155) do
 
   add_index "social_messages", ["recipient_id", "send_time", "delete_by_recipient"], :name => "recipient_id"
   add_index "social_messages", ["sender_id", "send_time", "delete_by_sender"], :name => "sender_id"
+
+  create_table "timeline_events", :force => true do |t|
+    t.string   "event_type"
+    t.string   "subject_type"
+    t.string   "actor_type"
+    t.string   "secondary_subject_type"
+    t.string   "secondary_actor_type"
+    t.integer  "subject_id"
+    t.integer  "actor_id"
+    t.integer  "secondary_subject_id"
+    t.integer  "secondary_actor_id"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+  end
+
+  add_index "timeline_events", ["actor_id"], :name => "index_timeline_events_on_actor_id"
+  add_index "timeline_events", ["actor_type"], :name => "index_timeline_events_on_actor_type"
+  add_index "timeline_events", ["event_type"], :name => "index_timeline_events_on_event_type"
+  add_index "timeline_events", ["secondary_actor_id"], :name => "index_timeline_events_on_secondary_actor_id"
+  add_index "timeline_events", ["secondary_actor_type"], :name => "index_timeline_events_on_secondary_actor_type"
+  add_index "timeline_events", ["subject_id"], :name => "index_timeline_events_on_subject_id"
 
   create_table "user_good_hit_comments", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -293,6 +310,22 @@ ActiveRecord::Schema.define(:version => 20120507225155) do
   end
 
   add_index "user_profiles", ["user_id"], :name => "user_profile_FI_1"
+
+  create_table "user_timelines", :force => true do |t|
+    t.integer  "user_id",           :null => false
+    t.integer  "timeline_event_id", :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "ownerable_type"
+    t.string   "ownerable_id"
+    t.string   "receiver"
+    t.integer  "receiver_id"
+    t.string   "event_type"
+  end
+
+  add_index "user_timelines", ["event_type"], :name => "index_user_timelines_on_event_type"
+  add_index "user_timelines", ["receiver_id"], :name => "index_user_timelines_on_receiver_id"
+  add_index "user_timelines", ["user_id"], :name => "index_user_timelines_on_user_id"
 
   create_table "user_wine_cellar_items", :force => true do |t|
     t.integer  "user_wine_cellar_id"
@@ -375,15 +408,15 @@ ActiveRecord::Schema.define(:version => 20120507225155) do
   add_index "votes", ["voter_id", "voter_type"], :name => "index_votes_on_voter_id_and_voter_type"
 
   create_table "wine_comments", :force => true do |t|
-    t.integer  "wine_detail_id",                              :null => false
-    t.integer  "user_id",                                     :null => false
+    t.integer  "wine_detail_id",                               :null => false
+    t.integer  "user_id",                                      :null => false
     t.text     "content"
-    t.integer  "good_hit",                     :default => 0
-    t.integer  "point",          :limit => 1,  :default => 0
-    t.string   "drink_status",   :limit => 40
+    t.integer  "good_hit",                     :default => 0,  :null => false
+    t.integer  "point",          :limit => 1,  :default => 0,  :null => false
+    t.string   "drink_status",   :limit => 40, :default => "", :null => false
     t.integer  "flag",           :limit => 1,  :default => 0
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
   end
 
   create_table "wine_details", :force => true do |t|
@@ -441,11 +474,11 @@ ActiveRecord::Schema.define(:version => 20120507225155) do
     t.integer  "parent_id"
     t.string   "name_en",     :limit => 45
     t.string   "name_zh",     :limit => 45
-    t.integer  "tree_right",                               :null => false
-    t.integer  "tree_left",                                :null => false
-    t.integer  "scope",                                    :null => false
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.integer  "tree_right"
+    t.integer  "tree_left"
+    t.integer  "scope"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "level",       :limit => 1,  :default => 1, :null => false
     t.string   "origin_name", :limit => 45
     t.string   "doc",         :limit => 30
@@ -472,10 +505,12 @@ ActiveRecord::Schema.define(:version => 20120507225155) do
     t.integer  "user_id"
     t.integer  "result"
     t.datetime "created_at",                                       :null => false
-    t.string   "other_cn_name"
     t.datetime "updated_at",                                       :null => false
+    t.string   "other_cn_name"
     t.string   "origin_name",        :limit => 45
     t.text     "description"
+    t.integer  "width"
+    t.integer  "height"
   end
 
   create_table "wine_special_comments", :force => true do |t|
@@ -509,11 +544,11 @@ ActiveRecord::Schema.define(:version => 20120507225155) do
   end
 
   create_table "wine_varieties", :force => true do |t|
-    t.string   "culture",     :limit => 7
-    t.string   "name_zh"
+    t.string   "culture",     :limit => 7, :default => ""
+    t.string   "name_zh",                  :default => ""
     t.string   "name_en"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "pinyin"
     t.string   "origin_name"
   end
@@ -561,9 +596,5 @@ ActiveRecord::Schema.define(:version => 20120507225155) do
 
   add_index "wines", ["region_tree_id"], :name => "fk_wine_region_tree1"
   add_index "wines", ["winery_id"], :name => "fk_wine_winery1"
-
-  add_foreign_key "notifications", "conversations", :name => "notifications_on_conversation_id"
-
-  add_foreign_key "receipts", "notifications", :name => "receipts_on_notification_id"
 
 end

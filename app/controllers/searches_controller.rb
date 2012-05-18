@@ -16,6 +16,10 @@ class SearchesController < ApplicationController
   end
 
   def hot_words 
+    if params[:word].blank?
+      render :json => { 'wines' =>  [] , 'wineries' => [] }
+      return
+    end
     server = HotSearch.new
     words = server.hot_words params[:word]
 
