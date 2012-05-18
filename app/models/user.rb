@@ -248,7 +248,7 @@ class User < ActiveRecord::Base
   
   def feeds
     Users::Timeline.where("user_id=#{id}").
-     includes(:timeline_event => [:actor, :subject]).
+     includes(:timeline_event => [:actor, :subject, :secondary_actor => [:covers, :wine]]).
      order("created_at DESC")
   end
 
