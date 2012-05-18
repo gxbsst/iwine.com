@@ -1,43 +1,57 @@
-<% unless params[:controller] == "wine_details/comments" %>
-<h3>
-  评论
-  <span class="font_12">
-    <%= link_to "(#{@wine_detail.comments_count}条, 更多)", wine_comments_path(@wine_detail.id)%>
-  </span>
-</h3>
-<% end %>
+<div class="wp_space_line ptb30">
+	<div class="title_btn">
+		<a href="#" class="btn_gray float_r"><span>添加评论</span></a>
+		<% unless params[:controller] == "wine_details/comments" %>
+		<h2>
+		  评论
+		  <span class="font12 more">
+		    <%= link_to "(#{@wine_detail.comments_count}条...)", wine_comments_path(@wine_detail.id)%>
+		  </span>
+		</h2>
+		<% end %>
+		<div class="clear"></div>
+	</div>
+	<ul class="comment_list clearfix">
 
-<!-- 酒评论带评分 -->
-<% @comments.each do |comment| %>
-  <div class="item relative dotted">
-    <div class="pic">
-      <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true), :with_avatar => true, :avatar_version => :middle %>
-    </div>
-    <p class="comment_info">
-      <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true ) %>
-      <%= comment.created_at.to_s(:normal) %>
-      <%= time_ago_in_words(comment.created_at) %>以前
-	  <%=  star_rate_tag(comment.point.to_i) %>
-    </p>
-    <p class="description"> <%= comment.body %> </p>
-    <p class="vote">
-      <%= link_to  vote_wine_comment_path(@wine_detail.id, comment.id), :remote => true, :class => "ajax"  do %>
-        有用(<span class="likes_count"><%=comment.votes_count %></span>)
-      <% end %>
-      |
-      <%= link_to  reply_wine_comment_path(@wine_detail.id, comment.id),
-          :remote => true,
-          :class => "ajax reply_comment_button",
-          :id => "reply_#{comment.id}" do %>
-      回复<span class="reply_comment_count">(<%= comment.children.size %>)</span>
-      <% end %> <span class="reply_result"> </span>
-     </p>
-    <div id=<%= "reply_comment_#{comment.id}" %> class ="reply_comment_outer" style="display: none"> </div>
-    <%= link_to_icon "delete", "/", :style => "display: none", :class => "delete" %>
-    <%= link_to_icon "edit", "/", :style => "display: none", :class => "edit" %>
-   </div>
-  <div class="clear"></div>
-<% end %>
+		<% @comments.each do |comment| %>	
+		<li>
+			<div class="userpic">
+				 <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true), :with_avatar => true, :avatar_version => :middle %>
+			</div>
+			<div class="main">
+				<div class="username">
+					<%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true ) %>
+					<span class="date"> <%= comment.created_at.to_s(:normal) %></span><!--<span class="control"><a href="#">回复</a> | <a href="#">删除</a></span>-->
+					<%=  star_rate_tag(comment.point.to_i) %>
+				</div>
+				<div class="content"><%= comment.body %></div>
+				<div class="userful">
+					<%= link_to  vote_wine_comment_path(@wine_detail.id, comment.id), :remote => true, :class => "ajax"  do %>
+		        有用(<span class="likes_count"><%=comment.votes_count %></span>)
+		      <% end %>
+					| 
+					<%= link_to  reply_wine_comment_path(@wine_detail.id, comment.id),
+		          :remote => true,
+		          :class => "ajax reply_comment_button",
+		          :id => "reply_#{comment.id}" do %>
+		      回复<span class="reply_comment_count">(<%= comment.children.size %>)</span>
+		      <% end %>
+				</div>
+				
+				<div id="reply_comment_<%= comment.id %>" class="replybox" style="display: none">
+			  </div>
+			
+				
+				
+			</div>
+			<div class="clear"></div>
+		</li>
+		<% end %>
+		</ul>
+		<div class="clear"></div>
+	</div>
+	
+
 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -50,17 +64,15 @@
   // $(".reply_comment_outer").html("");
   });
   $("a.reply_comment_button").bind("ajax:success", function(event, data, textStatus, jqXHR){
-  $comment_outer = $(this).parent().parent().children(".reply_comment_outer");
+  $comment_outer = $(this).parent().parent().children(".replybox");
   if($comment_outer.is(":hidden")){
-  $comment_outer.slideDown("slow");
+  	$comment_outer.slideDown("slow");
   }
   else
   {
-  $comment_outer.slideUp("slow");
+  	$comment_outer.slideUp("slow");
   }
   });
-
-
 
 
   });
