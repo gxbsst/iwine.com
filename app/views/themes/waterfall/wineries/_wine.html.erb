@@ -1,0 +1,17 @@
+<li class="clearfix">
+  <% releast_detail = wine.details.order("year desc").first %>
+  <%= link_to wine_path(releast_detail) do %>
+    <%= wine_cover_tag(releast_detail, :thumb_name => :w_thumb_x, :height => 100, :width => 100) if releast_detail %>
+  <% end %>
+  <div class="info">
+    <h3 class="zh"><%= link_to wine.name_zh, wine_path(releast_detail) %></h3>
+    <h3 class="en"><%= link_to wine.name_en, wine_path(releast_detail) %></h3>
+    <p><strong>年份：</strong></p>
+    <p class="year">
+      <% wine.details.order("year desc").each do |detail| %>
+        <span> <%= link_to detail.show_year, wine_path(detail)  %></span>
+      <% end %>
+    </p>
+    <div class="clear"> </div>
+  </div>
+</li>

@@ -106,12 +106,6 @@ class Wines::Detail < ActiveRecord::Base
     return comment.blank? ? false : true
   end
 
-  # 当前关注该支酒的用户列表
-  def followers(options = { })
-    comments = Comment.includes([:user]).where(["commentable_id = ? AND do = ?", self.id, "follow"]).limit(options[:limit])
-    users = comments.map{|comment| comment.user }
-  end
-
   def show_capacity
     "#{capacity.gsub('ml', '')}ml" unless capacity.blank?
   end
@@ -142,16 +136,20 @@ class Wines::Detail < ActiveRecord::Base
     owners.size
   end
 
-  # 关注总数
-  def followers_count
-    followers.size
-  end
-
   # 图片总数
   def photos_count
     photos.size
   end
   
-
+  #热门酒款
+  def self.hot_wines(options = {})
+   wine_details =  Wines::Detail.joins(:comments).
+        where("do = ?", "follow").
+        select("wine_details.*, count(*) as c").
+        group("commentable_id").
+        order("c #{options[:order]}").
+        limit(options[:limit])
+   wine_details
+  end
 
 end

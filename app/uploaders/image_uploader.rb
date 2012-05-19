@@ -149,7 +149,7 @@ class ImageUploader < CarrierWave::Uploader::Base
     process :store_geometry
   end
 
-  version :wy_large, :from_version => :wy_large, :if => :is_winery? do
+  version :wy_large, :if => :is_winery? do
     process :resize_to_limit => [APP_DATA["image"]["winery"]["large"]["width"], 
                                  APP_DATA["image"]["winery"]["large"]["height"]]
   end

@@ -215,12 +215,12 @@ namespace :app do
             if logo_path = Dir.glob(Rails.root.join("lib", "tasks", "data", item[0], "logo.*")).first
               winery.update_attribute("logo", open(logo_path))
             end
-            Dir.glob(Rails.root.join("lib", "tasks", "data", item[0], "*")).each do |photo_path|
+            Dir.glob(Rails.root.join("lib", "tasks", "data", item[0], "*")).each_with_index do |photo_path, index|
               next if photo_path.include?("logo")
               winery.photos.create!(
                   :category => 1,
                   :album_id => -1,
-                  :is_cover => 1,
+                  :is_cover => index == 0 ? 1 : 0,   #设置第一张图片为封面
                   :image => open(photo_path)
               )
             end
