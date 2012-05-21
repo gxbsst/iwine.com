@@ -1,17 +1,16 @@
 # encoding: utf-8
 class CommentsController < ApplicationController
-  before_filter :find_comment, :only => [:show, :edit, :update, :destroy]
-  before_filter :get_parent_resource
+  before_filter :get_comment, :only => [:show, :edit, :update, :destroy, :reply]
+  before_filter :get_commentable
   before_filter :authenticate_user!, :except => [:index, :show, :list]
-  # before_filter :get_wine_detail, :except => [:comment_vote]
+  before_filter :get_user
   
-  def new
-    @comment = @parent_resource.comments.build
+  def new   
     if params[:do].present? && params[:do] == "follow"
-      do_follow_comment
+      new_follow_comment
     else
-      do_normal_comment
-    end
+      new_normal_comment
+    end   
   end
   
   def index
@@ -45,17 +44,13 @@ class CommentsController < ApplicationController
   
   # 评论
   def create
-    @comment = ::Comment.new
-    @comment.do = "comment"
-    if request.post?
-      @comment = build_comment
-      if @comment.save
-        # TODO
-        # 1. 广播
-        # 2. 分享到SNS
-        notice_stickie("评论成功.")
-        redirect_to params[:return_url] ?  params[:return_url] : wine_detail_path(@wine_detail)
-      end
+    @comment = build_comment
+    if @comment.save
+      # TODO
+      # 1. 广播
+      # 2. 分享到SNS
+      notice_stickie("评论成功.")
+      redirect_to params[:return_url] ?  params[:return_url] : @commentable_path
     end
   end
   
@@ -72,84 +67,66 @@ class CommentsController < ApplicationController
 
   # 取消关注
   def cancle_follow
-    follow_items = @wine_detail.current_user_follow(current_user)
+    follow_items = @commentable.current_user_follow(@user)
     return notice_stickie("您还没有有关注该条目.") if follow_items.blank?
     if follow_items.first.update_attribute("deleted_at", Time.now)
       notice_stickie("取消关注成功.")
-      redirect_to wine_path(@wine_detail)
+      redirect_to @commentable_path
     end
   end
 
   # 有用
   def vote
-    @comment = ::Comment.find(params[:id])
-    @comment.liked_by current_user
+    @comment.liked_by @user
     render :json => @comment.likes.size.to_json
   end
 
   # 回复评论
   def reply
-    @comment = ::Comment.find(params[:id])
-
     if request.post?
-      @comment = ::Comment.find(params[:id])
-      @reply_comment = ::Comment.build_from(@wine_detail,
-      current_user.id,
+      @reply_comment = ::Comment.build_from(@comment.commentable,
+      @user.id,
       params[:comment][:body],
       :do => "comment")
       @reply_comment.save
       @reply_comment.move_to_child_of(@comment)
       render :json =>  @comment.children.size.to_json
-      # respond_to do |format|
-      #   format.js { render :json => @comment }
-      # end
     end
   end
 
   private
-
-  def build_comment
-    if params[:comment][:do] == "follow"
-      @comment = @wine_detail.current_user_follow(current_user)
-      @comment = @comment.blank? ?  ::Comment.new : @comment.first
-      @comment.attributes =  params[:comment]
-      @comment.commentable_type = @wine_detail.class.base_class.name
-      @comment.commentable_id = @wine_detail.id
-      @comment.point = params[:rate_value]
-      @comment.user_id = current_user.id
-      return @comment
-    end
-    @comment = ::Comment.build_from(@wine_detail,
-    current_user.id ,
-    params[:comment][:body],
-    :point => params[:rate_value],
-    :do => params[:comment][:do],
-    :is_share => params[:comment][:is_share],
-    :private => params[:comment][:private])
-  end
-
-  def find_comment
-    @comment = Comment.find(params[:id])
-  end
-
-  def get_parent_resource
-    if params[:user_id].present?
-      @parent_resource = User.find(params[:user_id])
-    end
+  
+  def get_commentable
+    @resource, @id = request.path.split('/')[1, 2]
+    @commentable_path = eval(@resource.singularize + "_path(#{@id})")
+    @resource = "Wines::Detail" if @resource == "wines"
+    @commentable = @resource.singularize.classify.constantize.find(@id)
   end
   
-  # 关注
-  def do_follow_comment
-    if request.get?
-      @comment = @parent_resource.current_user_follow(current_user)
-      @comment = @comment.blank? ?  ::Comment.new : @comment.first
-      @comment.do = "follow"
-      respond_to do |format|
-        format.html { render "create" }
-        format.js   { render "create" }
-      end
-    end
+  def new_follow_comment
+    @comment = @commentable.comments.build
+    @comment.do = "follow"
+  end
+  
+  def new_normal_comment
+    @comment = @commentable.comments.build
+    @comment.do = "comment"    
+  end
 
+  def build_comment
+    @resource, @id = request.path.split('/')[1, 2]
+    values = params[(@resource.singularize + "_comment").to_sym]
+    @comment = @commentable.comments.build(values)
+    @comment.user_id = @user.id
+    return @comment
+  end
+
+  def get_comment
+    @comment = Comment.find(params[:id])
+  end
+  
+  def get_user
+    @user = current_user
   end
   
 end

@@ -16,7 +16,15 @@ Patrick::Application.routes.draw do
     get :logout , :to => 'devise/sessions#destroy'
     get :register , :to => 'devise/registrations#new'
   end
-
+  
+  # COMMENT
+  resources :comments do 
+    member do 
+       match "reply", :via => [:get, :post]
+       get :vote
+    end
+  end
+  
   # WINE
   resources :wine_details, :controller => "wine_details", :as => :wines, :path => :wines  do
     member do
@@ -25,20 +33,29 @@ Patrick::Application.routes.draw do
       get :owners
       get :add_to_cellar
     end 
-    
-    resources :comments, :controller => "wine_details/comments" do
-      member do 
-        # 自定义actions
+    resources :comments, :controller => "comments" do
+      member do
         get :vote
-        match "reply", :via => [:get, :post]    
+        match "reply", :via => [:get, :post]
       end
-      collection do 
-        match "follow", :via => [:get, :post]
-        match "comment", :via => [:get, :post]
+      collection do
         get :cancle_follow 
-        get :add_to_cellar
       end
     end
+    
+    # resources :comments, :controller => "wine_details/comments" do
+    #   member do 
+    #     # 自定义actions
+    #     get :vote
+    #     match "reply", :via => [:get, :post]    
+    #   end
+    #   collection do 
+    #     match "follow", :via => [:get, :post]
+    #     match "comment", :via => [:get, :post]
+    #     get :cancle_follow 
+    #     get :add_to_cellar
+    #   end
+    # end
     resources :photos, :controller => "wine_details/photos" 
   end
   

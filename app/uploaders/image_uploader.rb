@@ -83,12 +83,12 @@ class ImageUploader < CarrierWave::Uploader::Base
     resize_to_limit(600, 600)
   end
 
-  version :normal, :if => :is_user? do
+  version :normal, :from_version => :large, :if => :is_user? do
     resize_to_limit(190, 190)
   end
 #  ## USER
 
-  version :thumb, :if => :is_user? do
+  version :thumb, :from_version => :normal, :if => :is_user? do
     resize_to_limit(100, 100)
   end
 
@@ -110,17 +110,18 @@ class ImageUploader < CarrierWave::Uploader::Base
   #  end
 
   ## WINE
-  version :w_thumb_x, :if => :is_wine?  do
+
+  version :w_thumb_x, :from_version => :w_large, :if => :is_wine?  do
     process :resize_to_limit => [APP_DATA["image"]["wine"]["x_thumb"]["width"],
                                  APP_DATA["image"]["wine"]["x_thumb"]["height"]]
   end
   
-  version :w_thumb, :if => :is_wine?  do
+  version :w_thumb, :from_version => :w_large, :if => :is_wine?  do
     process :resize_to_limit => [APP_DATA["image"]["wine"]["thumb"]["width"],
                                  APP_DATA["image"]["wine"]["thumb"]["height"]]
   end
   
-  version :w_middle, :if => :is_wine? do
+  version :w_middle, :from_version => :w_large, :if => :is_wine? do
     process :resize_to_limit => [APP_DATA["image"]["wine"]["middle"]["width"],
                                  APP_DATA["image"]["wine"]["middle"]["height"]]
     process :store_geometry
@@ -132,21 +133,20 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   ## WINERY
-  version :wy_thumb_x, :if => :is_winery?  do
+  version :wy_thumb_x, :from_version => :wy_large, :if => :is_winery?  do
     process :resize_to_limit => [APP_DATA["image"]["winery"]["x_thumb"]["width"], 
                                  APP_DATA["image"]["winery"]["x_thumb"]["height"]]
   end
   
-  version :wy_thumb, :if => :is_winery?  do
+  version :wy_thumb, :from_version => :wy_large, :if => :is_winery?  do
     process :resize_to_limit => [APP_DATA["image"]["winery"]["thumb"]["width"], 
                                  APP_DATA["image"]["winery"]["thumb"]["height"]]
   end
   
-  version :wy_middle, :if => :is_winery? do
+  version :wy_middle, :from_version => :wy_large, :if => :is_winery? do
     process :resize_to_limit => [APP_DATA["image"]["winery"]["middle"]["width"], 
                                  '']
     process :store_geometry
-    
   end
 
   version :wy_large, :if => :is_winery? do

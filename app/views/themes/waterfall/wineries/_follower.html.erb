@@ -1,0 +1,5 @@
+<li>
+  <%= link_to user_path(user) do %>
+    <%= user_avatar_tag(user, :thumb_name => :middle, :width => 50, :height => 50, :alt => user.name) %>
+  <% end %>
+</li>

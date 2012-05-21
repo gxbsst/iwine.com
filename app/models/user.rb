@@ -8,18 +8,19 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, :timeoutable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :crop_x, :crop_y, :crop_w, :crop_h, :agree_term, :width, :height
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :crop_x, :crop_y, :crop_w, :crop_h, :agree_term
 
   has_one  :profile, :class_name => 'Users::Profile', :dependent => :destroy
   has_many :albums, :class_name => 'Album', :foreign_key => 'created_by'
   has_many :registers, :class_name => 'Wines::Register'
-  has_many :comments, :class_name => "::Comment", :foreign_key => 'user_id', :include => [:user, :commentable]
+  has_many :comments, :class_name => "::Comment", :foreign_key => 'user_id', :include => [:user]
   has_one  :good_hit_comment, :class_name => 'Users::GoodHitComment'
   has_many :photo_comments
   has_many :photos, :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_USER }
   # has_one  :avatar, :class_name => 'Photo', :foreign_key => 'business_id', :conditions => { :is_cover => true }
   has_one :cellar, :class_name => 'Users::WineCellar'
   has_many :oauths, :class_name => 'Users::Oauth'
+  has_many :time_events
   has_many :followers, :class_name => 'Friendship', :include => :follower do
     def map_user
       map {|f| f.follower }
@@ -50,16 +51,6 @@ class User < ActiveRecord::Base
 
   ## crop avatar
   after_update :crop_avatar
-  
-  # before_save :set_avatar_width
-  # 
-  # def set_avatar_width
-  #   geometry = self.avatar.thumb.geometry
-  #   if (! geometry.nil?)
-  #     self.width = geometry[0]
-  #     self.height = geometry[1]
-  #   end
-  # end
 
   def name
     self.to_s
@@ -82,7 +73,7 @@ class User < ActiveRecord::Base
   # 关注的酒
   def wine_follows_count
     ## TODO 更改用户评论操作之后，更新以下计算代码
-    wine_followings.count
+    comments.count
   end
 
   # 关注的酒庄

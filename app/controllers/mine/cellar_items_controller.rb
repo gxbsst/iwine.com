@@ -1,5 +1,6 @@
 # encoding: UTF-8
   class Mine::CellarItemsController < ApplicationController
+    before_filter :require_user
     before_filter :get_cellar
     before_filter :get_item, :except => [:new, :create, :add]
     before_filter :get_mine

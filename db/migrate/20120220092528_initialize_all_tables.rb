@@ -22,7 +22,7 @@ class InitializeAllTables < ActiveRecord::Migration
       t.integer  "owner_type"   # 该图片是属于哪个类型： 1 => 用户， 2 => wine, 3 => winery
       t.integer  "business_id",                                    :null => false  # 和owner_type配合使用， 如果owner_type 为用户， 则该id为用户的id
       t.text     "intro"
-      t.string   "category",      :limit => 0,                :null => false
+      t.string   "category",      :limit => 10
       t.integer  "size"
       t.integer  "album_id",                                  :null => false
       t.integer  "width",                      :default => 0, :null => false

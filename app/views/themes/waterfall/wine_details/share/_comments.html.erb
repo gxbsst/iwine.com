@@ -26,7 +26,7 @@
 				</div>
 				<div class="content"><%= comment.body %></div>
 				<div class="userful">
-					<%= link_to  vote_wine_comment_path(@wine_detail.id, comment.id), :remote => true, :class => "ajax"  do %>
+					<%= link_to  vote_comment_path(comment.id), :remote => true, :class => "ajax"  do %>
 		        有用(<span class="likes_count"><%=comment.votes_count %></span>)
 		      <% end %>
 					| 
@@ -34,7 +34,7 @@
 		          :remote => true,
 		          :class => "ajax reply_comment_button",
 		          :id => "reply_#{comment.id}" do %>
-		      回复<span class="reply_comment_count">(<%= comment.children.size %>)</span>
+		      回复<span class="reply_comment_count">(<%= comment.children.size %>)</span><span class="reply_result"></span>
 		      <% end %>
 				</div>
 				

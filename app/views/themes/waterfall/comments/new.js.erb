@@ -1,0 +1,23 @@
+$("#comment_form").html("<%= escape_javascript(render('comment_form', :comment => @comment, :commentable => @commentable)) %>");
+
+$.fancybox({
+    maxWidth                : 700,
+    maxHeight               : 400,
+    fitToView               : false,
+    width                   : '90%',
+    height                  : '100%',
+    'autoScale'             : true,
+    'transitionIn'          : 'fade',
+    'transitionOut'         : 'fade',
+    'href'                  : '#comment_form',
+    helpers                :{
+        overlay                      : {
+            opacity                 : 0.8,
+            css                     : {
+                'background-color'  : '#FFF'
+            }
+        }
+    } // end helper
+});
+
+<%= render "comments/star_rate.js" %>

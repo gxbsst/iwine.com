@@ -38,11 +38,11 @@ class WineLabelUploader < CarrierWave::Uploader::Base
     process :resize_to_limit => [APP_DATA['image']['wine_label']['large']['width'], '']
   end
 
-  version :thumb do
+  version :thumb, :from_version => :large do
     process :resize_to_limit => [APP_DATA['image']['wine_label']['thumb']['width'], '']
   end
 
-  version :middle do
+  version :middle, :from_version => :large do
     process :resize_to_limit => [APP_DATA['image']['wine_label']['middle']['width'], '']
     process :store
   end

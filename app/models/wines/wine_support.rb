@@ -39,6 +39,16 @@ module Wines
      def drinkable
        "#{drinkable_begin.strftime('%Y') if drinkable_begin}-#{drinkable_end.strftime('%Y') if drinkable_end}"
      end
-     
+
+     # 当前关注该支酒的用户列表
+     def followers(options = { })
+       comments = self.comments.includes([:user]).where(["do = ?", "follow"]).limit(options[:limit])
+       users = comments.map{|comment| comment.user }
+     end
+
+     # 关注总数
+     def followers_count
+       self.comments.where(["do = ?", "follow"]).size.to_i
+     end
    end
 end

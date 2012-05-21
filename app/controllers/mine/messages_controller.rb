@@ -5,6 +5,7 @@ module Mine
     before_filter :authenticate_user!
     # before_filter :get_mailbox, :get_box, :get_actor
     before_filter :get_mailbox, :get_box
+    before_filter :check_users, :only => :create
     # before_filter :get_box
 
     def index
@@ -46,7 +47,6 @@ module Mine
     # POST /messages
     # POST /messages.xml
     def create
-      @message = Message.new params[:message]
       if @message.conversation_id
         @conversation = Conversation.find(@message.conversation_id)
         unless @conversation.is_participant?(current_user)
@@ -63,7 +63,7 @@ module Mine
           return render :new
         end
         # @message.subject = "user_#{current_user.id}_send"
-        receipt = current_user.send_message(parse_recipients(@message.recipients), @message.body, "subject_#{current_user.id}", true)
+        receipt = current_user.send_message(@recipient_list, @message.body, "subject_#{current_user.id}", true)
         redirect_to mine_conversations_path()
       end
       # flash[:notice] = "Message sent."
@@ -136,12 +136,14 @@ module Mine
       @box = params[:box]
     end
 
-    def parse_recipients(string='')
+    def check_users
+      @message = Message.new params[:message]
       @recipient_list = []
-      string.split(',').each do |s|
-        @recipient_list << User.find_by_email!(s.strip) unless s.blank?
+      @message.recipients.split(',').each do |s|
+        @recipient_list << User.find_by_username(s.strip) unless s.blank?
       end
       @recipient_list
+      redirect_to mine_conversations_path, :notice => "找不到用户#{@message.recipients},请重新发送。" if @recipient_list.blank?
     end
 
   end

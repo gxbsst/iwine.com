@@ -25,6 +25,7 @@ class Photo < ActiveRecord::Base
   belongs_to :album
   belongs_to :user
   belongs_to :wine_detail, :class_name => 'Wines::Detail', :foreign_key => 'business_id'
+  belongs_to :winery, :foreign_key => "business_id"
 
   acts_as_commentable
 
@@ -59,7 +60,7 @@ class Photo < ActiveRecord::Base
         :owner_type => 2,
         :business_id => opts[:wine_detail_id],
         :category => 1,
-        :album_id => 1,
+        :album_id => -1, # no user id
         :is_cover => 1,
         :height => opts[:height],
         :width => opts[:width],

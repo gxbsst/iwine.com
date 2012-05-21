@@ -1,0 +1,102 @@
+<div class="winery_header">
+   <div class="cover">
+     <%= image_tag(@winery.photos.where("is_cover = 1").first.image_url(:wy_large), :width => 360, :height => 320, :alt => @winery.name_en) if @winery.photos.where("is_cover = 1").first %>
+   </div>
+
+   <div class="info">
+     <div class="float_r">
+       <% if @winery.config["Sina"] %>
+         <%= link_to @winery.config['Sina'] do %>
+           <span class="icon_sina mr5"></span>
+         <% end %>
+       <% else %>
+         <span class="icon_sina_off mr5"></span>
+       <% end %>
+       <% if @winery.config["Twitter"] %>
+         <%= link_to @winery.config["Twitter"] do %>
+            <span class="icon_tt mr5"></span>   
+         <% end %>
+       <% else %>
+         <span class="icon_tt_off mr5"></span>
+       <% end %>
+       <% if @winery.config["Facebook"] %>
+         <%= link_to @winery.config["Facebook"] do %>
+             <span class="icon_fb mr5"></span>
+         <% end %>
+       <% else %>
+         <span class="icon_fb_off mr5"></span>
+       <% end %>
+     </div>
+
+     <div class="logo"><%= image_tag(@winery.logo_url(:thumb), :width => 100, :height => 50, :alt => @winery.name_en) %></div>
+     <h1 class="winery_name_ch"><%= @winery.name_zh %></h1>
+     <h1 class="winery_name_en"><%= @winery.name_en %></h1>
+     <div class="baseinfo">
+       地区：<%= @winery.region_path_zh(@winery.region_tree_id) %><br/>
+       地址：<%= @winery.address %><br/>
+       官网网站：<a href="http://<%= @winery.official_site %>"><%= @winery.official_site %></a><br/>
+       电子邮件：<%= @winery.email %> <br/>
+       电话：<%= @winery.cellphone %><br/>
+       传真：<%= @winery.fax %><br/>
+     </div>
+     <div class="mt20">
+       <ul class="count">
+         <li class="follow"><%= link_to "120个关注", "#" %></li>
+         <li class="comment"><%= link_to "45条评论", "#" %></li>
+       </ul>
+       <%= link_to "#", :class => "btn_gray_b mr5" do %>
+        <span>关注</span>
+       <% end %>
+       <%=  link_to "#", :class => "btn_gray_b mr5" do %>
+        <span>评论</span>
+       <% end %>
+     </div>
+   </div>
+
+   <div class="right">
+     <div class="share">分享到：
+        <%= link_to "#" do %>
+            <%= image_tag("/assets/waterfall/images/icon/sina_s_on.png", :alt => "新浪", :width => 17, :height => 17, :align => "absmiddle") %>
+        <% end %>
+        <%= link_to "#" do %>
+            <%= image_tag("/assets/waterfall/images/icon/tencen_s_on.png", :alt => "腾讯", :width => 17, :height => 17, :align => "absmiddle") %>
+        <% end %>
+       <%= link_to "#" do %>
+           <%= image_tag("/assets/waterfall/images/icon/douban_s_on.png", :alt => "豆瓣", :width => 17, :height => 17, :align => "absmiddle") %>
+       <% end %>
+       <%= link_to "#" do %>
+         <%= image_tag("/assets/waterfall/images/icon/kaixin_s_on.png", :alt => "开心网", :width => 17, :height => 17, :align => "absmiddle") %>
+       <% end %>
+       <%= link_to "#" do %>
+         <%= image_tag("/assets/waterfall/images/icon/renren_s_on.png", :alt => "人人网", :width => 17, :height => 17, :align => "absmiddle") %>
+       <% end %>
+     </div>
+     <ul class="item">
+       <li>
+         <p class="pic"><%= image_tag("/assets/waterfall/images/icon/winery_photo.gif", :width => 34, :height => 26) %></p>
+         <p><%= link_to "照片", "#" %></p>
+       </li>
+       <li>
+         <p class="pic"><%= image_tag("/assets/waterfall/images/icon/winery_intro.gif", :width => 26, :height => 30) %></p>
+         <p><%= link_to "介绍", "#02"%></p>
+       </li>
+       <li class="last">
+         <p class="pic"><%= image_tag("/assets/waterfall/images/icon/winery_hot.gif", :width => 32, :height => 32)%></p>
+         <p><%= link_to "热门酒款", "#05" %></p>
+       </li>
+       <li>
+         <p class="pic"><%= image_tag("/assets/waterfall/images/icon/winery_wine.gif", :width => 24, :height => 37) %></p>
+         <p><%= link_to "所有酒款", "#" %></p>
+       </li>
+       <li>
+         <p class="pic"><%= image_tag("/assets/waterfall/images/icon/winery_comment.gif", :width => 34, :height => 31) %></p>
+         <p><%= link_to "评论", "#" %></p>
+       </li>
+       <li class="last">
+         <p class="pic"><%= image_tag("/assets/waterfall/images/icon/winery_follower.gif", :width => 31, :height => 36) %></p>
+         <p><%= link_to "关注者", "#" %></p>
+       </li>
+     </ul>
+   </div>
+   <div class="clear"></div>
+</div>

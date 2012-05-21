@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 class Mine::CellarsController < ApplicationController
+ before_filter :require_user
  before_filter :get_cellar
  before_filter :get_mine
 

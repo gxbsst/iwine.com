@@ -60,4 +60,12 @@ $(document).ready(function(){
       $(".select_region").val("");
   });
 
+
 });
+
+//add info_items
+function add_fields(link, association, content) {
+    var new_id = new Date().getTime();
+    var regexp = new RegExp("new_" + association, "g");
+    $(link).parent().parent().before(content.replace(regexp, new_id));
+}
