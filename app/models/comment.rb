@@ -13,11 +13,6 @@ class Comment < ActiveRecord::Base
   # acts_as_voteable
   acts_as_votable
 
- fires :new_comment, :on                 => :create,
-                     :actor              => :user,
-                     :secondary_actor => :commentable,
-                     :if => lambda { |comment| comment.commentable_type == "Wines::Detail" }
-
   # 保存分享信息， 如新浪微博等
   store_configurable
   belongs_to :commentable, :polymorphic => true

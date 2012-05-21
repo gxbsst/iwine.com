@@ -10,23 +10,23 @@
 <div>
 	
 	<% unless user_signed_in? %>
-	<%= link_to follow_wine_comments_path(@wine_detail.id), :class => [:btn_gray, :mr5, :ajax], :remote => true do %>
+	<%= link_to  cancle_follow_wine_comments_path(@wine_detail.id), :class => [:btn_gray, :mr5, :ajax], :remote => true do %>
 		<span>关注</span>
 	<% end %>
 	<%# 用户已经登陆， 检查是否已经关注 %>
 	<% else %>
 		 <%  if @wine_detail.is_followed? current_user %>
 			<span class="icon_fol mr5">已关注<span class="cancl_fol">
-				 <%= link_to "取消", cancle_follow_wine_comment_path(@wine_detail) %>
+				 <%= link_to "取消", cancle_follow_wine_comments_path(@wine_detail) %>
 			</span>
 		 <% else %>
-				<%= link_to follow_wine_comments_path(@wine_detail.id), :class => [:btn_gray, :mr5, :ajax], :remote => true do %>
+				<%= link_to new_wine_comment_path(@wine_detail.id, :do => "follow"), :class => [:btn_gray, :mr5, :ajax], :remote => true do %>
 					<span>关注</span>
 				<% end %>
 		 <% end %>
 	<% end %>
 	
-	<%= link_to comment_wine_comments_path(@wine_detail.id, :do => "comment"), :class => [:btn_gray, :mr5, :ajax], :remote => true do %>
+	<%= link_to new_wine_comment_path(@wine_detail.id, :do => "comment"), :class => [:btn_gray, :mr5, :ajax], :remote => true do %>
 		<span>评论</span>
 	<% end %>
 	<%= link_to  add_to_cellar_wine_comments_path(@wine_detail.id), :class => [:btn_gray], :remote => true do %>

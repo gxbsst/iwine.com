@@ -1,55 +1,24 @@
-<p> <%= image_tag "v2/test/label.png", :title => "title", :class => "class" %> </p>
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td class="l">酒庄:</td>
-    <td class="c">
-      <%= link_to @wine.winery.name,
-                  :controller => "wineries",
-                  :action => 'show',
-                  :id => @wine.winery.id %>
-      </td>
-  </tr>
-  <tr>
-    <td class="l">官方网站:</td>
-    <td class="c">
-      <%= link_to @wine.official_site, 'http://' + @wine.official_site, :target => '_blank' %>
-      </td>
-  </tr>
-  <tr>
-    <td class="l">产区:</td>
-    <td class="c">
-       <%= render 'share/region_tree', :region_tree => @wine_detail.get_region_path(@wine_detail.wine.region_tree_id) %>
-    </td>
-  </tr>
-  <tr>
-    <td class="l">类型: </td>
-    <td class="c">
-      <%= image_tag "base/" + @wine.style.name_en + '.gif' %>
-      <%= link_to @wine.style.name_zh,
-                  :controller => :searh,
-                  :action => :wine,
-                  :style => @wine.style.name_en %>
-    </td>
-  </tr>
-  <tr>
-    <td class="l">容量: </td>
-    <td class="c">
-      <%= @wine_detail.capacity %>
-    </td>
-  </tr>
-  <tr>
-    <td class="l">酒精度:</td>
-    <td class="c">
-      <%= @wine_detail.alcoholicity %>
-      Vol
-    </td>
-  </tr>
-  <tr>
-    <td class="l">葡萄品种: </td>
-    <td class="c">
-       <% @wine_detail.variety_percentages.each do |i| %>
-       <%= i.name_zh %> (<%= i.percentage %>)、
-      <% end %>
-    </td>
-  </tr>
-</table>
+<div class="wine_id_pic">
+	<%= theme_image_tag "test/wine_id_pic.jpg" %>
+</div>
+<div class="info">
+	酒庄：<%= link_to @wine.winery.name,
+              :controller => "wineries",
+              :action => 'show',
+              :id => @wine.winery.id %>
+  <br />
+	官网：<%= link_to @wine.official_site, 'http://' + @wine.official_site, :target => '_blank' %><br />
+	产区：<%= render 'share/region_tree', :region_tree => @wine_detail.get_region_path(@wine_detail.wine.region_tree_id) %><br />
+	France>Burgundy>Côte de Nuits>Vosne-Romanée>Romanée-Conti (Grand Cru AOC)<br />
+	类型： <%= link_to @wine.style.name_zh,
+                :controller => :searh,
+                :action => :wine,
+                :style => @wine.style.name_en %><br />
+	容量：<%= @wine_detail.capacity %><br />
+	酒精度：<%= @wine_detail.alcoholicity %>Vol<br />
+	葡萄品种： <% @wine_detail.variety_percentages.each do |i| %>
+        <%= i.name_zh %> (<%= i.percentage %>)、
+        <% end %>
+</div>
+
+

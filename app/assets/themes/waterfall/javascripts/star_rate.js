@@ -1,23 +1,3 @@
-$.fancybox({
-    maxWidth                : 700,
-    maxHeight               : 400,
-    fitToView               : false,
-    width                   : '90%',
-    height                  : '100%',
-    'autoScale'             : true,
-    'transitionIn'          : 'fade',
-    'transitionOut'         : 'fade',
-    'href'                  : '#comment_form',
-    helpers                :{
-        overlay                      : {
-            opacity                 : 0.8,
-            css                     : {
-                'background-color'  : '#FFF'
-            }
-        }
-    } // end helper
-});
-
 $(function(){
 
     window.StarsView = Backbone.View.extend({
