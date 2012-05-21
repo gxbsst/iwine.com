@@ -14,20 +14,12 @@ class HotSearch
     wines = []
     wineries = []
 
-    words['wines'][0..4].each do |wine|
-      wines.push( {
-        'id' => wine['id'],
-        'name' => wine['name'],
-        'pic' => Wines::Detail.find( wine['id'] ).cover
-      });
+    words['wines'][0..3].each do |wine|
+      wines.push( Wines::Detail.find( wine['id'] ) );
     end
 
-    words['wineries'][0..3].each do |winery|
-      wineries.push( {
-        'id' => wine['id'],
-        'name' => wine['name'],
-        'pic' => Winery.find( winery['id'] ).log
-      });
+    words['wineries'][0..1].each do |winery|
+      wineries.push( Winery.find( winery['id'] ) );
     end
 
     { 'wines' => wines , 'wineries' => wineries }

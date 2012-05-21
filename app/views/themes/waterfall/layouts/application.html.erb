@@ -19,40 +19,7 @@
           <%= theme_image_submit_tag "icon/search.gif", :class => :search_btn %>
           <input class="search" id="hot_search" name="" type="text" />
         </div>
-        <div class="search_scroll" id="search_scroll" style="display: none">
-          <p class="title"><a href="#">搜索酒款 》</a></p>
-          <div class="wineResult">
-            <dl class="clearfix current">
-              <dt><img src="images/test/wine_thumb01.jpg" width="30" height="30" /></dt>
-              <dd><span>波特米勒站赤霞珠干红葡萄酒</span><p>PORTER MILL STATION Cabernet Sauvignon</p></dd>
-              <div class="clear"></div>
-            </dl>
-            <dl class="clearfix">
-              <dt><img src="images/test/wine_thumb01.jpg" width="30" height="30" /></dt>
-              <dd><span>波特米勒站赤霞珠干红葡萄酒</span><p>PORTER MILL STATION Cabernet Sauvignon</p></dd>
-              <div class="clear"></div>
-            </dl>
-            <dl class="clearfix">
-              <dt><img src="images/test/wine_thumb01.jpg" width="30" height="30" /></dt>
-              <dd><span>波特米勒站赤霞珠干红葡萄酒</span><p>PORTER MILL STATION Cabernet Sauvignon</p></dd>
-              <div class="clear"></div>
-            </dl>
-          </div>
-          <p class="title"><a href="#">搜索酒庄 》</a></p>
-          <div class="wineryResult">
-            <dl class="clearfix">
-              <dt><img src="images/test/winery70.jpg" width="30" height="30" /></dt>
-              <dd><span>某某酒庄</span><p>THE MOREFM WINERY</p></dd>
-              <div class="clear"></div>
-            </dl>
-            <dl class="clearfix">
-              <dt><img src="images/test/winery100_2.jpg" width="30" height="15" /></dt>
-              <dd><span>某某酒庄</span>
-                <p>THE MOREFM WINERY</p></dd>
-              <div class="clear"></div>
-            </dl>
-          </div>
-        </div>
+        <div class="search_scroll" id="search_scroll" style="display: none"></div>
         <div id="top_right">
           <%= render "layouts/user_fragment" %>
         </div>
@@ -71,32 +38,13 @@
         var search_scroll = $('#search_scroll');
         var getHotSerach = function(){
           $.ajax({
-            url: '/searches/hot_words?word='+$('#hot_search').val(),
+            url: '/searches/suggestion?word='+$('#hot_search').val(),
             success: function( data ){
-              var i ,
-              wines = data.wines,
-              wineries = data.wineries,
-              html =  '<ul>';
-
-              console.log( wines , wineries );
-
-              if( ( wines.length + wineries.length ) == 0 ){
+              if(( typeof data == 'string' ) && data ){
+                search_scroll.css( 'display' , 'block' );
+                search_scroll.html( data );
+              }else
                 search_scroll.css( 'display' , 'none' );
-                return;
-              }
-
-              for( i = 0 ; i < wines.length ; i++ ){
-                html += '<li>' + data.wines[i] + '</li>';
-              }
-
-              html += '</ul>';
-
-              for( i = 0 ; i< wineries.length ; i++ ){
-                html += '<li>' + data.wineries[i] + '</li>';
-              }
-
-              search_scroll.css( 'display' , 'block' );
-              //search_scroll.html( html );
             }
           });
         };

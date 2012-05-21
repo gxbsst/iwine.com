@@ -15,15 +15,19 @@ class SearchesController < ApplicationController
     redirect_to add_mine_wines_path(:step => 2, :id => @search.id)
   end
 
-  def hot_words 
+  def suggestion
     if params[:word].blank?
       render :json => { 'wines' =>  [] , 'wineries' => [] }
       return
     end
     server = HotSearch.new
-    words = server.hot_words params[:word]
+    @words = server.hot_words params[:word]
 
-    render :json => words
+    if ( @words['wines'].length + @words['wineries'].length ) > 0 
+      render :layout => false
+    else
+      render :text => ''
+    end
   end
 
   def hot_entries

@@ -133,6 +133,7 @@ GEM
       gdata (= 1.1.1)
       json (>= 0.4.1)
     daemon_controller (1.0.0)
+    daemons (1.1.8)
     database_cleaner (0.7.2)
     devise (2.0.4)
       bcrypt-ruby (~> 3.0)
@@ -147,6 +148,7 @@ GEM
     eco-source (1.1.0.rc.1)
     ejs (1.0.0)
     erubis (2.7.0)
+    eventmachine (0.12.10)
     exception_notification (2.5.2)
       actionmailer (>= 3.0.4)
     execjs (1.3.0)
@@ -308,6 +310,10 @@ GEM
     store_configurable (3.2.4)
       activerecord (~> 3.2.0)
     subexec (0.2.1)
+    thin (1.3.1)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
     thor (0.14.6)
     tilt (1.3.3)
     treetop (1.4.10)
@@ -378,6 +384,7 @@ DEPENDENCIES
   stickies!
   store_configurable (~> 3.2.0)
   themes_for_rails!
+  thin
   timeline_fu!
   turn
   uglifier (>= 1.0.3)

@@ -1,0 +1,28 @@
+<p class="title"><a href="#">搜索酒款 》</a></p>
+<div class="wineResult">
+  <% @words['wines'].each do |wine|%>
+  <dl class="clearfix">
+    <dt>
+      <%= wine_cover_tag( wine , :width => 30 , :height => 30 )%>
+    </dt>
+    <dd>
+      <span><%= wine.cname%></span>
+      <p><%= wine.ename%></p>
+    </dd>
+    <div class="clear"></div>
+  </dl>
+  <% end %>
+</div>
+<p class="title"><a href="#">搜索酒庄 》</a></p>
+<div class="wineryResult">
+  <% @words['wineries'].each do |winery| %>
+  <dl class="clearfix">
+    <dt>
+    <img src="images/test/winery100_2.jpg" width="30" height="15" />
+    </dt>
+    <dd><span><%= winery.name_zh %></span>
+      <p><%= winery.name_en%></p></dd>
+    <div class="clear"></div>
+  </dl>
+  <% end %>
+</div>

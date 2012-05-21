@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120515064516) do
+ActiveRecord::Schema.define(:version => 20120517095147) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -318,13 +318,13 @@ ActiveRecord::Schema.define(:version => 20120515064516) do
     t.datetime "updated_at",        :null => false
     t.string   "ownerable_type"
     t.string   "ownerable_id"
-    t.string   "receiver"
-    t.integer  "receiver_id"
+    t.string   "receiverable_type"
+    t.integer  "receiverable_id"
     t.string   "event_type"
   end
 
   add_index "user_timelines", ["event_type"], :name => "index_user_timelines_on_event_type"
-  add_index "user_timelines", ["receiver_id"], :name => "index_user_timelines_on_receiver_id"
+  add_index "user_timelines", ["receiverable_id"], :name => "index_user_timelines_on_receiver_id"
   add_index "user_timelines", ["user_id"], :name => "index_user_timelines_on_user_id"
 
   create_table "user_wine_cellar_items", :force => true do |t|
