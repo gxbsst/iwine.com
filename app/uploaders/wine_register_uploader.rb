@@ -3,8 +3,8 @@
 class WineRegisterUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
+  #include CarrierWave::RMagick
   include CarrierWave::MiniMagick
-  # include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -32,11 +32,11 @@ class WineRegisterUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-  version :thumb do
+  version :thumb, :from_version => :large do
     process :resize_to_limit => [APP_DATA["image"]["wine"]["thumb"]["width"], '']
   end
 
-  version :middle do
+  version :middle, :from_version => :large do
     process :resize_to_limit => [APP_DATA["image"]["wine"]["middle"]["width"], '']
                                 
    # 保存宽度到数据库                            

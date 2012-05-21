@@ -253,3 +253,32 @@
 .fancybox-inner  #add_data ul li a {
 
     }
+
+    #comment_form {
+        width: 540px;
+        height: 320px;
+        #wine_profile_star_bar {
+            padding: 10px 0 10px 10px;
+        }
+        .text_area, .private, .share {
+            padding: 0px 0 10px 17px;
+        }
+        .share {
+            padding-top: 10px;
+            border-top: 1px solid #CCC;
+            .absolute {
+                right: 10px;
+                top: 7px;
+            }
+        }
+        ul {
+            display: inline;
+            li {
+                @include horizontal-list-item;
+            }
+        }
+        textarea {
+            width: 454px;
+            height: 75px;
+        }
+    }

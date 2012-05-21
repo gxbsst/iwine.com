@@ -18,7 +18,7 @@ namespace :app do
     #
     # ## 导入酒类表
     styles.each do |s|
-      w = Wines::Style.find_or_create_by_name_en_and_name_zh(s[0], s[1])
+      w = Wines::Style.where("name_en = ? and name_zh =? ", s[0], s[1]).first_or_create(:name_en => s[0], :name_zh => s[1])
     end
 
     #
@@ -105,25 +105,6 @@ namespace :app do
           wine_register.save
         end
        puts wine_register.id
-        #wine = Wine.create(
-        #  :name_en => item[1].force_encoding('utf-8').to_ascii_brutal,
-        #  :origin_name => item[1].force_encoding('utf-8'),
-        #  :name_zh => item[2].to_s.force_encoding('utf-8').split('/').last,
-        #  :official_site => item[3].to_s.force_encoding('utf-8').gsub(/http:\/\//, ''),
-        #  :wine_style_id => 1,
-        #  :region_tree_id => region_tree_id,
-        #  :winery_id => 1
-        #)
-        #
-        #wine_detail = Wines::Detail.create(
-        #  :drinkable_begin => drinkable_begin,
-        #  :drinkable_end => drinkable_end,
-        #  :alcoholicity => item[12],
-        #  :capacity => item[14],
-        #  :wine_id => wine.id,
-        #  :year => item[9]
-        #)
-        #puts "#{wine.id}   #{wine_detail.id}"
       rescue Exception => e
         puts e
       end
@@ -178,12 +159,82 @@ namespace :app do
             # 2. 添加一个字段， 保存原生文字，如:RhÃ´ne Valley, name_en 保存 RhA´ne Valley
             # 转换方法: "Moulis/ Moulis-en-MÃ©doc".to_ascii_brutal => https://github.com/tomash/ascii_tic
             region = Wines::RegionTree.where("name_en = ? and level = ? ", value, level).first
-            region = Wines::RegionTree.create(:doc => value == last_value ? doc : nil,:name_zh => name_zh, :name_en => ascii_value, :origin_name => value, :parent_id => parent, :scope => 0, :tree_left => 0, :tree_right => 0, :level => level) if region.blank?
+            region = Wines::RegionTree.create(:doc => value == last_value ? doc : nil,
+                                              :name_zh => name_zh,
+                                              :name_en => ascii_value,
+                                              :origin_name => value,
+                                              :parent_id => parent,
+                                              :scope => 0,
+                                              :tree_left => 0,
+                                              :tree_right => 0,
+                                              :level => level) if region.blank?
             parent = region.id
             level = level + 1
           end
         end
       end
     end
+  end
+
+  task :init_wineries => :environment do
+    require 'csv'
+    photos_path = "lib/tasks/data/winery_photos"
+    winery_path = Rails.root.join("lib", "tasks", "data", "winery.csv")
+    csv  = CSV.read(winery_path)
+    csv.each_with_index do |item, index|
+      next if index == 0 # 跳过csv文件标题
+      # find region_tree_id
+      region_tree = Wines::RegionTree.where("name_en = ?", item[12].to_s.force_encoding('utf-8').to_ascii_brutal).order("level desc").first
+      unless region_tree
+        puts "region_tree can't be blank!"
+        next
+      end
+      Winery.transaction do
+        begin
+        name_en = item[1].to_s.force_encoding('utf-8').to_ascii_brutal
+          winery = Winery.where("name_en = ?", name_en).
+              first_or_create!(
+              :name_en => name_en,
+              :origin_name => item[1].to_s.force_encoding('utf-8'),
+              :name_zh => item[2],
+              :cellphone => item[3].to_s.gsub(" ", ''),
+              :fax => item[4],
+              :email => item[5],
+              :official_site => item[6].to_s.gsub(/http:\/\//, ''),
+              :address => item[7].to_s.force_encoding('utf-8').to_ascii_brutal,
+              :config => {"Facebook" => item[8], "Twitter" => item[8], "Sina" => item[9]},
+              :region_tree_id => region_tree.id)
+          #save_logo_and_photos
+          if !item[0].blank? && Dir.exist?(Rails.root.join(photos_path, item[0]))
+            if logo_path = Dir.glob(Rails.root.join(photos_path, item[0], "LOGO.*")).first
+              winery.update_attribute("logo", open(logo_path))
+            end
+            Dir.glob(Rails.root.join(photos_path, item[0], "*")).each_with_index do |photo_path, index|
+              next if photo_path.include?("LOGO")
+              winery.photos.create!(
+                :category => 1,
+                :album_id => -1,
+                :is_cover => photo_path.include?("Cover1") ? 1 : 0,   #设置第一张图片为封面
+                :image => open(photo_path)
+              )
+            end
+          end
+          #save_info_items
+          unless item[13].blank?
+            info_arr = item[13].split('#').collect{|i| i.force_encoding('utf-8').to_ascii_brutal}
+            info_arr.delete("") #delete ""
+            info_hash = Hash[*info_arr]
+            info_hash.each do |key, value|
+              winery.info_items.where("title = ?", key).first_or_create!(:title => key, :description => value)
+            end
+          end
+          puts winery.id
+        rescue Exception => e
+          puts e
+        end
+
+      end
+    end
+
   end
 end

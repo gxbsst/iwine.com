@@ -160,5 +160,4 @@ module ApplicationHelper
   def link_to_image(path, url, link_opts = { }, image_opts = { })
     link_to theme_image_tag(path, image_opts), url, link_opts
   end
-
 end

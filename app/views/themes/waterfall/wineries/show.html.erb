@@ -1,0 +1,74 @@
+<% content_for :css do  %>
+    <%= theme_stylesheet_link_tag "winery" %>
+<% end %>
+<div id="wrapper950">
+  <div class="whitespace mb30">
+    <%= render "winery_detail" %>
+  </div>
+
+  <div class="whitespace winerymain">
+    <div class="left">
+      <div class="section">
+        <div class="title">
+          <h2>照片<span class="font12 more"><%= link_to "共#{@winery.photos.size}张", "#" %></span></h2>
+        </div>
+
+        <div class="content">
+          <ul class="winery_pic">
+            <%= render :partial => "thumb_photo", :collection => @winery.photos, :as => :photo %>
+          </ul>
+          <div class="clear"></div>
+        </div>
+
+      </div>
+      <%= render :partial => "info_item", :collection => @winery.info_items %>
+      <div class="section">
+        <div class="title"><h2>所有酒款<span class="font12 more"><%= link_to "(共#{@winery.wines.size}支)" %></span></h2></div>
+        <div class="content">
+          <ul class="wine_list">
+            <%= render :partial => "wine", :collection => @wines %>
+          </ul>
+        </div>
+
+      </div>
+
+
+      <div class="seciont last">
+         <div class="title">
+           <%= link_to "#", :class => "btn_gray float_r font12" do %>
+             <span>添加评论</span>
+           <% end %>
+           <h2>评论<span class="font12 more"><%= link_to "(共条...)", "#" %></span></h2>
+         </div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="sidebox">
+        <div class="title"><h3><a name="05" id="05"></a>热门酒款</h3></div>
+        <div class="main">
+          <ul class="sidewine">
+            <%= render :partial => "hot_wine", :collection => @hot_wines, :as => :wine_detail %>
+            <div class="clear"></div>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sidebox">
+        <div class="title">
+          <h3>关注该酒庄的人<span class="font12 more"><%= link_to "(共#{@winery.followers_count}人)" %></span></h3>
+        </div>
+        
+        <div class=”main“>
+          <ul class="follower">
+            <%= render :partial => "follower", :collection => @users, :as => :user %>
+          </ul>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+</div>

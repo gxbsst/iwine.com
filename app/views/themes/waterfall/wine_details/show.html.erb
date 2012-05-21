@@ -34,29 +34,11 @@
 		 <%= render "wine_details/share/followers" %>
 	   <%= render "wine_details/share/owners" %>
     <%#= render "wine_details/share/events" %>
-
 		</div>
 				<div id="wp_right">
 					 <%= render "wine_details/share/resource" %>
-					<div class="wine_id_pic">
-						<%= theme_image_tag "test/wine_id_pic.jpg" %>
-					</div>
-					<div class="info">
-						酒庄：<a href="#">DRC官方</a><br />
-						官网：<a href="#">http://www.romanee-conti.fr/</a><br />
-						产区：法国>勃艮第>夜丘>维森-罗曼尼>罗曼尼-康帝（特级田）<br />
-						France>Burgundy>Côte de Nuits>Vosne-Romanée>Romanée-Conti (Grand Cru AOC)<br />
-						类型：红葡萄酒<br />
-						容量：750ml<br />
-						酒精度：13％Vol<br />
-						葡萄品种：Pinot Noir(25%)、 Pinot Noir (75%) 
-					</div>
-					<div class="score_star">
-						<span class="star star_b_s45"></span>
-						<span class="iw_score"><span class="redscore">8.5</span> 分，32人评价</span>
-						<div class="clear"></div>
-					</div>
-					<div class="pro_score">
+					<%= render "wine_details/share/spec"%>
+						<div class="pro_score">
 						<table width="250" border="0" cellspacing="0" cellpadding="0">
 							<tr>
 								<th class="critic">评论家</th>
