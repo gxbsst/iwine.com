@@ -15,9 +15,8 @@ class TimelineEvent < ActiveRecord::Base
   # Class Methods
   class << self
     def wine_details
-      
       where(["secondary_actor_type = ?", "Wines::Detail"]).
-        includes(:subject, {:secondary_actor => :covers} ).order("created_at DESC").
+        includes(:actor, {:secondary_actor => [:covers, :wine]} ).order("created_at DESC").
         group([:secondary_actor_id, :event_type])
     end
   end

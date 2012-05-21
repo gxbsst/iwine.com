@@ -6,16 +6,12 @@ class Comment < ActiveRecord::Base
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
   validates_presence_of :body
   validates_presence_of :user
+  scope :recent, lambda { |limit| order("created_at DESC").limit(limit) } 
 
   # NOTE: install the acts_as_votable plugin if you
   # want user to vote on the quality of comments.
   # acts_as_voteable
   acts_as_votable
-
- fires :new_comment, :on                 => :create,
-                     :actor              => :user,
-                     :secondary_actor => :commentable,
-                     :if => lambda { |comment| comment.commentable_type == "Wines::Detail" }
 
   # 保存分享信息， 如新浪微博等
   store_configurable

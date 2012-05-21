@@ -3,6 +3,7 @@ class Users::Timeline < ActiveRecord::Base
   include Users::UserSupport
   belongs_to :timeline_event
   belongs_to :ownerable, :polymorphic => true
+  belongs_to :receiverable, :polymorphic => true
 
   # 关于关注酒的行为
   # 关注的酒被评论的列表
@@ -28,7 +29,7 @@ class Users::Timeline < ActiveRecord::Base
 
   # 判断用户关注的酒或者酒庄已经存在, 如果存在就更新updated_at
   def self.receiver_item(user_id, event_type, receiver, receiver_id)
-    where(["user_id = ? && event_type = ? && receiver = ? && receiver_id = ?",
+    where(["user_id = ? && event_type = ? && receiverable_type = ? && receiverable_id = ?",
             user_id, event_type, receiver, receiver_id])
   end
 

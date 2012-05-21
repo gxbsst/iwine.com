@@ -80,6 +80,7 @@ group :development, :test do
   #gem 'ruby-growl'
   gem "uniform_notifier"
   gem 'slowgrowl'
+  gem "thin"
 end
 # Gems used only for assets and not required
 # in production environments by default.

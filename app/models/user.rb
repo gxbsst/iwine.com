@@ -20,12 +20,21 @@ class User < ActiveRecord::Base
   # has_one  :avatar, :class_name => 'Photo', :foreign_key => 'business_id', :conditions => { :is_cover => true }
   has_one :cellar, :class_name => 'Users::WineCellar'
   has_many :oauths, :class_name => 'Users::Oauth'
-  has_many :followers, :class_name => 'Friendship', :include => :follower
-  has_many :followings, :class_name => 'Friendship', :foreign_key => 'follower_id', :include => :user
-  
   has_many :time_events
-
+  has_many :followers, :class_name => 'Friendship', :include => :follower do
+    def map_user
+      map {|f| f.follower }
+    end
+  end
+  has_many :followings, :class_name => 'Friendship', :foreign_key => 'follower_id', :include => :user do
+    def map_user
+      map {|f| f.user }
+    end
+  end
+  
+  has_many :wine_followings, :include => :commentable, :class_name => "Comment", :conditions => {:commentable_type => "Wines::Detail", :do => "follow"}
   accepts_nested_attributes_for :profile, :allow_destroy => true
+  has_many :feeds, :class_name => "Users::Timeline", :include => [:ownerable, {:timeline_event => [:actor]}, {:receiverable =>  [:covers, :wine]}], :order => "created_at DESC"
 
   # validates :username, :presence => false, :allow_blank => true, :numericality => true
   validates :agree_term, :acceptance => true, :on => :create

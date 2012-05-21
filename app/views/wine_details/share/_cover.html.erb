@@ -1,27 +1,45 @@
-<div class="large relative">
-  <% @wine_detail.covers.each do |photo,index| %>
-    <%= link_to (image_tag @wine_detail.photos.first.image_url), "photo_url", :id => "large_#{index}" %>
+<div id="preview_wrap">
+	<div id="preview_outer">
+		<div id="preview_inner">
+			<% @wine_detail.covers.each do |photo,index| %>
+		    <div><%= image_tag @wine_detail.photo.image_url(:w_large) %></div>
+		  <% end %>
+		</div>
+	</div>
+</div>
+<div id="thumbs">
+	<!--<div id="arrow"></div>-->
+	<% @wine_detail.covers.each do |photo,index| %>
+    <span><%= image_tag @wine_detail.photo.image_url(:w_thumb) %></span>
   <% end %>
 </div>
-<div class="clear"></div>
-<div class="thumbs relative">
-  <%= link_to "", "javascript:void(0)", :class => "absolute icon compass_icons-arrow_left backward" %>
-  <span class="slideshow">
-    <% @wine_detail.covers.each do |photo| %>
-      <%= link_to (image_tag photo.image_url(:w_thumb), :class => "pic", :width => 60, :height => 60), "javascript:void(0)" %>
-    <% end %>
-  </span>
-  <%= link_to "", "javascript:void(0)", :class => "absolute icon compass_icons-arrow_right forward" %>
-</div>
-
 
 <script type="text/javascript">
-  $(document).ready(function(){
-   $(".slideshow").tabs(".large > a", {
-   effect: 'fade',
-   fadeOutSpeed: "slow",
-   rotate: true
-  }).slideshow();
+		$(document).ready(function() {
+			// Save  the jQuery objects for later use.
+			var outer		= $("#preview_outer");
+			var arrow		= $("#arrow");
+			var thumbs		= $("#thumbs span");
 
-  });
+			var preview_pos;
+			var preview_els	= $("#preview_inner div");
+			var image_width	= preview_els.eq(0).width(); // Get width of imaages
+			
+			// Hook up the click event
+			thumbs.click(function() {
+				// Get position of current image
+				preview_pos = preview_els.eq( thumbs.index( this) ).position();
+
+				// Animate them!
+				outer.stop().animate( {'scrollLeft' : preview_pos.left},	500 );
+				arrow.stop().animate( {'left' : $(this).position().left },	500 );
+			});
+
+			// Reset positions on load
+			arrow.css( {'left' : thumbs.eq(0).position().left } ).show();
+			outer.animate( {'scrollLeft' : 0}, 0 );
+
+			// Set initial width
+			$("#preview_inner").css('width', preview_els.length * image_width);
+		});
 </script>

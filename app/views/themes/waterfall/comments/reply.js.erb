@@ -9,10 +9,10 @@ $("#reply_comment_<%= @comment.id %> form")
   $(this).parent().parent().slideUp("slow", function(){
 });
   $(this).parent().parent().parent()
-  .children("p.vote")
+  .children(".userful")
   .find("span.reply_comment_count").text("(" + data + ")") ;
 
-  $(this).parent().parent().parent()
-  .children("p.vote")
-  .find("span.reply_result").text("回复成功.");
+  // $(this).parent().parent().parent()
+  // .children(".userful")
+  // .find("span.reply_result").text("回复成功.");
 });
