@@ -2,7 +2,7 @@
 #hp {background:url(../images/bg/bg_headerline.gif) repeat-x left 130px;padding:30px 39px;}
 .hp_header {margin:0 0 50px 0;}
 .hp_userimg {float:left;width:130px;margin:0 20px 0 0;}
-.hp_right {float:right;}
+.hp_header .hp_right {float:right;}
 .hp_info {float:left;width:550px;position:relative;}
 .hp_info .username {font-size:20px;font-weight:bold;margin:0 0 5px 0;}
 .hp_info .mystatu {margin:0 0 20px 0;color:#666;}
@@ -17,6 +17,37 @@
 .title_btn h1 {font-size:18px;}
 .album_right h2 {font-size:14px;}
 .side_album_list h3 {font-size:12px;}
+
+/*------------hp index style--------------*/
+#hp .left {width:590px;float:left;margin-right:28px;}
+#hp .right {width:250px;float:left;}
+.home_left {width:620px;float:left;margin-right:28px;}
+.home_right {width:220px;float:left;}
+.puzzle {margin-bottom:50px;}
+.puzzle span {display:block;float:left; margin:0 1px 1px 0;}
+#hp .home_left .comment_list li {width:620px;}
+#hp .home_left .comment_list .pic { width:70px;float:left;margin-right:20px;}
+#hp .home_left .comment_list .main {width:530px;float:left;}
+#hp .left .comment_list .main {width:500px;}
+#hp .left .wine_list li {margin:0 0 20px 0;}
+#hp .left .wine_list a img{width:100px;float:left;margin-right:20px;}
+#hp .left .wine_list .info {width:470px;float:left;}
+#hp .left .wine_list .info p {margin-bottom:0;}
+#hp .left .wine_list .info h3.en a{color:#999;font-weight:normal;}
+#hp .left .wine_list .year span a {margin:0 5px 0 0;color:#993333;text-decoration:underline;display:inline-block;}
+#hp .left .wine_list .year span a:hover {text-decoration:none;color:#993333;}
+#hp .sidebox {margin: 0 0 20px 0;}
+#hp .right .sidebox .title {border-radius:0;background-color:#e6e6e6;padding:5px 15px;}
+#hp .right .sidebox .title h3 {font-size:14px;}
+#hp .right .sidebox .main {padding:15px;background-color:#f7f7f7;}
+#hp .right .sidewine li {margin-bottom:20px;width:220px;float:left;}
+#hp .right .sidewine li.last {margin-bottom:0;}
+#hp .right .sidewine a img {width:70px;float:left;margin-right:10px;}
+#hp .right .sidewine .info {width:130px;float:left;}
+#hp .right .sidewine .info h3.zh {font-size:12px;}
+#hp .right .sidewine .info h3.en a {font-size:12px;font-weight:normal;color:#999;}
+#hp .right .sidewine .info h3.en a:hover {color:#999;text-decoration:none;}
+
 
 /*-------------album style----------------*/
 ul.album_list {padding:0 0 0 10px}
@@ -63,9 +94,9 @@ li.photo_des p {margin: 0 0 5px 0;}
 .step .step_fir {background-position:0 0;}
 .step .step_sec {background-position:0 -40px;}
 .step .step_thr {background-position:0 -80px;}
-.wine_list li {background:url(../images/bg/wine_search_bg.jpg) no-repeat left top;height:76px;padding:20px 30px;margin:0 0 20px 0;}
-.wine_list .wine_img {float:left;width:70px;margin: 0 20px 0 0;}
-.wine_list .add_to_cellar {float:right;padding: 20px 0 0 0;}
-.wine_list .wine_info {float:left;width:600px;}
-.wine_list .wine_info h2 {font-size:14px;}
-.wine_list .wine_info h3 {font-size:12px;font-weight:normal;color:#666;}
+#cellar .wine_list li {background:url(../images/bg/wine_search_bg.jpg) no-repeat left top;height:76px;padding:20px 30px;margin:0 0 20px 0;}
+#cellar .wine_list .wine_img {float:left;width:70px;margin: 0 20px 0 0;}
+#cellar .wine_list .add_to_cellar {float:right;padding: 20px 0 0 0;}
+#cellar .wine_list .wine_info {float:left;width:600px;}
+#cellar .wine_list .wine_info h2 {font-size:14px;}
+#cellar .wine_list .wine_info h3 {font-size:12px;font-weight:normal;color:#666;}
