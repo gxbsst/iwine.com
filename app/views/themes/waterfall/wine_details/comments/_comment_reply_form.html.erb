@@ -1,34 +1,33 @@
 <div class="top"></div>
 <div class="middle">
-<%= form_for @comment, :url => reply_wine_comment_path(@wine_detail.id, @comment.id), :method => :post, :remote => true do |f| -%>
-  <%= hidden_field_tag "wine_detail_id", @wine_detail.id %>
-  <table border="0" cellspacing="0" cellpadding="0">
-    <tr>
-      <td class="td_1"><%= text_area_tag "comment[body]" %></td>
-      <td class="td_2" valign="top"><%= image_submit_tag "v2/button/reply.png" %></td>
-    </tr>
-  </table>
-<% end -%>
+	<%= form_for @comment, :url => reply_wine_comment_path(@wine_detail.id, @comment.id), :method => :post, :remote => true do |f| -%>
+	  <%= hidden_field_tag "wine_detail_id", @wine_detail.id %>
+	
+	<div class="post clearfix"><a href="#" class="btn_gray float_r">
+		<span>回复</span></a>
+		<%= text_area_tag "comment[body]" %>
+	</div>
+	<ul class="reply_list clearfix">
+		<% if @comment.children.size > 0 %>
+		  <% @comment.children.each do |comment| %>
+			<li>
+				<div class="userpic">
+					 <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true), :with_avatar => true, :avatar_version => :thumb %>
+				</div>
+				<div class="main">
+					<div class="username">
+						 <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true) %>
+						<span class="date"> <%= comment.created_at.to_s(:normal) %></span>
+					</div>
+					<div class="content"><%= comment.body %></div>
+				</div>
+			</li>
+		 <% end %>
+		<% end %>
+		
+		<div class="clear"></div>
+	</ul>
+ <% end -%>
 
-<% if @comment.children.size > 0 %>
-  <% @comment.children.each do |comment| %>
-  <div class="item relative dotted">
-    <div class="pic">
-      <%= link_to_user comment.user, users_path(comment.user), :with_avatar => true, :avatar_version => :thumb %>
-    </div>
-    <p class="comment_info">
-      <%= link_to_user comment.user, users_path(comment.user) %>
-      <%= comment.created_at.to_s(:normal) %>
-      <%= time_ago_in_words(comment.created_at) %>以前
-    </p>
-    <p class="description"> <%= comment.body %> </p>
-    <%= link_to_icon "delete", "/", :style => "display: none", :class => "delete" %>
-    <%= link_to_icon "edit", "/", :style => "display: none", :class => "edit" %>
-  </div>
-  <div class="clear"></div>
- <% end %>
-<% end %>
-<!-- middle end -->
 </div>
-<div class="bottom">
-</div>
+<div class="botton"></div>

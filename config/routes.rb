@@ -29,13 +29,13 @@ Patrick::Application.routes.draw do
     resources :comments, :controller => "wine_details/comments" do
       member do 
         # 自定义actions
-        get :cancle_follow 
         get :vote
         match "reply", :via => [:get, :post]    
       end
       collection do 
         match "follow", :via => [:get, :post]
         match "comment", :via => [:get, :post]
+        get :cancle_follow 
         get :add_to_cellar
       end
     end

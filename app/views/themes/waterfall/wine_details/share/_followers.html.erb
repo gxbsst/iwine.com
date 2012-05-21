@@ -1,16 +1,17 @@
-<h3>
-  他们关注
-  <span class="font_12">
-    <%= link_to "（共#{@wine_detail.followers_count}人，更多...)", followers_wine_path(@wine_detail.id) %>
-  </span>
-</h3>
-
-<% @followers.each do |user| %>
-  <div class="item">
-      <%= link_to_user user,
-                       user_path(user, :trailing_slash => true),
-                       :with_avatar => true,
-                       :avatar_version => :middle %>
-  </div>
-<% end %>
-
+<div class="wp_space_line ptb30">
+	<div class="title_btn">
+		<h2>他们关注<span class="font12 more">
+			<%= link_to "（共#{@wine_detail.followers_count}人...)", followers_wine_path(@wine_detail.id) %>
+		</span></h2>
+	</div>
+	<ul class="wp_follower">
+		<% @followers.each do |user| %>
+		<li>
+			<%= link_to_user user, user_path(user, :trailing_slash => true),
+				{:with_avatar => true, :avatar_version => :middle},
+				{:width => 50, :height => 50 }%>
+		</li>
+		<% end %>
+		<div class="clear"></div>
+	</ul>
+</div>

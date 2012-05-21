@@ -34,9 +34,9 @@ class CommentsController < ApplicationController
 
     if !(@comments.nil?)
       unless @comments.kind_of?(Array)
-        @comments = @comments.page(params[:page]).per(8)
+        @comments = @comments.page(page).per(8)
       else
-        @comments = Kaminari.paginate_array(@comments).page(params[:page]).per(8)
+        @comments = Kaminari.paginate_array(@comments).page(page).per(8)
       end
     end
 

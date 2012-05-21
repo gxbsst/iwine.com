@@ -52,7 +52,7 @@ class WineDetailsController < ApplicationController
 
   def get_wine_detail
     wine_detail_id = params[:id]
-    @wine_detail = Wines::Detail.find(wine_detail_id)
+    @wine_detail = Wines::Detail.includes(:label).find(wine_detail_id)
   end
 
 end
