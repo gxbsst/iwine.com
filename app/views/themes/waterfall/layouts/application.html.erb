@@ -25,7 +25,11 @@
         <div class="clear"></div>
       </div>
     </div>
-    <div id="wrapper950">
+		<% if params[:controller] == "home" || (params[:controller] == "wine_details" && params[:action] == "index")%>
+		 <div id="home">
+		<% else %>
+			 <div id="wrapper950">
+		<% end %>
         <%= yield %>
     </div>
     <%= render "layouts/footer" %>

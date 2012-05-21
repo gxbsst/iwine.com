@@ -8,7 +8,7 @@ class Wines::Detail < ActiveRecord::Base
   acts_as_commentable
 
   belongs_to :wine
-  has_many :comments, :class_name => "::Comment", :foreign_key => 'commentable_id', :include => [:user], :conditions => {:commentable_type => self.to_s }
+  has_many :comments, :class_name => "WineComment", :foreign_key => 'commentable_id', :include => [:user], :conditions => {:commentable_type => self.to_s }
   #  has_many :good_comments, :foreign_key => 'wine_detail_id', :class_name => 'Wines::Comment', :order => 'good_hit DESC, id DESC', :limit => 5, :include => [:user_good_hit]
   has_one :statistic, :foreign_key => 'wine_detail_id'
   has_one :label
@@ -24,6 +24,7 @@ class Wines::Detail < ActiveRecord::Base
 
   accepts_nested_attributes_for :photos, :reject_if => proc { |attributes| attributes['image'].blank? }
   accepts_nested_attributes_for :label, :reject_if => proc { |attributes| attributes['filename'].blank? }
+  # scope :with_recent_comment, joins(:comments) & ::Comment.recent(6) 
   def comment( user_id )
     Wines::Comment.find_by_user_id user_id
   end

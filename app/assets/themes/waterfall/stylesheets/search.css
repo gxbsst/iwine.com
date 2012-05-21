@@ -1,0 +1,22 @@
+@charset "UTF-8";
+.searchbox input {width:495px;background-color:#fff;}
+.winery_result {border:3px solid #e6d2d2;background-color:#fff;padding:15px;margin-bottom:20px;}
+.winery_result a img {width:70px;float:left;margin-right:10px;}
+.winery_result li {width:245px;float:left;margin-right:10px;}
+.winery_result li.more {width:35px;margin-right:0;padding-top:50px;}
+.winery_result .meta {width:145px;float:left;}
+.search .wine_list {margin-bottom:30px;}
+.search .wine_list li {margin:0 0 20px 0;}
+.search .wine_list a img{width:70px;float:left;margin-right:20px;}
+.search .wine_list .info {width:470px;float:left;}
+.search .wine_list .info p {margin-bottom:0;}
+.search .wine_list .year span a {margin:0 5px 0 0;color:#993333;text-decoration:underline;display:inline-block;}
+.search .wine_list .year span a:hover {text-decoration:none;color:#993333;}
+.search .sidebar {margin-left:30px;}
+.search .sidebar .title {margin-bottom:20px;font-size:13px;font-weight:bold;}
+.search .sidebar .username {margin-bottom:5px;}
+.search .sidebar .userlist li {margin:0 0 20px 0;}
+.search .sidebar .location {color:#999;margin-left:10px;display:inline-block;}
+.winery_list li {margin: 0 0 40px 0;width:590px;float:left;}
+.winery_list .logo {width:100px;float:left;margin-right:20px;}
+.winery_list .meta {width:470px;float:left;}

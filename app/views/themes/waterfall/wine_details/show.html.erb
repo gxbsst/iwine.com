@@ -1,111 +1,75 @@
-<div id="comment_form"  style="display: none" >
+<% content_for :css do %>
+	<%= theme_stylesheet_link_tag :wine, :thumb %>
+<% end %>
+	<div id="comment_form"  style="display: none" >
 
-</div>
-<div id="add_to_cellar_form"  style="display: none" >
+	</div>
+	<div id="add_to_cellar_form"  style="display: none" >
 
-</div>
-<div class="wine_profile">
-  <%= render_stickies %>
-  <div class="left">
-    <div class="box title">
-     <h2>
-       <%= raw @wine_detail.cname %>
-       <br />
-       <span> <%= raw @wine_detail.ename %></span>
-     </h2>
-     <!-- title end -->
-    </div>
-
-    <div class="box buttons relative">
-      <%= render "wine_details/share/buttons" %>
-         <!-- buttons end -->
-    </div>
-    <div class="clear"></div>
-
-    <div class="box cover">
-      <%= render "wine_details/share/cover" %>
-    </div>
-    <div class="clear"></div>
-
-    <div class="box winery_description">
-      <%= render "wine_details/share/winery_description" %>
-    </div>
-    <div class="clear"></div>
-
-    <div class="box photos">
-      <%= render "wine_details/share/photos" %>
-    </div>
-    <div class="clear"></div>
-<!--
-    <div class="box likers">
-      <%#= render "wine_details/share/likers" %>
-    </div>
-    <div class="clear"></div>
--->
-    <div class="box comments">
-      <%= render "wine_details/share/comments" %>
-    </div>
-    <div class="clear"></div>
-<!-- 
-    <div class="box testing_notes">
-      <%#= render "wine_details/testing_notes/testing_note" %>
-    </div>
-    <div class="clear"></div>
- -->
-    <div class="box followers">
-      <%= render "wine_details/share/followers" %>
-    </div>
-    <div class="clear"></div>
-
-    <div class="box owners">
-      <%= render "wine_details/share/owners" %>
-    </div>
-    <div class="clear"></div>
-
-    <!-- <div class="box events">
-      <%#= render "wine_details/share/events" %>
-    </div>
-    <div class="clear"></div> -->
-    <!-- left end -->
-  </div>
-
-  <div  class="right">
-    <div class="box resource">
-      <%= render "wine_details/share/resource" %>
-    </div>
-    <div class="clear"></div>
-
-    <div class="box spec">
-      <%= render "wine_details/share/spec" %>
-    </div>
-    <div class="clear"></div>
-
-    <div class="box score">
-      <%= render "wine_details/share/score" %>
-    </div>
-    <div class="clear"></div>
-<!--
-    <div class="box special_comments">
-      <%#= render "wine_details/share/special_comments" %>
-    </div>
-
-    <div class="clear"></div>
-
-    <div class="box price">
-      <%#= render "wine_details/share/price" %>
-    </div>
-    <div class="clear"></div>
--->
-    <div class="box vintage">
-      <%= render "wine_details/share/vintage" %>
-    </div>
-    <div class="clear"></div>
-
-    <%= link_to_button "feedback", "/" %>
-    <!-- right end -->
-    </div>
-
-  <!-- wine_profile end -->
- </div>
-
-<div class="clear"></div>
+	</div>
+	<div id="wp_left">
+		<div class="wp_space_line">
+			<h1 class="wine_name_ch"><%= raw @wine_detail.cname %></h1>
+			<h1 class="wine_name_en"><%= raw @wine_detail.ename %></h1>
+		</div>
+		<div class="wp_space_line ptb10">
+			<%= render "wine_details/share/buttons" %>
+		</div>
+		<div class="wp_space_line">
+				<%= render "wine_details/share/cover" %>
+		</div>
+		<div class="wp_space_line ptb30">
+			<h2>介绍</h2>
+			<% unless @wine_detail.description.nil? %>
+			<div> <%= @wine_detail.description %></div>
+			<% else %>
+			<div>暂时没有介绍...</div>
+			<% end %>
+		</div>
+		<div class="wp_space_line ptb30">
+				<%= render "wine_details/share/photos" %>
+		</div>
+		<%#= render "wine_details/share/likers" %>
+		 <%= render "wine_details/share/comments" %>
+		 <%= render "wine_details/share/followers" %>
+	   <%= render "wine_details/share/owners" %>
+    <%#= render "wine_details/share/events" %>
+		</div>
+				<div id="wp_right">
+					 <%= render "wine_details/share/resource" %>
+					<%= render "wine_details/share/spec"%>
+						<div class="pro_score">
+						<table width="250" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<th class="critic">评论家</th>
+								<th class="score">得分</th>
+								<th class="year">适饮年限</th>
+							</tr>
+							<tr>
+								<td class="critic">Jancis Robinson</td>
+								<td>18/20</td>
+								<td>2014-2024</td>
+							</tr>
+							<tr>
+								<td class="critic">Wine Spectator </td>
+								<td>94/100</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td class="critic">iWine</td>
+								<td>95/100</td>
+								<td>&nbsp;</td>
+							</tr>
+						</table>
+					</div>
+					<div class="wp_price">
+						价格：<span class="price_b">￥2580</span> 起 <a href="#">(更多价格信息+)</a>
+					</div>
+					<div class="wp_price">
+						<p>更多年份</p>
+						<p class="year"><span><a href="wine_profile.html">2010</a></span><span><a href="wine_profile.html">2009</a></span><span><a href="#">2008</a></span><span><a href="#">2005</a></span><span><a href="#">2003</a></span><span><a href="#">2001</a></span><span><a href="#">2000</a></span></p>
+						<p class="mt10"><a href="#"><img src="images/icon/open.gif" width="13" height="13" alt="查看所有年份" /></a></p>
+					</div>
+					<div class=""><a href="#" class="btn_gray"><span>信息纠错与补充</span></a></div>
+				</div>
+				<div class="clear"></div>   

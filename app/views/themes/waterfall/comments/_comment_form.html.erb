@@ -1,6 +1,5 @@
 <h3 class="title"> 我要评论 </h3>
-<%= form_for @comment, :url => {:action => "#{@comment.do}"}, :method => :post,  :validate => true do |f| -%>
-<%= hidden_field_tag "wine_detail_id", @wine_detail.id %>
+<%= form_for @comment, :url => wine_comments_path,  :validate => true do |f| -%>
 <%= f.hidden_field :do %>
 <div class="star_rate" id="wine_profile_star_bar">
   <table border="0" cellspacing="5" cellpadding="5">

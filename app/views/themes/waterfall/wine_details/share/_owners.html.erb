@@ -1,22 +1,25 @@
-<h3>
-  他们拥有，或许也愿意出售
-  <span class="font_12">
-    <%= link_to "（共#{@wine_detail.owners_count}人，更多...)", owners_wine_path(@wine_detail.id) %>
-  </span>
-</h3>
-
-<% @owners.each do |cellar_item| %>
-  <div class="item">
-    <div class="pic">
-      <%= link_to_user cellar_item.user,
-          user_path(cellar_item.user, :trailing_slash => true),
-          :with_avatar => true,
-          :avatar_version => :middle %>
-    </div>
-    <div class="text">
-      <h4><%= link_to_user cellar_item.user,  user_path(cellar_item.user, :trailing_slash => true ) %></h4>
-      <p><%= cellar_item.number %>支 | 单价: ¥<%= cellar_item.price %></p>
-    </div>
-  </div>
-<% end %>
-
+<div class="wp_space_line ptb30">
+	<div class="title_btn">
+		<h2>他们拥有，或许也愿意出售<span class="font12 more">
+			<%= link_to "（共#{@wine_detail.owners_count}人...)", owners_wine_path(@wine_detail.id) %>
+			</span>
+		</h2>
+	</div>
+	<ul class="wp_owner">
+		<% @owners.each do |cellar_item| %>
+		<li>
+			<div class="userpic">
+				<%= link_to_user cellar_item.user,
+	          user_path(cellar_item.user, :trailing_slash => true),
+	          {:with_avatar => true, :avatar_version => :middle},
+	 					{:width => 50, :height => 50 }%>
+			</div>
+			<div class="info">
+				<p class="username"><%= link_to_user cellar_item.user,  user_path(cellar_item.user, :trailing_slash => true ) %></p>
+				<p><%= cellar_item.number %>支 | <span class="price"> ¥<%= cellar_item.price %></span>/支</p>
+			</div>
+		</li>
+		<% end %>
+		<div class="clear"></div>
+	</ul>
+</div>
