@@ -1,6 +1,3 @@
-<% content_for :css do %>
-  <%= theme_stylesheet_link_tag :search %>
-<% end %>
 <div class="whitespace normal search">
   <div class="left">
     <div class="searchbox">
@@ -10,44 +7,66 @@
     <div class="clear"></div>
     <div class="tabs">
       <ul>
-        <li class="current"><a href="#">全部</a></li>
-        <li><a href="search_wine.html">酒款</a></li>
-        <li><a href="search_winery.html">酒庄</a></li>
+        <li class="<%= @all_tab%>">
+          <a href="<%= url_for( '/searches/results?tab=all&word=' + params[:word] )%>">全部</a>
+        </li>
+        <li class="<%= @wine_tab%>">
+          <a href="<%= url_for( '/searches/results?tab=wine&word=' + params[:word] )%>">酒款</a>
+        </li>
+        <li class="<%= @winery_tab%>">
+          <a href="<%= url_for( '/searches/results?tab=winery&word=' + params[:word] )%>">酒庄</a>
+        </li>
       </ul>
     </div>
     <div class="clear"></div>
+    <% if @entries['wines'].blank? && @entries['wineries'].blank? %>
+    不好意思，没有找到相关内容
+    <% else %>
     <div class="nor_notice mb20">太好了，我们找到了一些相关内容：</div>
     <div class="winery_result">
+      <% if @entries['wineries'].present? %>
       <ul>
+        <% @entries['wineries'][1..2].each do|winery| %>
         <li>
-          <a href="#"><img src="images/test/winery70.jpg" width="70" height="70" alt="winery name" /></a>
+          <a href="<%= url_for( '/winery' + winery.id.to_s )%>">
+            <img src="<%= winery.logo_url(:thumb)%>" width="70" height="70" alt="winery name" />
+          </a>
           <div class="meta">
-            <h1 class="zh"><a href="#">某某酒庄</a></h1>
-            <h1 class="en"><a href="#">THE MOREFM WINERY</a></h1>
-            <p class="location">法国 > 波尔多</p>
+            <h1 class="zh">
+              <a href="<%= url_for( '/winery' + winery.id.to_s )%>"><%= winery.name_zh%></a>
+            </h1>
+            <h1 class="en">
+              <a href="<%= url_for( '/winery' + winery.id.to_s )%>"><%= winery.name_en%></a>
+            </h1>
+            <p class="location"><%= winery.region_path_zh(winery.region_tree_id)%></p>
           </div>
         </li>
-        <li>
-          <a href="#"><img src="images/test/winery70_2.jpg" width="70" height="70" alt="winery name" /></a>
-          <div class="meta">
-            <h1 class="zh"><a href="#">某某酒庄</a></h1>
-            <h1 class="en"><a href="#">THE MOREFM WINERY</a></h1>
-            <p class="location">法国 > 波尔多</p>
-          </div>
-        </li>
-        <li class="more"><a href="search_winery.html">更多...</a></li>
+        <% end %>
+        <li class="more"><a href="">更多...</a></li>
         <div class="clear"></div>
       </ul>
+      <% end %>
       <div class="clear"></div>
     </div>
+    <% @entries['wines'].each do |wine| %>
     <div class="wine_list">
       <div class="box590">
         <div class="box590_t"></div>
         <div class="box590_main">
-          <a href="wine_profile.html"><img src="images/test/wine70.jpg" width="70" height="70" alt="wine name" /></a>
+          <a href="<%= url_for( '/wines/' + wine.id.to_s )%>">
+            <%= wine_cover_tag( wine , :width => 70 , :height => 70 )%>
+          </a>
           <div class="info">
-            <h1 class="zh"><a href="wine_profile.html">波特米勒站赤霞珠干红葡萄酒</a></h1>
-            <h1 class="en"><a href="wine_profile.html">PORTER MILL STATION Cabernet Sauvignon</a></h1>
+            <h1 class="zh">
+              <a href="<%= url_for( '/wines/' + wine.id.to_s )%>">
+                <%= wine.cname%>
+              </a>
+            </h1>
+            <h1 class="en">
+              <a href="<%= url_for( '/wines/' + wine.id.to_s )%>">
+                <%= wine.ename%>
+              </a>
+            </h1>
             <p><strong>年份：</strong></p>
             <p class="year"><span><a href="wine_profile.html">2010</a></span><span><a href="wine_profile.html">2009</a></span><span><a href="#">2008</a></span><span><a href="#">2005</a></span><span><a href="#">2003</a></span><span><a href="#">2001</a></span><span><a href="#">2000</a></span></p>
           </div>
@@ -55,63 +74,9 @@
         </div>
         <div class="box590_b"></div>
       </div>
-      <div class="box590">
-        <div class="box590_t"></div>
-        <div class="box590_main">
-          <a href="wine_profile.html"><img src="images/test/wine70_03.jpg" width="70" height="70" alt="wine name" /></a><a href="#"></a>
-          <div class="info">
-            <h1 class="zh"><a href="wine_profile.html">波特米勒站赤霞珠干红葡萄酒</a></h1>
-            <h1 class="en"><a href="#">PORTER MILL STATION Cabernet Sauvignon</a></h1>
-            <p><strong>年份：</strong></p>
-            <p class="year"><span><a href="#">2010</a></span><span><a href="#">2009</a></span><span><a href="#">2008</a></span><span><a href="#">2005</a></span><span><a href="#">2003</a></span><span><a href="#">2001</a></span><span><a href="#">2000</a></span><span><a href="#">1998</a></span><span><a href="#">1997</a></span><span><a href="#">1996</a></span><span><a href="#">1995</a></span><span><a href="#">1994</a></span><span><a href="#">1993</a></span><span><a href="#">1992</a></span><span><a href="#">1991</a></span><span><a href="#">1990</a></span><span><a href="#">1989</a></span><span><a href="#">1988</a></span><span><a href="#">...</a></span></p>
-          </div>
-          <div class="clear"></div>
-        </div>
-        <div class="box590_b"></div>
-      </div>
-      <div class="box590">
-        <div class="box590_t"></div>
-        <div class="box590_main">
-          <a href="wine_profile.html"><img src="images/test/wine70_02.jpg" width="70" height="70" alt="wine name" /></a><a href="#"></a>
-          <div class="info">
-            <h1 class="zh"><a href="wine_profile.html">波特米勒站赤霞珠干红葡萄酒</a></h1>
-            <h1 class="en"><a href="#">PORTER MILL STATION Cabernet Sauvignon</a></h1>
-            <p><strong>年份：</strong></p>
-            <p class="year"><span><a href="#">2010</a></span><span><a href="#">2009</a></span><span><a href="#">2008</a></span><span><a href="#">2005</a></span><span><a href="#">2003</a></span><span><a href="#">2001</a></span><span><a href="#">2000</a></span><span><a href="#">1998</a></span><span><a href="#">1997</a></span><span><a href="#">1996</a></span><span><a href="#">1995</a></span><span><a href="#">1994</a></span><span><a href="#">1993</a></span><span><a href="#">1992</a></span><span><a href="#">1991</a></span><span><a href="#">1990</a></span></p>
-          </div>
-          <div class="clear"></div>
-        </div>
-        <div class="box590_b"></div>
-      </div>
-      <div class="box590">
-        <div class="box590_t"></div>
-        <div class="box590_main">
-          <a href="wine_profile.html"><img src="images/test/wine70.jpg" width="70" height="70" alt="wine name" /></a><a href="#"></a>
-          <div class="info">
-            <h1 class="zh"><a href="wine_profile.html">波特米勒站赤霞珠干红葡萄酒</a></h1>
-            <h1 class="en"><a href="#">PORTER MILL STATION Cabernet Sauvignon</a></h1>
-            <p><strong>年份：</strong></p>
-            <p class="year"><span><a href="#">2010</a></span><span><a href="#">2009</a></span><span><a href="#">2008</a></span><span><a href="#">2005</a></span><span><a href="#">2003</a></span><span><a href="#">2001</a></span><span><a href="#">2000</a></span><span><a href="#">1998</a></span><span><a href="#">1997</a></span><span><a href="#">1996</a></span><span><a href="#">1995</a></span><span><a href="#">1994</a></span></p>
-          </div>
-          <div class="clear"></div>
-        </div>
-        <div class="box590_b"></div>
-      </div>
-      <div class="box590">
-        <div class="box590_t"></div>
-        <div class="box590_main">
-          <a href="wine_profile.html"><img src="images/test/wine70.jpg" width="70" height="70" alt="wine name" /></a><a href="#"></a>
-          <div class="info">
-            <h1 class="zh"><a href="wine_profile.html">波特米勒站赤霞珠干红葡萄酒</a></h1>
-            <h1 class="en"><a href="#">PORTER MILL STATION Cabernet Sauvignon</a></h1>
-            <p><strong>年份：</strong></p>
-            <p class="year"><span><a href="#">2010</a></span><span><a href="#">2009</a></span><span><a href="#">2008</a></span><span><a href="#">2005</a></span><span><a href="#">2003</a></span><span><a href="#">2001</a></span><span><a href="#">2000</a></span><span><a href="#">1998</a></span><span><a href="#">1997</a></span><span><a href="#">1996</a></span><span><a href="#">1995</a></span><span><a href="#">1994</a></span><span><a href="#">1993</a></span><span><a href="#">1992</a></span><span><a href="#">1991</a></span><span><a href="#">1990</a></span><span><a href="#">1989</a></span><span><a href="#">1988</a></span><span><a href="#">...</a></span></p>
-          </div>
-          <div class="clear"></div>
-        </div>
-        <div class="box590_b"></div>
-      </div>
     </div>
+    <% end %>
+    <% end %>
   </div>
   <div class="right">
     <div class="sidebar">

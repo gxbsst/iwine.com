@@ -58,7 +58,10 @@
           },
 
           blur: function(){
-            search_scroll.css( 'display' , 'none' );
+            var hide = function(){
+              search_scroll.css( 'display' , 'none' );
+            };
+            setTimeout( hide , 200 );
           }
         });
       </script>

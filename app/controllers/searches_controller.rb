@@ -35,6 +35,19 @@ class SearchesController < ApplicationController
   end
 
   def results
+    server = HotSearch.new
+    @entries = server.hot_entries params[:word]
+    @tab_all = @tab_wine = @tab_winery = ''
+    
+    if params[:tab] == 'all' 
+      @tab_all = 'current' 
+    elsif params[:tab] == 'wine'
+      @tab_wine = 'current'
+    else
+      @tab_winery = 'current'
+    end
+
+    binding.pry
 
   end
 end

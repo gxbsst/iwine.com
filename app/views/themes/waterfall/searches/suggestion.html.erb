@@ -1,7 +1,7 @@
 <p class="title"><a href="#">搜索酒款 》</a></p>
 <div class="wineResult">
   <% @words['wines'].each do |wine|%>
-  <dl class="clearfix">
+  <dl class="clearfix" onclick="location.href='<%= url_for( '/wines/' + wine.id.to_s )%>'">
     <dt>
       <%= wine_cover_tag( wine , :width => 30 , :height => 30 )%>
     </dt>
@@ -16,9 +16,9 @@
 <p class="title"><a href="#">搜索酒庄 》</a></p>
 <div class="wineryResult">
   <% @words['wineries'].each do |winery| %>
-  <dl class="clearfix">
+  <dl class="clearfix" onclick="location.href='<%= url_for( '/wineries/' + winery.id.to_s )%>'">
     <dt>
-    <img src="images/test/winery100_2.jpg" width="30" height="15" />
+    <img src="<%= winery.logo_url(:thumb)%>" width="30" height="15" />
     </dt>
     <dd><span><%= winery.name_zh %></span>
       <p><%= winery.name_en%></p></dd>
