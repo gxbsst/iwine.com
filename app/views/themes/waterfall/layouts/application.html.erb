@@ -18,7 +18,40 @@
         <div id="top_search">
           <%= theme_image_submit_tag "icon/search.gif", :class => :search_btn %>
           <input class="search" id="hot_search" name="" type="text" />
-          <div id="hot-search-list" style="color: #660000;position: absolute;background: #ddd;"></div>
+        </div>
+        <div class="search_scroll" id="search_scroll" style="display: none">
+          <p class="title"><a href="#">搜索酒款 》</a></p>
+          <div class="wineResult">
+            <dl class="clearfix current">
+              <dt><img src="images/test/wine_thumb01.jpg" width="30" height="30" /></dt>
+              <dd><span>波特米勒站赤霞珠干红葡萄酒</span><p>PORTER MILL STATION Cabernet Sauvignon</p></dd>
+              <div class="clear"></div>
+            </dl>
+            <dl class="clearfix">
+              <dt><img src="images/test/wine_thumb01.jpg" width="30" height="30" /></dt>
+              <dd><span>波特米勒站赤霞珠干红葡萄酒</span><p>PORTER MILL STATION Cabernet Sauvignon</p></dd>
+              <div class="clear"></div>
+            </dl>
+            <dl class="clearfix">
+              <dt><img src="images/test/wine_thumb01.jpg" width="30" height="30" /></dt>
+              <dd><span>波特米勒站赤霞珠干红葡萄酒</span><p>PORTER MILL STATION Cabernet Sauvignon</p></dd>
+              <div class="clear"></div>
+            </dl>
+          </div>
+          <p class="title"><a href="#">搜索酒庄 》</a></p>
+          <div class="wineryResult">
+            <dl class="clearfix">
+              <dt><img src="images/test/winery70.jpg" width="30" height="30" /></dt>
+              <dd><span>某某酒庄</span><p>THE MOREFM WINERY</p></dd>
+              <div class="clear"></div>
+            </dl>
+            <dl class="clearfix">
+              <dt><img src="images/test/winery100_2.jpg" width="30" height="15" /></dt>
+              <dd><span>某某酒庄</span>
+                <p>THE MOREFM WINERY</p></dd>
+              <div class="clear"></div>
+            </dl>
+          </div>
         </div>
         <div id="top_right">
           <%= render "layouts/user_fragment" %>
@@ -26,47 +59,60 @@
         <div class="clear"></div>
       </div>
     </div>
-		<% if params[:controller] == "home" || (params[:controller] == "wine_details" && params[:action] == "index")%>
-		 <div id="home">
-		<% else %>
-			 <div id="wrapper950">
-		<% end %>
+    <% if params[:controller] == "home" || (params[:controller] == "wine_details" && params[:action] == "index")%>
+      <div id="home">
+      <% else %>
+        <div id="wrapper950">
+        <% end %>
         <%= yield %>
-    </div>
-    <%= render "layouts/footer" %>
-<script type="text/javascript" >
-  var getHotSerach = function(){
-    $.ajax({
-      url: '/searches/hot_words?word='+$('#hot_search').val(),
-      success: function( data ){
-        var i ,
-          wines = data.wines,
-          wineries = data.wineries,
-          html =  '<ul>';
+      </div>
+      <%= render "layouts/footer" %>
+      <script type="text/javascript" >
+        var search_scroll = $('#search_scroll');
+        var getHotSerach = function(){
+          $.ajax({
+            url: '/searches/hot_words?word='+$('#hot_search').val(),
+            success: function( data ){
+              var i ,
+              wines = data.wines,
+              wineries = data.wineries,
+              html =  '<ul>';
 
-        for( i = 0 ; i < wines.length ; i++ ){
-          html += '<li>' + data.wines[i] + '</li>';
-        }
+              console.log( wines , wineries );
 
-        html += '</ul>';
+              if( ( wines.length + wineries.length ) == 0 ){
+                search_scroll.css( 'display' , 'none' );
+                return;
+              }
 
-        for( i = 0 ; i< wineries.length ; i++ ){
-          html += '<li>' + data.wineries[i] + '</li>';
-        }
+              for( i = 0 ; i < wines.length ; i++ ){
+                html += '<li>' + data.wines[i] + '</li>';
+              }
 
-  console.log( wines , wineries );
+              html += '</ul>';
 
-        $('#hot-search-list').html( html );
-      }
-    });
-  };
+              for( i = 0 ; i< wineries.length ; i++ ){
+                html += '<li>' + data.wineries[i] + '</li>';
+              }
 
-  var timer;
+              search_scroll.css( 'display' , 'block' );
+              //search_scroll.html( html );
+            }
+          });
+        };
 
-  $('#hot_search').bind( 'keyup' , function(){
-    clearTimeout( timer );
-    timer = setTimeout( getHotSerach , 400 );
-  });
-</script>
+        var timer;
+
+        $('#hot_search').bind({
+          keyup: function(){
+            clearTimeout( timer );
+            timer = setTimeout( getHotSerach , 400 );
+          },
+
+          blur: function(){
+            search_scroll.css( 'display' , 'none' );
+          }
+        });
+      </script>
   </body>
 </html>

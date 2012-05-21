@@ -23,10 +23,7 @@ class SearchesController < ApplicationController
     server = HotSearch.new
     words = server.hot_words params[:word]
 
-    wines = words['wines']
-    wineries = words['wineries']
-
-    render :json => { 'wines' => wines[0..4] , 'wineries' => wineries[0..4] }
+    render :json => words
   end
 
   def hot_entries
