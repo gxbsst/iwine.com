@@ -29,6 +29,8 @@ class Photo < ActiveRecord::Base
 
   acts_as_commentable
 
+  acts_as_votable
+
   delegate :user_id, :to => :album
 
   paginates_per 12
@@ -38,6 +40,8 @@ class Photo < ActiveRecord::Base
   #after_update :crop_avatar
   after_save :recreate_delayed_versions!
   after_destroy :update_album_delete
+
+  serialize :counts, Hash
 
   #def crop_avatar
   #  image.recreate_versions! if crop_x.present?

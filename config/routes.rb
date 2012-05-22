@@ -130,7 +130,13 @@ Patrick::Application.routes.draw do
   match "/friends/:type/callback" => "friends#callback", :as => :sync_callback
 
   # WINERIES
-  resources :wineries
+  resources :wineries do
+    member do
+      get "photos_list"
+      get "wines_list"
+      get "photo"
+    end
+  end
   # SETTINGS
   resources :settings do
     collection do

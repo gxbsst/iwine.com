@@ -12,6 +12,7 @@ class Winery < ActiveRecord::Base
   accepts_nested_attributes_for :photos
   accepts_nested_attributes_for :info_items, :reject_if => lambda {|t| t[:title].blank? }, :allow_destroy => true
   serialize :config, Hash
+  serialize :counts, Hash
   def name
     name_en + '/' + name_zh    
   end
