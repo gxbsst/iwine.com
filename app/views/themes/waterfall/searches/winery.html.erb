@@ -1,94 +1,62 @@
 <div class="whitespace normal search">
   <div class="left">
     <div class="searchbox">
-      <a href="<%= url_for( '/searches/results?tab=all&word=' )%>" onclick="this.href+=$('#search_input').val()" id="search_link" class="btn_gray float_r">
-        <span>搜索</span>
-      </a>
-      <input class="text"  name="" id="search_input" type="text" placeholder="请输入酒款或酒庄的名称" />
+      <a href="#" class="btn_gray float_r"><span>搜索</span></a>
+      <input class="text" name="" type="text" placeholder="请输入酒款或酒庄的名称" />
     </div>
     <div class="clear"></div>
     <div class="tabs">
       <ul>
-        <li class="<%= @all_tab%>">
+        <li>
           <a href="<%= url_for( '/searches/results?tab=all&word=' + params[:word] )%>">全部</a>
         </li>
-        <li class="<%= @wine_tab%>">
+        <li>
           <a href="<%= url_for( '/searches/results?tab=wine&word=' + params[:word] )%>">酒款</a>
         </li>
-        <li class="<%= @winery_tab%>">
+        <li class="current">
           <a href="<%= url_for( '/searches/winery?word=' + params[:word] )%>">酒庄</a>
         </li>
       </ul>
     </div>
     <div class="clear"></div>
-    <% if @entries['wines'].blank? && @entries['wineries'].blank? %>
+    <% if @wineries.blank? %>
     不好意思，没有找到相关内容
     <% else %>
     <div class="nor_notice mb20">太好了，我们找到了一些相关内容：</div>
-    <% if @entries['wineries'].length > 1 && @all_tab == 'current'%>
-    <div class="winery_result">
-      <ul>
-        <% @entries['wineries'][0..1].each do|winery| %>
-        <li>
-          <a href="<%= url_for( '/winery' + winery.id.to_s )%>">
-            <img src="<%= winery.logo_url(:thumb)%>" width="70" height="70" alt="winery name" />
+    <ul class="winery_list">
+      <% @wineries.each do |winery| %>
+      <li>
+        <div class="logo">
+          <a href="<%= url_for( '/winery/' + winery.id.to_s )%>">
+            <img src="<%= winery.logo_url(:thumb)%>" width="100" height="100" alt="<%= winery.name_en%>" />
           </a>
-          <div class="meta">
-            <h1 class="zh">
-              <a href="<%= url_for( '/winery' + winery.id.to_s )%>"><%= winery.name_zh%></a>
-            </h1>
-            <h1 class="en">
-              <a href="<%= url_for( '/winery' + winery.id.to_s )%>"><%= winery.name_en%></a>
-            </h1>
-            <p class="location"><%= winery.region_path_zh(winery.region_tree_id)%></p>
-          </div>
-        </li>
-        <% end %>
-        <li class="more">
-          <a href="<%= url_for( '/searches/winery?word=' + params[:word] )%>">更多...</a>
-        </li>
-        <div class="clear"></div>
-      </ul>
-      <div class="clear"></div>
-    </div>
-    <% end %>
-    <% @entries['wines'].each do |wine| %>
-    <div class="wine_list">
-      <div class="box590">
-        <div class="box590_t"></div>
-        <div class="box590_main">
-          <a href="<%= url_for( '/wines/' + wine.id.to_s )%>">
-            <%= wine_cover_tag( wine , :width => 70 , :height => 70 )%>
-          </a>
-          <div class="info">
-            <h1 class="zh">
-              <a href="<%= url_for( '/wines/' + wine.id.to_s )%>">
-                <%= wine.cname%>
-              </a>
-            </h1>
-            <h1 class="en">
-              <a href="<%= url_for( '/wines/' + wine.id.to_s )%>">
-                <%= wine.ename%>
-              </a>
-            </h1>
-            <p><strong>年份：</strong></p>
-            <p class="year">
-              <% wine.wine.details.each do |w| %>
-              <span>
-                <a href="<%= url_for '/wines/'+w.id.to_s%>"><%= w.year.to_s.slice( 0 , 4 )%></a>
-              </span>
-              <% end %>
-            </p>
-          </div>
-          <div class="clear"></div>
         </div>
-        <div class="box590_b"></div>
-      </div>
-    </div>
-    <% end %>
+        <div class="meta">
+          <h1 class="zh">
+            <a href="<%= winery.logo_url(:thumb)%>"><%= winery.name_zh%></a>
+          </h1>
+          <h1 class="en">
+            <a href="<%= winery.logo_url(:thumb)%>"><%= winery.name_en%></a>
+          </h1>
+          <p class="mt10">
+            地区：<%= winery.region_path_zh(winery.region_tree_id)%>
+            <br />
+            地址：Screaming Eagle PO Box 12 Oakville, CA 94562
+            <br />
+            官方网站：<a href="#">http://www.romanee-conti.fr/</a><br />
+            电子邮件：<a href="#">bernardo@gmail.com</a><br />
+            电话：(707) 944-0749
+            <br />
+            传真：(707) 944-9271
+          </p>
+        </div>
+      </li>
+      <div class="clear"></div>
+      <% end %>
+    </ul>
     <div class="pagination">
-      <a href="<%= url_for( '/searches/results?word=' + params[:word] +'&page=' + ( @page - 1 ).to_s + '&tab=' + params[:tab])%>"> < </a>
-      <a href="<%= url_for( '/searches/results?word=' + params[:word] +'&page=' + ( @page + 1 ).to_s + '&tab=' + params[:tab])%>"> > </a>
+      <a href="<%= url_for( '/searches/winery?word=' + params[:word] +'&page=' + ( @page - 1 ).to_s )%>"> < </a>
+      <a href="<%= url_for( '/searches/winery?word=' + params[:word] +'&page=' + ( @page + 1 ).to_s )%>"> > </a>
       <!--
       <span class="disabled"> < </span>
       <span class="current">1</span>

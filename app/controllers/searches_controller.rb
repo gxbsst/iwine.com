@@ -34,20 +34,29 @@ class SearchesController < ApplicationController
 
   end
 
+  def winery
+    server = HotSearch.new
+    @page = params[:page].to_i || 1
+    if @page < 1 
+      @page = 1
+    end
+    @entries = server.all_entries( params[:word] , @page )
+    @wineries = @entries['wineries']
+  end
+
   def results
     server = HotSearch.new
-    @entries = server.hot_entries params[:word]
-    @tab_all = @tab_wine = @tab_winery = ''
-    
-    if params[:tab] == 'all' 
-      @tab_all = 'current' 
-    elsif params[:tab] == 'wine'
-      @tab_wine = 'current'
-    else
-      @tab_winery = 'current'
+    @page = params[:page].to_i || 1
+    if @page < 1 
+      @page = 1
     end
-
-    binding.pry
-
+    @entries = server.all_entries( params[:word] , @page )
+    @all_tab = @wine_tab = ''
+    
+    if params[:tab] == 'wine' 
+      @wine_tab = 'current'
+    else
+      @all_tab = 'current' 
+    end
   end
 end

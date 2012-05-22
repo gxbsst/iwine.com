@@ -16,7 +16,7 @@
           <%= theme_image_tag "common/logo.gif", :width => 299, :height => 43 %>
         </div>
         <div id="top_search">
-          <%= theme_image_submit_tag "icon/search.gif", :class => :search_btn %>
+          <%= theme_image_submit_tag "icon/search.gif", :class => :search_btn , :id=>:search_btn %>
           <input class="search" id="hot_search" name="" type="text" />
         </div>
         <div class="search_scroll" id="search_scroll" style="display: none"></div>
@@ -50,9 +50,12 @@
         };
 
         var timer;
-
         $('#hot_search').bind({
-          keyup: function(){
+          keyup: function(e){
+            if( e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 37 || e.keyCode == 39 ){
+                return;
+            }
+
             clearTimeout( timer );
             timer = setTimeout( getHotSerach , 400 );
           },
@@ -63,6 +66,12 @@
             };
             setTimeout( hide , 200 );
           }
+        });
+
+        $('#search_btn').bind( 'click' , function(){
+          var url = '<%= url_for( '/searches/results?tab=all&word=' )%>';
+          url+=$('#hot_search').val();
+          location.href = url;
         });
       </script>
   </body>

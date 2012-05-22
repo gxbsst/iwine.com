@@ -145,7 +145,7 @@ Patrick::Application.routes.draw do
   # Search
   resources :searches do
     collection do
-      get :hot_words, :via => [:get , :put]
+      get :winery, :via => [:get , :put]
       get :suggestion, :via => [:get , :put]
       get :results, :via => [:get , :put]
     end

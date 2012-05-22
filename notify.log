@@ -58,4 +58,32 @@ Unused Eager Loading detected
 localhost:3000/wines/6
 Unused Eager Loading detected
   Wines::Detail => [:label]
+  Remove from your finder: :include => [:label]2012-05-22 14:14:13[WARN] user: dongwei
+localhost:3000/searches/results?tab=all&word=sdfs
+Unused Eager Loading detected
+  Wines::Detail => [:label]
+  Remove from your finder: :include => [:label]2012-05-22 14:15:15[WARN] user: dongwei
+localhost:3000/searches/suggestion?word=s
+Unused Eager Loading detected
+  Wines::Detail => [:label]
+  Remove from your finder: :include => [:label]2012-05-22 14:15:45[WARN] user: dongwei
+localhost:3000/searches/results?word=%E6%8B%89
+Unused Eager Loading detected
+  Wines::Detail => [:label]
+  Remove from your finder: :include => [:label]2012-05-22 14:18:43[WARN] user: dongwei
+localhost:3000/searches/results?word=s
+Unused Eager Loading detected
+  Wines::Detail => [:label]
+  Remove from your finder: :include => [:label]2012-05-22 14:43:16[WARN] user: dongwei
+192.168.11.123:3000/searches/suggestion?word=b
+Unused Eager Loading detected
+  Wines::Detail => [:label]
+  Remove from your finder: :include => [:label]2012-05-22 14:47:01[WARN] user: dongwei
+192.168.11.123:3000/searches/winery?word=b
+Unused Eager Loading detected
+  Wines::Detail => [:label]
+  Remove from your finder: :include => [:label]2012-05-22 14:47:47[WARN] user: dongwei
+192.168.11.123:3000/searches/results?tab=wine&word=b
+Unused Eager Loading detected
+  Wines::Detail => [:label]
   Remove from your finder: :include => [:label]

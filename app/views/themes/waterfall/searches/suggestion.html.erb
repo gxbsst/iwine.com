@@ -1,28 +1,75 @@
 <p class="title"><a href="#">搜索酒款 》</a></p>
-<div class="wineResult">
+<div id="search_scroll_wines" class="wineResult">
   <% @words['wines'].each do |wine|%>
-  <dl class="clearfix" onclick="location.href='<%= url_for( '/wines/' + wine.id.to_s )%>'">
-    <dt>
+    <dl class="clearfix" onclick="location.href='<%= url_for( '/wines/' + wine.id.to_s )%>'">
+      <dt>
       <%= wine_cover_tag( wine , :width => 30 , :height => 30 )%>
-    </dt>
-    <dd>
-      <span><%= wine.cname%></span>
-      <p><%= wine.ename%></p>
-    </dd>
-    <div class="clear"></div>
-  </dl>
+      </dt>
+      <dd>
+        <span><%= wine.cname%></span>
+        <p><%= wine.ename%></p>
+      </dd>
+      <div class="clear"></div>
+    </dl>
   <% end %>
 </div>
 <p class="title"><a href="#">搜索酒庄 》</a></p>
-<div class="wineryResult">
+<div id="search_scroll_wineries" class="wineryResult">
   <% @words['wineries'].each do |winery| %>
-  <dl class="clearfix" onclick="location.href='<%= url_for( '/wineries/' + winery.id.to_s )%>'">
-    <dt>
-    <img src="<%= winery.logo_url(:thumb)%>" width="30" height="15" />
-    </dt>
-    <dd><span><%= winery.name_zh %></span>
-      <p><%= winery.name_en%></p></dd>
-    <div class="clear"></div>
-  </dl>
+    <dl class="clearfix" onclick="location.href='<%= url_for( '/wineries/' + winery.id.to_s )%>'">
+      <dt>
+      <img src="<%= winery.logo_url(:thumb)%>" width="30" height="15" />
+      </dt>
+      <dd><span><%= winery.name_zh %></span>
+        <p><%= winery.name_en%></p></dd>
+      <div class="clear"></div>
+    </dl>
   <% end %>
 </div>
+<script type="text/javascript">
+(function(){
+  var wines = $('#search_scroll_wines').children();
+  var wineries = $('#search_scroll_wineries').children();
+
+  var all = [];
+  wines.each( function(){ all.push(this)});
+  wineries.each( function(){ all.push(this)});
+  var index = 0;
+  var current;
+  $('#hot_search').bind({
+    keyup: function(e){
+      if( e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 37 || e.keyCode == 39 ){
+        if( !current ){
+          current = $(all[index]);
+          current.addClass( 'current' );
+          return;
+        }
+        if( e.keyCode == 38 || e.keyCode == 37 ){
+          index --;
+          if( index < 0 ){
+            index = all.length - 1;
+          }
+        }else{
+          index ++;
+          if( index >= all.length ){
+            index = 0;
+          }
+        }
+
+        current.removeClass( 'current' );
+        var next = $(all[ index]);
+        next.addClass( 'current' );
+        current = next;
+        return;
+      }
+
+      if( e.keyCode == 13 ){
+        if( current ){
+          current.click();
+        }else{
+          location.href = '/searches/results?word='+this.value;
+        }
+      }
+  }});
+})();
+</script>
