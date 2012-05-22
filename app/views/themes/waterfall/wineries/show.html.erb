@@ -10,7 +10,7 @@
     <div class="left">
       <div class="section">
         <div class="title">
-          <h2>照片<span class="font12 more"><%= link_to "共#{@winery.photos.size}张", "#" %></span></h2>
+          <h2>照片<span class="font12 more"><%= link_to "共#{@winery.photos.size}张", photos_list_winery_path(@winery) %></span></h2>
         </div>
 
         <div class="content">

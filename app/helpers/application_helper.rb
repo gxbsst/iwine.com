@@ -160,4 +160,22 @@ module ApplicationHelper
   def link_to_image(path, url, link_opts = { }, image_opts = { })
     link_to theme_image_tag(path, image_opts), url, link_opts
   end
+
+  def previous_page(ids_arr, current_id)
+    ids_arr, current_index = page_ids(ids_arr, current_id)
+    previous = ids_arr[current_index - 1]
+    return current_index != 0 && previous ? previous : false
+  end
+
+  def next_page(ids_arr, current_id)
+    ids_arr, current_index = page_ids(ids_arr, current_id)
+    next_id = ids_arr[current_index + 1]
+    return next_id ? next_id : false
+  end
+
+  def page_ids(ids_arr, current_id)
+    ids_arr = ids_arr.sort
+    current_index  = ids_arr.sort.index(current_id)
+    return [ids_arr, current_index]
+  end
 end

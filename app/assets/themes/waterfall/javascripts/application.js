@@ -154,6 +154,12 @@ $(document).ready(function(){
            window.location.replace("/login");
          }
     });
+    
+    // a变成submit
+    $("a.submit").click(function(){
+			$(this).parents("form").submit();
+		});
+    
 
 });
 

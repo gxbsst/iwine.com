@@ -56,9 +56,13 @@ Patrick::Application.routes.draw do
     #     get :add_to_cellar
     #   end
     # end
-    resources :photos, :controller => "wine_details/photos" 
+    resources :photos, :controller => "wine_details/photos"  
   end
   
+  # PHOTO
+  resources :photos, :controller => "wine_details/photos"  do
+    resources :comments, :as => "photo_comments"
+  end
   # MINE
   namespace :mine do
     # 相册
@@ -130,7 +134,13 @@ Patrick::Application.routes.draw do
   match "/friends/:type/callback" => "friends#callback", :as => :sync_callback
 
   # WINERIES
-  resources :wineries
+  resources :wineries do
+    member do
+      get "photos_list"
+      get "wines_list"
+      get "photo"
+    end
+  end
   # SETTINGS
   resources :settings do
     collection do

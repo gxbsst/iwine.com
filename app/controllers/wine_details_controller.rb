@@ -22,6 +22,14 @@ class WineDetailsController < ApplicationController
   def followers
     @wine      = @wine_detail.wine
     @followers = @wine_detail.followers
+    
+    if !(@followers.nil?)
+      unless @followers.kind_of?(Array)
+        @followers = @followers.page(params[:page]).per(8)
+      else
+        @followers = Kaminari.paginate_array(@followers).page(params[:page]).per(8)
+      end
+    end
   end
 
   # 拥有者

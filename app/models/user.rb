@@ -6,21 +6,21 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, :timeoutable, :omniauthable
-
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :crop_x, :crop_y, :crop_w, :crop_h, :agree_term
-
   has_one  :profile, :class_name => 'Users::Profile', :dependent => :destroy
+  has_one  :cellar, :class_name => 'Users::WineCellar'
+  has_one  :good_hit_comment, :class_name => 'Users::GoodHitComment'
   has_many :albums, :class_name => 'Album', :foreign_key => 'created_by'
   has_many :registers, :class_name => 'Wines::Register'
   has_many :comments, :class_name => "::Comment", :foreign_key => 'user_id', :include => [:user]
-  has_one  :good_hit_comment, :class_name => 'Users::GoodHitComment'
   has_many :photo_comments
-  has_many :photos, :foreign_key => 'business_id', :conditions => { :owner_type => OWNER_TYPE_USER }
-  # has_one  :avatar, :class_name => 'Photo', :foreign_key => 'business_id', :conditions => { :is_cover => true }
-  has_one :cellar, :class_name => 'Users::WineCellar'
+  has_many :photos #关于用户上传的所有图片
+  has_many :images, :as => :imageable # 关于用户的图片
   has_many :oauths, :class_name => 'Users::Oauth'
   has_many :time_events
+  has_many :wine_followings, :include => :commentable, :class_name => "Comment", :conditions => {:commentable_type => "Wines::Detail", :do => "follow"}
+  has_many :feeds, :class_name => "Users::Timeline", :include => [:ownerable, {:timeline_event => [:actor]}, {:receiverable =>  [:covers, :wine]}], :order => "created_at DESC"
   has_many :followers, :class_name => 'Friendship', :include => :follower do
     def map_user
       map {|f| f.follower }
@@ -31,11 +31,8 @@ class User < ActiveRecord::Base
       map {|f| f.user }
     end
   end
-  
-  has_many :wine_followings, :include => :commentable, :class_name => "Comment", :conditions => {:commentable_type => "Wines::Detail", :do => "follow"}
   accepts_nested_attributes_for :profile, :allow_destroy => true
-  has_many :feeds, :class_name => "Users::Timeline", :include => [:ownerable, {:timeline_event => [:actor]}, {:receiverable =>  [:covers, :wine]}], :order => "created_at DESC"
-
+  
   # validates :username, :presence => false, :allow_blank => true, :numericality => true
   validates :agree_term, :acceptance => true, :on => :create
   validates :email, :uniqueness => true

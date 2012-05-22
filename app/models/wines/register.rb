@@ -37,7 +37,7 @@ class Wines::Register < ActiveRecord::Base
     Wines::VarietyPercentage.build_variety_percentage(variety_name, variety_percentage, wine_detail.id)
     Wines::SpecialComment.change_special_comment_to_wine(wine_detail, self)
     Photo.build_wine_photo(:wine_register_id => id, 
-      :wine_detail_id => wine_detail.id, 
+      :wine_detail => wine_detail,
       :width => width , 
       :height => height) unless photo_name.blank?
   end
