@@ -1,7 +1,7 @@
 <p class="title"><a href="#">搜索酒款 》</a></p>
 <div id="search_scroll_wines" class="wineResult">
   <% @words['wines'].each do |wine|%>
-    <dl class="clearfix" onclick="location.href='<%= url_for( '/wines/' + wine.id.to_s )%>'">
+  <dl onmouseover="$(this).addClass( 'current' );" onmouseout="$(this).removeClass('current')" class="clearfix" onclick="location.href='<%= url_for( '/wines/' + wine.id.to_s )%>'">
       <dt>
       <%= wine_cover_tag( wine , :width => 30 , :height => 30 )%>
       </dt>
