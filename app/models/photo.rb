@@ -42,11 +42,9 @@ class Photo < ActiveRecord::Base
   end
 
   def self.build_wine_photo(opts = {})
-    check_wine_dir(opts[:wine_detail_id])
-    photo_path = copy_photo(opts[:wine_register_id], opts[:wine_detail_id])
-    Photo.create(
-        :owner_type => 2,
-        :business_id => opts[:wine_detail_id],
+    check_wine_dir(opts[:wine_detail].id)
+    photo_path = copy_photo(opts[:wine_register_id], opts[:wine_detail].id)
+    opts[:wine_detail].photos.create(
         :category => 1,
         :album_id => -1, # no user id
         :is_cover => 1,
