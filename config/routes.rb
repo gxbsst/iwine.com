@@ -56,12 +56,15 @@ Patrick::Application.routes.draw do
     #     get :add_to_cellar
     #   end
     # end
-    resources :photos, :controller => "wine_details/photos"  
+    resources :photos
   end
   
   # PHOTO
-  resources :photos, :controller => "wine_details/photos"  do
+  resources :photos do
     resources :comments, :as => "photo_comments"
+    member do
+      get "vote"
+    end
   end
   # MINE
   namespace :mine do

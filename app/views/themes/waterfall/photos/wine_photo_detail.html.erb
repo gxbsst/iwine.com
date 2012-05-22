@@ -4,10 +4,10 @@
 <div id="wp_left">
 	<%= render_stickies %>
 	<div class="wp_space_line top">
-		<%= link_to wine_path(@wine_detail), :class => [:btn_gray, :float_r] do %>
+		<%= link_to wine_photos_path(@wine_detail), :class => [:btn_gray, :float_r] do %>
 		<span>返回</span>
 		<% end %>
-
+    <a href="#" class="btn_gray float_r mr5"><span>上传照片</span></a>
 		<h1 class="wine_name_ch"><%= raw @wine_detail.cname %>的图片</h1>
 		<div class="clear"></div>
 	</div>
@@ -17,18 +17,20 @@
 				<div class="pre_next"><a href="#" class="btn_gray mr5"><span>前一张</span></a><a href="#" class="btn_gray"><span>后一张</span></a></div>
 			</div>
 			<div class="photo">
-				<img src="images/test/wine440.jpg" width="440" height="440" alt="photo">
-				<%= image_tag @photo.image_url(:w_large) %>
+				<%= image_tag @photo.image_url(:w_large), :widht => 440 %>
 			</div>
 			<div class="info">
-				<div class="like float_r"><a href="#" class="icon_like">赞 (3)</a></div>
-				<div class="share float_r">分享到：<a href=" #"><img src="images/icon/sina_s_on.png" alt="新浪" width="17" height="17" align="absmiddle"></a><a href="#"><img src="images/icon/tencen_s_on.png" alt="腾讯" width="17" height="17" align="absmiddle"></a><a href="#"><img src="images/icon/douban_s_on.png" alt="豆瓣" width="17" height="17" align="absmiddle"></a><a href="#"><img src="images/icon/kaixin_s_on.png" alt="开心网" width="17" height="17" align="absmiddle"></a><a href="#"><img src="images/icon/renren_s_on.png" alt="人人网" width="17" height="17" align="absmiddle"></a> |</div>
-				<div>10浏览 | 4评论</div>
+				
+				<%= render :partial => 'liked' %>
+				
+				<%= render :partial => 'share/sns_icons' %>
+				
+				<div><%= @photo.viewed_num %>浏览 | <%= @comments.count %>评论</div>
 			</div>
 			<div class="comment">
 				<div class="mb20 clearfix">
 					<div class="title">
-						<a href="#01" class="btn_gray float_r"><span>添加评论</span></a>
+						<a href="#01" class="btn_gray float_r" onclick="javascript:$('#photo_comment_body').focus()"><span>添加评论</span></a>
 						<h3>评论</h3>
 					</div>
 				</div>
