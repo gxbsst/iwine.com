@@ -4,7 +4,7 @@ class Winery < ActiveRecord::Base
 
   has_many :registers
   has_many :info_items, :class_name => "InfoItem"
-  has_many :photos, :class_name => 'Photo',  :foreign_key => 'business_id', :order => 'created_at DESC', :conditions => { :owner_type => OWNER_TYPE_WINERY }
+  has_many :photos, :as => :imageable
   has_many :wines
   has_many :comments, :as => :commentable
   mount_uploader :logo, WineryUploader
