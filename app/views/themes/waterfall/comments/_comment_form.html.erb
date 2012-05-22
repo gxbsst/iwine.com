@@ -1,5 +1,5 @@
 <h3 class="title"> 我要评论 </h3>
-<%= form_for @comment, :url => wine_comments_path,  :validate => true do |f| -%>
+<%= form_for [comment],  :validate => true do |f| -%>
 <%= f.hidden_field :do %>
 <div class="star_rate" id="wine_profile_star_bar">
   <table border="0" cellspacing="5" cellpadding="5">
@@ -35,3 +35,4 @@
   <%= image_tag 'base/star_gray.jpg', :width => 15, :height => 14 %>
  </script>
 
+<%= render "comments/star_rate.js" %>

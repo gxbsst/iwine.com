@@ -1,56 +1,57 @@
-<div id="comment_form"  style="display: none" ></div>
-<div id="add_to_cellar_form"  style="display: none" ></div>
-<div class="wine_profile">
-  <%= render_stickies %>
-  <div class="left">
-    <div class="box title relative">
-      <h2>
-        关注 <%= link_to @wine_detail.name.html_safe, wine_path(@wine_detail) %> 的人
-        (<%= @wine_detail.followers_count %> )
-      </h2>
-      <%= link_to_button "back", wine_path(@wine_detail) %>
-      <!-- title end -->
-    </div>
-    <div class="clear"></div>
-    <div class="box followers">
-      <%= render "/wine_details/share/followers_list" %>
-    </div>
-    <div class="clear"></div>
-    <div class="pagination">
-      <%#= paginate @comments %>
-    </div>
-    <!-- left end -->
-  </div>
-  <div  class="right">
-    <div class="box resource">
-      <%= render "wine_details/share/resource" %>
-    </div>
-    <div class="clear"></div>
-    <div class="box spec">
-      <%= render "wine_details/share/spec" %>
-    </div>
-    <div class="clear"></div>
-    <div class="box score">
-      <%= render "wine_details/share/score" %>
-    </div>
-    <div class="clear"></div>
-    <div class="box special_comments">
-      <%= render "wine_details/share/special_comments" %>
-    </div>
-    <div class="clear"></div>
-    <div class="box price">
-      <%= render "wine_details/share/price" %>
-    </div>
-    <div class="clear"></div>
-    <div class="box vintage">
-      <%= render "wine_details/share/vintage" %>
-    </div>
-    <div class="clear"></div>
-    <%= link_to_button "feedback", "/" %>
-    <!-- right end -->
-  </div>
-  <!-- wine_profile end -->
-</div>
-<div class="clear"></div>
+<% content_for :css do %>
+	<%= theme_stylesheet_link_tag :wine, :thumb %>
+	<% end %>
+	<div id="wp_left">
+		<%= render_stickies %>
+		<div class="wp_space_line top">
+			<%= link_to wine_path(@wine_detail), :class => [:btn_gray, :float_r] do %>
+			<span>返回</span>
+			<% end %>
 
+			<h1 class="wine_name_ch"><%= raw @wine_detail.cname %>的关注者</h1>
+			<div class="clear"></div>
+		</div>
+		<div class="wp_space_line ptb30">
+
+			<ul class="userlist">
+				<% @followers.each_with_index do |user, index| %>
+				<li>
+					<div class="userpic">
+						<%= link_to_user user, user_path(user, :trailing_slash => true), :with_avatar => true, :avatar_version => :middle %>
+					</div>
+					<div class="userinfo">
+						<div class="username">
+								<%= link_to_user user, user_path(user, :trailing_slash => true) %>
+						</div>
+						<div class="userlocation">上海</div>
+					</div>
+				</li>
+				<% if ((index + 1) % 3) == 0 %>
+				<div class="clear"></div>
+				<% end %>
+
+				<% end %>
+				<div class="clear"></div>
+			</ul>
+
+
+			<div class="clear"></div>
+			<div class="pagination">
+				<%= paginate @followers %>
+			</div>
+
+		</div>
+	</div>
+
+
+	<div id="wp_right">
+		<%= render "wine_details/share/resource" %>
+		<%= render "wine_details/share/spec"%>
+		<%= render "wine_details/share/score"%>
+		<%= render "wine_details/share/special_comments"%>
+		<%= render "wine_details/share/price"%>
+		<%= render "wine_details/share/vintage"%>
+		<div class=""><a href="#" class="btn_gray"><span>信息纠错与补充</span></a></div>
+	</div>
+	<div class="clear"></div>   
 

@@ -1,7 +1,13 @@
-<p><strong>更多年份</strong></p>
-<% @wine_detail.all_vintage.each do  |item| %>
-  <%= link_to item.show_year, wine_path(item.id) %>
-<% end %>
-
-
-<%= link_to "显示更多年份", { :controller => "wines", :action => "list", :wine_id => @wine_detail.wine_id }, { :class => "year_more" }  %>
+<div class="wp_price">
+	<p>更多年份</p>
+	<p class="year">
+		<% @wine_detail.all_vintage.each do  |item| %>
+		  <span><%= link_to item.show_year, wine_path(item.id) %></span>
+		<% end %>
+	</p>
+	<p class="mt10">
+		<a href="#">
+			<%= theme_image_tag "icon/open.gif", :width => 13, :height => 13, :alt => "查看所有年份" %>
+		</a>
+	</p>
+</div>

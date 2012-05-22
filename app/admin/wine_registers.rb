@@ -31,7 +31,7 @@ ActiveAdmin.register Wines::Register do
           redirect_to admin_wines_registers_path, :notice => "发布成功"
         end
       end
-    rescue e
+    rescue Exception => e
       logger.error(e)
       @wines_register.update_attribute(:status, -1)
       redirect_to admin_wines_registers_path, :notice => "发布出现问题！"

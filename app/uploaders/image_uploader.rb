@@ -16,7 +16,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{OWNER_TYPES[model.owner_type]}/#{model.business_id}"
+    "uploads/#{model.class.to_s.underscore}/#{model.imageable_type.constantize.table_name}/#{model.imageable_id}"
 
   #  "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
@@ -182,16 +182,16 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   def is_user? picture
     return false unless should_process?
-    model.owner_type == OWNER_TYPE_USER
+    model.imageable_type == "User"
   end
 
   def is_wine? picture
     return false unless should_process?
-    model.owner_type == OWNER_TYPE_WINE
+    model.imageable_type == "Wines::Detail"
   end
 
   def is_winery? picture
-    model.owner_type == OWNER_TYPE_WINERY
+    model.imageable_type == "Winery"
   end
 
   #def secure_token
