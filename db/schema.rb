@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120517095147) do
+ActiveRecord::Schema.define(:version => 20120522013806) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -108,6 +108,14 @@ ActiveRecord::Schema.define(:version => 20120517095147) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "info_items", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "winery_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "notifications", :force => true do |t|
     t.string   "type"
     t.text     "body"
@@ -140,21 +148,23 @@ ActiveRecord::Schema.define(:version => 20120517095147) do
 
   create_table "photos", :force => true do |t|
     t.string   "image"
-    t.integer  "owner_type"
-    t.integer  "business_id"
+    t.string   "imageable_type"
+    t.integer  "imageable_id"
     t.text     "intro"
-    t.string   "category",      :limit => 0, :default => ""
+    t.string   "category",       :limit => 0,  :default => ""
     t.integer  "size"
     t.integer  "album_id"
-    t.integer  "width",                      :default => 0
-    t.integer  "height",                     :default => 0
-    t.integer  "viewed_num",                 :default => 0
-    t.integer  "commented_num",              :default => 0
-    t.integer  "liked_num",                  :default => 0
+    t.integer  "width",                        :default => 0
+    t.integer  "height",                       :default => 0
+    t.integer  "viewed_num",                   :default => 0
+    t.integer  "commented_num",                :default => 0
+    t.integer  "liked_num",                    :default => 0
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_cover",                   :default => false
+    t.boolean  "is_cover",                     :default => false
+    t.string   "counts",         :limit => 50
+    t.integer  "user_id"
   end
 
   create_table "receipts", :force => true do |t|
@@ -361,13 +371,13 @@ ActiveRecord::Schema.define(:version => 20120517095147) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "",   :null => false
-    t.string   "username",               :default => "",   :null => false
-    t.string   "encrypted_password",     :default => "",   :null => false
+    t.string   "email",                                :default => "",   :null => false
+    t.string   "username",                             :default => "",   :null => false
+    t.string   "encrypted_password",                   :default => "",   :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
+    t.integer  "sign_in_count",                        :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -377,15 +387,16 @@ ActiveRecord::Schema.define(:version => 20120517095147) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",        :default => 0
+    t.integer  "failed_attempts",                      :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "authentication_token"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.datetime "created_at",                                             :null => false
+    t.datetime "updated_at",                                             :null => false
     t.string   "role"
-    t.boolean  "agree_term",             :default => true
+    t.boolean  "agree_term",                           :default => true
     t.string   "avatar"
+    t.string   "counts",                 :limit => 50
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
@@ -567,18 +578,20 @@ ActiveRecord::Schema.define(:version => 20120517095147) do
 
   create_table "wineries", :force => true do |t|
     t.string   "name_en",        :limit => 45
-    t.integer  "region_id",                     :null => false
     t.integer  "region_tree_id",                :null => false
-    t.text     "history"
-    t.text     "legend"
     t.string   "owner",          :limit => 100
-    t.string   "winemaker",      :limit => 100
-    t.text     "environment"
-    t.text     "multiple"
-    t.text     "badge"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.string   "name_zh"
+    t.string   "logo",           :limit => 100
+    t.string   "address",        :limit => 100
+    t.string   "official_site",  :limit => 100
+    t.string   "email",          :limit => 50
+    t.string   "cellphone",      :limit => 50
+    t.string   "fax",            :limit => 50
+    t.string   "config"
+    t.string   "region_name",    :limit => 50
+    t.string   "counts",         :limit => 50
   end
 
   create_table "wines", :force => true do |t|
@@ -592,6 +605,7 @@ ActiveRecord::Schema.define(:version => 20120517095147) do
     t.datetime "updated_at",                    :null => false
     t.string   "origin_name"
     t.string   "other_cn_name"
+    t.string   "counts",         :limit => 50
   end
 
   add_index "wines", ["region_tree_id"], :name => "fk_wine_region_tree1"
