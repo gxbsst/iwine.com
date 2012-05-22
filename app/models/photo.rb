@@ -26,6 +26,8 @@ class Photo < ActiveRecord::Base
   belongs_to :user
   belongs_to :wine_detail, :class_name => 'Wines::Detail', :foreign_key => 'business_id'
   belongs_to :winery, :foreign_key => "business_id"
+  has_many :comments, :as => :commentable
+  has_many :comments, :class_name => "PhotoComment", :as => :commentable, :include => [:user]
 
   acts_as_commentable
 

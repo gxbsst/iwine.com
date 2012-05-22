@@ -56,9 +56,13 @@ Patrick::Application.routes.draw do
     #     get :add_to_cellar
     #   end
     # end
-    resources :photos, :controller => "wine_details/photos" 
+    resources :photos, :controller => "wine_details/photos"  
   end
   
+  # PHOTO
+  resources :photos, :controller => "wine_details/photos"  do
+    resources :comments, :as => "photo_comments"
+  end
   # MINE
   namespace :mine do
     # 相册
