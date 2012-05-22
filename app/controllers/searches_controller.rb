@@ -52,6 +52,7 @@ class SearchesController < ApplicationController
     end
     @entries = server.all_entries( params[:word] , @page )
     @all_tab = @wine_tab = ''
+    @tab = params[:tab] || ''
     
     if params[:tab] == 'wine' 
       @wine_tab = 'current'

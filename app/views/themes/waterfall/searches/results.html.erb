@@ -87,8 +87,8 @@
     </div>
     <% end %>
     <div class="pagination">
-      <a href="<%= url_for( '/searches/results?word=' + params[:word] +'&page=' + ( @page - 1 ).to_s + '&tab=' + params[:tab])%>"> < </a>
-      <a href="<%= url_for( '/searches/results?word=' + params[:word] +'&page=' + ( @page + 1 ).to_s + '&tab=' + params[:tab])%>"> > </a>
+      <a href="<%= url_for( '/searches/results?word=' + params[:word] +'&page=' + ( @page - 1 ).to_s + '&tab=' + @tab)%>"> < </a>
+      <a href="<%= url_for( '/searches/results?word=' + params[:word] +'&page=' + ( @page + 1 ).to_s + '&tab=' + @tab)%>"> > </a>
       <!--
       <span class="disabled"> < </span>
       <span class="current">1</span>
