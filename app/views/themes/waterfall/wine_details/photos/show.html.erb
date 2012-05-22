@@ -1,115 +1,56 @@
-<div id="cu_user_menu" class="clearfix">
-  <div class="pic"><a href="#"><img src="/assets/base/test/user_img50.jpg" alt="不良夏生" width="50" height="50" /></a></div>
-  <div class="info_menu">
-    <h1>不良夏生 <img src="/assets/base/icon_user_l1.gif" width="13" height="12" alt="评论等级" />
-      <div class="edit_signature"><span> 准备小宇宙爆发......（<a href="#">修改</a>）</span></div></h1>
-    <ul class="clearfix">
-      <li><a href="community_listen.html">收听</a></li>
-      <li><a href="community_myhp.html">主页</a></li>
-      <li><a href="cellar_mycellar.html">酒窖</a></li>
-      <li><a href="community_statuses.html">广播</a></li>
-      <li><a href="community_albmu_list.html">相册</a></li>
-      <li><a href="community_setting.html">设置</a></li>
-    </ul>
-  </div>
-  <div class="clear"></div>
-</div>
-<div class="title_btn clearfix">
-  <h2>我的相册-吃货那点事儿 <span class="count_b">(共10张)</span></h2>
-</div>
-<div id="leftcol" class="mr50">
-  <div class="photo_detail">
-    <div class="pn clearfix">
-      <a href="#" class="button_gray float_r"><span>下一张</span></a>
-      <a href="" class="button_gray float_r mr5"><span>上一张</span></a>
-      <a href="community_photo_list.html" class="button_gray float_l"><span>返回该相册</span></a>
-      第1张/共13张
-    </div>
-    <div class="photo_detail_pic">
-		<%= image_tag @photo.image_url, :width => 600, :height => 404 %>
+<% content_for :css do %>
+<%= theme_stylesheet_link_tag :wine, :thumb %>
+<% end %>
+<div id="wp_left">
+	<%= render_stickies %>
+	<div class="wp_space_line top">
+		<%= link_to wine_path(@wine_detail), :class => [:btn_gray, :float_r] do %>
+		<span>返回</span>
+		<% end %>
+
+		<h1 class="wine_name_ch"><%= raw @wine_detail.cname %>的图片</h1>
+		<div class="clear"></div>
 	</div>
-    <h3>三文鱼色拉</h3>
-    <div class="description">中午在COCO吃了咖喱，色拉赞！</div>
-    <div class="photo_info clearfix">
-      <span class="float_r">分享到</span>
-      <span class="icon_like float_r mr10">(13)</span>
-      10浏览 | 4评论
-    </div>
-  </div>
-  <div class="comment">
-    <a href="#add_comment" class="button_gray float_r"><span>添加评论</span></a><h3>评论</h3>
-    <div class="comment_list">
-      <ul>
-        <li class="clearfix">
-          <div class="user_img"><a href="#"><img src="/images/test/user_img50.jpg" width="50" height="50" alt="user name" /></a></div>
-          <div class="comment_main">
-            <div class="name_time_score"><div class="mr5"><a href="#">xiaoying</a> <span class="time">2012-2-8</span></div></div>
-            <div class="comment_content">好诱人的食物啊...</div>
-          </div>
-          <div class="clear"></div>
-        </li>
-        <li class="clearfix">
-          <div class="user_img"><a href="#"><img src="/images/test/user_img50.jpg" width="50" height="50" alt="user name" /></a></div>
-          <div class="comment_main">
-            <div class="name_time_score"><div class="mr5"><a href="#">xiaoying</a> <span class="time">2012-2-8</span></div></div>
-            <div class="comment_content">看的我都要流口水了，人家正饿着呐！</div>
-          </div>
-          <div class="clear"></div>
-        </li>
-        <li class="clearfix">
-          <div class="user_img"><a href="#"><img src="/images/test/user_img50.jpg" width="50" height="50" alt="user name" /></a></div>
-          <div class="comment_main">
-            <div class="name_time_score"><div class="mr5"><a href="#">xiaoying</a> <span class="time">2012-2-8</span></div></div>
-            <div class="reply_content">这是哪家店的呀？我也要吃！</div>
-            <div class="comment_content">这是COCO一番屋的鲔鱼色拉</div>
-          </div>
-          <div class="clear"></div>
-        </li>
-        <li class="clearfix">
-          <div class="user_img"><a href="#"><img src="/images/test/user_img50.jpg" width="50" height="50" alt="user name" /></a></div>
-          <div class="comment_main">
-            <div class="name_time_score"><div class="mr5"><a href="#">xiaoying</a> <span class="time">2012-2-8</span></div></div>
-            <div class="comment_content">这是哪家店的呀？我也要吃！</div>
-          </div>
-          <div class="clear"></div>
-        </li>
-      </ul>
-      <div class="comment_form mt20">
-        <div class="user_img"><img src="/assets/base/test/user_img50.jpg" width="50" height="50" /></div>
-        <div class="comment_input"><a name="add_comment" id="add_comment"></a>
-          <div class="reply_content2">这是哪家店的啊？我也要吃！<span class="reply_to">by aluoaluo</span></div>
-          <textarea class="comment" name="" cols="" rows=""></textarea>
-          <a href="" class="button_gray float_l mt10"><span>OK, 加上去</span></a>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="wp_space_line ptb30">
+		<div class="album_left">
+			<div class="mb20">
+				<div class="pre_next"><a href="#" class="btn_gray mr5"><span>前一张</span></a><a href="#" class="btn_gray"><span>后一张</span></a></div>
+			</div>
+			<div class="photo">
+				<img src="images/test/wine440.jpg" width="440" height="440" alt="photo">
+				<%= image_tag @photo.image_url(:w_large) %>
+			</div>
+			<div class="info">
+				<div class="like float_r"><a href="#" class="icon_like">赞 (3)</a></div>
+				<div class="share float_r">分享到：<a href=" #"><img src="images/icon/sina_s_on.png" alt="新浪" width="17" height="17" align="absmiddle"></a><a href="#"><img src="images/icon/tencen_s_on.png" alt="腾讯" width="17" height="17" align="absmiddle"></a><a href="#"><img src="images/icon/douban_s_on.png" alt="豆瓣" width="17" height="17" align="absmiddle"></a><a href="#"><img src="images/icon/kaixin_s_on.png" alt="开心网" width="17" height="17" align="absmiddle"></a><a href="#"><img src="images/icon/renren_s_on.png" alt="人人网" width="17" height="17" align="absmiddle"></a> |</div>
+				<div>10浏览 | 4评论</div>
+			</div>
+			<div class="comment">
+				<div class="mb20 clearfix">
+					<div class="title">
+						<a href="#01" class="btn_gray float_r"><span>添加评论</span></a>
+						<h3>评论</h3>
+					</div>
+				</div>
+				<%= render "comments/comment_list" %>
+				<a name="01" id="01"></a>
+
+			</div>
+		</div>
+	</div>
+
 </div>
-<div id="rightcol" class="other_content">
-  <h3>我的其他相册</h3>
-  <ul class="other_album">
-    <li class="clearfix">
-      <div class="pic"><a href="community_photo_list.html"><img src="/assets/base/test/album_cover5_s.jpg" width="90" height="90" /></a></div>
-      <div class="album_info">
-        <h3><a href="community_photo_list.html">植物也欢乐</a></h3>
-        3张照片<br/>2012-2-13 更新
-      </div>
-    </li>
-    <li class="clearfix">
-      <div class="pic"><a href="community_photo_list.html"><img src="/assets/base/test/album_cover5_s.jpg" width="90" height="90" /></a></div>
-      <div class="album_info">
-        <h3><a href="community_photo_list.html">植物也欢乐</a></h3>
-        3张照片<br/>2012-2-13 更新
-      </div>
-    </li>
-    <li class="clearfix">
-      <div class="pic"><a href="community_photo_list.html"><img src="/assets/base/test/album_cover5_s.jpg" width="90" height="90" /></a></div>
-      <div class="album_info">
-        <h3><a href="community_photo_list.html">植物也欢乐</a></h3>
-        3张照片<br/>2012-2-13 更新
-      </div>
-    </li>
-    <div class="clear"></div>
-  </ul>
+
+
+<div id="wp_right">
+	<%= render "wine_details/share/resource" %>
+	<%= render "wine_details/share/spec"%>
+	<%= render "wine_details/share/score"%>
+	<%= render "wine_details/share/special_comments"%>
+	<%= render "wine_details/share/price"%>
+	<%= render "wine_details/share/vintage"%>
+	<div class=""><a href="#" class="btn_gray"><span>信息纠错与补充</span></a></div>
 </div>
-<div class="clear"></div>
+<div class="clear"></div>   
+
+

@@ -13,31 +13,24 @@ class Wines::Detail < ActiveRecord::Base
   has_one :statistic, :foreign_key => 'wine_detail_id'
   has_one :label
   has_one :item, :class_name => "Users::WineCellarItem", :foreign_key => "wine_detail_id"
-  has_many :covers, :class_name => 'Photo',  :foreign_key => 'business_id', :conditions => { :is_cover => true, :owner_type => OWNER_TYPE_WINE }
-  has_many :photos, :class_name => 'Photo',  :foreign_key => 'business_id', :limit => 5, :order => 'created_at DESC', :conditions => { :owner_type => OWNER_TYPE_WINE }
+  belongs_to :audit_log, :class_name => "AuditLog", :foreign_key => "audit_id"
+  belongs_to :style, :foreign_key => "wine_style_id"
+  has_many :covers, :as => :imageable, :conditions => { :is_cover => true }
+  has_many :photos, :as => :imageable
   has_many :prices, :class_name => "Price", :foreign_key => "wine_detail_id"
   has_many :variety_percentages, :class_name => 'VarietyPercentage', :foreign_key => 'wine_detail_id', :dependent => :destroy
-  belongs_to :audit_log, :class_name => "AuditLog", :foreign_key => "audit_id"
-
-  belongs_to :style, :foreign_key => "wine_style_id"
   has_many :special_comments, :as => :special_commentable
-
   accepts_nested_attributes_for :photos, :reject_if => proc { |attributes| attributes['image'].blank? }
   accepts_nested_attributes_for :label, :reject_if => proc { |attributes| attributes['filename'].blank? }
+  
   # scope :with_recent_comment, joins(:comments) & ::Comment.recent(6) 
   def comment( user_id )
     Wines::Comment.find_by_user_id user_id
   end
 
-
-  # def best_comments( limit = 5 )
-  #   # Wines::Comment.find(:all, :include => [:user, :avatar, :user_good_hit], :limit => limit, :conditions => ["wine_detail_id = ?", id])
-  # end
-
   def cname
     "#{show_year} #{wine.name_zh.to_s}"
   end
-
 
   def ename
     "#{show_year} #{wine.name_en.to_s}"
@@ -110,6 +103,7 @@ class Wines::Detail < ActiveRecord::Base
   def show_capacity
     "#{capacity.gsub('ml', '')}ml" unless capacity.blank?
   end
+  
   # 谁拥有这些酒
   def owners(options = {})
      Users::WineCellarItem.all(:include => [:user],

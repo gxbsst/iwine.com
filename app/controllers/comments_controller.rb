@@ -1,6 +1,6 @@
 # encoding: utf-8
 class CommentsController < ApplicationController
-  before_filter :get_comment, :only => [:show, :edit, :update, :destroy, :reply]
+  before_filter :get_comment, :only => [:show, :edit, :update, :destroy, :reply, :vote]
   before_filter :get_commentable
   before_filter :authenticate_user!, :except => [:index, :show, :list]
   before_filter :get_user
@@ -22,12 +22,11 @@ class CommentsController < ApplicationController
     else
       order = "votes_count DESC, created_at DESC"
     end
-
     @comments  =  ::Comment.all(:include => [:user],
     # :joins => :votes,
     :joins => "LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id",
     :select => "comments.*, count(votes.id) as votes_count",
-    :conditions => ["commentable_id=? AND parent_id IS NULL", @wine_detail.id ], :group => "comments.id",
+    :conditions => ["commentable_id=? AND parent_id IS NULL", @commentable.id ], :group => "comments.id",
     :order => order )
     page = params[:params] || 1
 
@@ -35,11 +34,18 @@ class CommentsController < ApplicationController
       unless @comments.kind_of?(Array)
         @comments = @comments.page(page).per(8)
       else
-        @comments = Kaminari.paginate_array(@comments).page(page).per(8)
+        @comments = Kaminari.paginate_array(@comments).page(page).per(10)
       end
     end
 
-    @comment = ::Comment.new
+    new_normal_comment
+    
+    if @resource == "Wines::Detail"
+      @wine_detail = @commentable
+      @wine      = @wine_detail.wine
+      render "wine_details/comments/index"
+    end
+
   end
   
   # 评论

@@ -1,31 +1,15 @@
 # -*- coding: utf-8 -*-
-#class Photo < ActiveRecord::Base
-#  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
-#  belongs_to :user
-#
-#  mount_uploader :image, ImageUploader
-#
-#  ## FIXED
-#  ## 修改image_uploader.rb 中 is_user? 的model的数据为空的bugs
-#
-##  after_update :recreate_delayed_versions!
-##
-##
-##  def recreate_delayed_versions!
-##    image.should_process = true
-##    image.recreate_versions! if crop_x.present?
-###    self.image.recreate_versions! if self.image.present?
-##  end
-#
-#
-#end
 require 'fileutils'
 class Photo < ActiveRecord::Base
-
-  belongs_to :album
+  # fires :new_photo, :on                 => :create,
+  #                     :actor              => :user,
+  #                     :secondary_actor => :imageable,
+  #                     :if => lambda { |imageable| imageable.imageable_type == "Wines::Detail" }
+  
+  belongs_to :imageable, :polymorphic => true
   belongs_to :user
-  belongs_to :wine_detail, :class_name => 'Wines::Detail', :foreign_key => 'business_id'
-  belongs_to :winery, :foreign_key => "business_id"
+  has_many :comments, :as => :commentable
+  has_many :comments, :class_name => "PhotoComment", :as => :commentable, :include => [:user]
 
   acts_as_commentable
 
