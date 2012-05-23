@@ -98,4 +98,8 @@ Unused Eager Loading detected
 localhost:3000/searches/suggestion?word=
 Unused Eager Loading detected
   Wines::Detail => [:label]
+  Remove from your finder: :include => [:label]2012-05-23 09:40:26[WARN] user: dongwei
+localhost:3000/wines/60
+Unused Eager Loading detected
+  Wines::Detail => [:label]
   Remove from your finder: :include => [:label]
