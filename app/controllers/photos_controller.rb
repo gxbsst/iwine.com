@@ -14,7 +14,7 @@ class PhotosController < ApplicationController
   end
 
   def show
-    @photo.update_attribute(:viewed_num, @photo.viewed_num + 1)
+    @photo.update_attribute(:views_count, @photo.views_count + 1)
     new_normal_comment
     order = "votes_count DESC, created_at DESC"
     @comments  =  @photo.comments.all(:include => [:user],

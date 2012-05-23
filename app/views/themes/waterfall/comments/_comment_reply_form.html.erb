@@ -9,10 +9,10 @@
   </table>
 <% end -%>
 
-<% if @comment.children.size > 0 %>
+<% if @comment.children.all.size > 0 %>
 <ul class="reply_list clearfix">
 
-  <% @comment.children.each do |comment| %>
+  <% @comment.children.all.each do |comment| %>
 
 	<li>
     	<div class="userpic">
