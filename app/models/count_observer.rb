@@ -80,23 +80,27 @@ class CountObserver < ActiveRecord::Observer
 
   #评论或者关注
   def increment_comments_count model, target_id, target_type_class
-    case model.do
-      when "follow"
-        target_type_class.increment_counter :followers_count, target_id
-      when "comment"
-        target_type_class.increment_counter :comments_count, target_id
+    if model.parent_id.blank? #parent_id 不为空是回复，数目不变
+      case model.do
+        when "follow"
+          target_type_class.increment_counter :followers_count, target_id
+        when "comment"
+          target_type_class.increment_counter :comments_count, target_id
+      end
+      increment_user_count model
     end
-    increment_user_count model
   end
 
   def decrement_comments_count model, target_id, target_type_class
-    case model.do
-      when "follow"
-        target_type_class.decrement_counter :followers_count, target_id
-      when "comment"
-        target_type_class.decrement_counter :comments_count, target_id
+    if model.parent_id.blank?
+      case model.do
+        when "follow"
+          target_type_class.decrement_counter :followers_count, target_id
+        when "comment"
+          target_type_class.decrement_counter :comments_count, target_id
+      end
+      decrement_user_count model
     end
-    decrement_user_count model
   end
 
 
@@ -128,8 +132,8 @@ class CountObserver < ActiveRecord::Observer
         [model.wine_detail_id, "Wines::Detail", "Wines::Detail"]
       when "Wines::Detail"
         [model.wine.winery_id, "Winery", "Winery"]
-      when "Vote"
-        [model.voteable_id, "Vote", model.voteable_type]
+      when "ActsAsVotable::Vote"
+        [model.votable_id, "Vote", model.votable_type]
      end
     return [target_id, target_type, target_type_class.constantize]
   end

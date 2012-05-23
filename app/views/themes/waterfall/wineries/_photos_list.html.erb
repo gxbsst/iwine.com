@@ -2,7 +2,7 @@
     <% value = index/4 ; if index != 0 && value != 0 && value.to_i == value %><div class="clear"></div><% end %>
     <li id="<%= index%>">
       <%= link_to photo_winery_path(@winery, :photo_id => photo.id) do %>
-          <%= image_tag(photo.image_url(:wy_thumb), :alt => @winery.name_en) %>
+          <%= image_tag(photo.image_url(:thumb), :alt => @winery.name_en) %>
       <% end %>
       <%= link_to photo.counts['comment'].to_i, photo_winery_path(@winery, :photo_id => photo.id), :class => "icon_comment" %>
     </li>
