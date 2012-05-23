@@ -29,3 +29,6 @@ db/wine_variety_i18n.csv
 schema.rb
 notify.log
 lib/wines_photos
+/Gemfile.lock
+/db/schema.rb
+/notify.log
