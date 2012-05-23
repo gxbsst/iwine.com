@@ -180,11 +180,11 @@ module ApplicationHelper
   end
 
   def reply_comment(comment)
-    link_to  "/#{comment.get_commentable_path}/#{comment.commentable_id}/comments/#{comment.id}",
+    link_to  "/#{comment.get_commentable_path}/#{comment.commentable_id}/comments/#{comment.id}/reply",
 		  :remote => true,
       :class => "ajax reply_comment_button",
       :id => "reply_#{comment.id}" do
-		  raw "回复<span class='reply_comment_count'>(#{comment.children.size })</span><span class='reply_result'></span>"
+		  raw "回复<span class='reply_comment_count'>(#{comment.children.all.size })</span><span class='reply_result'></span>"
 		end
   end
   

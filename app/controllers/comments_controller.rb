@@ -96,7 +96,7 @@ class CommentsController < ApplicationController
       :do => "comment")
       @reply_comment.save
       @reply_comment.move_to_child_of(@comment)
-      render :json =>  @comment.children.size.to_json
+      render :json =>  @comment.children.all.size.to_json
     end
   end
 
