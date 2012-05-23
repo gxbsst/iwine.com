@@ -1,4 +1,3 @@
-<div id="wrapper950">
   <div class="whitespace mb30">
     <%= render "winery_detail" %>
   </div>
@@ -30,16 +29,14 @@
                         <span>后一张</span>
                     <% end %>
                 <% end %>  
-                <%= previous_and_next_photo(@winery.photo_ids, @photo.id, @winery) %>
               </div>
             </div>
             
             <div class="photo">
-              <%= image_tag @photo.image_url(:wy_large), :alt => @photo.intro %>
+              <%= image_tag @photo.image_url(:large), :alt => @photo.intro %>
             </div>
 
             <div class="info">
-              <div class="like float_r"><%= "赞(#{@photo.})" %></div>
             </div>
           </div>
         </div>
@@ -53,5 +50,3 @@
     <div class="clear"></div>
 
   </div>
-
-</div>

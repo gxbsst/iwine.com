@@ -6,7 +6,7 @@
 		<% if l.event_type == "new_comment" %>
 		<div class="iw item">
       	<div class="iw_img">
-					<%= link_to wine_waterfall_image_tag(l.receiverable, :thumb_name => :w_middle), wine_path(l.receiverable) %>
+					<%= link_to wine_waterfall_image_tag(l.receiverable, :thumb_name => :middle), wine_path(l.receiverable) %>
 				</div>
           <div class="iw_info">
               <h1>
@@ -45,7 +45,7 @@
 		<% elsif l.event_type == "add_to_cellar" %>
 		<div class="iw item">
       	<div class="iw_img">
-					<%= link_to wine_waterfall_image_tag(l.receiverable, :thumb_name => :w_middle), wine_path(l.receiverable) %>
+					<%= link_to wine_waterfall_image_tag(l.receiverable, :thumb_name => :middle), wine_path(l.receiverable) %>
 				</div>
           <div class="iw_info">
             <h1>
@@ -95,7 +95,7 @@
             <div class="clear"></div>
         </div>
         	<div class="iw_img">
-						<%= link_to wine_waterfall_image_tag(l.receiverable, :thumb_name => :w_middle), wine_path(l.receiverable) %>
+						<%= link_to wine_waterfall_image_tag(l.receiverable, :thumb_name => :middle), wine_path(l.receiverable) %>
 				 </div>
             <div class="iw_info">
               <h1>
@@ -138,7 +138,7 @@
             <div class="clear"></div>
         </div>
         	<div class="iw_img">
-						<%= link_to wine_waterfall_image_tag(l.receiverable, :thumb_name => :w_middle), wine_path(l.receiverable) %>	
+						<%= link_to wine_waterfall_image_tag(l.receiverable, :thumb_name => :middle), wine_path(l.receiverable) %>	
 					</div>
             <div class="iw_info">
               <h1>

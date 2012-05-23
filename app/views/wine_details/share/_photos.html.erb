@@ -7,6 +7,6 @@
 
 <div class="items">
   <% @wine_detail.photos.each do |photo| %>
-    <%= link_to image_tag(photo.image_url(:w_thumb), :width => 90, :height => 90), wine_photo_path(photo.id) %>
+    <%= link_to image_tag(photo.image_url(:thumb), :width => 90, :height => 90), wine_photo_path(photo.id) %>
   <% end %>
 </div>

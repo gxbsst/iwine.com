@@ -1,5 +1,6 @@
-<div class="mine albums">
-<%= render "/mine/sub_nav", :action => params[:action] %>
+<div class="whitespace">
+<div id="hp">
+<%= render "mine/sub_nav", :action => params[:action] %>
 <div class="clear"></div>
 
 <div class="title_btn">
@@ -21,7 +22,7 @@
   <% @photos.each_with_index do |photo, i| %>
     <li>
       <a href="<%= url_for @album.id.to_s+'/photo?index='+i.to_s %>">
-        <%= image_tag photo.image_url( :normal ), :class => 'cover' %>
+        <%= image_tag photo.image_url( :thumb ), :class => 'cover' %>
       </a>
       <% if photo.intro.present? %>
         <p class="intro">
@@ -68,4 +69,5 @@ function delete_upload_photo( id ){
 $('.best_in_place').best_in_place();
 </script>
 <!-- end mine -->
+</div>
 </div>
