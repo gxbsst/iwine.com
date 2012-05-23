@@ -187,4 +187,9 @@ module ApplicationHelper
 		  raw "回复<span class='reply_comment_count'>(#{comment.children.size })</span><span class='reply_result'></span>"
 		end
   end
+  
+  def wine_default_image(version)
+    return theme_image_tag("avatar_default_bg_#{version.to_s}.png") if version.present?
+    theme_image_tag("avatar_default_bg.png")
+  end
 end

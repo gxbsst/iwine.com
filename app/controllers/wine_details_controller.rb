@@ -15,7 +15,6 @@ class WineDetailsController < ApplicationController
     @comments         = @wine_detail.all_comments(:limit => 6)
     @owners           = @wine_detail.owners(:limit => 4)
     @followers        = @wine_detail.followers(:limit => 11)
-    # @wine_statistic = @wine_detail.statistic || @wine_detail.build_statistic
   end
 
   # 关注者
@@ -59,8 +58,7 @@ class WineDetailsController < ApplicationController
   end
 
   def get_wine_detail
-    wine_detail_id = params[:id]
-    @wine_detail = Wines::Detail.includes(:label).find(wine_detail_id)
+    @wine_detail = Wines::Detail.includes(:label, :photos).find(params[:id])
   end
 
 end
