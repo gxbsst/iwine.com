@@ -93,6 +93,7 @@ namespace :app do
           wine_register.variety_percentage = variety_percentage
           wine_register.variety_name = variety_name
           wine_register.capacity = item[14]
+          wine_register.user_id = -1
           wine_register.status = 0
           wine_register.result = 0
           # process photo

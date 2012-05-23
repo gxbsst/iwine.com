@@ -1,10 +1,11 @@
 # encoding: utf-8
 class CommentsController < ApplicationController
+  before_filter :authenticate_user!, :except => [:index, :show, :list]
   before_filter :get_comment, :only => [:show, :edit, :update, :destroy, :reply, :vote]
   before_filter :get_commentable
-  before_filter :authenticate_user!, :except => [:index, :show, :list]
   before_filter :get_user
-  
+  before_filter :check_followed, :only => :create
+  before_filter :check_cancle_follow, :only => :cancle_follow
   def new   
     if params[:do].present? && params[:do] == "follow"
       new_follow_comment
@@ -73,9 +74,8 @@ class CommentsController < ApplicationController
 
   # 取消关注
   def cancle_follow
-    follow_items = @commentable.current_user_follow(@user)
-    return notice_stickie("您还没有有关注该条目.") if follow_items.blank?
-    if follow_items.first.update_attribute("deleted_at", Time.now)
+    follow_item = @commentable.find_follow @user
+    if follow_item.update_attribute("deleted_at", Time.now)
       notice_stickie("取消关注成功.")
       redirect_to @commentable_path
     end
@@ -93,10 +93,11 @@ class CommentsController < ApplicationController
       @reply_comment = ::Comment.build_from(@comment.commentable,
       @user.id,
       params[:comment][:body],
+      :parent_id => @comment.id,
       :do => "comment")
       @reply_comment.save
       @reply_comment.move_to_child_of(@comment)
-      render :json =>  @comment.children.size.to_json
+      render :json =>  @comment.children.all.size.to_json
     end
   end
 
@@ -134,5 +135,16 @@ class CommentsController < ApplicationController
   def get_user
     @user = current_user
   end
-  
+
+  def check_followed
+    if params[:do] == "follow" && @commentable.is_followed?(@user)
+      redirect_to(@commentable_path, :notice => "已经关注过")
+    end
+  end
+
+  def check_cancle_follow
+    if params[:do] == "follow" && !@commentable.is_followed?(@user)
+      redirect_to(@commentable_path, :notice => "请先关注")
+    end
+  end
 end

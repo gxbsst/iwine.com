@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 class Wines::Detail < ActiveRecord::Base
+  include Common
 
   paginates_per 10
 
@@ -15,8 +16,8 @@ class Wines::Detail < ActiveRecord::Base
   has_one :item, :class_name => "Users::WineCellarItem", :foreign_key => "wine_detail_id"
   belongs_to :audit_log, :class_name => "AuditLog", :foreign_key => "audit_id"
   belongs_to :style, :foreign_key => "wine_style_id"
-  has_many :covers, :class_name => "Photo", :as => :imageable, :conditions => { :is_cover => true }
-  has_many :photos, :as => :imageable
+  has_many :covers, :as => :imageable, :class_name => "Photo", :conditions => { :is_cover => true }
+  has_many :photos, :as => :imageable, :class_name => "Photo"
   has_many :prices, :class_name => "Price", :foreign_key => "wine_detail_id"
   has_many :variety_percentages, :class_name => 'VarietyPercentage', :foreign_key => 'wine_detail_id', :dependent => :destroy
   has_many :special_comments, :as => :special_commentable
@@ -71,7 +72,8 @@ class Wines::Detail < ActiveRecord::Base
         :alcoholicity => register.alcoholicity,
         :capacity => register.capacity,
         :wine_style_id => register.wine_style_id,
-        :audit_id => register.audit_log_id
+        :audit_id => register.audit_log_id,
+        :user_id => register.user_id
       )
     end
     return wine_detail
@@ -85,21 +87,6 @@ class Wines::Detail < ActiveRecord::Base
     return show_percentage
   end
   
-  # 当前用户关注记录
-  def current_user_follow(user_object)
-    Comment.where(["commentable_id = ? AND commentable_type = ? AND do = ? AND user_id = ? AND deleted_at IS NULL",
-                   self.id,
-                   "Wines::Detail",
-                   "follow",
-                   user_object.id])
-  end
-
-  # 是否已经关注
-  def is_followed? user_object
-    comment = self.current_user_follow(user_object)
-    return comment.blank? ? false : true
-  end
-
   def show_capacity
     "#{capacity.gsub('ml', '')}ml" unless capacity.blank?
   end
@@ -119,21 +106,6 @@ class Wines::Detail < ActiveRecord::Base
                                 :select => "comments.*, count(votes.id) as votes_count",
                                 :conditions => ["commentable_id=? AND parent_id IS NULL", id ], :group => "comments.id",
                                 :order => "votes_count DESC, created_at DESC", :limit => options[:limit] )
-  end
-
-  # 评论总数
-  def comments_count
-    all_comments.size
-  end
-
-  # 拥有者总数
-  def owners_count
-    owners.size
-  end
-
-  # 图片总数
-  def photos_count
-    photos.size
   end
   
   #热门酒款
