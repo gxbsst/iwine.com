@@ -109,6 +109,9 @@ image:
     middle:
        width: 200
        height: 200
+    middle_x:
+       width: 360
+       height: 360
     large:
        width: 360
        height: 360
@@ -126,3 +129,8 @@ timeline:
       new_photo: "上传了新的图片"
      
        
+search_server:
+  host: www.sidways.com
+  port: 8080
+  entry_url: /patrick/query/
+  word_url: /patrick/associate

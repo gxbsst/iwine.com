@@ -20,3 +20,14 @@
 .winery_list li {margin: 0 0 40px 0;width:590px;float:left;}
 .winery_list .logo {width:100px;float:left;margin-right:20px;}
 .winery_list .meta {width:470px;float:left;}
+#top_search {position:relative;}
+.search_scroll {width:348px; position:absolute;left:320px;top:38px;border:1px solid #999;border-top:none;background-color: #fff;border-radius:3px 3px 3px 3px;color:#333;}
+.search_scroll .current {background-color:#f3f3f3;}
+.search_scroll p.title a  {display:block;border-top:1px solid #ccc;padding:5px 10px;}
+.search_scroll dl {border-top:1px dotted #ccc;padding:5px 10px 5px 20px;}
+.search_scroll dt {width:30px;float:left;margin-right:10px;}
+.search_scroll dd {float:left;}
+.search_scroll dd p {color:#999;}
+.search_scroll p.title a:hover {background-color:#f3f3f3;text-decoration:none;}
+
+.winery_list .meta {width:470px;float:left;}

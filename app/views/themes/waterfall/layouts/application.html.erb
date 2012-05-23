@@ -16,22 +16,63 @@
           <%= theme_image_tag "common/logo.gif", :width => 299, :height => 43 %>
         </div>
         <div id="top_search">
-          <%= theme_image_submit_tag "icon/search.gif", :class => :search_btn %>
-          <input class="search" name="" type="text" />
+          <%= theme_image_submit_tag "icon/search.gif", :class => :search_btn , :id=>:search_btn %>
+          <input class="search" id="hot_search" name="" type="text" />
         </div>
+        <div class="search_scroll" id="search_scroll" style="display: none"></div>
         <div id="top_right">
           <%= render "layouts/user_fragment" %>
         </div>
         <div class="clear"></div>
       </div>
     </div>
-		<% if params[:controller] == "home" || (params[:controller] == "wine_details" && params[:action] == "index")%>
-		 <div id="home">
-		<% else %>
-			 <div id="wrapper950">
-		<% end %>
+    <% if params[:controller] == "home" || (params[:controller] == "wine_details" && params[:action] == "index")%>
+      <div id="home">
+      <% else %>
+        <div id="wrapper950">
+        <% end %>
         <%= yield %>
-    </div>
-    <%= render "layouts/footer" %>
+      </div>
+      <%= render "layouts/footer" %>
+      <script type="text/javascript" >
+        var search_scroll = $('#search_scroll');
+        var getHotSerach = function(){
+          $.ajax({
+            url: '/searches/suggestion?word='+$('#hot_search').val(),
+            success: function( data ){
+              if(( typeof data == 'string' ) && data ){
+                search_scroll.css( 'display' , 'block' );
+                search_scroll.html( data );
+              }else
+                search_scroll.css( 'display' , 'none' );
+            }
+          });
+        };
+
+        var timer;
+        $('#hot_search').bind({
+          keyup: function(e){
+            if( e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 37 || e.keyCode == 39 ){
+                return;
+            }
+
+            clearTimeout( timer );
+            timer = setTimeout( getHotSerach , 400 );
+          },
+
+          blur: function(){
+            var hide = function(){
+              search_scroll.css( 'display' , 'none' );
+            };
+            setTimeout( hide , 200 );
+          }
+        });
+
+        $('#search_btn').bind( 'click' , function(){
+          var url = '<%= url_for( '/searches/results?tab=all&word=' )%>';
+          url+=$('#hot_search').val();
+          location.href = url;
+        });
+      </script>
   </body>
 </html>

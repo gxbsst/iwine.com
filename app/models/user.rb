@@ -10,13 +10,11 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :crop_x, :crop_y, :crop_w, :crop_h, :agree_term
   has_one  :profile, :class_name => 'Users::Profile', :dependent => :destroy
   has_one  :cellar, :class_name => 'Users::WineCellar'
-  has_one  :good_hit_comment, :class_name => 'Users::GoodHitComment'
   has_many :albums, :class_name => 'Album', :foreign_key => 'created_by'
   has_many :registers, :class_name => 'Wines::Register'
   has_many :comments, :class_name => "::Comment", :foreign_key => 'user_id', :include => [:user]
   has_many :photo_comments
   has_many :photos #关于用户上传的所有图片
-  has_many :images, :as => :imageable # 关于用户的图片
   has_many :oauths, :class_name => 'Users::Oauth'
   has_many :time_events
   has_many :wine_followings, :include => :commentable, :class_name => "Comment", :conditions => {:commentable_type => "Wines::Detail", :do => "follow"}

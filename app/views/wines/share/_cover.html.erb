@@ -8,7 +8,7 @@
   <%= link_to "", "javascript:void(0)", :class => "absolute icon compass_icons-arrow_left backward" %>
   <span class="slideshow">
     <% @wine_detail.covers.each do |photo| %>
-      <%= link_to (image_tag photo.image_url(:w_thumb), :class => "pic", :width => 60, :height => 60), "javascript:void(0)" %>
+      <%= link_to (image_tag photo.image_url(:thumb), :class => "pic", :width => 60, :height => 60), "javascript:void(0)" %>
     <% end %>
   </span>
   <%= link_to "", "javascript:void(0)", :class => "absolute icon compass_icons-arrow_right forward" %>

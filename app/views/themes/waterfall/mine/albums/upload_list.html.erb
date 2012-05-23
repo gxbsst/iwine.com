@@ -1,32 +1,40 @@
-<%#= render "mine/sub_nav", :action => params[:action] %>
+<div class="whitespace">
+<div id="hp" >
+<%= render "mine/sub_nav", :action => params[:action] %>
+<div class="clear"></div>
+
 <div id="cu_user_menu" class="clearfix">
   <span class="f14">《 <a href="community_albmu_list.html">返回相册首页</a></span>
 </div>
 <div class="title_btn clearfix">
   <h2>完成上传 - 添加描述</h2>
 </div>
-<div class="photolist">
+  <ul class="photo_list">
 <%= form_tag '/mine/albums/save_upload_list', :id => 'save_upload_list_form' do %>
   <% @photos.each do |photo| %>
-  <div class="photo_list_item clearfix" id="upload_photo_div_<%= photo.id %>">
-    <div class="thumb">
-        <%= image_tag photo.image_url :normal %>
-    </div>
-    <div class="description">描述：<br/><textarea class="photo photo_intro" name="photo[<%= photo.id %>]" cols="" rows=""><%= photo.intro %></textarea></div>
-    <div >
-      <a href="<%= url_for :action => 'delete_photo', :photo_id => photo.id %>" class="fancybox_delete_photo fancybox.ajax btn_delete float_r">删除</a>
+  <li class="photo_des" id="upload_photo_div_<%= photo.id %>" >
+    <%= image_tag photo.image_url :middle %>
+    <p>标题</p>
+    <p><input class="text photo_name" name="" type="text" /></p>
+    <p>描述</p>
+    <p>
+      <textarea class="photo_des" name="photo[<%= photo.id %>]" cols="" rows=""><%= photo.intro %></textarea>
+    </p>
+    <p>
+      <%= link_to "删除", delete_photo_mine_albums_path(:photo_id => photo.id), :class => "fancybox_delete_photo fancybox.ajax btn_delete float_r" %>
       <label>
         <input class="radio" name="cover_id" type="radio" value="<%= photo.id %>" /> 
-        设为封面
-      </label>
-    </div>
-  </div>
+        设为封面 
+        </label>
+    </p>
+  </li>
   <% end %>
+  </ul>
   <div class="clear"></div>
 </div>
 <input type="hidden" name="id" value="<%= params[:id] %>"/>
 <input type="hidden" name="deleted_ids" id="deleted_photo_ids"/>
-<div class="align_c"><a href="javascript:save();" class="button_gray"><span>保存</span></a></div>
+<div class="align_c"><a href="javascript:save();" class="btn_gray button_gray"><span>保存</span></a></div>
 <% end %>
 <script type="text/javascript">
 var deleted_ids = [];
@@ -43,3 +51,6 @@ function save(){
   form = $('#save_upload_list_form').submit();
 }
 </script>
+
+</div>
+</div>
