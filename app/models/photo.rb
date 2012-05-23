@@ -21,7 +21,6 @@ class Photo < ActiveRecord::Base
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
   #after_update :crop_avatar
   after_save :recreate_delayed_versions!
-  after_destroy :update_album_delete
 
   serialize :counts, Hash
 
@@ -32,11 +31,6 @@ class Photo < ActiveRecord::Base
   def recreate_delayed_versions!
       image.should_process = true
       image.recreate_versions!
-  end
-
-  def update_album_delete
-    album.photos_num -= 1;
-    album.save
   end
 
   def self.build_wine_photo(opts = {})

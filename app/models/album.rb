@@ -1,6 +1,7 @@
 class Album < ActiveRecord::Base
   belongs_to :user, :foreign_key => 'created_by'
-  has_many :photos
+  has_many :images, :class_name => "Photo"
+  has_many :photos, :as => :imageable
 
   def cover
     cover = Photo.first :conditions => {:album_id => id, :is_cover => true}

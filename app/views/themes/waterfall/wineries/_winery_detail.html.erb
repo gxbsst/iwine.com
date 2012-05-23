@@ -1,6 +1,6 @@
 <div class="winery_header">
    <div class="cover">
-     <%= image_tag(@winery.photos.where("is_cover = 1").first.image_url(:wy_large), :width => 360, :height => 320, :alt => @winery.name_en) if @winery.photos.where("is_cover = 1").first %>
+     <%= image_tag(@winery.photos.where("is_cover = 1").first.image_url(:middle_x), :width => 360, :height => 320, :alt => @winery.name_en) if @winery.photos.where("is_cover = 1").first %>
    </div>
 
    <div class="info">

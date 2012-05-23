@@ -56,12 +56,15 @@ Patrick::Application.routes.draw do
     #     get :add_to_cellar
     #   end
     # end
-    resources :photos, :controller => "wine_details/photos"  
+    resources :photos
   end
   
   # PHOTO
-  resources :photos, :controller => "wine_details/photos"  do
+  resources :photos do
     resources :comments, :as => "photo_comments"
+    member do
+      get "vote"
+    end
   end
   # MINE
   namespace :mine do
@@ -73,6 +76,7 @@ Patrick::Application.routes.draw do
         match 'upload_list', :via => [:get, :post]
         match 'save_upload_list', :via => [:get, :post]
         match 'photo_comment', :via => [:get, :post]
+        match 'delete_photo', :via => [:get, :post]
       end
 
       member do
@@ -162,7 +166,15 @@ Patrick::Application.routes.draw do
     end
   end
   # Search
-  resources :searches
+  resources :searches do
+    collection do
+      get :winery, :via => [:get , :put]
+      get :suggestion, :via => [:get , :put]
+      get :results, :via => [:get , :put]
+    end
+  end
+
+
   # API
   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
   ## STATIC
