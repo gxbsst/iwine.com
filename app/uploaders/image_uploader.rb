@@ -113,34 +113,34 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   version :w_thumb_x, :from_version => :w_large, :if => :is_wine?  do
     process :resize_to_limit => [APP_DATA["image"]["wine"]["x_thumb"]["width"],
-                                 APP_DATA["image"]["wine"]["x_thumb"]["height"]]
+                                 '']
   end
   
   version :w_thumb, :from_version => :w_large, :if => :is_wine?  do
     process :resize_to_limit => [APP_DATA["image"]["wine"]["thumb"]["width"],
-                                 APP_DATA["image"]["wine"]["thumb"]["height"]]
+                                 '']
   end
   
   version :w_middle, :from_version => :w_large, :if => :is_wine? do
     process :resize_to_limit => [APP_DATA["image"]["wine"]["middle"]["width"],
-                                 APP_DATA["image"]["wine"]["middle"]["height"]]
+                                 '']
     process :store_geometry
   end
 
   version :w_large, :if => :is_wine? do
     process :resize_to_limit => [APP_DATA["image"]["wine"]["large"]["width"],
-                                 APP_DATA["image"]["wine"]["large"]["height"] ]
+                                 '']
   end
 
   ## WINERY
   version :wy_thumb_x, :from_version => :wy_large, :if => :is_winery?  do
     process :resize_to_limit => [APP_DATA["image"]["winery"]["x_thumb"]["width"], 
-                                 APP_DATA["image"]["winery"]["x_thumb"]["height"]]
+                                 '']
   end
   
   version :wy_thumb, :from_version => :wy_large, :if => :is_winery?  do
     process :resize_to_limit => [APP_DATA["image"]["winery"]["thumb"]["width"], 
-                                 APP_DATA["image"]["winery"]["thumb"]["height"]]
+                                 '']
   end
   
   version :wy_middle, :from_version => :wy_large, :if => :is_winery? do
@@ -151,7 +151,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   version :wy_large, :if => :is_winery? do
     process :resize_to_limit => [APP_DATA["image"]["winery"]["large"]["width"], 
-                                 APP_DATA["image"]["winery"]["large"]["height"]]
+                                 '']
   end
 
   def should_process?

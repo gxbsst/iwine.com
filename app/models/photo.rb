@@ -15,8 +15,6 @@ class Photo < ActiveRecord::Base
 
   acts_as_votable
 
-  delegate :user_id, :to => :album
-
   paginates_per 12
 
   mount_uploader :image, ImageUploader
@@ -64,4 +62,5 @@ class Photo < ActiveRecord::Base
     FileUtils.cp_r Dir.glob("#{Rails.root}/public/uploads/wines/register/#{wine_register_id}/*"), "#{Rails.root}/public/uploads/photo/wine/#{wine_detail_id}"
     Rails.root.join 'public', 'uploads', 'photo', 'wine', wine_detail_id.to_s, Dir.entries(Rails.root.join('public', 'uploads','photo', 'wine', wine_detail_id.to_s)).select{|x| x != '.' && x != '..' && x != '.DS_Store'}.first
   end
+
 end

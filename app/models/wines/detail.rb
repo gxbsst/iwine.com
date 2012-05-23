@@ -15,7 +15,7 @@ class Wines::Detail < ActiveRecord::Base
   has_one :item, :class_name => "Users::WineCellarItem", :foreign_key => "wine_detail_id"
   belongs_to :audit_log, :class_name => "AuditLog", :foreign_key => "audit_id"
   belongs_to :style, :foreign_key => "wine_style_id"
-  has_many :covers, :as => :imageable, :conditions => { :is_cover => true }
+  has_many :covers, :as => :imageable, :class_name => "Photo", :conditions => { :is_cover => true }
   has_many :photos, :as => :imageable
   has_many :prices, :class_name => "Price", :foreign_key => "wine_detail_id"
   has_many :variety_percentages, :class_name => 'VarietyPercentage', :foreign_key => 'wine_detail_id', :dependent => :destroy
@@ -71,7 +71,8 @@ class Wines::Detail < ActiveRecord::Base
         :alcoholicity => register.alcoholicity,
         :capacity => register.capacity,
         :wine_style_id => register.wine_style_id,
-        :audit_id => register.audit_log_id
+        :audit_id => register.audit_log_id,
+        :user_id => register.user_id
       )
     end
     return wine_detail
