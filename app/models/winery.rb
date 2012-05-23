@@ -1,6 +1,7 @@
 class Winery < ActiveRecord::Base
   set_table_name "wineries"
   include Wines::WineSupport
+  include Common
   has_many :registers
   has_many :info_items, :class_name => "InfoItem"
   has_many :photos, :as => :imageable

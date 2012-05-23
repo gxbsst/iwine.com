@@ -7,7 +7,7 @@ ActiveAdmin.register Winery do
     def edit
       @winery = Winery.find(params[:id])
       @winery.info_items.build if @winery.info_items.blank? # for accepts_nested_attributes_for
-      @winery.photos.build(:album_id => current_admin_user.id) if @winery.photos.blank?
+      @winery.photos.build(:album_id => current_admin_user.id)
     end
 
     def update
