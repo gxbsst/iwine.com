@@ -1,3 +1,6 @@
+<% content_for :css do %>
+<%= theme_stylesheet_link_tag :hp %>
+<% end %>
 <% if params[:controller].include? "mine" %>
 <% sub_menu = {
      "wine_favorite"     => [mine_cellar_path(@user.cellar.id), @user.wine_cellar_count],
@@ -6,8 +9,8 @@
      "comments"  => ["/mine/comments", @user.comments_count],
      # "testing_notes"  => ["testing_notes", 0],
      "followings"     => ["/mine/followings", @user.user_followes_count],
-     "followers"    => ["/mine/followers", @user.user_followeds_count]
-   #  "albums"           => ["/mine/albums", @user.albums_count]
+     "followers"    => ["/mine/followers", @user.user_followeds_count],
+     "albums"           => ["/mine/albums/", @user.albums_count]
 } %>
 <% else %>
 <% sub_menu = {
@@ -17,8 +20,8 @@
      "comments"  => [comments_user_path(@user.id), @user.comments_count],
      # "testing_notes"  => ["testing_notes", 0],
      "followings"     => [followings_user_path(@user.id), @user.user_followes_count],
-     "followers"    => [followers_user_path(@user.id), @user.user_followeds_count]
-     #"albums"           => [user_albums_path(@user.id), @user.albums_count]
+     "followers"    => [followers_user_path(@user.id), @user.user_followeds_count],
+     "albums"           => [user_albums_path(@user.id, :trailing_slash => true), @user.albums_count]
  } %>
 <% end %>
 

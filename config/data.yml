@@ -109,6 +109,9 @@ image:
     middle:
        width: 200
        height: 200
+    middle_x:
+       width: 360
+       height: 360
     large:
        width: 440
        height: 440

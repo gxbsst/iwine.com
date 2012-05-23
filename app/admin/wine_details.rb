@@ -45,7 +45,7 @@ ActiveAdmin.register Wines::Detail do
         detail.show_region_percentage
       end
       row "图片" do
-        image_tag(detail.photos.first.image_url(:w_thumb)) if detail.photos.first
+        image_tag(detail.photos.first.image_url(:thumb)) if detail.photos.first
       end
       row "标签" do
         image_tag(detail.label.filename_url(:middle)) if detail.label

@@ -76,6 +76,7 @@ Patrick::Application.routes.draw do
         match 'upload_list', :via => [:get, :post]
         match 'save_upload_list', :via => [:get, :post]
         match 'photo_comment', :via => [:get, :post]
+        match 'delete_photo', :via => [:get, :post]
       end
 
       member do

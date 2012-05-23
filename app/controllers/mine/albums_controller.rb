@@ -1,193 +1,159 @@
+# encoding: utf-8
 class Mine::AlbumsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :get_user
-  before_filter :get_album, :except => [:index, :upload, :new]
+  before_filter :get_album, :except => [:index, :upload, :new, :delete_photo]
 
   def upload
-
-    if request.post?
-      photo = Photo.new
-      photo.image = params[:photo][:image]
-      photo.owner_type = OWNER_TYPE_USER
-      photo.business_id = current_user.id
-      photo.album_id = params[:album_id]
-      photo.save
-
-      album = Album.find params[:album_id]
-      album.photos_num +=1
-      album.save
-
-      render :text => photo.id.to_s
-    end
-
-    @albums = current_user.albums
+    @albums = @user.albums
     if @albums.blank?
-      avatar_album = Album.create :created_by => current_user.id , :name => 'avatar'
-      default_album = Album.create :created_by => current_user.id , :name => 'other'
-      @albums = [avatar_album, default_album]
-    end
-    
-    @select_album_id = params[:album_id] || @albums[0].id
-  end
-
-  def upload_list
-    @photos = Photo.all :conditions => { :id => params[:photo_ids].split(',') }
-  end
-
-  def save_upload_list
-    photos = Photo.all :conditions => { :id => params[:photo].keys , :album_id => params[:id] }
-    cover = Photo.first :conditions => { :album_id => params[:id] , :is_cover => true }
-
-    photos.each do |photo|
-      if params[:photo][photo.id.to_s].present?
-        photo.intro = params[:photo][photo.id.to_s]
+      @albums.create!([{:user_id => @user.id, :name => "酒"},
+        {:user_id => @user.id, :name => "酒庄"},
+        {:user_id => @user.id, :name => "其他"},])
       end
-      if photo.id === params[:cover_id].to_i
-        photo.is_cover = true;
+      @album_id = params[:album_id] ||  @albums.first.id
+      if request.post?
+        @photo = create_photo
+        @photo.save
+        render :text => @photo.id.to_s
       end
-
-      photo.save
     end
 
-    if cover.present?
-      cover.is_cover = false;
-      cover.save
-    end
-    if params[:deleted_ids].present?
-      Photo.delete params[:deleted_ids].split(',')
+    def upload_list
+      @photos = Photo.all :conditions => { :id => params[:photo_ids].split(',') }
     end
 
-    redirect_to '/mine/albums/'+params[:id]
-  end
-
-  def new
-    if request.post?
-      album = Album.new
-      album.attributes = params[:album]
-      album.created_by = current_user.id
-      album.save
-      redirect_to request.referer
-      return
-    end
-    @album = Album.new
-    render :layout => false
-  end
-
-  def delete
-    if request.post?
-      @album = Album.first :conditions => { :id => params[:album_id] , :created_by => current_user.id }
-
-      if @album.present? && @album.name != 'avatar'
-        Photo.delete_all '`album_id`=' + @album.id.to_s
-        @album.delete
+    def save_upload_list
+      photos = Photo.all :conditions => { :id => params[:photo].keys , :album_id => params[:id] }
+      cover = Photo.first :conditions => { :album_id => params[:id] , :is_cover => true }
+      photos.each do |photo|
+        if params[:photo][photo.id.to_s].present?
+          photo.intro = params[:photo][photo.id.to_s]
+        end
+        if photo.id === params[:cover_id].to_i
+          photo.is_cover = true;
+        end
+        photo.save
       end
-
-      redirect_to :action => 'index'
-      return
+      if cover.present?
+        cover.is_cover = false;
+        cover.save
+      end
+      if params[:deleted_ids].present?
+        Photo.delete params[:deleted_ids].split(',')
+      end
+      redirect_to '/mine/albums/'+params[:id]
     end
 
-    render :layout => false
-  end
+    def new
+      if request.post?
+        album = Album.new
+        album.attributes = params[:album]
+        album.created_by = current_user.id
+        album.save
+        redirect_to request.referer
+        return
+      end
+      @album = Album.new
+      render :layout => false
+    end
 
-  def delete_photo
-    if request.post?
+    def delete
+      if request.post?
+        @album = Album.first :conditions => { :id => params[:album_id] , :created_by => current_user.id }
+        if @album.present? && @album.name != 'avatar'
+          Photo.delete_all '`album_id`=' + @album.id.to_s
+          @album.delete
+        end
+        redirect_to :action => 'index'
+        return
+      end
+      render :layout => false
+    end
 
+    def delete_photo
+      if request.post?
+        photo = Photo.find params[:photo_id]
+        photo.destroy if photo && photo.user_id == @user.id
+        redirect_to request.referer
+        return
+      end
+      render :layout => false
+    end
+
+    def edit
+      redirect_to request.referer if @album.blank?
+      if request.put?
+        @album.attributes = params[:album]
+        @album.save
+        redirect_to :action => 'show' , :album_id => @album.id
+      end
+      if @album.blank?
+        redirect_to :action => 'list'
+        return
+      end
+    end
+
+    def update_photo_intro
       photo = Photo.find params[:photo_id]
-      if photo && photo.album.created_by == current_user.id
-        photo.destroy
+      photo.intro = params[:photo]["intro"]
+      photo.save
+      render :json => photo
+    end
+
+    def show    
+      redirect_to request.referer if @album.blank?
+      if user_signed_in? && current_user.id == @user.id
+        @is_owner = true;
+      else
+        @is_owner = false;
       end
-
-      redirect_to request.referer
-      return
-    end
-
-    render :layout => false
-  end
-
-  def edit
-    if @album.blank?
-      redirect_to request.referer
-    end
-    
-    if request.put?
-      @album.attributes = params[:album]
-      @album.save
-      redirect_to :action => 'show' , :album_id => @album.id
-    end
-
-    if @album.blank?
-      redirect_to :action => 'list'
-      return
-    end
-  end
-
-  def update_photo_intro
-    photo = Photo.find params[:photo_id]
-    photo.intro = params[:photo]["intro"]
-    photo.save
-
-    render :json => photo
-  end
-
-  def show
-   
-    if @album.blank?
-      redirect_to request.referer
-    end
-
-    if user_signed_in? && current_user.id == @user.id
-      @is_owner = true;
-    else
-      @is_owner = false;
-    end
-
-    order = params[:order] === 'time' ? 'created_at' : 'liked_num';
-
-    @photos = Photo
+      order = params[:order] === 'time' ? 'created_at' : 'liked_num';
+      @photos = Photo
       .where(["album_id= ?", params[:id]])
       .order("#{order} DESC,id DESC")
       .page params[:page] || 1
-    
-  end
-
-  def photo
-    @album = Album.find params[:id]
-
-    if @album.blank?
-      redirect_to request.referer
     end
 
-    if params[:index].to_i < 0
-      @index = @album.photos_num - 1
-    elsif params[:index].to_i >= @album.photos_num
-      @index = 0
-    else
-      @index = params[:index].to_i
+    def photo
+
+      redirect_to request.referer if @album.blank?
+      @photos = @album.photos
     end
 
-    @photo = @album.photo @index
-    @top_albums = @user.top_albums 3
-    @photo.viewed_num += 1
-    @album.viewed_num += 1
-    @photo.save
-    @album.save
+    def index
+      @user = current_user
+      @albums = Album .where(["created_by= ?", current_user.id]).order("id DESC").page params[:page] || 1
+    end
 
-    @photo_comment = PhotoComment.new
-    @photo_comments = PhotoComment.all :conditions => { :photo_id => @photo.id }
-  end
+    private
 
-  def index
-    @user = current_user
-    @albums = Album .where(["created_by= ?", current_user.id]).order("id DESC").page params[:page] || 1
+    def get_user
+      @user = current_user
+    end
+
+    def get_album
+      @album = @user.albums.find(params[:id])
+    end
+
+    def get_imageable
+      if params[:wine_id].present?
+        @resource, @id = ["Wines::Detail", params[:wine_id]]
+      elsif params[:winery_id].present?
+        @resource, @id = ["Winery", params[:winery_id]]
+      else
+        @resource, @id = ["Album",  params[:album_id]]
+      end
+      @imageable = @resource.singularize.classify.constantize.find(@id)
+    end
+
+    def create_photo
+      @imageable = get_imageable
+      @photo = @imageable.photos.build
+      @photo.album_id = params[:album_id]
+      @photo.image = params[:photo][:image]
+      @photo.user_id = @user.id
+      return @photo    
+    end
+
   end
- 
-  private
- 
-  def get_user
-    @user = current_user
-  end
-  
-  def get_album
-    @album = @user.albums.find(params[:id])
-  end
-end

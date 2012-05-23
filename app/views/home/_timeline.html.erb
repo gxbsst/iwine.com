@@ -9,7 +9,7 @@
          <p><%= link_to_user l.timeline_event.actor, "/" %> <%= l.timeline_event.created_at.to_s(:normal) %> </p>
          <p class="event_type"><%= APP_DATA["timeline"]["event"]["user"][l.timeline_event.event_type] %></p>
        </div>
-       <p class="wine_cover"><%= wine_waterfall_image_tag(l.timeline_event.secondary_actor, :thumb_name => :w_middle) %></p>
+       <p class="wine_cover"><%= wine_waterfall_image_tag(l.timeline_event.secondary_actor, :thumb_name => :middle) %></p>
        <h3>
          <%= link_to  wine_path(l.timeline_event.secondary_actor) do %>
            <%= raw l.timeline_event.secondary_actor.cname %><br />
@@ -23,7 +23,7 @@
 	<% if l.event_type == "add_to_cellar"%>
 	<div class="ks-waterfall item about_with_wine <%= l.event_type %>">
      <p class="wine_cover">
-       <%= wine_waterfall_image_tag(l.timeline_event.secondary_actor, :thumb_name => :w_middle) %>
+       <%= wine_waterfall_image_tag(l.timeline_event.secondary_actor, :thumb_name => :middle) %>
      </p>
      <h3>
        <%= link_to  wine_path(l.timeline_event.secondary_actor) do %>
@@ -46,7 +46,7 @@
 	<% else%>
      <div class="ks-waterfall item about_with_wine">
        <p class="wine_cover">
-         <%= wine_waterfall_image_tag(l.timeline_event.secondary_actor, :thumb_name => :w_middle) %>
+         <%= wine_waterfall_image_tag(l.timeline_event.secondary_actor, :thumb_name => :middle) %>
        </p>
        <h3>
          <%= link_to  wine_path(l.timeline_event.secondary_actor) do %>
