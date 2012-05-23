@@ -146,5 +146,4 @@ class Wines::Detail < ActiveRecord::Base
         limit(options[:limit])
    wine_details
   end
-
 end
