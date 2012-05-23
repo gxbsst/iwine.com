@@ -1,7 +1,7 @@
 <li class="clearfix">
   <% releast_detail = wine.details.order("year desc").first %>
   <%= link_to wine_path(releast_detail) do %>
-    <%= wine_cover_tag(releast_detail, :thumb_name => :w_thumb_x, :height => 100, :width => 100) if releast_detail %>
+    <%= wine_cover_tag(releast_detail, :thumb_name => :thumb_x, :height => 100, :width => 100) if releast_detail %>
   <% end %>
   <div class="info">
     <h3 class="zh"><%= link_to wine.name_zh, wine_path(releast_detail) %></h3>
