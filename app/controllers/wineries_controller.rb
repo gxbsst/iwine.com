@@ -9,6 +9,7 @@ class WineriesController < ApplicationController
     @winery = Winery.includes([:info_items, :photos]).find(params[:id])
     @wines = @winery.wines.includes([:details => :photos]).limit(5)
     @users = @winery.followers(:limit => 16)#关注酒庄的人
+    @comments = Comment.get_comments(@winery, :limit => 10)
   end
 
   def photos_list

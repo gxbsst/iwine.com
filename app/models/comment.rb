@@ -60,4 +60,24 @@ class Comment < ActiveRecord::Base
   def self.find_commentable(commentable_str, commentable_id)
     commentable_str.constantize.find(commentable_id)
   end
+
+  def get_commentable_path
+    path = case commentable_type
+    when "Wines::Detail"
+      "wines"
+    when "Winery"
+      "wineries"
+    when "User"
+      "users"
+    end
+    return path
+  end
+
+  def self.get_comments(commentable, option = {})
+    commentable.comments.all(:include => [:user],
+      :joins => "LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id",
+      :select => "comments.*, count(votes.id) as votes_count",
+      :conditions => ["parent_id is null"], :group => "comments.id",
+      :order => "votes_count DESC, created_at DESC", :limit => option[:limit] )
+  end
 end

@@ -145,6 +145,15 @@ Patrick::Application.routes.draw do
       get "wines_list"
       get "photo"
     end
+    resources :comments, :controller => "comments" do
+      member do
+        get :vote
+        match "reply", :via => [:get, :post]
+      end
+      collection do
+        get :cancle_follow
+      end
+    end
   end
   # SETTINGS
   resources :settings do

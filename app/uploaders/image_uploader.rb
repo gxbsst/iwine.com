@@ -58,7 +58,6 @@ class ImageUploader < CarrierWave::Uploader::Base
     process :resize_to_limit => [APP_DATA["image"]["winery"]["middle_x"]["width"],'']
   end
 
-
   def should_process?
     @should_process ||= false
   end

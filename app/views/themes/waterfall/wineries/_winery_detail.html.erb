@@ -41,14 +41,14 @@
      </div>
      <div class="mt20">
        <ul class="count">
-         <li class="follow"><%= link_to "120个关注", "#" %></li>
-         <li class="comment"><%= link_to "45条评论", "#" %></li>
+         <li class="follow"><%= link_to "#{@winery.followers_count}个关注", "#" %></li>
+         <li class="comment"><%= link_to "#{@winery.comments_count}条评论", "#" %></li>
        </ul>
        <%= link_to "#", :class => "btn_gray_b mr5" do %>
         <span>关注</span>
        <% end %>
-       <%=  link_to "#", :class => "btn_gray_b mr5" do %>
-        <span>评论</span>
+       <%= link_to new_winery_comment_path(@winery.id, :do => "comment"), :class => [:btn_gray_b, :mr5, :ajax], :remote => true do %>
+           <span>评论</span>
        <% end %>
      </div>
    </div>
