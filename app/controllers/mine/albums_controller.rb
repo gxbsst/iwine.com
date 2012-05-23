@@ -2,7 +2,7 @@
 class Mine::AlbumsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :get_user
-  before_filter :get_album, :except => [:index, :upload, :new, :delete_photo]
+  before_filter :get_album, :except => [:index, :upload, :new, :delete_photo, :update_photo_intro]
 
   def upload
     @albums = @user.albums
