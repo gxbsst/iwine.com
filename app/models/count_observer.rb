@@ -113,11 +113,17 @@ class CountObserver < ActiveRecord::Observer
   end
 
   def change_to_pluralize model
-    model.class.name.downcase.pluralize
+    name = get_model_name model
+    name.downcase.pluralize
+  end
+
+  def get_model_name model
+    model.class.name.include?("Comment") ? model.class.superclass.name : model.class.name
   end
 
   def get_target model
-    target_id, target_type, target_type_class = case model.class.name
+    name = get_model_name model
+    target_id, target_type, target_type_class = case name
       when "Photo"
         [model.imageable_id, "Photo", model.imageable_type]
       when "Comment"
