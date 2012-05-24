@@ -50,6 +50,14 @@
 <div class="pagination">
  <%= paginate @photos, :outer_window => 2 %>
 </div>
+<div class="share_btn">
+      	<div class="btn">
+      	  <a href="#" class="btn_gray"><span>删除相册</span></a>
+      	  </div>
+        <div class="share float_l">分享到：<a href=" #"><img src="images/icon/sina_s_on.png" alt="新浪" width="17" height="17" align="absmiddle"></a><a href="#"><img src="images/icon/tencen_s_on.png" alt="腾讯" width="17" height="17" align="absmiddle"></a><a href="#"><img src="images/icon/douban_s_on.png" alt="豆瓣" width="17" height="17" align="absmiddle"></a><a href="#"><img src="images/icon/kaixin_s_on.png" alt="开心网" width="17" height="17" align="absmiddle"></a><a href="#"><img src="images/icon/renren_s_on.png" alt="人人网" width="17" height="17" align="absmiddle"></a> |</div>
+        <div class="like float_l"><a href="#" class="icon_like">赞 (3)</a></div>
+        <div class="clear"></div>
+</div>
 <div class="bottom_action_space clearfix mt20">
   <% if @is_owner && @album.name != 'avatar' %>
   <a href="<%= url_for :action => 'delete', :album_id => @album.id %>" class="fancybox_delete_photo fancybox.ajax button_gray float_r"><span>删除相册</span></a>

@@ -3,14 +3,15 @@
   <%= render "mine/sub_nav" %>
 <div class="title_btn">
       <div class="btn_action">
-          <%= link_to upload_mine_album_path(), :class => "btn_gray mr5"  %>
+          <%= link_to upload_mine_albums_path(), :class => "btn_gray mr5" do %>
           <span>添加照片</span>
           <% end %>
-          <%= link_to new_mine_album_path(), :class => "new_album fancybox.ajax btn_gray"  %>
+          <%= link_to new_mine_album_path(), :class => "new_album fancybox.ajax btn_gray"  do  %>
           <span>创建相册</span>
+          <% end %>
         </a>
       </div>
-      <h1>我的相册 <span class="font12">(共<%= @albums.total_count %>个)</span></h1>
+      <h1>我的相册 <span class="font12">(共<%= @albums.count %>个)</span></h1>
       <div class="clear"></div>
 </div>
 <ul class="album_list">
@@ -18,19 +19,19 @@
        	<li> 
           <a href="<%= album.id %>">
             <% if album.cover.present? %>
-        <%= image_tag album.cover.image_url( :middle), :class => 'cover' %>
-        <% else %>
-        <%= theme_image_tag "test/album_cover.jpg", :class => :cover, :width => 150, :height => 150 %>
-        <% end %>
+             <%= image_tag album.cover.image_url :thumb, :class => 'cover' %>
+            <% else %>
+             <%= theme_image_tag "test/album_cover.jpg", :class => :cover, :width => 150, :height => 150 %>
+            <% end %>
           </a>
           <h2>
             <%= link_to album.name , "#{album.id}"  %>
           </h2>
-          <p class="info"><%= album.photos_count %>张照片 2012-1-28更新<br/>
-          <%= album.viewed_num %>浏览 | <%= album.commented_num %>评论 | 2赞</p>
+          <p class="info"><%= album.photos_count %>张照片 <%= album.updated_at.to_s(:normal) %>更新<br/>
+          <%= album.viewed_num %>浏览 | <%= album.commented_num %>评论 | <%= %>赞</p>
         </li>
-  <% end %>
-  <div class="clear"></div>
+    <% end %>
+    <div class="clear"></div>
 </ul>
 <div class="clear"></div>
 <div class="pagination">
