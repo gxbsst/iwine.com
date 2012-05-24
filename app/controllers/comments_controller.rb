@@ -93,6 +93,7 @@ class CommentsController < ApplicationController
       @reply_comment = ::Comment.build_from(@comment.commentable,
       @user.id,
       params[:comment][:body],
+      :parent_id => @comment.id,
       :do => "comment")
       @reply_comment.save
       @reply_comment.move_to_child_of(@comment)
