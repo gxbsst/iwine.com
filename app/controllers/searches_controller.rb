@@ -57,7 +57,7 @@ class SearchesController < ApplicationController
     if params[:tab] == 'wine' 
       @wine_tab = 'current'
     else
-      @all_tab = 'current' 
+      @all_tab = 'current'
     end
   end
 end

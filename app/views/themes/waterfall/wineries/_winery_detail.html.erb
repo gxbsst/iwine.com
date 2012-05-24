@@ -70,22 +70,8 @@
    </div>
 
    <div class="right">
-     <div class="share">分享到：
-        <%= link_to "#" do %>
-            <%= image_tag("/assets/waterfall/images/icon/sina_s_on.png", :alt => "新浪", :width => 17, :height => 17, :align => "absmiddle") %>
-        <% end %>
-        <%= link_to "#" do %>
-            <%= image_tag("/assets/waterfall/images/icon/tencen_s_on.png", :alt => "腾讯", :width => 17, :height => 17, :align => "absmiddle") %>
-        <% end %>
-       <%= link_to "#" do %>
-           <%= image_tag("/assets/waterfall/images/icon/douban_s_on.png", :alt => "豆瓣", :width => 17, :height => 17, :align => "absmiddle") %>
-       <% end %>
-       <%= link_to "#" do %>
-         <%= image_tag("/assets/waterfall/images/icon/kaixin_s_on.png", :alt => "开心网", :width => 17, :height => 17, :align => "absmiddle") %>
-       <% end %>
-       <%= link_to "#" do %>
-         <%= image_tag("/assets/waterfall/images/icon/renren_s_on.png", :alt => "人人网", :width => 17, :height => 17, :align => "absmiddle") %>
-       <% end %>
+     <div class="share">
+       <%= render "themes/waterfall/share/sns_icons" %>
      </div>
      <ul class="item">
        <li>

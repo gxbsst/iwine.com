@@ -86,6 +86,7 @@
       </div>
     </div>
     <% end %>
+    <% if @entries['wines'].length >= 50 %>
     <div class="pagination">
       <a href="<%= url_for( '/searches/results?word=' + params[:word] +'&page=' + ( @page - 1 ).to_s + '&tab=' + @tab)%>"> < </a>
       <a href="<%= url_for( '/searches/results?word=' + params[:word] +'&page=' + ( @page + 1 ).to_s + '&tab=' + @tab)%>"> > </a>
@@ -103,6 +104,7 @@
       <br />
       -->
     </div>
+    <%end%>
     <% end %>
   </div>
   <div class="right">

@@ -108,7 +108,8 @@ class Mine::AlbumsController < ApplicationController
       else
         @is_owner = false;
       end
-      order = params[:order] === 'time' ? 'created_at' : 'liked_num';
+      # order = params[:order] === 'time' ? 'created_at' : 'liked_num';
+      order = 'created_at'
       @photos = Photo
       .where(["album_id= ?", params[:id]])
       .order("#{order} DESC,id DESC")
@@ -116,9 +117,20 @@ class Mine::AlbumsController < ApplicationController
     end
 
     def photo
-
       redirect_to request.referer if @album.blank?
-      @photos = @album.photos
+      order = "votes_count DESC, created_at DESC"
+      @photo = Photo.find(params[:photo_id])
+      @photo.update_attribute(:views_count, @photo.views_count + 1)
+      @comments  =  @photo.comments.all(:include => [:user],
+      # :joins => :votes,
+      :joins => "LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id",
+      :select => "comments.*, count(votes.id) as votes_count",
+      :conditions => ["parent_id IS NULL"], :group => "comments.id",
+      :order => order )
+      page = params[:params] || 1
+      @commentable = @photo
+      new_normal_comment
+      @other_albums = @user.albums.where("id != #{@album.id}")
     end
 
     def index
@@ -155,5 +167,11 @@ class Mine::AlbumsController < ApplicationController
       @photo.user_id = @user.id
       return @photo    
     end
+    
+    def new_normal_comment
+       @comment = @photo.comments.build
+       @comment.do = "comment" 
+       return @comment   
+     end
 
   end

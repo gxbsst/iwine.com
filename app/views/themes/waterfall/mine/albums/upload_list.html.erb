@@ -13,9 +13,7 @@
 <%= form_tag '/mine/albums/save_upload_list', :id => 'save_upload_list_form' do %>
   <% @photos.each do |photo| %>
   <li class="photo_des" id="upload_photo_div_<%= photo.id %>" >
-    <%= image_tag photo.image_url :middle %>
-    <p>标题</p>
-    <p><input class="text photo_name" name="" type="text" /></p>
+    <%= image_tag photo.image_url :thumb %>
     <p>描述</p>
     <p>
       <textarea class="photo_des" name="photo[<%= photo.id %>]" cols="" rows=""><%= photo.intro %></textarea>
@@ -25,7 +23,7 @@
       <label>
         <input class="radio" name="cover_id" type="radio" value="<%= photo.id %>" /> 
         设为封面 
-        </label>
+      </label>
     </p>
   </li>
   <% end %>

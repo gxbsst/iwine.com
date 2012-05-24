@@ -55,6 +55,10 @@
             if( e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 37 || e.keyCode == 39 ){
                 return;
             }
+            if( e.keyCode == 27 ){
+              search_scroll.css( 'display' , 'none' );
+              return;
+            }
 
             clearTimeout( timer );
             timer = setTimeout( getHotSerach , 400 );

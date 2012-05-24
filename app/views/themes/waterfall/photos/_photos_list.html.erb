@@ -1,9 +1,9 @@
 <% @photos.each_with_index do  |photo, index| %>
     <% value = index/4 ; if index != 0 && value != 0 && value.to_i == value %><div class="clear"></div><% end %>
     <li id="<%= index%>">
-      <%= link_to photo_winery_path(@winery, :photo_id => photo.id) do %>
+      <%= link_to winery_photo_path(@winery, photo) do %>
           <%= image_tag(photo.image_url(:thumb), :alt => @winery.name_en) %>
       <% end %>
-      <%= link_to photo.counts['comment'].to_i, photo_winery_path(@winery, :photo_id => photo.id), :class => "icon_comment" %>
+      <%= link_to photo.comments_count, winery_photo_path(@winery, photo), :class => "icon_comment" %>
     </li>
 <% end %>

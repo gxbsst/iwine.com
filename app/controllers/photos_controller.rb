@@ -8,7 +8,7 @@ class PhotosController < ApplicationController
     case @resource
     when "Wines::Detail"
       render_wine_photo_list
-    when "Winery"
+    when "wineries"
       render_winery_photo_list
     end
   end
@@ -28,13 +28,14 @@ class PhotosController < ApplicationController
     case @resource
     when "Wines::Detail"
       render_wine_photo_detail
-    when "Winery"
+    when "wineries"
       render_winery_photo_detail
     end
   end
   
   def vote
     @photo.liked_by @user
+     render :json => @photo.likes.size.to_json
   end
 
   private
@@ -69,6 +70,8 @@ class PhotosController < ApplicationController
   end
 
   def render_winery_photo_detail
+    find_winery_and_hot_wine
+    @photo = @winery.photos.find(params[:id])
     render "winery_photo_detail"
   end
 
@@ -79,7 +82,13 @@ class PhotosController < ApplicationController
   end
 
   def render_winery_photo_list
+    find_winery_and_hot_wine
+    @photos = @winery.photos.order("updated_at desc").page(params[:page] || 1).per(8)
     render "winery_photo_list"
   end
 
+  def find_winery_and_hot_wine
+    @winery = Winery.find params[:winery_id]
+    @hot_wines = Wines::Detail.hot_wines(:order => "desc", :limit => 5)
+  end
 end

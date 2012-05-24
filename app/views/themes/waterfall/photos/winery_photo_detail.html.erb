@@ -1,16 +1,19 @@
+<% content_for :css do  %>
+    <%= theme_stylesheet_link_tag "winery" %>
+<% end %>
+<div id="wrapper950">
   <div class="whitespace mb30">
-    <%= render "winery_detail" %>
+    <%= render "themes/waterfall/wineries/winery_detail" %>
   </div>
-
   <div class="whitespace winerymain">
     <div class="left">
       <div class="section">
         <div class="title">
           <%= link_to photos_list_winery_path(@winery), :class => "btn_gray float_r" do %>
-            <span>返回</span>
+              <span>返回</span>
           <% end %>
           <%= link_to upload_mine_albums_path, :class => "btn_gray float_r mr5" do %>
-            <span>上传照片</span>
+              <span>上传照片</span>
           <% end %>
           <h2>所有照片</h2>
         </div>
@@ -20,33 +23,45 @@
             <div class="mb20">
               <div class="pre_next">
                 <% if previous_photo = previous_page(@winery.photo_ids, @photo.id) %>
-                    <%= link_to photo_winery_path(@winery, :photo_id => previous_photo) do %>
+                    <%= link_to photo_winery_path(@winery, :photo_id => previous_photo), :class => "btn_gray" do %>
                         <span>前一张</span>
                     <% end %>
                 <% end %>
                 <% if next_photo = next_page(@winery.photo_ids, @photo.id) %>
-                    <%= link_to photo_winery_path(@winery, :photo_id => next_photo) do %>
+                    <%= link_to photo_winery_path(@winery, :photo_id => next_photo), :class => "btn_gray" do %>
                         <span>后一张</span>
                     <% end %>
-                <% end %>  
+                <% end %>
               </div>
             </div>
-            
+
             <div class="photo">
               <%= image_tag @photo.image_url(:large), :alt => @photo.intro %>
             </div>
 
             <div class="info">
+              <div class="like float_r"><%= link_to "赞(#{@photo.votes_count})", "#", :class => "icon_like" %></div>
+              <div class="share float_r"><%= render "themes/waterfall/share/sns_icons"%></div>
+              <div><%= @photo.views_count %>浏览 | <%= @photo.comments_count %>评论</div>
+            </div>
+            
+            <div class="comment">
+              <div class="mb20 clearfix">
+                <div class="title">
+                </div>
+              </div>
+              
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="right">
-
-    </div>
+    <div class="right"></div>
 
     <div class="clear"></div>
 
   </div>
+</div>
+
+

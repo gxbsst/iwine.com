@@ -133,4 +133,4 @@ search_server:
   host: www.sidways.com
   port: 8080
   entry_url: /patrick/query/
-  word_url: /patrick/associate
+  word_url: /patrick/query/associate
