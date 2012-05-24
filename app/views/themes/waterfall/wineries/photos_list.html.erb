@@ -17,7 +17,7 @@
                       <%= link_to upload_mine_albums_path, :class => "btn_gray float_r mr5" do %>
                           <span>上传照片</span>
                       <% end %>
-                      <h2>所有照片<span class="font12 more">(共<%= @winery.counts[:photo] %>张)</span></h2>
+                      <h2>所有照片<span class="font12 more">(共<%= @winery.photos_count %>张)</span></h2>
                   </div>
                   <div class="content">
                       <ul class="winery_pic_list">

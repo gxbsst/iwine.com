@@ -40,7 +40,7 @@ class ImageUploader < CarrierWave::Uploader::Base
     process :resize_to_limit => [APP_DATA["image"]["wine"]["large"]["width"], '']
   end
   
-  version :middle, :from_version => :large, :if => :is_wine? do
+  version :middle, :from_version => :large do
     process :resize_to_limit => [APP_DATA["image"]["wine"]["middle"]["width"],'']
     process :store_geometry
   end
@@ -93,8 +93,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   def store_geometry
     manipulate! do |img|
       if model
-        model.width = img[:width]
-        model.height = img[:height]
+        Photo.update_all("width = #{img[:width]}, height = #{img[:height]} ", "id = #{model.id}")
       end
       img = yield(img) if block_given?
       img

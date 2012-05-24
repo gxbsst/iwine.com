@@ -4,6 +4,6 @@
       <%= link_to photo_winery_path(@winery, :photo_id => photo.id) do %>
           <%= image_tag(photo.image_url(:thumb), :alt => @winery.name_en) %>
       <% end %>
-      <%= link_to photo.counts['comment'].to_i, photo_winery_path(@winery, :photo_id => photo.id), :class => "icon_comment" %>
+      <%= link_to photo.comments_count, photo_winery_path(@winery, :photo_id => photo.id), :class => "icon_comment" %>
     </li>
 <% end %>
