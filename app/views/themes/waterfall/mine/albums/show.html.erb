@@ -5,25 +5,26 @@
 
 <div class="title_btn">
   <div class="btn_action">
-    <a href="<%= url_for(:action => :edit, :album_id => @album.id)%>" class="btn_gray mr5">
-      <span>编辑相册属性</span>
-    </a>
-    <a href="<%= url_for(:action => :upload, :album_id => params[:album_id]) %>" class="btn_gray mr5">
-      <span>添加照片</span>
-    </a>
-    <a href="<%= url_for(:action => :index) %>" class="btn_gray">
+      <%= link_to edit_mine_album_path(:album_id => @album.id), :class => "btn_gray mr5" do %>
+       <span>编辑相册属性</span>
+      <% end %>
+      <%= link_to upload_mine_albums_path(:album_id => @album.id), :class => "btn_gray mr5" do %>  
+       <span>添加照片</span>
+      <% end %>
+      <%= link_to mine_album_path( @album.id), :class => "btn_gray" do %>  
       <span>返回相册首页</span>
-    </a>
+      <% end %>
   </div>
-  <h1><%= @album.name %> <span class="font12">(共<%= @album.photos_num%>张)</span></h1>
+  <h1><%= @album.name %> <span class="font12">(共<%= @album.photos_count%>张)</span></h1>
   <div class="clear"></div>
 </div>
 <ul class="photo_list">
   <% @photos.each_with_index do |photo, i| %>
     <li>
-      <a href="<%= url_for @album.id.to_s+'/photo?index='+i.to_s %>">
-        <%= image_tag photo.image_url( :thumb ), :class => 'cover' %>
-      </a>
+        <%= link_to photo_mine_album_path(@album.id, :photo_id => photo.id)  do %>
+         <%= image_tag photo.image_url( :thumb ), :class => 'cover' %>
+        <% end %>
+        
       <% if photo.intro.present? %>
         <p class="intro">
           <% if @is_owner %>
@@ -38,9 +39,9 @@
         </p>
       <% end %>
       <p class="info">
-        <%= photo.created_at.strftime '%Y-%m-%d'%> 上传 | 
+        <%= photo.created_at.to_s(:normal) %> 上传 | 
         <a href="<%= url_for :action => 'delete_photo', :photo_id => photo.id %>" class="fancybox_delete_photo fancybox.ajax">删除</a><br/>
-      <%= photo.viewed_num%>浏览 | <%= photo.commented_num%>评论 | 2赞
+      <%= photo.views_count %>浏览 | <%= photo.comments_count%>评论 | 2赞
       </p>
     </li>
   <% end %>

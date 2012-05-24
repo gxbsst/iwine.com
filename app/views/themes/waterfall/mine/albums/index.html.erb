@@ -3,10 +3,10 @@
   <%= render "mine/sub_nav" %>
 <div class="title_btn">
       <div class="btn_action">
-        <a href="<%= url_for :action => 'upload' %>" class="btn_gray mr5">
+          <%= link_to upload_mine_album_path(), :class => "btn_gray mr5"  %>
           <span>添加照片</span>
-        </a>
-        <a href="<%= url_for :action => 'new' %>" class="new_album fancybox.ajax btn_gray">
+          <% end %>
+          <%= link_to new_mine_album_path(), :class => "new_album fancybox.ajax btn_gray"  %>
           <span>创建相册</span>
         </a>
       </div>
@@ -26,7 +26,7 @@
           <h2>
             <%= link_to album.name , "#{album.id}"  %>
           </h2>
-          <p class="info"><%= album.photos_num %>张照片 2012-1-28更新<br/>
+          <p class="info"><%= album.photos_count %>张照片 2012-1-28更新<br/>
           <%= album.viewed_num %>浏览 | <%= album.commented_num %>评论 | 2赞</p>
         </li>
   <% end %>
