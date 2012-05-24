@@ -44,8 +44,10 @@
               if(( typeof data == 'string' ) && data ){
                 search_scroll.css( 'display' , 'block' );
                 search_scroll.html( data );
-              }else
+              }else{
+                has_scroll = false;
                 search_scroll.css( 'display' , 'none' );
+              }
             }
           });
         };
