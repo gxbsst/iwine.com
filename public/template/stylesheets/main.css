@@ -42,6 +42,7 @@ i {color:#ccc;}
 .clear {clear: both;font: 0pt/0 Arial;height: 0;visibility: hidden;}
 .path {margin: 15px 0;}
 .gray {color:#999;}
+.red {color:#C00;}
 textarea, input, select {font-size:12px;color:#666;font-family:Arial, Helvetica, sans-serif;}
 textarea, input.text {border:1px solid #ccc;background-color:#f9f9f9;}
 textarea, input {padding:5px;}
@@ -109,9 +110,9 @@ textarea.wine_intro {width:500px;height:200px;}
 #login {width:772px;margin:0 auto;padding-top:100px;}
 #login .error, #register .error {margin-bottom:20px;}
 .login .boxstyle {margin: 0 20px 0 0;}
-.boxstyle {width:376px;background:url(../images/bg/login_m.jpg) repeat-y left top;float:left;}
-.boxstyle .top {background:url(../images/bg/login_t.jpg) no-repeat left top;height:54px;text-align:center; line-height:50px;padding-top:5px;font-size:16px;font-weight:bold;color:#666;}
-.boxstyle .bot {background:url(../images/bg/login_b.jpg) no-repeat left bottom;height:12px;}
+.boxstyle {width:376px;background:url(../images/bg/login_m.gif) repeat-y left top;float:left;}
+.boxstyle .top {background:url(../images/bg/login_t.gif) no-repeat left top;height:55px;text-align:center; line-height:50px;padding-top:6px;font-size:16px;font-weight:bold;color:#666;}
+.boxstyle .bot {background:url(../images/bg/login_b.gif) no-repeat left bottom;height:12px;}
 .login .boxstyle .mid {padding:20px 28px;height:150px;}
 .register .boxstyle .mid {padding:60px 28px 20px 28px;height:110px;}
 .boxstyle input.text {border:1px solid #fff;background-color:#fff;height:25px;width:300px;padding:0; vertical-align:middle;}
@@ -120,6 +121,9 @@ textarea.wine_intro {width:500px;height:200px;}
 .boxstyle .rember_pw a:hover {text-decoration:none;}
 #register {width:376px;margin:0 auto;padding-top:100px;}
 #register .boxstyle .mid {padding:20px 28px;}
+#register p {font-size:13px;padding:0 0 5px 5px;}
+#register .location {padding-left:5px;}
+#register select {}
 
 /*icon*/
 .icon_mail, .icon_like, .icon_add_album, .icon_delet, .icon_edit, .icon_add, .icon_delet2, .icon_comment, .icon_fol, .icon_fol_e, .icon_cellar {background:url(../images/icon/icon_all.gif) no-repeat;display:inline-block;}
