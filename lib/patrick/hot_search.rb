@@ -14,11 +14,11 @@ class HotSearch
     wines = []
     wineries = []
 
-    words['wines'][0..3].each do |wine|
+    words['wine'][0..3].each do |wine|
       wines.push( Wines::Detail.find( wine['id'] ) );
     end
 
-    words['wineries'][0..1].each do |winery|
+    words['winery'][0..1].each do |winery|
       wineries.push( Winery.find( winery['id'] ) );
     end
 
@@ -38,14 +38,14 @@ class HotSearch
     start = ( page - 1 ) * count
     end_count = start + count - 1
 
-    data = words['wines'][start..end_count]
+    data = words['wine'][start..end_count]
     if data.present?
       data.each do |wine|
         wines.push( Wines::Detail.find( wine['id'] ) );
       end
     end
 
-    data = words['wineries'][start..end_count]
+    data = words['winery'][start..end_count]
     if data.present?
       data.each do |winery|
         wineries.push( Winery.find( winery['id'] ) );
