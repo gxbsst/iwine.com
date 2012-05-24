@@ -1,5 +1,6 @@
 @charset "UTF-8";
-.setting {padding:30px 74px;}
+/*----------user setting------------*/
+.setting, .friends {padding:30px 74px;}
 .setting .right {width:280px;}
 .avatar {padding-left:40px;background:url(../images/bg/line_dotted.jpg) no-repeat left top;min-height:250px;height:auto !important;height:250px;overflow:visible;}
 .avatar p.sample {margin-bottom:10px; position:relative;}
@@ -8,3 +9,19 @@
 .set_optional {margin-bottom:10px;}
 .set_optional h3 {font-size:14px;margin: 0 0 5px 0;}
 .set_optional label {color:#666;}
+
+/*-------------friends-------------*/
+.friends .gray_box {margin:0 0 10px 0;}
+.friends h3, .snsSearch{margin-bottom:20px;}
+.snsSearch a {margin-right:5px;}
+.mailSearch li {width:250px;float:left;text-align:center;height:100px;}
+.mailSearch li img  {margin: 0 0 10px 0;}
+.invite textarea {width:300px;height:150px;display:block;}
+.invite textarea, .invite input {background-color:#fff;margin: 0 0 10px 0;}
+.invite form {position:relative;}
+.invite .notice {position:absolute;left:350px;top:0;width:240px;text-align:left;box-shadow: 0px 1px 2px 1px #ccc;}
+.maillogin {text-align:center;}
+.maillogin table {margin: 0 auto;}
+.maillogin th, .maillogin td {padding:5px;}
+.maillogin th {text-align:right;font-weight:normal;}
+.maillogin td {text-align:left;}
