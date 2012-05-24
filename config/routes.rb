@@ -101,6 +101,7 @@ Patrick::Application.routes.draw do
       collection do
         get :add
       end
+
     end
   end
   
@@ -141,10 +142,9 @@ Patrick::Application.routes.draw do
   # WINERIES
   resources :wineries do
     member do
-      get "photos_list"
       get "wines_list"
-      get "photo"
     end
+    resources :photos
     resources :comments, :controller => "comments" do
       member do
         get :vote

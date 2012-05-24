@@ -4,7 +4,7 @@
 
 <div id="wrapper950">
     <div class="whitespace mb30">
-         <%= render "winery_detail" %>
+         <%= render "themes/waterfall/wineries/winery_detail" %>
     </div>
 
     <div class="whitespace winerymain">
@@ -17,11 +17,11 @@
                       <%= link_to upload_mine_albums_path, :class => "btn_gray float_r mr5" do %>
                           <span>上传照片</span>
                       <% end %>
-                      <h2>所有照片<span class="font12 more">(共<%= @winery.counts[:photo] %>张)</span></h2>
+                      <h2>所有照片<span class="font12 more">(共<%= @winery.photos_count %>张)</span></h2>
                   </div>
                   <div class="content">
                       <ul class="winery_pic_list">
-                          <%= render :partial => "photos_list" %>
+                          <%= render :partial => "themes/waterfall/photos/photos_list" %>
                       </ul>
                       <div class="clear"></div>
                   </div>
@@ -35,7 +35,7 @@
              <div class="title"><h3><a name="05" id="05"></a>热门酒款</h3></div>
              <div class="main">
                <ul class="sidewine">
-                 <%= render :partial => "hot_wine", :collection => @hot_wines, :as => :wine_detail %>
+                 <%= render :partial => "themes/waterfall/wineries/hot_wine", :collection => @hot_wines, :as => :wine_detail %>
                  <div class="clear"></div>
                </ul>
              </div>
