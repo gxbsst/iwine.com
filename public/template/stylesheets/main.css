@@ -123,7 +123,7 @@ textarea.wine_intro {width:500px;height:200px;}
 #register .boxstyle .mid {padding:20px 28px;}
 #register p {font-size:13px;padding:0 0 5px 5px;}
 #register .location {padding-left:5px;}
-#register select {}
+#register .submit {margin-top:20px;line-height:51px; overflow:hidden;}
 
 /*icon*/
 .icon_mail, .icon_like, .icon_add_album, .icon_delet, .icon_edit, .icon_add, .icon_delet2, .icon_comment, .icon_fol, .icon_fol_e, .icon_cellar {background:url(../images/icon/icon_all.gif) no-repeat;display:inline-block;}
