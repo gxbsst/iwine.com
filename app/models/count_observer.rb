@@ -118,7 +118,8 @@ class CountObserver < ActiveRecord::Observer
   end
 
   def get_model_name model
-    model.class.name.include?("Comment") ? model.class.superclass.name : model.class.name
+    model_name = model.class.name
+    model_name.include?("Comment") && model_name != "Comment" ? model.class.superclass.name : model_name
   end
 
   def get_target model
