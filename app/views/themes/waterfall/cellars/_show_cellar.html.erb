@@ -1,7 +1,3 @@
-<div class="mine albums">
-  <%= render "/mine/sub_nav", :action => params[:action] %>
-  <div class="clear"></div>
-  <div id="hp">
     <div id="cellar">
       <div class="title_btn">
         <h1>我的酒窖 <span class="font12">(共<%= @cellar_items.size %>支)</span></h1>
@@ -10,7 +6,7 @@
       <div class="sort_search mb20">
         <% if current_user.id == @user.id %>
             <div class="float_r">
-              <%= link_to add_mine_cellar_items_path(@cellar, :step => 1), :class => "btn_blue_b" do %>
+              <%= link_to add_cellar_items_path(@cellar, :step => 1), :class => "btn_blue_b" do %>
                   <span>添加藏酒</span>
               <% end %>
             </div>
@@ -21,7 +17,7 @@
         </select>
         </div>
 
-        <div class="search"><%=  render "mine/cellars/search_cellar_item", :object => @cellar %></div>
+        <div class="search"><%=  render "search_cellar_item", :object => @cellar %></div>
         <div class="clear"></div>
       </div>
 
@@ -67,10 +63,10 @@
                 <td class="place"><%= item.location %></td>
                 <% if current_user.id == @user.id %>
                     <td>
-                      <%= link_to "修改", edit_mine_cellar_item_path(@cellar, item), :class => "icon_edit" %>
+                      <%= link_to "修改", edit_cellar_item_path(@cellar, item), :class => "icon_edit" %>
                     </td>
                     <td>
-                      <%= link_to "删除", mine_cellar_item_path(@cellar, item), :method => :delete, :confirm => "确定删除吗？", :class => "icon_delet" %>
+                      <%= link_to "删除", cellar_item_path(@cellar, item), :method => :delete, :confirm => "确定删除吗？", :class => "icon_delet" %>
                     </td>
                 <% end %>
               </tr>
@@ -82,5 +78,4 @@
         <%= paginate @cellar_items, :outer_window => 2 %>
       </div>
     </div>
-  </div>
-</div>
+

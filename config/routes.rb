@@ -82,25 +82,26 @@ Patrick::Application.routes.draw do
       match "albums", :via => [:get], :to => "albums#index"
       match "albums/:album_id", :via => [:get], :to => "albums#show"
       match "albums/:album_id/photo/:photo_id", :via => [:get], :to => "albums#photo"
+      # Cellars
+      match "cellars/:cellar_id", :via => [:get], :to => "cellars#show", :as => :cellars
     end
     collection do
       get "register_success"
     end
-
-     # 酒窖
-     resources :cellars, :controller => "users/cellars" do
-        resources :cellar_items, :controller => "users/cellar_items", :path => :items, :as => "items" do
-          collection do
-            get :add
-          end
-        end
-     end
      # 私信
      resources :messages
      resources :conversations
      # 酒
-
      resources :wines do
+       collection do
+         get :add
+       end
+     end
+  end
+  
+  # 酒窖
+  resources :cellars do
+     resources :cellar_items, :path => :items, :as => "items" do
        collection do
          get :add
        end

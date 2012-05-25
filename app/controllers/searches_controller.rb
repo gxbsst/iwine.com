@@ -7,12 +7,12 @@ class SearchesController < ApplicationController
 
   def create
     @search = Search.create!(params[:search])
-    redirect_to add_mine_cellar_items_path(current_user.cellar.id, :step => 2, :search_id => @search.id)
+    redirect_to add_cellar_items_path(current_user.cellar.id, :step => 2, :search_id => @search.id)
   end
 
   def search_wines
     @search = Search.create!(params[:search])
-    redirect_to add_mine_wines_path(:step => 2, :id => @search.id)
+    redirect_to add_users_wines_path(:step => 2, :id => @search.id)
   end
 
   def suggestion

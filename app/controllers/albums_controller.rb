@@ -1,8 +1,8 @@
 # encoding: utf-8
 class AlbumsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index, :photo]
-  before_filter :get_user, :only => [:index, :show, :photo] 
   before_filter :get_current_user, :except => [:index, :show, :photo]
+  before_filter :get_user, :only => [:index, :show, :photo] 
   before_filter :get_album, :except => [:index, :upload, :new, :delete_photo, :update_photo_intro]
 
   def upload
@@ -150,10 +150,6 @@ class AlbumsController < ApplicationController
       @user = User.find(params[:id])
     end
     
-    def get_current_user
-      @user = current_user
-    end
-
     def get_album
       
       @album = @user.albums.find(params[:album_id] || params[:id])

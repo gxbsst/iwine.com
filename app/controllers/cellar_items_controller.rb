@@ -1,9 +1,10 @@
 # encoding: UTF-8
-  class Users::CellarItemsController < ApplicationController
-    before_filter :require_user
+  class CellarItemsController < ApplicationController
+    before_filter :authenticate_user!
+    before_filter :get_current_user
     before_filter :get_cellar
     before_filter :get_item, :except => [:new, :create, :add]
-    before_filter :get_mine
+    
     def edit
       @wine_detail = Wines::Detail.includes( :covers, :photos, :statistic,  { :wine => [:style, :winery]} ).find(  @cellar_item.wine_detail_id )
       @wine = @wine_detail.wine
@@ -22,7 +23,7 @@
       if @cellar_item.update_attributes(params[:users_wine_cellar_item])
         # flash[:notice] = "成功更新"
         notice_stickie("更新成功.")
-        redirect_to mine_cellar_path(@cellar)
+        redirect_to cellars_user_path(@user, @cellar)
       else
         render :action => 'edit'
       end
@@ -33,7 +34,7 @@
       if @cellar_item.delete
         # flash[:notice] = "删除成功."
         notice_stickie("删除成功.")
-       redirect_to mine_cellar_path(@cellar)
+       redirect_to cellars_user_path(@user, @cellar)
       end
     end
 
@@ -65,7 +66,7 @@
       if @cellar_item.save
         #flash[:notice] = "成功建立"
         notice_stickie("添加成功.")
-        redirect_to mine_cellar_path(@cellar)
+        redirect_to cellars_user_path(@user, @cellar)
       else
         render :action => 'new'
       end
@@ -74,17 +75,17 @@
     def add
       if params[:step].to_i == 1
         @search = ::Search.new
-        render :template => "mine/cellar_items/add_step_one"
+        render  "add_step_one"
       elsif params[:step].to_i == 2
         @search = Search.find(params[:search_id])
-        render :template => "mine/cellar_items/add_step_two"
+        render "add_step_two"
       end
 
     end
 
     private 
       def get_cellar
-        @cellar = current_user.cellar
+        @cellar = @user.cellar
       end
 
       def get_item
