@@ -43,39 +43,20 @@
            <%= link_to new_winery_comment_path(@winery, :do => "comment"), :class => "btn_gray float_r font12", :remote => true do %>
                 <span>添加评论</span>
            <% end %>
-           <h2>评论<span class="font12 more"><%= link_to "(共条...)", "#" %></span></h2>
+           <h2>评论<span class="font12 more"><%= link_to "(共#{@winery.comments_count}条...)", winery_comments_path(@winery) %></span></h2>
          </div>
 
         <div class="wp_space_line ptb30">
-          <%= render "wine_details/share/comments"  %>
+          <%= render "comments/comments"  %>
         </div>
       </div>
     </div>
 
     <div class="right">
-      <div class="sidebox">
-        <div class="title"><h3><a name="05" id="05"></a>热门酒款</h3></div>
-        <div class="main">
-          <ul class="sidewine">
-            <%= render :partial => "hot_wine", :collection => @hot_wines, :as => :wine_detail %>
-            <div class="clear"></div>
-          </ul>
-        </div>
-      </div>
+      <%= render "hot_wine" %>
 
-      <div class="sidebox">
-        <div class="title">
-          <h3>关注该酒庄的人<span class="font12 more"><%= link_to "(共#{@winery.followers_count}人)" %></span></h3>
-        </div>
-        
-        <div class=”main“>
-          <ul class="follower">
-            <%= render :partial => "follower", :collection => @users, :as => :user %>
-          </ul>
-        </div>
-      </div>
-      
-    </div>
+       <%= render "wineries/follower" %>
+     </div>
 
     <div class="clear"></div>
   </div>

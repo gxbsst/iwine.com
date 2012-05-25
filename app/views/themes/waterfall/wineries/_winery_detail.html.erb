@@ -75,28 +75,52 @@
      </div>
      <ul class="item">
        <li>
-         <p class="pic"><%= image_tag("/assets/waterfall/images/icon/winery_photo.gif", :width => 34, :height => 26) %></p>
-         <p><%= link_to "照片", "#" %></p>
+         <p class="pic">
+           <%= link_to winery_photos_path(@winery) do  %>
+               <%= image_tag("/assets/waterfall/images/icon/winery_photo.gif", :width => 34, :height => 26) %>
+           <% end %>
+         </p>
+         <p><%= link_to "照片", winery_photos_path(@winery) %></p>
        </li>
        <li>
-         <p class="pic"><%= image_tag("/assets/waterfall/images/icon/winery_intro.gif", :width => 26, :height => 30) %></p>
-         <p><%= link_to "介绍", "#02"%></p>
+         <p class="pic">
+           <%= link_to "/wineries/#{@winery.id}#02" do  %>
+               <%= image_tag("/assets/waterfall/images/icon/winery_intro.gif", :width => 26, :height => 30) %>
+           <% end %>
+         </p>
+         <p><%= link_to "介绍", "/wineries/#{@winery.id}#02" %></p>
        </li>
        <li class="last">
-         <p class="pic"><%= image_tag("/assets/waterfall/images/icon/winery_hot.gif", :width => 32, :height => 32)%></p>
+         <p class="pic">
+           <%= link_to "#05" do  %>
+             <%= image_tag("/assets/waterfall/images/icon/winery_hot.gif", :width => 32, :height => 32)%>
+           <% end %>
+          </p>
          <p><%= link_to "热门酒款", "#05" %></p>
        </li>
        <li>
-         <p class="pic"><%= image_tag("/assets/waterfall/images/icon/winery_wine.gif", :width => 24, :height => 37) %></p>
-         <p><%= link_to "所有酒款", "#" %></p>
+         <p class="pic">
+           <%= link_to wines_list_winery_path(@winery) do  %>
+               <%= image_tag("/assets/waterfall/images/icon/winery_wine.gif", :width => 24, :height => 37) %>
+           <% end  %>
+         </p>
+         <p><%= link_to "所有酒款", wines_list_winery_path(@winery) %></p>
        </li>
        <li>
-         <p class="pic"><%= image_tag("/assets/waterfall/images/icon/winery_comment.gif", :width => 34, :height => 31) %></p>
-         <p><%= link_to "评论", "#" %></p>
+         <p class="pic">
+           <%= link_to winery_comments_path(@winery) do  %>
+               <%= image_tag("/assets/waterfall/images/icon/winery_comment.gif", :width => 34, :height => 31) %>
+           <% end %>
+         </p>
+         <p><%= link_to "评论", winery_comments_path(@winery) %></p>
        </li>
        <li class="last">
-         <p class="pic"><%= image_tag("/assets/waterfall/images/icon/winery_follower.gif", :width => 31, :height => 36) %></p>
-         <p><%= link_to "关注者", "#" %></p>
+         <p class="pic">
+           <%= link_to followers_list_winery_path(@winery) do %>
+               <%= image_tag("/assets/waterfall/images/icon/winery_follower.gif", :width => 31, :height => 36) %>
+           <% end %>
+         </p>
+         <p><%= link_to "关注者", followers_list_winery_path(@winery) %></p>
        </li>
      </ul>
    </div>
