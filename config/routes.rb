@@ -41,21 +41,7 @@ Patrick::Application.routes.draw do
       collection do
         get :cancle_follow 
       end
-    end
-    
-    # resources :comments, :controller => "wine_details/comments" do
-    #   member do 
-    #     # 自定义actions
-    #     get :vote
-    #     match "reply", :via => [:get, :post]    
-    #   end
-    #   collection do 
-    #     match "follow", :via => [:get, :post]
-    #     match "comment", :via => [:get, :post]
-    #     get :cancle_follow 
-    #     get :add_to_cellar
-    #   end
-    # end
+    end    
     resources :photos
   end
   
@@ -66,46 +52,6 @@ Patrick::Application.routes.draw do
       get "vote"
     end
   end
-  # MINE
-  # resources :mine, :controller => "users", :id => /.*/ do
-  #   # 相册
-  #   resources :albums do
-  #     # 自定义actions,albums后面不带id 
-  #     collection do 
-  #       match "upload", :via => [:get, :post]
-  #       match 'upload_list', :via => [:get, :post]
-  #       match 'save_upload_list', :via => [:get, :post]
-  #       match 'photo_comment', :via => [:get, :post]
-  #       match 'delete_photo', :via => [:get, :post]
-  #       match 'update_photo_intro', :via => [:put]
-  #       match 'delete', :via => [:post, :get]
-  #     end
-  # 
-  #     member do
-  #       match 'photo', :via => [:get, :post]
-  #       get "vote"
-  #     end
-  #   end
-  #   # 酒窖
-  #   resources :cellars do
-  #      resources :cellar_items, :controller => "cellar_items", :path => :items, :as => "items" do
-  #        collection do
-  #          get :add
-  #        end
-  #      end
-  #   end
-  #   # 私信
-  #   resources :messages
-  #   resources :conversations
-  #   # 酒
-  # 
-  #   resources :wines do
-  #     collection do
-  #       get :add
-  #     end
-  #   end
-  # end
-  
   # 相册
    resources :albums do
      # 自定义actions,albums后面不带id 

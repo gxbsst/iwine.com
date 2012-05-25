@@ -3,13 +3,13 @@
 <% end %>
 
 <% sub_menu = {
-        "wine_favorite"   => [user_cellar_path(@user.id, @user.cellar), @user.wine_cellar_count],
-     "wine_follows"     => [wine_follows_user_path(@user.id), @user.wine_follows_count],
-     "winery_follows"   => [winery_follows_user_path(@user.id), @user.wine_follows_count],
+        "wine_favorite"   => [user_cellar_path(@user.id, @user.cellar), @user.wines_count],
+     "wine_follows"     => [wine_follows_user_path(@user.id), @user.wine_followings_count],
+     "winery_follows"   => [winery_follows_user_path(@user.id), @user.winery_followings_count],
      "comments"  => [comments_user_path(@user.id), @user.comments_count],
      # "testing_notes"  => ["testing_notes", 0],
-     "followings"     => [followings_user_path(@user.id), @user.user_followes_count],
-     "followers"    => [followers_user_path(@user.id), @user.user_followeds_count],
+     "followings"     => [followings_user_path(@user.id), @user.followings_count],
+     "followers"    => [followers_user_path(@user.id), @user.followers_count],
      "albums"           => [user_albums_path(@user.id, :trailing_slash => true), @user.albums_count]
  } %>
 

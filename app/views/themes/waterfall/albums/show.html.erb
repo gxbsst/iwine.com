@@ -5,10 +5,10 @@
 
 <div class="title_btn">
   <div class="btn_action">
-      <%= link_to edit_album_path(@user, :album_id => @album.id), :class => "btn_gray mr5" do %>
+      <%= link_to edit_album_path(:album_id => @album.id), :class => "btn_gray mr5" do %>
        <span>编辑相册属性</span>
       <% end %>
-      <%= link_to upload_user_albums_path(@user, :album_id => @album.id), :class => "btn_gray mr5" do %>  
+      <%= link_to upload_albums_path(:album_id => @album.id), :class => "btn_gray mr5" do %>  
        <span>添加照片</span>
       <% end %>
       <%= link_to user_album_path(@user, @album.id), :class => "btn_gray" do %>  
@@ -41,7 +41,7 @@
       <p class="info">
         <%= photo.created_at.to_s(:normal) %> 上传 | 
         <%= link_to "删除", delete_photo_albums_path(:photo_id => photo.id), :class => "fancybox_delete_photo fancybox.ajax" %> <br />
-        <%= photo.views_count %>浏览 | <%= photo.comments_count%>评论 | 2赞
+        <%= photo.views_count %>浏览 | <%= photo.comments_count%>评论 | <%= photo.likes.size %>赞
       </p>
     </li>
   <% end %>

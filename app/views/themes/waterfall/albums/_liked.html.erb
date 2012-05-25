@@ -1,4 +1,4 @@
-	<%= link_to  vote_mine_album_path(@album.id), :remote => true, :class => "ajax vote icon_like"  do %>
+	<%= link_to  vote_album_path(@album.id), :remote => true, :class => "ajax vote icon_like"  do %>
 	赞(<span class="likes_count"><%= @album.likes.size %></span>)
 	<% end %>
 

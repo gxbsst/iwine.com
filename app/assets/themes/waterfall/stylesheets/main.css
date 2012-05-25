@@ -42,6 +42,7 @@ i {color:#ccc;}
 .clear {clear: both;font: 0pt/0 Arial;height: 0;visibility: hidden;}
 .path {margin: 15px 0;}
 .gray {color:#999;}
+.red {color:#C00;}
 textarea, input, select {font-size:12px;color:#666;font-family:Arial, Helvetica, sans-serif;}
 textarea, input.text {border:1px solid #ccc;background-color:#f9f9f9;}
 textarea, input {padding:5px;}
@@ -103,6 +104,47 @@ input.count{width:30px;}
 input.year, input.percent  {width:50px;}
 textarea.wine_intro {width:500px;height:200px;}
 #stylized label.w50 {width:50px;text-align:left;margin:0;}
+.form th, .form td {padding:5px;}
+
+/*----------login register---------*/
+#login {width:772px;margin:0 auto;padding-top:30px;}
+#login .error, #register .error {margin-bottom:20px;}
+.login .boxstyle {margin: 0 20px 0 0;}
+.boxstyle {width:376px;background:url(../images/bg/login_m.gif) repeat-y left top;float:left;}
+.boxstyle .top {background:url(../images/bg/login_t.gif) no-repeat left top;height:55px;text-align:center; line-height:50px;padding-top:6px;font-size:16px;font-weight:bold;color:#666;}
+.boxstyle .bot {background:url(../images/bg/login_b.gif) no-repeat left bottom;height:12px;}
+.login .boxstyle .mid {padding:20px 28px;height:150px;}
+.register .boxstyle .mid {padding:60px 28px 20px 28px;height:110px;}
+.boxstyle input.text {border:1px solid #fff;background-color:#fff;height:25px;width:300px;padding:0;line-height:25px; vertical-align:middle;}
+.boxstyle .un, .boxstyle .pw {background:url(../images/bg/login_input.jpg) no-repeat left top;height:27px;padding:8px 10px;width:300px;margin:0 0 10px 0;}
+.boxstyle .rember_pw {line-height:41px;}
+.boxstyle .rember_pw a:hover {text-decoration:none;}
+#register {width:376px;margin:0 auto;padding-top:30px;}
+#register .boxstyle .mid {padding:20px 28px;}
+#register p {font-size:13px;padding:0 0 5px 5px;}
+#register .location {padding-left:5px;}
+#register .submit {margin-top:20px;line-height:51px; overflow:hidden;}
+
+/*-------------first recommend--------------*/
+#recommend .wel {background:url(../images/common/recommend_top.jpg) no-repeat left top;height:138px;padding:40px 0 0 70px;}
+#recommend .paper {background:url(../images/bg/paper_mid.jpg) repeat-y left top;}
+#recommend .paper .mid {padding:10px 0;}
+#recommend .paper .top {background:url(../images/bg/paper_top.jpg) no-repeat left top;height:30px;}
+#recommend .paper .bot {background:url(../images/bg/paper_bot.jpg) no-repeat left bottom;height:40px;}
+#recommend h1.zh {font-size:14px;}
+#recommend h1.en {font-size:12px;}
+#recommend span {display:block;}
+#recommend .wine {margin-bottom:20px;}
+#recommend ul {padding: 0 70px;}
+#recommend .wine ul.line {border-bottom:1px dotted #ccc;padding-bottom:40px;margin-bottom:40px;}
+#recommend .wine li {float:left;width:250px;margin-right:25px;}
+#recommend .wine li.last {margin-right:0;}
+#recommend .wine img {width:130px;float:left;margin-right:20px;}
+#recommend .wine .meta {width:100px;float:left;}
+#recommend .user li {float:left;width:140px;margin-right:25px;}
+#recommend .user li.last {margin-right:0;}
+#recommend .user img {width:50px;float:left;margin-right:15px;}
+#recommend .user .meta {width:75px;float:left;}
 
 /*icon*/
 .icon_mail, .icon_like, .icon_add_album, .icon_delet, .icon_edit, .icon_add, .icon_delet2, .icon_comment, .icon_fol, .icon_fol_e, .icon_cellar {background:url(../images/icon/icon_all.gif) no-repeat;display:inline-block;}
@@ -268,31 +310,7 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .normal .left {width:590px;float:left;margin-right:28px;}
 .normal .right {width:250px;float:left;}
 .whitespace860 {background-color:#fff;box-shadow: 0 1px 3px rgba(34,25,25,0.4);border:1px solid #ddd;}
-#message {width:600px;margin:0 auto;}
-#message h1 {font-size:18px;font-weight:bold;color:#000;}
-#message .search_space {float:right;}
-.message_search {float:right;}
-.search_space input {height:24px;border:1px solid #ccc;padding:0 5px;}
-.search_space .search_btn {background:url(../images/icon/search.gif) no-repeat left top; height:26px;width:26px;float:right;}
-.message_list {margin-top:20px;}
-.message_list .userimg, .send_private_msg .userimg {float:left;display:inline-block;margin-right:10px;}
-.message_list .content p span, .message_talk .content p span {float:right;}
-.message_list .content p.info, .message_talk .content p.info {margin-top:10px;}
-ul.private_list {border-top:1px solid #ccc;}
-ul.private_list li {padding:15px 10px;border-bottom:1px solid #ccc;}
-.send_private_msg {margin:0 0 15px 0;}
-.send_private_msg .title{padding-left:60px;color:#333;margin-bottom:5px;}
-.send_private_msg .content {float:left;width:480px;}
-.send_private_msg textarea {height:80px;width:480px;margin-bottom:10px;}
-.send_private_msg .btn {text-align:right;}
-.message_talk {margin:10px 0 0 0;}
-.talk_l, .talk_r {margin:0 0 10px 0;}
-.talk_r {padding-left:60px;}
-.talk_l .userimg {float:left;width:50px;margin:0 10px 0 0;}
-.talk_r .userimg {float:right;width:50px;margin:0 0 0 10px;}
-.message_talk .content { float:left;display:inline-block;width:460px;}
-.talk_l .content {background-color:#f3f3f3;padding:10px;}
-.talk_r .content {background-color:#f9f9f9;padding:10px;}
+
 .winery_list li {margin: 0 0 40px 0;width:590px;float:left;}
 .winery_list .logo {width:100px;float:left;margin-right:20px;}
 .winery_list .meta {width:470px;float:left;}

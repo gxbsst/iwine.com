@@ -111,7 +111,7 @@ class AlbumsController < ApplicationController
       # order = params[:order] === 'time' ? 'created_at' : 'liked_num';
       order = 'created_at'
       @photos = Photo
-      .where(["album_id= ?", params[:id]])
+      .where(["album_id= ?", params[:album_id]])
       .order("#{order} DESC,id DESC")
       .page params[:page] || 1
     end
@@ -150,7 +150,7 @@ class AlbumsController < ApplicationController
     end
 
     def get_album
-      @album = @user.albums.find(params[:id] || params[:album_id])
+      @album = @user.albums.find(params[:album_id] || params[:id])
     end
 
     def get_imageable

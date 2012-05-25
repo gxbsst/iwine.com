@@ -1,28 +1,50 @@
 <div class="whitespace">
 <div id="hp">
-<%#= render "/mine/sub_nav", :action => params[:action] %>
+<%= render "users/sub_nav", :action => params[:action] %>
 <div class="clear"></div>
 
-<div id="cu_user_menu" class="clearfix">
-  <span class="f14">《 <a href="<%= url_for :action => 'index' %>">返回相册首页</a></span>
+<div class="title_btn">
+  <%= link_to albums_path, :class => "btn_gray float_r"  do  %>
+  <span>返回相册首页</span>
+  <% end %>
+  <h1>编辑相册属性 </h1>
+  <div class="clear"></div>
 </div>
-<div class="title_btn clearfix">
-  <h2>相册属性编辑-<%= @album.name %></h2>
-</div>
+<div>
 <%= form_for @album, :url => {:action => 'edit', :album_id => @album.id } do |f| %>
-<div id="leftcol" class="mr50">
-  <p class="mb5">相册名称（必填）</p>
-  <%= f.text_field :name %>
-  <p class="mt10 mb5">相册描述</p>
-  <%= f.text_area :intro%>
-  <p class="mt10"><a href="javascript:$('#edit_album_<%= @album.id%>').submit();" class="button_gray ml5"><span>保存设置</span></a>
-  </p>
-</div>
+    <table class="form" width="" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <th>相册名称</th>
+        <td><label>
+           <%= f.text_field :name, :class => "text name" %>
+        </label></td>
+      </tr>
+      <tr>
+        <th valign="top">相册描述</th>
+        <td><label>
+          <%= f.text_area :intro, :style => "width: 250px", :size => "45x5" %>
+        </label></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>
+          <a href="javascript:$('#edit_album_<%= @album.id%>').submit();" class="btn_gray ml5">
+            <span>保存修改</span>
+          </a>
+          
+          <%= link_to albums_path, :class => "btn_gray"  do  %>
+          <span>取消</span>
+          <% end %>
+          
+        </td>
+      </tr>
+    </table>
 <% end %>
-<div id="rightcol">
-  <p class="mb20">相册总容量1G</p>
 </div>
-<div class="clear"></div>
+
+
 <!-- end mine -->
 </div>
 </div>
+
+
