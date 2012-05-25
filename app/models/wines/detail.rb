@@ -111,6 +111,7 @@ class Wines::Detail < ActiveRecord::Base
   #热门酒款
   def self.hot_wines(options = {})
    wine_details =  Wines::Detail.joins(:comments).
+        includes([:wine, :covers]).
         where("do = ?", "follow").
         select("wine_details.*, count(*) as c").
         group("commentable_id").
