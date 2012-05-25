@@ -135,7 +135,7 @@ textarea.wine_intro {width:500px;height:200px;}
 #recommend h1.en {font-size:12px;}
 #recommend span {display:block;}
 #recommend .wine {margin-bottom:20px;}
-#recommend ul {padding: 0 70px;}
+#recommend ul {padding: 0 70px;zoom:1;}
 #recommend .wine ul.line {border-bottom:1px dotted #ccc;padding-bottom:40px;margin-bottom:40px;}
 #recommend .wine li {float:left;width:250px;margin-right:25px;}
 #recommend .wine li.last {margin-right:0;}
