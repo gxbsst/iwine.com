@@ -72,7 +72,7 @@ class Wines::Detail < ActiveRecord::Base
         :alcoholicity => register.alcoholicity,
         :capacity => register.capacity,
         :wine_style_id => register.wine_style_id,
-        :audit_id => register.audit_log_id,
+        :audit_id => audit_log_id,
         :user_id => register.user_id
       )
     end
