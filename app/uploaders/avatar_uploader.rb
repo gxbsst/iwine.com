@@ -58,6 +58,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
     resize_to_limit(APP_DATA["image"]["user"]["large"]["width"],APP_DATA["image"]["user"]["large"]["height"])
   end
 
+  # 50
   version :middle do
     resize_to_limit( APP_DATA["image"]["user"]["middle"]["width"],  APP_DATA["image"]["user"]["middle"]["height"])
   end

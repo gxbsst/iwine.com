@@ -55,54 +55,6 @@ class User < ActiveRecord::Base
   def mailboxer_email(message)
     email
   end
-
-   ##################################
-   # 用户资源统计， 如:  藏酒，好友 #
-   ##################################
-
-  # 藏酒
-  def wine_cellar_count
-    ## TODO: 当酒窖未创建时， 会出错， 因此当用户注册帐号时， 请同时创建酒窖、相册等用户资源信息
-    cellar.items.count
-  end
-
-  # 关注的酒
-  def wine_follows_count
-    ## TODO 更改用户评论操作之后，更新以下计算代码
-    comments.count
-  end
-
-  # 关注的酒庄
-  def winery_follows_count
-    ## TODO: 未实现这个功能， 实现之后请更新
-  end
-
-  # 评论
-  def comments_count
-    comments.count
-    ## TODO: 未实现这个功能， 实现之后请更新
-  end
-
-  # 酒评
-  def detail_comment_count
-    ## TODO: 未实现这个功能， 实现之后请更新
-  end
-
-  # 关注的人
-  def user_followes_count
-     followings.count
-  end
-
-  # 粉丝
-  def user_followeds_count
-   
-    followers.count
-  end
-
-  # 相册
-  def albums_count
-    albums.count
-  end
   # accepts_nested_attributes_for :user_profile
   # alias :user_profiles_attribute :user_profile
 

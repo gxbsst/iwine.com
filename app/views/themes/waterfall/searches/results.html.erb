@@ -30,15 +30,15 @@
       <ul>
         <% @entries['wineries'][0..1].each do|winery| %>
         <li>
-          <a href="<%= url_for( '/winery' + winery.id.to_s )%>">
+          <a href="<%= url_for( '/winery/' + winery.id.to_s )%>">
             <img src="<%= winery.logo_url(:thumb)%>" width="70" height="70" alt="winery name" />
           </a>
           <div class="meta">
             <h1 class="zh">
-              <a href="<%= url_for( '/winery' + winery.id.to_s )%>"><%= winery.name_zh%></a>
+              <a href="<%= url_for( '/winery/' + winery.id.to_s )%>"><%= winery.name_zh%></a>
             </h1>
             <h1 class="en">
-              <a href="<%= url_for( '/winery' + winery.id.to_s )%>"><%= winery.name_en%></a>
+              <a href="<%= url_for( '/winery/' + winery.id.to_s )%>"><%= winery.name_en%></a>
             </h1>
             <p class="location"><%= winery.region_path_zh(winery.region_tree_id)%></p>
           </div>
