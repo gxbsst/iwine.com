@@ -4,7 +4,7 @@
 
 <div id="wrapper950">
     <div class="whitespace mb30">
-         <%= render "winery_detail" %>
+         <%= render "wineries/winery_detail" %>
     </div>
 
     <div class="whitespace winerymain">
@@ -21,7 +21,7 @@
                   </div>
                   <div class="content">
                       <ul class="winery_pic_list">
-                          <%= render :partial => "photos_list" %>
+                          <%= render :partial => "photos/photos_list" %>
                       </ul>
                       <div class="clear"></div>
                   </div>
@@ -31,15 +31,7 @@
          </div>
 
          <div class="right">
-           <div class="sidebox">
-             <div class="title"><h3><a name="05" id="05"></a>热门酒款</h3></div>
-             <div class="main">
-               <ul class="sidewine">
-                 <%= render :partial => "hot_wine", :collection => @hot_wines, :as => :wine_detail %>
-                 <div class="clear"></div>
-               </ul>
-             </div>
-           </div>
+           <%= render "wineries/hot_wine" %>
          </div>
          <div class="clear"></div>
     </div>

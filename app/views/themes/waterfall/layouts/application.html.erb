@@ -36,6 +36,7 @@
       <%= render "layouts/footer" %>
       <script type="text/javascript" >
         var search_scroll = $('#search_scroll');
+        var has_scroll = false;
         var getHotSerach = function(){
           $.ajax({
             url: '/searches/suggestion?word='+$('#hot_search').val(),
@@ -57,6 +58,11 @@
             }
             if( e.keyCode == 27 ){
               search_scroll.css( 'display' , 'none' );
+              has_scroll = false;
+              return;
+            }
+            if( e.keyCode == 13 && has_scroll == false ){
+              location.href = '/searches/results?word='+this.value;
               return;
             }
 
@@ -66,6 +72,7 @@
 
           blur: function(){
             var hide = function(){
+              has_scroll = false;
               search_scroll.css( 'display' , 'none' );
             };
             setTimeout( hide , 200 );

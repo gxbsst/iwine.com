@@ -1,0 +1,36 @@
+<% content_for :css do  %>
+    <%= theme_stylesheet_link_tag "winery" %>
+<% end %>
+
+<div id="wrapper950">
+  <div class="whitespace mb30">
+    <%= render "winery_detail" %>
+  </div>
+  
+  <div class="whitespace winerymain">
+    <div class="left">
+      <div class="section">
+        <div class="title">
+          <%= link_to winery_path(@winery), :class => "btn_gray float_r" do  %>
+            <span>返回</span>
+          <% end %>
+          <h2>所有酒款<span class="font12 more">(共<%= @winery.wines_count %>支)</span></h2>
+        </div>
+        
+        <div class="content">
+          <ul class="wine_list">
+            <%= render :partial => "wine", :collection => @wines %>
+          </ul>
+          
+        </div>
+      </div>
+      <div class="pagination"><%= paginate @wines%></div>
+    </div>
+    
+    <div class="right">
+      <%= render "hot_wine" %>
+    </div>
+    
+    <div class="clear"></div>
+  </div>
+</div>
