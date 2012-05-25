@@ -1,6 +1,6 @@
 # encoding: utf-8
 class CountObserver < ActiveRecord::Observer
-  observe :comment, :photo, Users::WineCellarItem, Wines::Detail, ActsAsVotable::Vote
+  observe :comment, :photo, Users::WineCellarItem, Wines::Detail, ActsAsVotable::Vote, :friendship, :album
 
   def after_create model
     target_id, target_type, target_type_class = get_target model
@@ -15,6 +15,10 @@ class CountObserver < ActiveRecord::Observer
         increment_wine_details_count model, target_id, target_type_class
       when "Vote"
         increment_votes_count target_id, target_type_class
+      when 'Friendship'
+        increment_follows_count model
+      when "Album"
+        increment_albums_count model
     end
   end
 
@@ -31,11 +35,49 @@ class CountObserver < ActiveRecord::Observer
         decrement_wine_details_count model, target_id, target_type_class
       when "Vote"
         decrement_votes_count target_id, target_type_class
+      when 'Friendship'
+        decrement_follows_count model
+      when "Album"
+        decrement_albums_count model
     end
   end
 
+  # only for cancel_follow
+  def after_update model
+    if get_model_name(model) == "Comment"
+      target_id, target_type, target_type_class = get_target model
+      if model.parent_id.blank?
+        case model.do
+          when "follow"
+            target_type_class.decrement_counter :followers_count, target_id
+          when "comment"
+            target_type_class.decrement_counter :comments_count, target_id
+        end
+        decrement_user_count model
+      end
+    end
+  end
   private
 
+  #相册
+  def increment_albums_count model
+    User.increment_counter :albums_count, model.user_id
+  end
+
+  def decrement_albums_count model
+    User.decrement_counter :albums_count, model.user_id
+  end
+
+  #关注用户
+  def increment_follows_count model
+    User.increment_counter :followers_count, model.user_id
+    User.increment_counter :followings_count, model.follower.id
+  end
+
+  def decrement_follows_count model
+    User.decrement_counter :followers_count, model.user_id
+    User.decrement_counter :followings_count, model.follower.id
+  end
   #对评论”有用", 对照片“赞"
   def increment_votes_count target_id, target_type_class
     target_type_class.increment_counter :votes_count, target_id
@@ -70,12 +112,12 @@ class CountObserver < ActiveRecord::Observer
   #上传照片操作
   def increment_photos_count model, target_id, target_type_class
     target_type_class.increment_counter :photos_count, target_id
-    increment_user_count model
+    User.increment_counter :photos_count, model.user_id
   end
 
   def decrement_photos_count model, target_id, target_type_class
     target_type_class.decrement_counter :photos_count, target_id
-    decrement_user_count model
+    User.decrement_counter :photos_count, model.user_id
   end
 
   #评论或者关注
@@ -105,16 +147,19 @@ class CountObserver < ActiveRecord::Observer
 
 
   def increment_user_count model
-    User.increment_counter "#{change_to_pluralize model}_count", model.user_id
+    User.increment_counter get_count_name(model), model.user_id
   end
 
   def decrement_user_count model
-    User.decrement_counter "#{change_to_pluralize model}_count", model.user_id
+    User.decrement_counter get_count_name(model), model.user_id
   end
 
-  def change_to_pluralize model
-    name = get_model_name model
-    name.downcase.pluralize
+  def get_count_name model
+    if model.do == "comment"
+      "comments_count"
+    elsif model.do == "follow"
+      model.commentable_type == "Winery" ? "winery_followings_count" : "wine_followings_count"
+    end
   end
 
   def get_model_name model
@@ -135,6 +180,10 @@ class CountObserver < ActiveRecord::Observer
         [model.wine.winery_id, "Winery", "Winery"]
       when "ActsAsVotable::Vote"
         [model.votable_id, "Vote", model.votable_type]
+      when "Friendship" #关注某人
+        [model.user_id, "Friendship", "User"]
+      when "Album" #相册
+        [model.user_id, "Album", "Album"]
      end
     return [target_id, target_type, target_type_class.constantize]
   end

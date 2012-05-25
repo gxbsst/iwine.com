@@ -30,7 +30,7 @@
     end
 
     def destroy
-      if @cellar_item.delete
+      if @cellar_item.destroy
         # flash[:notice] = "删除成功."
         notice_stickie("删除成功.")
        redirect_to mine_cellar_path(@cellar)
