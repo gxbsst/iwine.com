@@ -35,6 +35,7 @@
   wineries.each( function(){ all.push(this)});
   var index = 0;
   var current;
+  has_scroll = true;
   $('#hot_search').bind({
     keyup: function(e){
       if( e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 37 || e.keyCode == 39 ){
