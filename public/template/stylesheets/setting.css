@@ -61,4 +61,4 @@ ul.private_list li {padding:15px 10px;border-bottom:1px solid #ccc;}
 .sys .sys_on {background:url(../images/common/sys.png) no-repeat left top;width:65px;height:65px;display:inline-block;position:absolute;left:165px;top:-1px}
 .sys img {margin: 0 0 10px 0;}
 .sys p {margin-bottom:10px;}
-.sys em {background:url(../images/icon/icon_all.gif) no-repeat 0 -174px;padding-left:15px;}
+.sys em {background:url(../images/icon/icon_all.gif) no-repeat 0 -174px;padding-left:15px; font-style:normal;}
