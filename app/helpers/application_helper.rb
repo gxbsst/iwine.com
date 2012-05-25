@@ -180,7 +180,7 @@ module ApplicationHelper
   end
 
   def reply_comment(comment)
-    link_to  "/#{comment.get_commentable_path}/#{comment.commentable_id}/comments/#{comment.id}/reply",
+    link_to  reply_comment_path(comment.id),
 		  :remote => true,
       :class => "ajax reply_comment_button",
       :id => "reply_#{comment.id}" do

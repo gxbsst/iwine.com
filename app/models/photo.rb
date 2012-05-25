@@ -5,7 +5,7 @@ class Photo < ActiveRecord::Base
   #                     :actor              => :user,
   #                     :secondary_actor => :imageable,
   #                     :if => lambda { |imageable| imageable.imageable_type == "Wines::Detail" }
-  
+  belongs_to :album, :touch => true
   belongs_to :imageable, :polymorphic => true
   belongs_to :user
   has_many :comments, :as => :commentable

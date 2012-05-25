@@ -35,6 +35,7 @@ class PhotosController < ApplicationController
   
   def vote
     @photo.liked_by @user
+     render :json => @photo.likes.size.to_json
   end
 
   private

@@ -32,12 +32,7 @@
 		        有用(<span class="likes_count"><%=comment.votes_count %></span>)
 		      <% end %>
 					| 
-					<%= link_to  reply_wine_comment_path(@wine_detail.id, comment.id),
-		          :remote => true,
-		          :class => "ajax reply_comment_button",
-		          :id => "reply_#{comment.id}" do %>
-		      回复<span class="reply_comment_count">(<%= comment.children.size %>)</span><span class="reply_result"></span>
-		      <% end %>
+					<%=  reply_comment(comment) %>
 				</div>		
 				<div id="reply_comment_<%= comment.id %>" class="replybox" style="display: none"></div>			
 			</div>
@@ -77,8 +72,6 @@
 			<p><%= link_to "登陆发表评论", login_path() %></p>
 			<% end %>
 		</div>
-
-		
 
 
 <script type="text/javascript">
