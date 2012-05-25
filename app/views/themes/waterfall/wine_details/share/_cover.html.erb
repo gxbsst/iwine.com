@@ -13,7 +13,7 @@
 		</div>
 	</div>
 </div>
-<% if @wine_detail.covers.size > 0 %>
+<% if @wine_detail.covers.size > 1 %>
 <div id="thumbs">
 	<!--<div id="arrow"></div>-->
 	<% @wine_detail.covers.each do |photo,index| %>
@@ -21,7 +21,7 @@
   <% end %>
 </div>
 <% end %>
-<% if @wine_detail.covers.size > 0 %>
+<% if @wine_detail.covers.size > 1 %>
 <script type="text/javascript">
 		$(document).ready(function() {
 			// Save  the jQuery objects for later use.

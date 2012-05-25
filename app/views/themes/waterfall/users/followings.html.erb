@@ -1,0 +1,29 @@
+<div class="whitespace">
+  <div id="hp">
+    <%= render "users/sub_nav", :action => params[:action] %>
+    <div class="clear"></div>
+    <div class="content">
+      <div class="left">
+        <div class="title_btn">
+           <h1>关注的人 <span class="font12 more">(共<%= @user.followings_count %>个...)</span></h1>
+        </div>
+        <%= render "users/share/user_followings" %>
+        <div class="pagination">
+           <%= paginate @followings, :outer_window => 2 %> 
+          <!-- pagination  end   -->
+        </div>      
+      </div>
+      <div class="right">
+        <div class="sidebox">
+          <div class="title"><h3>或许你会对这些人感兴趣...</h3></div>
+          <div class="main">
+             <%= render "users/share/recommend_users" %>
+          </div>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>
+
+

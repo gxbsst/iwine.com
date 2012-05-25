@@ -40,7 +40,7 @@ module ApplicationHelper
     unless object.covers.first.nil?
       image_tag object.covers.first.image_url(options[:thumb_name]), options
     else
-      image_tag "base/test/win_50p.jpg", options
+      theme_image_tag "wine_img.jpg", options
     end
   end
 
@@ -52,7 +52,7 @@ module ApplicationHelper
     else
       options[:width] = 200
       options[:height] = 200
-      image_tag "v2/avatar_default_bg.png", options
+      theme_image_tag "wine_img.jpg", options
     end
   end
 
@@ -61,7 +61,7 @@ module ApplicationHelper
     if object.avatar.respond_to? "image_url"
       image_tag object.avatar.image_url( options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt]
     else
-      image_tag "base/test/user_img50.jpg", :width => options[:width], :height => options[:height], :alt => options[:alt]
+      theme_image_tag "userpic.jpg", :width => options[:width], :height => options[:height], :alt => options[:alt]
     end
   end
 
@@ -191,5 +191,27 @@ module ApplicationHelper
   def wine_default_image(version)
     return theme_image_tag("avatar_default_bg_#{version.to_s}.png") if version.present?
     theme_image_tag("avatar_default_bg.png")
+  end
+  
+  def wine_label_tag(wine, options = {})
+      unless wine.label.nil?
+        options[:thumb_name] = if options.has_key? :thumb_name 
+          options[:thumb_name]
+        else
+          "thumb"
+        end
+        image_tag wine.label.filename_url(options[:thumb_name]), options
+      else
+        theme_image_tag "wine_img.jpg", options
+      end    
+  end
+  
+  # 主要为了在User Controller 判断是否为当前用户
+  def is_login_user?(user)
+    if user_signed_in?
+      @user == current_user
+    else
+      false
+    end
   end
 end

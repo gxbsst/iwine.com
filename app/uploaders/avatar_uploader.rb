@@ -21,7 +21,8 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # Provide a default URL as a default if there hasn't been a file uploaded:
 
   def default_url
-    "/assets/base/" + [version_name, "user_default.jpg"].compact.join('_')
+    # "/assets/base/" + [version_name, "user_default.jpg"].compact.join('_')
+    "/assets/userpic.jpg"
   end
   
   # process :get_geometry

@@ -1,0 +1,12 @@
+	<%= link_to  vote_mine_album_path(@album.id), :remote => true, :class => "ajax vote icon_like"  do %>
+	赞(<span class="likes_count"><%= @album.likes.size %></span>)
+	<% end %>
+
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+	// "有用" 成功时，更新有用的数量
+	$("a.vote").bind("ajax:success", function(event, data, textStatus, jqXHR){
+		$(this).find("span.likes_count").text(data);
+	});
+});
+</script>

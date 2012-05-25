@@ -10,7 +10,7 @@
 <div>
 	
 	<% unless user_signed_in? %>
-	<%= link_to  new_follow_wine_comments_path(@wine_detail.id), :class => [:btn_gray, :mr5, :ajax], :remote => true do %>
+	<%= link_to  new_wine_comment_path(@wine_detail.id), :class => [:btn_gray, :mr5, :ajax], :remote => true do %>
 		<span>关注</span>
 	<% end %>
 	<%# 用户已经登陆， 检查是否已经关注 %>

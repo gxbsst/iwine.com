@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :oauths, :class_name => 'Users::Oauth'
   has_many :time_events
   has_many :wine_followings, :include => :commentable, :class_name => "Comment", :conditions => {:commentable_type => "Wines::Detail", :do => "follow"}
+  has_many :winery_followings, :include => :commentable, :class_name => "Comment", :conditions => {:commentable_type => "Winery", :do => "follow"}  
   has_many :feeds, :class_name => "Users::Timeline", :include => [:ownerable, {:timeline_event => [:actor]}, {:receiverable =>  [:covers, :wine]}], :order => "created_at DESC"
   has_many :followers, :class_name => 'Friendship', :include => :follower do
     def map_user
@@ -203,7 +204,8 @@ class User < ActiveRecord::Base
 
     users
   end
-
+  
+  # 判断是否已经关注某人
   def is_following user_id
     Friendship.first :conditions => { :user_id => user_id , :follower_id => id }
   end

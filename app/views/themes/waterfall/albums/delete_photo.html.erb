@@ -1,0 +1,17 @@
+<div class="popup_header">
+  <a href="javascript:void(0);" onclick="$.fancybox.close(true);" class="close"></a>
+</div>
+<div class="popup_content">
+  <div class="confirm">确定要删除这张照片?</div>
+</div>
+<div class="popup_footer">
+  <div class="wine_bid_btn margin_auto" style="width:93px;">
+    <a href="javascript:;" onclick="$.fancybox.close(true);" class="button_gray float_r" >
+      <span>取消</span>
+    </a>
+    <a href="javascript:delete_upload_photo(<%= params[:photo_id]%>);$.fancybox.close(true);" class="button_gray float_r mr5">
+      <span>确定</span>
+    </a>
+    <div class="clear"></div>
+  </div>
+</div>

@@ -17,18 +17,18 @@
 <ul class="album_list">
   <% @albums.each do |album| %>
        	<li> 
-          <a href="<%= album.id %>">
+          <%= link_to mine_album_path(album) do %>
             <% if album.cover.present? %>
              <%= image_tag album.cover.image_url :thumb, :class => 'cover' %>
             <% else %>
              <%= theme_image_tag "test/album_cover.jpg", :class => :cover, :width => 150, :height => 150 %>
             <% end %>
-          </a>
+          <% end %>
           <h2>
-            <%= link_to album.name , "#{album.id}"  %>
+            <%= link_to album.name, mine_album_path(album) %>
           </h2>
           <p class="info"><%= album.photos_count %>张照片 <%= album.updated_at.to_s(:normal) %>更新<br/>
-          <%= album.viewed_num %>浏览 | <%= album.commented_num %>评论 | <%= %>赞</p>
+          <%= album.viewed_num %>浏览 | <%= album.commented_num %>评论 | <%= album.likes.count %>赞</p>
         </li>
     <% end %>
     <div class="clear"></div>

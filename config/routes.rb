@@ -67,67 +67,97 @@ Patrick::Application.routes.draw do
     end
   end
   # MINE
-  namespace :mine do
-    # 相册
-    resources :albums do
-      # 自定义actions,albums后面不带id 
-      collection do 
-        match "upload", :via => [:get, :post]
-        match 'upload_list', :via => [:get, :post]
-        match 'save_upload_list', :via => [:get, :post]
-        match 'photo_comment', :via => [:get, :post]
-        match 'delete_photo', :via => [:get, :post]
-        match 'update_photo_intro', :via => [:put]
-      end
-
-      member do
-        match 'photo', :via => [:get, :post]
-      end
-    end
-    # 酒窖
-    resources :cellars do
-       resources :cellar_items, :controller => "cellar_items", :path => :items, :as => "items" do
-         collection do
-           get :add
-         end
-       end
-    end
-    # 私信
-    resources :messages
-    resources :conversations
-    # 酒
-
-    resources :wines do
-      collection do
-        get :add
-      end
-
-    end
-  end
+  # resources :mine, :controller => "users", :id => /.*/ do
+  #   # 相册
+  #   resources :albums do
+  #     # 自定义actions,albums后面不带id 
+  #     collection do 
+  #       match "upload", :via => [:get, :post]
+  #       match 'upload_list', :via => [:get, :post]
+  #       match 'save_upload_list', :via => [:get, :post]
+  #       match 'photo_comment', :via => [:get, :post]
+  #       match 'delete_photo', :via => [:get, :post]
+  #       match 'update_photo_intro', :via => [:put]
+  #       match 'delete', :via => [:post, :get]
+  #     end
+  # 
+  #     member do
+  #       match 'photo', :via => [:get, :post]
+  #       get "vote"
+  #     end
+  #   end
+  #   # 酒窖
+  #   resources :cellars do
+  #      resources :cellar_items, :controller => "cellar_items", :path => :items, :as => "items" do
+  #        collection do
+  #          get :add
+  #        end
+  #      end
+  #   end
+  #   # 私信
+  #   resources :messages
+  #   resources :conversations
+  #   # 酒
+  # 
+  #   resources :wines do
+  #     collection do
+  #       get :add
+  #     end
+  #   end
+  # end
+  
+  # 相册
+   resources :albums do
+     # 自定义actions,albums后面不带id 
+     collection do 
+       match "upload", :via => [:get, :post]
+       match 'upload_list', :via => [:get, :post]
+       match 'save_upload_list', :via => [:get, :post]
+       match 'photo_comment', :via => [:get, :post]
+       match 'delete_photo', :via => [:get, :post]
+       match 'update_photo_intro', :via => [:put]
+     end
+     member do
+       get "vote"
+       match 'delete', :via => [:post, :get]
+     end
+   end
   
   # USER
   resources :users do 
+    member do 
+      match "wine_follows", :via => [:get]
+      match "winery_follows", :via => [:get]
+      match "comments", :via => [:get]
+      match "followings", :via => [:get]
+      match "followers", :via => [:get]
+      # Album
+      match "albums", :via => [:get], :to => "albums#index"
+      match "albums/:album_id", :via => [:get], :to => "albums#show"
+      match "albums/:album_id/photo/:photo_id", :via => [:get], :to => "albums#photo"
+    end
     collection do
       get "register_success"
     end
-    member do
-      get "wine_follows"
-      get "winery_follows"
-      get "comments"
-      get "followings"
-      get "followers"
-    end
-    resources :comments
-    # 相册
-    resources :albums, :controller => "users/albums" do
-     collection do 
-        match 'photo_comment', :via => [:get, :post]
-      end 
-    end
 
-    
-    # 酒窖
-    resources :cellars, :controller => "users/cellars" 
+     # 酒窖
+     resources :cellars, :controller => "users/cellars" do
+        resources :cellar_items, :controller => "users/cellar_items", :path => :items, :as => "items" do
+          collection do
+            get :add
+          end
+        end
+     end
+     # 私信
+     resources :messages
+     resources :conversations
+     # 酒
+
+     resources :wines do
+       collection do
+         get :add
+       end
+     end
   end
   
   # HOME

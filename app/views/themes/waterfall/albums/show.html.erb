@@ -1,0 +1,83 @@
+<div class="whitespace">
+<div id="hp">
+<%= render "users/sub_nav", :action => params[:action] %>
+<div class="clear"></div>
+
+<div class="title_btn">
+  <div class="btn_action">
+      <%= link_to edit_album_path(@user, :album_id => @album.id), :class => "btn_gray mr5" do %>
+       <span>编辑相册属性</span>
+      <% end %>
+      <%= link_to upload_user_albums_path(@user, :album_id => @album.id), :class => "btn_gray mr5" do %>  
+       <span>添加照片</span>
+      <% end %>
+      <%= link_to user_album_path(@user, @album.id), :class => "btn_gray" do %>  
+      <span>返回相册首页</span>
+      <% end %>
+  </div>
+  <h1><%= @album.name %> <span class="font12">(共<%= @album.photos_count%>张)</span></h1>
+  <div class="clear"></div>
+</div>
+<ul class="photo_list">
+  <% @photos.each_with_index do |photo, i| %>
+    <li>
+        <%= link_to user_album_photo_user_path(@user, @album.id, photo.id)  do %>
+         <%= image_tag photo.image_url( :thumb ), :class => 'cover' %>
+        <% end %>
+        
+      <% if photo.intro.present? %>
+        <p class="intro">
+          <% if @is_owner %>
+          <%= best_in_place photo, :intro, {:path => {:action => 'update_photo_intro', :photo_id => photo.id } } %>
+          <% else %>
+          <%= photo.intro %>
+          <% end %>
+        </p>
+      <% elsif @is_owner %>
+        <p class="intro">
+          <%= best_in_place photo, :intro, { :nil => '点击添加描述', :path => {:action => 'update_photo_intro', :photo_id => photo.id} } %>
+        </p>
+      <% end %>
+      <p class="info">
+        <%= photo.created_at.to_s(:normal) %> 上传 | 
+        <%= link_to "删除", delete_photo_albums_path(:photo_id => photo.id), :class => "fancybox_delete_photo fancybox.ajax" %> <br />
+        <%= photo.views_count %>浏览 | <%= photo.comments_count%>评论 | 2赞
+      </p>
+    </li>
+  <% end %>
+  <div class="clear"></div>
+</ul>
+<div class="pagination">
+ <%= paginate @photos, :outer_window => 2 %>
+</div>
+<div class="share_btn">
+  <div class="btn">
+    <% if @is_owner %>
+    <%= link_to delete_album_path(@album), :class => "fancybox_delete_photo fancybox.ajax btn_gray" do  %>
+    <span>删除相册</span>
+    <% end %>
+    <% end %>
+  </div>
+  <div class="share float_l">
+    <%= render "share/sns_icons" %> |
+  </div>
+  <div class="like float_l">
+    <%= render "albums/liked" %>
+  </div>
+  <div class="clear"></div>
+</div>
+
+<%= form_tag :action => 'delete_photo', :method => 'post' do %>
+<input type="hidden" name="photo_id" id="delete_photo_id"/>
+<% end %>
+<script type="text/javascript">
+$('.fancybox_delete_photo').fancybox({padding:0, margin: 0, width: 450, height: 'auto', autoSize: false, modal: true});
+
+function delete_upload_photo( id ){
+  $('#delete_photo_id').val( id ).parent().submit();
+};
+$('.best_in_place').best_in_place();
+</script>
+<!-- end mine -->
+</div>
+</div>

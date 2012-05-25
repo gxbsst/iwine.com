@@ -1,0 +1,13 @@
+<div id="mainspace860" class="addwine">
+  <div class="addwine">
+    <h1 class="main_title">添加藏酒</h1>
+    <div class="step">
+      <div class="step_fir"></div>
+    </div>
+      <%= render :partial => "mine/wines/search_wine", :object => @search %>
+  </div>
+</div>
+
+<% content_for :css do %>
+<%= theme_stylesheet_link_tag :hp, :add %>
+<% end %>

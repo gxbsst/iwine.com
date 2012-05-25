@@ -1,0 +1,18 @@
+
+  <ul id="special_comment_items">
+    <% @register.special_comments.each do |s| %>
+        <% next if s.name.blank? %>
+        <li>
+          <span class="extra_attribute"><%= s.name %></span>
+          <span class="extra_attribute"><%= s.score %></span>
+          <span class="extra_attribute"><%= s.drinkable %></span>
+          <input name="special_comment[name][]" type="hidden" value="<%= s.name %>"/>
+          <input name="special_comment[score][]" type="hidden" value="<%= s.score %>"/>
+          <input name='special_comment[drinkable_begin][]' type='hidden' value="<%= s.drinkable_begin %>" />
+          <input name='special_comment[drinkable_end][]' type='hidden' value="<%= s.drinkable_end %>" />
+          <%= link_to "", "#", :class => 'delete_special_comment icon_delet2' %>
+        </li>
+    <% end %>
+  </ul>
+
+  <p class="mt10"><%= image_tag "/assets/common/ex_score.jpg", :width => "278", :height => "76", :alt => "评分例子" %></p>

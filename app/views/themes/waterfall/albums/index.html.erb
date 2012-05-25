@@ -1,0 +1,45 @@
+ <div class="whitespace">
+<div id="hp">
+  <%= render "users/sub_nav" %>
+<div class="title_btn">
+      <div class="btn_action">
+          <%= link_to upload_albums_path(), :class => "btn_gray mr5" do %>
+          <span>添加照片</span>
+          <% end %>
+          <%= link_to new_album_path(), :class => "new_album fancybox.ajax btn_gray"  do  %>
+          <span>创建相册</span>
+          <% end %>
+        </a>
+      </div>
+      <h1>我的相册 <span class="font12">(共<%= @albums.count %>个)</span></h1>
+      <div class="clear"></div>
+</div>
+<ul class="album_list">
+  <% @albums.each do |album| %>
+       	<li> 
+          <%= link_to user_album_path(@user, album) do %>
+            <% if album.cover.present? %>
+             <%= image_tag album.cover.image_url :thumb, :class => 'cover' %>
+            <% else %>
+             <%= theme_image_tag "test/album_cover.jpg", :class => :cover, :width => 150, :height => 150 %>
+            <% end %>
+          <% end %>
+          <h2>
+            <%= link_to album.name, user_album_path(@user, album) %>
+          </h2>
+          <p class="info"><%= album.photos_count %>张照片 <%= album.updated_at.to_s(:normal) %>更新<br/>
+          <%= album.viewed_num %>浏览 | <%= album.commented_num %>评论 | <%= album.likes.count %>赞</p>
+        </li>
+    <% end %>
+    <div class="clear"></div>
+</ul>
+<div class="clear"></div>
+<div class="pagination">
+ <%= paginate @albums, :outer_window => 2 %>
+</div>
+<script type="text/javascript">
+$('.new_album').fancybox({padding:0, margin: 0, width: 450, height: 'auto', autoSize: false, modal: true});
+</script>
+<!-- end mine -->
+</div>
+</div>

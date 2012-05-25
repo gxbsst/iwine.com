@@ -1,1 +1,9 @@
+<% content_for :css do %>
+<%= theme_stylesheet_link_tag :hp %>
+<% end %>
+<div class="whitespace">
+<div id="hp">
+<%= render "sub_nav", :action => params[:action] %>
 <%= render "share/show_cellar" %>
+</div>
+</div>

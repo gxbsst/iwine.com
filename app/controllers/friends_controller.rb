@@ -1,33 +1,29 @@
 # -*- coding: utf-8 -*-
 class FriendsController < ApplicationController
+  before_filter :authenticate_user!
   
   def follow
-
     params[:user_id].split(',').each do |user_id|
       if current_user.is_following( user_id ).blank? && current_user.id != user_id.to_i
-
         friendship = Friendship.new
         friendship.user_id = user_id
         friendship.follower_id = current_user.id
         friendship.save
-
       end
     end
-
     redirect_to request.referer
   end
 
   def unfollow
     friendship = Friendship.first :conditions => { :user_id => params[:user_id] , :follower_id => current_user.id }
-
     if friendship.present?
       friendship.destroy
     end
-
-    redirect_to :action => 'find' 
+   # redirect_to :action => 'find' 
+    redirect_to request.referer
   end
-  
-  # 查找好友
+ 
+   # 查找好友
   def find
     @availabe_sns = current_user.available_sns
   end
@@ -60,11 +56,9 @@ class FriendsController < ApplicationController
 
   def delete_sns
     user_oauth = Users::Oauth.first :conditions => { :user_id => current_user.id , :sns_name => params[:sns_name] }
-
     if user_oauth.present?
       user_oauth.delete
     end
-
     redirect_to request.referer
   end
 

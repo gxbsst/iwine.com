@@ -1,0 +1,67 @@
+<% content_for :css do %>
+<%= theme_stylesheet_link_tag :hp %>
+<% end %>
+
+<% sub_menu = {
+        "wine_favorite"   => [user_cellar_path(@user.id, @user.cellar), @user.wine_cellar_count],
+     "wine_follows"     => [wine_follows_user_path(@user.id), @user.wine_follows_count],
+     "winery_follows"   => [winery_follows_user_path(@user.id), @user.wine_follows_count],
+     "comments"  => [comments_user_path(@user.id), @user.comments_count],
+     # "testing_notes"  => ["testing_notes", 0],
+     "followings"     => [followings_user_path(@user.id), @user.user_followes_count],
+     "followers"    => [followers_user_path(@user.id), @user.user_followeds_count],
+     "albums"           => [user_albums_path(@user.id, :trailing_slash => true), @user.albums_count]
+ } %>
+
+  <div class="hp_header">
+    <div class="hp_right">
+      <%= link_to user_cellar_path(@user, @user.cellar), :class => "btn_red_sb" do %>
+        <% if is_login_user? @user %>
+        <span>我的酒窖</span>
+        <% else %>
+        <span>他的酒窖</span>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="hp_userimg">
+       <%= link_to_user @user,
+                        user_path(@user, :trailing_slash => true),
+                        { :with_avatar => true,
+                        :avatar_version => :large },
+                        {:width => 130, :height => 130}  %>
+    </div>
+    
+    <div class="hp_info">
+      
+      <% if is_login_user? @user  %>
+      <div class="username"><%= @user.username %></div>
+      <div class="mystatu"><%= @user.profile.bio %> <span><a href="#">修改</a></span></div>
+      <div class="item">
+        <%= link_to "私信", "/", :class => :icon_mail %> |
+        <%= link_to "设置", basic_settings_path %>
+      </div>
+      <% else %>
+       <div class="username"><%= @user.username %></div>
+       <div class="mystatu"><%= @user.profile.bio %></div>
+       <div class="item">
+        <% if (current_user.is_following @user) && (@user.is_following current_user) %>
+          <span class="icon_fol_e mr5">互相关注<span class="cancl_fol"><a href="#">(取消)</a></span></span>
+        <% elsif current_user.is_following @user %>
+          <span class="icon_fol mr5">已关注<span class="cancl_fol"><a href="#">(取消)</a></span></span>
+        <% else %>
+          <a href="#" class="btn_gray"><span>加关注</span></a>
+        <% end %>
+         <%= link_to "私信", "/", :class => :icon_mail %> 
+        </div> 
+      <% end %>      
+      <ul class="hp_navi">
+        <% sub_menu.each do |action_name, url| %>
+          <%= content_tag :li, :class => ( if params[:action] == action_name; :current; end) do %>
+            <%= link_to "#{url[1]} <br />".html_safe + t("nav.sub_nav.mine.#{action_name}"),  url[0] %>
+          <% end %>
+        <% end %>
+      </ul>
+      <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+  </div>

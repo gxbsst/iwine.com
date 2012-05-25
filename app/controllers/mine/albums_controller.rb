@@ -138,6 +138,11 @@ class Mine::AlbumsController < ApplicationController
       @albums = Album .where(["created_by= ?", current_user.id]).order("id DESC").page params[:page] || 1
     end
 
+    def vote
+      @album.liked_by @user
+      render :json => @album.likes.size.to_json
+    end
+
     private
 
     def get_user
@@ -145,7 +150,7 @@ class Mine::AlbumsController < ApplicationController
     end
 
     def get_album
-      @album = @user.albums.find(params[:id])
+      @album = @user.albums.find(params[:id] || params[:album_id])
     end
 
     def get_imageable

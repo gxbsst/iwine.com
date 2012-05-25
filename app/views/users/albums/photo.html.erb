@@ -1,35 +1,61 @@
-
-<div class="title_btn clearfix">
-  <h2><%= @user.username %>的相册-<%= @album.intro %> <span class="count_b">(共<%= @album.photos_num %>张)</span></h2>
-</div>
-<div id="leftcol" class="mr50">
-  <div class="photo_detail">
-    <div class="pn clearfix">
-      <a href="<%= url_for :action => 'photo', :album_id => @album.id, :index => @index + 1%>" class="button_gray float_r"><span>下一张</span></a>
-      <a href="<%= url_for :action => 'photo', :album_id => @album.id, :index => @index - 1%>" class="button_gray float_r mr5"><span>上一张</span></a>
-      <a href="<%= url_for :action => 'show', :album_id => @album.id %>" class="button_gray float_l"><span>返回该相册</span></a>
-      第<%= @index + 1 %>张/共<%= @album.photos_num %>张
+<div class="content">
+  <div class="album_left">
+    <div class="title_btn">
+      <h1><%= @album.name %> <span class="font12">(共<%= @album.photos_num %>张)</span></h1>
     </div>
-    <div class="photo_detail_pic">
+    <div class="mb20">
+      <div class="btn_action">
+        <a href="<%=  %><%= url_for :action => 'show', :album_id => @album.id %>" class="btn_gray">
+          <span>返回该相册</span>
+        </a>
+      </div>
+      <div class="pre_next">
+        <a href="<%= url_for :action => 'photo', :album_id => @album.id, :index => @index - 1%>" class="btn_gray mr5">
+          <span>前一张</span>
+        </a>
+        <a href="<%= url_for :action => 'photo', :album_id => @album.id, :index => @index + 1%>" class="btn_gray">
+          <span>后一张</span>
+        </a>
+      </div>
+    </div>
+    <div class="photo">
       <%= image_tag @photo.image_url :large %>
+      <p class="intro"><%= @photo.intro %></p>
     </div>
-    <div class="description"><%= @photo.intro %></div>
-    <div class="photo_info clearfix">
-      <span class="float_r">分享到</span>
-      <span class="icon_like float_r mr10">(13)</span>
-      <%= @photo.viewed_num %>浏览 | <%= @photo.commented_num %>评论
+
+    <div class="info">
+      <div class="like float_r">
+        <a href="#" class="icon_like">赞 (3)</a>
+      </div>
+      <div class="share float_r">分享到：
+        <a href=" #">
+          <img src="/assets/v2/icon/sina_s_on.png" alt="新浪" width="17" height="17" align="absmiddle" />
+        </a>
+        <a href="#">
+          <img src="/assets/v2/icon/tencen_s_on.png" alt="腾讯" width="17" height="17" align="absmiddle" />
+        </a>
+        <a href="#">
+          <img src="/assets/v2/icon/douban_s_on.png" alt="豆瓣" width="17" height="17" align="absmiddle" />
+        </a>
+        <a href="#">
+          <img src="/assets/v2/icon/kaixin_s_on.png" alt="开心网" width="17" height="17" align="absmiddle" />
+        </a>
+        <a href="#">
+          <img src="/assets/v2/icon/renren_s_on.png" alt="人人网" width="17" height="17" align="absmiddle" />
+        </a> 
+      </div>
+      <div><%= @photo.viewed_num %>浏览 | <%= @photo.commented_num %>评论</div>
     </div>
-  </div>
-  <div class="comment">
+      <div class="comment">
     <a href="#add_comment" onclick="$('#photo_comment_comment').focus();" class="button_gray float_r"><span>添加评论</span></a><h3>评论</h3>
-    <div class="comment_list">
+    <div class="comment" style="display: none">
       <ul>
         <% @photo_comments.each do |comment| %>
         <li class="clearfix">
           <div class="user_img">
             <a href="#">
               <% if comment.user.avatar.present? %>
-              <%= image_tag comment.user.avatar.image_url( :thumb ), :width => 50, :height => 50 %>
+              <%= image_tag comment.user.avatar, :width => 50, :height => 50 %>
               <% else %>
               <img src="/images/test/user_img50.jpg" width="50" height="50" alt="user name" />
               <% end %>
@@ -53,12 +79,12 @@
         <% end %>
       </ul>
       <div class="comment_form mt20">
-        <%= form_for @photo_comment, :url => '/users/albums/photo_comment' do |f| %>
+        <%= form_for @photo_comment, :url => '/mine/albums/photo_comment' do |f| %>
         <input type="hidden" name="photo_comment[photo_id]" value="<%= @photo.id %>" />
         <%= f.hidden_field :reply_id %>
         <div class="user_img">
             <% if current_user.avatar.present? %>
-            <%= image_tag current_user.avatar.image_url( :thumb ), :width => 50, :height => 50 %>
+            <%= image_tag current_user.avatar, :width => 50, :height => 50 %>
             <% else %>
             <img src="/images/test/user_img50.jpg" width="50" height="50" alt="user name" />
             <% end %>
@@ -74,31 +100,96 @@
       </div>
     </div>
   </div>
-</div>
-<div id="rightcol" class="other_content">
-  <h3><%= @user.username %>的其他相册</h3>
-  <ul class="other_album">
-    <% @top_albums.each do |album| %>
-    <li class="clearfix">
-      <div class="pic">
-        <a href="<%= url_for :action => 'show', :album_id => album.id %>">
-          <% if album.cover.present? %>
-          <%= image_tag album.cover.image_url( :thumb ), :width => 90, :height => 90 %>
-          <% else %>
-          <img src="/assets/base/test/album_cover5_s.jpg" width="90" height="90" />
-          <% end %>
-        </a>
+    <div class="comment" style="display: none">
+      <div class="mb20 clearfix">
+        <a href="#01" class="btn_gray float_r">
+          <span>添加评论</span>
+        </a> 
+        <div class="title">评论</div>
       </div>
-      <div class="album_info">
-        <h3><a href="<%= url_for :action => 'show', :album_id => album.id %>"><%= album.intro %></a></h3>
-        <%= album.photos_num %>张照片<br/><%= album.updated_at.strftime '%Y-%m-%d'%> 更新
+
+      <ul class="comment_list">
+        <li>
+          <div class="userpic"><a href="#"><img src="image/userimage/1.jpg" width="50" height="50" alt="username" /></a></div>
+          <div class="main">
+            <div class="username"><a href="#">不良夏生</a><span class="date">2012-4-28</span></div>
+            <div class="content">好诱人的咖喱啊，我也好想吃！</div>
+          </div>
+          <div class="clear"></div>
+        </li>
+        <li>
+          <div class="userpic"><a href="#"><img src="image/userimage/1.jpg" width="50" height="50" alt="username" /></a></div>
+          <div class="main">
+            <div class="username"><a href="#">不良夏生</a><span class="date">2012-4-28</span><span class="control"><a href="#">回复</a> | <a href="#">删除</a></span></div>
+            <div class="content">好诱人的咖喱啊，我也好想吃！</div>
+          </div>
+          <div class="clear"></div>
+        </li>
+        <li>
+          <div class="userpic"><a href="#"><img src="image/userimage/1.jpg" width="50" height="50" alt="username" /></a></div>
+          <div class="main">
+            <div class="username"><a href="#">不良夏生</a><span class="date">2012-4-28</span></div>
+            <div class="content">
+              <p class="reply">好诱人的咖喱啊，我也好想吃！</p>
+              好诱人的咖喱啊，我也好想吃！</div>
+          </div>
+          <div class="clear"></div>
+        </li>
+        <li>
+          <div class="userpic"><a href="#"><img src="image/userimage/1.jpg" width="50" height="50" alt="username" /></a></div>
+          <div class="main">
+            <div class="username"><a href="#">不良夏生</a><span class="date">2012-4-28</span></div>
+            <div class="content">好诱人的咖喱啊，我也好想吃！</div>
+          </div>
+          <div class="clear"></div>
+        </li>
+        <li>
+          <div class="userpic"><a href="#"><img src="image/userimage/1.jpg" width="50" height="50" alt="username" /></a></div>
+          <div class="main">
+            <div class="username"><a href="#">不良夏生</a><span class="date">2012-4-28</span></div>
+            <div class="content">好诱人的咖喱啊，我也好想吃！</div>
+          </div>
+          <div class="clear"></div>
+        </li>
+      </ul>
+      <a name="01" id="01"></a>
+      <div class="comment_post">
+        <div class="userpic"><a href="#"><img src="image/userimage/1.jpg" width="50" height="50" alt="username" /></a></div>
+        <div class="post_main">
+          <div class="reply_text">回复 xiaoying </div>
+          <div class="post">
+            <textarea class="mb10" name="" cols="" rows=""></textarea>
+            <div><a href="#" class="btn_gray"><span>加上去</span></a></div>
+          </div>
+        </div>
+        <div class="clear"></div>
       </div>
-    </li>
+    </div>
+  </div>
+  <div class="album_right pt60 pl30">
+    <h2>我的其他相册</h2>
+    <% if @top_albums.present? %>
+      <ul class="side_album_list">
+        <% @top_albums.each do |album| %>
+          <li>
+            <a href="<%= url_for :action => 'show', :album_id => album.id %>">
+              <% if album.cover.present? %>
+                <%= image_tag album.cover.image_url :thumb %>
+              <% else %>
+                <img src="/assets/base/test/album_cover1.jpg" alt="木有图片" width="190" height="190" />
+              <% end %>
+            </a>
+            <h3>
+              <a href="<%= url_for :action => 'show', :album_id => album.id %>"><% album.name %></a>
+            </h3>
+            <p class="info">2012-1-28更新</p>
+          </li>
+        <% end %>
+      </ul>
     <% end %>
-    <div class="clear"></div>
-  </ul>
+  </div>
+  <div class="clear"></div>
 </div>
-<div class="clear"></div>
 <script type="text/javascript">
 function reply_to( comment_id ){
   $('#reply_comment_content').css('display' , 'block');

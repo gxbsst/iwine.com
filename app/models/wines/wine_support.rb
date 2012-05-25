@@ -20,10 +20,18 @@ module Wines
        
      end
 
-     def region_path_zh(region_tree_id)
+     def region_path_zh(region_tree_id, options = {})
        region_trees = get_region_path(region_tree_id)
-       region_trees.collect{|r| r.name_zh }.join('-')
+       options[:connector] = "-" unless options.has_key? :connector
+       region_trees.collect{|r| r.name_zh }.join(options[:connector] )
      end
+     
+     def region_path_en(region_tree_id, options = {})
+       region_trees = get_region_path(region_tree_id)
+       options[:connector] = "-" unless options.has_key? :connector
+       region_trees.collect{|r| r.name_en }.join(options[:connector] )
+     end
+     
 
      def get_region_path(region_tree_id)
        region = Wines::RegionTree.find(region_tree_id)
@@ -49,6 +57,11 @@ module Wines
      # 关注总数
      def followers_count
        self.comments.where(["do = ?", "follow"]).size.to_i
+     end
+     
+     # 官方网站
+     def html_official_site
+       "http://" + official_site
      end
    end
 end

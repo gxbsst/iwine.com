@@ -7,7 +7,7 @@
       <div class="sort_search mb20">
         <% if current_user.id == @user.id %>
             <div class="float_r">
-              <%= link_to add_mine_cellar_items_path(@cellar, :step => 1), :class => "btn_blue_b" do %>
+              <%= link_to "/", :class => "btn_blue_b" do %>
                   <span>添加藏酒</span>
               <% end %>
             </div>
@@ -18,7 +18,7 @@
         </select>
         </div>
 
-        <div class="search"><%=  render "mine/cellars/search_cellar_item", :object => @cellar %></div>
+        <div class="search"><%=  render "users/cellars/search_cellar_item", :object => @cellar %></div>
         <div class="clear"></div>
       </div>
 
