@@ -1,0 +1,33 @@
+<% content_for :css do  %>
+    <%= theme_stylesheet_link_tag "winery" %>
+<% end %>
+<div id="wrapper950">
+   <div class="whitespace mb30">
+      <%= render "wineries/winery_detail" %>
+   </div>
+  
+   <div class="whitespace winerymain">
+     <div class="left">
+       <div class="section">
+         <div class="title">
+           <%= link_to winery_path(@winery), :class => "btn_gray float_r" do %>
+             <span>返回</span>
+           <% end %>
+           <%= link_to "", :class => "btn_gray float_r mr5" do %>
+            <span>添加评论</span>
+           <% end %>
+         </div>
+         
+         <div class="content">
+           
+         </div>
+       </div>
+     </div>
+     
+     <div class="right">
+       <%= render "wineries/hot_wine" %>
+       <%= render "wineries/follower" %>
+     </div>
+     <div class="clear"></div>
+   </div>
+</div>

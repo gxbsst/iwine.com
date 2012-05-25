@@ -42,13 +42,10 @@ module Wines
 
      # 当前关注该支酒的用户列表
      def followers(options = { })
-       comments = self.comments.includes([:user]).where(["do = ?", "follow"]).limit(options[:limit])
-       users = comments.map{|comment| comment.user }
-     end
-
-     # 关注总数
-     def followers_count
-       self.comments.where(["do = ?", "follow"]).size.to_i
+       User.joins(:comments).
+         where("commentable_type = ? and commentable_id = ? and do = ? and deleted_at is null", self.class.name, id, 'follow').
+         page(options[:page] || 1).
+         per(options[:per] || 16) #如果想使用limit而不用分页效果可以使用per
      end
    end
 end
