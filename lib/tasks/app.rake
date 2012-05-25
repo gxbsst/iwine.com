@@ -56,22 +56,22 @@ namespace :app do
     csv  = CSV.read(file_path)
     csv.each do |item|
       begin
-        region_tree = Wines::RegionTree.where("origin_name = ? and level = ?", item[6].to_s.split('/').last, item[6].to_s.split('/').size).first
+        region_tree = Wines::RegionTree.where("origin_name = ? and level = ?", item[5].to_s.split('/').last, item[5].to_s.split('/').size).first
         unless region_tree
-          puts "#{item[6]}  region_tree_id can't be blank!"
+          puts "#{item[5]}  region_tree_id can't be blank!"
           next
         end
         #处理适饮年限
-        if item[11].to_s.include?('+')
-          drinkable_begin = item[11].to_s.gsub(/\+/, '')
+        if item[10].to_s.include?('+')
+          drinkable_begin = item[10].to_s.gsub(/\+/, '')
           drinkable_end = nil
         else
-          drinkable_begin = item[11].to_s.split('-').first
-          drinkable_end = item[11].to_s.split('-').last
+          drinkable_begin = item[10].to_s.split('-').first
+          drinkable_end = item[10].to_s.split('-').last
         end
 
         #酒类品种及百分比处理
-        variety_arr = item[13].to_s.gsub(/\n/, '/').force_encoding('utf-8').split('/')
+        variety_arr = item[12].to_s.gsub(/\n/, '/').force_encoding('utf-8').split('/')
         next if variety_arr.size.odd?
         variety_percentage = []
         variety_name = []
@@ -79,25 +79,26 @@ namespace :app do
           variety_name.push key
           variety_percentage.push value
         end
-
+        # get wine_style_id
+        wine_style = Wines::Style.where("name_zh = ? ", item[4]).first
         #查找酒庄
-        winery = Winery.where("name_en = ? ", item[7].to_s.force_encoding('utf-8').to_ascii_brutal).first
-        wine_register = Wines::Register.find_or_initialize_by_origin_name_and_vintage(item[1].to_s.force_encoding('utf-8'), item[10])
+        winery = Winery.where("name_en = ? ", item[6].to_s.force_encoding('utf-8').to_ascii_brutal).first
+        wine_register = Wines::Register.find_or_initialize_by_origin_name_and_vintage(item[1].to_s.force_encoding('utf-8'), item[9])
         if wine_register.new_record?
           wine_register.name_zh = item[2].to_s.force_encoding('utf-8').split('/').last
           wine_register.name_en = item[1].to_s.force_encoding('utf-8').to_ascii_brutal
           wine_register.origin_name = item[1].to_s.force_encoding 'utf-8'
           wine_register.official_site = item[3].to_s.force_encoding('utf-8').gsub(/http:\/\//, '')
-          wine_register.wine_style_id =  1 #需要更改数据
+          wine_register.wine_style_id =  wine_style.id if wine_style #需要更改数据
           wine_register.region_tree_id = region_tree.id
           wine_register.winery_id = winery.id if winery
-          wine_register.vintage = DateTime.parse "#{item[10]}-01-01" unless item[10].blank?
+          wine_register.vintage = DateTime.parse "#{item[9]}-01-01" unless item[9].blank?
           wine_register.drinkable_begin = drinkable_begin.to_i == 0 ? nil : drinkable_begin.to_i
           wine_register.drinkable_end = drinkable_end.to_i == 0 ? nil : drinkable_end.to_i
-          wine_register.alcoholicity =item[12]
+          wine_register.alcoholicity =item[11]
           wine_register.variety_percentage = variety_percentage
           wine_register.variety_name = variety_name
-          wine_register.capacity = item[14]
+          wine_register.capacity = item[13]
           wine_register.user_id = -1
           wine_register.status = 0
           wine_register.result = 0
@@ -249,25 +250,35 @@ namespace :app do
   task :init_other_photos => :environment do
     file_path = Rails.root.join("lib/tasks/data/wines_datas.csv")
     csv  = CSV.read(file_path)
-    csv.each do |item|
-      #获得图片路径
-      photo_path  = Rails.root.join('lib', 'tasks','data', 'wine_photos', item[0])
-      if Dir.exist? photo_path
-        file_path = Rails.root.join(photo_path, Dir.entries(photo_path).select{|x| x != '.' && x != '..' && x != '.DS_Store'}.first)
-      end
+    begin
+      csv.each do |item|
+        #获得图片路径
+        photo_path  = Rails.root.join('lib', 'tasks','data', 'wine_photos', item[0])
 
-      next if item[10].blank? #跳过年代为空
-      name_en = item[1].to_s.force_encoding('utf-8').to_ascii_brutal
-      year = DateTime.parse "#{item[10]}-01-01"
-      if wine_detail = Wines::Detail.joins(:wine).where("name_en = ? and year = ? ", name_en, year).first
-        wine_detail.photo.create(
-            :category => 1,
-            :album_id => -1, # no user id
-            :is_cover => file_path.include?("cover") ? 1 : 0,
-            :image => open(file_path)
-        )
-      end
+        if Dir.exist? photo_path
+          photos_path = []
+          Dir.entries(photo_path).select{|x| x != '.' && x != '..' && x != '.DS_Store'}.each do |file_path|
+            photos_path.push Rails.root.join(photo_path, file_path)
+          end
+        end
 
+        next if item[9].blank? || photos_path.blank? #跳过年代为空和图片为空的
+        name_en = item[1].to_s.force_encoding('utf-8').to_ascii_brutal
+        if wine_detail = Wines::Detail.joins(:wine).where("name_en = ? and year = ? ", name_en, "#{item[9].force_encoding('utf-8')}-01-01").first
+          photos_path.each do |path|
+            wine_detail.photos.create(
+                :category => 1,
+                :album_id => -1, # no user id
+                :is_cover => path.to_s.include?("cover") ? 1 : 0,
+                :image => open(path)
+            )
+          end
+          puts wine_detail.id
+        end
+
+      end
+    rescue Exception => e
+      puts e
     end
   end
 end
