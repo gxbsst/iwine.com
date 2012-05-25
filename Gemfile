@@ -14,7 +14,7 @@ gem 'kaminari'
 #gem 'uploadify'
 gem 'flash_cookie_session'
 gem 'best_in_place'
-gem 'contacts_cn'
+gem 'contacts_cn'  # 连接email
 gem 'hpricot'
 
 gem "rmagick"
