@@ -1,7 +1,8 @@
 # encoding: utf-8
 class AlbumsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index, :photo]
-  before_filter :get_user
+  before_filter :get_user, :only => [:index, :show, :photo] 
+  before_filter :get_current_user, :except => [:index, :show, :photo]
   before_filter :get_album, :except => [:index, :upload, :new, :delete_photo, :update_photo_intro]
 
   def upload
@@ -42,7 +43,7 @@ class AlbumsController < ApplicationController
       if params[:deleted_ids].present?
         Photo.delete params[:deleted_ids].split(',')
       end
-      redirect_to '/mine/albums/'+params[:id]
+      redirect_to user_album_path(current_user, params[:id])
     end
 
     def new
@@ -134,8 +135,8 @@ class AlbumsController < ApplicationController
     end
 
     def index
-      @user = current_user
-      @albums = Album .where(["created_by= ?", current_user.id]).order("id DESC").page params[:page] || 1
+      @albums = Album.where(["created_by= ?", @user.id]).order("id DESC").page params[:page] || 1
+      # @albums = @user.albums.all.page(params[:page] || 1).per(10)
     end
 
     def vote
@@ -146,10 +147,15 @@ class AlbumsController < ApplicationController
     private
 
     def get_user
-      @user = User.find(params[:id] || current_user.id)
+      @user = User.find(params[:id])
+    end
+    
+    def get_current_user
+      @user = current_user
     end
 
     def get_album
+      
       @album = @user.albums.find(params[:album_id] || params[:id])
     end
 

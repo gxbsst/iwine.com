@@ -21,7 +21,7 @@
             <% if album.cover.present? %>
              <%= image_tag album.cover.image_url :thumb, :class => 'cover' %>
             <% else %>
-             <%= theme_image_tag "test/album_cover.jpg", :class => :cover, :width => 150, :height => 150 %>
+             <%= theme_image_tag "album.jpg", :class => :cover, :width => 150, :height => 150 %>
             <% end %>
           <% end %>
           <h2>

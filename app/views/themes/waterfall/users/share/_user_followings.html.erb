@@ -12,9 +12,16 @@
       <%= link_to_user user, user_path(user.id,:trailing_slash => true) %> 
     </div>
     <div class="userlocation">上海</div>
+    <% if is_login_user? @user #  当前访问属于自己的页面 %>
     <p><span class="cancl_fol"> <%= link_to "取消关注", "/friends/unfollow?user_id="+user.id.to_s  %> </span></p>
      <% if user.is_following current_user.id %>
         <p> 互相关注 </p>
+    <% end %>
+    <% else %>
+    <%= link_to "/friends/follow?user_id="+user.id.to_s, :class => "btn_gray" do  %>
+    <span>加关注</span>
+    <% end %>      
+    
     <% end %>
   </div>
 </li>

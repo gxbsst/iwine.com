@@ -66,6 +66,7 @@ Patrick::Application.routes.draw do
      member do
        get "vote"
        match 'delete', :via => [:post, :get]
+       match 'edit', :via => [:put, :get]
      end
    end
   

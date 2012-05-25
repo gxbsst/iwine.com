@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :crop_x, :crop_y, :crop_w, :crop_h, :agree_term
   has_one  :profile, :class_name => 'Users::Profile', :dependent => :destroy
   has_one  :cellar, :class_name => 'Users::WineCellar'
-  has_many :albums, :class_name => 'Album', :foreign_key => 'created_by'
+  has_many :albums, :foreign_key => 'created_by'
   has_many :registers, :class_name => 'Wines::Register'
   has_many :comments, :class_name => "::Comment", :foreign_key => 'user_id', :include => [:user]
   has_many :photo_comments
