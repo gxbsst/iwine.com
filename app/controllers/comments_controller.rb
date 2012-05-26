@@ -152,7 +152,7 @@ class CommentsController < ApplicationController
   def render_wine_comments
     @wine_detail = @commentable
     @wine = @wine_detail.wine
-    render "wine_details/comments/index"
+    render "wine_comments_list"
   end
   def render_winery_comments
     @winery = @commentable
