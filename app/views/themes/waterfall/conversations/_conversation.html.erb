@@ -1,0 +1,39 @@
+<li class="clearfix">
+	<div class="userimg">
+    <% if conversation.originator == current_user %> 
+		<%= link_to_user conversation.receipts.first.receiver, 
+		    { :controller => :users, :action => :show, :id => conversation.last_sender}, 
+		    {:with_avatar => true, :avatar_version => :middle} %>
+		<% else %>
+		<%= link_to_user conversation.originator, 
+		    { :controller => :users, :action => :show, :id => conversation.last_sender}, 
+		    {:with_avatar => true, :avatar_version => :middle} %>
+		<% end %>
+	</div>
+	<div class="content clearfix">
+			<div >
+			  <% if conversation.originator == current_user %> 
+				 发给：<%= link_to_user conversation.receipts.first.receiver, user_path(conversation.receipts.first.receiver) %>
+				<% else %>
+				 来自: <%= link_to_user conversation.originator, user_path(conversation.originator) %>
+				<% end %>
+				<%= truncate(truncate(conversation.last_message.body)) %>
+			</div>
+			<!--
+			<div class="reply_body">
+			 	<%= truncate(conversation.last_message.body) %>
+			</div>
+			-->
+		<p class="text_info">
+			<span>
+				共<%= link_to conversation.count_messages, conversation_path(conversation) %>条私信
+				<i class="W_vline">|</i>
+				<%= link_to "回复", "#form_#{conversation.id}", :class => "reply_conversation" %>
+			</span>
+			<i class="date"><%= "#{conversation.created_at.to_s(:long)} #{time_ago_in_words(conversation.created_at)} "%> 之前</i>
+		</p>
+	</div>
+	<div class="reply_form" id="<%= "form_#{conversation.id}" %>" style="display: none">
+		<%=	render "reply_form", :message => conversation.last_message %>
+	</div>
+</li>

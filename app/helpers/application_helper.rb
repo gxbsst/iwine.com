@@ -132,9 +132,9 @@ module ApplicationHelper
     user.avatar.url(version)
   end
 
-  def messages_path(m)
-    mine_messages_path(m)
-  end
+  # def messages_path(m)
+  #   mine_messages_path(m)
+  # end
 
   def special_comments_list(parent)
     parent.special_comments.each do |s|

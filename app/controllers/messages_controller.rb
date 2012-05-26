@@ -1,5 +1,5 @@
 # encoding: utf-8
-  class Users::MessagesController < ApplicationController
+  class MessagesController < ApplicationController
 
     before_filter :authenticate_user!
     # before_filter :get_mailbox, :get_box, :get_actor
@@ -8,7 +8,7 @@
     # before_filter :get_box
 
     def index
-      redirect_to mine_conversations_path(:box => @box)
+      redirect_to conversations_path(:box => @box)
        @box = params[:box] || 'inbox'
         @messages = current_user.mailbox.inbox if @box == 'inbox'
         @messages = current_user.mailbox.sentbox if @box == 'sent'
@@ -20,11 +20,11 @@
     def show
       if @message = Message.find_by_id(params[:id]) and @conversation = @message.conversation
         if @conversation.is_participant?(@actor)
-          redirect_to mine_conversation_path(@conversation, :box => @box, :anchor => "message_" + @message.id.to_s)
+          redirect_to conversation_path(@conversation, :box => @box, :anchor => "message_" + @message.id.to_s)
           return
         end
       end
-      redirect_to mine_conversations_path(:box => @box)
+      redirect_to conversations_path(:box => @box)
     end
 
     # GET /messages/new
@@ -46,6 +46,7 @@
     # POST /messages
     # POST /messages.xml
     def create
+      # @message = Message.new params[:message]
       if @message.conversation_id
         @conversation = Conversation.find(@message.conversation_id)
         unless @conversation.is_participant?(current_user)
@@ -56,14 +57,14 @@
         unless receipt.errors.empty?
            notice_stickie("不能回复自己.")
         end
-        redirect_to mine_conversation_path(@conversation)
+        redirect_to conversation_path(@conversation)
       else
         unless @message.valid?
           return render :new
         end
         # @message.subject = "user_#{current_user.id}_send"
         receipt = current_user.send_message(@recipient_list, @message.body, "subject_#{current_user.id}", true)
-        redirect_to mine_conversations_path()
+        redirect_to conversations_path()
       end
       # flash[:notice] = "Message sent."
       # redirect_to mine_conversation_path(@conversation)
@@ -107,14 +108,14 @@
         conversations.each { |c| current_user.trash(c) }
         flash[:notice] = "Messages sent to trash."
       end
-      redirect_to mine_messages_path(box: params[:current_box])
+      redirect_to messages_path(box: params[:current_box])
     end
 
     def untrash
       conversation = Conversation.find(params[:id])
       current_user.untrash(conversation)
       flash[:notice] = "Message untrashed."
-      redirect_to mine_messages_path(box: 'inbox')
+      redirect_to messages_path(box: 'inbox')
     end
 
     private
@@ -137,13 +138,12 @@
 
     def check_users
       @message = Message.new params[:message]
-      @recipient_list = []
-      @message.recipients.split(',').each do |s|
-        @recipient_list << User.find_by_username(s.strip) unless s.blank?
-      end
-      @recipient_list
-      redirect_to mine_conversations_path, :notice => "找不到用户#{@message.recipients},请重新发送。" if @recipient_list.blank?
-    end
+       @recipient_list = []
+       @message.recipients.split(',').each do |s|
+         @recipient_list << User.find_by_username(s.strip) unless s.blank?
+       end
+       @recipient_list
+       redirect_to conversations_path, :notice => "找不到用户#{@message.recipients},请重新发送。" if @recipient_list.blank?
+     end
 
-  end
-
+end

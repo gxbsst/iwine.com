@@ -71,7 +71,7 @@
               </ul>
           </div>
           <div class="iw_more">
-          	<%= link_to "去看看他的酒窖", user_cellar_path(l.timeline_event.actor, l.timeline_event.actor)%>
+          	<%= link_to "去看看他的酒窖", cellars_user_path(l.timeline_event.actor, l.timeline_event.actor.cellar)%>
           </div>
     </div>
     
@@ -149,7 +149,7 @@
 							</h2>
             </div>
              <div class="iw_more">
-             	<%= link_to "去看看他的酒窖", user_cellar_path(l.timeline_event.actor, l.timeline_event.actor)%>
+             	<%= link_to "去看看他的酒窖", cellars_user_path(l.timeline_event.actor, l.timeline_event.actor.cellar)%>
              </div>
       </div>
       

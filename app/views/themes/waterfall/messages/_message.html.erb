@@ -1,0 +1,12 @@
+<dl class="<%= message.sender_id == current_user.id ? "talk_l" : "talk_r" %> clearfix">
+	<dt class="userimg">
+		<%= link_to_user message.sender, user_path(message.sender), {:with_avatar => true, :avatar_version => :middle }%>
+	</dt>
+	<dd class="content">
+		<p>	<%= link_to_user message.sender, user_path(message.sender) %>：<%= message.body %></p>
+		<p class="text_info">
+			<i class="date"><%= raw "#{message.created_at.to_s(:long)} &nbsp;&nbsp;"  "#{time_ago_in_words(message.created_at)}" %>之前</i>
+		</p>
+	</dd>
+	<div class="clear"></div>
+</dl>

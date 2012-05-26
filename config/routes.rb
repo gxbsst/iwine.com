@@ -88,9 +88,6 @@ Patrick::Application.routes.draw do
     collection do
       get "register_success"
     end
-     # 私信
-     resources :messages
-     resources :conversations
      # 酒
      resources :wines do
        collection do
@@ -107,6 +104,10 @@ Patrick::Application.routes.draw do
        end
      end
   end
+  
+  # 私信
+  resources :messages
+  resources :conversations
   
   # HOME
   resources :home
