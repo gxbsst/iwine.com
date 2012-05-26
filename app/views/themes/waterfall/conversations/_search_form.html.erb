@@ -1,0 +1,8 @@
+  <%= form_tag(:action => "search") do %>
+    <a href="javascript:void(0)" onclick="$(this).parents('form').submit()", class="search_btn">搜索</a>
+    <input class="text search" name="search" type="text" placeholder="查找联系人或私信内容"/>
+  <% end -%>
+  
+  <%= link_to "#send_message_form", :class => "btn_gray send_message"  do %>
+  <span>发送私信</span>
+  <% end %>

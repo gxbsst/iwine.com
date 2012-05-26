@@ -14,19 +14,24 @@
       <h1 class="main_title">我的私信</h1>
       <div class="clear"></div>
   </div>
+  <div class="path">
+		<%= link_to "返回私信列表", conversations_path %> 》
+	</div>
   
   <div class="message_list">
     <%= render_stickies %>
+    <% if !@conversations.blank? %>
     <ul class="private_list">
       <% @conversations.each do |conversation| %>
       <%= render conversation %>	
       <% end %>
     </ul>
+    <% else %>
+    <p>无搜索记录.</p>
+    <% end %>
   </div>
   
-  <div class="pagination">
-    <%= paginate @conversations, :outer_window => 2 %> 
-  </div>
+
   
 </div>
 

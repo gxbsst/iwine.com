@@ -3,11 +3,13 @@
     <% if conversation.originator == current_user %> 
 		<%= link_to_user conversation.receipts.first.receiver, 
 		    { :controller => :users, :action => :show, :id => conversation.last_sender}, 
-		    {:with_avatar => true, :avatar_version => :middle} %>
+		    {:with_avatar => true, :avatar_version => :middle},
+		    {:size => "50x50"} %>
 		<% else %>
 		<%= link_to_user conversation.originator, 
 		    { :controller => :users, :action => :show, :id => conversation.last_sender}, 
-		    {:with_avatar => true, :avatar_version => :middle} %>
+		    {:with_avatar => true, :avatar_version => :middle},
+		    {:size => "50x50"} %>
 		<% end %>
 	</div>
 	<div class="content clearfix">
@@ -26,7 +28,7 @@
 			-->
 		<p class="text_info">
 			<span>
-				共<%= link_to conversation.count_messages, conversation_path(conversation) %>条私信
+				<%= link_to "共#{conversation.count_messages}条私信", conversation_path(conversation) %>
 				<i class="W_vline">|</i>
 				<%= link_to "回复", "#form_#{conversation.id}", :class => "reply_conversation" %>
 			</span>

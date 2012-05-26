@@ -5,7 +5,7 @@ class ConversationsController < ApplicationController
   before_filter :check_current_subject_in_conversation, :only => [:show, :update, :destroy,:reply]
   def index
     @message = Message.new
-    @conversations = @mailbox.conversations.page(params[:page]).per(9)
+    @conversations = @mailbox.conversations.order("created_at DESC").page(params[:page]).per(9)
     # if @box.eql? "inbox"
     #   @conversations = @mailbox.inbox.page(params[:page]).per(9)
     # elsif @box.eql? "sentbox"
@@ -86,6 +86,33 @@ class ConversationsController < ApplicationController
         end
       }
     end
+  end
+
+  def search
+    @message = Message.new
+    if user = User.find_by_username(params[:search])
+      conditions = ["receipts.receiver_id=? AND (notifications.body like ? OR notifications.sender_id=?)", current_user.id, "%" + params[:search] + "%", user.id]
+    else
+      conditions = ["receipts.receiver_id=? AND (notifications.body like ?)", current_user.id, "%" + params[:search] + "%"]
+    end
+    @receipts = Receipt.all(:joins => "LEFT OUTER JOIN `notifications` ON notifications.id = receipts.notification_id", 
+    :include => [:notification => :conversation],
+    :conditions => conditions)    
+    if !@receipts.blank?
+      @conversations = @receipts.inject([]) do |memo, receipt|
+        memo << receipt.notification.conversation
+      end 
+      #TODO: 加分页
+      # page = params[:page] || 1
+      # if !(@conversations.nil?)
+      #   unless @conversations.kind_of?(Array)
+      #     @conversations = @conversations.page(page).per(8)
+      #   else
+      #     @conversations = Kaminari.paginate_array(@conversations).page(page).per(10)
+      #   end
+      # end
+    end
+
   end
 
   private

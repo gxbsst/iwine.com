@@ -46,11 +46,11 @@
     # POST /messages
     # POST /messages.xml
     def create
-      # @message = Message.new params[:message]
-      if @message.conversation_id
+       @message = Message.new params[:message]
+      if @message.conversation_id # 回复
         @conversation = Conversation.find(@message.conversation_id)
         unless @conversation.is_participant?(current_user)
-          flash[:alert] = "You do not have permission to view that conversation."
+          notice_stickie("你不能回复这个私信。")
           return redirect_to root_path
         end
         receipt = current_user.reply_to_conversation(@conversation, @message.body, nil, true, true, @message.attachment)
@@ -58,11 +58,16 @@
            notice_stickie("不能回复自己.")
         end
         redirect_to conversation_path(@conversation)
-      else
+      else # 新的私信
         unless @message.valid?
           return render :new
         end
-        # @message.subject = "user_#{current_user.id}_send"
+        @message = Message.new params[:message]
+        @recipient_list = []
+        @message.recipients.split(',').each do |s|
+          @recipient_list << User.find_by_username(s.strip) unless s.blank?
+        end
+                
         receipt = current_user.send_message(@recipient_list, @message.body, "subject_#{current_user.id}", true)
         redirect_to conversations_path()
       end
@@ -137,13 +142,14 @@
     end
 
     def check_users
-      @message = Message.new params[:message]
-       @recipient_list = []
-       @message.recipients.split(',').each do |s|
-         @recipient_list << User.find_by_username(s.strip) unless s.blank?
-       end
-       @recipient_list
-       redirect_to conversations_path, :notice => "找不到用户#{@message.recipients},请重新发送。" if @recipient_list.blank?
+      # # @message = Message.new params[:message]
+      #     @recipient_list = []
+      #     @message.recipients.split(',').each do |s|
+      #       @recipient_list << User.find_by_username(s.strip) unless s.blank?
+      #     end
+      #     @recipient_list
+      #    #  binding.pry
+         #  redirect_to conversations_path, :notice => "找不到用户#{@message.recipients},请重新发送。" if @recipient_list.blank?
      end
 
 end
