@@ -61,7 +61,7 @@
    <!------------------------------------------>
    <!-- TODO: big的ICON还未齐全， 请通知肖颖 -->
    <!------------------------------------------>
-   <p><%= link_to_sync_button params[:sns_name], '/friends/new_sns?sns_name=' + params[:sns_name] %> <br />点击按钮绑定账号</p>
+   <p><%= link_to_sync_button params[:sns_name].to_s, '/friends/new_sns?sns_name=' + params[:sns_name].to_s %> <br />点击按钮绑定账号</p>
 </div>
 <% end %>
 <!-- friends end -->

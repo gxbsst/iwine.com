@@ -28,7 +28,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    model.read_attribute( :image ) || Digest::SHA1.hexdigest("#{Time.now.utc}--#{original_filename()}") + '.' + file.extension
+    model.read_attribute( :image ) || Digest::SHA1.hexdigest("#{Time.now.utc}--#{original_filename()}") + '.' + file.extension  if original_filename
   end
 
   def timestamp

@@ -89,11 +89,7 @@ class User < ActiveRecord::Base
 
     if @client[ sns_name ].blank?
       oauth = Users::Oauth.first :conditions => { :user_id => id , :sns_name => sns_name.to_s }
-
-      if oauth.blank?
-        return
-      end
-
+      return if oauth.blank?
       sns_class_name = sns_name.capitalize
       oauth_module = eval( "OauthChina::#{sns_class_name}" )
       @client[ sns_name ] = oauth_module.load( oauth.tokens )

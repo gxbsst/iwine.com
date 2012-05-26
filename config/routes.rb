@@ -24,7 +24,12 @@ Patrick::Application.routes.draw do
        get :vote
     end
   end
-  
+  resources :friends do
+    collection do
+      get :find
+      get :sync
+    end
+  end
   # WINE
   resources :wine_details, :controller => "wine_details", :as => :wines, :path => :wines  do
     member do
@@ -136,6 +141,8 @@ Patrick::Application.routes.draw do
   # resources :friends do 
   # end
   # oauth china
+
+
   match "/friends/:type/sync" => "friends#new", :as => :sync_new
   match "/friends/:type/callback" => "friends#callback", :as => :sync_callback
 

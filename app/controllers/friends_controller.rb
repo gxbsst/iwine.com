@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 class FriendsController < ApplicationController
+  def show
+
+  end
   
   def follow
 
@@ -45,7 +48,6 @@ class FriendsController < ApplicationController
     client = current_user.oauth_client( params[:sns_name] )
     @availabe_sns = current_user.available_sns
     @user_ids = []
-
     if client.present?
       @recommend_friends = current_user.remove_followings client.possible_local_friends
       @authorized = true
