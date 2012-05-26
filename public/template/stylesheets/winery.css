@@ -45,6 +45,8 @@ h1.winery_name_en {font-size:14px;color:#666;font-weight:normal;margin: 0 0 15px
 .winerymain .sidewine .info h3.en a {font-size:12px;font-weight:normal;color:#999;}
 .winerymain .sidewine .info h3.en a:hover {color:#999;text-decoration:none;}
 .winerymain .sidebox .follower li {width:50px;height:50px;float:left;margin: 0 2px 5px 2px;}
+.winerymain .comment_post_star .post_main {width:390px;}
+.winerymain .comment_post_star .post_main textarea {width:370px;}
 
 /*-------------album style----------------*/
 ul.album_list {padding:0 0 0 10px}
