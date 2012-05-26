@@ -44,7 +44,7 @@
     elsif comment.commentable.imageable_type == "Winery"
       winery_photo_path(comment.commentable.imageable, comment.commentable)
     elsif comment.commentable.imageable_type == "Album"
-      user_album_photo_user_path(comment.commentable.user_id, comment.commentable.imageable, comment.commentable)
+      album_photo_show_user_path(comment.commentable.user_id, comment.commentable.imageable, comment.commentable)
     end
     %>
      <%= link_to commentable_path do %>

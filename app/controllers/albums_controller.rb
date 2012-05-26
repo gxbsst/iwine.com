@@ -43,7 +43,7 @@ class AlbumsController < ApplicationController
       if params[:deleted_ids].present?
         Photo.delete params[:deleted_ids].split(',')
       end
-      redirect_to user_album_path(current_user, params[:id])
+      redirect_to albums_user_path(current_user, params[:id])
     end
 
     def new

@@ -11,7 +11,7 @@
       <%= link_to upload_albums_path(:album_id => @album.id), :class => "btn_gray mr5" do %>  
        <span>添加照片</span>
       <% end %>
-      <%= link_to user_album_path(@user, @album.id), :class => "btn_gray" do %>  
+      <%= link_to albums_user_path(@user), :class => "btn_gray" do %>  
       <span>返回相册首页</span>
       <% end %>
   </div>
@@ -21,7 +21,7 @@
 <ul class="photo_list">
   <% @photos.each_with_index do |photo, i| %>
     <li>
-        <%= link_to user_album_photo_user_path(@user, @album.id, photo.id)  do %>
+        <%= link_to album_photo_show_user_path(@user, @album.id, photo.id)  do %>
          <%= image_tag photo.image_url( :thumb ), :class => 'cover' %>
         <% end %>
         

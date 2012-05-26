@@ -13,18 +13,18 @@
         </div>
         <div class="mb20">
           <div class="btn_action">
-            <%= link_to user_album_path(@user, @album.id), :class => [:btn_gray] do  %>
+            <%= link_to album_show_user_path(@user, @album.id), :class => [:btn_gray] do  %>
              <span>返回该相册</span>
             <% end %>
           </div>
           <div class="pre_next">
             <% if previous_photo = previous_page(@album.image_ids, @photo.id) %>
-                <%= link_to user_album_photo_user_path(@user, @album, previous_photo), :class => "btn_gray mr5" do %>
+                <%= link_to album_photo_show_user_path(@user, @album, previous_photo), :class => "btn_gray mr5" do %>
                     <span>前一张</span>
                 <% end %>
             <% end %>
             <% if next_photo = next_page(@album.image_ids, @photo.id) %>
-                <%= link_to user_album_photo_user_path(@user, @album, next_photo), :class => "btn_gray" do %>
+                <%= link_to album_photo_show_user_path(@user, @album, next_photo), :class => "btn_gray" do %>
                     <span>后一张</span>
                 <% end %>
             <% end %>              
@@ -56,14 +56,14 @@
           <ul class="side_album_list">
             <% @other_albums.each do |album| %>
             <li> 
-              <%= link_to user_album_path(@user, album.id) do %>
+              <%= link_to album_show_user_path(@user, album.id) do %>
                 <% if album.cover.present? %>
                   <%= image_tag album.cover.image_url :thumb %>
                 <% else %>
-                  <img src="/assets/base/test/album_cover1.jpg" alt="木有图片" width="190" height="190" />
+                   <%= theme_image_tag "album.jpg", :class => :cover, :width => 150, :height => 150 %> 
                 <% end %>              
               <% end %>
-              <h3><%= link_to album.name, user_album_path(@user, album.id) %></h3>
+              <h3><%= link_to album.name, albums_user_path(@user, album.id) %></h3>
               <p class="info"><%= album.updated_at.to_s(:normal)%></p>
             </li>
             <% end %>

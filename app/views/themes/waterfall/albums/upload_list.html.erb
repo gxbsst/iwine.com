@@ -19,7 +19,7 @@
       <textarea class="photo_des" name="photo[<%= photo.id %>]" cols="" rows=""><%= photo.intro %></textarea>
     </p>
     <p>
-      <%= link_to "删除", delete_photo_mine_albums_path(:photo_id => photo.id), :class => "fancybox_delete_photo fancybox.ajax btn_delete float_r" %>
+      <%= link_to "删除", delete_photo_albums_path(:photo_id => photo.id), :class => "fancybox_delete_photo fancybox.ajax btn_delete float_r" %>
       <label>
         <input class="radio" name="cover_id" type="radio" value="<%= photo.id %>" /> 
         设为封面 
@@ -29,10 +29,11 @@
   <% end %>
   </ul>
   <div class="clear"></div>
+  <div class="align_c"><a href="javascript:save();" class="btn_gray button_gray"><span>保存</span></a></div>
 </div>
 <input type="hidden" name="id" value="<%= params[:id] %>"/>
 <input type="hidden" name="deleted_ids" id="deleted_photo_ids"/>
-<div class="align_c"><a href="javascript:save();" class="btn_gray button_gray"><span>保存</span></a></div>
+
 <% end %>
 <script type="text/javascript">
 var deleted_ids = [];
