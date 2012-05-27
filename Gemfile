@@ -14,8 +14,8 @@ gem 'kaminari'
 #gem 'uploadify'
 gem 'flash_cookie_session'
 gem 'best_in_place'
-# gem 'contacts_cn'
-# gem 'hpricot'
+gem 'contacts_cn'  # 连接email
+gem 'hpricot'
 
 gem "rmagick"
 gem "mini_magick"
@@ -94,7 +94,6 @@ group :assets do
   gem 'compass-rails'
 end
 
-
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -121,6 +120,3 @@ gem 'user_resource_init', :path => 'lib/patrick/user_resource_init'
 
 # 模板
 gem 'themes_for_rails', :path => "lib/gems"
-
-
-
