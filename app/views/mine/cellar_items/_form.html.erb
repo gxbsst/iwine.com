@@ -14,7 +14,7 @@
     </div>
     <div class="optional">
       <label>酒庄</label>
-      <div class="content"><%= @wine.winery.name %></div>
+      <div class="content"><%= @wine.winery.name if @wine.winery%></div>
     </div>
     <div class="optional">
       <label>酒商</label>

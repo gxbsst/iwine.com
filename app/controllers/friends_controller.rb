@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 class FriendsController < ApplicationController
+  def show
+
+  end
   
   def follow
 
@@ -45,7 +48,6 @@ class FriendsController < ApplicationController
     client = current_user.oauth_client( params[:sns_name] )
     @availabe_sns = current_user.available_sns
     @user_ids = []
-
     if client.present?
       @recommend_friends = current_user.remove_followings client.possible_local_friends
       @authorized = true
@@ -109,6 +111,19 @@ class FriendsController < ApplicationController
       @recommend_users = current_user.mail_contacts params[:email], params[:login], params[:password] 
     end
 
+  end
+
+
+  def email_invite
+    email_arr = params[:email_address].to_s.split("\n")
+    if email_arr.blank?
+      redirect_to find_friends_path, :notice => "收件人不能为空！"
+    else
+      email_arr.each do |email|
+        ::UserMailer.invoting_friends(email, params[:description], current_user).deliver
+      end
+      redirect_to user_path current_user
+    end
   end
 
   private
