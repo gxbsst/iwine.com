@@ -12,12 +12,7 @@ module Wines
 
      # Class Methods
      module ClassMethods
-
-       # Wine 项目要用到的公共 class methods
-       def timeline_events
-         TimelineEvent.wine_details
-       end
-       
+       # Wine 项目要用到的公共 class methods       
      end
 
      def region_path_zh(region_tree_id, options = {})

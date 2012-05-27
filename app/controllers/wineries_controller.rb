@@ -2,7 +2,7 @@ class WineriesController < ApplicationController
   before_filter :get_hot_wines, :except => :index
   before_filter :get_winery, :except => [:show, :index]
   def index
-    @timelines = Wines::Detail.timeline_events.page(params[:page] || 1 ).per(6)
+    @timelines = Winery.timeline_events.page(params[:page] || 1 ).per(6)
   end
 
   def show

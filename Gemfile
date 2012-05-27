@@ -14,8 +14,8 @@ gem 'kaminari'
 #gem 'uploadify'
 gem 'flash_cookie_session'
 gem 'best_in_place'
-gem 'contacts_cn'
-gem 'hpricot'
+# gem 'contacts_cn'
+# gem 'hpricot'
 
 gem "rmagick"
 gem "mini_magick"
@@ -68,6 +68,9 @@ gem 'rmmseg-cpp-huacnlee', '0.2.9'
 #gem 'redis-namespace','~> 1.1.0'
 #gem 'redis-search', '0.8.0'
 
+#  查找图片的宽度／高度
+# gem 'dimensions-rails'
+
 group :development, :test do
   gem 'i18n'
   gem 'pry'  # "binding.pry" in action
@@ -79,7 +82,7 @@ group :development, :test do
   #gem 'growl'
   #gem 'ruby-growl'
   gem "uniform_notifier"
-  gem 'slowgrowl'
+  # gem 'slowgrowl'
   gem "thin"
 end
 # Gems used only for assets and not required
