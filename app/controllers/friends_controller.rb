@@ -113,6 +113,19 @@ class FriendsController < ApplicationController
 
   end
 
+
+  def email_invite
+    email_arr = params[:email_address].to_s.split("\n")
+    if email_arr.blank?
+      redirect_to find_friends_path, :notice => "收件人不能为空！"
+    else
+      email_arr.each do |email|
+        ::UserMailer.invoting_friends(email, params[:description], current_user).deliver
+      end
+      redirect_to user_path current_user
+    end
+  end
+
   private
 
   def build_oauth_token_key(name, oauth_token)

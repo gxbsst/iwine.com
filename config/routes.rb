@@ -28,6 +28,12 @@ Patrick::Application.routes.draw do
     collection do
       get :find
       get :sync
+      get :sns
+      get :follow
+      get :new_sns
+    end
+    member do
+      post :email_invite
     end
   end
   # WINE

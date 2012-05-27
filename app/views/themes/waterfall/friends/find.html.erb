@@ -1,54 +1,17 @@
 <% content_for :css do  %>
     <%= theme_stylesheet_link_tag "setting" %>
 <% end %>
-<div class="globel_navi">
-  <ul>
-    <li class="current"><%= link_to "首页", root_url %></li>
-    <li class="arrow"><%= link_to "酒款", wines_path %></li>
-    <li class="last arrow"><%= link_to "酒庄", wineries_path %></li>
-    <div class="clear"></div>
-  </ul>
-</div>
-<div id="wrapper950">
   <div class="whitespace friends">
     <h1 class="main_title">添加好友</h1>
-    <div class="gray_box">
-      <h3>通过社交平台来寻找好友</h3>
-      <p class="snsSearch">
-        <% SNS_SERVERS.each do |sns_name| %>
-           <%= link_to_sns_icon @availabe_sns[sns_name].present?, sns_name, '/friends/sync?sns_name=' + sns_name %>
-        <% end %>
-      </p>
-      <p>
-        <%= link_to sync_friends_path, :class => "btn_gray mr5" do %>
-            <span>搜索全部同步项</span>
-        <% end %>
-        <%= link_to "#", :class => "btn_gray" do %>
-            <span>更改同步设置</span>
-        <% end %>
-      </p>
-    </div>
-
-    <div class="gray_box">
-      <h3>通过邮箱来寻找好友</h3>
-      <ul class="mailSearch">
-         <li>
-           <p><img src="images/common/qqmail.gif" width="140" height="46" alt="QQ Mail" /></p>
-           <%= link_to "#", :class => "btn_gray" do  %>
-            <span>搜寻好友</span>
-           <% end %>
-         </li>
-        <div class="clear"></div>
-      </ul>
-    </div>
+    <%= render :partial => "friends/all_sns" %>
 
     <div class="gray_box invite">
       <h3>通过邮件邀请朋友加入</h3>
-      <%= form_tag :action => "email_invite", :html => {:id => "invote_user"} do %>
+      <%= form_tag :action => "email_invite" do %>
         <p>
           <%= text_area_tag "email_address", nil, :placeholder => '输入邮件地址' %>
           <%= text_area_tag "description", nil,  :placeholder => '输入邀请留言' %>
-          <%= text_field_tag "name", nil, :placeholder => "输入你的姓名" %>
+          <%= text_field_tag "name", current_user.username, :placeholder => "输入你的姓名" %>
         </p>
         <p>
           <%= link_to "javascript:void(0);", :class => "btn_gray save" do %>
@@ -61,7 +24,7 @@
     </div>
 
   </div>
-</div>
+
 <script type="text/javascript" charset="utf-8">
     $('a.save').click(function(){
         $('.invite form').submit();

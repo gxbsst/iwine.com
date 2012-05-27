@@ -102,7 +102,6 @@ module ApplicationHelper
   end
 
   def link_to_sync_button(sns_name, url_or_object, options={})
-    options.merge!({ :class => "button #{sns_name}" })
 
     button_name = 'btn_syn_' + sns_name
     link_to(image_tag("v2/button/#{button_name}.jpg", { :title => button_name }),

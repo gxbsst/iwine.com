@@ -97,7 +97,6 @@ class User < ActiveRecord::Base
         @sns_user_id = oauth.sns_user_id
       end
     end
-
     @client[ sns_name ]
   end
 
