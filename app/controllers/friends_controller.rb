@@ -1,33 +1,29 @@
 # -*- coding: utf-8 -*-
 class FriendsController < ApplicationController
+  before_filter :authenticate_user!
   
   def follow
-
     params[:user_id].split(',').each do |user_id|
       if current_user.is_following( user_id ).blank? && current_user.id != user_id.to_i
-
         friendship = Friendship.new
         friendship.user_id = user_id
         friendship.follower_id = current_user.id
         friendship.save
-
       end
     end
-
     redirect_to request.referer
   end
 
   def unfollow
     friendship = Friendship.first :conditions => { :user_id => params[:user_id] , :follower_id => current_user.id }
-
     if friendship.present?
       friendship.destroy
     end
-
-    redirect_to :action => 'find' 
+   # redirect_to :action => 'find' 
+    redirect_to request.referer
   end
-  
-  # 查找好友
+ 
+   # 查找好友
   def find
     @availabe_sns = current_user.available_sns
   end
@@ -45,7 +41,6 @@ class FriendsController < ApplicationController
     client = current_user.oauth_client( params[:sns_name] )
     @availabe_sns = current_user.available_sns
     @user_ids = []
-
     if client.present?
       @recommend_friends = current_user.remove_followings client.possible_local_friends
       @authorized = true
@@ -60,11 +55,9 @@ class FriendsController < ApplicationController
 
   def delete_sns
     user_oauth = Users::Oauth.first :conditions => { :user_id => current_user.id , :sns_name => params[:sns_name] }
-
     if user_oauth.present?
       user_oauth.delete
     end
-
     redirect_to request.referer
   end
 
@@ -109,6 +102,19 @@ class FriendsController < ApplicationController
       @recommend_users = current_user.mail_contacts params[:email], params[:login], params[:password] 
     end
 
+  end
+
+
+  def email_invite
+    email_arr = params[:email_address].to_s.split("\n")
+    if email_arr.blank?
+      redirect_to find_friends_path, :notice => "收件人不能为空！"
+    else
+      email_arr.each do |email|
+        ::UserMailer.invoting_friends(email, params[:description], current_user).deliver
+      end
+      redirect_to user_path current_user
+    end
   end
 
   private

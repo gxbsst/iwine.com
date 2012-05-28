@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :crop_x, :crop_y, :crop_w, :crop_h, :agree_term
   has_one  :profile, :class_name => 'Users::Profile', :dependent => :destroy
   has_one  :cellar, :class_name => 'Users::WineCellar'
-  has_many :albums, :class_name => 'Album', :foreign_key => 'created_by'
+  has_many :albums, :foreign_key => 'created_by'
   has_many :registers, :class_name => 'Wines::Register'
   has_many :comments, :class_name => "::Comment", :foreign_key => 'user_id', :include => [:user]
   has_many :photo_comments
@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :oauths, :class_name => 'Users::Oauth'
   has_many :time_events
   has_many :wine_followings, :include => :commentable, :class_name => "Comment", :conditions => {:commentable_type => "Wines::Detail", :do => "follow"}
+  has_many :winery_followings, :include => :commentable, :class_name => "Comment", :conditions => {:commentable_type => "Winery", :do => "follow"}  
   has_many :feeds, :class_name => "Users::Timeline", :include => [:ownerable, {:timeline_event => [:actor]}, {:receiverable =>  [:covers, :wine]}], :order => "created_at DESC"
   has_many :followers, :class_name => 'Friendship', :include => :follower do
     def map_user
@@ -54,54 +55,6 @@ class User < ActiveRecord::Base
   def mailboxer_email(message)
     email
   end
-
-   ##################################
-   # 用户资源统计， 如:  藏酒，好友 #
-   ##################################
-
-  # 藏酒
-  def wine_cellar_count
-    ## TODO: 当酒窖未创建时， 会出错， 因此当用户注册帐号时， 请同时创建酒窖、相册等用户资源信息
-    cellar.items.count
-  end
-
-  # 关注的酒
-  def wine_follows_count
-    ## TODO 更改用户评论操作之后，更新以下计算代码
-    comments.count
-  end
-
-  # 关注的酒庄
-  def winery_follows_count
-    ## TODO: 未实现这个功能， 实现之后请更新
-  end
-
-  # 评论
-  def comments_count
-    comments.count
-    ## TODO: 未实现这个功能， 实现之后请更新
-  end
-
-  # 酒评
-  def detail_comment_count
-    ## TODO: 未实现这个功能， 实现之后请更新
-  end
-
-  # 关注的人
-  def user_followes_count
-     followings.count
-  end
-
-  # 粉丝
-  def user_followeds_count
-   
-    followers.count
-  end
-
-  # 相册
-  def albums_count
-    albums.count
-  end
   # accepts_nested_attributes_for :user_profile
   # alias :user_profiles_attribute :user_profile
 
@@ -137,11 +90,7 @@ class User < ActiveRecord::Base
 
     if @client[ sns_name ].blank?
       oauth = Users::Oauth.first :conditions => { :user_id => id , :sns_name => sns_name.to_s }
-
-      if oauth.blank?
-        return
-      end
-
+      return if oauth.blank?
       sns_class_name = sns_name.capitalize
       oauth_module = eval( "OauthChina::#{sns_class_name}" )
       @client[ sns_name ] = oauth_module.load( oauth.tokens )
@@ -149,7 +98,6 @@ class User < ActiveRecord::Base
         @sns_user_id = oauth.sns_user_id
       end
     end
-
     @client[ sns_name ]
   end
 
@@ -203,7 +151,8 @@ class User < ActiveRecord::Base
 
     users
   end
-
+  
+  # 判断是否已经关注某人
   def is_following user_id
     Friendship.first :conditions => { :user_id => user_id , :follower_id => id }
   end

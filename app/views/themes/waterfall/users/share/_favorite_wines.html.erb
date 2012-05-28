@@ -1,0 +1,22 @@
+<% if !@cellar_items.blank? %>
+<% @cellar_items.each_with_index do |item, index| %>
+<span>
+  <%= link_to wine_path(item.wine_detail) do %>
+  <% if index > 2 %>
+  <%= wine_cover_tag(item.wine_detail, 
+      :thumb_name => :thumb, 
+      :width => 50, 
+      :height => 50) %>
+  <% else %>
+  <%= wine_cover_tag(item.wine_detail, 
+      :thumb_name => :thumb, 
+      :width => 201, 
+      :height => 201) %>;
+  <% end %>
+  <% end %>
+</span>
+<% end %>
+<div class="clear"></div>
+<% else %>
+<p>暂时没有藏酒.</p>
+<% end %>

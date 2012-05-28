@@ -7,7 +7,7 @@
 		<%= link_to wine_photos_path(@wine_detail), :class => [:btn_gray, :float_r] do %>
 		<span>返回</span>
 		<% end %>
-    <%= link_to upload_mine_albums_path(:wine_id => @wine_detail.id), :class => [:btn_gray, :float_r, :mr5] do %>
+    <%= link_to upload_albums_path(:wine_id => @wine_detail.id), :class => [:btn_gray, :float_r, :mr5] do %>
       <span>上传照片</span>
     <% end %>
 		<h1 class="wine_name_ch"><%= raw @wine_detail.cname %>的图片</h1>
@@ -16,7 +16,19 @@
 	<div class="wp_space_line ptb30">
 		<div class="album_left">
 			<div class="mb20">
-				<div class="pre_next"><a href="#" class="btn_gray mr5"><span>前一张</span></a><a href="#" class="btn_gray"><span>后一张</span></a></div>
+				<div class="pre_next">
+				  <% if previous_photo = previous_page(@wine_detail.photo_ids, @photo.id) %>
+              <%= link_to wine_photo_path(@wine_detail, previous_photo), :class => "btn_gray mr5" do %>
+                  <span>前一张</span>
+              <% end %>
+          <% end %>
+          <% if next_photo = next_page(@wine_detail.photo_ids, @photo.id) %>
+              <%= link_to wine_photo_path(@wine_detail, next_photo), :class => "btn_gray" do %>
+                  <span>后一张</span>
+              <% end %>
+          <% end %>              
+          
+				</div>
 			</div>
 			<div class="photo">
 				<%= image_tag @photo.image_url(:large), :widht => 440 %>

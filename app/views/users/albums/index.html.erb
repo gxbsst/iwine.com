@@ -2,34 +2,45 @@
 <%= render "/mine/sub_nav", :action => params[:action] %>
 <div class="clear"></div>
 
-<div class="title_btn clearfix">
-  <a href="<%= url_for :action => 'new' %>" class="new_album fancybox.ajax button_gray float_r"><span>新建相册</span></a>
-  <%= link_to upload_mine_albums_path(), :class => "button_gray float_r mr5" do %>
-	<span>添加照片</span>
-  <% end %>
-  <h2><%= @user.username %>的相册 <span class="count_b">(共<%= @albums.total_count %>个)</span></h2>
+<div class="title_btn">
+      <div class="btn_action">
+        <a href="<%= url_for :action => 'upload' %>" class="btn_gray mr5">
+          <span>添加照片</span>
+        </a>
+        <a href="<%= url_for :action => 'new' %>" class="new_album fancybox.ajax btn_gray">
+          <span>创建相册</span>
+        </a>
+      </div>
+      <h1>我的相册 <span class="font12">(共<%= @albums.total_count %>个)</span></h1>
+      <div class="clear"></div>
 </div>
-<ul class="album_list clearfix">
+
+
+
+
+<ul class="album_list">
   <% @albums.each do |album| %>
-  <li>
-    <div class="pic">
-      
-	
-        <% if album.cover.present? %>
-        <%= link_to image_tag(album.cover.image_url :normal), user_album_path(@user.id,album)  %>
+       	<li> 
+          <a href="<%= album.id %>">
+            <% if album.cover.present? %>
+        <%= image_tag album.cover.image_url( :normal), :class => 'cover' %>
         <% else %>
-		<%= link_to image_tag("base/test/album_cover1.jpg", :alt => "木有图片", :width => 190, :height => 190), 
-			user_album_path(@user.id,album)  %>
+        <img class="cover" src="/assets/base/test/album_cover1.jpg" alt="木有图片" width="190" height="190" />
         <% end %>
-      </a>
-    </div>
-    <h3><%= link_to album.name , user_album_path(@user.id,album) %></h3>
-    <div class="album_info"><%= album.photos_num %>张照片 2012-1-28更新<br/><%= album.viewed_num %>浏览 | <%= album.commented_num %>评论 | <%= album.liked_num %>喜欢</div>
-  </li>
+          </a>
+          <h2>
+            <%= link_to album.name , "#{album.id}"  %>
+          </h2>
+          <p class="info"><%= album.photos_num %>张照片 2012-1-28更新<br/>
+          <%= album.viewed_num %>浏览 | <%= album.commented_num %>评论 | 2赞</p>
+        </li>
   <% end %>
-
-
+  <div class="clear"></div>
 </ul>
+
+
+
+
 <div class="clear"></div>
 <div class="pagination">
  <%= paginate @albums, :outer_window => 2 %>

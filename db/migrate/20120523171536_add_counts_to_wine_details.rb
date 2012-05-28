@@ -17,13 +17,13 @@ class AddCountsToWineDetails < ActiveRecord::Migration
     add_column :wineries, :followers_count, :integer, :limit => 11, :default => 0
 
     add_column :users, :photos_count, :integer, :limit => 11, :default => 0
-    add_column :users, :wine_followings_count, :integer, :limit => 11, :default => 0
-    add_column :users, :winery_followings_count, :integer, :limit => 11, :default => 0
+    add_column :users, :wine_followings_count, :integer, :limit => 11, :default => 0 #关注的酒
+    add_column :users, :winery_followings_count, :integer, :limit => 11, :default => 0 #关注的酒庄
     add_column :users, :comments_count, :integer, :limit => 11, :default => 0
     add_column :users, :tasting_notes_count, :integer, :limit => 11, :default => 0
     add_column :users, :followings_count, :integer, :limit => 11, :default => 0
     add_column :users, :followers_count, :integer, :limit => 11, :default => 0
-    add_column :users, :albums_count, :integer, :limit => 11, :default => 0
+    add_column :users, :albums_count, :integer, :limit => 11, :default => 3 #默认初始化三个相册
 
     add_column  :albums, :photos_count, :integer, :limit => 11, :default => 0
     add_column :comments, :children_count, :integer, :limit => 11, :default => 0

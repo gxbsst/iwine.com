@@ -1,0 +1,65 @@
+<!-- 酒评论带评分 -->
+<ul class="comment_list">
+ <% @comments.each do |comment| %> 
+ <% if comment.commentable_type == "Wines::Detail" %>
+<li>
+    <div class="pic">
+     <%= link_to wine_path(comment.commentable) do %>
+        <%= wine_cover_tag comment.commentable, :thumb_name => :thumb, :width => 70, :height => 70 %>
+      <% end %>
+    </div>
+      <div class="main">
+        <div class="winename">
+          评论了酒: 
+          <%= link_to comment.commentable.cname, wine_path(comment.commentable) %>
+          <span class="date"><%= comment.created_at.to_s(:normal)%></span><span class=" star_s3_h"></span>
+        </div>
+        <div class="content"><%= comment.body %></div>
+    </div>
+</li>
+<!-- 酒庄评论 -->
+<% elsif  comment.commentable_type == "Winery"%>
+<li>
+    <div class="pic">
+     <%= link_to winery_path(comment.commentable) do %>
+        <%= image_tag comment.commentable.logo_url, :thumb_name => :thumb, :width => 70, :height => 70 %>
+      <% end %>
+    </div>
+      <div class="main">
+        <div class="winename">
+          评论了酒庄: 
+          <%= link_to comment.commentable.name_zh, winery_path(comment.commentable) %>
+          <span class="date"><%= comment.created_at.to_s(:normal)%></span><span class=" star_s3_h"></span>
+        </div>
+        <div class="content"><%= comment.body %></div>
+    </div>
+</li>
+<!-- 图片评论 -->
+<% elsif  comment.commentable_type == "Photo"%>
+<li>
+    <div class="pic">
+    <% 
+    commentable_path = if comment.commentable.imageable_type == "Wines::Detail"
+      wine_photo_path(comment.commentable.imageable, comment.commentable)
+    elsif comment.commentable.imageable_type == "Winery"
+      winery_photo_path(comment.commentable.imageable, comment.commentable)
+    elsif comment.commentable.imageable_type == "Album"
+      album_photo_show_user_path(comment.commentable.user_id, comment.commentable.imageable, comment.commentable)
+    end
+    %>
+     <%= link_to commentable_path do %>
+        <%= image_tag comment.commentable.image_url, :thumb_name => :thumb, :width => 70, :height => 70 %>
+      <% end %>
+    </div>
+      <div class="main">
+        <div class="winename">
+          评论了图片
+          <span class="date"><%= comment.created_at.to_s(:normal)%></span><span class=" star_s3_h"></span>
+        </div>
+        <div class="content"><%= comment.body %></div>
+    </div>
+</li>
+<% end %>
+<% end %>
+</ul>
+

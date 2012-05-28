@@ -1,0 +1,29 @@
+<div class="whitespace">
+  <div id="hp">
+    <%= render "users/sub_nav", :action => params[:action] %>
+    <div class="clear"></div>
+    <div class="content">
+      <div class="left">
+        <div class="title_btn">
+          <h1>关注的酒 <span class="font_12 more">(共 <%= @user.wines_count %> 支)</span> </h1>
+        </div>
+        <%= render "users/share/wine_follows" %>
+        <div class="pagination">
+          <%= paginate @comments %>
+          <!-- pagination  end   -->
+        </div>      
+      </div>
+      <div class="right">
+        <div class="sidebox">
+          <div class="title"><h3>热门酒款</h3></div>
+          <div class="main">
+            <%= render "users/share/most_wine_follows" %>
+          </div>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>
+
+

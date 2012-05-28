@@ -1,68 +1,28 @@
-<div class="friends">
-  <div id="main_t" class="clearfix">
-    <h1>添加好友</h1>
-    <div class="clear"></div>
-  </div>
-
-  <div class="box box_1">
-    <h3>通过社交平台寻找好友</h3>
-    <% if SNS_SERVERS.present? %>
-    <ul>
-      <% SNS_SERVERS.each do |sns_name| %>
-      <li>
-        <% if @availabe_sns[sns_name].present? %>
-          <%= link_to_sns_icon true, sns_name, '/friends/sync?sns_name=' + sns_name %>
-        <% else %>
-          <%= link_to_sns_icon false, sns_name, '/friends/sync?sns_name=' + sns_name %>
-        <% end %>
-      </li>
-      <% end %>
-    </ul>
-    <% end %>
-    <div class="buttons">
-      <%= link_to_button "search_all_syncs", "/" %>
-      <%= link_to_button "syncs_settings", "/friends/sns" %>
-    </div>
-    <!-- .box end -->
-  </div>
-  <div class="clear"> </div>
-
-<% if @authorized %>
-<div class="result">
-<table width="100%" cellspacing="0" cellpadding="0" border="0">
-  <tr>
-    <td valign="middle" width="100px" >
-      共找到<%= @recommend_friends.length %>个好友
-    </td>
-    <td valign="top">
-      <% if @recommend_friends.length > 0 %>
-      <%= link_to_button "add_all_friends", "/friends/follow?user_id=" + @user_ids.join(',') %>
-      <% end %>
-      <%= link_to_button "chose_another_method", "/" %>
-    </td>
-  </tr>
-</table>
-<div class="person">
-  <% @recommend_friends.each do|friend| %>
-  <div class="person_item">
-    <p class="avatar">  <%= link_to image_tag(friend.sns_info[:avatar],  :width => "60px", :height => "60px"), "/" %> </p>
-    <p class="name"> <%= link_to friend.user.username, '/friends/follow?user_id=' + friend.user_id.to_s %>
-    <p class="button"> <%= link_to_button "add_friend", '/friends/follow?user_id=' + friend.user_id.to_s %>
-    <!-- person item end -->
-  </div>
-  <% end %>
-  <div class="clear"> </div>
-  <!-- person end -->
-</div>
-</div>
-<% else %>
-<div class="sync">
-   <h3>您还没有设置<%= params[:sns_name] %>帐号</h3>
-   <!------------------------------------------>
-   <!-- TODO: big的ICON还未齐全， 请通知肖颖 -->
-   <!------------------------------------------>
-   <p><%= link_to_sync_button params[:sns_name], '/friends/new_sns?sns_name=' + params[:sns_name] %> <br />点击按钮绑定账号</p>
-</div>
+<% content_for :css do  %>
+    <%= theme_stylesheet_link_tag "setting" %>
 <% end %>
-<!-- friends end -->
+
+<div class="whitespace friends">
+  <h1 class="main_title">添加好友</h1>
+  <%= render "friends/all_sns" %>
+
+  <div class="mt20">
+    <% if @authorized %>
+        <p class="mb30">
+          <span class="font14">共找到<%= @recommend_friends.length %>好友</span>
+          <%= link_to follow_friends_path(:user_id=> @user_ids.join(',')), :class => "btn_gray mr5" do %>
+              <span>全部加为好友</span>
+          <% end %>
+          <%= link_to find_friends_path(), :class => "btn_gray" do %>
+              <span>选择其它方式寻找好友</span>
+          <% end %>
+        </p>
+        <%= render :partial => "friends/friend" %>
+    <% else %>
+        <p class="mb30"><span class="font14">你还没有设置<%= params[:sns_name] %>账号</span></p>
+        <div class="align_c">
+          <%= link_to_sync_button params[:sns_name].to_s, new_sns_friends_path(:sns_name => params[:sns_name]) %>
+        </div>
+    <% end %>
+  </div>
 </div>

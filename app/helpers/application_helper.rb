@@ -40,19 +40,20 @@ module ApplicationHelper
     unless object.covers.first.nil?
       image_tag object.covers.first.image_url(options[:thumb_name]), options
     else
-      image_tag "base/test/win_50p.jpg", options
+      theme_image_tag "wine_img.jpg", options
     end
   end
 
   def wine_waterfall_image_tag(object, options = {})
     unless object.covers.first.nil?
-      options[:width] = object.covers.first.width
-      options[:height] = object.covers.first.height
-      image_tag object.covers.first.image_url(options[:thumb_name]), options
+      options[:thumb_name] = :middle_x unless options.has_key? :thumb_name
+      # options[:width] = object.covers.first.width
+      # options[:height] = object.covers.first.height
+      image_tag object.covers.first.image_url(options[:thumb_name])
     else
       options[:width] = 200
       options[:height] = 200
-      image_tag "v2/avatar_default_bg.png", options
+      theme_image_tag "wine_img.jpg", options
     end
   end
 
@@ -61,7 +62,7 @@ module ApplicationHelper
     if object.avatar.respond_to? "image_url"
       image_tag object.avatar.image_url( options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt]
     else
-      image_tag "base/test/user_img50.jpg", :width => options[:width], :height => options[:height], :alt => options[:alt]
+      theme_image_tag "userpic.jpg", :width => options[:width], :height => options[:height], :alt => options[:alt]
     end
   end
 
@@ -102,7 +103,6 @@ module ApplicationHelper
   end
 
   def link_to_sync_button(sns_name, url_or_object, options={})
-    options.merge!({ :class => "button #{sns_name}" })
 
     button_name = 'btn_syn_' + sns_name
     link_to(image_tag("v2/button/#{button_name}.jpg", { :title => button_name }),
@@ -132,9 +132,9 @@ module ApplicationHelper
     user.avatar.url(version)
   end
 
-  def messages_path(m)
-    mine_messages_path(m)
-  end
+  # def messages_path(m)
+  #   mine_messages_path(m)
+  # end
 
   def special_comments_list(parent)
     parent.special_comments.each do |s|
@@ -191,5 +191,27 @@ module ApplicationHelper
   def wine_default_image(version)
     return theme_image_tag("avatar_default_bg_#{version.to_s}.png") if version.present?
     theme_image_tag("avatar_default_bg.png")
+  end
+  
+  def wine_label_tag(wine, options = {})
+      unless wine.label.nil?
+        options[:thumb_name] = if options.has_key? :thumb_name 
+          options[:thumb_name]
+        else
+          "thumb"
+        end
+        image_tag wine.label.filename_url(options[:thumb_name]), options
+      else
+        theme_image_tag "wine_img.jpg", options
+      end    
+  end
+  
+  # 主要为了在User Controller 判断是否为当前用户
+  def is_login_user?(user)
+    if user_signed_in?
+      @user == current_user
+    else
+      false
+    end
   end
 end

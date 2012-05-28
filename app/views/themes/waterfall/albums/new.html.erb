@@ -1,0 +1,28 @@
+<div class="popup_header">
+  <a href="javascript:void(0);" onclick="$.fancybox.close(true);" class="close"></a>
+  <h3 class="title"> <%= t :new_album %> </h3>
+</div>
+<div class="popup_content">
+  <%= form_for @album, :url => {:action => 'new'}, :html => {:id => 'new_album_form', :class => 'new_album_form'} do |f| %>
+	<div class="creat_new">
+    <table width="90%" border="0" align="center" cellpadding="5" cellspacing="5">
+      <tr>
+        <th><%= f.label :name %></th>
+        <td>
+            <%= f.text_field :name, :class => 'comment text name' %>
+        </td>
+      </tr>
+      <tr>
+        <th valign="top"><%= f.label :intro %></th>
+        <td>
+          <%= f.text_area :intro, :class => 'comment', :size => "45x5", :width => 245 %>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><a href="javascript:$('#new_album_form').submit();" class="button_gray float_l mr5"><span><%= t :add %></span></a><a href="javascript:$.fancybox.close(true);" class="button_gray float_l"><span><%= t :cancle %></span></a></td>
+      </tr>
+    </table>
+  </div>
+  <% end %>
+</div>

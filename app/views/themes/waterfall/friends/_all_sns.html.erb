@@ -1,0 +1,16 @@
+<div class="gray_box">
+  <h3>通过社交平台来寻找好友</h3>
+  <p class="snsSearch">
+    <% SNS_SERVERS.each do |sns_name| %>
+        <%= link_to_sns_icon @availabe_sns[sns_name].present?, sns_name, '/friends/sync?sns_name=' + sns_name %>
+    <% end %>
+  </p>
+  <p>
+    <%= link_to sync_friends_path, :class => "btn_gray mr5" do %>
+        <span>搜索全部同步项</span>
+    <% end %>
+    <%= link_to "#", :class => "btn_gray" do %>
+        <span>更改同步设置</span>
+    <% end %>
+  </p>
+</div>

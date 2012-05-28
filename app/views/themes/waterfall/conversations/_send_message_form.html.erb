@@ -1,0 +1,26 @@
+<h3>发送私信</h3>
+<%= form_for message, :url => messages_path(), :validate => true do |f| %>
+<table border="0" cellspacing="10" cellpadding="5">
+	<tr>
+		<td class="label">
+			<span class="red">*</span>发送给:
+		</td>
+		<td class="text_input">
+			<%= f.text_field :recipients, data: {autocomplete_source: '/api/users/names'}, :class => "text", :value => nil %>		
+			<i>请输入用户昵称</i>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" class="label">
+			<span class="red">*</span>内容:
+		</td>
+		<td class="text_area">
+			<%= f.text_area :body, :size => "45x5" %> <br />
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><%= f.submit("发送") %></td>
+	</tr>
+</table>
+<%  end -%>

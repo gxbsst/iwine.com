@@ -14,8 +14,8 @@ gem 'kaminari'
 #gem 'uploadify'
 gem 'flash_cookie_session'
 gem 'best_in_place'
-gem 'contacts_cn'
-gem 'hpricot'
+# gem 'contacts_cn'  # 连接email
+# gem 'hpricot'
 
 gem "rmagick"
 gem "mini_magick"
@@ -62,11 +62,14 @@ gem 'acts_as_votable', :path => "lib/gems"
 gem "timeline_fu", :path => "lib/gems"
 
 ## redis_search
-gem 'redis','>= 2.1.1'
+#gem 'redis','>= 2.1.1'
 gem 'chinese_pinyin', '0.4.1'
 gem 'rmmseg-cpp-huacnlee', '0.2.9'
-gem 'redis-namespace','~> 1.1.0'
-gem 'redis-search', '0.8.0'
+#gem 'redis-namespace','~> 1.1.0'
+#gem 'redis-search', '0.8.0'
+
+#  查找图片的宽度／高度
+# gem 'dimensions-rails'
 
 group :development, :test do
   gem 'i18n'
@@ -79,7 +82,7 @@ group :development, :test do
   #gem 'growl'
   #gem 'ruby-growl'
   gem "uniform_notifier"
-  gem 'slowgrowl'
+  # gem 'slowgrowl'
   gem "thin"
 end
 # Gems used only for assets and not required
@@ -90,7 +93,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem 'compass-rails'
 end
-
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -118,6 +120,3 @@ gem 'user_resource_init', :path => 'lib/patrick/user_resource_init'
 
 # 模板
 gem 'themes_for_rails', :path => "lib/gems"
-
-
-

@@ -12,7 +12,7 @@ class Users::Profile < ActiveRecord::Base
 
   # validates :qq, :presence => false, :allow_blank => true, :numericality => true, :on => :update
 
-  validates :username, :presence => true, :on => :update
+  validates :username, :hometown, :presence => true, :on => :update
 
   delegate :username, :to => :user
   delegate :email, :to => :user

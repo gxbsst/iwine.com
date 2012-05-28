@@ -23,11 +23,11 @@ class CommentsController < ApplicationController
     else
       order = "votes_count DESC, created_at DESC"
     end
-    @comments  =  ::Comment.all(:include => [:user],
+    @comments  =  @commentable.comments.all(:include => [:user],
     # :joins => :votes,
     :joins => "LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id",
     :select => "comments.*, count(votes.id) as votes_count",
-    :conditions => ["commentable_id=? AND parent_id IS NULL", @commentable.id ], :group => "comments.id",
+    :conditions => ["parent_id IS NULL"], :group => "comments.id",
     :order => order )
     page = params[:params] || 1
 
@@ -40,11 +40,12 @@ class CommentsController < ApplicationController
     end
 
     new_normal_comment
-    
-    if @resource == "Wines::Detail"
-      @wine_detail = @commentable
-      @wine      = @wine_detail.wine
-      render "wine_details/comments/index"
+
+    case @resource
+      when "Wines::Detail"
+        render_wine_comments
+      when "wineries"
+        render_winery_comments
     end
 
   end
@@ -146,5 +147,17 @@ class CommentsController < ApplicationController
     if params[:do] == "follow" && !@commentable.is_followed?(@user)
       redirect_to(@commentable_path, :notice => "请先关注")
     end
+  end
+
+  def render_wine_comments
+    @wine_detail = @commentable
+    @wine = @wine_detail.wine
+    render "wine_comments_list"
+  end
+  def render_winery_comments
+    @winery = @commentable
+    @hot_wines = Wines::Detail.hot_wines(:order => "desc", :limit => 5)
+    @users = @winery.followers(:limit => 16)#关注酒庄的人
+    render "winery_comments_list"
   end
 end

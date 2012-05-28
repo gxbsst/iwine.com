@@ -34,9 +34,48 @@
       </div>
       <div class="iw_more">
 				<%= link_to  wine_comments_path(l.secondary_actor) do %>
-				共<%= l.secondary_actor.comments_count %>条评论
+				共<%= l.secondary_actor.all_comments_count %>条评论
 				<% end %>
 				</div>
+</div>
+<!-- 酒被关注 -->
+<% elsif l.event_type == "new_follow" %>
+<div class="iw item">
+    <div class="iw_img">
+      <%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), wine_path(l.secondary_actor) %>
+    </div>
+      <div class="iw_info">
+          <h1>
+            <%= raw link_to l.secondary_actor.cname, wine_path(l.secondary_actor) %>
+          </h1>
+          <h2>
+            <%= raw link_to l.secondary_actor.ename, wine_path(l.secondary_actor) %>
+          </h2>
+          <p class="iw_action">这支酒被关注.</p>
+      </div>
+      <div class="iw_main">
+        <ul>
+           <% l.secondary_actor.comments.recent(6).each do |comment|%>
+            <li>
+                <div class="left">
+                  <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true), {:with_avatar => true, :avatar_version => :thumb}, {:width => 30, :height => 30} %>
+                </div>
+                  <div class="right">
+                    <p class="username">
+                      <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true) %>
+                    </p>
+                      <p class="content"><%= comment.body %></p>
+                  </div>
+                  <div class="clear"></div>
+              </li>
+            <% end %>
+         </ul>
+      </div>
+      <div class="iw_more">
+        <%= link_to  wine_comments_path(l.secondary_actor) do %>
+        共<%= l.secondary_actor.all_comments_count  %>条评论
+        <% end %>
+        </div>
 </div>
 <!-- 关注的酒被加入酒窖 -->
 <% elsif l.event_type == "add_to_cellar" %>
@@ -68,7 +107,7 @@
           </ul>
       </div>
       <div class="iw_more">
-      	<%= link_to "去看看他的酒窖", user_cellar_path(l.actor, l.actor)%>
+      	<%= link_to "去看看他的酒窖", cellars_user_path(l.actor, l.actor.cellar)%>
       </div>
 </div>
 

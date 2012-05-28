@@ -24,7 +24,18 @@ Patrick::Application.routes.draw do
        get :vote
     end
   end
-  
+  resources :friends do
+    collection do
+      get :find
+      get :sync
+      get :sns
+      get :follow
+      get :new_sns
+    end
+    member do
+      post :email_invite
+    end
+  end
   # WINE
   resources :wine_details, :controller => "wine_details", :as => :wines, :path => :wines  do
     member do
@@ -41,21 +52,7 @@ Patrick::Application.routes.draw do
       collection do
         get :cancle_follow 
       end
-    end
-    
-    # resources :comments, :controller => "wine_details/comments" do
-    #   member do 
-    #     # 自定义actions
-    #     get :vote
-    #     match "reply", :via => [:get, :post]    
-    #   end
-    #   collection do 
-    #     match "follow", :via => [:get, :post]
-    #     match "comment", :via => [:get, :post]
-    #     get :cancle_follow 
-    #     get :add_to_cellar
-    #   end
-    # end
+    end    
     resources :photos
   end
   
@@ -66,69 +63,62 @@ Patrick::Application.routes.draw do
       get "vote"
     end
   end
-  # MINE
-  namespace :mine do
-    # 相册
-    resources :albums do
-      # 自定义actions,albums后面不带id 
-      collection do 
-        match "upload", :via => [:get, :post]
-        match 'upload_list', :via => [:get, :post]
-        match 'save_upload_list', :via => [:get, :post]
-        match 'photo_comment', :via => [:get, :post]
-        match 'delete_photo', :via => [:get, :post]
-        match 'update_photo_intro', :via => [:put]
-      end
-
-      member do
-        match 'photo', :via => [:get, :post]
-      end
-    end
-    # 酒窖
-    resources :cellars do
-       resources :cellar_items, :controller => "cellar_items", :path => :items, :as => "items" do
-         collection do
-           get :add
-         end
-       end
-    end
-    # 私信
-    resources :messages
-    resources :conversations
-    # 酒
-
-    resources :wines do
-      collection do
-        get :add
-      end
-
-    end
-  end
+  # 相册
+   resources :albums do
+     # 自定义actions,albums后面不带id 
+     collection do 
+       match "upload", :via => [:get, :post]
+       match 'upload_list', :via => [:get, :post]
+       match 'save_upload_list', :via => [:get, :post]
+       match 'photo_comment', :via => [:get, :post]
+       match 'delete_photo', :via => [:get, :post]
+       match 'update_photo_intro', :via => [:put]
+     end
+     member do
+       get "vote"
+       match 'delete', :via => [:post, :get]
+       match 'edit', :via => [:put, :get]
+     end
+   end
   
   # USER
   resources :users do 
+    member do 
+      match "wine_follows", :via => [:get]
+      match "winery_follows", :via => [:get]
+      match "comments", :via => [:get]
+      match "followings", :via => [:get]
+      match "followers", :via => [:get]
+      # Album
+      match "albums", :via => [:get], :to => "albums#index"
+      match "albums/:album_id", :via => [:get], :to => "albums#show", :as => :album_show
+      match "albums/:album_id/photo/:photo_id", :via => [:get], :to => "albums#photo", :as => :album_photo_show
+      # Cellars
+      match "cellars/:cellar_id", :via => [:get], :to => "cellars#show", :as => :cellars
+    end
     collection do
       get "register_success"
     end
-    member do
-      get "wine_follows"
-      get "winery_follows"
-      get "comments"
-      get "followings"
-      get "followers"
-    end
-    resources :comments
-    # 相册
-    resources :albums, :controller => "users/albums" do
-     collection do 
-        match 'photo_comment', :via => [:get, :post]
-      end 
-    end
-
-    
-    # 酒窖
-    resources :cellars, :controller => "users/cellars" 
+     # 酒
+     resources :wines do
+       collection do
+         get :add
+       end
+     end
   end
+  
+  # 酒窖
+  resources :cellars do
+     resources :cellar_items, :path => :items, :as => "items" do
+       collection do
+         get :add
+       end
+     end
+  end
+  
+  # 私信
+  resources :messages
+  resources :conversations
   
   # HOME
   resources :home
@@ -136,6 +126,8 @@ Patrick::Application.routes.draw do
   # resources :friends do 
   # end
   # oauth china
+
+
   match "/friends/:type/sync" => "friends#new", :as => :sync_new
   match "/friends/:type/callback" => "friends#callback", :as => :sync_callback
 
@@ -143,6 +135,7 @@ Patrick::Application.routes.draw do
   resources :wineries do
     member do
       get "wines_list"
+      get "followers_list"
     end
     resources :photos
     resources :comments, :controller => "comments" do

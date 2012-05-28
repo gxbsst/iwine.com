@@ -1,0 +1,30 @@
+<ul class="winery_list">
+  
+   <% @comments.collect{|i| i.commentable }.each do |winery| %>
+  <li>
+  	<div class="logo">
+  	  <%= link_to winery_path(winery) do  %>
+      <%= image_tag winery.logo_url(:thumb), :widht => 100, :height => 100 %>
+  	  <% end %>
+  	</div>
+      <div class="meta">
+      	<h1 class="zh">
+      	  <%= link_to winery.name_zh, winery_path(winery) %>
+        </h1>
+        <h1 class="en">
+           <%= link_to winery.name_en, winery_path(winery) %>
+        </h1>
+          <p class="mt10">地区：<%= winery.region_path_zh(winery.region_tree_id, :connector => "<") %>(<%= winery.region_path_en(winery.region_tree_id, :connector => "<") %>)
+            <br />
+            地址：<%= winery.address %>
+            <br />
+            官方网站：<%= link_to winery.official_site, winery.html_official_site, :target => "_blank" %><br />
+            电子邮件：<%= mail_to winery.email, winery.email %><br />
+            电话：<%= winery.cellphone %>
+            <br />
+        传真：<%= winery.fax %></p>
+      </div>
+  </li>
+	<% end %>
+</ul>
+

@@ -1,0 +1,18 @@
+<ul class="sidewine">
+  <% @hot_wines.each do |wine|%>
+  <li>
+    <%= link_to wine_path(wine) do %>
+    <%= wine_cover_tag wine, :thumb_name => :thumb, :width => 70, :height => 70 %>
+    <% end %>
+    <div class="info">
+    <h3 class="zh">
+      <%= link_to wine.cname, wine_path(wine) %>
+    </h3>
+    <h3 class="en">
+      <%= link_to wine.ename, wine_path(wine) %>
+    </h3> 
+    </div>     
+  </li>
+  <% end %>
+  <div class="clear"></div>
+<ul>

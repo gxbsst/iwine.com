@@ -15,7 +15,8 @@ jQuery ->
   $('#variety_name').autocomplete
     source: $('#variety_name').data('autocomplete-source')
 
-
+  $("#message_recipients").autocomplete
+      source: $("#message_recipients").data("autocomplete-source")
 
 
 

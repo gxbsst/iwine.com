@@ -22,20 +22,14 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_locale
 
-  def index
-
-  end
 
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
   end
 
   private
-  def require_user
-    redirect_to root_url, :notice => "登录后才能执行此操作" unless current_user
-  end
-
-  def get_mine
+  
+  def get_current_user
     @user = current_user
   end
 

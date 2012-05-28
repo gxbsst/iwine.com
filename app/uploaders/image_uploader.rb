@@ -28,7 +28,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    model.read_attribute( :image ) || Digest::SHA1.hexdigest("#{Time.now.utc}--#{original_filename()}") + '.' + file.extension
+    model.read_attribute( :image ) || Digest::SHA1.hexdigest("#{Time.now.utc}--#{original_filename()}") + '.' + file.extension  if original_filename
   end
 
   def timestamp
@@ -93,7 +93,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   def store_geometry
     manipulate! do |img|
       if model
-        Photo.update_all("width = #{img[:width]}, height = #{img[:height]} ", "id = #{model.id}")
+        Photo.update_all("width = #{img[:width]}, height = #{img[:height]} ", "id = '#{model.id}'")
       end
       img = yield(img) if block_given?
       img

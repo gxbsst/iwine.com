@@ -19,7 +19,7 @@ class WineryUploader < CarrierWave::Uploader::Base
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   def default_url
-    "/images/fallback/" + [version_name, "default.png"].compact.join('_')
+   "/assets/base/" + [version_name, "wine_default.jpg"].compact.join('_')
   end
 
   # Process files as they are uploaded:
@@ -43,7 +43,7 @@ class WineryUploader < CarrierWave::Uploader::Base
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def filename
-    model.read_attribute(:logo) || Digest::SHA1.hexdigest("#{Time.now.utc}--#{original_filename()}") + '.' + file.extension
+    model.read_attribute(:logo) || Digest::SHA1.hexdigest("#{Time.now.utc}--#{original_filename()}") + '.' + file.extension   if original_filename
   end
 
 end

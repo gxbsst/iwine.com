@@ -1,0 +1,22 @@
+<% if !@following_wines.blank? %>
+<% @following_wines.collect{|i| i.commentable }.each_with_index do |wine, index| %>
+<span>
+  <%= link_to wine_path(wine) do %>
+  <% if index > 1 %>
+  <%= wine_cover_tag(wine, 
+      :thumb_name => :thumb, 
+      :width => 50, 
+      :height => 50) %>
+  <% else %>
+  <%= wine_cover_tag(wine, 
+      :thumb_name => :thumb, 
+      :width => 201, 
+      :height => 201) %>
+  <% end %>
+  <% end %>
+</span>
+<% end %>
+<div class="clear"></div>
+<% else %>
+<p>暂时没有关注的酒.</p>
+<% end %>

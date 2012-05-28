@@ -14,7 +14,6 @@ class SettingsController < ApplicationController
       ## 处理配置信息
       # set_config
       ## 处理所在地信息
-      set_living_city_id
       if current_user.update_attribute(:username, params[:users_profile][:username]) &&  @profile.update_attributes(params[:users_profile])
         notice_stickie("更新成功.")
       end
@@ -93,6 +92,7 @@ class SettingsController < ApplicationController
 
   def avatar
     @title = "设置头像"
+    
     # 保存图片
     if request.put?
       if save_avatar
@@ -115,19 +115,6 @@ class SettingsController < ApplicationController
 
   def set_config
     params[:config].each {|k,v| @profile.config[k] = v }
-  end
-
-  def set_living_city_id
-
-    regions = params[:region]
-    regions.reject!{ |k,v| v.blank? }
-    return true if regions.blank?
-
-    regions.keys.each_with_index do |key, index|
-      if index == regions.length - 1
-        params[:users_profile][:living_city] = regions[key]
-      end
-    end
   end
 
   def build_oauth_token_key(name, oauth_token)

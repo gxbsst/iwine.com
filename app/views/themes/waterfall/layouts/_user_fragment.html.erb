@@ -11,9 +11,9 @@
       <ul class="drop_down_menu" >
         <li><%= link_to "设置", basic_settings_path() %></li>
         <li><%= link_to "找朋友", :controller => "/friends", :action => "find" %></li>
-        <li><%= link_to "我的Patrick", :controller => "/mine" %></li>
-        <li><%= link_to "我的酒窖", mine_cellar_path(current_user.cellar) %></li>
-        <li><%= link_to "私信", mine_conversations_path %></li>
+        <li><%= link_to "我的Patrick", user_path(current_user) %></li>
+        <li><%#= link_to "我的酒窖", cellars_user_path(current_user, current_user.cellar) %></li>
+        <li><%= link_to "私信", conversations_path %></li>
         <li><%= link_to "登出",  logout_path %></li>
       </ul>
     </li>
@@ -36,13 +36,13 @@
           <%= link_to "添加评论", :controller => "/wines", :action => "detail_comment" %>
         </li>
         <li>
-          <%= link_to_icon "add_wine", add_mine_wines_path(:step => 1)  %> <br />
-          <%= link_to "添加红酒", add_mine_wines_path(:step => 1) %>
+          <%= link_to_icon "add_wine", "/"  %> <br />
+          <%= link_to "添加红酒", "/" %>
 
         </li>
         <li>
-          <%= link_to_icon "add_to_cellar", add_mine_cellar_items_path(current_user.cellar, :step => 1) %> <br />
-          <%= link_to "添加藏酒", add_mine_cellar_items_path(current_user.cellar, :step => 1) %>
+          <%= link_to_icon "add_to_cellar","" %> <br />
+          <%= link_to "添加藏酒", "/" %>
 
         </li>
         <li>
