@@ -107,7 +107,7 @@ textarea.wine_intro {width:500px;height:200px;}
 
 /*----------login register---------*/
 #login {width:772px;margin:0 auto;padding-top:30px;}
-#login .error, #register .error {margin-bottom:20px;}
+#login .error{margin-bottom:20px;}
 .login .boxstyle {margin: 0 20px 0 0;_margin:0 18px 0 0;}
 .boxstyle {width:376px;background:url(../images/bg/login_m.gif) repeat-y left top;float:left;}
 .boxstyle .top {background:url(../images/bg/login_t.gif) no-repeat left top;height:55px;text-align:center; line-height:50px;padding-top:6px;font-size:16px;font-weight:bold;color:#666;}
@@ -115,7 +115,7 @@ textarea.wine_intro {width:500px;height:200px;}
 .login .boxstyle .mid {padding:20px 28px;height:150px;}
 .register .boxstyle .mid {padding:60px 28px 20px 28px;height:110px;}
 .boxstyle input.text {border:1px solid #fff;background-color:#fff;height:25px;width:300px;padding:0;line-height:25px; vertical-align:middle;}
-.boxstyle .un, .boxstyle .pw {background:url(../images/bg/login_input.jpg) no-repeat left top;height:27px;padding:8px 10px;width:300px;margin:0 0 10px 0;}
+.boxstyle .un, .boxstyle .pw {background:url(../images/bg/login_input.jpg) no-repeat left top;padding:8px 10px;width:300px;margin:0 0 10px 0;}
 .boxstyle .rember_pw {line-height:41px;}
 .boxstyle .rember_pw a:hover {text-decoration:none;}
 #register {width:376px;margin:0 auto;padding-top:30px;}
@@ -123,6 +123,10 @@ textarea.wine_intro {width:500px;height:200px;}
 #register p {font-size:13px;padding:0 0 5px 5px;}
 #register .location {padding-left:5px;}
 #register .submit {margin-top:20px;line-height:51px; overflow:hidden;}
+#register .error {text-align:left;background:none;padding:  10px 0 0 0;}
+#register .optional {margin-bottom:10px;}
+#register .err .un, #register .err .pw {background:url(../images/bg/login_input_error.jpg) no-repeat left top;}
+#register .err .un, #register .err .pw {padding:8px 10px 0 10px;}
 
 /*-------------first recommend--------------*/
 #recommend .wel {background:url(../images/common/recommend_top.jpg) no-repeat left top;height:138px;padding:40px 0 0 70px;}
