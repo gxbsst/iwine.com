@@ -1,27 +1,17 @@
 # encoding: utf-8
 class Users::Profile < ActiveRecord::Base
-
   include Users::UserSupport
-
   belongs_to :user
-
-  attr_accessor :username
-
-  # validates_numericality_of :qq,  :message => "数据格式不对", :allow_nil => true
-  # validates :contact_email, :msn, :email_format => true, :allow_blank => true, :on => :update
-
-  # validates :qq, :presence => false, :allow_blank => true, :numericality => true, :on => :update
-
-  validates :username, :hometown, :presence => true, :on => :update
-
-  delegate :username, :to => :user
+  # delegate :username, :to => :user
   delegate :email, :to => :user
-  # validates_numericality_of :qq, :message => "请输入正确的格式"
-  # attr_protected :_config
-  #attr_accessible :province, :city, :district
+  # delegate :city, :to => :user
+  # attr_accessor :username, :city
+  # validates :username, :city,  :presence => true, :on => :update
+  
+
   store_configurable
 
-  before_save :init_configs
+  # before_save :init_configs
 
   def get_living_city_path
     unless living_city.blank?
