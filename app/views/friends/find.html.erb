@@ -20,8 +20,9 @@
     </ul>
     <% end %>
     <div class="buttons">
-      <%= link_to_button "search_all_syncs", "/" %>
-      <%= link_to_button "syncs_settings", "/friends/sns" %>
+      <%= link_to setting_sns_friends_path, :class => "btn_gray" do %>
+        <span>更改同步设置</span>
+      <% end %>
     </div>
     <!-- .box end -->
   </div>
