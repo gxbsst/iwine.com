@@ -11,7 +11,7 @@
 .set_optional label {color:#666;}
 
 /*-------------friends-------------*/
-.friends .gray_box {margin:0 0 10px 0;}
+.friends .gray_box {margin:0 0 10px 0;zoom:1;}
 .friends h3, .snsSearch{margin-bottom:20px;}
 .snsSearch a {margin-right:5px;}
 .mailSearch li {width:250px;float:left;text-align:center;height:100px;}
