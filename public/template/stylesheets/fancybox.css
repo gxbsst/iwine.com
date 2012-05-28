@@ -43,12 +43,13 @@
   overflow: hidden;
 }
 /* line 46, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
-.fancybox-inner h3.title {
-  background: #f2f2f2;
-  padding: 18px 0 18px 20px;
-  border-bottom: 1px solid #CCC;
+.fancybox-inner h3.title, .fancybox-inner #add_data h3{
+  background: url(../images/fancybox/bg_title.gif) repeat-x left top;
+  padding: 0 20px;
+  height:55px;
+  line-height:50px;
 }
-
+.fancybox-inner #add_data h3 {text-align:center;}
 /* line 53, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-error {
   color: #444;
@@ -91,16 +92,17 @@
 
 /* line 89, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-close, .fancybox-prev span, .fancybox-next span {
-  background-image: url("../images/fancybox_sprite.png");
+  background:url(../images/fancybox/fancy_close.png) no-repeat left top;
 }
 
 /* line 93, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-close {
   position: absolute;
-  top: 0;
-  right: 13px;
-  width: 38px;
-  height: 50px;
+  cursor: pointer;
+  top: -15px;
+  right:-15px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
   z-index: 1004;
 }
@@ -264,26 +266,29 @@
 }
 
 /* line 242, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
-.fancybox-inner #add_data h3 {
-  margin-bottom: 21px;
-}
 
 /* line 246, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-inner #add_data ul {
-  margin-top: 20px;
+  margin: 20px 0;
+  padding-left:80px;
 }
 
 /* line 249, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
-.fancybox-inner #add_data ul li {
-  width: 90px;
-  float: left;
+.fancybox-inner #add_data ul li a {
+  width: 130px;
+  height:154px;
   text-align: center;
+  background:url(../images/common/add.jpg) no-repeat;
+  text-indent:-9999px;
+  display:inline-block;
 }
-
+.fancybox-inner #add_data ul li {margin: 20px;float:left;}
+.fancybox-inner #add_data ul li a.add_new_wine {background-position: 0 0;}
+.fancybox-inner #add_data ul li a.add_cellar_wine {background-position: -137px 0;}
+.fancybox-inner #add_data ul li a.add_new_wine:hover {background-position: 0 -190px;}
+.fancybox-inner #add_data ul li a.add_cellar_wine:hover {background-position: -137px -190px;}
 /* line 258, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 #comment_form {
-  width: 540px;
-  height: 320px;
 }
 /* line 261, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 #comment_form #wine_profile_star_bar {
@@ -295,8 +300,9 @@
 }
 /* line 267, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 #comment_form .share {
-  padding-top: 10px;
+  padding: 20px;
   border-top: 1px solid #CCC;
+  width:auto;
 }
 /* line 270, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 #comment_form .share .absolute {
@@ -307,8 +313,11 @@
 #comment_form ul {
   display: inline;
 }
+#comment_form ul li {float:left;}
 /* line 280, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 #comment_form textarea {
   width: 454px;
   height: 75px;
 }
+.creat_new, .confirm {padding:15px 20px;}
+.creat_new textarea {width:250px;}
