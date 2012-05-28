@@ -43,6 +43,11 @@ zh-CN:
         wish: "想喝"
         do: "喝过"
 
+    global_nav:
+      style: "类型"
+      country: "国家"
+      hot_area: "热门产区"
+
 
 
 

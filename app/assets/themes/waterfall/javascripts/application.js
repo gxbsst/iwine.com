@@ -28,11 +28,23 @@
 $(document).ready(function(){
 
     // 下拉菜单
-
-    $('a.arrow_down').click(function (event) {
+    $('a.arrow_down').mouseover(function (event) {
         // $(this).preventDefault();
         event.preventDefault();
         $('ul.drop_down_menu').slideToggle('medium');
+    });
+
+    $('ul.drop_down_menu').mouseleave(function (event) {
+        $(this).slideToggle('medium');
+    });
+
+    // Wine 下拉菜单 
+    $(".globel_navi li.arrow a.arrow_link").mouseover(function(event){
+        $(this).parents().find('.CategoryDropdown').slideToggle('medium');
+    });
+    $('.CategoryDropdown').mouseleave(function(){
+      $(this).slideToggle('medium'); 
+      console.log("....") 
     });
 
     // 酒详细页面
@@ -161,6 +173,8 @@ $(document).ready(function(){
 		});
     
 
+
+   
 });
 
 

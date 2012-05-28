@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title><%= content_for?(:title) ? content_for(:title) : 'Patrick' %></title>
     <%= theme_stylesheet_link_tag    "application" %>
+    <%= theme_stylesheet_link_tag    "fancybox" %>
     <%= theme_javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= yield :css %>
@@ -27,16 +28,7 @@
       </div>
     </div>
     <div class="globel_navi">
-    	<ul>
-    	    <% global_nav = {"home" => root_path, "wines" => wines_path, "wineries" => wineries_path} %>
-    	    <% global_nav.each do |key, value| %>
-    	      <% unless key == "home"; class_name = "arrow"; end %>
-    	      <%= content_tag :li, :class => class_name do %>
-    	        <%= link_to t("nav.#{key}"), value %>
-    	      <% end %>
-    	    <%end %>
-          <div class="clear"></div>
-      </ul>
+      <%= render "layouts/global_nav" %>
     </div>
     <% if params[:controller] == "home" || (params[:controller] == "wine_details" && params[:action] == "index")%>
       <div id="home">
@@ -47,7 +39,9 @@
       </div>
       <%= render "layouts/footer" %>
       <script type="text/javascript" >
-        var search_scroll = $('#search_scroll');
+      
+    //SEARCH
+  var search_scroll = $('#search_scroll');
         var has_scroll = false;
         var getHotSerach = function(){
           $.ajax({
@@ -98,6 +92,8 @@
           url+=$('#hot_search').val();
           location.href = url;
         });
+
+        // SEARCH END
       </script>
   </body>
 </html>

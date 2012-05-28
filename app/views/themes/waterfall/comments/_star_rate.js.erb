@@ -1,4 +1,23 @@
+/* =====================================================
+ * Backbone Js 评星
+ *    by Weston, 20th may 2012
+ * ------------------------------
+ * Usage: 
+ * 先在模板添加
+ HTML:
+ <div class="star_rate" id="wine_profile_star_bar">
+   <ul id="stars">
+   </ul>
+   <input type="hidden" name="rate_value" value=<%= @comment.point || 0 %> /> #记录星值
+   <span class="text_value"></span> ＃ 星对应文字， 如太差...
+ </div>
 
+ JAVASCRIPT:
+   window.StarApp = new StarsView({el:$("#wine_profile_star_bar")});
+   StarApp.itemView = new StarItemView();
+   StarApp.setDefaultRateStar();
+ * =====================================================
+ */
 
 $(function(){
 

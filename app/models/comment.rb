@@ -7,6 +7,7 @@ class Comment < ActiveRecord::Base
   validates_presence_of :body
   validates_presence_of :user
   scope :recent, lambda { |limit| order("created_at DESC").limit(limit) } 
+  scope :with_point_is, lambda {|point| where(["point = ?", point])}
 
   # NOTE: install the acts_as_votable plugin if you
   # want user to vote on the quality of comments.

@@ -3,7 +3,7 @@
 <% if l.event_type == "new_comment" %>
 <div class="iw item">
  <div class="iw_img">
-   <%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), wine_path(l.secondary_actor) %>
+   <%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), winery_path(l.secondary_actor) %>
  </div>
  <div class="iw_info">
   <h1>
