@@ -1,3 +1,8 @@
+<% content_for :css do  %>
+    <%= theme_stylesheet_link_tag "setting" %>
+<% end %>
+<% content_for :css do %>
+    <%= theme_stylesheet_li
 <div class="whitespace setting">
   <h1 class="main_title">广播/通知设置</h1>
   <%= render_stickies %>
@@ -59,91 +64,11 @@
             </p>
           <% end %>
         </div>
+
+        <p align="center">
+          <%= image_submit_tag "v2/button/setting.png", :align => "center"  %>
+          <%= link_to "取消", :action => "basic" %>
+        </p>
       </div>
   <% end %>
-</div>
-
-
-<div class="settings privacy">
-
-  <%= render_stickies %>
-  <%= form_for @profile, :url => url_for( :action => "privacy" ) do |f| -%>
-
-    <h2>
-      广播隐私
-      <span class="small gray">
-        （你可以自己选择将自己一些动作与朋友分享，你发现的好东西对别人会非常有用）
-      </span>
-    </h2>
-
-    <h3> 酒窖 </h3>
-    <ul>
-      <li>
-        <%= check_box_tag "config[share][wine_cellar]", 1, @profile.config.share.wine_cellar %>
-        <%= label_tag "config[share][wine_cellar]",  "默认分享" %>
-      </li>
-    </ul>
-
-    <h3> 评论好友的酒评 </h3>
-    <ul>
-      <li>
-        <%= check_box_tag "config[share][wine_detail_comment]", 1, @profile.config.share.wine_detail_comment %>
-        <%= label_tag "config[share][wine_detail_comment]",  "默认分享" %>
-      </li>
-    </ul>
-
-    <h3> 评论好友的评论 </h3>
-    <ul>
-      <li>
-        <%= check_box_tag "config[share][wine_simple_comment]", 1,  @profile.config.share.wine_simple_comment  %>
-        <%= label_tag "config[share][wine_simple_comment]",  "默认分享" %>
-      </li>
-    </ul>
-
-    <h2>通知设置</h2>
-    <h3> 评论 <span class="x-small">( 设置谁可以评论我)</span> </h3>
-    <ul>
-      <% APP_DATA["user_profile"]["configs"]["normal"].each do |key,value| %>
-        <li>
-          <%= radio_button_tag("config[notice][comment]", key , key == @profile.config.notice.comment.to_i, options = {}) %>
-          <%=  label_tag "config_notice_comment_#{key}" do  %>
-            <%= raw value %>
-          <% end %>
-       </li>
-      <% end %>
-     </ul>
-
-    <h3> 私信 <span class="x-small"> (设置谁可以给我发私信) </span> </h3>
-      <% APP_DATA["user_profile"]["configs"]["message"].each do |key,value| %>
-
-    <ul>
-       <li>
-         <%= radio_button_tag("config[notice][message]", key , key == @profile.config.notice.message.to_i, options = {}) %>
-         <%= label_tag "config_notice_message_#{key}" do  %>
-          <%= raw value %>
-         <% end %>
-        </li>
-     </ul>
-<% end %>
-
-
-<h3> 邮件 <span class="x-small"> (我们会通过Email提醒与你有关的事情, 你可以选择只接受哪些类型) </span> </h3>
-<% APP_DATA["user_profile"]["configs"]["email"].each do |key,value| %>
-  <ul>
-    <li>
-     <%= check_box_tag("config[notice][email][]", key, (@profile.config.notice.email.include? key.to_s), :id => "config_notice_email_#{key}") %>
-      <%=  label_tag "config_notice_email_#{key}" do  %>
-      <%=  raw value %>
-     <% end %>
-    </li>
-   </ul>
-<% end %>
-
-<p align="center">
-  <%= image_submit_tag "v2/button/setting.png", :align => "center"  %>
-  <%= link_to "取消", :action => "basic" %>
-</p>
-<% end -%>
-
- <!-- settings end -->
 </div>
