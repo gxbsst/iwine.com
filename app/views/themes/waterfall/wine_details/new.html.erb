@@ -1,20 +1,20 @@
+<% content_for :css do %>
+    <%= theme_stylesheet_link_tag :hp, :add %>
+<% end %>
+<div class="whitespace">
+  <div class="addwine">
+    <%= render "wine_details/addwine_step" %>
+    <div class="notice_b mb20">请填写<%= @register.name_en.blank? ? "该酒款的" : @register.ename %>基本信息的基本信息</div>
+    <div id="stylized" class="myform">
+
+      <%= render "new_form", :objet => @register %>
+    </div>
+  </div>
+</div>
 <% content_for :wine_register do %>
     <%= javascript_include_tag 'wine_registers_variety' %>
     <%= javascript_include_tag 'region_world' %>
 <% end %>
-<div id="mainspace860" class="addwine">
-  <div class="addwine">
-    <h1 class="main_title">添加藏酒</h1>
-    <div class="step">
-      <div class="step_sec"></div>
-    </div>
-    <div class="notice_b mb20">请填写<%= @register.name_en.blank? ? "该酒款的" : @register.ename %>基本信息的基本信息</div>
-    <div id="stylized" class="myform">
-
-    <%= render "new_form", :objet => @register %>
-    </div>
-  </div>
-</div>
 <script type="text/javascript" charset="utf-8">
     $('#submit_register').click(function(){
         $("form.form-horizontal").submit();
