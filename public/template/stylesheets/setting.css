@@ -1,0 +1,64 @@
+@charset "UTF-8";
+/*----------user setting------------*/
+.setting, .friends {padding:30px 74px;}
+.setting .right {width:280px;}
+.avatar {padding-left:40px;background:url(../images/bg/line_dotted.jpg) no-repeat left top;min-height:250px;height:auto !important;height:250px;overflow:visible;}
+.avatar p.sample {margin-bottom:10px; position:relative;}
+.avatar p span {position:absolute;display:inline-block;margin-left:5px;}
+.set_module h2 {font-size:14px;margin: 30px 0;}
+.set_optional {margin-bottom:10px;}
+.set_optional h3 {font-size:14px;margin: 0 0 5px 0;}
+.set_optional label {color:#666;}
+
+/*-------------friends-------------*/
+.friends .gray_box {margin:0 0 10px 0;zoom:1;}
+.friends h3, .snsSearch{margin-bottom:20px;}
+.snsSearch a {margin-right:5px;}
+.mailSearch li {width:250px;float:left;text-align:center;height:100px;}
+.mailSearch li img  {margin: 0 0 10px 0;}
+.invite textarea {width:300px;height:150px;display:block;}
+.invite textarea, .invite input {background-color:#fff;margin: 0 0 10px 0;}
+.invite form {position:relative;}
+.invite .notice {position:absolute;left:350px;top:0;width:240px;text-align:left;box-shadow: 0px 1px 2px 1px #ccc;}
+.maillogin {text-align:center;}
+.maillogin table {margin: 0 auto;}
+.maillogin th, .maillogin td {padding:5px;}
+.maillogin th {text-align:right;font-weight:normal;}
+.maillogin td {text-align:left;}
+
+/*---------message--------------*/
+.message {padding:30px 154px;}
+.message .search_space {float:right;}
+.message_search {float:right;width:300px;}
+.message_search input {height:24px;border:1px solid #ccc;padding:0 5px;}
+.message_search .search_btn {background:url(../images/icon/search.gif) no-repeat left top; height:26px;width:26px;float:right;text-indent:-9999px;}
+.message_search .btn_gray, .message_search .search_btn, .message_search input {float:right;}
+.message_search .search_btn, .message_search input {margin-left:5px;}
+.message_list {margin-top:20px;}
+.message_list .userimg, .send_private_msg .userimg {float:left;display:inline-block;margin-right:10px;}
+.message_list .content p span, .message_talk .content p span {float:right;}
+.message_list .content p.info, .message_talk .content p.info {margin-top:10px;}
+ul.private_list {border-top:1px solid #ccc;margin-bottom:20px;}
+ul.private_list li {padding:15px 10px;border-bottom:1px solid #ccc;}
+.send_private_msg {margin:0 0 15px 0;}
+.send_private_msg .title{padding-left:60px;color:#333;margin-bottom:5px;}
+.send_private_msg .content {float:left;width:520px;}
+.send_private_msg textarea {height:80px;width:510px;margin-bottom:10px;}
+.send_private_msg .btn {text-align:right;}
+.message_talk {margin:10px 0 0 0;}
+.talk_l, .talk_r {margin:0 0 10px 0;}
+.talk_r {padding-left:60px;}
+.talk_l .userimg {float:left;width:50px;margin:0 10px 0 0;}
+.talk_r .userimg {float:right;width:50px;margin:0 0 0 10px;}
+.message_talk .content { float:left;display:inline-block;width:500px;}
+.talk_l .content {background-color:#f3f3f3;padding:10px;}
+.talk_r .content {background-color:#f9f9f9;padding:10px;}
+
+/*-------------sys--------------*/
+.sys ul {zoom:1;}
+.sys li {float:left;width:229px;position:relative;text-align:center;color:#999;height:160px;margin-right:55px;}
+.sys li.last {margin-right:0;}
+.sys .sys_on {background:url(../images/common/sys.png) no-repeat left top;width:65px;height:65px;display:inline-block;position:absolute;left:165px;top:-1px}
+.sys img {margin: 0 0 10px 0;}
+.sys p {margin-bottom:10px;}
+.sys em {background:url(../images/icon/icon_all.gif) no-repeat 0 -174px;padding-left:15px; font-style:normal;}
