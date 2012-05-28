@@ -123,6 +123,11 @@ class User < ActiveRecord::Base
     @client[ sns_name ]
   end
 
+  #判断是否和给定得网站绑定
+  def check_oauth?(type)
+    return self.oauths.where("sns_name = ?", type).first ? true : false
+  end
+
   def available_sns
     list = {}
     tokens = Users::Oauth.all :conditions => { :user_id => id }
@@ -196,10 +201,6 @@ class User < ActiveRecord::Base
     elsif email == 'qq'
       #TODO
     end
-
-  end
-
-  def all_comments
 
   end
 

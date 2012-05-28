@@ -1,15 +1,17 @@
-<div id="mainspace860" class="addwine">
-  <div class="addwine">
-    <h1 class="main_title">添加藏酒</h1>
-    <div class="step">
-      <div class="step_fir"></div>
-    </div>
+<% content_for :css do %>
+    <%= theme_stylesheet_link_tag :hp, :add %>
+<% end %>
+  <div class="whitespace addwine">
+    <%= render "wine_details/addwine_step" %>
     <% unless @search.wines.blank? %>
-        <%= render :partial => "mine/wines/search_wine", :object => @search %>
+        <div class="search mb20">
+          <%= render :partial => "wine_details/search_wine", :object => @search %>
+        </div>
+
         <div>
           <div class="float_r">
             <span class="notice_b">这些都不是您要找的酒？</span>
-            <%=  link_to new_mine_wine_path, :class => "btn_gray" do %>
+            <%=  link_to new_wine_path, :class => "btn_gray" do %>
                 <span>添加酒款</span>
             <% end %>
           </div>
@@ -32,7 +34,7 @@
                     <% end %>
                   </p>
                   <p class="mt10">
-                    <%= link_to new_mine_wine_path(:wine_detail_id => detail.id), :class => "btn_gray" do %>
+                    <%= link_to new_wine_path(:wine_detail_id => detail.id), :class => "btn_gray" do %>
                         <span>添加新年份</span>
                     <% end %>
                   </p>
@@ -45,17 +47,17 @@
     <% else %>
         <div class="notice mb20">没有找到相关酒款，您愿意帮助我们添加么？</div>
         <div class="align_c">
-          <%= link_to new_mine_wine_path, :class => "btn_gray_b mr5" do %>
+          <%= link_to new_wine_path, :class => "btn_gray_b mr5" do %>
               <span>我来添加</span>
           <% end %>
-          <%=  link_to mine_wines_add_path(:step => 1), :class => "btn_gray_b" do %>
+          <%=  link_to add_wines_path(:step => 1), :class => "btn_gray_b" do %>
              <span>重新搜索</span>
           <% end %>
         </div>
     <% end %>
     
   </div>
-</div>
+
 
 
 
