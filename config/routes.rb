@@ -45,7 +45,10 @@ Patrick::Application.routes.draw do
       get :followers
       get :owners
       get :add_to_cellar
-    end 
+    end
+    collection do
+      get :add
+    end
     resources :comments, :controller => "comments" do
       member do
         get :vote
@@ -101,12 +104,6 @@ Patrick::Application.routes.draw do
     collection do
       get "register_success"
     end
-     # 酒
-     resources :wines do
-       collection do
-         get :add
-       end
-     end
   end
   
   # 酒窖
