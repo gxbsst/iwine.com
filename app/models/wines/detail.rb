@@ -11,7 +11,7 @@ class Wines::Detail < ActiveRecord::Base
   belongs_to :wine
   has_many :comments, :class_name => "WineComment", :foreign_key => 'commentable_id', :include => [:user], :conditions => {:commentable_type => self.to_s }
   #  has_many :good_comments, :foreign_key => 'wine_detail_id', :class_name => 'Wines::Comment', :order => 'good_hit DESC, id DESC', :limit => 5, :include => [:user_good_hit]
-  has_one :statistic, :foreign_key => 'wine_detail_id'
+  # has_one :statistic, :foreign_key => 'wine_detail_id'
   has_one :label
   has_one :item, :class_name => "Users::WineCellarItem", :foreign_key => "wine_detail_id"
   belongs_to :audit_log, :class_name => "AuditLog", :foreign_key => "audit_id"

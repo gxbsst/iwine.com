@@ -134,3 +134,13 @@ search_server:
   port: 8080
   entry_url: /patrick/query/
   word_url: /patrick/query/associate
+
+search:
+  wine:
+    style: ["红葡萄酒", "白葡萄酒", "气泡酒", "香槟"]
+    country: ["法国", "意大利", "西班牙", "德国", "奥地利", "澳洲", "新西兰", "智利", "阿根廷"]
+    hot_area: ["波尔多", "勃艮第", "纳帕谷"]
+
+
+
+

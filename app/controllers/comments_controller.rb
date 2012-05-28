@@ -124,6 +124,8 @@ class CommentsController < ApplicationController
   def build_comment
     @resource, @id = request.path.split('/')[1, 2]
     values = params[(@resource.singularize + "_comment").to_sym]
+    values["point"] = params[:rate_value] if params[:rate_value].present?
+    # TODO： point这个字段要做保护处理，以免用户回复时也会更新point
     @comment = @commentable.comments.build(values)
     @comment.user_id = @user.id
     return @comment

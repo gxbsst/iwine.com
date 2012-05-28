@@ -1,0 +1,45 @@
+<ul>
+	<% global_nav = {"home" => root_path, "wines" => wines_path, "wineries" => wineries_path} %>
+	<% global_nav.each do |key, value| %>
+		<% if key == "wines" %> 
+			<%= content_tag :li, :class => "arrow" do %>
+				<%= link_to t("nav.#{key}"), value, :class => "arrow_link" %>
+				 <ul class="CategoryDropdown" style="display: none; z-index:1000000">
+				 	<% APP_DATA["search"]["wine"].each do |type,values| %>
+				 	 <li>
+				 	 	<p class="title"><%= t("nav.global_nav.#{type}") %></p>
+				 	 	<div class="item">
+				 	 		<% values.each do |item|  %>
+					 	 		<span>
+					 	 			<%= link_to item, results_searches_path(:tab => :wine, :word => item) %>
+					 	 		</span>
+				 	 		<% end %>
+				 	 	</div>
+				 	 </li>
+				 	<% end %> 
+				 	<li>
+				 		<p class="title">热门酒款</p>
+				 		<div class="item hot">
+				 			<dl class="clearfix">
+				 				<dt><a href="wine_profile.html"><img src="images/test/wine_thumb01.jpg" width="30" height="30" /></a></dt>
+				 				<dd>
+				 					<span><a href="wine_profile.html">2001拉菲珍宝</a></span>
+				 					<p><a href="wine_profile.html">PORTER MILL STATION Cabernet Sauvignon</a></p>
+				 				</dd>
+				 				<div class="clear"></div>
+				 			</dl>
+				 		</div>
+				 	</li>
+				 </ul>
+				<%#= html.html_safe %>
+			<% end %>
+		<% else %>
+			<%= content_tag :li  do %>
+			<%= link_to t("nav.#{key}"), value %>
+			<% end %>
+		<% end %>
+
+	<% end %>
+	<div class="clear"></div>
+</ul>
+
