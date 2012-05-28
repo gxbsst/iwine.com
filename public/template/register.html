@@ -37,23 +37,40 @@
     </div>
     <div id="wrapper950">
     	<div id="register">
-        	<div class="error">啊哦，这个邮件地址无效哦！</div>
             <div class="boxstyle">
                     <div class="top">注册iWine</div>
                     <div class="mid">
                       <p>用户名<span class="red">*</span></p>
-                      <div class="un"><input class="text" name="" type="text" placeholder="用户名" /></div>
+                      <div class="optional err">
+                          <div class="un">
+                              <div class="field_with_errors">
+                              <input class="text" name="" type="text" placeholder="用户名" />
+                              <div class="error">该用户名已存在</div>
+                              </div>
+                          </div>
+                      </div>
                       <p>密码<span class="red">*</span></p>
-                      <div class="pw"><input class="text"  name="" type="password" placeholder="密码" /></div>
+                      <div class="optional err">
+                          <div class="pw">
+                          	<div class="field_with_errors">
+                            <input class="text"  name="" type="password" placeholder="密码" />
+                            <div class="error">密码至少为6个字符</div>
+                          </div>
+                      </div>
+                      </div>
                       <p>邮件地址<span class="red">*</span></p>
-                      <div class="pw"><input class="text"  name="" type="text" placeholder="邮件地址" /></div>
+                      <div class="optional err">
+                          <div class="pw">
+                          	<div class="field_with_errors">
+                          	<input class="text"  name="" type="text" placeholder="邮件地址" />
+                            <div class="error">改邮件地址无效</div>
+                          	</div>
+                          </div>
+                      </div>
                       <p>所在地<span class="red">*</span></p>
-                      <div class="location">
-                      <select name="">
-                        <option>上海</option>
-                        <option>北京</option>
-                        <option>广州</option>
-                      </select></div>
+                      <div class="optional">
+                          <div class="pw"><input class="text"  name="" type="text" placeholder="所在地" /></div>
+                      </div>
                       <div class="submit">
                       	<span class="float_r"><input class="checkbox" name="" type="checkbox" value="" /> 我已阅读并同意<a href="#">使用条款</a></span>
                           <a href="register.html"><img src="images/common/register_submit.jpg" width="138" height="51" alt="马上注册" /></a>
