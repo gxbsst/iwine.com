@@ -29,8 +29,8 @@ class FriendsController < ApplicationController
   end
 
   # 设置同步
-  def followers
-    @followers = current_user.followers
+  def setting_sns
+    @availabe_sns = current_user.available_sns
   end
 
   def followings

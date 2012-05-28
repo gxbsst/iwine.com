@@ -50,6 +50,7 @@ class SettingsController < ApplicationController
         redirect_to basic_settings_path
       end
     end
+
   end
 
   def syncs

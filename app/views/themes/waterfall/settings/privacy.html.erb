@@ -1,8 +1,6 @@
 <% content_for :css do  %>
     <%= theme_stylesheet_link_tag "setting" %>
 <% end %>
-<% content_for :css do %>
-    <%= theme_stylesheet_li
 <div class="whitespace setting">
   <h1 class="main_title">广播/通知设置</h1>
   <%= render_stickies %>
@@ -11,17 +9,17 @@
         <h2>广播隐私<span class="gray">（你可以自己选择将自己一些动作与朋友分享，你发现的好东西对别人会非常有用）</span></h2>
         <div class="set_optional">
           <h3>酒窖</h3>
-          <p><label> <%= check_box_tag "config[share][wine_cellar]", 1, @profile.config.share.wine_cellar %></label></p>
+          <p><label> <%= check_box_tag "config[share][wine_cellar]", 1, @profile.config.share.wine_cellar.present? %>默认分享</label></p>
         </div>
 
         <div class="set_optional">
           <h3>评论好友的酒评</h3>
-          <p><label> <%= check_box_tag "config[share][wine_detail_comment]", 1, @profile.config.share.wine_detail_comment %></label></p>
+          <p><label> <%= check_box_tag "config[share][wine_detail_comment]", 1, @profile.config.share.wine_detail_comment.present? %>默认分享</label></p>
         </div>
 
         <div class="set_optional">
           <h3>评论好友的评论</h3>
-          <p><label> <%= check_box_tag "config[share][wine_simple_comment]", 1,  @profile.config.share.wine_simple_comment  %></label></p>
+          <p><label> <%= check_box_tag "config[share][wine_simple_comment]", 1,  @profile.config.share.wine_simple_comment.present?  %>默认分享</label></p>
         </div>
       </div>
 
@@ -65,10 +63,17 @@
           <% end %>
         </div>
 
-        <p align="center">
-          <%= image_submit_tag "v2/button/setting.png", :align => "center"  %>
-          <%= link_to "取消", :action => "basic" %>
-        </p>
+      </div>
+      <div class="align_c mt20">
+        <%= link_to "javascript:void(0);", :class => "btn_gray save" do %>
+          <span>保存设置</span>
+        <% end %>
       </div>
   <% end %>
 </div>
+
+<script type="text/javascript">
+  $(".save").click(function(){
+    $(".edit_users_profile").submit();
+  });
+</script>

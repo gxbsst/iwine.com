@@ -2,10 +2,7 @@
   loading...
 </div>
 <div class="share float_r pt5">
-	分享到：
-	<% %w(sina tencen douban kaixin renren).each do |i| %>
-		<%= link_to_image("icon/#{i}_s_on.png", "/", {}, {:alt => "#{i}", :width => 17, :height => 17, :align => "absmiddle"} )%>
-	<% end %>
+	<%= render :partial => "share/sns_icons.html.erb" %>
 </div>
 <div>
 	
