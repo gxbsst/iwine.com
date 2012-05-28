@@ -92,6 +92,7 @@ input.common_search {width:250px;}
 #stylized h1 {font-size:14px;font-weight:bold;margin-bottom:8px;}
 #stylized .required label span {color:#F00;}
 #stylized label{display:block; font-weight:bold;text-align:right;width:100px;float:left;margin: 0 20px 10px 0;}
+#stylized label.nv {display:inline-block;float:none;width:auto;margin:0 0 0 10px;font-weight:normal;text-align:left;}
 #stylized .small{color:#666666;display:block;font-size:11px;font-weight:normal;text-align:right;width:140px;}
 #stylized input{margin-right:5px;}
 #stylized .content {float:left;width:380px;}
@@ -272,8 +273,8 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
     z-index: 10000;
     background: #f3f3f3;
     top: 32px;
-    left: -67px;
-    border:1px solid #ccc;
+	left: -67px;
+	border:1px solid #ccc;
     /* -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 2px 0 2px 2px;    
