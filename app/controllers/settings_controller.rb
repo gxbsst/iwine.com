@@ -92,6 +92,7 @@ class SettingsController < ApplicationController
 
   def avatar
     @title = "设置头像"
+    
     # 保存图片
     if request.put?
       if save_avatar
