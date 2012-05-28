@@ -123,10 +123,7 @@ textarea.wine_intro {width:500px;height:200px;}
 #register p {font-size:13px;padding:0 0 5px 5px;}
 #register .location {padding-left:5px;}
 #register .submit {margin-top:20px;line-height:51px; overflow:hidden;}
-#register .error {text-align:left;background:none;padding:  10px 0 0 0;}
-#register .optional {margin-bottom:10px;}
-#register .err .un, #register .err .pw {background:url(../images/bg/login_input_error.jpg) no-repeat left top;}
-#register .err .un, #register .err .pw {padding:8px 10px 0 10px;}
+#register .message {color:#C00;padding:10px 0 0 0;display:block;}
 
 /*-------------first recommend--------------*/
 #recommend .wel {background:url(../images/common/recommend_top.jpg) no-repeat left top;height:138px;padding:40px 0 0 70px;}
@@ -262,6 +259,7 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 #header #top_search {float:left;width:350px;margin:5px 0 0 20px;}
 #header #top_right {float:right;padding-top:5px;}
 #header #top_right ul li {float:right;margin-left:5px;}
+#header #top_right .userbox {position:relative;}
 #header #top_right .userbox .userpic {width:20px;height:20px;border:5px solid #f5f3f3;}
 #header #top_right .userbox .userpic img {width:20px;height:20px;}
 #header #top_right .userbox a {float:left;}
@@ -272,23 +270,26 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
     display: none;
     position: absolute;
     z-index: 10000;
-    background: #F5F3F3;
-    top: 42px;
-    -moz-border-radius: 3px;
+    background: #f3f3f3;
+    top: 32px;
+	left: -67px;
+	border:1px solid #ccc;
+    /* -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
-    border-radius: 2px 0 2px 2px;
-    padding-left: 10px;
-    opacity: 0.9;
+    border-radius: 2px 0 2px 2px;    
+    opacity: 0.9;*/
 }
 .header-content ul.user_nav .drop_down_menu li {
     float: none;
 }
+#header #top_right .drop_down_menu li {border-bottom:1px solid #ddd;float:none;margin-left:0;}
+#header #top_right .drop_down_menu li  a {float:none;}
 .drop_down_menu li a {
     display: block;
-    width: 111px;
     padding: 5px 10px;
     text-decoration: none;
 }
+.drop_down_menu li a:hover {background-color:#fff;}
 .search_scroll {width:348px; position:absolute;left:320px;top:38px;border:1px solid #999;border-top:none;background-color: #fff;border-radius:3px 3px 3px 3px;color:#333;z-index:1;}
 .search_scroll .current {background-color:#f3f3f3;}
 .search_scroll p.title a  {display:block;border-top:1px solid #ccc;padding:5px 10px;}

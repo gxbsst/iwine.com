@@ -20,6 +20,12 @@
             	<ul>
                 	<li class="userbox">
                     	<a class="userpic" href="#"><img src="images/userimage/06.jpg" width="20" height="20" /></a><a href="#"><img src="images/common/userbox_arrow.jpg" width="22" height="30" /></a>
+                        <ul class="drop_down_menu" style="display: block;">
+                            <li><a href="/conversations">私信</a></li>
+                            <li><a href="/friends/find">找朋友</a></li>
+                            <li><a href="/settings/basic">设置</a></li>
+                            <li><a href="/logout">登出</a></li>
+                          </ul>
                     </li>
                     <li class="top_add"><a href="#" class="btn_add">添加</a></li>
                 </ul>
@@ -41,36 +47,28 @@
                     <div class="top">注册iWine</div>
                     <div class="mid">
                       <p>用户名<span class="red">*</span></p>
-                      <div class="optional err">
                           <div class="un">
                               <div class="field_with_errors">
                               <input class="text" name="" type="text" placeholder="用户名" />
-                              <div class="error">该用户名已存在</div>
+                              <label class="message">该用户名已存在</label>
                               </div>
                           </div>
-                      </div>
                       <p>密码<span class="red">*</span></p>
-                      <div class="optional err">
                           <div class="pw">
                           	<div class="field_with_errors">
                             <input class="text"  name="" type="password" placeholder="密码" />
-                            <div class="error">密码至少为6个字符</div>
+                           <label class="message">密码至少为6个字符</label>
                           </div>
                       </div>
-                      </div>
                       <p>邮件地址<span class="red">*</span></p>
-                      <div class="optional err">
                           <div class="pw">
                           	<div class="field_with_errors">
                           	<input class="text"  name="" type="text" placeholder="邮件地址" />
-                            <div class="error">改邮件地址无效</div>
+                            <label class="message">改邮件地址无效</label>
                           	</div>
                           </div>
-                      </div>
                       <p>所在地<span class="red">*</span></p>
-                      <div class="optional">
                           <div class="pw"><input class="text"  name="" type="text" placeholder="所在地" /></div>
-                      </div>
                       <div class="submit">
                       	<span class="float_r"><input class="checkbox" name="" type="checkbox" value="" /> 我已阅读并同意<a href="#">使用条款</a></span>
                           <a href="register.html"><img src="images/common/register_submit.jpg" width="138" height="51" alt="马上注册" /></a>
