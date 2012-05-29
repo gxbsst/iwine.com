@@ -311,6 +311,7 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .CategoryDropdown p.title {font-weight:bold;padding:5px 10px;border-bottom:1px dotted #ccc;background-color:#f3f3f3;}
 .CategoryDropdown .item {padding:10px;border-bottom:1px dotted #ccc;}
 .CategoryDropdown span a {background:none;padding:0 5px;}
+.CategoryDropdown .hot dl {margin-bottom:5px;}
 .CategoryDropdown .hot dt {width:30px;float:left;margin-right:10px;}
 .CategoryDropdown .hot dd {width:190px;float:left;}
 .CategoryDropdown .hot dt a, .CategoryDropdown .hot dd a {padding:0;background:none;color:#333;}
