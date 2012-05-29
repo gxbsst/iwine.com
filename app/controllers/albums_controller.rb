@@ -3,7 +3,7 @@ class AlbumsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index, :photo]
   before_filter :get_current_user, :except => [:index, :show, :photo]
   before_filter :get_user, :only => [:index, :show, :photo] 
-  before_filter :get_album, :except => [:index, :upload, :new, :delete_photo, :update_photo_intro]
+  before_filter :get_album, :except => [:index, :upload, :new, :delete_photo, :update_photo_intro, :delete]
 
   def upload
     @albums = @user.albums
@@ -61,12 +61,12 @@ class AlbumsController < ApplicationController
 
     def delete
       if request.post?
-        @album = Album.first :conditions => { :id => params[:album_id] , :created_by => current_user.id }
+        @album = Album.first :conditions => { :id => params[:id] , :created_by => current_user.id }
         if @album.present? && @album.name != 'avatar'
           Photo.delete_all '`album_id`=' + @album.id.to_s
           @album.delete
         end
-        redirect_to :action => 'index'
+        redirect_to albums_user_path(@user)
         return
       end
       render :layout => false
@@ -151,7 +151,6 @@ class AlbumsController < ApplicationController
     end
     
     def get_album
-      
       @album = @user.albums.find(params[:album_id] || params[:id])
     end
 

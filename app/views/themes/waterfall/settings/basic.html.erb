@@ -9,7 +9,7 @@
   <h1 class="main_title">账号设置</h1>
   <div id="stylized" class="myform">
     <%= render_stickies %>
-    <%= form_for @profile, 
+    <%= form_for @user, 
     :url => basic_settings_path, 
     :validate => true,  
     :html => { :class => 'form-horizontal', :multipart => true } do |f| -%>
@@ -17,33 +17,38 @@
     <div class="left">
       <div class="required">
         <label><span>*</span>邮箱</label>
-        <%= @profile.email %>
+        <%= @user.email %>
         <%= link_to "修改密码", update_password_settings_path %>
       </div>
       <div class="required">
         <label><span>*</span>昵称</label>
         <%= f.text_field :username , :class => "text name"%>
       </div>
+        <%= f.fields_for :profile do |p| %>
       <div class="required">
         <label><span>*</span>性别</label>
-        <%= f.radio_button :gender, 1  %>男
-        <%= f.radio_button :gender, 0 %>女
+        <%= p.radio_button :gender, 1  %>男
+        <%= p.radio_button :gender, 0 %>女
       </div>
       <div class="required">
         <label><span>*</span>生日</label>
-        <%= f.date_select :birthday, :start_year => 1910, :end_year => Time.now.year, :default => { :year => 1980, :month => 9, :day => 6 }  %>
+        <%= p.date_select :birthday, :start_year => 1910, :end_year => Time.now.year, :default => { :year => 1980, :month => 9, :day => 6 }  %>
       </div>
+        <% end %>
       <div class="required">
         <label><span>*</span>所在地</label>
-        <div class="content"><%= f.text_field :hometown %></div>
+        <div class="content">
+          <%= f.text_field :city %>
+        </div>
       </div>
+       <%= f.fields_for :profile do |p| %>
       <div class="optional">
         <label>博客地址</label>
-        <%= f.text_field :website, :class => "text name mr5" %>
+        <%= p.text_field :website, :class => "text name mr5" %>
       </div>
       <div class="optional">
         <label>介绍</label>
-        <%= f.text_area :bio, :size => "48x5" %>
+        <%= p.text_area :bio, :size => "48x5" %>
       </div>
       <div class="optional">
         <label>通知设置</label>
@@ -54,10 +59,11 @@
       <div class="optional">
         <label style="padding-top:13px;">同步设置</label>
         <%= render "friends/icons" %>
-        <%= link_to "#", :class => "btn_gray ml10" do %>
+        <%= link_to setting_sns_friends_path, :class => "btn_gray ml10" do %>
         <span>更改同步设置</span>
         <% end %>
       </div>
+      <% end %>
       <div class="mt10">
         <label>&nbsp;</label>
         <div class="content">

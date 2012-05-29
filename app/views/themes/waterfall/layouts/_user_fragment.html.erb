@@ -1,54 +1,36 @@
 <%  if user_signed_in? %>
+  
+<div id="top_right">
   <ul>
     <li class="userbox">
       <%= link_to_user current_user,
-           home_index_path,
-           {:class => "userpic", :with_avatar => true, :avatar_version => :thumb, :width => 20, :height => 20 }  %>
+      home_index_path,
+      {:class => "userpic", :with_avatar => true, :avatar_version => :thumb, :width => 20, :height => 20 }  %>
       <%= link_to_image "common/userbox_arrow.jpg", "#", {:class => :arrow_down}, :width => 20, :height => 30 %>
-    </li>
-    <li class="top_add">
-      <%= link_to "添加", "#add_data", :class => [:btn_add, :fancybox] %>
       <ul class="drop_down_menu" >
-        <li><%= link_to "设置", basic_settings_path() %></li>
-        <li><%= link_to "找朋友", :controller => "/friends", :action => "find" %></li>
-        <li><%= link_to "我的Patrick", user_path(current_user) %></li>
-        <li><%#= link_to "我的酒窖", cellars_user_path(current_user, current_user.cellar) %></li>
         <li><%= link_to "私信", conversations_path %></li>
+        <li><%= link_to "找朋友", :controller => "/friends", :action => "find" %></li>
+        <li><%= link_to "设置", basic_settings_path() %></li>
+        <li><%= link_to "我的iWine", user_path(current_user) %></li>
         <li><%= link_to "登出",  logout_path %></li>
       </ul>
     </li>
+    <%= link_to "添加", "#add_data", :class => [:btn_add, :fancybox] %>
   </ul>
+</div>
 
   <div style="display:none">
-    <div id="add_data">
-      <h3> 添加 </h3>
-      <div class="text_info"> 请选择你想要添加的内容类型 </div>
+
+    <div id="add_data" style="display: block;">
+      <h3>请选择要添加的内容类型</h3>
       <ul>
         <li>
-          <%= link_to_icon "add_detail_comment", {:controller => "/wines", :action => "detail_comment" }  %>
-          <div class="clear">
-
-          </div>
-          <%= link_to "添加品酒辞", :controller => "/wines", :action => "detail_comment" %>
+           <%= link_to "添加新酒款", add_wines_path(:step => 1), :class => "add_new_wine" %>
         </li>
         <li>
-          <%= link_to_icon "add_simple_comment", {:controller => "/wines", :action => "detail_comment" }  %> <br />
-          <%= link_to "添加评论", :controller => "/wines", :action => "detail_comment" %>
+          <a  class="add_cellar_wine" href="#">添加藏酒</a>
         </li>
-        <li>
-          <%= link_to_icon "add_wine", "/"  %> <br />
-          <%= link_to "添加红酒", "/" %>
-
-        </li>
-        <li>
-          <%= link_to_icon "add_to_cellar","" %> <br />
-          <%= link_to "添加藏酒", "/" %>
-
-        </li>
-        <li>
-          <%= link_to_icon "add_friends", {:controller => "/friends", :action => "find" }  %> <br />
-          <%= link_to "添加好友", :controller => "/friends", :action => "find" %>
-        </li>
+        <div class="clear"></div>
       </ul>
     </div>
   </div>

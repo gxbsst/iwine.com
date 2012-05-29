@@ -1,4 +1,8 @@
+<% if comment.do == "follow" %>
+<h3 class="title"> 我要关注 </h3>
+<% else %>
 <h3 class="title"> 我要评论 </h3>
+<% end %>
 <%= form_for [comment],  :validate => true do |f| -%>
 <%= f.hidden_field :do %>
 <div class="star_rate" id="wine_profile_star_bar">
@@ -26,9 +30,13 @@
     <%= f.check_box :private %>仅自己可见
   </div>
   <div class="share relative">
-    分享到 <%= f.check_box :is_share %> 广播
-    <%= image_submit_tag "v2/button/save_grey.png", :class => "absolute" %>
+      <%= link_to "javascript:void(0)", :class => "btn_gray float_r", :onclick => "$(this).parents('form').submit()" do  %>
+        <span>保存</span>
+      <% end %>
+      <a href="#" class="btn_gray float_r"></a>
+      分享到 <%= f.check_box :is_share %>广播
   </div>
+
 <% end -%>
 
 <script type="text/template" id="star_item">

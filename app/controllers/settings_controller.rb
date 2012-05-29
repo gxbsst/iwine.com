@@ -7,6 +7,7 @@ class SettingsController < ApplicationController
   def basic
     @title = "帐号设置"
     @availabe_sns = current_user.available_sns
+    @user = current_user
     # @profile = current_user.profile || current_user.build_profile
     if request.put?
       # @user = current_user
@@ -14,8 +15,12 @@ class SettingsController < ApplicationController
       ## 处理配置信息
       # set_config
       ## 处理所在地信息
-      if current_user.update_attribute(:username, params[:users_profile][:username]) &&  @profile.update_attributes(params[:users_profile])
+      #
+      if current_user.update_attributes(params[:user]) &&
+        current_user.profile.update_attributes(params[:user][:profile_attributes])
+        
         notice_stickie("更新成功.")
+        
       end
       redirect_to basic_settings_path
     end
@@ -50,6 +55,7 @@ class SettingsController < ApplicationController
         redirect_to basic_settings_path
       end
     end
+
   end
 
   def syncs

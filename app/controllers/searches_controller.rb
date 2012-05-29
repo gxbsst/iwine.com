@@ -12,7 +12,7 @@ class SearchesController < ApplicationController
 
   def search_wines
     @search = Search.create!(params[:search])
-    redirect_to add_users_wines_path(:step => 2, :id => @search.id)
+    redirect_to add_wines_path(:step => 2, :id => @search.id)
   end
 
   def suggestion

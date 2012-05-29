@@ -19,16 +19,22 @@
 				 	<% end %> 
 				 	<li>
 				 		<p class="title">热门酒款</p>
+				 		<% get_hot_wine(1).each do |wine| %>
 				 		<div class="item hot">
 				 			<dl class="clearfix">
-				 				<dt><a href="wine_profile.html"><img src="images/test/wine_thumb01.jpg" width="30" height="30" /></a></dt>
+				 				<dt>
+				 					<%= link_to wine_path(wine) do %>
+					 					<%= wine_cover_tag wine, :thumb_name => :x_thumb,  :size => "30x30" %>
+				 					<% end %>
+				 				</dt>
 				 				<dd>
-				 					<span><a href="wine_profile.html">2001拉菲珍宝</a></span>
-				 					<p><a href="wine_profile.html">PORTER MILL STATION Cabernet Sauvignon</a></p>
+				 					<span><%= link_to wine.cname, wine_path(wine) %></span>
+				 					<p><%= link_to wine.ename, wine_path(wine) %></p>
 				 				</dd>
 				 				<div class="clear"></div>
 				 			</dl>
 				 		</div>
+				 		<% end %>
 				 	</li>
 				 </ul>
 				<%#= html.html_safe %>

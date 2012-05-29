@@ -44,7 +44,7 @@ $(document).ready(function(){
     });
     $('.CategoryDropdown').mouseleave(function(){
       $(this).slideToggle('medium'); 
-      console.log("....") 
+      
     });
 
     // 酒详细页面
@@ -52,11 +52,12 @@ $(document).ready(function(){
 
     // 添加朋友、酒等
     $("a.btn_add.fancybox").fancybox({
-        maxWidth        : 500,
-        maxHeight       : 150,
+        maxWidth        : 520,
+        maxHeight       : 299,
+        padding : 0,
         fitToView       : false,
-        width           : '70%',
-        height          : '70%',
+        width           : '100%',
+        height          : '100%',
         autoSize        : false,
         closeClick      : false,
         openEffect      : 'none',
@@ -115,27 +116,7 @@ $(document).ready(function(){
 
     });
 
-    // 评论
-    $(".wine_profile .follow_wine1").fancybox({
-        maxWidth        : 500,
-        maxHeight       : 260,
-        fitToView       : false,
-        width           : '70%',
-        height          : '100%',
-        autoSize        : false,
-        closeClick      : false,
-        openEffect      : 'none',
-        closeEffect     : 'none',
-        helpers : {
-            overlay : {
-                opacity : 0.8,
-                css : {
-                    'background-color' : '#FFF'
-                }
-            }
-        } // end helper
-
-    });
+  
 
 
     // Mine 鼠标滑动显示编辑、删除按钮

@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Wines
    module WineSupport
 
@@ -77,16 +78,19 @@ module Wines
       @score = score.round(1)
      end
 
+     # 星级
      def stars
        (@score / 2).round(0)
      end
 
+     # 评分总数
      def rate_comments_count
        comments.where("point > 0").count
      end
 
      private
 
+     # 评星与总评分
      def star_percentage(star, rate_comments_count)
       if comments.with_point_is(star).count > 0
         (comments.with_point_is(star).count.to_f / rate_comments_count).round(1)

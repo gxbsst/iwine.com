@@ -8,8 +8,7 @@ Patrick::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   ## USER
-  devise_for :users, :controllers => {  }
-  devise_for :users, :controllers => { :sessions => "devise/sessions", :registrations => "devise/registrations" }
+  devise_for :users, :controllers => { :sessions => "devise/sessions", :registrations => "registrations" }
   
   devise_scope :user do
     get :login , :to => "devise/sessions#new"
@@ -31,6 +30,8 @@ Patrick::Application.routes.draw do
       get :sns
       get :follow
       get :new_sns
+      get :setting_sns
+      get :delete_sns
     end
     member do
       post :email_invite
@@ -43,7 +44,10 @@ Patrick::Application.routes.draw do
       get :followers
       get :owners
       get :add_to_cellar
-    end 
+    end
+    collection do
+      get :add
+    end
     resources :comments, :controller => "comments" do
       member do
         get :vote
@@ -99,12 +103,6 @@ Patrick::Application.routes.draw do
     collection do
       get "register_success"
     end
-     # 酒
-     resources :wines do
-       collection do
-         get :add
-       end
-     end
   end
   
   # 酒窖
@@ -172,7 +170,7 @@ Patrick::Application.routes.draw do
   # API
   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
   ## STATIC
-  statics = %w(about_us contact_us help private site_map home)
+  statics = %w(about_us contact_us help private site_map home feedback)
   statics.each do |i|
      match "/#{i}", :to => "static##{i}"
   end
