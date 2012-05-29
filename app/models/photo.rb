@@ -8,7 +8,6 @@ class Photo < ActiveRecord::Base
   belongs_to :album, :touch => true
   belongs_to :imageable, :polymorphic => true
   belongs_to :user
-  has_many :comments, :as => :commentable
   has_many :comments, :class_name => "PhotoComment", :as => :commentable, :include => [:user]
 
   acts_as_commentable

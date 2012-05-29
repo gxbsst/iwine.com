@@ -13,8 +13,9 @@
       <a href="<%= url_for :action => 'new' %>" class="new_album fancybox.ajax icon_add_album ml20">新建相册</a>
     </p>
     <p class="mb10">
-      <input type="file" id="photo_image" value="选择照片"/></p>
-    <p><a href="javascript:$('input#photo_image').uploadifyUpload();" class="button_gray"><%= t :upload %></a></p>
+      <input type="file" id="photo_image" value="选择照片"/>
+    </p>
+    <p><a href="javascript:$('input#photo_image').uploadifyUpload();" class="btn_gray"><span>上传</span></a></p>
     <p>提示：每次最多可以批量上传10张照片</p>
   </div>
 </div>

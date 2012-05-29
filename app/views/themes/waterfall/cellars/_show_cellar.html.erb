@@ -4,13 +4,11 @@
       </div>
 
       <div class="sort_search mb20">
-        <% if current_user.id == @user.id %>
             <div class="float_r">
               <%= link_to add_cellar_items_path(@cellar, :step => 1), :class => "btn_blue_b" do %>
                   <span>添加藏酒</span>
               <% end %>
             </div>
-        <% end %>
         <% # TODO: 添加搜索功能  %>
         <div class="sort pt5">排序 <select name="">
           <option>价格</option>
@@ -32,7 +30,7 @@
             <th class="count">数量</th>
             <th class="price">购入价格</th>
             <th class="place">所在地</th>
-            <% if current_user.id == @user.id %>
+            <% if is_login_user? @user %>
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
             <% end %>
@@ -62,7 +60,7 @@
                 <td class=“count”><%= item.number %></td>
                 <td class="price"><%= number_to_currency(item.price) %></td>
                 <td class="place"><%= item.location %></td>
-                <% if current_user.id == @user.id %>
+                <% if is_login_user? @user %>
                     <td>
                       <%= link_to "修改", edit_cellar_item_path(@cellar, item), :class => "icon_edit" %>
                     </td>

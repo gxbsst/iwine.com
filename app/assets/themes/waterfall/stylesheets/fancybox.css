@@ -271,18 +271,18 @@
 .fancybox-inner #add_data ul {
   margin: 20px 0;
   padding-left:80px;
+  _padding-left:50px;
 }
 
 /* line 249, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-inner #add_data ul li a {
   width: 130px;
   height:154px;
-  text-align: center;
   background:url(../images/common/add.jpg) no-repeat;
   text-indent:-9999px;
-  display:inline-block;
+  display:block;
 }
-.fancybox-inner #add_data ul li {margin: 20px;float:left;}
+.fancybox-inner #add_data ul li {margin: 20px;float:left;display:block;}
 .fancybox-inner #add_data ul li a.add_new_wine {background-position: 0 0;}
 .fancybox-inner #add_data ul li a.add_cellar_wine {background-position: -137px 0;}
 .fancybox-inner #add_data ul li a.add_new_wine:hover {background-position: 0 -190px;}

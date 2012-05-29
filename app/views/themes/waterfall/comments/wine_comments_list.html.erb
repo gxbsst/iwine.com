@@ -27,40 +27,11 @@
 				<div class="clear"></div>
 			</div>
 
-			<%= render "wine_details/share/comments" %>
+			<%= render "comment_list" %>
 
 			<div class="clear"></div>
 			<div class="pagination">
 				<%= paginate @comments %>
-			</div>
-
-
-			<div class="comment_post mt30">
-				<% if user_signed_in? %>
-				<%= form_for @comment, :validate => true do |f| -%>
-				<%= f.hidden_field :do %>
-				<%= hidden_field_tag "return_url", request.fullpath %>
-				<a name="01" id="01"></a>
-				<div class="userpic">
-					<%= link_to_user @user,
-					users_path(@user),
-					:with_avatar => true,
-					:avatar_version => :middle %>      
-				</div>
-				<div class="post_main">
-					<div class="post">
-						<%= f.text_area :body,  :class => [:mb10, :comment_body] %>
-						<div>
-							<a href="javascript:void(0)" class="btn_gray submit"><span>加上去</span></a>
-						</div>
-					</div>
-				</div>
-				<div class="clear"></div>
-				<% end %>
-
-				<% else %>
-				<p><%= link_to "登陆发表评论", login_path() %></p>
-				<% end %>
 			</div>
 
 		</div>

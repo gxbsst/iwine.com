@@ -1,3 +1,30 @@
+/* =====================================================
+ * Backbone Js 评星
+ *    by Weston, 20th may 2012
+ * ------------------------------
+ * Usage: 
+ * 先在模板添加
+ HTML:
+ <div class="star_rate" id="wine_profile_star_bar">
+   <ul id="stars">
+   </ul>
+   <input type="hidden" name="rate_value" value=<%= @comment.point || 0 %> /> #记录星值
+   <span class="text_value"></span> ＃ 星对应文字， 如太差...
+ </div>
+
+ TEMPLATE
+
+<script type="text/template" id="star_item">
+  <%= image_tag 'base/star_gray.jpg', :width => 15, :height => 14 %>
+ </script>
+ 
+ JAVASCRIPT:
+   window.StarApp = new StarsView({el:$("#wine_profile_star_bar")});
+   StarApp.itemView = new StarItemView();
+   StarApp.setDefaultRateStar();
+ * =====================================================
+ */
+
 $(function(){
 
     window.StarsView = Backbone.View.extend({
@@ -14,9 +41,9 @@ $(function(){
         },
         setDefaultRateStar: function(){
             var default_num = this.itemView.input.val();
-            var items = $(this.el).find("ul").children();
+            var items = $(this.el).find("ul#stars").children().slice(0, default_num);
             _.each(items, function(item){
-                $(item).find("img").attr("src", "/assets/base/star_gray.jpg");
+                $(item).find("img").attr("src", "/assets/base/star_red.gif");
             });
 
         }
@@ -26,7 +53,7 @@ $(function(){
         input: $("input[name='rate_value']"),
         tagName: 'li',
         template: _.template($('#star_item').html()),
-        textValue: ['欠佳',   '可接受','出色','非常不错','质量一流'],
+        textValue: ['','欠佳', '可接受', '出色', '非常不错', '质量一流'],
         events: {
             "mouseover .star img"  : "changeStarColorAsYellow",
             'mouseleave .star img': 'initializeRateValue',
@@ -44,7 +71,7 @@ $(function(){
         setStarRate: function() {
             var num = $(this.el).attr("id").split("_")[1];
             this.setInputValue(num);
-            this.showColorStar(nub, "red");
+            this.showColorStar(num, "red");
         },
         // mouseover 鼠标滑进时
         changeStarColorAsYellow: function() {
@@ -64,9 +91,10 @@ $(function(){
             this.showColorStar(num, "gray");
             var num = this.input.val();
             this.showColorStar(num, "red");
+            this.setText(num);
         },
         starSrc: function(color){
-            return "/assets/base/star_" + color +".jpg";
+            return "/assets/base/star_" + color +".gif";
         },
         // end: 为显示几个星星
         // color: 显示什么颜色
@@ -84,13 +112,20 @@ $(function(){
             // this.model.destroy();
         },
         setText: function(num) {
-            $(".text_value").text(this.textValue[num]);
+            if(num > 0){
+                $(".text_value").text(this.textValue[num]);
+            }
+            else
+            {
+                $(".text_value").text("");
+            }
+
         }
     });
 
-    window.StarApp = new StarsView({el:$("#wine_profile_star_bar")});
-    StarApp.itemView = new StarItemView();
-    StarApp.setDefaultRateStar();
+    // window.StarApp = new StarsView({el:$("#wine_profile_star_bar")});
+    // StarApp.itemView = new StarItemView();
+    // StarApp.setDefaultRateStar();
 });
 
 
