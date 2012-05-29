@@ -1,6 +1,8 @@
 <% content_for :css do %>
     <%= theme_stylesheet_link_tag :hp, :add %>
 <% end %>
+<%= javascript_include_tag 'wine_registers_variety', 'region_world' %>
+
 <div class="whitespace">
   <div class="addwine">
     <%= render "wine_details/addwine_step" %>
@@ -11,10 +13,6 @@
     </div>
   </div>
 </div>
-<% content_for :wine_register do %>
-    <%= javascript_include_tag 'wine_registers_variety' %>
-    <%= javascript_include_tag 'region_world' %>
-<% end %>
 <script type="text/javascript" charset="utf-8">
     $('#submit_register').click(function(){
         $("form.form-horizontal").submit();
