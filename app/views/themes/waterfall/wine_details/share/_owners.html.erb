@@ -19,7 +19,7 @@
 			<div class="info">
 				<p class="username"><%= link_to_user cellar_item.user,  user_path(cellar_item.user, :trailing_slash => true ) %></p>
 				<p><%= cellar_item.number %>支 | <span class="price"> ¥<%= cellar_item.price %></span>/支</p>
-				<%= link_to "去他的酒窖", user_cellar_path(cellar_item.user, cellar_item.user.cellar), :class => [:icon_cellar], :title => "去他的酒窖"%>
+				<%= link_to "去他的酒窖", cellars_user_path(cellar_item.user, cellar_item.user.cellar), :class => [:icon_cellar], :title => "去他的酒窖"%>
 			</div>
 		</li>
 		<% end %>

@@ -56,14 +56,14 @@ class PhotosController < ApplicationController
   end
 
   def new_normal_comment
-    @comment = @imageable.comments.build
+    @commentable = @photo
+    @comment = @commentable.comments.build
     @comment.do = "comment" 
     return @comment   
   end
 
   def render_wine_photo_detail
-    @commentable = @photo
-    @comment = @commentable.comments.build
+    # @comment = @commentable.comments.build
     @wine_detail = Wines::Detail.find(params[:wine_id])
     @wine = @wine_detail.wine
     render "wine_photo_detail"

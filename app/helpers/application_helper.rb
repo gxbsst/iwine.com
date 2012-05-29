@@ -47,9 +47,9 @@ module ApplicationHelper
   def wine_waterfall_image_tag(object, options = {})
     unless object.covers.first.nil?
       options[:thumb_name] = :middle_x unless options.has_key? :thumb_name
-      # options[:width] = object.covers.first.width
-      # options[:height] = object.covers.first.height
-      image_tag object.covers.first.image_url(options[:thumb_name])
+      options[:width] = object.covers.first.width
+      options[:height] = object.covers.first.height
+      image_tag object.covers.first.image_url(options[:thumb_name]), options
     else
       options[:width] = 200
       options[:height] = 200
