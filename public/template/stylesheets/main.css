@@ -315,6 +315,8 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .CategoryDropdown .hot dd {width:190px;float:left;}
 .CategoryDropdown .hot dt a, .CategoryDropdown .hot dd a {padding:0;background:none;color:#333;}
 .message_notice {background:url(../images/bg/message_notice.png) no-repeat left top;display:inline-block;width:91px;height:52px;text-align:center;color:#875f0e;position:absolute;left:-44px;top:38px;padding:20px 5px 0 5px;}
+#header #top_right .message_notice a {float:none;color:#875f0e;}
+#header #top_right .message_notice a:hover {color:#875f0e;text-decoration:none;}
 
 /*main space*/
 #wrapper950 {width:950px;margin: 30px auto;}
