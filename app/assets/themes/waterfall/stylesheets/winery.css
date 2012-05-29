@@ -1,9 +1,10 @@
 @charset "UTF-8";
-.winery_header {background:url(../images/bg/bg_gray_line.gif) repeat-y ;background-position: 15px 0;}
+.winery_header {background:url(../images/bg/bg_gray_line.gif) repeat-y ;background-position: 15px 0;zoom:1;}
 .winery_header .cover {width:360px;float:left;}
 .winery_header .info {width:305px;float:left;padding:20px;}
 .winery_header .logo {margin:0 0 10px 0;}
 .winery_header .right{width:203px;float:left;padding:20px;}
+.winery_header .score_star .star {margin-right:10px;}
 h1.winery_name_ch {font-size:20px;color:#000;margin:0 0 3px 0;}
 h1.winery_name_en {font-size:14px;color:#666;font-weight:normal;margin: 0 0 15px 0;}
 .winery_header .count {float:right;padding-top:5px;}
@@ -11,9 +12,10 @@ h1.winery_name_en {font-size:14px;color:#666;font-weight:normal;margin: 0 0 15px
 .count li.follow, .count li.comment {background:url(../images/icon/icon_all.gif) no-repeat;}
 .count li.follow {background-position:0 -127px;margin-right:5px;}
 .count li.comment {background-position:0 -143px;}
-.winery_header .item li {float:left; text-align:center;margin:40px 20px 0 0;width:50px;}
+.winery_header .item {zoom:1;margin-bottom:50px;}
+.winery_header .item li {float:left; text-align:center;margin:20px 20px 0 0;width:50px;}
 .winery_header .item li.last {margin-right:0;}
-.winery_header .item p.pic {height:50px;vertical-align:middle; cursor:pointer;} 
+.winery_header .item p.pic {height:40px;vertical-align:middle; cursor:pointer;} 
 .winerymain {padding:30px 40px;}
 .winerymain .left {width:590px;float:left;margin-right:28px;}
 .winerymain .left .last {margin-bottom:0;}

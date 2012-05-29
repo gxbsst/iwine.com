@@ -55,6 +55,7 @@ Patrick::Application.routes.draw do
       end
       collection do
         get :cancle_follow 
+        post :create, :as => "wines_detail" # 这里主要是为了使评论表单的URL为一致
       end
     end    
     resources :photos
@@ -63,6 +64,7 @@ Patrick::Application.routes.draw do
   # PHOTO
   resources :photos do
     resources :comments, :as => "photo_comments"
+    # resources :comments, :controller => "comments"
     member do
       get "vote"
     end
@@ -143,6 +145,7 @@ Patrick::Application.routes.draw do
       end
       collection do
         get :cancle_follow
+        post :create, :as => "winery" # 这里主要是为了使评论表单的URL为一致
       end
     end
   end

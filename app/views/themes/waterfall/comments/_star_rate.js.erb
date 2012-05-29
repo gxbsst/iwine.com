@@ -12,6 +12,12 @@
    <span class="text_value"></span> ＃ 星对应文字， 如太差...
  </div>
 
+ TEMPLATE
+
+<script type="text/template" id="star_item">
+  <%= image_tag 'base/star_gray.jpg', :width => 15, :height => 14 %>
+ </script>
+ 
  JAVASCRIPT:
    window.StarApp = new StarsView({el:$("#wine_profile_star_bar")});
    StarApp.itemView = new StarItemView();
@@ -37,7 +43,7 @@ $(function(){
             var default_num = this.itemView.input.val();
             var items = $(this.el).find("ul#stars").children().slice(0, default_num);
             _.each(items, function(item){
-                $(item).find("img").attr("src", "/assets/base/star_red.jpg");
+                $(item).find("img").attr("src", "/assets/base/star_red.gif");
             });
 
         }
@@ -65,7 +71,7 @@ $(function(){
         setStarRate: function() {
             var num = $(this.el).attr("id").split("_")[1];
             this.setInputValue(num);
-            this.showColorStar(nub, "red");
+            this.showColorStar(num, "red");
         },
         // mouseover 鼠标滑进时
         changeStarColorAsYellow: function() {
@@ -88,7 +94,7 @@ $(function(){
             this.setText(num);
         },
         starSrc: function(color){
-            return "/assets/base/star_" + color +".jpg";
+            return "/assets/base/star_" + color +".gif";
         },
         // end: 为显示几个星星
         // color: 显示什么颜色
