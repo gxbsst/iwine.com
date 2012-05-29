@@ -3,24 +3,25 @@
     <%= render 'share/error_messages', :target => @register %>
     <div class="left">
       <div class="required">
-        <%= f.label :name_en %>
+        <label><span>*</span>葡萄酒英文名</label>
         <% if @read_only %> <%= @register.name_en %> <% else %><%= f.text_field :name_en %><% end %>
       </div>
       <div class="required">
-        <%= f.label :wine_style_id %>
+        <label><span>*</span>类型</label>
         <% if @read_only %> <%= @register.style.name %> <% else %> <%= f.select :wine_style_id, Wines::Style.all.collect{ |s| [s.name_zh + '/' + s.name_en, s.id] } %><% end %>
       </div>
       <div class="required">
-        <%= f.label :region_tree_id %>
+        <label><span>*</span>产区</label>
         <% if @read_only %><%=  @register.region_path_zh(@wine.region_tree_id) %> <% else %><%= render "region_tree" %><% end %>
       </div>
 
       <div class="required">
-        <%= f.label :vintage %>
-        <%= f.date_select :vintage, :discard_day => true, :discard_month => true, :start_year => 1990, :end_year => Time.now.year + 150 %>年
+        <label><span>*</span>年份</label>
+        <%= f.date_select :vintage, :discard_day => true, :discard_month => true, :start_year => 1950, :end_year => Time.now.year, :prompt => {:year => "选择年份"} %>年
+        <label class="nv"><%= check_box_tag("wines_register[is_nv]", 1, @register.is_nv.to_i == 1) %>NV/无年份葡萄酒</label>
       </div>
       <div class="required">
-        <%= f.label :capacity %>
+        <label><span>*</span>容量</label>
         <%= f.select :capacity, APP_DATA['wines']['capacity'].collect{|i| [i, i]} %>
       </div>
       <div class="optional">
