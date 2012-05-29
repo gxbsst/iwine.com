@@ -21,7 +21,8 @@ Gemfile.lock
 .idea/workspace.xml
 db/schema.rb
 
-lib/tasks/data
+lib/tasks/data/wine_photos
+lib/tasks/data/winery_photos
 .idea/workspace.xml
 db/wine_variety_i18n.csv
 .rakeTasks
