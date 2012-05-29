@@ -27,4 +27,8 @@ class StaticController < ApplicationController
   def contact_us
     @title = t("nav.contact_us")
   end
+
+  def feedback
+    @title = t("nav.feedback")
+  end
 end

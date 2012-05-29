@@ -37,6 +37,7 @@ h1.winery_name_en {font-size:14px;color:#666;font-weight:normal;margin: 0 0 15px
 .winerymain .sidebox .title {border-radius:0;background-color:#e6e6e6;padding:5px 15px;}
 .winerymain .sidebox .title h3 {font-size:14px;}
 .winerymain .sidebox .main {padding:15px;background-color:#f7f7f7;}
+.winerymain .sidewine {zoom:1;}
 .winerymain .sidewine li {margin-bottom:20px;width:220px;float:left;}
 .winerymain .sidewine li.last {margin-bottom:0;}
 .winerymain .sidewine a img {width:70px;float:left;margin-right:10px;}
@@ -44,7 +45,10 @@ h1.winery_name_en {font-size:14px;color:#666;font-weight:normal;margin: 0 0 15px
 .winerymain .sidewine .info h3.zh {font-size:12px;}
 .winerymain .sidewine .info h3.en a {font-size:12px;font-weight:normal;color:#999;}
 .winerymain .sidewine .info h3.en a:hover {color:#999;text-decoration:none;}
+.winerymain .sidebox .follower {zoom:1;}
 .winerymain .sidebox .follower li {width:50px;height:50px;float:left;margin: 0 2px 5px 2px;}
+.winerymain .comment_post_star .post_main {width:390px;}
+.winerymain .comment_post_star .post_main textarea {width:370px;}
 
 /*-------------album style----------------*/
 ul.album_list {padding:0 0 0 10px}
@@ -58,7 +62,7 @@ ul.photo_list li {display:inline-block; vertical-align:top; width:190px;margin:0
 ul.photo_list li.last {margin-right:0;}
 ul.photo_list li img {margin:0 0 10px 0;}
 ul.photo_list li .intro, .album_left .photo .intro{margin:0 0 5px 0;}
-.content .album_left {width:590px;float:left;margin:0 28px 0 0;}
+.content .album_left {width:590px;float:left;}
 .content .album_right {width:210px;float:left;}
 .album_left .info {margin:15px 0 40px 0;color:#666;}
 .album_left .photo img {margin:0 0 10px 0;}

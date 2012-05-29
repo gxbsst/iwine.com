@@ -214,4 +214,9 @@ module ApplicationHelper
       false
     end
   end
+  
+  #  下拉菜单: 获取热门酒款
+  def get_hot_wine(limit)
+    hot_wines = Wines::Detail.hot_wines(:limit => limit)
+  end
 end

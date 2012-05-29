@@ -8,8 +8,7 @@ Patrick::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   ## USER
-  devise_for :users, :controllers => {  }
-  devise_for :users, :controllers => { :sessions => "devise/sessions", :registrations => "devise/registrations" }
+  devise_for :users, :controllers => { :sessions => "devise/sessions", :registrations => "registrations" }
   
   devise_scope :user do
     get :login , :to => "devise/sessions#new"
@@ -171,7 +170,7 @@ Patrick::Application.routes.draw do
   # API
   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
   ## STATIC
-  statics = %w(about_us contact_us help private site_map home)
+  statics = %w(about_us contact_us help private site_map home feedback)
   statics.each do |i|
      match "/#{i}", :to => "static##{i}"
   end

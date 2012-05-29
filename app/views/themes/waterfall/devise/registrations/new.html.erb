@@ -1,8 +1,5 @@
 <div id="register">
    <%= form_for(@user, :url => registration_path(resource_name) ) do |f| %>
-  <% unless devise_error_messages!.blank? %>
-  <div class="error"><%= devise_error_messages! %></div>
-  <% end %>
   <div class="boxstyle">
     <div class="top">注册iWine</div>
     <div class="mid">
@@ -19,12 +16,9 @@
         <%= f.email_field :email, :class => "text", :placeholder => "邮件地址"%>
       </div>
       <p>所在地<span class="red">*</span></p>
-      <div class="location">
-        <select name="">
-          <option>上海</option>
-          <option>北京</option>
-          <option>广州</option>
-        </select></div>
+      <div class="un">
+           <%= f.text_field :city, :class => "text", :placeholder => "所在地"%>
+      </div>
         <div class="submit">
           <span class="float_r">
               <%= f.check_box :agree_term, :checked => "checked" %>

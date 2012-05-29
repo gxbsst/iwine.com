@@ -3,7 +3,7 @@ class WineDetailsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show]
   before_filter :set_current_user
   before_filter :get_wine_detail, :only => [:show, :owners, :followers]
-  before_filter :find_register, :only => [:show, :edit, :update]
+  before_filter :find_register, :only => [:edit, :update]
   before_filter :check_region_tree, :only => :create
   before_filter :check_edit_register, :only => [:edit, :update]
   

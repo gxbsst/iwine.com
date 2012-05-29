@@ -1,6 +1,7 @@
 @charset "UTF-8";
 .searchbox input {width:495px;background-color:#fff;}
 .winery_result {border:3px solid #e6d2d2;background-color:#fff;padding:15px;margin-bottom:20px;}
+.winery_result ul {zoom:1;}
 .winery_result a img {width:70px;float:left;margin-right:10px;}
 .winery_result li {width:245px;float:left;margin-right:10px;}
 .winery_result li.more {width:35px;margin-right:0;padding-top:50px;}

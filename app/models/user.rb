@@ -4,10 +4,31 @@ class User < ActiveRecord::Base
  init_resources "Users::Profile", "Users::WineCellar", "Album"
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable, :timeoutable, :omniauthable
+  devise :database_authenticatable, 
+         :registerable,
+         :recoverable, 
+         :rememberable, 
+         :trackable, 
+         :validatable, 
+         :confirmable, 
+         :lockable, 
+         :timeoutable, 
+         :omniauthable
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :crop_x, :crop_y, :crop_w, :crop_h, :agree_term
+  attr_accessible :email, 
+                  :password,
+                  :password_confirmation, 
+                  :remember_me, 
+                  :username, 
+                  :crop_x, 
+                  :crop_y, 
+                  :crop_w, 
+                  :crop_h, 
+                  :agree_term,
+                  :city,
+                  :profile_attributes
+
+
   has_one  :profile, :class_name => 'Users::Profile', :dependent => :destroy
   has_one  :cellar, :class_name => 'Users::WineCellar'
   has_many :albums, :foreign_key => 'created_by'
@@ -35,11 +56,12 @@ class User < ActiveRecord::Base
   # validates :username, :presence => false, :allow_blank => true, :numericality => true
   validates :agree_term, :acceptance => true, :on => :create
   validates :email, :uniqueness => true
+  validates :city, :presence => true
 
   # upload avatar
   mount_uploader :avatar, AvatarUploader
 
-  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :agree_term
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :agree_term, :profile_attributes
   cattr_accessor :current_user
 
   ## extend message for user
