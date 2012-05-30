@@ -2,7 +2,11 @@
     <%= theme_stylesheet_link_tag :hp, :add %>
 <% end %>
   <div class="whitespace addwine">
-    <%= render "wine_details/addwine_step" %>
+    <%#= render "wine_details/addwine_step" %>
+    <h1 class="main_title">添加酒款</h1>
+    <div class="step">
+      <div class="step_sec"></div>
+    </div>
     <% unless @search.wines.blank? %>
         <div class="search mb20">
           <%= render :partial => "wine_details/search_wine", :object => @search %>

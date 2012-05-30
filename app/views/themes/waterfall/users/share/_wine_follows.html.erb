@@ -1,3 +1,4 @@
+<% if !@comments.blank? %>
 <ul class="wine_list">
   <% @comments.each do |comment| %>
   <li class="clearfix">
@@ -16,4 +17,6 @@
   </li>
   <% end %>
 </ul>
-
+<% else %>
+<p>暂时没有评论.</p>
+<% end %>

@@ -1,3 +1,4 @@
+<% if !@followings.blank? %>
 <ul class="userlist">
   <% @followings.map_user.each do |user| %>
 <li>
@@ -11,7 +12,7 @@
     <div class="username">
       <%= link_to_user user, user_path(user.id,:trailing_slash => true) %> 
     </div>
-    <div class="userlocation">上海</div>
+    <div class="userlocation"><%= user.city %></div>
     <% if is_login_user? @user #  当前访问属于自己的页面 %>
     <p><span class="cancl_fol"> <%= link_to "取消关注", "/friends/unfollow?user_id="+user.id.to_s  %> </span></p>
      <% if user.is_following current_user.id %>
@@ -27,3 +28,6 @@
 </li>
 <% end %>
 </ul>
+<% else %>
+<p>暂时没有关注的人.</p>
+<% end %>

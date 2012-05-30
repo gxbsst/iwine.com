@@ -217,6 +217,6 @@ module ApplicationHelper
   
   #  下拉菜单: 获取热门酒款
   def get_hot_wine(limit)
-    hot_wines = Wines::Detail.hot_wines(:limit => limit)
+    Wines::Detail.hot_wines(1)
   end
 end

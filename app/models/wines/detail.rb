@@ -21,6 +21,15 @@ class Wines::Detail < ActiveRecord::Base
   has_many :prices, :class_name => "Price", :foreign_key => "wine_detail_id"
   has_many :variety_percentages, :class_name => 'VarietyPercentage', :foreign_key => 'wine_detail_id', :dependent => :destroy
   has_many :special_comments, :as => :special_commentable
+  scope :hot_wines, lambda { |limit| joins(:comments).
+                                     includes([:wine, :covers]).
+                                     where("do = ?", "follow").
+                                     select("wine_details.*, count(*) as c").
+                                     group("commentable_id").
+                                     order("c DESC").
+                                     limit(limit || 6)
+                           }
+
   accepts_nested_attributes_for :photos, :reject_if => proc { |attributes| attributes['image'].blank? }
   accepts_nested_attributes_for :label, :reject_if => proc { |attributes| attributes['filename'].blank? }
   
@@ -107,18 +116,6 @@ class Wines::Detail < ActiveRecord::Base
                                 :select => "comments.*, count(votes.id) as votes_count",
                                 :conditions => ["commentable_id=? AND parent_id IS NULL", id ], :group => "comments.id",
                                 :order => "votes_count DESC, created_at DESC", :limit => options[:limit] )
-  end
-  
-  #热门酒款
-  def self.hot_wines(options = {})
-   wine_details =  Wines::Detail.joins(:comments).
-        includes([:wine, :covers]).
-        where("do = ?", "follow").
-        select("wine_details.*, count(*) as c").
-        group("commentable_id").
-        order("c #{options[:order]}").
-        limit(options[:limit])
-   wine_details
   end
 
   # 所有评论的总数（评论数+关注数量)

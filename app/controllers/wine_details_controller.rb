@@ -1,6 +1,6 @@
 # encoding: UTF-8
 class WineDetailsController < ApplicationController
-  before_filter :authenticate_user!, :except => [:index, :show]
+  before_filter :authenticate_user!, :except => [:index, :show, :comments, :owners, :followers]
   before_filter :set_current_user
   before_filter :get_wine_detail, :only => [:show, :owners, :followers]
   before_filter :find_register, :only => [:edit, :update]
@@ -18,6 +18,7 @@ class WineDetailsController < ApplicationController
     @comments         = @wine_detail.all_comments(:limit => 6)
     @owners           = @wine_detail.owners(:limit => 4)
     @followers        = @wine_detail.followers(:limit => 11)
+    @photos = @wine_detail.photos.limit(6)
   end
 
   #搜索要添加的酒款
@@ -39,7 +40,8 @@ class WineDetailsController < ApplicationController
     Wines::SpecialComment.build_special_comment(@register, params[:special_comment])
     @register.result = 1 #设置为一，用户无法再编辑
     if @register.update_attributes(params[:wines_register])
-      redirect_to wine_path(@register)
+      # redirect_to wine_path(@register)
+      render "add_success"
     else
       render :action => :edit
     end
@@ -116,8 +118,12 @@ class WineDetailsController < ApplicationController
 
   # 添加到酒窖
   def add_to_cellar
-    @cellar =  Users::WineCellar.new
-    @cellar_item = Users::WineCellarItem.new
+     redirect_to new_cellar_item_path(current_user.cellar.id, :wine_detail_id => params[:id] )
+  end
+
+  #上传酒款成功
+  def add_success
+    
   end
 
   private
@@ -133,7 +139,8 @@ class WineDetailsController < ApplicationController
   def check_edit_register
     if @register.result.to_i == 1
       notice_stickie("已经成功上传，不能再次修改")
-      redirect_to mine_wine_path(@register)
+      # redirect_to mine_wine_path(@register)
+      render "add_success"
     end
   end
 

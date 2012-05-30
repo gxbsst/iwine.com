@@ -14,18 +14,18 @@ class UsersController < ApplicationController
   # 关注的酒
   def wine_follows
     @comments = @user.wine_followings.page(params[:page] || 1).per(10) 
-    @hot_wines = Wines::Detail.hot_wines(:limit => 5)
+    @hot_wines = Wines::Detail.hot_wines(5)
   end
 
   # 关注的酒庄
   def winery_follows
     @comments = @user.winery_followings.page(params[:page] || 1).per(10) 
-    @hot_wines = Wines::Detail.hot_wines(:limit => 5)
+    @hot_wines = Wines::Detail.hot_wines(5)
   end
 
   # 我的评论
   def comments
-    @hot_wines = Wines::Detail.hot_wines(:limit => 5)
+    @hot_wines = Wines::Detail.hot_wines(5)
     @comments = @user.comments.page(params[:page] || 1).per(10) 
   end
 

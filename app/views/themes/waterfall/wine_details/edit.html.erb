@@ -4,7 +4,11 @@
 <%= javascript_include_tag 'wine_registers_variety', 'region_world' %>
 <div class="whitespace">
   <div class="addwine">
-    <%= render "wine_details/addwine_step" %>
+    <%#= render "wine_details/addwine_step" %>
+    <h1 class="main_title">添加酒款</h1>
+    <div class="step">
+        <div class="step_thr"></div>
+    </div>
     <div class="notice_b mb20">请完善<%= @register.name_en.blank? ? "该酒款的" : @register.ename %>的详细信息</div>
     <div id="stylized" class="myform">
     <%=  render "edit_form", :object => @register %>

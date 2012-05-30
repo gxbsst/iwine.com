@@ -78,17 +78,13 @@
 				<a href="javascript:void(0)" class="btn_gray submit"><span>加上去</span></a>
 			</div>
 
-
-
-		  	<%#= content_for :js do %>
+		  	<%  unless @comment.commentable_type == "Photo"   %>
 		  		<%= theme_javascript_include_tag :star_rate %>
-		  	<% #end %>
+		  	<% end %>
 		  	
-
-		   
 			<div class="userpic">
 				<%= link_to_user @user,
-				users_path(@user),
+				user_path(@user),
 				:with_avatar => true,
 				:avatar_version => :middle %>      
 			</div>
@@ -114,13 +110,15 @@
   $("a.vote").bind("ajax:success", function(event, data, textStatus, jqXHR){
     $(this).find("span.likes_count").text(data);
   });
-  // 评论按钮
+  // 回复按钮
   $("a.reply_comment_button").click(function(){
   // $(".reply_comment_outer").html("");
   });
   $("a.reply_comment_button").bind("ajax:success", function(event, data, textStatus, jqXHR){
   $comment_outer = $(this).parent().parent().children(".replybox");
+
   if($comment_outer.is(":hidden")){
+
   	$comment_outer.slideDown("slow");
   }
   else

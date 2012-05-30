@@ -14,7 +14,7 @@
           <div class="mb20">
             <div class="float_r">
               <span class="notice_b">这些都不是您要找的酒？</span>
-              <%= link_to add_cellar_items_path(current_user.cellar, :step => 1), :class => "btn_gray" do %>
+              <%= link_to add_wines_path(:step => 1), :class => "btn_gray" do %>
                   <span>添加酒款</span>
               <% end %>
             </div>
@@ -29,10 +29,16 @@
                         <span>加入酒窖</span>
                     <% end %>
                   </div>
-                  <div class="wine_img"><%= wine_cover_tag( wine_detail, :thumb_name => "thumb", :width => "50", :height => "63" ) %></div>
+                  <div class="wine_img">
+                    <%= link_to wine_path(wine_detail.id) do %>
+                      <%= wine_cover_tag( wine_detail, :thumb_name => "thumb", :width => "50", :height => "63" ) %>
+                    <% end %>
+                  </div>
                   <div class="wine_info">
-                    <h2><a href="wine_profile.html"><%= wine_detail.cname %></a></h2>
-                    <h3><%= wine_detail.ename %></h3>
+                    <h2>
+                      <%= link_to wine_detail.cname, wine_path(wine_detail.id) %>
+                    </h2>
+                    <h3><%= link_to wine_detail.ename, wine_path(wine_detail.id) %></h3>
                     <p><%= wine_detail.region_path_zh(wine_detail.wine.region_tree_id) %></p>
                     <p><%= wine_detail.wine.style.name_zh %></p>
                   </div>
