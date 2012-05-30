@@ -2,7 +2,7 @@
     <%= theme_stylesheet_link_tag :hp, :add %>
 <% end %>
   <div class="whitespace addwine">
-    <%= render "wine_details/addwine_step" %>
+    <%= render "wine_details/addwine_step", :step => "step_fir" %>
     <% unless @search.wines.blank? %>
         <div class="search mb20">
           <%= render :partial => "wine_details/search_wine", :object => @search %>
