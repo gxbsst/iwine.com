@@ -31,7 +31,7 @@
         <% @entries['wineries'][0..1].each do|winery| %>
         <li>
           <%= link_to  winery_path(winery) do %>
-            <%= image_tag winery.logo_url(:thumb), :size => "70x70" %>
+            <%= winery_label_tag winery, :thumb_name => :thumb, :size => "70x70", :alt => winery.name_en %>
           <% end %>
           <div class="meta">
             <h1 class="zh">

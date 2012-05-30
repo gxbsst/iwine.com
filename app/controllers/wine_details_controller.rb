@@ -133,7 +133,8 @@ class WineDetailsController < ApplicationController
   end
 
   def get_wine_detail
-    @wine_detail = Wines::Detail.includes(:label, :photos).find(params[:id])
+    #如果是成功上传酒款就不需要@wine_detail
+    @wine_detail = Wines::Detail.includes(:label, :photos).find(params[:id]) unless params[:register_success]
   end
 
   def check_edit_register

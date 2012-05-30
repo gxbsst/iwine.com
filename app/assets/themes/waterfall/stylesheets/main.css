@@ -115,8 +115,8 @@ textarea.wine_intro {width:500px;height:200px;}
 .boxstyle .bot {background:url(../images/bg/login_b.gif) no-repeat left bottom;height:12px;}
 .login .boxstyle .mid {padding:20px 28px;height:150px;}
 .register .boxstyle .mid {padding:60px 28px 20px 28px;height:110px;}
-.boxstyle input.text {border:1px solid #fff;background-color:#fff;height:25px;width:300px;padding:0;line-height:25px; vertical-align:middle;}
-.boxstyle .un, .boxstyle .pw {background:url(../images/bg/login_input.jpg) no-repeat left top;padding:8px 10px;width:300px;margin:0 0 10px 0;}
+.boxstyle input.text, .boxstyle2 input.text {border:1px solid #fff;background-color:#fff;height:25px;width:300px;padding:0;line-height:25px; vertical-align:middle;}
+.boxstyle .un, .boxstyle .pw, .boxstyle2 .un {background:url(../images/bg/login_input.jpg) no-repeat left top;padding:8px 10px;width:300px;margin:0 0 10px 0;}
 .boxstyle .rember_pw {line-height:41px;}
 .boxstyle .rember_pw a:hover {text-decoration:none;}
 #register {width:376px;margin:0 auto;padding-top:30px;}
@@ -125,6 +125,12 @@ textarea.wine_intro {width:500px;height:200px;}
 #register .location {padding-left:5px;}
 #register .submit {margin-top:20px;line-height:51px; overflow:hidden;}
 #register .message {color:#C00;padding:10px 0 0 0;display:block;}
+.boxstyle2 {background:url(../images/bg/bg_box772_m.gif) repeat-y left top;}
+.boxstyle2 .top {background:url(../images/bg/bg_box772_t.gif) no-repeat left top;height:12px;}
+.boxstyle2 .mid {padding:20px 28px;}
+.boxstyle2 .bot {background:url(../images/bg/bg_box772_b.gif) no-repeat left bottom;height:12px;}
+.boxstyle2 h2, .boxstyle2 h3 {margin-bottom:20px;}
+
 
 /*-------------first recommend--------------*/
 #recommend .wel {background:url(../images/common/recommend_top.jpg) no-repeat left top;height:138px;padding:40px 0 0 70px;}
@@ -311,9 +317,13 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .CategoryDropdown p.title {font-weight:bold;padding:5px 10px;border-bottom:1px dotted #ccc;background-color:#f3f3f3;}
 .CategoryDropdown .item {padding:10px;border-bottom:1px dotted #ccc;}
 .CategoryDropdown span a {background:none;padding:0 5px;}
+.CategoryDropdown .hot dl {margin-bottom:5px;}
 .CategoryDropdown .hot dt {width:30px;float:left;margin-right:10px;}
 .CategoryDropdown .hot dd {width:190px;float:left;}
 .CategoryDropdown .hot dt a, .CategoryDropdown .hot dd a {padding:0;background:none;color:#333;}
+.message_notice {background:url(../images/bg/message_notice.png) no-repeat left top;display:inline-block;width:91px;height:52px;text-align:center;color:#875f0e;position:absolute;left:-44px;top:38px;padding:20px 5px 0 5px;}
+#header #top_right .message_notice a {float:none;color:#875f0e;}
+#header #top_right .message_notice a:hover {color:#875f0e;text-decoration:none;}
 
 /*main space*/
 #wrapper950 {width:950px;margin: 30px auto;}

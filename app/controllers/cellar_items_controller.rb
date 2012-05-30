@@ -39,7 +39,7 @@
     end
 
     def new
-      @wine_detail = Wines::Detail.includes( :covers, :photos,  { :wine => [:style, :winery]} ).find( params[:wine_detail_id].to_i )
+      @wine_detail = Wines::Detail.includes( :covers, :photos, { :wine => [:style, :winery]} ).find( params[:wine_detail_id].to_i )
       @wine = @wine_detail.wine
       @cellar_item = Users::WineCellarItem.new
       @cellar_item.year = @wine_detail.year
@@ -49,7 +49,7 @@
     end
 
     def create
-      @wine_detail = Wines::Detail.includes( :covers, :photos,  { :wine => [:style, :winery]} ).find( params[:wine_detail_id].to_i )
+      @wine_detail = Wines::Detail.includes( :covers, :photos, { :wine => [:style, :winery]} ).find( params[:wine_detail_id].to_i )
       @wine = @wine_detail.wine
       # @cellar = Users::WineCellar.find_by_user_id(current_user.id)
       @cellar ||= current_user.cellar.create(:title => "#{current_user.username}的酒窖", :private_type => Users::WineCellar::PRIVATE_TYPE_PUBLIC )
