@@ -14,10 +14,14 @@ class WineDetailsController < ApplicationController
 
   # Wine Profile
   def show
-    @wine             = @wine_detail.wine
-    @comments         = @wine_detail.all_comments(:limit => 6)
-    @owners           = @wine_detail.owners(:limit => 4)
-    @followers        = @wine_detail.followers(:limit => 11)
+    if params[:register_success]
+      render "wine_details/register_success"
+    else
+      @wine             = @wine_detail.wine
+      @comments         = @wine_detail.all_comments(:limit => 6)
+      @owners           = @wine_detail.owners(:limit => 4)
+      @followers        = @wine_detail.followers(:limit => 11)
+    end
   end
 
   #搜索要添加的酒款
@@ -39,7 +43,7 @@ class WineDetailsController < ApplicationController
     Wines::SpecialComment.build_special_comment(@register, params[:special_comment])
     @register.result = 1 #设置为一，用户无法再编辑
     if @register.update_attributes(params[:wines_register])
-      redirect_to wine_path(@register)
+      redirect_to wine_path(@register, :register_success => true) # params[:register_success] 是为了用户成功上传酒款而用
     else
       render :action => :edit
     end
@@ -127,13 +131,14 @@ class WineDetailsController < ApplicationController
   end
 
   def get_wine_detail
-    @wine_detail = Wines::Detail.includes(:label, :photos).find(params[:id])
+    #如果是成功上传酒款就不需要@wine_detail
+    @wine_detail = Wines::Detail.includes(:label, :photos).find(params[:id]) unless params[:register_success]
   end
 
   def check_edit_register
     if @register.result.to_i == 1
       notice_stickie("已经成功上传，不能再次修改")
-      redirect_to mine_wine_path(@register)
+      redirect_to wine_path(@register, :register_success => true)
     end
   end
 

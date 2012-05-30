@@ -26,7 +26,7 @@ class AlbumsController < ApplicationController
 
     def save_upload_list
       photos = Photo.all :conditions => { :id => params[:photo].keys , :album_id => params[:id] }
-      cover = Photo.first :conditions => { :album_id => params[:id] , :is_cover => true }
+      cover = @album.covers.first
       photos.each do |photo|
         if params[:photo][photo.id.to_s].present?
           photo.intro = params[:photo][photo.id.to_s]

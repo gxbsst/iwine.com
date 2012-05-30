@@ -4,13 +4,14 @@ class Album < ActiveRecord::Base
   has_many :photos, :as => :imageable
   acts_as_votable
 
-  def cover
-    cover = Photo.first :conditions => {:album_id => id, :is_cover => true}
-    if cover.blank?
-      cover = Photo.first :conditions => { :album_id => id }
-    end
-    cover
-  end
+  #使用photos 的scope
+  #def cover
+  #  cover = Photo.first :conditions => {:album_id => id, :is_cover => true}
+  #  if cover.blank?
+  #    cover = Photo.first :conditions => { :album_id => id }
+  #  end
+  #  cover
+  #end
 
   def position photo_id
     Photo.count( :conditions => '`album_id`=' + id.to_s + ' and `id` > ' + photo_id.to_s ) + 1

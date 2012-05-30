@@ -23,6 +23,10 @@ class Photo < ActiveRecord::Base
 
   serialize :counts, Hash
 
+  scope :covers, where(:photo_type => APP_DATA["photo"]["photo_type"]["cover"])
+  scope :labels, where(:photo_type => APP_DATA["photo"]["photo_type"]["label"])
+  scope :label, labels.limit(1) #取出一个 label
+  scope :cover, covers.limit(1) #取出一个 cover
   #def crop_avatar
   #  image.recreate_versions! if crop_x.present?
   #end
@@ -38,7 +42,7 @@ class Photo < ActiveRecord::Base
     opts[:wine_detail].photos.create(
         :category => 1,
         :album_id => -1, # no user id
-        :is_cover => 1,
+        :photo_type => APP_DATA["photo"]["photo_type"]["cover"],
         :height => opts[:height],
         :width => opts[:width],
         :image => open(photo_path))
