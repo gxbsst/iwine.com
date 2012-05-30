@@ -2,16 +2,18 @@ class Album < ActiveRecord::Base
   belongs_to :user, :foreign_key => 'created_by'
   has_many :images, :class_name => "Photo"
   has_many :photos, :as => :imageable
+  has_many :covers, :as => :imageable, :class_name => "Photo", :conditions => { :photo_type => APP_DATA["photo"]["photo_type"]["cover"] }
+
   acts_as_votable
 
   #使用photos 的scope
-  #def cover
+  # def cover
   #  cover = Photo.first :conditions => {:album_id => id, :is_cover => true}
   #  if cover.blank?
   #    cover = Photo.first :conditions => { :album_id => id }
   #  end
   #  cover
-  #end
+  # end
 
   def position photo_id
     Photo.count( :conditions => '`album_id`=' + id.to_s + ' and `id` > ' + photo_id.to_s ) + 1
@@ -21,5 +23,5 @@ class Album < ActiveRecord::Base
     index = 0 if index < 0
     Photo.first :conditions => { :album_id => id } , :order => 'id DESC' , :offset => index , :limit => 1
   end
-  
+
 end

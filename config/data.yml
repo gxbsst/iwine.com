@@ -150,6 +150,7 @@ photo:
   photo_type:
     label: 1
     cover: 2
+    normal: 0
 
 
 

@@ -32,12 +32,12 @@ class AlbumsController < ApplicationController
           photo.intro = params[:photo][photo.id.to_s]
         end
         if photo.id === params[:cover_id].to_i
-          photo.is_cover = true;
+          photo.photo_type = APP_DATA["photo"]["photo_type"]["cover"]
         end
         photo.save
       end
       if cover.present?
-        cover.is_cover = false;
+        cover.photo_type = APP_DATA["photo"]["photo_type"]["normal"]
         cover.save
       end
       if params[:deleted_ids].present?

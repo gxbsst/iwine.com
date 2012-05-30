@@ -321,3 +321,6 @@
 }
 .creat_new, .confirm {padding:15px 20px;}
 .creat_new textarea {width:250px;}
+.fancybox-inner table td, .fancybox-inner table th {padding:5px;}
+.fancybox-inner table th {text-align:right;}
+.fancybox-inner .comment_box {padding:15px 20px;}

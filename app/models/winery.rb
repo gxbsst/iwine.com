@@ -15,7 +15,7 @@ class Winery < ActiveRecord::Base
                                         select("wineries.*, count(*) as c").
                                         group("commentable_id").
                                         order("c DESC").
-                                        limit(limit || 6)
+                                        limit(limit)
                            }
   mount_uploader :logo, WineryUploader
 

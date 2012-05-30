@@ -11,6 +11,7 @@ class SearchesController < ApplicationController
   end
 
   def search_wines
+    @recommend_users = User.recommends(5)
     @search = Search.create!(params[:search])
     redirect_to add_wines_path(:step => 2, :id => @search.id)
   end
@@ -35,6 +36,7 @@ class SearchesController < ApplicationController
   end
 
   def winery
+    @recommend_users = User.recommends(5)
     server = HotSearch.new
     @page = params[:page].to_i || 1
     if @page < 1 
@@ -45,6 +47,7 @@ class SearchesController < ApplicationController
   end
 
   def results
+    @recommend_users = User.recommends(5)
     server = HotSearch.new
     @page = params[:page].to_i || 1
     if @page < 1 

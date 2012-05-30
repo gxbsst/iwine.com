@@ -57,8 +57,8 @@
             <% @other_albums.each do |album| %>
             <li> 
               <%= link_to album_show_user_path(@user, album.id) do %>
-                <% if album.cover.present? %>
-                  <%= image_tag album.cover.image_url :thumb %>
+                <% if album.covers.present? %>
+                  <%= image_tag album.covers.first.image_url :thumb %>
                 <% else %>
                    <%= theme_image_tag "album.jpg", :class => :cover, :width => 150, :height => 150 %> 
                 <% end %>              

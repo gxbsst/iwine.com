@@ -70,6 +70,8 @@ class User < ActiveRecord::Base
       map {|f| f.user }
     end
   end
+  # 推荐的用户
+  scope :recommends, lambda { |limit| order("followers_count DESC").limit(limit) }
   accepts_nested_attributes_for :profile, :allow_destroy => true
   
   # validates :username, :presence => false, :allow_blank => true, :numericality => true

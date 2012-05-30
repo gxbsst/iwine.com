@@ -27,7 +27,7 @@ class Wines::Detail < ActiveRecord::Base
                                      select("wine_details.*, count(*) as c").
                                      group("commentable_id").
                                      order("c DESC").
-                                     limit(limit || 6)
+                                     limit(limit)
                            }
 
   accepts_nested_attributes_for :photos, :reject_if => proc { |attributes| attributes['image'].blank? }

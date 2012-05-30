@@ -41,8 +41,11 @@
      </div>
      <div class="mt20">
        <ul class="count">
-         <li class="follow"><%= link_to "#{@winery.followers_count}个关注", "#" %></li>
-         <li class="comment"><%= link_to "#{@winery.comments_count}条评论", "#" %></li>
+         <li class="follow">
+
+          <%= link_to "#{@winery.followers_count}个关注", followers_list_winery_path(@winery) %>
+        </li>
+         <li class="comment"><%= link_to "#{@winery.comments_count}条评论", winery_comments_path(@winery) %></li>
        </ul>
 
 

@@ -1,5 +1,15 @@
- <div class="whitespace">
- 	<%= title @title %>
- 	<p>Coming Soon...</p>
- 	<div class="clear"></div>
- </div>
+<% content_for :css do %>
+<%= theme_stylesheet_link_tag :about %>
+<% end %>	
+<div class="whitespace about">
+	<h1 class="main_title">联系爱红酒（iWine）</h1>
+	<div class="namecard">
+		<ul>
+			<li class="email">电子邮件：<a href="mailto:info@sidways.com">info@sidways.com</a></li>
+			<li class="add">信件地址：上海市茶陵北路20号3幢401室 iWine项目组 （收）</li>
+			<li class="zipcode">邮政编码：200032</li>
+			<li class="tel">电话：+86-21-51702312</li>
+		</ul>
+	</div>
+</div>
+</div>

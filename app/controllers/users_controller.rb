@@ -31,16 +31,14 @@ class UsersController < ApplicationController
 
   def followings
     @followings = @user.followings.page(params[:page] || 1).per(10)
-    # TODO: 这里的算法有问题， 请更新, 应该算出被follow最多的用户
-    @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
-    # @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
+    @recommend_users = User.recommends(5)
+    # @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
   end
 
   def followers
     @followers = @user.followers.page(params[:page] || 1).per(10)
-    # TODO: 这里的算法有问题， 请更新, 应该算出被follow最多的用户
-    @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
-    # @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+current_user.id.to_s , :limit => 5
+    @recommend_users = User.recommends(5)
+    # @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
   end
 
   private

@@ -1,6 +1,7 @@
 #encoding UTF-8
 class Wines::SpecialComment  < ActiveRecord::Base
-  include Wines::WineSupport
+  # include Wines::WineSupport
+  set_table_name "wine_special_comments"
   belongs_to :special_commentable, :polymorphic => true
 
   def self.build_special_comment(parent, attributes)
