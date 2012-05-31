@@ -1,4 +1,5 @@
 zh-CN:
+  save_successed: "保存成功。"
   helpers:
     submit:
       create: "创建 %{model}"
