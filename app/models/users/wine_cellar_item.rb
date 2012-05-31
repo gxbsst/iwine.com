@@ -20,7 +20,7 @@ class Users::WineCellarItem < ActiveRecord::Base
     
     fires :add_to_cellar, :on                 => :create,
                         :actor              => :user,
-                        :secondary_actor => :wine_detail,
+                        :secondary_actor => :wine_detail
 
     
   
