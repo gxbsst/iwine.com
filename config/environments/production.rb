@@ -9,7 +9,7 @@ Patrick::Application.configure do
   config.action_controller.perform_caching = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  config.serve_static_assets = true
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
@@ -63,5 +63,7 @@ Patrick::Application.configure do
     :email_prefix => "[Exception] ",
     :sender_address => %{"Exception Notifier" <support@sidways.com>},
     :exception_recipients => %w{weston.wei@sidways.com}
+
+  config.action_mailer.default_url_options = { :host => 'iwine.com' }
     
 end

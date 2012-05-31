@@ -20,7 +20,7 @@
 		<% @comments.each do |comment| %>	
 		<li>
 			<div class="userpic">
-				 <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true), :with_avatar => true, :avatar_version => :middle %>
+				 <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true), {:with_avatar => true, :avatar_version => :middle}, {:width => 50, :height => 50} %>
 			</div>
 			<div class="main">
 				<div class="username">

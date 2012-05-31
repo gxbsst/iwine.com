@@ -16,3 +16,7 @@
 .namecard li.add {background-position:0 -27px;}
 .namecard li.zipcode {background-position:0 -57px;}
 .namecard li.tel {background-position: 0 -86px;}
+.feedback td, .feedback th {padding:5px 10px;}
+.feedback th {width:60px;text-align:left;}
+.feedback textarea {width:300px;height:100px;}
+.feedback input.content {width:300px;}

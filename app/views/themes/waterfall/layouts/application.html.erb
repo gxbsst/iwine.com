@@ -29,12 +29,12 @@
     <div class="globel_navi">
       <%= render "layouts/global_nav" %>
     </div>
-    <% if params[:controller] == "home" || (params[:controller] == "wine_details" && params[:action] == "index")%>
-
+      <% if params[:controller] == "home" || (params[:controller] == "wine_details" && params[:action] == "index")%>
       <div id="home">
       <% else %>
-        <div id="wrapper950">
-        <% end %>
+      <div id="wrapper950">
+      <% end %>
+        <%= render_stickies %>
         <%= yield %>
       </div>
       <%= render "layouts/footer" %>

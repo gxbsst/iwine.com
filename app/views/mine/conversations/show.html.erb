@@ -25,7 +25,6 @@
 			<%= link_to_user current_user, users_path(current_user), {:with_avatar => true, :avatar_version => :middle }%>
 		</div>
 		<div class="content">
-			<%= render_stickies %>
 			
 			<%= form_for @message, :url => mine_messages_path, :validate => true do |f| %>
 			<%= f.hidden_field :conversation_id %>

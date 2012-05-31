@@ -9,6 +9,7 @@ class FriendsController < ApplicationController
         friendship.user_id = user_id
         friendship.follower_id = current_user.id
         friendship.save
+        notice_stickie("关注成功.")
       end
     end
     redirect_to request.referer
@@ -18,6 +19,7 @@ class FriendsController < ApplicationController
     friendship = Friendship.first :conditions => { :user_id => params[:user_id] , :follower_id => current_user.id }
     if friendship.present?
       friendship.destroy
+      notice_stickie("取消关注成功.")
     end
    # redirect_to :action => 'find' 
     redirect_to request.referer
@@ -82,10 +84,10 @@ class FriendsController < ApplicationController
     else
       flash[:notice] = "fail"
     end
-
+    # 创建UserOauth记录
     user_oauth = current_user.oauth_token client.name.to_s
     user_oauth.access_token = results[:access_token]
-    user_oauth.sns_user_id = client.user_id
+    user_oauth.sns_user_id = client.user_id # sns.rb Sina#user_id
     user_oauth.refresh_token = results[:access_token_secret]
     user_oauth.save
 
