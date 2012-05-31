@@ -8,7 +8,7 @@ class WineriesController < ApplicationController
   def show
     @winery = Winery.includes([:info_items, :photos]).find(params[:id])
     @wines = @winery.wines.includes([:details => :photos]).limit(5)
-    @users = @winery.followers#关注酒庄的人
+    @users = @winery.followers #关注酒庄的人
     @comments = Comment.get_comments(@winery, :limit => 10)
   end
 
@@ -26,6 +26,6 @@ class WineriesController < ApplicationController
   end
   #热门酒款
   def get_hot_wines
-    @hot_wines = Wines::Detail.hot_wines(:order => "desc", :limit => 5)
+    @hot_wines = Wines::Detail.hot_wines(5)
   end
 end

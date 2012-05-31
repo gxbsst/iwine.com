@@ -27,16 +27,16 @@
       <% @wineries.each do |winery| %>
       <li>
         <div class="logo">
-          <a href="<%= url_for( '/winery/' + winery.id.to_s )%>">
-            <img src="<%= winery.logo_url(:thumb)%>" width="100" height="100" alt="<%= winery.name_en%>" />
-          </a>
+            <%= link_to winery_path(winery)  do %>
+              <%= winery_label_tag(winery, :thumb_name => :thumb, :width => 100, :height => 100, :alt => winery.name_en) %>
+            <% end %>
         </div>
         <div class="meta">
           <h1 class="zh">
-            <a href="<%= winery.logo_url(:thumb)%>"><%= winery.name_zh%></a>
+            <%= link_to  winery.name_zh, winery_path(winery)  %>
           </h1>
           <h1 class="en">
-            <a href="<%= winery.logo_url(:thumb)%>"><%= winery.name_en%></a>
+            <%= link_to  winery.name_en, winery_path(winery)  %>
           </h1>
           <p class="mt10">
             地区：<%= winery.region_path_zh(winery.region_tree_id)%>
@@ -76,43 +76,7 @@
   <div class="right">
     <div class="sidebar">
       <div class="title">或许你会对这些人感兴趣...</div>
-      <ul class="userlist">
-        <li>
-          <div class="userpic"><a href="#"><img src="images/userimage/04.jpg" width="50" height="50" /></a></div>
-          <div class="userinfo">
-            <p class="username"><a href="#">不良夏生</a><span class="location">上海</span></p>
-            <p class="statu"><a href="#" class="btn_gray"><span>加关注</span></a></p>
-          </div>
-        </li>
-        <li>
-          <div class="userpic"><a href="#"><img src="images/userimage/05.jpg" width="50" height="50" /></a></div>
-          <div class="userinfo">
-            <p class="username"><a href="#">aluoaluo</a><span class="location">北京</span></p>
-            <p class="statu"><a href="#" class="btn_gray"><span>加关注</span></a></p>
-          </div>
-        </li>
-        <li>
-          <div class="userpic"><a href="#"><img src="images/userimage/07.jpg" width="50" height="50" /></a></div>
-          <div class="userinfo">
-            <p class="username"><a href="#">我就是秀秀</a><span class="location">香港</span></p>
-            <p class="statu"><a href="#" class="btn_gray"><span>加关注</span></a></p>
-          </div>
-        </li>
-        <li>
-          <div class="userpic"><a href="#"><img src="images/userimage/01.jpg" width="50" height="50" /></a></div>
-          <div class="userinfo">
-            <p class="username"><a href="#">不良夏生</a><span class="location">上海</span></p>
-            <p class="statu"><a href="#" class="btn_gray"><span>加关注</span></a></p>
-          </div>
-        </li>
-        <li>
-          <div class="userpic"><a href="#"><img src="images/userimage/08.jpg" width="50" height="50" /></a></div>
-          <div class="userinfo">
-            <p class="username"><a href="#">aluoaluo</a><span class="location">北京</span></p>
-            <p class="statu"><a href="#" class="btn_gray"><span>加关注</span></a></p>
-          </div>
-        </li>
-      </ul>
+      <%= render "users/share/recommend_users" %>
     </div>
   </div>
   <div class="clear"></div>

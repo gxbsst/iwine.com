@@ -2,7 +2,7 @@
 	<div id="preview_outer">
 		<div id="preview_inner">
 		  <% if @wine_detail.covers.size > 0 %>
-			<% @wine_detail.covers.each do |photo,index| %>
+			<% @wine_detail.covers.limit(3).each do |photo,index| %>
 		    <div>
 		      <%= image_tag photo.image_url(:large) %>
 		    </div>
@@ -16,7 +16,7 @@
 <% if @wine_detail.covers.size > 1 %>
 <div id="thumbs">
 	<!--<div id="arrow"></div>-->
-	<% @wine_detail.covers.each do |photo,index| %>
+	<% @wine_detail.covers.limit(3).each do |photo,index| %>
     <span><%= image_tag photo.image_url(:thumb_x), :width => 50 %></span>
   <% end %>
 </div>

@@ -2,12 +2,11 @@
 	<div class="link">
 		<% foot_nav = { :about_us => '/about_us', 
 						:contact_us => '/contact_us',
-						:help => '/help', 
+						# :help => '/help', 
 						:private => '/private',
-						:site_map => '/site_map',
+						# :site_map => '/site_map',
 						:feedback => '/feedback'} %>
 		<%= raw foot_nav.collect { |k, v| link_to t("nav.#{k}"), v }.join(" | ") %>
-		
 	</div>
 	<div class="copyright">Copyright © <%= Time.now.year %> iWine, Inc. All rights reserved. <a href="#">沪ICP备12345678号</a></div>
 </div>

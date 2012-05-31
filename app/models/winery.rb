@@ -5,10 +5,18 @@ class Winery < ActiveRecord::Base
   has_many :registers
   has_many :info_items, :class_name => "InfoItem"
   has_many :photos, :as => :imageable
-  has_many :covers, :as => :imageable, :class_name => "Photo", :conditions => {:is_cover => true}, :limit => 1
+  has_many :covers, :as => :imageable, :class_name => "Photo", :conditions => {:photo_type => APP_DATA["photo"]["photo_type"]["cover"]}
+  has_one :label, :as => :imageable, :class_name => "Photo", :conditions => {:photo_type => APP_DATA["photo"]["photo_type"]["label"]}
   has_many :wines
   has_many :comments, :class_name => "WineryComment", :as => :commentable
-
+  scope :hot_wineries, lambda { |limit| joins(:comments).
+                                        includes([:covers]).
+                                        where("do = ?", "follow").
+                                        select("wineries.*, count(*) as c").
+                                        group("commentable_id").
+                                        order("c DESC").
+                                        limit(limit)
+                           }
   mount_uploader :logo, WineryUploader
 
   accepts_nested_attributes_for :photos

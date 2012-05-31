@@ -21,6 +21,6 @@ function update_crop(coords){
   <% [:crop_x , :crop_y , :crop_w , :crop_h].each do |attr| %>
     <%= f.hidden_field attr, :id => attr %>
   <% end %>
-  <%= f.hidden_field :is_cover, :value => 1 %>
+  <%= f.hidden_field :photo_type, :value => APP_DATA["photo"]["photo_type"]["cover"] %>
   <%= f.submit '修改' %>
 <% end %>

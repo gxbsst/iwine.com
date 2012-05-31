@@ -4,31 +4,51 @@
           <div class="content">
           	<div class="home_left">
             	<div class="title_btn">
-                  <h1>藏酒 <span class="font12 more"><a href="cellar.html">(共10支...)</a></span></h1>
+                  <h1>藏酒 
+                    <span class="font12 more">
+                      <%= link_to "共#{@user.cellar.items.count}支...", cellars_user_path(@user.id, @user.cellar) %>
+                    </span>
+                </h1>
                 </div>
                 <div class="puzzle clearfix">
                  <%= render "users/share/favorite_wines", :wine => @wine_collections %>
                 </div>
                 <div class="title_btn">
-                  <h1>关注的酒 <span class="font12 more"><a href="myhp_wine_list.html">(共10支...)</a></span></h1>
+                  <h1>关注的酒 
+                    <span class="font12 more">
+                      <%= link_to "共#{@user.wine_followings_count}支...", wine_follows_user_path(@user.id) %>
+                    </span>
+                  </h1>
                 </div>
                 <div class="puzzle clearfix">
                  <%= render "users/share/following_wines", :wine => @wine_follows %>
                 </div>
                 <div class="title_btn">
-                  <h1>评论 <span class="font12 more"><a href="myhp_comment_list.html">(共10条...)</a></span></h1>
+                  <h1>评论 
+                    <span class="font12 more">
+                      <%= link_to "共#{@user.comments_count}条...", comments_user_path(@user.id) %>
+                    </span>
+                  </h1>
                 </div>
                 <%= render "users/share/comments" %>
             </div>
             <div class="home_right">
             	<div class="title_btn">
-                  <h1>关注的人 <span class="font12 more"><a href="myhp_following_list.html">(共20人...)</a></span></h1>
+                  <h1>关注的人 
+                    <span class="font12 more">
+                      <%= link_to "共#{@user.followings_count}人...", followings_user_path(@user.id) %>
+                    </span>
+                  </h1>
                 </div>
                 <div class="puzzle">               
                 <%= render "users/share/following_list", :items => @followings %>
                 </div>
                 <div class="title_btn">
-                  <h1>粉丝 <span class="font12 more"><a href="myhp_follower_list.html">(共20人...)</a></span></h1>
+                  <h1>粉丝 
+                    <span class="font12 more">
+                      <%= link_to "共#{@user.followers_count}人...", followers_user_path(@user.id) %>
+                    </span>
+                  </h1>
                 </div>
                 <div class="puzzle">
                 <%= render "users/share/follower_list"  %>

@@ -158,7 +158,7 @@ class CommentsController < ApplicationController
   end
   def render_winery_comments
     @winery = @commentable
-    @hot_wines = Wines::Detail.hot_wines(:order => "desc", :limit => 5)
+    @hot_wines = Wines::Detail.hot_wines(5)
     @users = @winery.followers(:limit => 16) #关注酒庄的人
     render "winery_comments_list"
   end

@@ -23,7 +23,7 @@ namespace :app do
 
     #
     # ## 导入中国地区表
-    regions = CSV.read("#{Rails.root}/lib/region.csv")
+    regions = CSV.read("#{Rails.root}/lib/tasks/data/region.csv")
     regions.each do |r|
       Region.find_or_create_by_parent_id_and_region_name_and_region_type(r[1], r[2], r[3].to_i)
     end
@@ -34,7 +34,7 @@ namespace :app do
     require 'csv'
     #
     # ## 导入酒庄
-    varieties = CSV.read("#{Rails.root}/lib/wine_variety_i18n.csv")
+    varieties = CSV.read("#{Rails.root}/lib/tasks/data/wine_variety_i18n.csv")
     varieties.each do |v|
       begin
         unless v[2].blank?
@@ -227,7 +227,7 @@ namespace :app do
               winery.photos.create!(
                 :category => 1,
                 :album_id => -1,
-                :is_cover => photo_path.include?("cover") ? 1 : 0,   #设置第一张图片为封面
+                :is_cover => photo_path.include?("cover") ? APP_DATA["photo"]["photo_type"]["cover"] : 0,   #设置第一张图片为封面
                 :image => open(photo_path)
               )
             end
@@ -276,7 +276,7 @@ namespace :app do
             wine_detail.photos.create(
                 :category => 1,
                 :album_id => -1, # no user id
-                :is_cover => path.to_s.include?("cover") ? 1 : 0,
+                :is_cover => path.to_s.include?("cover") ? APP_DATA["photo"]["photo_type"]["cover"] : 0,
                 :image => open(path)
             )
           end

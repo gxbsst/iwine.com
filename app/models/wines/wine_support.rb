@@ -88,6 +88,16 @@ module Wines
        comments.where("point > 0").count
      end
 
+     def get_label
+       label = case self.class.name
+                 when "Wines::Detail"
+                   self.label ? self.label : self.wine.label
+                 when "Wine"
+                   self.label
+               end
+       return label
+     end
+
      private
 
      # 评星与总评分

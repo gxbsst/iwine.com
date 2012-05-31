@@ -37,10 +37,30 @@ module ApplicationHelper
 
   ## 显示酒的封面
   def wine_cover_tag(object, options = {})
-    unless object.covers.first.nil?
-      image_tag object.covers.first.image_url(options[:thumb_name]), options
+    cover = object.photos.cover.first
+    if cover
+      image_tag cover.image_url(options[:thumb_name]), options
     else
-      theme_image_tag "wine_img.jpg", options
+      theme_image_tag "wine_img.png", options
+    end
+  end
+
+  def winery_cover_tag(object, options = {})
+    cover = object.photos.cover.first
+    if cover
+      image_tag cover.image_url(options[:thumb_name]), options
+    else
+      theme_image_tag "winery_img.png", options
+    end
+  end
+
+  def winery_label_tag(winery, options ={})
+    if winery.logo.present?
+      image_tag winery.logo_url(options[:thumb_name]), options
+    elsif winery.photos.label.first
+      image_tag winery.photos.label.first.image_url(options[:thumb_name]), options
+    else
+      theme_image_tag "winery_img.png", options
     end
   end
 
@@ -53,7 +73,7 @@ module ApplicationHelper
     else
       options[:width] = 200
       options[:height] = 200
-      theme_image_tag "wine_img.jpg", options
+      theme_image_tag "wine_img.png", options
     end
   end
 
@@ -194,17 +214,14 @@ module ApplicationHelper
   end
   
   def wine_label_tag(wine, options = {})
-      unless wine.label.nil?
-        options[:thumb_name] = if options.has_key? :thumb_name 
-          options[:thumb_name]
-        else
-          "thumb"
-        end
-        image_tag wine.label.filename_url(options[:thumb_name]), options
+    label = wine.get_label
+      if label
+        image_tag label.image_url(options[:thumb_name]), options
       else
-        theme_image_tag "wine_img.jpg", options
+        theme_image_tag "wine_img.png", options
       end    
   end
+
   
   # 主要为了在User Controller 判断是否为当前用户
   def is_login_user?(user)
@@ -217,6 +234,10 @@ module ApplicationHelper
   
   #  下拉菜单: 获取热门酒款
   def get_hot_wine(limit)
-    hot_wines = Wines::Detail.hot_wines(:limit => limit)
+    Wines::Detail.hot_wines(1)
+  end
+    #  下拉菜单: 获取热门酒款
+  def get_hot_wineries(limit)
+    Winery.hot_wineries(1)
   end
 end

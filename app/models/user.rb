@@ -28,19 +28,38 @@ class User < ActiveRecord::Base
                   :city,
                   :profile_attributes
 
-
-  has_one  :profile, :class_name => 'Users::Profile', :dependent => :destroy
+  has_one  :profile, 
+           :class_name => 'Users::Profile', 
+           :dependent => :destroy
   has_one  :cellar, :class_name => 'Users::WineCellar'
   has_many :albums, :foreign_key => 'created_by'
   has_many :registers, :class_name => 'Wines::Register'
-  has_many :comments, :class_name => "::Comment", :foreign_key => 'user_id', :include => [:user]
+  has_many :comments, 
+           :class_name => "::Comment", 
+           :foreign_key => 'user_id', 
+           :include => [:user]
+
   has_many :photo_comments
   has_many :photos #关于用户上传的所有图片
   has_many :oauths, :class_name => 'Users::Oauth'
   has_many :time_events
-  has_many :wine_followings, :include => :commentable, :class_name => "Comment", :conditions => {:commentable_type => "Wines::Detail", :do => "follow"}
-  has_many :winery_followings, :include => :commentable, :class_name => "Comment", :conditions => {:commentable_type => "Winery", :do => "follow"}  
-  has_many :feeds, :class_name => "Users::Timeline", :include => [:ownerable, {:timeline_event => [:actor]}, {:receiverable =>  [:covers, :wine]}], :order => "created_at DESC"
+
+  has_many :wine_followings, 
+           :include => :commentable,
+           :class_name => "Comment", 
+           :conditions => {:commentable_type => "Wines::Detail", :do => "follow"}
+
+  has_many :winery_followings, 
+           :include => :commentable, 
+           :class_name => "Comment", 
+           :conditions => {:commentable_type => "Winery", :do => "follow"} 
+
+  has_many :feeds, 
+           :class_name => "Users::Timeline", 
+           :include => [:ownerable, {:timeline_event => [:actor]}, {:receiverable =>  [:covers, :wine]}], 
+           :order => "created_at DESC",
+           :conditions => ["receiverable_type = ?", "Wines::Detail"] #TODO: 现在只是调用酒的部分， 如果调用酒庄， 请把include wine去掉， 因为酒庄没有wine
+
   has_many :followers, :class_name => 'Friendship', :include => :follower do
     def map_user
       map {|f| f.follower }
@@ -51,6 +70,8 @@ class User < ActiveRecord::Base
       map {|f| f.user }
     end
   end
+  # 推荐的用户
+  scope :recommends, lambda { |limit| order("followers_count DESC").limit(limit) }
   accepts_nested_attributes_for :profile, :allow_destroy => true
   
   # validates :username, :presence => false, :allow_blank => true, :numericality => true

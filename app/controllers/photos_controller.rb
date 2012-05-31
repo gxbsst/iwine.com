@@ -89,6 +89,6 @@ class PhotosController < ApplicationController
 
   def find_winery_and_hot_wine
     @winery = Winery.find params[:winery_id]
-    @hot_wines = Wines::Detail.hot_wines(:order => "desc", :limit => 5)
+    @hot_wines = Wines::Detail.hot_wines(5)
   end
 end

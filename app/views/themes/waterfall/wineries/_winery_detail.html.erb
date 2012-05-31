@@ -1,6 +1,6 @@
 <div class="winery_header">
    <div class="cover">
-     <%= image_tag(@winery.photos.where("is_cover = 1").first.image_url(:middle_x), :width => 360, :height => 320, :alt => @winery.name_en) if @winery.photos.where("is_cover = 1").first %>
+     <%= winery_cover_tag(@winery, :thumb_name => :middle_x, :width => 360, :height => 330, :alt => @winery.name_en) %>
    </div>
 
    <div class="info">
@@ -41,8 +41,11 @@
      </div>
      <div class="mt20">
        <ul class="count">
-         <li class="follow"><%= link_to "#{@winery.followers_count}个关注", "#" %></li>
-         <li class="comment"><%= link_to "#{@winery.comments_count}条评论", "#" %></li>
+         <li class="follow">
+
+          <%= link_to "#{@winery.followers_count}个关注", followers_list_winery_path(@winery) %>
+        </li>
+         <li class="comment"><%= link_to "#{@winery.comments_count}条评论", winery_comments_path(@winery) %></li>
        </ul>
 
 

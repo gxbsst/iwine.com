@@ -49,7 +49,11 @@
       </div>
       <div class="mt10">
         <label>&nbsp;</label>
-        <div class="content"><%= link_to "提交信息", "#", :class => "btn_gray mr5 complete_register" %></div>
+        <div class="content">
+          <%= link_to  "#", :class => "btn_gray mr5 complete_register" do  %>
+            <span>提交信息</span>
+          <% end %>
+        </div>
       </div>
       <div class="clear"></div>
     </div>

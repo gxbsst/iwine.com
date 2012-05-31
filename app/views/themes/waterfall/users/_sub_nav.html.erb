@@ -3,7 +3,7 @@
 <% end %>
 
 <% sub_menu = {
-     "wine_favorite"   =>  [cellars_user_path(@user.id, @user.cellar), @user.wines_count],
+     "wine_favorite"   =>  [cellars_user_path(@user.id, @user.cellar), @user.cellar.items.count],
      "wine_follows"     => [wine_follows_user_path(@user.id), @user.wine_followings_count],
      "winery_follows"   => [winery_follows_user_path(@user.id), @user.winery_followings_count],
      "comments"  => [comments_user_path(@user.id), @user.comments_count],

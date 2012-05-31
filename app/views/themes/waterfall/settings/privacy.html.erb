@@ -2,6 +2,9 @@
     <%= theme_stylesheet_link_tag "setting" %>
 <% end %>
 <div class="whitespace setting">
+  <%= link_to basic_settings_path, :class => "btn_gray float_r" do %>
+     <span>返回</span>
+  <% end %>
   <h1 class="main_title">广播/通知设置</h1>
   <%= render_stickies %>
   <%= form_for @profile, :url => url_for( :action => "privacy" ) do |f| -%>

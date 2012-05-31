@@ -28,7 +28,7 @@
            <%= link_to "添加新酒款", add_wines_path(:step => 1), :class => "add_new_wine" %>
         </li>
         <li>
-          <a  class="add_cellar_wine" href="#">添加藏酒</a>
+          <%= link_to "添加藏酒", add_cellar_items_path(current_user.cellar, :step => 1), :class => "add_cellar_wine" %>
         </li>
         <div class="clear"></div>
       </ul>

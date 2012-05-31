@@ -1,5 +1,5 @@
+<% if !@comments.blank?  %>
 <ul class="winery_list">
-  
    <% @comments.collect{|i| i.commentable }.each do |winery| %>
   <li>
   	<div class="logo">
@@ -28,3 +28,6 @@
 	<% end %>
 </ul>
 
+<% else %>
+<p> 暂时没有评论. </p>
+<% end %>
