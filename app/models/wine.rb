@@ -41,6 +41,7 @@ class Wine < ActiveRecord::Base
       wine.update_attributes!(
         :origin_name => register.origin_name,
         :name_zh => register.name_zh,
+        :other_cn_name => register.other_cn_name,
         :official_site => register.official_site,
         :wine_style_id => register.wine_style_id,
         :region_tree_id => register.region_tree_id,

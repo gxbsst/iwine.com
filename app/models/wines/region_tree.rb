@@ -4,5 +4,11 @@ class Wines::RegionTree < ActiveRecord::Base
   belongs_to :parent, :class_name => "RegionTree", :foreign_key => "parent_id"
   
   scope :region, lambda {|parent_id| where(["parent_id = ?", parent_id])}
-  
+
+
+  #清晰数据时查询region_tree的id
+  def self.get_region_tree_id(name)
+    region_tree = self.where("name_en = ?", name).order("level desc").first
+    region_tree ? region_tree.id : nil
+  end
 end

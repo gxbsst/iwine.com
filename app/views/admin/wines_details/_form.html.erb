@@ -114,26 +114,24 @@
         <tr>
           <td></td>
           <td>
-            <% @photo = @wines_detail.photos.blank? ? @wines_detail.photos.build(:album_id => 1,:category => 1, :photo_type => APP_DATA["photo"]["photo_type"]["cover"]) : @wines_detail.photos.first %>
-            <%= d.fields_for :photos, @photo do |photo| %>
-                <%= photo.file_field :image %>
-                <%= photo.hidden_field :album_id %>
-                <%= photo.hidden_field :category %>
-                <%= photo.hidden_field :photo_type %>
+            <%  @wines_detail.photos.build( :photo_type => APP_DATA["photo"]["photo_type"]["cover"])  if @wines_detail.photos.blank? %>
+            <%= d.fields_for :photos do |p| %>
+                <%= p.file_field :image %>
+                <%= p.hidden_field :image_cache %>
             <% end %>
           </td>
         </tr>
         <tr>
           <td><label>酒标</label></td>
-          <td><%= image_tag @wines_detail.label.filename_url(:thumb) if @wines_detail.label %></td>
+          <td><%= image_tag @wines_detail.label.image_url(:thumb) if @wines_detail.label %></td>
         </tr>
         <tr>
           <td></td>
           <td>
-          <% @wines_label = @wines_detail.label ? @wines_detail.label : @wines_detail.build_label(:md5_signature => "test") %>
-          <%= d.fields_for :label, @wines_label do |label| %>
-            <%= label.file_field :filename %>
-            <%= label.hidden_field :md5_signature %>
+          <%#  @wines_detail.photos.build(:photo_type => APP_DATA["photo"]["photo_type"]["cover"]) unless @wines_detail.label %>
+          <% @wines_detail.build_label(:photo_type => APP_DATA["photo"]["photo_type"]["label"]) unless @wines_detail.label%>
+          <%= d.fields_for :label do |l| %>
+            <%= l.file_field :image %>
           <% end %>
           </td>
         </tr>

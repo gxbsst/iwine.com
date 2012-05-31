@@ -1,10 +1,12 @@
 <div id="preview_wrap">
 	<div id="preview_outer">
 		<div id="preview_inner">
-		  <% if @wine_detail.covers.size > 0 %>
-			<% @wine_detail.covers.limit(3).each do |photo,index| %>
+		  <% if @covers.present? %>
+			<% @covers.each do |photo,index| %>
 		    <div>
-		      <%= image_tag photo.image_url(:large) %>
+              <%= link_to wine_photo_path(@wine_detail, photo) do %>
+		         <%= image_tag photo.image_url(:large) %>
+              <% end %>
 		    </div>
 		  <% end %>
 		  <% else %>
@@ -13,15 +15,15 @@
 		</div>
 	</div>
 </div>
-<% if @wine_detail.covers.size > 1 %>
+<% if @covers.to_a.size > 1 %>
 <div id="thumbs">
 	<!--<div id="arrow"></div>-->
-	<% @wine_detail.covers.limit(3).each do |photo,index| %>
+	<% @covers.each do |photo,index| %>
     <span><%= image_tag photo.image_url(:thumb_x), :width => 50 %></span>
   <% end %>
 </div>
 <% end %>
-<% if @wine_detail.covers.size > 1 %>
+<% if @covers.to_a.size > 1 %>
 <script type="text/javascript">
 		$(document).ready(function() {
 			// Save  the jQuery objects for later use.

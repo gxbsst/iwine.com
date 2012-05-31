@@ -8,6 +8,9 @@ class Wines::Register < ActiveRecord::Base
   belongs_to :winery
   belongs_to :region_tree, :foreign_key => 'region_tree_id'
   has_many :special_comments, :as => :special_commentable
+  has_many :photos, :as => :imageable, :class_name => "Photo"
+  has_many :covers, :as => :imageable, :class_name => "Photo", :conditions => { :photo_type => APP_DATA["photo"]["photo_type"]["cover"] }
+  has_one :label, :as => :imageable, :class_name => "Photo", :conditions => { :photo_type => APP_DATA["photo"]["photo_type"]["label"] }
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :variety_name_value, :variety_percentage_value, :owner_type, :business_id
 
   ## upload image with carrierwave
@@ -16,7 +19,7 @@ class Wines::Register < ActiveRecord::Base
   serialize :variety_name, Array
   serialize :variety_percentage, Array
 
-  validates :name_en, :region_tree_id, :presence => true
+  validates :name_en, :presence => true
   def self.has_translation(*attributes)
     attributes.each do |attribute|
       define_method "#{attribute}" do
@@ -40,6 +43,16 @@ class Wines::Register < ActiveRecord::Base
       :wine_detail => wine_detail,
       :width => width , 
       :height => height) unless photo_name.blank?
+  end
+
+  #更改csv文件结构后的程序
+  def new_approve_wine
+    audit_log = AuditLog.build_log(id, 4)
+    self.update_attributes!(:audit_log_id => audit_log.id, :status => 1, :result => 1)
+    wine = Wine.approve_wine(self)
+    wine_detail = Wines::Detail.approve_wine_detail(wine.id, self, audit_log.id)
+    Wines::VarietyPercentage.build_variety_percentage(variety_name, variety_percentage, wine_detail.id)
+    return wine_detail.id
   end
 
   def show_status
