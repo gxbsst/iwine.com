@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
     :select => "comments.*, count(votes.id) as votes_count",
     :conditions => ["parent_id IS NULL"], :group => "comments.id",
     :order => order )
-    page = params[:params] || 1
+    page = params[:page] || 1
 
     if !(@comments.nil?)
       unless @comments.kind_of?(Array)
