@@ -1,3 +1,4 @@
+# encoding: utf-8
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
@@ -56,6 +57,7 @@ module Patrick
     ActiveSupport::Deprecation.silenced = true
 
     Time::DATE_FORMATS[:normal] = "%Y-%m-%d"
+    Time::DATE_FORMATS[:cn] = "%Y年%m月%d日  %I:%M"
     
     ThemesForRails.config.default_theme = "waterfall"
     

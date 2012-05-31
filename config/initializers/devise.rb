@@ -220,4 +220,5 @@ Devise.setup do |config|
   #   manager.intercept_401 = false
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
+  # config.allow_unconfirmed_access_for = 2.days
 end

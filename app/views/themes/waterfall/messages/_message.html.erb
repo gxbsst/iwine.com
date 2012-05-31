@@ -1,6 +1,8 @@
 <dl class="<%= message.sender_id == current_user.id ? "talk_l" : "talk_r" %> clearfix">
 	<dt class="userimg">
-		<%= link_to_user message.sender, user_path(message.sender), {:with_avatar => true, :avatar_version => :middle }%>
+		<%= link_to_user message.sender, user_path(message.sender), 
+										 {:with_avatar => true, :avatar_version => :middle },
+										 {:size => "50x50"} %>
 	</dt>
 	<dd class="content">
 		<p>	<%= link_to_user message.sender, user_path(message.sender) %>：<%= message.body %></p>

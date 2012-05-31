@@ -2,7 +2,7 @@
 <%= theme_stylesheet_link_tag :setting %>
 <% end %>
 <div class="whitespace message">
-  <%= render_stickies %>
+ 
   <div class="reply_form" id="send_message_form" style="display: none">
     <%= render "send_message_form", :message => @message %>
   </div>
@@ -19,7 +19,7 @@
 	</div>
   
   <div class="message_list">
-    <%= render_stickies %>
+    
     <% if !@conversations.blank? %>
     <ul class="private_list">
       <% @conversations.each do |conversation| %>

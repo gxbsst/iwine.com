@@ -80,7 +80,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # end
 
   def filename
-    model.read_attribute( :avatar ) || Digest::SHA1.hexdigest("#{Time.now.utc}--#{original_filename()}") + '.png'
+    model.read_attribute( :avatar ) || Digest::SHA1.hexdigest("#{Time.now.utc}--#{original_filename()}") + '.png' if original_filename
   end
 
   def crop

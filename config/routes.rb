@@ -32,6 +32,7 @@ Patrick::Application.routes.draw do
       get :new_sns
       get :setting_sns
       get :delete_sns
+      get :unfollow
     end
     member do
       post :email_invite
