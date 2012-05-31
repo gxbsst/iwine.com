@@ -38,22 +38,43 @@ class SearchesController < ApplicationController
   def winery
     @recommend_users = User.recommends(5)
     server = HotSearch.new
-    @page = params[:page].to_i || 1
-    if @page < 1 
-      @page = 1
-    end
-    @entries = server.all_entries( params[:word] , @page )
+    # @page = params[:page].to_i || 1
+    # if @page < 1 
+    #   @page = 1
+    # end
+    @entries = server.all_entries( params[:word])
     @wineries = @entries['wineries']
+    page = params[:page] || 1
+    if !(@wineries.nil?)
+      unless @wineries.kind_of?(Array)
+        @wineries = @wineries.page(page).per(10)
+      else
+        @wineries = Kaminari.paginate_array(@wineries).page(page).per(10)
+      end
+    end
   end
 
   def results
     @recommend_users = User.recommends(5)
     server = HotSearch.new
-    @page = params[:page].to_i || 1
-    if @page < 1 
-      @page = 1
+    # @page = params[:page].to_i || 1
+    # if @page < 1 
+    #   @page = 1
+    # end
+    @entries = server.all_entries( params[:word] )
+    @all_wines = @entries['wines']
+    @wineries = @entries['wineries']
+
+    page = params[:page] || 1
+    if !(@all_wines.nil?)
+      unless @all_wines.kind_of?(Array)
+        @wines = @all_wines.page(page).per(10)
+      else
+        @wines = Kaminari.paginate_array(@all_wines).page(page).per(10)
+      end
     end
-    @entries = server.all_entries( params[:word] , @page )
+    
+
     @all_tab = @wine_tab = ''
     @tab = params[:tab] || ''
     

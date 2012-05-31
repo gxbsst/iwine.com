@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-</head>
-<body>
-<h1>Welcome to example.com, <%= @user.username %></h1>
+<p><%= @email %>, 您好</p>
 <p>
-  You have successfully signed up to example.com,
-  your username is: 善华<br/>
+  你的好友<%= @user.username %>邀请您加入<a href="http://www.iwine.com">iWine.com.</a>
+
 </p>
-<p>
-  To login to the site, just follow this link: http://www.sidways.com.
-</p>
-<p>Thanks for joining and have a great day!</p>
-</body>
-</html>
+<p><% @body %></p>
+
+<p>爱酒网</p>
