@@ -37,7 +37,7 @@ module ApplicationHelper
 
   ## 显示酒的封面
   def wine_cover_tag(object, options = {})
-    cover = object.photos.cover.first
+    cover = get_cover object
     if cover
       image_tag cover.image_url(options[:thumb_name]), options
     else
@@ -65,11 +65,12 @@ module ApplicationHelper
   end
 
   def wine_waterfall_image_tag(object, options = {})
-    unless object.covers.first.nil?
+    cover =  get_cover object
+    if cover
       options[:thumb_name] = :middle_x unless options.has_key? :thumb_name
-      options[:width] = object.covers.first.width
-      options[:height] = object.covers.first.height
-      image_tag object.covers.first.image_url(options[:thumb_name]), options
+      options[:width] = cover.width
+      options[:height] = cover.height
+      image_tag cover.image_url(options[:thumb_name]), options
     else
       options[:width] = 200
       options[:height] = 200
@@ -77,6 +78,16 @@ module ApplicationHelper
     end
   end
 
+  def get_cover(object)
+    case object.class.name
+      when "Wine"
+        cover = object.photos.cover.first
+      when "Wines::Detail"
+        cover = object.photos.cover.first
+        cover = object.wine.photos.cover.first unless cover
+    end
+    return cover
+  end
   ## 显示用户头像
   def user_avatar_tag(object, options = {} )
     if object.avatar.respond_to? "image_url"
