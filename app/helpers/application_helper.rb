@@ -46,7 +46,7 @@ module ApplicationHelper
   end
 
   def winery_cover_tag(object, options = {})
-    cover = object.photos.cover.first
+    cover = get_cover(object)
     if cover
       image_tag cover.image_url(options[:thumb_name]), options
     else
@@ -80,7 +80,7 @@ module ApplicationHelper
 
   def get_cover(object)
     case object.class.name
-      when "Wine"
+      when "Wine", "Winery"
         cover = object.photos.cover.first
       when "Wines::Detail"
         cover = object.photos.cover.first
@@ -251,4 +251,30 @@ module ApplicationHelper
   def get_hot_wineries(limit)
     Winery.hot_wineries(1)
   end
+
+  #for sns_share
+
+  def sns_title(name)
+    "【#{name}】"
+  end
+
+  def winery_summary(winery)
+    truncate(winery.info_items.first.description.gsub(" ", '').gsub(/\r|\n/, ''), :length => 70)  if winery.info_items.first
+  end
+
+  def wine_summary(description)
+    truncate(description.to_s.gsub(" ", '').gsub(/\r|\n/, ''), :length => 70)
+  end
+
+  def sns_image_url(object, options = {})
+    if object.class.name == "Photo"
+      cover = object
+    else
+      cover = get_cover(object)
+    end
+    if cover
+      "#{root_url}#{cover.image_url(options[:thumb_name])}"
+    end
+  end
+
 end
