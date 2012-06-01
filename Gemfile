@@ -84,6 +84,7 @@ group :development, :test do
   gem "uniform_notifier"
   # gem 'slowgrowl'
   gem "thin"
+  gem 'sextant' #通过 http://localhost:3000/rails/routes 查看routes
 end
 # Gems used only for assets and not required
 # in production environments by default.
