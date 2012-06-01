@@ -21,6 +21,7 @@ class WineDetailsController < ApplicationController
       @comments         = @wine_detail.all_comments(:limit => 6)
       @owners           = @wine_detail.owners(:limit => 4)
       @followers        = @wine_detail.followers(:limit => 11)
+      @covers           = @wine_detail.show_covers
     end
   end
 

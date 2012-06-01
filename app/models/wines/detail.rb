@@ -24,7 +24,8 @@ class Wines::Detail < ActiveRecord::Base
   accepts_nested_attributes_for :photos, :reject_if => proc { |attributes| attributes['image'].blank? }
   accepts_nested_attributes_for :label, :reject_if => proc { |attributes| attributes['filename'].blank? }
 
-  # scope :with_recent_comment, joins(:comments) & ::CommenGt.recent(6) 
+  # scope :with_recent_comment, joins(:comments) & ::CommenGt.recent(6)
+
   def comment( user_id )
     Wines::Comment.find_by_user_id user_id
   end
@@ -124,6 +125,16 @@ class Wines::Detail < ActiveRecord::Base
   # 所有评论的总数（评论数+关注数量)
   def all_comments_count
     comments_count + followers_count
+  end
+
+  #展示detail covers 如果没有则展示wine 的covers
+  def show_covers
+    if covers.present?
+      photo_covers = covers
+    elsif wine.covers.present?
+      photo_covers = wine.covers
+    end
+    return photo_covers
   end
 
   # 类方法
