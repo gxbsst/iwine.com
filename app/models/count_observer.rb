@@ -109,13 +109,15 @@ class CountObserver < ActiveRecord::Observer
     Users::WineCellar.decrement_counter :items_count, model.user.cellar.id if model.user_id != -1
   end
 
-  #上传照片操作
+  #上传照片操作(需要特别注意上传wine的photo时，用户photos_count目前暂不修改)
   def increment_photos_count model, target_id, target_type_class
+    return if model.imageable_type == "Wine" #wine的photo不计数
     target_type_class.increment_counter :photos_count, target_id
     User.increment_counter :photos_count, model.user_id
   end
 
   def decrement_photos_count model, target_id, target_type_class
+    return if model.imageable_type == "Wine"
     target_type_class.decrement_counter :photos_count, target_id
     User.decrement_counter :photos_count, model.user_id
   end

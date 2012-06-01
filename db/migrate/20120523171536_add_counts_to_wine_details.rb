@@ -23,7 +23,7 @@ class AddCountsToWineDetails < ActiveRecord::Migration
     add_column :users, :tasting_notes_count, :integer, :limit => 11, :default => 0
     add_column :users, :followings_count, :integer, :limit => 11, :default => 0
     add_column :users, :followers_count, :integer, :limit => 11, :default => 0
-    add_column :users, :albums_count, :integer, :limit => 11, :default => 3 #默认初始化三个相册
+    add_column :users, :albums_count, :integer, :limit => 11, :default => 0 #默认初始化三个相册
 
     add_column  :albums, :photos_count, :integer, :limit => 11, :default => 0
     add_column :comments, :children_count, :integer, :limit => 11, :default => 0
