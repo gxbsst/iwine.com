@@ -6,7 +6,9 @@ class PhotosController < ApplicationController
   def index
     @photos = @imageable.photos.page(params[:page] || 1).per(8)
     case @resource
-    when "Wines::Detail"
+      when "Wines::Detail"
+      # 包括detail和wine的图片
+      @photos =  @imageable.all_photos.page(params[:page] || 1).per(8)
       render_wine_photo_list
     when "wineries"
       render_winery_photo_list

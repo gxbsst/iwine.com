@@ -15,8 +15,8 @@
 	产区：<%= render 'share/region_tree', :region_tree => @wine_detail.get_region_path(@wine_detail.wine.region_tree_id) %><br />
 	类型： <%= link_to @wine.style.name_zh,
 				results_searches_path(:tab => :wine, :word => @wine.style.name_en) %><br />
-	容量：<%= @wine_detail.capacity %><br />
-	酒精度：<%= @wine_detail.alcoholicity %>Vol<br />
+	容量：<%= @wine_detail.show_capacity %><br />
+	酒精度：<%= @wine_detail.show_alcoholicity %><br />
 	葡萄品种： <% @wine_detail.variety_percentages.each do |i| %>
         <%= i.name_zh %> (<%= i.percentage %>)、
         <% end %>

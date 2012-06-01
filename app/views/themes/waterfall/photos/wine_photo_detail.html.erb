@@ -17,16 +17,16 @@
 		<div class="album_left">
 			<div class="mb20">
 				<div class="pre_next">
-				  <% if previous_photo = previous_page(@wine_detail.photo_ids, @photo.id) %>
-              <%= link_to wine_photo_path(@wine_detail, previous_photo), :class => "btn_gray mr5" do %>
-                  <span>前一张</span>
-              <% end %>
-          <% end %>
-          <% if next_photo = next_page(@wine_detail.photo_ids, @photo.id) %>
-              <%= link_to wine_photo_path(@wine_detail, next_photo), :class => "btn_gray" do %>
-                  <span>后一张</span>
-              <% end %>
-          <% end %>              
+				  <% if previous_photo = previous_page(@wine_detail.all_photo_ids, @photo.id) %>
+                     <%= link_to wine_photo_path(@wine_detail, previous_photo), :class => "btn_gray mr5" do %>
+                        <span>前一张</span>
+                     <% end %>
+                  <% end %>
+                  <% if next_photo = next_page(@wine_detail.all_photo_ids, @photo.id) %>
+                    <%= link_to wine_photo_path(@wine_detail, next_photo), :class => "btn_gray" do %>
+                        <span>后一张</span>
+                    <% end %>
+                  <% end %>
           
 				</div>
 			</div>
