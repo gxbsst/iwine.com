@@ -52,7 +52,7 @@
       <div class="clear"></div>
     </div>
     <% end %>
-    <% @entries['wines'].each do |wine| %>
+    <% @wines.each do |wine| %>
     <div class="wine_list">
       <div class="box590">
         <div class="box590_t"></div>
@@ -86,10 +86,14 @@
       </div>
     </div>
     <% end %>
-    <% if @entries['wines'].length >= 50 || @page > 1 %>
-    <div class="pagination">
-      <a href="<%= url_for( '/searches/results?word=' + params[:word] +'&page=' + ( @page - 1 ).to_s + '&tab=' + @tab)%>"> < </a>
-      <a href="<%= url_for( '/searches/results?word=' + params[:word] +'&page=' + ( @page + 1 ).to_s + '&tab=' + @tab)%>"> > </a>
+
+      <div class="pagination">
+        <%= paginate @wines %>
+      </div>
+
+
+
+    
       <!--
       <span class="disabled"> < </span>
       <span class="current">1</span>
@@ -103,8 +107,7 @@
       <a href="#?page=2"> > </a>
       <br />
       -->
-    </div>
-    <%end%>
+ 
     <% end %>
   </div>
   <div class="right">

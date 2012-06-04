@@ -54,9 +54,11 @@
       <div class="clear"></div>
       <% end %>
     </ul>
-    <div class="pagination">
-      <a href="<%= url_for( '/searches/winery?word=' + params[:word] +'&page=' + ( @page - 1 ).to_s )%>"> < </a>
-      <a href="<%= url_for( '/searches/winery?word=' + params[:word] +'&page=' + ( @page + 1 ).to_s )%>"> > </a>
+      <div class="pagination">
+        <%= paginate @wineries %>
+      </div>
+    <!-- <div class="pagination"> -->
+
       <!--
       <span class="disabled"> < </span>
       <span class="current">1</span>
@@ -70,7 +72,7 @@
       <a href="#?page=2"> > </a>
       <br />
       -->
-    </div>
+    <!-- </div> -->
     <% end %>
   </div>
   <div class="right">

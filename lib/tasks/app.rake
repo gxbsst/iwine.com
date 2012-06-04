@@ -1,7 +1,7 @@
 #encoding: UTF-8
 namespace :app do
   desc "TODO"
-  task :upload_one_wine => :environment do
+  task :init_default_data => :environment do
     require 'csv'
     styles = [
       ['Red Wine', '红葡萄酒'],
@@ -19,13 +19,15 @@ namespace :app do
     # ## 导入酒类表
     styles.each do |s|
       w = Wines::Style.where("name_en = ? and name_zh =? ", s[0], s[1]).first_or_create(:name_en => s[0], :name_zh => s[1])
+      puts "wine_style #{w.id}"
     end
 
     #
     # ## 导入中国地区表
     regions = CSV.read("#{Rails.root}/lib/tasks/data/region.csv")
     regions.each do |r|
-      Region.find_or_create_by_parent_id_and_region_name_and_region_type(r[1], r[2], r[3].to_i)
+      region = Region.find_or_create_by_parent_id_and_region_name_and_region_type(r[1], r[2], r[3].to_i)
+      puts "region #{region.id}"
     end
   end
 
@@ -49,80 +51,67 @@ namespace :app do
     end
   end
 
-  desc "TODO"
+  desc "将数据填进wine_registers表中"
   task :upload_all_wines => :environment do
     require 'csv'
+    require "fileutils"
     ## 导入酒和详细信息
-    file_path = Rails.root.join("lib/tasks/data/wines_datas.csv")
-    csv  = CSV.read(file_path)
-    csv.each do |item|
-      begin
-        region_tree = Wines::RegionTree.where("origin_name = ? and level = ?", item[5].to_s.split('/').last, item[5].to_s.split('/').size).first
-        unless region_tree
-          puts "#{item[5]}  region_tree_id can't be blank!"
-          next
-        end
-        #处理适饮年限
-        if item[10].to_s.include?('+')
-          drinkable_begin = item[10].to_s.gsub(/\+/, '')
-          drinkable_end = nil
-        else
-          drinkable_begin = item[10].to_s.split('-').first
-          drinkable_end = item[10].to_s.split('-').last
-        end
+    file_directories = Rails.root.join("lib", "tasks","data", "wine", "*.csv")
+    Dir.glob(file_directories).each do |csv_file|
+      puts "开始加载 #{csv_file}"
+      csv = CSV.read(csv_file)
+      csv.each_with_index do |item, index|
+        next if index == 0 #跳过标题
+        begin
+          #转换数据类型
+          item.collect{|i| i.to_s.force_encoding('utf-8')}
+          #查找region_tree
+          region_tree_id = Wines::RegionTree.get_region_tree_id(to_ascii(item[5]))
+          #处理适饮年限
+          drinkable_begin, drinkable_end = get_drinkable_time(item[10])
+          #酒类品种及百分比处理
+          variety_name, variety_percentage = get_variety_percentage(item[12])
+          # get wine_style_id
+          wine_style = Wines::Style.where("name_zh = ? ", item[4]).first
+          #查找酒庄
+          winery = Winery.where("name_en = ? ", to_ascii(item[7])).first
+          #中文名处理
+          name_zh_arr = item[2].to_s.split('/')
+          #年代
+          vintage = (item[9] != "NV" && item[9].present?) ? DateTime.parse("#{item[9]}-01-01") : nil
+          register = Wines::Register.where("name_en = ? and vintage = ?", to_ascii(item[1]), item[9]).first_or_create!(
+            :origin_name => item[1].force_encoding('utf-8'),
+            :name_en => to_ascii(item[1]),
+            :name_zh => name_zh_arr.pop,
+            :other_cn_name => name_zh_arr.blank? ? nil : name_zh_arr.join(' '),
+            :vintage => vintage,
+            :is_nv => item[9].to_s == "NV" ? 1 : 0,
+            :official_site => to_utf8(item[3]).gsub(/http:\/\//, ''),
+            :wine_style_id => wine_style ? wine_style.id : nil,
+            :region_tree_id => region_tree_id,
+            :winery_id => winery ? winery.id : nil,
+            :drinkable_begin => drinkable_begin,
+            :drinkable_end => drinkable_end,
+            :alcoholicity => item[11],
+            :variety_percentage => variety_percentage,
+            :variety_name => variety_name,
+            :status => 0, #0表示此条记录没有发布
+            :result => 0,
+            :user_id => -1, #-1说明是程序填充的数据
+            :capacity => item[13]
+          )
+          puts register.id
 
-        #酒类品种及百分比处理
-        variety_arr = item[12].to_s.gsub(/\n/, '/').force_encoding('utf-8').split('/')
-        next if variety_arr.size.odd?
-        variety_percentage = []
-        variety_name = []
-        Hash[*variety_arr].each do |key, value|
-          variety_name.push key
-          variety_percentage.push value
+        rescue Exception => e
+          puts e
         end
-        # get wine_style_id
-        wine_style = Wines::Style.where("name_zh = ? ", item[4]).first
-        #查找酒庄
-        winery = Winery.where("name_en = ? ", item[7].to_s.force_encoding('utf-8').to_ascii_brutal).first
-        wine_register = Wines::Register.find_or_initialize_by_name_en_and_vintage(item[1].to_s.force_encoding('utf-8').to_ascii_brutal, item[9])
-        if wine_register.new_record?
-          wine_register.name_zh = item[2].to_s.force_encoding('utf-8').split('/').last
-          wine_register.name_en = item[1].to_s.force_encoding('utf-8').to_ascii_brutal
-          wine_register.origin_name = item[1].to_s.force_encoding 'utf-8'
-          wine_register.official_site = item[3].to_s.force_encoding('utf-8').gsub(/http:\/\//, '')
-          wine_register.wine_style_id =  wine_style.id if wine_style #需要更改数据
-          wine_register.region_tree_id = region_tree.id
-          wine_register.winery_id = winery.id if winery
-          wine_register.vintage = DateTime.parse "#{item[9]}-01-01" if item[9] != "NV" && item[9].present?
-          wine_register.is_nv = 1 if item[9].to_s == "NV"
-          wine_register.drinkable_begin = drinkable_begin.to_i == 0 ? nil : drinkable_begin.to_i
-          wine_register.drinkable_end = drinkable_end.to_i == 0 ? nil : drinkable_end.to_i
-          wine_register.alcoholicity =item[11]
-          wine_register.variety_percentage = variety_percentage
-          wine_register.variety_name = variety_name
-          wine_register.capacity = item[13]
-          wine_register.user_id = -1
-          wine_register.status = 0
-          wine_register.result = 0
-          # process photo
-          photo_path  = Rails.root.join('lib', 'tasks','data', 'wine_photos', item[0])
-
-          if Dir.exist? photo_path
-            file_path = Rails.root.join(photo_path, Dir.entries(photo_path).select{|x| x != '.' && x != '..' && x != '.DS_Store'}.first)
-            wine_register.photo_name = open(file_path)
-            File.delete(file_path) #删除此照片
-          end
-          wine_register.save
-        end
-       puts wine_register.id
-      rescue Exception => e
-        puts e
       end
     end
   end
 
   #发布酒
-  desc "TODO"
+  desc "将wine_registers中的数据分别导入到对应的wine 和wine_details表中"
+
   task :approve_wines => :environment do
     require 'csv'
     # 文件复制
@@ -144,23 +133,40 @@ namespace :app do
     end
   end
 
-  desc "TODO"
+  desc "（新版）将wine_registers中的数据分别导入到对应的wine 和wine_details表中"
+  task :new_approve_wines => :environment do
+    Wines::Register.where("status = 0").each do|register|
+      begin
+        Wine.transaction do
+          wine_detail_id = register.new_approve_wine
+          puts "#{wine_detail_id} #{register.vintage}"
+        end
+      rescue Exception => e
+        register.update_attribute(:status, -1) #发布失败
+        puts e
+      end
+    end
+
+  end
+
+  desc "加载region_tree"
   task :init_region_tree => :environment do
     require 'csv'
     # TODO: “请修改下面的路径”
-    file_path = Rails.root.join("lib/tasks/data/region_tree/region_tree.csv")
-    csv = CSV.read(file_path)
-    csv.each do |item|
+    file_directories = Rails.root.join("lib/tasks/data/region_tree/region_tree/*.csv")
+    Dir.glob(file_directories).each do |csv_file|
+      puts "开始加载 #{csv_file}"
+      csv = CSV.read(csv_file)
+      csv.each do |item|
         item.collect{|i| i.to_s.force_encoding('utf-8')}
-        #最后两列分别为空和doc,需要单独处理
-        doc = item.pop #拿出doc
-        item.pop #去掉空列
+        #是奇数说明包含doc
+        doc = item.size.odd? ? item.pop : nil
         item_to_hash = Hash[*item]
         parent = 0
         level = 1
         item_to_hash.each do |key, value|
           unless value.blank?
-            ascii_value = value.to_ascii_brutal
+            ascii_value = to_ascii(value)
             name_zh = key.blank? ? ascii_value : key
             # TODO:
             # 如果处理以下
@@ -168,7 +174,7 @@ namespace :app do
             # 2. 添加一个字段， 保存原生文字，如:RhÃ´ne Valley, name_en 保存 RhA´ne Valley
             # 转换方法: "Moulis/ Moulis-en-MÃ©doc".to_ascii_brutal => https://github.com/tomash/ascii_tic
             region = Wines::RegionTree.where("name_en = ? and level = ? ", ascii_value, level).first
-            region = Wines::RegionTree.create(:doc => doc.to_s.to_ascii_brutal,
+            region = Wines::RegionTree.create(:doc => to_ascii(doc),
                                               :name_zh => name_zh,
                                               :name_en => ascii_value,
                                               :origin_name => value,
@@ -183,72 +189,57 @@ namespace :app do
           end
         end
       end
+
+    end
   end
 
   task :init_wineries => :environment do
     require 'csv'
     require 'fileutils'
-    photos_path = "lib/tasks/data/winery_photos"
-    winery_path = Rails.root.join("lib", "tasks", "data", "winery.csv")
-    csv  = CSV.read(winery_path)
-    csv.each_with_index do |item, index|
-      next if index == 0 # 跳过csv文件标题
-      item.collect{|i| i.to_s.force_encoding('utf-8')} #转换数据类型
-      # find region_tree_id
-      region_tree = Wines::RegionTree.where("name_en = ?", item[12].to_s.to_ascii_brutal).order("level desc").first
-      unless region_tree
-        puts "region_tree can't be blank!"
-        next
-      end
-      Winery.transaction do
-        begin
-          name_en = item[1].to_s.to_ascii_brutal
-          winery = Winery.where("name_en = ?", name_en).
-              first_or_create!(
-              :name_en => name_en,
-              :origin_name => item[1],
-              :name_zh => item[2],
-              :cellphone => item[3].to_s.gsub(" ", ''),
-              :fax => item[4],
-              :email => item[5],
-              :official_site => item[6].to_s.gsub(/http:\/\//, ''),
-              :address => item[7].to_s.to_ascii_brutal,
-              :config => {"Facebook" => item[8], "Twitter" => item[8], "Sina" => item[9]},
-              :region_tree_id => region_tree.id)
-          puts winery.id
-          #next unless winery.new_record? #跳过老数据
-          #save_logo_and_photos
-          if !item[0].blank? && Dir.exist?(Rails.root.join(photos_path, item[0]))
-            if logo_path = Dir.glob(Rails.root.join(photos_path, item[0], "logo.*")).first
-              winery.update_attribute("logo", open(logo_path))
-            end
-            Dir.glob(Rails.root.join(photos_path, item[0], "*")).each_with_index do |photo_path, index|
-              next if photo_path.include?("logo")
-              winery.photos.create!(
-                :category => 1,
-                :album_id => -1,
-                :is_cover => photo_path.include?("cover") ? APP_DATA["photo"]["photo_type"]["cover"] : 0,   #设置第一张图片为封面
-                :image => open(photo_path)
-              )
-            end
-            #删除已经保存的图片
-            FileUtils.rm_r(Rails.root.join(photos_path, item[0]))
-          end
-          #save_info_items
-          unless item[13].blank?
-            info_arr = item[13].split('#').collect{|i| i.to_ascii_brutal}
-            info_arr.delete("") #delete ""
-            info_hash = Hash[*info_arr]
-            info_hash.each do |key, value|
-              winery.info_items.where("title = ?", key).first_or_create!(:title => key, :description => value)
-            end
-          end
-        rescue Exception => e
-          puts e
-        end
 
+    file_directory = Rails.root.join("lib", "tasks", "data", "winery", "*.csv")
+    Dir.glob(file_directory).each do |csv_file|
+      puts "开始加载 #{csv_file}"
+      csv  = CSV.read(csv_file)
+      csv.each_with_index do |item, index|
+        next if index == 0 # 跳过csv文件标题
+        item.collect{|i| i.to_s.force_encoding('utf-8')} #转换数据类型
+        # find region_tree_id
+        region_tree_id = Wines::RegionTree.get_region_tree_id(item[12].to_s.to_ascii_brutal)
+        Winery.transaction do
+          begin
+            name_en = item[1].to_s.to_ascii_brutal
+            winery = Winery.where("name_en = ?", name_en).
+                first_or_create!(
+                :name_en => name_en,
+                :origin_name => item[1],
+                :name_zh => item[2],
+                :cellphone => item[3].to_s.gsub(" ", ''),
+                :fax => item[4],
+                :email => item[5],
+                :official_site => item[6].to_s.gsub(/http:\/\//, ''),
+                :address => item[7].to_s.to_ascii_brutal,
+                :config => {"Facebook" => item[8], "Twitter" => item[8], "Sina" => item[9]},
+                :region_tree_id => region_tree_id)
+            puts winery.id
+
+            #save_info_items
+            unless item[13].blank?
+              info_arr = item[13].split('#').collect{|i| i.to_ascii_brutal}
+              info_arr.delete("") #delete ""
+              info_hash = Hash[*info_arr]
+              info_hash.each do |key, value|
+                winery.info_items.where("title = ?", key).first_or_create!(:title => key, :description => value)
+              end
+            end
+          rescue Exception => e
+            puts e
+          end
+
+        end
       end
     end
+
 
   end
 
@@ -288,4 +279,62 @@ namespace :app do
       puts e
     end
   end
+
+  #处理酒的品种和百分比
+  def get_variety_percentage(variety)
+    return [nil, nil] if variety.blank?
+    #将variety 格式化为类似于[‘Cf', '!0', "DE", '', 'MER'. '12']
+    variety_arr = to_ascii(variety).split("\n")
+    new_variety_arr = variety_arr.collect{|v| v.split "/"}
+    #没有百分比的将百分比设置为空
+    new_variety_arr.collect{|v| v.push("") if v.size.odd? }
+    final_variety_arr = new_variety_arr.flatten
+
+    variety_percentage = []
+    variety_name = []
+    Hash[*final_variety_arr].each do |key, value|
+      variety_name.push key
+      variety_percentage.push value
+    end
+
+    #将简写转化为原始数据
+    variety_name = short_variety_to_long(variety_name)
+    return [variety_name, variety_percentage]
+  end
+
+  #将简写的variety转换为原始数据
+  def short_variety_to_long variety_name
+    file_path = Rails.root.join('lib', 'tasks', 'data', 'region_tree','variety_short.csv')
+    csv  = CSV.read(file_path)
+    variety_arr = []
+    csv.each do |item|
+      variety_arr.push item[0], item[1]
+    end
+    variety_hash = Hash[*variety_arr]
+    final_variety = variety_name.collect{|name| name = variety_hash[name] ? variety_hash[name] : name}
+    return final_variety
+  end
+  #适饮年限
+  def get_drinkable_time(date)
+    return [nil, nil] if date.blank?
+    if data.include?('+')  #只有起始年代
+      drinkable_begin = date.gsub(/\+/, '')
+      drinkable_end = nil
+    else
+      date_arr = date.split("-")
+      drinkable_begin = date_arr.size.odd? ? nil : date_arr.first #处理没有起始年代的情况
+      drinkable_end = date_arr.last
+    end
+    return [drinkable_begin, drinkable_end]
+  end
+
+
+  def to_ascii(string)
+    string.to_s.force_encoding('utf-8').to_ascii_brutal
+  end
+
+  def to_utf8(string)
+    string.to_s.force_encoding('utf-8')
+  end
+
 end
