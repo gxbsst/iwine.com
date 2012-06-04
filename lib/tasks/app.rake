@@ -162,7 +162,7 @@ namespace :app do
         #是奇数说明包含doc
         doc = item.size.odd? ? item.pop : nil
         item_to_hash = Hash[*item]
-        parent = 0
+        parent = nil #搜索parent时，如果搜到nil则终止搜索
         level = 1
         item_to_hash.each do |key, value|
           unless value.blank?

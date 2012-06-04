@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class FriendsController < ApplicationController
   before_filter :authenticate_user!
-  
+
   def follow
     params[:user_id].split(',').each do |user_id|
       if current_user.is_following( user_id ).blank? && current_user.id != user_id.to_i
@@ -21,11 +21,11 @@ class FriendsController < ApplicationController
       friendship.destroy
       notice_stickie("取消关注成功.")
     end
-   # redirect_to :action => 'find' 
+    # redirect_to :action => 'find'
     redirect_to request.referer
   end
- 
-   # 查找好友
+
+  # 查找好友
   def find
     @availabe_sns = current_user.available_sns
   end
@@ -39,7 +39,7 @@ class FriendsController < ApplicationController
     @followings = current_user.followings
   end
 
-  def sync 
+  def sync
     client = current_user.oauth_client( params[:sns_name] )
     @availabe_sns = current_user.available_sns
     @user_ids = []
@@ -101,7 +101,7 @@ class FriendsController < ApplicationController
   def from_email
 
     if request.post?
-      @recommend_users = current_user.mail_contacts params[:email], params[:login], params[:password] 
+      @recommend_users = current_user.mail_contacts params[:email], params[:login], params[:password]
     end
 
   end

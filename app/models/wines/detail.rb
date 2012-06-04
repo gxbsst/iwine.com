@@ -18,6 +18,7 @@ class Wines::Detail < ActiveRecord::Base
   has_many :covers, :as => :imageable, :class_name => "Photo", :conditions => { :photo_type => APP_DATA["photo"]["photo_type"]["cover"] }
   has_one :label, :as => :imageable, :class_name => "Photo", :conditions => { :photo_type => APP_DATA["photo"]["photo_type"]["label"] }
   has_many :photos, :as => :imageable, :class_name => "Photo"
+
   has_many :prices, :class_name => "Price", :foreign_key => "wine_detail_id"
   has_many :variety_percentages, :class_name => 'VarietyPercentage', :foreign_key => 'wine_detail_id', :dependent => :destroy
   has_many :special_comments, :as => :special_commentable
@@ -134,6 +135,25 @@ class Wines::Detail < ActiveRecord::Base
     return photo_covers
   end
 
+  def show_alcoholicity
+    alcoholicity.blank? ? nil : "#{alcoholicity}%Vol"
+  end
+
+  def show_capacity
+    capacity.blank? ? nil : "#{capacity}ml"
+  end
+
+  def all_photo_ids
+   all_photos.inject([]) {|memo, p| memo << p.id}
+  end
+
+  def all_photos
+    Photo.where(["(imageable_type=? AND imageable_id = ?) OR (imageable_type=? AND imageable_id =? )", "Wines::Detail", id, "Wine", wine_id])
+  end
+
+  def all_photo_counts
+    photos_count.to_i + wine.photos.count.to_i
+  end
   # 类方法
   class << self
    def timeline_events

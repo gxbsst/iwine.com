@@ -2,6 +2,6 @@
 	<%= link_to "#{@wine_detail.followers_count}<br /> 关注".html_safe, followers_wine_path(@wine_detail.id) %>
 	<%= link_to "#{@wine_detail.owners_count}<br /> 拥有".html_safe, owners_wine_path(@wine_detail.id)  %>
 	<%= link_to "#{@wine_detail.all_comments_count}<br /> 评论".html_safe, wine_comments_path(@wine_detail.id) %>
-	<%= link_to "#{@wine_detail.photos_count}<br /> 照片".html_safe, wine_photos_path(@wine_detail.id) %>
+	<%= link_to "#{@wine_detail.all_photo_counts}<br /> 照片".html_safe, wine_photos_path(@wine_detail.id) %>
 	<div class="clear"></div>
 </div>

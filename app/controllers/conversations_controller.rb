@@ -95,13 +95,13 @@ class ConversationsController < ApplicationController
     else
       conditions = ["receipts.receiver_id=? AND (notifications.body like ?)", current_user.id, "%" + params[:search] + "%"]
     end
-    @receipts = Receipt.all(:joins => "LEFT OUTER JOIN `notifications` ON notifications.id = receipts.notification_id", 
-    :include => [:notification => :conversation],
-    :conditions => conditions)    
+    @receipts = Receipt.all(:joins => "LEFT OUTER JOIN `notifications` ON notifications.id = receipts.notification_id",
+      :include => [:notification => :conversation],
+    :conditions => conditions)
     if !@receipts.blank?
       @conversations = @receipts.inject([]) do |memo, receipt|
         memo << receipt.notification.conversation
-      end 
+      end
       #TODO: 加分页
       # page = params[:page] || 1
       # if !(@conversations.nil?)
@@ -144,4 +144,3 @@ class ConversationsController < ApplicationController
   end
 
 end
-
