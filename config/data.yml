@@ -152,5 +152,13 @@ photo:
     cover: 2
     normal: 0
 
+email:
+  from:
+    normal: "non-reply@iWine.com"
+    #TODO: 根据不同需要在这里继续添加
+  to:
+    normal: "non-reply@iWine.com"
+    feedback: "non-reply@iWine.com" # 接收用户反馈的邮箱帐号
+
 
 

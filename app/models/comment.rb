@@ -75,6 +75,10 @@ class Comment < ActiveRecord::Base
     return path
   end
 
+  def children_and_order(order = "created_at DESC")
+    Comment.where(["parent_id = ?", id]).order(order)
+  end
+
   def self.get_comments(commentable, option = {})
     commentable.comments.all(:include => [:user],
       :joins => "LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id",
@@ -82,4 +86,5 @@ class Comment < ActiveRecord::Base
       :conditions => ["parent_id is null and do = 'comment'"], :group => "comments.id",
       :order => "votes_count DESC, created_at DESC", :limit => option[:limit] )
   end
+
 end

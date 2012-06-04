@@ -98,11 +98,16 @@ class SettingsController < ApplicationController
 
   def avatar
     @title = "设置头像"
-    
     # 保存图片
     if request.put?
-      if save_avatar
-        notice_stickie t("save_successed")
+      if params[:user].present?
+        if save_avatar
+          notice_stickie "上传图片成功."
+        else
+          notice_stickie "上传图片失败."
+        end
+      else
+        notice_stickie "请上传图片."
       end
       redirect_to avatar_settings_path
     end
@@ -111,7 +116,7 @@ class SettingsController < ApplicationController
     if request.post?
       if params[:user][:crop_x].present?
         crop_avatar
-        notice_stickie t("save_successed")
+        notice_stickie "设置头像成功."
       end
       redirect_to basic_settings_path
     end

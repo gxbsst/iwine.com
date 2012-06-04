@@ -1,4 +1,42 @@
 # -*- coding: utf-8 -*-
+# Attributes:
+# * id [integer, primary, not null, limit=4] - primary key
+# * agree_term [boolean, default=true, limit=1] - TODO: document me
+# * albums_count [integer, default=3, limit=4] - TODO: document me
+# * authentication_token [string] - Devise Token authenticable module
+# * avatar [string] - TODO: document me
+# * city [string] - TODO: document me
+# * comments_count [integer, default=0, limit=4] - TODO: document me
+# * confirmation_sent_at [datetime] - TODO: document me
+# * confirmation_token [string] - Devise Confirmable module
+# * confirmed_at [datetime] - Devise Confirmable module
+# * counts [string] - TODO: document me
+# * created_at [datetime, not null] - creation time
+# * current_sign_in_at [datetime] - Devise Trackable module
+# * current_sign_in_ip [string] - Devise Trackable module
+# * email [string, default=, not null]
+# * encrypted_password [string, default=, not null] - TODO: document me
+# * failed_attempts [integer, default=0, limit=4] - Devise Lockable module
+# * followers_count [integer, default=0, limit=4] - TODO: document me
+# * followings_count [integer, default=0, limit=4] - TODO: document me
+# * last_sign_in_at [datetime] - Devise Trackable module
+# * last_sign_in_ip [string] - Devise Trackable module
+# * locked_at [datetime] - Devise Lockable module
+# * password_salt [string] - Devise Encriptable module
+# * photos_count [integer, default=0, limit=4] - TODO: document me
+# * remember_created_at [datetime] - Devise Rememberable module
+# * reset_password_sent_at [datetime] - Devise Recoverable module
+# * reset_password_token [string] - Devise Recoverable module
+# * role [string] - TODO: document me
+# * sign_in_count [integer, default=0, limit=4] - Devise Trackable module
+# * tasting_notes_count [integer, default=0, limit=4] - TODO: document me
+# * unconfirmed_email [string] - Devise Confirmable module
+# * unlock_token [string] - Devise Locakble module
+# * updated_at [datetime, not null] - last update time
+# * username [string, default=, not null] - TODO: document me
+# * wine_followings_count [integer, default=0, limit=4] - TODO: document me
+# * winery_followings_count [integer, default=0, limit=4] - TODO: document me
+# * wines_count [integer, default=0, limit=4] - TODO: document me
 class User < ActiveRecord::Base
 
  init_resources "Users::Profile", "Users::WineCellar"

@@ -22,6 +22,7 @@ img {border:none;}
 i {color:#ccc;}
 .mr5 {margin-right:5px;}
 .mb10 {margin-bottom:10px;}
+.mt5 {margin-top:5px;}
 .mt10 {margin-top:10px;}
 .mt20 {margin-top:20px;}
 .mt30 {margin-top:30px;}
@@ -400,3 +401,10 @@ div.pagination span.disabled {padding-right: 6px; padding-left: 6px; padding-bot
 #footer {width:950px;margin: 30px auto;text-align:center;color:#999}
 #footer a {color:#999;text-decoration:none;}
 #footer a:hover {color:#999;text-decoration:underline;}
+
+/*------add------*/
+.correcting table td, .correcting table th {padding:5px 10px;}
+.correcting table th {width:100px;text-align:left;}
+.correcting textarea {width:470px;height:100px;}
+.correcting input.content {width:300px;}
+.correcting .information {text-align:left;float:left;margin-top:5px;}

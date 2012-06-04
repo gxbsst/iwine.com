@@ -21,6 +21,7 @@ Patrick::Application.routes.draw do
     member do 
        match "reply", :via => [:get, :post]
        get :vote
+       get :children
     end
   end
   resources :friends do
@@ -177,6 +178,13 @@ Patrick::Application.routes.draw do
   statics = %w(about_us contact_us help private site_map home feedback)
   statics.each do |i|
      match "/#{i}", :to => "static##{i}"
+  end
+
+  # Feedback
+  resources :feedbacks do 
+    collection do
+      get "success"
+    end
   end
 
   ## GLOBAL

@@ -1,7 +1,7 @@
 # encoding: utf-8
 class CommentsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show, :list]
-  before_filter :get_comment, :only => [:show, :edit, :update, :destroy, :reply, :vote]
+  before_filter :get_comment, :only => [:show, :edit, :update, :destroy, :reply, :vote, :children]
   before_filter :get_commentable
   before_filter :get_user
   before_filter :check_followed, :only => :create
@@ -100,6 +100,12 @@ class CommentsController < ApplicationController
       @reply_comment.move_to_child_of(@comment)
       render :json =>  @comment.children.all.size.to_json
     end
+  end
+
+  # 子评论列表
+  def children
+    # binding.pry
+    @children = @comment.children_and_order
   end
 
   private

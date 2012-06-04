@@ -1,3 +1,8 @@
+# Attributes:
+# * id [integer, primary, not null, limit=4] - primary key
+# * created_at [datetime, not null] - creation time
+# * keywords [string] - TODO: document me
+# * updated_at [datetime, not null] - last update time
 class Search < ActiveRecord::Base
   def wines
     @wines ||= find_wines

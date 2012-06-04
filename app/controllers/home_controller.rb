@@ -3,7 +3,7 @@ class HomeController < ApplicationController
   before_filter :get_user
 
   def index
-      @timelines = @user.feeds.page(params[:page] || 1 ).per(12)
+    @timelines = @user.feeds.page(params[:page] || 1 ).per(12)
   end
 
   def show
@@ -22,7 +22,7 @@ class HomeController < ApplicationController
 
   end
 
-  private 
+  private
   def get_user
     @user = current_user
   end
