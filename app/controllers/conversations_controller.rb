@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ConversationsController < ApplicationController
   before_filter :authenticate_user!
   # before_filter :get_mailbox, :get_box, :get_actor
@@ -18,7 +19,7 @@ class ConversationsController < ApplicationController
   def show
     @conversation = Conversation.find_by_id(params[:id])
     unless @conversation.is_participant?(current_user)
-      flash[:alert] = "You do not have permission to view that conversation."
+      notice_stickie("您没有权限执行此操作！")
       return redirect_to root_path
     end
     @message = Message.new conversation_id: @conversation.id

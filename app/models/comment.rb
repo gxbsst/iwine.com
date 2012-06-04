@@ -56,6 +56,7 @@ class Comment < ActiveRecord::Base
     where(:commentable_type => commentable_str.to_s, :commentable_id => commentable_id).order('created_at DESC')
   }
 
+  scope :real_comments, lambda {where(" do = 'comment' ")}
   # Helper class method to look up a commentable object
   # given the commentable class name and id
   def self.find_commentable(commentable_str, commentable_id)
@@ -78,7 +79,7 @@ class Comment < ActiveRecord::Base
     commentable.comments.all(:include => [:user],
       :joins => "LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id",
       :select => "comments.*, count(votes.id) as votes_count",
-      :conditions => ["parent_id is null"], :group => "comments.id",
+      :conditions => ["parent_id is null and do = 'comment'"], :group => "comments.id",
       :order => "votes_count DESC, created_at DESC", :limit => option[:limit] )
   end
 end
