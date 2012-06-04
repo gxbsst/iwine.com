@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   def show
     @followers = @user.followers
     @followings = @user.followings
-    @comments = @user.comments.limit(6)
+    @comments = @user.comments.real_comments.limit(6)
     @cellar_items = @user.cellar.items.limit(6)
     @following_wines = @user.wine_followings.limit(6)
   end
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
   # 我的评论
   def comments
     @hot_wines = Wines::Detail.hot_wines(5)
-    @comments = @user.comments.page(params[:page] || 1).per(10) 
+    @comments = @user.comments.real_comments.page(params[:page] || 1).per(10)
   end
 
   def followings
