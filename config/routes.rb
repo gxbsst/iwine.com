@@ -181,7 +181,11 @@ Patrick::Application.routes.draw do
   end
 
   # Feedback
-  resources :feedbacks
+  resources :feedbacks do 
+    collection do
+      get "success"
+    end
+  end
 
   ## GLOBAL
   match ':controller(/:action(/:id(.:format)))'

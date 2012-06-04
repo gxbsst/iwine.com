@@ -2,31 +2,34 @@
 class FeedbacksController < ApplicationController
 
   def new
-  	build_feedback
+    build_feedback
   end
 
   def create
     build_feedback
     if @feedback.save
-      notice_stickie("反馈成功.")
+      redirect_to(success_feedbacks_path(:for => @for))
     else
-      notice_stickie("反馈失败， 请重新创建.")
+      notice_stickie("您的提交有误， 请重新填写.")
+      redirect_to(request.referer)
     end
-    redirect_to(request.referer)
   end
 
   def success
-    render :text => "success"
+
   end
 
   private
   def build_feedback
     if params.has_key? "feedback_error_feedback" || params[:for] == "error_feedback"
       @feedback = Feedback::ErrorFeedback.new(params[:feedback_error_feedback])
+      @for = "error_feedback"
     elsif params.has_key? "feedback_complement_feedback" || params[:for] == "complement_feedback"
       @feedback = Feedback::ErrorFeedback.new(params[:feedback_complement_feedback])
+      @for = "complement_feedback"
     else
       @feedback = Feedback::NormalFeedback.new(params[:feedback_normal_feedback])
+      @for = "normal_feedback"
     end
   end
 end
