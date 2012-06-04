@@ -16,11 +16,6 @@
         </div>
 
         <div class="set_optional">
-          <h3>评论好友的酒评</h3>
-          <p><label> <%= check_box_tag "config[share][wine_detail_comment]", 1, @profile.config.share.wine_detail_comment.present? %>默认分享</label></p>
-        </div>
-
-        <div class="set_optional">
           <h3>评论好友的评论</h3>
           <p><label> <%= check_box_tag "config[share][wine_simple_comment]", 1,  @profile.config.share.wine_simple_comment.present?  %>默认分享</label></p>
         </div>
