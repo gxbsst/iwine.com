@@ -179,6 +179,9 @@ Patrick::Application.routes.draw do
      match "/#{i}", :to => "static##{i}"
   end
 
+  # Feedback
+  resources :feedbacks
+
   ## GLOBAL
   match ':controller(/:action(/:id(.:format)))'
   #match ':controller(/:user_id(/:action(.:format)))'

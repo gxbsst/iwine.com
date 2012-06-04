@@ -1,3 +1,24 @@
+# Attributes:
+# * id [integer, primary, not null, limit=4] - primary key
+# * address [string] - TODO: document me
+# * cellphone [string] - TODO: document me
+# * comments_count [integer, default=0, limit=4] - TODO: document me
+# * config [string] - TODO: document me
+# * counts [string] - TODO: document me
+# * created_at [datetime, not null] - creation time
+# * email [string]
+# * fax [string] - TODO: document me
+# * followers_count [integer, default=0, limit=4] - TODO: document me
+# * logo [string] - TODO: document me
+# * name_en [string] - TODO: document me
+# * name_zh [string] - TODO: document me
+# * official_site [string] - TODO: document me
+# * origin_name [string] - TODO: document me
+# * owner [string] - TODO: document me
+# * photos_count [integer, default=0, limit=4] - TODO: document me
+# * region_tree_id [integer, limit=4] - TODO: document me
+# * updated_at [datetime, not null] - last update time
+# * wines_count [integer, default=0, limit=4] - TODO: document me
 class Winery < ActiveRecord::Base
   set_table_name "wineries"
   include Wines::WineSupport

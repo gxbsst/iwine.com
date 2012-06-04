@@ -77,7 +77,7 @@ group :development, :test do
   gem 'wirble'
   gem 'rspec-rails'
   # 优化
-  #gem "query_reviewer", :git => "git://github.com/nesquena/query_reviewer.git"
+  #gem "query_revie wer", :git => "git://github.com/nesquena/query_reviewer.git"
   gem "bullet"
   #gem 'growl'
   #gem 'ruby-growl'
@@ -85,6 +85,7 @@ group :development, :test do
   # gem 'slowgrowl'
   gem "thin"
   gem 'sextant' #通过 http://localhost:3000/rails/routes 查看routes
+  gem 'annotator'
 end
 # Gems used only for assets and not required
 # in production environments by default.
@@ -121,3 +122,5 @@ gem 'user_resource_init', :path => 'lib/patrick/user_resource_init'
 
 # 模板
 gem 'themes_for_rails', :path => "lib/gems"
+
+

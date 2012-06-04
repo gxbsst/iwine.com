@@ -152,5 +152,13 @@ photo:
     cover: 2
     normal: 0
 
+email:
+  from:
+    normal: "service@sidways.com"
+    #TODO: 根据不同需要在这里继续添加
+  to:
+    normal: "service@sidways.com"
+    feedback: "support@sidways.zendesk.com"
+
 
 
