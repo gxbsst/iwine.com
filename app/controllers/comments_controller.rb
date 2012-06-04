@@ -104,7 +104,6 @@ class CommentsController < ApplicationController
 
   # 子评论列表
   def children
-    # binding.pry
     @children = @comment.children_and_order
   end
 

@@ -96,6 +96,7 @@ Patrick::Application.routes.draw do
       match "winery_follows", :via => [:get]
       match "comments", :via => [:get]
       match "followings", :via => [:get]
+      match "start", :via => [:get, :post]
       match "followers", :via => [:get]
       # Album
       match "albums", :via => [:get], :to => "albums#index"

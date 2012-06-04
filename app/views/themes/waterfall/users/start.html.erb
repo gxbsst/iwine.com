@@ -1,0 +1,57 @@
+<%= form_tag() do %>
+<div id="wrapper950">
+ <div id="recommend">
+   <div class="wel">
+    <%= theme_image_tag "common/recommend_wel.gif", :size => "626x95" %>
+  </div>
+  <div class="paper wine">
+   <div class="top"></div>
+   <div class="mid">
+    
+     <ul class="line">
+      <% @hot_wines.each do |wine_detail| %>
+      <li>
+       <%= wine_cover_tag wine_detail, :thumb_name => :thumb, :size => "130x130" %>
+       <div class="meta">
+         <h1 class="zh"><%= wine_detail.cname %></h1>
+         <h1 class="en"><%= wine_detail.ename %></h1>
+         <span class="gray"><%= wine_detail.wine.style.name_zh %></span>
+        <%= check_box_tag "wine_detail_ids[]", wine_detail.id, true  %> 
+       </div>
+     </li>
+     <% end %>
+     <div class="clear"></div>
+   </ul>
+ </div>
+ <div class="bot"></div>
+</div>
+<div class="paper user">
+ <div class="top"></div>
+ <div class="mid">
+  <ul>
+    <% @recommend_users.each do |user| %>
+    <li>
+      <%= link_to_user user, 
+      user_path(user.id,:trailing_slash => true), 
+      {:with_avatar => true, :avatar_version => :large}, 
+      {:width => 50, :height => 50} %>
+      <div class="meta">
+       <%= link_to_user user, user_path(user.id,:trailing_slash => true) %> 
+       <span class="location"><%= user.city %></span>
+       <%= check_box_tag "user_ids[]", user.id, true  %> 
+     </div>
+   </li>
+   <% end %>
+   <div class="clear"></div>
+ </ul>
+</div>
+<div class="bot"></div>
+</div>
+<div class="align_c mt20">
+  <%= link_to "javascript:void(0)", :onclick => "$(this).parents('form').submit()" do  %>
+    <%= theme_image_tag "common/go.jpg", :alt => "开始吧！", :size => "176x51" %>
+  <% end %>
+</div>
+</div>
+</div>
+<% end -%>
