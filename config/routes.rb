@@ -21,6 +21,7 @@ Patrick::Application.routes.draw do
     member do 
        match "reply", :via => [:get, :post]
        get :vote
+       get :children
     end
   end
   resources :friends do
