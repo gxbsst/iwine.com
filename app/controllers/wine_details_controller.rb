@@ -94,6 +94,7 @@ class WineDetailsController < ApplicationController
       render :action => "new"
     end
   end
+  
   # 关注者
   def followers
     @wine      = @wine_detail.wine
