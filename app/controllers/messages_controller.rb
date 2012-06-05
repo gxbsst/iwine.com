@@ -151,16 +151,18 @@
       @message = Message.new params[:message]
     end
     def check_can_send?
-     user = User.where("username = ?", params[:message][:recipients]).first
-     if user
-       if user.profile.config.notice.message.to_i == 3 && !user.following_ids.include?(current_user.id)
-         notice_stickie("只有关注 <strong>#{params[:message][:recipients]}</trong> 后才能给TA发送私信。")
-         redirect_to conversations_path
-       end
-     else
-       notice_stickie("没有找到用户 <strong>#{params[:message][:recipients]}</trong>，请检查用户名是否填写正确。")
-       redirect_to conversations_path
-     end
+      unless @message.conversation_id
+        user = User.where("username = ?", params[:message][:recipients]).first
+        if user
+          if user.profile.config.notice.message.to_i == 3 && !user.following_ids.include?(current_user.id)
+            notice_stickie("只有关注 <strong>#{params[:message][:recipients]}</trong> 后才能给TA发送私信。")
+            redirect_to conversations_path
+          end
+        else
+          notice_stickie("没有找到用户 <strong>#{params[:message][:recipients]}</trong>，请检查用户名是否填写正确。")
+          redirect_to conversations_path
+        end
+      end
     end
 
 end

@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
   before_filter :get_user
   before_filter :check_followed, :only => :create
   before_filter :check_cancle_follow, :only => :cancle_follow
+  before_filter :check_can_comment, :only => :create
   def new   
     if params[:do].present? && params[:do] == "follow"
       new_follow_comment
@@ -166,5 +167,19 @@ class CommentsController < ApplicationController
     @hot_wines = Wines::Detail.hot_wines(5)
     @users = @winery.followers(:limit => 16) #关注酒庄的人
     render "winery_comments_list"
+  end
+
+  #用户评论设置
+  def check_can_comment
+    #只检查用户相册的照片是否有权限评论
+    if @commentable.class.name == "Photo" && @commentable.imageable_type == "Album"
+      user = @commentable.user
+      if current_user != user  #跳过用户自己评论自己的照片
+        if user.profile.config.notice.comment.to_i == 2 && !current_user.is_following(user)#2只有关注的人才能评论自己，1所有人
+          notice_stickie("只有此用户关注的人才有权限发表评论。")
+          redirect_to params[:return_url] ?  params[:return_url] : @commentable_path
+        end
+      end
+    end
   end
 end
