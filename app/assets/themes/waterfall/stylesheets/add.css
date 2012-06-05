@@ -13,3 +13,7 @@
 .addwine .box .wine_img {float:left;widht:70px;margin: 0 20px 0 0;}
 .addwine .box .wine_info {float:left;width:530px;}
 .addwine .box .year span a {margin:0 5px 0 0;text-decoration:underline;display:inline-block;}
+.addwine .myform .left {width:680px;}
+.addwine .myform .left .required, .addwine .myform .left .optional {width:680px;}
+.addwine .myform .left .areas {width:560px;float:left;}
+.addwine .myform .left .areas select {display:block;margin-bottom:5px;}
