@@ -1,12 +1,14 @@
     <div id="cellar">
       <div class="title_btn">
-        <h1>我的酒窖 <span class="font12">(共<%= @cellar_items.size %>支)</span></h1>
+        <h1><%= is_login_user?(@user) ? "我的酒窖" : "他的酒窖" %> <span class="font12">(共<%= @cellar_items.size %>支)</span></h1>
       </div>
 
       <div class="sort_search mb20">
             <div class="float_r">
-              <%= link_to add_cellar_items_path(@cellar, :step => 1), :class => "btn_blue_b" do %>
+              <% if is_login_user?(@user) %>
+                <%= link_to add_cellar_items_path(@cellar, :step => 1), :class => "btn_blue_b" do %>
                   <span>添加藏酒</span>
+                <% end %>
               <% end %>
             </div>
         <% # TODO: 添加搜索功能  %>

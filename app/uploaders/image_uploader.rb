@@ -1,3 +1,4 @@
+
 # encoding: utf-8
 
 class ImageUploader < CarrierWave::Uploader::Base
@@ -47,11 +48,13 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   #130
   version :thumb_x, :from_version => :large  do
-    process :resize_to_limit => [APP_DATA["image"]["wine"]["x_thumb"]["width"],'']
+    process :resize_to_fill => [APP_DATA["image"]["wine"]["x_thumb"]["width"],
+                                APP_DATA["image"]["wine"]["x_thumb"]["height"]]
   end
   #100
   version :thumb, :from_version => :large  do
-    process :resize_to_limit => [APP_DATA["image"]["wine"]["thumb"]["width"],'']
+    process :resize_to_fill => [APP_DATA["image"]["wine"]["thumb"]["width"],
+                                APP_DATA["image"]["wine"]["thumb"]["height"]]
   end
   
   # Winery
