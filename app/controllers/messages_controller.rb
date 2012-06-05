@@ -123,6 +123,10 @@
       redirect_to messages_path(box: 'inbox')
     end
 
+    def unread
+      @count = Conversation.unread(current_user).count
+    end
+
     private
 
     def get_mailbox

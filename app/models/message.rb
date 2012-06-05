@@ -23,8 +23,6 @@ class Message < Notification
   #   end
   # end
   # 
-  
-    
 
   class << self
     #Sets the on deliver callback method.

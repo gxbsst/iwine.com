@@ -5,8 +5,17 @@ class ConversationsController < ApplicationController
   before_filter :get_mailbox, :get_box
   before_filter :check_current_subject_in_conversation, :only => [:show, :update, :destroy,:reply]
   def index
+    # binding.pry 
     @message = Message.new
     @conversations = @mailbox.conversations.order("created_at DESC").page(params[:page]).per(9)
+    
+    # mask all items as read
+    @unreads = Conversation.unread(current_user)
+    unless @unreads.blank?
+      @unreads.each do |i|
+        i.mark_as_read(current_user)
+      end
+    end
     # if @box.eql? "inbox"
     #   @conversations = @mailbox.inbox.page(params[:page]).per(9)
     # elsif @box.eql? "sentbox"
