@@ -28,7 +28,15 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  
+
+  def mine_equal_current_user?(user)
+    if current_user
+      return user.id == current_user.id ? true : false
+    else
+      return false
+    end
+  end
+
   def get_current_user
     @user = current_user
   end

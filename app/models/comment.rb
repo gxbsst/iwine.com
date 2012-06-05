@@ -4,7 +4,7 @@ class Comment < ActiveRecord::Base
   scope :with_wine_follows, where(:commentable_type => "Wines::Detail", :do => "follow")
 
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
-  validates_presence_of :body
+  validates_presence_of :body, :if => :is_comment?
   validates_presence_of :user
   scope :recent, lambda { |limit| order("created_at DESC").limit(limit) } 
   scope :with_point_is, lambda {|point| where(["point = ?", point])}
@@ -39,6 +39,10 @@ class Comment < ActiveRecord::Base
     c
   end
 
+  # 如果是关注，允许body为空
+  def is_comment?
+    self.do == 'comment'
+  end
   #helper method to check if a comment has children
   def has_children?
     self.children.size > 0

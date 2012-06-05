@@ -11,13 +11,13 @@
       <div class="set_module">
         <h2>广播隐私<span class="gray">（你可以自己选择将自己一些动作与朋友分享，你发现的好东西对别人会非常有用）</span></h2>
         <div class="set_optional">
-          <h3>酒窖</h3>
-          <p><label> <%= check_box_tag "config[share][wine_cellar]", 1, @profile.config.share.wine_cellar.present? %>默认分享</label></p>
+          <h3>酒窖里添加了新的藏酒</h3>
+          <p><label> <%= check_box_tag "config[share][wine_cellar]", 1, @profile.config.share.wine_cellar.to_i == 1 %>默认分享</label></p>
         </div>
 
         <div class="set_optional">
-          <h3>评论好友的评论</h3>
-          <p><label> <%= check_box_tag "config[share][wine_simple_comment]", 1,  @profile.config.share.wine_simple_comment.present?  %>默认分享</label></p>
+          <h3>发表了新的评论</h3>
+          <p><label> <%= check_box_tag "config[share][wine_simple_comment]", 1,  @profile.config.share.wine_simple_comment.to_i == 1  %>默认分享</label></p>
         </div>
       </div>
 
@@ -37,7 +37,7 @@
 
         <div class="set_optional">
           <div class="set_optional">
-            <h3>私信<span class="gray">（我们会通过Email提醒与你有关的事情，你可以选择只接受哪些类别）</span></h3>
+            <h3>私信<span class="gray">（设置谁可以给我发私信）</span></h3>
               <% APP_DATA["user_profile"]["configs"]["message"].each do |key, value | %>
                 <p>
                   <label>

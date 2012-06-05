@@ -51,7 +51,7 @@ class SettingsController < ApplicationController
     if request.put?
       set_config
       if @profile.save
-        notice_stickie t("update_success.")
+        notice_stickie t("update_success")
         redirect_to basic_settings_path
       end
     end
@@ -120,6 +120,10 @@ class SettingsController < ApplicationController
   private
 
   def set_config
+    unless params[:config][:share]
+      @profile.config.share.wine_cellar = 0
+      @profile.config.share.wine_simple_comment = 0
+    end
     params[:config].each {|k,v| @profile.config[k] = v }
   end
 
@@ -138,10 +142,6 @@ class SettingsController < ApplicationController
     current_user.update_attributes(params[:user])
   end
 
-  # 初始化配置信息
-  def init_configs
-
-  end
   def get_profile
     @profile = current_user.profile
   end
