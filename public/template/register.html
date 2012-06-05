@@ -46,11 +46,11 @@
             <div class="boxstyle">
                     <div class="top">注册iWine</div>
                     <div class="mid">
-                      <p>用户名<span class="red">*</span></p>
+                      <p>邮件地址<span class="red">*</span></p>
                           <div class="un">
                               <div class="field_with_errors">
-                              <input class="text" name="" type="text" placeholder="用户名" />
-                              <label class="message">该用户名已存在</label>
+                              <input class="text" name="" type="text" placeholder="邮件地址" />
+                              <label class="message">该邮件地址已存在</label>
                               </div>
                           </div>
                       <p>密码<span class="red">*</span></p>
@@ -70,7 +70,13 @@
                       <p>所在地<span class="red">*</span></p>
                           <div class="pw"><input class="text"  name="" type="text" placeholder="所在地" /></div>
                       <div class="submit">
-                      	<span class="float_r"><input class="checkbox" name="" type="checkbox" value="" /> 我已阅读并同意<a href="#">使用条款</a></span>
+                      	<span class="float_r agree">
+                        	<div class="field_with_errors">
+                                <input class="checkbox" name="" type="checkbox" value="" />
+                                <label class="message" for="user_agree_term">必须是可被接受的</label>
+                                </div>
+                            我已阅读并同意<a href="#">使用条款</a>
+                        </span>
                           <a href="register.html"><img src="images/common/register_submit.jpg" width="138" height="51" alt="马上注册" /></a>
                       </div>
                   </div>
