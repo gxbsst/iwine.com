@@ -26,8 +26,8 @@ class HotSearch
   end
 
   def all_entries( letters , page = 1 , count = 50 )
-    words = JSON.parse @http.post( @word_url , 'query=' + letters ).body
-    words = JSON.parse @http.post( @word_url , 'query=' + letters ).body
+    words = JSON.parse @http.post( @entry_url , 'query=' + letters ).body
+    words = JSON.parse @http.post( @entry_url , 'query=' + letters ).body
     wines = []
     wineries = []
 
@@ -37,21 +37,20 @@ class HotSearch
 
     start = ( page - 1 ) * count
     end_count = start + count - 1
-
     data = words['wine'][start..end_count]
     if data.present?
       data.each do |wine|
-        wines.push( Wines::Detail.find( wine['id'] ) );
+        wines.push Wine.find(wine['id'])
       end
     end
 
     data = words['winery'][start..end_count]
     if data.present?
       data.each do |winery|
-        wineries.push( Winery.find( winery['id'] ) );
+        wineries.push( Winery.find( winery['id'] ) )
       end
   end
 
-    { 'wines' => wines , 'wineries' => wineries }
+    { 'wines' => wines , 'wineries' => wineries}
   end
 end

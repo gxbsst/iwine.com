@@ -43,3 +43,18 @@
     </div>
     <div class="clear"></div>
 <% end %>
+<script type="text/javascript">
+    $("#check_nv").change(function(){
+       if ($(this).attr("checked") == "checked") {
+           console.log("checked");
+           $("#wines_register_vintage_1i").attr("disabled", "disabled");
+           $("#wines_register_vintage_2i").attr("disabled", "disabled");
+           $("#wines_register_vintage_3i").attr("disabled", "disabled");
+       }else{
+           console.log("unchecked");
+           $("#wines_register_vintage_1i").removeAttr('disabled');
+           $("#wines_register_vintage_2i").removeAttr('disabled');
+           $("#wines_register_vintage_3i").removeAttr('disabled');
+       }
+    });
+</script>
