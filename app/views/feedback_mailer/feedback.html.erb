@@ -1,0 +1,5 @@
+<p>[<%= "#{@feedback.name}, #{@feedback.email}"%>]在<%= @feedback.created_at.to_s(:cn) %> 发送了一条意见反馈</p>
+<p>标题：<%= @feedback.subject %></p>
+<p>内容：<br />
+	<%= @feedback.description %>
+</p>

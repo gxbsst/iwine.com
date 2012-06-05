@@ -1,0 +1,34 @@
+<script type="text/javascript">
+$('#container').masonry({
+		itemSelector: '.item',
+		resizeable: true,
+		isFitWidth: true
+	}).on('mouseenter', 'div.gulu', function(){
+		$(this).addClass('ghover');
+	}).on('mouseleave', 'div.gulu', function(){
+		$(this).removeClass('ghover');
+	});
+	setTimeout(function(){
+		$('#container').masonry();
+	}, 200);
+
+
+  // 如果要设定waterfall有固定宽度
+  // $(window).resize(function(){
+  //     var w = parseInt(document.documentElement.clientWidth);
+  //     if(w < 1300) return;
+  //     w = parseInt(w/230)*230 - 10;
+  //     $('#home').width(w);
+  // }).trigger('resize');
+
+</script>
+
+<style type="text/css">
+	#container {
+		margin: 0 auto;
+	}
+	#home {
+		/*width: 1000px;
+		margin: 0 auto;*/
+	}
+</style>

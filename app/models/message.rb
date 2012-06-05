@@ -23,8 +23,6 @@ class Message < Notification
   #   end
   # end
   # 
-  
-    
 
   class << self
     #Sets the on deliver callback method.
@@ -60,7 +58,8 @@ class Message < Notification
       temp_receipts.each(&:save!) 	#Save receipts
       self.recipients.each do |r|
       #Should send an email?
-        if Mailboxer.uses_emails 
+        #email包含“1”同意发送邮件
+        if Mailboxer.uses_emails && r.profile.config.notice.email.include?('1')
           email_to = r.send(Mailboxer.email_method,self)
           unless email_to.blank?
             MessageMailer.send_email(self,r).deliver

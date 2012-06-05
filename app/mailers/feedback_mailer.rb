@@ -4,16 +4,16 @@ class FeedbackMailer < ActionMailer::Base
 
 	def feedback(feedback)
 		@feedback = feedback
-		mail(:subject => "反馈:#{feedback.subject}" )
+		mail(:subject => "反馈:#{@feedback.subject}" )
 	end
 
 	def error_feedback(feedback)
 		@feedback = feedback
-		mail(:subject => "反馈:#{feedback.subject}" )
+		mail(:subject => "纠错:#{@feedback.subject}" )
 	end
 
 	def complement_feedback(feedback)
 		@feedback = feedback
-		mail(:subject => "纠错:#{feedback.subject}" )
+		mail(:subject => "补充:#{@feedback.subject}" )
 	end
 end
