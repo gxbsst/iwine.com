@@ -57,8 +57,8 @@ class Message < Notification
     if temp_receipts.all? { |t| t.errors.empty? }
       temp_receipts.each(&:save!) 	#Save receipts
       self.recipients.each do |r|
-      #Should send an email?
-        if Mailboxer.uses_emails 
+      #Should send an email? email包含“1”则发送邮件
+        if Mailboxer.uses_emails && r.profile.config.notice.email.include?('1')
           email_to = r.send(Mailboxer.email_method,self)
           unless email_to.blank?
             MessageMailer.send_email(self,r).deliver
