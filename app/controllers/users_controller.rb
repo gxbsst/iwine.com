@@ -43,29 +43,33 @@ class UsersController < ApplicationController
 
   # 用户第一次登录
   def start
-    @hot_wines = Wines::Detail.hot_wines(6)
-    @recommend_users = User.recommends(5)
-    if request.post?
+    if current_user.sign_in_count == 1
+      @hot_wines = Wines::Detail.hot_wines(6)
+      @recommend_users = User.recommends(5)
+      if request.post?
 
-      # follow wines
-      if params[:wine_detail_ids].present?
-        params[:wine_detail_ids].each do |wine_detail_id|
-          follow_one_wine(wine_detail_id)
-        end
-      end # end wines
+        # follow wines
+        if params[:wine_detail_ids].present?
+          params[:wine_detail_ids].each do |wine_detail_id|
+            follow_one_wine(wine_detail_id)
+          end
+        end # end wines
 
-      # follow users
-      if params[:user_ids].present?
-        params[:user_ids].each do |user_id|
-          follow_one_user(user_id)
-        end
-      end # end users
+        # follow users
+        if params[:user_ids].present?
+          params[:user_ids].each do |user_id|
+            follow_one_user(user_id)
+          end
+        end # end users
 
-      # 填充用户的Home内容
-      current_user.init_events_from_followings
+        # 填充用户的Home内容
+        current_user.init_events_from_followings
 
-      redirect_to(home_index_path)
-    end # end post
+        redirect_to(home_index_path)
+      end # end post
+    else
+      redirect_to home_index_path
+    end
   end
 
   private

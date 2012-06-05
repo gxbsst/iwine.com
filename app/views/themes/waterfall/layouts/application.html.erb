@@ -94,6 +94,24 @@
         });
 
         // SEARCH END
+
+        // Get Number Of Message 
+        <% if user_signed_in? %>
+          function getMessageCount()
+          {
+            $.ajax({
+              type:'GET',
+              url:'/messages/unread',
+              dataType:'script',
+              success:function(xhr)
+              {
+
+              }
+            });  
+            setTimeout('getMessageCount()',6000);   
+          }
+          getMessageCount();
+        <% end %>
       </script>
   </body>
 </html>

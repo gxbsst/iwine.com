@@ -21,7 +21,7 @@ class Feedback < ActiveRecord::Base
 
   after_create :send_email
   def send_email
-    if type == "Feedback::EorroFeedback"
+    if type == "Feedback::ErrorFeedback"
       FeedbackMailer.error_feedback(self).deliver
     elsif type == "Feedback::ComplementFeedback"
       FeedbackMailer.complement_feedback(self).deliver

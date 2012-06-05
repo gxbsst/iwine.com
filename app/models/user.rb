@@ -67,8 +67,8 @@ class User < ActiveRecord::Base
                   :profile_attributes
 
   has_one  :profile,
-  :class_name => 'Users::Profile',
-  :dependent => :destroy
+            :class_name => 'Users::Profile',
+            :dependent => :destroy
   has_one  :cellar, :class_name => 'Users::WineCellar'
   has_many :albums, :foreign_key => 'created_by'
   has_many :registers, :class_name => 'Wines::Register'

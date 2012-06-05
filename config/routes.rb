@@ -120,7 +120,11 @@ Patrick::Application.routes.draw do
   end
   
   # 私信
-  resources :messages
+  resources :messages do 
+    collection do
+      get :unread
+    end
+  end
   resources :conversations
   
   # HOME
