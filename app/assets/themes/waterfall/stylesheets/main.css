@@ -409,3 +409,7 @@ div.pagination span.disabled {padding-right: 6px; padding-left: 6px; padding-bot
 .correcting textarea {width:470px;height:100px;}
 .correcting input.content {width:300px;}
 .correcting .information {text-align:left;float:left;margin-top:5px;}
+
+
+/*------field_with_errors------*/
+.field_with_errors .message {padding:5px;background: none repeat scroll 0 0 #FBE3E4;color: #8A1F11;display:block;}
