@@ -95,7 +95,10 @@
       	<ul>
           	<li>
               	<div class="left">
-									<%= link_to_user l.actor, user_path(l.actor, :trailing_slash => true), :with_avatar => true, :avatar_version => :thumb %>
+									<%= link_to_user l.actor, 
+                                   user_path(l.actor, :trailing_slash => true), 
+                                   { :with_avatar => true, :avatar_version => :thumb },
+                                   { :size => "30x30"} %>
 								</div>
                   <div class="right">
                   	<p class="username">
