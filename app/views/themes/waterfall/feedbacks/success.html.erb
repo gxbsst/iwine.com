@@ -1,0 +1,8 @@
+<% content_for :css do %>
+<%= theme_stylesheet_link_tag :about %>
+<% end %>	
+<% feedbacks = {"normal_feedback" => "意见反馈", "error_feedback" => "纠错/补充", "complement_feedback" => "纠错/补充"} %>
+<div class="whitespace about">
+	<h1 class="main_title"><%= feedbacks[params[:for]]%></h1>
+	<div class="success">提交成功，感谢您的支持！您的建议将帮助我们不断完善爱红酒（iWIne）的产品与服务。</div>
+</div>

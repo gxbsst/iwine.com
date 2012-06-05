@@ -43,6 +43,8 @@ class WineDetailsController < ApplicationController
     params[:wines_register].delete('special_comments')
     Wines::SpecialComment.build_special_comment(@register, params[:special_comment])
     @register.result = 1 #设置为一，用户无法再编辑
+    @register.variety_name = params[:wines_register][:variety_name_value]
+    @register.variety_percentage = params[:wines_register][:variety_name_value]
     if @register.update_attributes(params[:wines_register])
       # redirect_to wine_path(@register)
       render "add_success"
@@ -86,12 +88,13 @@ class WineDetailsController < ApplicationController
     @register.variety_name = @register.variety_name_value
     @register.variety_percentage = @register.variety_percentage_value
     if @register.save
-      flash[:notice] = "成功上传新酒款！"
+      notice_stickie("成功上传新酒款！")
       redirect_to edit_wine_path @register
     else
       render :action => "new"
     end
   end
+  
   # 关注者
   def followers
     @wine      = @wine_detail.wine

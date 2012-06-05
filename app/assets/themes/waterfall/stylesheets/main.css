@@ -22,6 +22,7 @@ img {border:none;}
 i {color:#ccc;}
 .mr5 {margin-right:5px;}
 .mb10 {margin-bottom:10px;}
+.mt5 {margin-top:5px;}
 .mt10 {margin-top:10px;}
 .mt20 {margin-top:20px;}
 .mt30 {margin-top:30px;}
@@ -123,8 +124,9 @@ textarea.wine_intro {width:500px;height:200px;}
 #register .boxstyle .mid {padding:20px 28px;}
 #register p {font-size:13px;padding:0 0 5px 5px;}
 #register .location {padding-left:5px;}
-#register .submit {margin-top:20px;line-height:51px; overflow:hidden;}
+#register .submit {margin-top:20px;overflow:hidden;}
 #register .message {color:#C00;padding:10px 0 0 0;display:block;}
+#register span .message {padding:0;}
 .boxstyle2 {background:url(../images/bg/bg_box772_m.gif) repeat-y left top;}
 .boxstyle2 .top {background:url(../images/bg/bg_box772_t.gif) no-repeat left top;height:12px;}
 .boxstyle2 .mid {padding:20px 28px;}
@@ -400,3 +402,10 @@ div.pagination span.disabled {padding-right: 6px; padding-left: 6px; padding-bot
 #footer {width:950px;margin: 30px auto;text-align:center;color:#999}
 #footer a {color:#999;text-decoration:none;}
 #footer a:hover {color:#999;text-decoration:underline;}
+
+/*------add------*/
+.correcting table td, .correcting table th {padding:5px 10px;}
+.correcting table th {width:100px;text-align:left;}
+.correcting textarea {width:470px;height:100px;}
+.correcting input.content {width:300px;}
+.correcting .information {text-align:left;float:left;margin-top:5px;}

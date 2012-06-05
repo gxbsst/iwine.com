@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class ApplicationController < ActionController::Base
   include ThemesForRails::ActionController
-  theme "waterfall" 
+  theme "waterfall"
   # layout "waterfall"
   # layout  proc { |controller|
   #   #span_950 = ["static", "wines"]
@@ -28,12 +28,24 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  
+
+  def mine_equal_current_user?(user)
+    if current_user
+      return user.id == current_user.id ? true : false
+    else
+      return false
+    end
+  end
+
   def get_current_user
     @user = current_user
   end
 
   def after_sign_in_path_for(resource)
-    return request.env['omniauth.origin'] || stored_location_for(resource) || home_index_path
+    if current_user.sign_in_count == 1
+      return start_user_path(current_user)
+    else
+      return request.env['omniauth.origin'] || stored_location_for(resource) || home_index_path
+    end
   end
 end

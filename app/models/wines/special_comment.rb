@@ -14,7 +14,7 @@ class Wines::SpecialComment  < ActiveRecord::Base
         :drinkable_end => DateTime.parse("#{attributes[:drinkable_end][index]}0101")
       )
     end
-    Wines::SpecialComment.delete(attributes[:destroy]) if attributes[:destroy]
+    Wines::SpecialComment.delete(attributes[:destroy]) if attributes[:destroy] #删除已经保存过的special_comment
 
   end
 
@@ -22,5 +22,11 @@ class Wines::SpecialComment  < ActiveRecord::Base
     register.special_comments.each do |s|
       detail.special_comments.create(:name => s.name, :score => s.score, :drinkable_begin => s.drinkable_begin, :drinkable_end => s.drinkable_end)
     end
+  end
+
+  #添加酒款"完善信息"时展示时间
+
+  def drinkable
+    "#{drinkable_begin.to_s(:year)}-#{drinkable_end.to_s(:year)}"
   end
 end

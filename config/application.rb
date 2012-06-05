@@ -58,6 +58,7 @@ module Patrick
 
     Time::DATE_FORMATS[:normal] = "%Y-%m-%d"
     Time::DATE_FORMATS[:cn] = "%Y年%m月%d日  %I:%M"
+    Time::DATE_FORMATS[:year] = "%Y"
     
     ThemesForRails.config.default_theme = "waterfall"
     

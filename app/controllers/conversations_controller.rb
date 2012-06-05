@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ConversationsController < ApplicationController
   before_filter :authenticate_user!
   # before_filter :get_mailbox, :get_box, :get_actor
@@ -18,7 +19,7 @@ class ConversationsController < ApplicationController
   def show
     @conversation = Conversation.find_by_id(params[:id])
     unless @conversation.is_participant?(current_user)
-      flash[:alert] = "You do not have permission to view that conversation."
+      notice_stickie("您没有权限执行此操作！")
       return redirect_to root_path
     end
     @message = Message.new conversation_id: @conversation.id
@@ -95,13 +96,13 @@ class ConversationsController < ApplicationController
     else
       conditions = ["receipts.receiver_id=? AND (notifications.body like ?)", current_user.id, "%" + params[:search] + "%"]
     end
-    @receipts = Receipt.all(:joins => "LEFT OUTER JOIN `notifications` ON notifications.id = receipts.notification_id", 
-    :include => [:notification => :conversation],
-    :conditions => conditions)    
+    @receipts = Receipt.all(:joins => "LEFT OUTER JOIN `notifications` ON notifications.id = receipts.notification_id",
+      :include => [:notification => :conversation],
+    :conditions => conditions)
     if !@receipts.blank?
       @conversations = @receipts.inject([]) do |memo, receipt|
         memo << receipt.notification.conversation
-      end 
+      end
       #TODO: 加分页
       # page = params[:page] || 1
       # if !(@conversations.nil?)
@@ -144,4 +145,3 @@ class ConversationsController < ApplicationController
   end
 
 end
-

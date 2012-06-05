@@ -41,7 +41,13 @@
 
             <div class="info">
               <div class="like float_r"><%= link_to "赞(#{@photo.votes_count})", "#", :class => "icon_like" %></div>
-              <div class="share float_r"><%= render "share/sns_icons"%></div>
+              <div class="share float_r">
+                <%= render "share/sns_icons_second",
+                   :image_url => sns_image_url(@photo, :thumb_name => :large),
+                   :title => sns_title(@winery.name),
+                   :summary => "的图片",
+                   :url => request.url %>
+              </div>
               <div><%= @photo.views_count %>浏览 | <%= @photo.comments_count %>评论</div>
             </div>
             

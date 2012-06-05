@@ -11,9 +11,8 @@ user_profile:
       normal: 1 #默认分享或者所有人可见
       email: [1, 2, 3]
     normal:
-      1: 所有人可见
-      2: 我关注的人可见
-      3: 仅自己可见
+      1: 所有人
+      2: 我关注的人
     birth_day:
       1: 公开
       2: 完整显示
@@ -22,7 +21,6 @@ user_profile:
       5: 保密
     message:
       1: <strong>所有人</strong><span></span>
-      2: 可信用户
       3: 我关注的人
     recommend:
       1: 在我附近上网的人
@@ -33,7 +31,6 @@ user_profile:
       1: 我收到一条私信
       2: 我收到一条回复或评论
       3: 我被某人关注
-      4: 我的酒评被收藏
       5: 关于新 iWine 产品功能和技巧的更新
       6: 关于我的 iWine 账号的产品或服务更新
     share:
@@ -151,6 +148,14 @@ photo:
     label: 1
     cover: 2
     normal: 0
+
+email:
+  from:
+    normal: "non-reply@iWine.com"
+    #TODO: 根据不同需要在这里继续添加
+  to:
+    normal: "non-reply@iWine.com"
+    feedback: "non-reply@iWine.com" # 接收用户反馈的邮箱帐号
 
 
 

@@ -36,8 +36,8 @@
               评论家<%= s.text_field :name, :name => "special_comment[name][]", :id => "special_comment_name", :size => 20, :class => "text" %>
               得分<%= s.text_field :score, :name => "special_comment[score][]", :id => "special_comment_score", :size => 10, :class => "text percent"%>
               适饮年限
-              <%= s.date_select :drinkable_begin, {:discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150}, {:name => "special_comment[drinkable_begin][]"} %>至
-              <%= s.date_select :drinkable_end, {:discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150}, {:name => "special_comment[drinkable_end][]"}%>
+              <%= s.date_select :drinkable_begin, {:discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150}, {:name => "special_comment[drinkable_begin][]", :id => "special_drinkable_begin"} %>至
+              <%= s.date_select :drinkable_end, {:discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150}, {:name => "special_comment[drinkable_end][]", :id => "special_drinkable_end"}%>
               <%= link_to "", "javascript:void(0);", :id => "create_special_comment", :class => "icon_add" %>
           <% end %>
           <%=  render "special_comment", :object => @register %>

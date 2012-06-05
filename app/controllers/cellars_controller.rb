@@ -6,9 +6,21 @@ class CellarsController < ApplicationController
 
   def show
     if params[:wine_name]
-      @cellar_items = @cellar.items.includes(:wine_cellar, {:wine_detail => [:covers, :wine]}).joins(:wine_detail => :wine).where("wines.name_en like ? or wines.name_zh like ? ", "%#{params[:wine_name]}%", "%#{params[:wine_name]}%").page params[:page] || 1
+      if mine_equal_current_user?(@user)
+        @cellar_items = @cellar.mine_items.joins(:wine_detail => :wine).
+            where("wines.name_en like ? or wines.name_zh like ? ", "%#{params[:wine_name]}%", "%#{params[:wine_name]}%").
+            page params[:page] || 1
+      else
+        @cellar_items = @cellar.user_items.joins(:wine_detail => :wine).
+            where("wines.name_en like ? or wines.name_zh like ? ", "%#{params[:wine_name]}%", "%#{params[:wine_name]}%").
+            page params[:page] || 1
+      end
     else
-      @cellar_items = @cellar.items.includes(:wine_cellar, {:wine_detail => [:covers, :wine]}).page params[:page] || 1
+      if mine_equal_current_user?(@user)
+        @cellar_items = @cellar.mine_items.page params[:page] || 1
+      else
+        @cellar_items = @cellar.user_items.page params[:page] || 1
+      end
     end
   end
 
@@ -21,5 +33,6 @@ class CellarsController < ApplicationController
   def get_user
     @user = User.find(params[:id])
   end
+
 
 end

@@ -1,3 +1,8 @@
+# Attributes:
+# * id [integer, primary, not null, limit=4] - primary key
+# * created_at [datetime, not null] - creation time
+# * subject [string, default=] - TODO: document me
+# * updated_at [datetime, not null] - last update time
 class Conversation < ActiveRecord::Base
   has_many :messages, :dependent => :destroy, :order => "created_at DESC"
   has_many :receipts, :through => :messages
