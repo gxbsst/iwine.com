@@ -22,7 +22,10 @@
 							 <% l.receiverable.comments.recent(6).each do |comment|%>
               	<li>
                   	<div class="left">
-											<%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true), {:with_avatar => true, :avatar_version => :thumb}, {:width => 30, :height => 30} %>
+											<%= link_to_user comment.user, 
+                                       user_path(comment.user, :trailing_slash => true), 
+                                       {:with_avatar => true, :avatar_version => :thumb}, 
+                                       {:width => 30, :height => 30} %>
 										</div>
                       <div class="right">
                       	<p class="username">
@@ -59,7 +62,10 @@
           	<ul>
               	<li>
                   	<div class="left">
-											<%= link_to_user l.timeline_event.actor, user_path(l.timeline_event.actor, :trailing_slash => true), :with_avatar => true, :avatar_version => :thumb %>
+											<%= link_to_user l.timeline_event.actor, 
+                                       user_path(l.timeline_event.actor, :trailing_slash => true), 
+                                       {:with_avatar => true, :avatar_version => :thumb},
+                                       {:size => "30x30"} %>
 										</div>
                       <div class="right">
                       	<p class="username">
@@ -84,7 +90,10 @@
 	    <div class="iw item">
       	<div class="iw_user">
         	<div class="left">
-						<%= link_to_user l.ownerable, user_path(l.ownerable, :trailing_slash => true), :with_avatar => true, :avatar_version => :thumb%>
+						<%= link_to_user l.ownerable, 
+                             user_path(l.ownerable, :trailing_slash => true), 
+                             {:with_avatar => true, :avatar_version => :thumb},
+                             {:size => "30x30"} %>
 						</div>
             <div class="right">
                 <p class="username">
@@ -109,7 +118,10 @@
             	<ul>
                 	<li>
 					        	<div class="left">
-											<%= link_to_user l.ownerable, user_path(l.ownerable, :trailing_slash => true), :with_avatar => true, :avatar_version => :thumb%>
+											<%= link_to_user l.ownerable, 
+                                       user_path(l.ownerable, :trailing_slash => true), 
+                                       {:with_avatar => true, :avatar_version => :thumb},
+                                       {:size => "30x30"} %>
 											</div>
                         <div class="right">
 					                <p class="username">
@@ -127,7 +139,10 @@
 			<div class="iw item">
       	<div class="iw_user">
         	<div class="left">
-		<%= link_to_user l.timeline_event.actor, user_path(l.timeline_event.actor, :trailing_slash => true), :with_avatar => true, :avatar_version => :thumb %>
+		<%= link_to_user l.timeline_event.actor, 
+                     user_path(l.timeline_event.actor, :trailing_slash => true), 
+                    {:with_avatar => true, :avatar_version => :thumb},
+                    {:size => "30x30"} %>
 	  </div>
             <div class="right">
                 <p class="username">

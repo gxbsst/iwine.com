@@ -114,7 +114,7 @@ class User < ActiveRecord::Base
 
   # validates :username, :presence => false, :allow_blank => true, :numericality => true
   validates :agree_term, :acceptance => true, :on => :create
-  validates :email, :uniqueness => true
+  validates :email, :username, :uniqueness => true
   validates :city, :presence => true
 
   # upload avatar

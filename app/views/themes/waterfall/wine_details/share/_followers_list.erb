@@ -2,7 +2,10 @@
 	<% @followers.each_with_index do |user, index| %>
 	<li>
 		<div class="userpic">
-			<%= link_to_user user, user_path(user, :trailing_slash => true), :with_avatar => true, :avatar_version => :middle %>
+			<%= link_to_user user, 
+											 user_path(user, :trailing_slash => true), 
+											 {:with_avatar => true, :avatar_version => :middle},
+											 {:size => "50x50"} %>
 		</div>
 		<div class="userinfo">
 			<div class="username">
