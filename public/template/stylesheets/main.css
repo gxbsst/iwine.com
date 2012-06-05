@@ -127,6 +127,7 @@ textarea.wine_intro {width:500px;height:200px;}
 #register .submit {margin-top:20px;overflow:hidden;}
 #register .message {color:#C00;padding:10px 0 0 0;display:block;}
 #register span .message {padding:0;}
+#register .agree .field_with_errors .message {display:inline;}
 .boxstyle2 {background:url(../images/bg/bg_box772_m.gif) repeat-y left top;}
 .boxstyle2 .top {background:url(../images/bg/bg_box772_t.gif) no-repeat left top;height:12px;}
 .boxstyle2 .mid {padding:20px 28px;}
@@ -412,4 +413,7 @@ div.pagination span.disabled {padding-right: 6px; padding-left: 6px; padding-bot
 
 
 /*------field_with_errors------*/
-.field_with_errors .message {padding:5px;background: none repeat scroll 0 0 #FBE3E4;color: #8A1F11;display:block;}
+#stylized .field_with_errors label.message {padding:5px;background: none repeat scroll 0 0 #FBE3E4;color: #8A1F11;display:inline;float:none;}
+
+/*------search dropdown------*/
+.ui-autocomplete {background-color:#fff;padding:5px;border:1px solid #ccc;}
