@@ -74,6 +74,7 @@ class PhotosController < ApplicationController
   def render_winery_photo_detail
     find_winery_and_hot_wine
     @photo = @winery.photos.find(params[:id])
+    @multiple = true #此页面有两个分享
     render "winery_photo_detail"
   end
 

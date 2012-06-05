@@ -11,7 +11,7 @@ class Users::Profile < ActiveRecord::Base
 
   store_configurable
 
-  # before_save :init_configs
+  before_save :init_configs
 
   def get_living_city_path
     unless living_city.blank?

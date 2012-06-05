@@ -2,7 +2,11 @@
   loading...
 </div>
 <div class="share float_r pt5">
-	<%= render :partial => "share/sns_icons.html.erb" %>
+	<%= render "share/sns_icons",
+        :image_url => sns_image_url(@wine_detail, :thumb_name => :large),
+        :title => sns_title(@wine_detail.en_zh_name),
+        :summary => wine_summary(@wine_detail.description),
+        :url => request.url %>
 </div>
 <div>
 	

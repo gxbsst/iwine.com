@@ -26,15 +26,12 @@
     <p class="label">简短评论: </p>
     <%= f.text_area :body,  :rows => 10, :cols => 25 %>
   </div>
-  <div class="private">
-    <%= f.check_box :private %>仅自己可见
-  </div>
   <div class="share relative">
       <%= link_to "javascript:void(0)", :class => "btn_gray float_r", :onclick => "$(this).parents('form').submit()" do  %>
         <span>保存</span>
       <% end %>
       <a href="#" class="btn_gray float_r"></a>
-      分享到 <%= f.check_box :is_share %>广播
+      分享到<%= f.check_box :is_share, :checked => current_user.profile.config.share.wine_simple_comment.to_i == 1 %> 广播
   </div>
 
 <% end -%>

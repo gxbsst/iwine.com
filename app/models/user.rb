@@ -39,64 +39,64 @@
 # * wines_count [integer, default=0, limit=4] - TODO: document me
 class User < ActiveRecord::Base
 
- init_resources "Users::Profile", "Users::WineCellar"
+  init_resources "Users::Profile", "Users::WineCellar"
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, 
+  devise :database_authenticatable,
          :registerable,
-         :recoverable, 
-         :rememberable, 
-         :trackable, 
-         :validatable, 
-         :confirmable, 
-         :lockable, 
-         :timeoutable, 
+         :recoverable,
+         :rememberable,
+         :trackable,
+         :validatable,
+         :confirmable,
+         :lockable,
+         :timeoutable,
          :omniauthable
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, 
+  attr_accessible :email,
                   :password,
-                  :password_confirmation, 
-                  :remember_me, 
-                  :username, 
-                  :crop_x, 
-                  :crop_y, 
-                  :crop_w, 
-                  :crop_h, 
+                  :password_confirmation,
+                  :remember_me,
+                  :username,
+                  :crop_x,
+                  :crop_y,
+                  :crop_w,
+                  :crop_h,
                   :agree_term,
                   :city,
                   :profile_attributes
 
-  has_one  :profile, 
-           :class_name => 'Users::Profile', 
-           :dependent => :destroy
+  has_one  :profile,
+            :class_name => 'Users::Profile',
+            :dependent => :destroy
   has_one  :cellar, :class_name => 'Users::WineCellar'
   has_many :albums, :foreign_key => 'created_by'
   has_many :registers, :class_name => 'Wines::Register'
-  has_many :comments, 
-           :class_name => "::Comment", 
-           :foreign_key => 'user_id', 
+  has_many :comments,
+           :class_name => "::Comment",
+           :foreign_key => 'user_id',
            :include => [:user]
 
   has_many :photo_comments
   has_many :photos #关于用户上传的所有图片
   has_many :oauths, :class_name => 'Users::Oauth'
-  has_many :time_events
+  has_many :timeline_events, :as => :actor
 
-  has_many :wine_followings, 
-           :include => :commentable,
-           :class_name => "Comment", 
-           :conditions => {:commentable_type => "Wines::Detail", :do => "follow"}
+  has_many :wine_followings,
+  :include => :commentable,
+  :class_name => "Comment",
+  :conditions => {:commentable_type => "Wines::Detail", :do => "follow"}
 
-  has_many :winery_followings, 
-           :include => :commentable, 
-           :class_name => "Comment", 
-           :conditions => {:commentable_type => "Winery", :do => "follow"} 
+  has_many :winery_followings,
+  :include => :commentable,
+  :class_name => "Comment",
+  :conditions => {:commentable_type => "Winery", :do => "follow"}
 
-  has_many :feeds, 
-           :class_name => "Users::Timeline", 
-           :include => [:ownerable, {:timeline_event => [:actor]}, {:receiverable =>  [:covers, :wine]}], 
-           :order => "created_at DESC",
-           :conditions => ["receiverable_type = ?", "Wines::Detail"] #TODO: 现在只是调用酒的部分， 如果调用酒庄， 请把include wine去掉， 因为酒庄没有wine
+  has_many :feeds,
+  :class_name => "Users::Timeline",
+  :include => [:ownerable, {:timeline_event => [:actor]}, {:receiverable =>  [:covers, :wine]}],
+  :order => "created_at DESC",
+  :conditions => ["receiverable_type = ?", "Wines::Detail"] #TODO: 现在只是调用酒的部分， 如果调用酒庄， 请把include wine去掉， 因为酒庄没有wine
 
   has_many :followers, :class_name => 'Friendship', :include => :follower do
     def map_user
@@ -111,7 +111,7 @@ class User < ActiveRecord::Base
   # 推荐的用户
   scope :recommends, lambda { |limit| order("followers_count DESC").limit(limit) }
   accepts_nested_attributes_for :profile, :allow_destroy => true
-  
+
   # validates :username, :presence => false, :allow_blank => true, :numericality => true
   validates :agree_term, :acceptance => true, :on => :create
   validates :email, :uniqueness => true
@@ -136,24 +136,6 @@ class User < ActiveRecord::Base
   def mailboxer_email(message)
     email
   end
-  # accepts_nested_attributes_for :user_profile
-  # alias :user_profiles_attribute :user_profile
-
-  #验证
-  # validates_presence_of   :name,          :message => ERROR_EMPTY
-  #   validates_presence_of   :email_address, :message => ERROR_EMPTY
-  #   validates_presence_of   :password,      :message => ERROR_EMPTY
-  #   validates_confirmation_of :password
-  #   validates_uniqueness_of :email_address, :message => 'You already have an account.<br>Please log in to your existing account'
-  #   validates_length_of     :email_address, :maximum => 255
-  #   validates_format_of     :email_address, :with => /^([^@\s]+)@((?:[-a-zA-Z0-9]+\.)+[a-zA-Z]{2,})(\.?)$/, :message => "Please enter a valid email address."
-
-  # with_options(:class_name => 'ERP::SalesOrder', :foreign_key => 'erp_customer_id') do |c|
-  #     c.has_many :open_orders, :conditions => 'deleted = false AND completed = false'
-  #     c.has_many :close_orders, :conditions => 'deleted = false AND completed = true'
-  #   end
-  # has_many :contact_people, :foreign_key => "erp_customer_id"
-  # has_many :addresses, :foreign_key => "parent_id", :class_name => "ERP::CustomerAddress"
 
   def role?(value)
     role === value.to_s
@@ -223,7 +205,7 @@ class User < ActiveRecord::Base
   end
 
   def following_wines
-    Comment.all :conditions => { :user_id => id , :do => 'follow', :commentable_type => 'Wines::Detail' } 
+    Comment.all :conditions => { :user_id => id , :do => 'follow', :commentable_type => 'Wines::Detail' }
   end
 
   def remove_followings sns_friends
@@ -237,7 +219,7 @@ class User < ActiveRecord::Base
 
     users
   end
-  
+
   # 判断是否已经关注某人
   def is_following user_id
     Friendship.first :conditions => { :user_id => user_id , :follower_id => id }
@@ -261,6 +243,51 @@ class User < ActiveRecord::Base
       #TODO
     end
 
+  end
+
+  # 关注某支酒
+  def follow_wine(wine_detail)
+    unless wine_detail.is_followed? self # 如果还没有被关注了
+      Comment.build_from(wine_detail, id, "关注", options = {:do => "follow"} )
+    else
+      false
+    end
+  end
+
+  # 关注某人
+  def follow_user(user_id)
+    unless is_following user_id
+      friendship = Friendship.create(:user_id => user_id, :follower_id => id)
+    else
+      false
+    end
+  end
+
+  # 当关注某人时， 可以压入该用户的events到当前用户的Timline中
+  def push_one_user_events(user, events)
+    events = user.timeline_events
+    unless events.blank?
+      events.each do |event|
+        user_timeline = Users::Timeline.create(:user_id => id, 
+                                               :timeline_event_id => event.id, 
+                                               :ownerable_type => event.secondary_actor_type,
+                                               :ownerable_id => event.secondary_actor_id,
+                                               :receiverable_type => event.actor_type,
+                                               :receiverable_id => event.actor_id,
+                                               :event_type => event.event_type,
+                                               :created_at => event.created_at,
+                                               :updated_at => event.updated_at)
+      end # end events
+    end # end unless
+  end
+
+  # 当用户第一次注册成功，初始化用户的首页数据
+  def init_events_from_followings
+    users = followings.map_user
+    users.each do |user|
+      events = user.timeline_events
+      push_one_user_events(user, events)
+    end # end users
   end
 
   private

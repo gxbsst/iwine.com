@@ -12,8 +12,6 @@
         :url => avatar_settings_path, 
         :html => { :multipart => 'true', :id => :form, :method => :put } do |f| %>
 
-        
-
         <p>从电脑上传（支持JPG、GIF、PNG图片格式，且小于5M）</p>
         <p class="mt20">
          <%= f.file_field :avatar, :align => "center", :class => "text name mr5" %>

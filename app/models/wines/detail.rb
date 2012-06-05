@@ -52,6 +52,10 @@ class Wines::Detail < ActiveRecord::Base
     cname + ename
   end
 
+  def en_zh_name
+    "#{wine.name_en.to_s}#{wine.name_zh.to_s}"
+  end
+
   def other_cn_name
     wine.other_cn_name
   end
@@ -68,10 +72,6 @@ class Wines::Detail < ActiveRecord::Base
 
   def show_year
     year.strftime("%Y") unless year.blank?
-  end
-
-  def other_cn_name
-    wine.other_cn_name
   end
 
   def self.approve_wine_detail(wine_id, register, audit_log_id)

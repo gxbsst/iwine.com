@@ -3,5 +3,5 @@ class WineryComment < Comment
         :on              => :create,
         :actor           => :user,
         :secondary_actor => :commentable,
-        :if => lambda { |comment| comment.commentable_type == "Winery" }
+        :if => lambda {|winery_comment| winery_comment.is_share}
 end

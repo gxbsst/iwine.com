@@ -1,0 +1,5 @@
+<p>[<%= "#{@feedback.name}, #{@feedback.email}"%>]在<%= @feedback.created_at.to_s(:cn) %> 发送了一条信息补充</p>
+<p>原文：<%= @feedback.subject %></p>
+<p>修订后的内容：<br />
+	<%= @feedback.description %>
+</p>

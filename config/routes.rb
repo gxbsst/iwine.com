@@ -96,6 +96,7 @@ Patrick::Application.routes.draw do
       match "winery_follows", :via => [:get]
       match "comments", :via => [:get]
       match "followings", :via => [:get]
+      match "start", :via => [:get, :post]
       match "followers", :via => [:get]
       # Album
       match "albums", :via => [:get], :to => "albums#index"
@@ -119,7 +120,11 @@ Patrick::Application.routes.draw do
   end
   
   # 私信
-  resources :messages
+  resources :messages do 
+    collection do
+      get :unread
+    end
+  end
   resources :conversations
   
   # HOME

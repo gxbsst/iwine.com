@@ -4,7 +4,8 @@
     before_filter :authenticate_user!
     # before_filter :get_mailbox, :get_box, :get_actor
     before_filter :get_mailbox, :get_box
-    before_filter :check_users, :only => :create
+    before_filter :build_message, :only => :create
+    before_filter :check_can_send?, :only => :create
     # before_filter :get_box
 
     def index
@@ -46,7 +47,7 @@
     # POST /messages
     # POST /messages.xml
     def create
-       @message = Message.new params[:message]
+
       if @message.conversation_id # 回复
         @conversation = Conversation.find(@message.conversation_id)
         unless @conversation.is_participant?(current_user)
@@ -62,14 +63,13 @@
         unless @message.valid?
           return render :new
         end
-        @message = Message.new params[:message]
         @recipient_list = []
         @message.recipients.split(',').each do |s|
           @recipient_list << User.find_by_username(s.strip) unless s.blank?
         end
                 
         receipt = current_user.send_message(@recipient_list, @message.body, "subject_#{current_user.id}", true)
-        redirect_to conversations_path()
+        redirect_to conversations_path
       end
       # flash[:notice] = "Message sent."
       # redirect_to mine_conversation_path(@conversation)
@@ -123,6 +123,10 @@
       redirect_to messages_path(box: 'inbox')
     end
 
+    def unread
+      @count = Conversation.unread(current_user).count
+    end
+
     private
 
     def get_mailbox
@@ -141,15 +145,22 @@
       @box = params[:box]
     end
 
-    def check_users
-      # # @message = Message.new params[:message]
-      #     @recipient_list = []
-      #     @message.recipients.split(',').each do |s|
-      #       @recipient_list << User.find_by_username(s.strip) unless s.blank?
-      #     end
-      #     @recipient_list
-      #    #  binding.pry
-         #  redirect_to conversations_path, :notice => "找不到用户#{@message.recipients},请重新发送。" if @recipient_list.blank?
+    #如果用户设置通知设置（检测只有关注用户才可以发私信)
+
+    def build_message
+      @message = Message.new params[:message]
+    end
+    def check_can_send?
+     user = User.where("username = ?", params[:message][:recipients]).first
+     if user
+       if user.profile.config.notice.message.to_i == 3 && !user.following_ids.include?(current_user.id)
+         notice_stickie("只有关注 <strong>#{params[:message][:recipients]}</trong> 后才能给TA发送私信。")
+         redirect_to conversations_path
+       end
+     else
+       notice_stickie("没有找到用户 <strong>#{params[:message][:recipients]}</trong>，请检查用户名是否填写正确。")
+       redirect_to conversations_path
      end
+    end
 
 end
