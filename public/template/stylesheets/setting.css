@@ -4,7 +4,7 @@
 .setting .right {width:280px;}
 .avatar {padding-left:40px;background:url(../images/bg/line_dotted.jpg) no-repeat left top;min-height:250px;height:auto !important;height:250px;overflow:visible;}
 .avatar p.sample {margin-bottom:10px; position:relative;}
-.avatar p span {position:absolute;display:inline-block;margin-left:5px;}
+.avatar p span {display:inline-block;margin-left:5px;}
 .set_module h2 {font-size:14px;margin: 30px 0;}
 .set_optional {margin-bottom:10px;}
 .set_optional h3 {font-size:14px;margin: 0 0 5px 0;}

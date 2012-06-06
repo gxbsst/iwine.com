@@ -19,7 +19,7 @@
         <% if is_login_user? @user %>
         <span>我的酒窖</span>
         <% else %>
-        <span>他的酒窖</span>
+        <span><%= @user.username %>的酒窖</span>
         <% end %>
       <% end %>
     </div>

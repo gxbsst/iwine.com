@@ -8,8 +8,8 @@
             <div class="boxstyle">
                 <div class="top">欢迎登陆iWine!</div>
                 <div class="mid">
-                  <div class="un"><%= f.email_field :email, :class => "text", :placeholder => "Email" %></div>
-                  <div class="pw"><%= f.password_field :password, :class => "text", :placeholder => "密码" %></div>
+                  <div class="un"><%= f.email_field :email, :class => "text", :placeholder => "Email", :onclick => "clearDefaultText(this,'E-mail')" %></div>
+                  <div class="pw"><%= f.password_field :password, :class => "text", :placeholder => "密码", :onclick => "clearDefaultText(this,'密码')" %></div>
                     <div class="rember_pw">
                         <%= link_to  "javascript:void(0)", :onclick => "$(this).parents('form').submit()" do %>
                         <%= theme_image_tag "common/btn_login.jpg", 
