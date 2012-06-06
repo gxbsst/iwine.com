@@ -52,14 +52,14 @@ namespace :photo do
            end
 
            #删除已经保存的图片
-           FileUtils.rm_r("#{photo_directory}")
+           #FileUtils.rm_r("#{photo_directory}")
          end
        rescue Exception => e
          puts e
        end
      end
      #删除已经清楚过的数据
-     FileUtils.rm(csv_file)
+     #FileUtils.rm(csv_file)
     end
 
   end
@@ -81,7 +81,6 @@ namespace :photo do
           :image => open(file)
       )
       puts "wine #{photo.id}"
-      #FileUtils.rm(file)     #删除已保存的默认图片
     end
   end
 
@@ -96,7 +95,6 @@ namespace :photo do
         :image => open(file)
       )
       puts "wine_detail #{photo.id}"
-      #FileUtils.rm(file)
     end
   end
 
