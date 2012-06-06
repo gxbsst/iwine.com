@@ -31,7 +31,7 @@
         <% @entries['wineries'][0..1].each do|winery| %>
         <li>
           <%= link_to  winery_path(winery) do %>
-            <%= winery_label_tag winery, :thumb_name => :thumb, :size => "70x70", :alt => winery.name_en %>
+            <%= winery_label_tag winery, :thumb_name => :thumb_x, :size => "70x70", :alt => winery.name_en %>
           <% end %>
           <div class="meta">
             <h1 class="zh">
@@ -59,7 +59,7 @@
           <div class="box590_main">
             <% releast_detail = wine.details.order("year desc").first  %>
             <%= link_to wine_path(releast_detail) do %>
-               <%= wine_cover_tag(wine, :alt => releast_detail.en_zh_name, :thumb_name => "thumb" )%>
+               <%= wine_cover_tag(wine, :alt => releast_detail.en_zh_name, :thumb_name => "thumb_x", :size => "70x70" )%>
             <% end %>
             <div class="info">
               <h1 class="zh"><%= link_to wine.name_zh, wine_path(releast_detail) %></h1>

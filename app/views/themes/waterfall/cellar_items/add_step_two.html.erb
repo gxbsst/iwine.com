@@ -31,7 +31,7 @@
                   </div>
                   <div class="wine_img">
                     <%= link_to wine_path(wine_detail.id) do %>
-                      <%= wine_cover_tag( wine_detail, :thumb_name => "thumb", :width => "50", :height => "63" ) %>
+                      <%= wine_cover_tag( wine_detail, :thumb_name => "thumb_x", :width => "70", :height => "70" ) %>
                     <% end %>
                   </div>
                   <div class="wine_info">
@@ -49,7 +49,7 @@
       <% else %>
         <p class="notice_b mb20">对不起，没有找到关于“<%= @search.keywords %>”的信息，您是否愿意帮助我们添加酒款？</p>
         <p>
-          <%= link_to new_mine_wine_path, :class => "btn_gray mr5" do %>
+          <%= link_to new_wine_path, :class => "btn_gray mr5" do %>
             <span>我来添加</span>
           <% end %>
           <%= link_to add_cellar_items_path(current_user.cellar, :step => 1), :class => "btn_gray" do %>
