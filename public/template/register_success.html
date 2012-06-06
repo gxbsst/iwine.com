@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>iWine</title>
 <link href="stylesheets/main.css" rel="stylesheet" type="text/css" />
+<script src="javascripts/input.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -13,7 +14,7 @@
             <form action="search.html">
                 <div id="top_search">
                     <input class="search_btn" name="" type="image" src="images/icon/search.gif"/>
-                    <input class="search" name="" type="text" placeholder="搜索酒款、酒庄" />
+                    <input class="search" type="text" value="搜索酒款、酒庄" onclick="clearDefaultText(this,'搜索酒款、酒庄')"  />
                 </div>
             </form>
             <div id="top_right">
@@ -50,7 +51,7 @@
         请登陆邮箱并激活，即可完成注册！</div>
         <div class="mt30">
         	<p>没有收到激活邮件？</p>
-        	<p>1 请确保邮件地址是否正确，如果错误就请<a href="register.html">重新注册</a>一次吧<br />
+        	<p>1 请确保邮箱地址是否正确，如果错误就请<a href="register.html">重新注册</a>一次吧<br />
             2 我们的邮件或许进了垃圾邮件箱，请去看一看<br />
         	  3 稍等几分钟，若仍旧没收到确认信，可以让iWine<a href="#">重发一封</a></p>
         </div>

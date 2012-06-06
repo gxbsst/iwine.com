@@ -13,7 +13,9 @@
     <div id="header">
       <div class="main950">
         <div id="logo">
-          <%= theme_image_tag "common/logo.gif", :width => 299, :height => 43 %>
+          <%= link_to root_path() do %>
+            <%= theme_image_tag "common/logo.gif", :width => 299, :height => 43 %>
+          <% end %>
         </div>
         <div id="top_search">
           <%= theme_image_submit_tag "icon/search.gif", :class => :search_btn , :id=>:search_btn %>
@@ -112,6 +114,9 @@
           }
           getMessageCount();
         <% end %>
+
+        // Support Placeholder For All Browers
+        $('input[placeholder], textarea[placeholder]').placeholder();
       </script>
   </body>
 </html>

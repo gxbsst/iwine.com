@@ -64,7 +64,8 @@ class User < ActiveRecord::Base
                   :crop_h,
                   :agree_term,
                   :city,
-                  :profile_attributes
+                  :profile_attributes,
+                  :current_password
 
   has_one  :profile,
             :class_name => 'Users::Profile',
@@ -83,14 +84,14 @@ class User < ActiveRecord::Base
   has_many :timeline_events, :as => :actor
 
   has_many :wine_followings,
-  :include => :commentable,
-  :class_name => "Comment",
-  :conditions => {:commentable_type => "Wines::Detail", :do => "follow"}
+           :include => :commentable,
+           :class_name => "Comment",
+           :conditions => {:commentable_type => "Wines::Detail", :do => "follow"}
 
   has_many :winery_followings,
-  :include => :commentable,
-  :class_name => "Comment",
-  :conditions => {:commentable_type => "Winery", :do => "follow"}
+           :include => :commentable,
+           :class_name => "Comment",
+           :conditions => {:commentable_type => "Winery", :do => "follow"}
 
   has_many :feeds,
   :class_name => "Users::Timeline",
@@ -116,11 +117,20 @@ class User < ActiveRecord::Base
   validates :agree_term, :acceptance => true, :on => :create
   validates :email, :username, :uniqueness => true
   validates :city, :presence => true
+  validates :current_password, :presence => true
+  validates_confirmation_of :password
 
   # upload avatar
   mount_uploader :avatar, AvatarUploader
 
-  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :agree_term, :profile_attributes
+  attr_accessor :crop_x, 
+                :crop_y, 
+                :crop_w, 
+                :crop_h, 
+                :agree_term, 
+                :profile_attributes,
+                :current_password
+
   cattr_accessor :current_user
 
   ## extend message for user
@@ -270,10 +280,10 @@ class User < ActiveRecord::Base
       events.each do |event|
         user_timeline = Users::Timeline.create(:user_id => id, 
                                                :timeline_event_id => event.id, 
-                                               :ownerable_type => event.secondary_actor_type,
-                                               :ownerable_id => event.secondary_actor_id,
-                                               :receiverable_type => event.actor_type,
-                                               :receiverable_id => event.actor_id,
+                                               :ownerable_type => event.actor_type, # 谁做(User)
+                                               :ownerable_id => event.actor_id,
+                                               :receiverable_type => event.secondary_actor_type, # 谁被做（Wine, Winery)
+                                               :receiverable_id => event.secondary_actor_id,
                                                :event_type => event.event_type,
                                                :created_at => event.created_at,
                                                :updated_at => event.updated_at)
@@ -288,6 +298,31 @@ class User < ActiveRecord::Base
       events = user.timeline_events
       push_one_user_events(user, events)
     end # end users
+  end
+
+  def update_with_password(params={})
+
+    current_password = params[:current_password] if !params[:current_password].blank?
+
+    if params[:password].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation) if params[:password_confirmation].blank?
+    end
+
+    result = if has_no_password?  || valid_password?(current_password)
+      update_attributes(params) 
+    else
+      self.errors.add(:current_password, current_password.blank? ? :blank : :invalid)
+      self.attributes = params
+      false
+    end
+
+    clean_up_passwords
+    result
+  end
+
+  def has_no_password?
+    self.encrypted_password.blank?
   end
 
   private
