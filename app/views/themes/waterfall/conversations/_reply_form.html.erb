@@ -5,7 +5,9 @@
 	<table border="0" cellspacing="10" cellpadding="5">
 		<tr>
 			<td valign="top"><%= f.label "内容:" %></td>
-			<td><%= f.text_area :body, :size => "45x5" %></td>
+			<td>
+				<%= text_area_tag "message[body]", "", :size => "45x5" %>
+			</td>
 		</tr>
 		<tr>
 			<td></td>
