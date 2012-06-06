@@ -2,6 +2,7 @@
 body {font-size:12px; font-family:Arial, Helvetica, sans-serif; color:#333;background:url(../images/bg/body_bg.jpg) repeat;}
 body {line-height:18px;}
 * {margin:0;padding:0;}
+input,button,select,textarea{outline:none}
 h1, h2, h3, h4, h5, h6, ul, li, p, dl, dd, dt {margin:0;padding:0;}
 h1 a, h2 a, h3 a, h4 a {color:#333;}
 h1.zh a {font-size:14px;color:#333;}

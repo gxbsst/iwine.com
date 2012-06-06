@@ -5,6 +5,8 @@
 <title>iWine</title>
 <link href="stylesheets/main.css" rel="stylesheet" type="text/css" />
 <link href="stylesheets/add.css" rel="stylesheet" type="text/css" />
+<link href="stylesheets/stickies.css" rel="stylesheet" type="text/css" />
+<script src="javascripts/input.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -14,7 +16,7 @@
             <form action="search.html">
                 <div id="top_search">
                     <input class="search_btn" name="" type="image" src="images/icon/search.gif"/>
-                    <input class="search" name="" type="text" placeholder="搜索酒款、酒庄" />
+                    <input class="search" type="text" value="搜索酒款、酒庄" onclick="clearDefaultText(this,'搜索酒款、酒庄')"  />
                 </div>
             </form>
             <div id="top_right">
@@ -37,7 +39,8 @@
       </ul>
     </div>
     <div id="wrapper950">
-    	<div class="whitespace">
+    	<div id="stickies"><div id="stickie_188730340" class="notice_stickie"><div class="stickies_close_area"><a href="#">Close</a></div>成功上传新酒款！<br style="clear:all;"></div></div>
+        <div class="whitespace">
     	<div class="addwine">
             <h1 class="main_title">添加酒款</h1>
             <div class="step">
@@ -49,7 +52,10 @@
                 <div class="left">
                    <div class="required">
                    		<label><span>*</span>葡萄酒英文名</label>
-                       <input name="text" type="text" class="text name" value="" />
+                       <div class="field_with_errors">
+                           <input name="text" type="text" class="text name" value="" />
+                           <label class="message" for="wines_register_name_en">请输入酒名</label>
+                       </div>
                    </div>
                    <div class="required">
                        <label><span>*</span>类型</label>
