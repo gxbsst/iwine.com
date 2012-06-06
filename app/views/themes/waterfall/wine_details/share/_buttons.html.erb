@@ -16,7 +16,7 @@
 	                                   :remote => true do %>
 		<span>关注</span>
 	<% end %>
-	<%# 用户已经登陆， 检查是否已经关注 %>
+	<%# 用户已经登录， 检查是否已经关注 %>
 	<% else %>
 		 <%  if @wine_detail.is_followed? current_user %>
 			<span class="icon_fol mr5">

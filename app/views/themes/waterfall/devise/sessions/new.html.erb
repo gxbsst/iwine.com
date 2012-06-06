@@ -6,7 +6,7 @@
     	<% end %>
         <div class="login">
             <div class="boxstyle">
-                <div class="top">欢迎登陆iWine!</div>
+                <div class="top">欢迎登录iWine!</div>
                 <div class="mid">
                   <div class="un"><%= f.email_field :email, :class => "text", :placeholder => "Email", :onclick => "clearDefaultText(this,'E-mail')" %></div>
                   <div class="pw"><%= f.password_field :password, :class => "text", :placeholder => "密码", :onclick => "clearDefaultText(this,'密码')" %></div>
@@ -16,7 +16,7 @@
                         :class => :float_r, 
                         :width => 96, 
                         :height => 41, 
-                        :alt => "登陆" %>
+                        :alt => "登录" %>
                         <% end %>
                         <label><%= f.check_box :remember_me %> 记住我</label> 
                         | <%= link_to "忘记密码?", new_password_path(resource_name) %>
