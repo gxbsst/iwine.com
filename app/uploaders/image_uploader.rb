@@ -40,7 +40,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   version :large do
     process :resize_to_limit => [APP_DATA["image"]["wine"]["large"]["width"], '']
   end
-  
+  #200*200
   version :middle, :from_version => :large do
     process :resize_to_limit => [APP_DATA["image"]["wine"]["middle"]["width"],'']
     process :store_geometry

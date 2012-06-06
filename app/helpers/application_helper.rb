@@ -41,7 +41,7 @@ module ApplicationHelper
     if cover
       image_tag cover.image_url(options[:thumb_name]), options
     else
-      theme_image_tag "wine_img.png", options
+      theme_image_tag "common/wine_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -50,7 +50,7 @@ module ApplicationHelper
     if cover
       image_tag cover.image_url(options[:thumb_name]), options
     else
-      theme_image_tag "winery_img.png", options
+      theme_image_tag "common/winery_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -60,7 +60,7 @@ module ApplicationHelper
     elsif winery.photos.label.first
       image_tag winery.photos.label.first.image_url(options[:thumb_name]), options
     else
-      theme_image_tag "winery_img.png", options
+      theme_image_tag "common/winery_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -74,7 +74,7 @@ module ApplicationHelper
     else
       options[:width] = 200
       options[:height] = 200
-      theme_image_tag "wine_img.png", options
+      theme_image_tag "common/wine_#{options[:thumb_name]}.png", options
     end
   end
 
