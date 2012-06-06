@@ -5,6 +5,7 @@
 <title>iWine</title>
 <link href="stylesheets/main.css" rel="stylesheet" type="text/css" />
 <link href="stylesheets/winery.css" rel="stylesheet" type="text/css" />
+<script src="javascripts/input.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -14,7 +15,7 @@
             <form action="search.html">
                 <div id="top_search">
                     <input class="search_btn" name="" type="image" src="images/icon/search.gif"/>
-                    <input class="search" name="" type="text" placeholder="搜索酒款、酒庄" />
+                    <input class="search" type="text" value="搜索酒款、酒庄" onclick="clearDefaultText(this,'搜索酒款、酒庄')"  />
                 </div>
             </form>
             <div id="top_right">
