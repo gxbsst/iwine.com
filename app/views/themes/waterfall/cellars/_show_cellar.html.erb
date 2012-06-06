@@ -12,12 +12,14 @@
               <% end %>
             </div>
         <% # TODO: 添加搜索功能  %>
-        <div class="sort pt5">排序 <select name="">
-          <option>价格</option>
-          <option>数量</option>
-        </select>
+        <div class="sort pt5">
+          排序<select name="order" id="search_order">
+          <% order_hash = { "1" => "购买时间↑", "2" => "购买时间↓", "3" => "年份↑", "4" => "年份↓", "5" => "价格↑", "6" => "价格↓"} %>
+          <% order_hash.each do |key, value| %>
+            <option value="<%= key %>" <%= "selected='selected'" if (!params[:search_order] && key == '1') || (params[:search_order] == key) %>><%= value %></option>
+          <% end %>
+            </select>
         </div>
-
         <div class="search"><%=  render "search_cellar_item", :object => @cellar %></div>
         <div class="clear"></div>
       </div>
