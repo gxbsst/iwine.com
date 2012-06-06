@@ -61,7 +61,7 @@ zh-CN:
       signed_up: "您已经成功注册。如果有设定的话, 确认信会送到您的邮箱。"
       updated: "帐号更新成功。"
       user:
-       signed_up_but_unconfirmed: 您已经注册了帐号，请到您的邮箱确认。
+       signed_up_but_unconfirmed: 您已经注册了帐号，请到您的邮箱激活帐号。
     sessions:
       new:
         alpha_software: "你即将使用处于开发初期的功能。"
