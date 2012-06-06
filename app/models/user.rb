@@ -116,6 +116,7 @@ class User < ActiveRecord::Base
   # validates :username, :presence => false, :allow_blank => true, :numericality => true
   validates :agree_term, :acceptance => true, :on => :create
   validates :email, :username, :uniqueness => true
+  validates :username, :presence => true
   validates :city, :presence => true
   # validates :current_password, :presence => true
   validates_confirmation_of :password
