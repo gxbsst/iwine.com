@@ -46,18 +46,18 @@ class ImageUploader < CarrierWave::Uploader::Base
     process :store_geometry
   end
 
-  #130
+  #100*100
   version :thumb_x, :from_version => :large  do
-    process :resize_to_fill => [APP_DATA["image"]["wine"]["x_thumb"]["width"],
+    process :resize_to_fit => [APP_DATA["image"]["wine"]["x_thumb"]["width"],
                                 APP_DATA["image"]["wine"]["x_thumb"]["height"]]
   end
-  #100
+  #130*130
   version :thumb, :from_version => :large  do
-    process :resize_to_fill => [APP_DATA["image"]["wine"]["thumb"]["width"],
+    process :resize_to_fit => [APP_DATA["image"]["wine"]["thumb"]["width"],
                                 APP_DATA["image"]["wine"]["thumb"]["height"]]
   end
   
-  # Winery
+  # Winery360*360
   version :middle_x, :from_version => :large, :if => :is_winery? do
     process :resize_to_limit => [APP_DATA["image"]["winery"]["middle_x"]["width"],'']
   end
