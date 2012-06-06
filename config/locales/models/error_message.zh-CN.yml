@@ -1,3 +1,30 @@
+# 错误信息: http://guides.rubyonrails.org/v2.3.8/i18n.html#error-message-interpolation
+# http://guides.rubyonrails.org/i18n.html
+# accepted 
+# invalid
+# blank
+# validates_confirmation_of  –   :confirmation   -
+# validates_acceptance_of  –     :accepted   -
+# validates_presence_of  –       :blank  -
+# validates_length_of            :within, :in  :too_short  count
+# validates_length_of :within, :in  :too_long   count
+# validates_length_of  :is   :wrong_length   count
+# validates_length_of  :minimum  :too_short  count
+# validates_length_of  :maximum  :too_long   count
+# validates_uniqueness_of  –   :taken  -
+# validates_format_of  –   :invalid  -
+# validates_inclusion_of   –   :inclusion  -
+# validates_exclusion_of   –   :exclusion  -
+# validates_associated   –   :invalid  -
+# validates_numericality_of  –   :not_a_number   -
+# validates_numericality_of  :greater_than   :greater_than   count
+# validates_numericality_of  :greater_than_or_equal_to   :greater_than_or_equal_to   count
+# validates_numericality_of  :equal_to   :equal_to   count
+# validates_numericality_of  :less_than  :less_than  count
+# validates_numericality_of  :less_than_or_equal_to  :less_than_or_equal_to  count
+# validates_numericality_of  :odd  :odd  -
+# validates_numericality_of  :even   :even   -
+
 zh-CN:
   activerecord:
     errors:
@@ -8,6 +35,23 @@ zh-CN:
           attributes:
             vintage:
               invalid: "请输入正确的格式， 如:2004"
+        user:
+          attributes:
+            username:
+              blank: "用户名不能为空"
+              taken: 该用户名已经被注册了
+            email:
+              invalid: "请输入正确的email格式"
+              blank: "Email不能为空"
+              taken: 该Email已经被注册了
+            password: 
+              blank: 密码不能为空
+              less_than: "密码不能少于6位"
+              too_short: 密码不能少于6位
+            city: 
+              blank: 请输入目前所在城市
+            agree_term:
+              accepted: 请确认已经阅读且同意网站使用条款
         users/profile:
           attributes:
             contact_email:
