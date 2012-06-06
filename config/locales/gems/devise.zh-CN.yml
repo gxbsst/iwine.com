@@ -94,6 +94,6 @@ zh-CN:
   errors:
     messages:
       already_confirmed: "已确认"
-      not_found: "未找到"
+      not_found: "未找到您的帐号"
       not_locked: "未锁定"
       not_saved: "未保存"

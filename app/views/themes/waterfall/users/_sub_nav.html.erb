@@ -31,7 +31,7 @@
                         {:width => 130, :height => 130}  %>
     </div>
     <div class="hp_info">
-      <% if is_login_user? @user  # 如果用户登陆而且访问自己的页面 %>
+      <% if is_login_user? @user  # 如果用户登录而且访问自己的页面 %>
       <div class="username"><%= @user.username %></div>
       <div class="mystatu">
         <%= @user.profile.bio %> 

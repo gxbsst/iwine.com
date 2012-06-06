@@ -18,7 +18,7 @@
       </div>
       <div class="optional">
         <label>葡萄品种</label>
-        <div class="content2">
+        <div class="content2" id="auto_variety_name">
           <%= f.text_field :variety_name_value, :name => "wines_register[variety_name_value][]", data: { autocomplete_source: '/api/wine_varieties/index' }, :class => "text"  %>
           成分百分比 <%= f.text_field :variety_percentage_value, :name => "wines_register[variety_percentage_value][]", :id => 'new_variety', :size => 10, :class => "text percent" %>% <%= link_to "", "javascript:void(0);", :class => "icon_add", :id => "create_variety" %><span class="variety_percentage_error"></span>
           <%= render "variety_percentage", :object => @register %>

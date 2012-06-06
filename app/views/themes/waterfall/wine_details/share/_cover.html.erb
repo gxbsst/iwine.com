@@ -19,7 +19,7 @@
 <div id="thumbs">
 	<!--<div id="arrow"></div>-->
 	<% @covers.each do |photo,index| %>
-    <span><%= image_tag photo.image_url(:thumb_x), :width => 50 %></span>
+    <span><%= image_tag photo.image_url(:thumb_x), :size => "50x50" %></span>
   <% end %>
 </div>
 <% end %>
