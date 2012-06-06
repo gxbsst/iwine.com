@@ -25,12 +25,12 @@
       </div>
         <%= f.fields_for :profile do |p| %>
       <div class="required">
-        <label><span>*</span>性别</label>
+        <label>性别</label>
         <%= p.radio_button :gender, 1  %>男
         <%= p.radio_button :gender, 0 %>女
       </div>
       <div class="required">
-        <label><span>*</span>生日</label>
+        <label>生日</label>
         <%= p.date_select :birthday, :start_year => 1910, :end_year => Time.now.year, :default => { :year => 1980, :month => 9, :day => 6 }  %>
       </div>
         <% end %>

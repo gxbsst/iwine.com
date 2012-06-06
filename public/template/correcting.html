@@ -5,6 +5,7 @@
 <title>iWine</title>
 <link href="stylesheets/main.css" rel="stylesheet" type="text/css" />
 <link href="stylesheets/setting.css" rel="stylesheet" type="text/css" />
+<script src="javascripts/input.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -14,7 +15,7 @@
             <form action="search.html">
                 <div id="top_search">
                     <input class="search_btn" name="" type="image" src="images/icon/search.gif"/>
-                    <input class="search" name="" type="text" placeholder="搜索酒款、酒庄" />
+                    <input class="search" type="text" value="搜索酒款、酒庄" onclick="clearDefaultText(this,'搜索酒款、酒庄')"  />
                 </div>
             </form>
             <div id="top_right">
@@ -48,18 +49,18 @@
              <table class="float_l" width="590" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <th valign="top">原文</th>
-            <td><textarea name="textarea" id="textarea" cols="45" rows="5" placeholder="请输入原文"></textarea></td>
+            <td><textarea name="textarea" id="textarea" cols="45" rows="5" ></textarea></td>
           </tr>
           <tr>
             <th valign="top">修定后内容</th>
             <td>
-              <textarea name="textarea" id="textarea" cols="45" rows="5" placeholder="请输入修定后的内容" ></textarea>
+              <textarea name="textarea" id="textarea" cols="45" rows="5" ></textarea>
             </td>
           </tr>
           <tr>
             <th valign="middle">联系方式</th>
             <td>
-              <input class="text content" type="text" name="textfield2" id="textfield2" placeholder="请输入邮件地址以便我们联系您"/>
+              <input class="text content" type="text" name="textfield2" id="textfield2"/>
             </td>
           </tr>
           <tr>

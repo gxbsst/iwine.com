@@ -3,7 +3,7 @@
 // be included in the compiled file accessible from http://example.com/assets/application.js
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
-//
+// !!! Placeholder will not work with fancybox For IE 6
 
 //= require jquery
 //= require jquery-ui
@@ -23,6 +23,7 @@
 //= require jquery-tools/tabs/tabs.slideshow
 //= require waterfall/javascripts/waterfall
 //= require waterfall/javascripts/home
+//= require waterfall/javascripts/jquery.placeholder.min
 
 
 $(document).ready(function(){
