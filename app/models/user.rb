@@ -117,7 +117,7 @@ class User < ActiveRecord::Base
   validates :agree_term, :acceptance => true, :on => :create
   validates :email, :username, :uniqueness => true
   validates :city, :presence => true
-  validates :current_password, :presence => true
+  # validates :current_password, :presence => true
   validates_confirmation_of :password
 
   # upload avatar

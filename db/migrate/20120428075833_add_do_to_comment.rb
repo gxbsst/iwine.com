@@ -5,6 +5,6 @@ class AddDoToComment < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :comments,
+    remove_column :comments
   end
 end

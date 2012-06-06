@@ -30,6 +30,11 @@ class SettingsController < ApplicationController
     @title = "修改密码"
     @user = current_user
     if request.put?
+      if params[:user][:password].blank?
+        error_stickie "更新失败: 请确认当前密码或者新密码是否错误"
+        redirect_to update_password_settings_path
+        return 
+      end
       @user = User.find(current_user.id)
       if @user.update_with_password(params[:user])
 
@@ -38,7 +43,7 @@ class SettingsController < ApplicationController
         notice_stickie "更新成功"
         redirect_to basic_settings_path
       else
-        error_stickie "更新失败: 请确认当前密码是否错误"
+        error_stickie "更新失败: 请确认当前密码或者新密码是否错误"
         redirect_to update_password_settings_path
       end
     end
