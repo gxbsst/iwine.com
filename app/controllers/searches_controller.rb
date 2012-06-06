@@ -1,6 +1,5 @@
 # encoding: UTF-8
 class SearchesController < ApplicationController
-
   def new
     @search = Search.new
   end
@@ -55,7 +54,7 @@ class SearchesController < ApplicationController
   end
 
   def results
-    @recommend_users = User.recommends(5)
+    @recommend_users = User.recommends(5) #获取推荐用户
     server = HotSearch.new
     # @page = params[:page].to_i || 1
     # if @page < 1 
@@ -64,7 +63,6 @@ class SearchesController < ApplicationController
     @entries = server.all_entries( params[:word] )
     @all_wines = @entries['wines']
     @wineries = @entries['wineries']
-
     page = params[:page] || 1
     if !(@all_wines.nil?)
       unless @all_wines.kind_of?(Array)
@@ -83,5 +81,7 @@ class SearchesController < ApplicationController
     else
       @all_tab = 'current'
     end
+
   end
+
 end
