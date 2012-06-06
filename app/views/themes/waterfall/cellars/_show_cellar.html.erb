@@ -24,6 +24,8 @@
         <div class="clear"></div>
       </div>
 
+
+
       <div class="wine_data">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
@@ -63,7 +65,7 @@
                   酒商:<%= item.buy_from %><br/>
                   适饮年限:<%= "#{item.drinkable_begin.strftime('%Y年') if item.drinkable_begin} - #{item.drinkable_end.strftime('%Y年') if item.drinkable_end}年" %>
                 </td>
-                <td class=“count”><%= item.number %></td>
+                <td class="count"><%= item.number %></td>
                 <td class="price"><%= number_to_currency(item.price) %></td>
                 <td class="place"><%= item.location %></td>
                 <% if is_login_user? @user %>
