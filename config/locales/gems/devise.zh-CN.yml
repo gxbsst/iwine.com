@@ -93,7 +93,7 @@ zh-CN:
       unlocked: "帐号解锁成功。你已经登录。"
   errors:
     messages:
-      already_confirmed: "已确认"
+      already_confirmed: "您的激活邮件已经重发， 请到您的Email查收。"
       not_found: "未找到您的帐号"
       not_locked: "未锁定"
       not_saved: "未保存"
