@@ -270,10 +270,10 @@ class User < ActiveRecord::Base
       events.each do |event|
         user_timeline = Users::Timeline.create(:user_id => id, 
                                                :timeline_event_id => event.id, 
-                                               :ownerable_type => event.secondary_actor_type,
-                                               :ownerable_id => event.secondary_actor_id,
-                                               :receiverable_type => event.actor_type,
-                                               :receiverable_id => event.actor_id,
+                                               :ownerable_type => event.actor_type, # 谁做(User)
+                                               :ownerable_id => event.actor_id,
+                                               :receiverable_type => event.secondary_actor_type, # 谁被做（Wine, Winery)
+                                               :receiverable_id => event.secondary_actor_id,
                                                :event_type => event.event_type,
                                                :created_at => event.created_at,
                                                :updated_at => event.updated_at)
