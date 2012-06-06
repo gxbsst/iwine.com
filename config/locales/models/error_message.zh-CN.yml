@@ -51,7 +51,7 @@ zh-CN:
             city: 
               blank: 请输入目前所在城市
             agree_term:
-              accepted: 请确认已经阅读且同意网站使用条款
+              accepted: 请接受服务条款
         users/profile:
           attributes:
             contact_email:
