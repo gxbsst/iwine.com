@@ -24,7 +24,7 @@ zh-CN:
     mailer:
       confirmation_instructions:
         confirm: "确认帐号"
-        subject: "帐号确认步骤"
+        subject: "欢迎加入“爱红酒”（iWine）！请激活您的邮件地址，完成注册"
         you_can_confirm: "你可以点击下面的链接确认帐号："
       hello: "您好, %{email}!"
       invitation_instructions:
@@ -39,7 +39,7 @@ zh-CN:
         change: "重置密码"
         ignore: "如果您并没有请求重置密码, 请忽略这封信件。"
         someone_requested: "有人请求重置您的密码，若确实要这么做，请点击下面的链接。"
-        subject: "密码重置步骤"
+        subject: "重设在iWine的密码"
         wont_change: "在点击以上链接重置密码后，您的密码才会改变。"
       unlock_instructions:
         account_locked: "您的帐号因为登录失败次数异常而被锁定。"

@@ -4,6 +4,7 @@
 						:contact_us => '/contact_us',
 						# :help => '/help', 
 						:private => '/private',
+						:agreement => '/agreement',
 						# :site_map => '/site_map',
 						:feedback => '/feedback'} %>
 		<%= raw foot_nav.collect { |k, v| link_to t("nav.#{k}"), v }.join(" | ") %>

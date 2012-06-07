@@ -150,8 +150,10 @@ photo:
     normal: 0
 
 email:
+  welcome:
+    subject: "注册成功！到各个版块转转吧？"
   from:
-    normal: "爱酒网 <non-reply@iWine.com>"
+    normal: "爱红酒 <non-reply@iWine.com>"
     #TODO: 根据不同需要在这里继续添加
   to:
     normal: "non-reply@iWine.com"
