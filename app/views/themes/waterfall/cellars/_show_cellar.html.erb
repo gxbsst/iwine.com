@@ -12,15 +12,19 @@
               <% end %>
             </div>
         <% # TODO: 添加搜索功能  %>
-        <div class="sort pt5">排序 <select name="">
-          <option>价格</option>
-          <option>数量</option>
-        </select>
+        <div class="sort pt5">
+          排序<select name="order" id="search_order">
+          <% order_hash = { "1" => "购买时间↑", "2" => "购买时间↓", "3" => "年份↑", "4" => "年份↓", "5" => "价格↑", "6" => "价格↓"} %>
+          <% order_hash.each do |key, value| %>
+            <option value="<%= key %>" <%= "selected='selected'" if (!params[:search_order] && key == '1') || (params[:search_order] == key) %>><%= value %></option>
+          <% end %>
+            </select>
         </div>
-
         <div class="search"><%=  render "search_cellar_item", :object => @cellar %></div>
         <div class="clear"></div>
       </div>
+
+
 
       <div class="wine_data">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -61,7 +65,7 @@
                   酒商:<%= item.buy_from %><br/>
                   适饮年限:<%= "#{item.drinkable_begin.strftime('%Y年') if item.drinkable_begin} - #{item.drinkable_end.strftime('%Y年') if item.drinkable_end}年" %>
                 </td>
-                <td class=“count”><%= item.number %></td>
+                <td class="count"><%= item.number %></td>
                 <td class="price"><%= number_to_currency(item.price) %></td>
                 <td class="place"><%= item.location %></td>
                 <% if is_login_user? @user %>

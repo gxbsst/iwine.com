@@ -54,36 +54,31 @@
 
 			<div class="evaluate">
 				<% #图片不需要评星 %>
-				<%  unless @comment.commentable_type == "Photo"   %>
-				想给个评价么？
-				<div class="star_rate" id="wine_profile_star_bar">
-					<ul id="stars">
-					</ul>
-					<input type="hidden" name="rate_value" value=<%= @comment.point || 0 %> />
-				</div>
-				<div class="clear"></div>
-				<!-- <span class="text_value"></span> -->
+				<% unless @comment.commentable_type == "Photo"   %>
+					想给个评价么？
+					<div class="star_rate" id="wine_profile_star_bar">
+						<ul id="stars">
+						</ul>
+						<input type="hidden" name="rate_value" value=<%= @comment.point || 0 %> />
+					</div>
+					<div class="clear"></div>
+					<!-- <span class="text_value"></span> -->
 
-				<script type="text/template" id="star_item">
- 				 <%= image_tag 'base/star_gray.gif', :width => 15, :height => 14 %>
-		   		</script>
-
-		   		<script type="text/javascript">
-		   		 $(document).ready(function(){
-
-		   		 });
-		   		</script>
+					<script type="text/template" id="star_item">
+	 				 <%= image_tag 'base/star_gray.gif', :width => 15, :height => 14 %>
+			   	</script>
 				<% end %>
 				<div class="clear"></div>
 				<a href="javascript:void(0)" class="btn_gray submit"><span>加上去</span></a>
 			</div>
-
-		  	<%  unless @comment.commentable_type == "Photo"   %>
+		  	<% unless @comment.commentable_type == "Photo"   %>
 		  		<%= theme_javascript_include_tag :star_rate %>
 		  	<% end %>
-		  	
 			<div class="userpic">
-				 <%= link_to_user @user, user_path(@user, :trailing_slash => true), {:with_avatar => true, :avatar_version => :middle}, {:width => 50, :height => 50} %>     
+				 <%= link_to_user @user, 
+				                  user_path(@user, :trailing_slash => true),  
+				                  {:with_avatar => true, :avatar_version => :middle},  
+				                  {:width => 50, :height => 50} %>     
 			</div>
 			<div class="post_main">
 				<div class="post">
@@ -94,15 +89,13 @@
 			<% end %>
 
 			<% else %>
-			<p><%= link_to "登陆发表评论", login_path() %></p>
+			<p><%= link_to "登录发表评论", login_path() %></p>
 			<% end %>
 		</div>
 
 
 <script type="text/javascript">
   $(document).ready(function(){
-
-
   // "有用" 成功时，更新有用的数量
   $("a.vote").bind("ajax:success", function(event, data, textStatus, jqXHR){
     $(this).find("span.likes_count").text(data);
@@ -115,7 +108,6 @@
   $comment_outer = $(this).parent().parent().children(".replybox");
 
   if($comment_outer.is(":hidden")){
-
   	$comment_outer.slideDown("slow");
   }
   else
@@ -124,12 +116,12 @@
   }
   });
 
-<% #图片不需要评星 %>
-<%  unless @comment.commentable_type == "Photo"   %>
-  window.StarApp = new StarsView({el:$("#wine_profile_star_bar")});
-		  		StarApp.itemView = new StarItemView();
-		  		StarApp.setDefaultRateStar();
-<% end %>
+	<% #图片不需要评星 %>
+	<%  unless @comment.commentable_type == "Photo"   %>
+	  window.StarApp = new StarsView({el:$("#wine_profile_star_bar")});
+			  		StarApp.itemView = new StarItemView();
+			  		StarApp.setDefaultRateStar();
+	<% end %>
 
   });
 </script>

@@ -31,7 +31,7 @@
         <% @entries['wineries'][0..1].each do|winery| %>
         <li>
           <%= link_to  winery_path(winery) do %>
-            <%= winery_label_tag winery, :thumb_name => :thumb, :size => "70x70", :alt => winery.name_en %>
+            <%= winery_label_tag winery, :thumb_name => :thumb_x, :size => "70x70", :alt => winery.name_en %>
           <% end %>
           <div class="meta">
             <h1 class="zh">
@@ -52,40 +52,31 @@
       <div class="clear"></div>
     </div>
     <% end %>
-    <% @wines.each do |wine| %>
     <div class="wine_list">
-      <div class="box590">
-        <div class="box590_t"></div>
-        <div class="box590_main">
-          <a href="<%= url_for( '/wines/' + wine.id.to_s )%>">
-            <%= wine_cover_tag( wine , :width => 70 , :height => 70 )%>
-          </a>
-          <div class="info">
-            <h1 class="zh">
-              <a href="<%= url_for( '/wines/' + wine.id.to_s )%>">
-                <%= wine.cname%>
-              </a>
-            </h1>
-            <h1 class="en">
-              <a href="<%= url_for( '/wines/' + wine.id.to_s )%>">
-                <%= wine.ename%>
-              </a>
-            </h1>
-            <p><strong>年份：</strong></p>
-            <p class="year">
-              <% wine.wine.details.each do |w| %>
-              <span>
-                <a href="<%= url_for '/wines/'+w.id.to_s%>"><%= w.year.to_s.slice( 0 , 4 )%></a>
-              </span>
-              <% end %>
-            </p>
+      <% @wines.each do |wine| %>
+        <div class="box590">
+          <div class="box590_t"></div>
+          <div class="box590_main">
+            <% releast_detail = wine.details.order("year desc").first  %>
+            <%= link_to wine_path(releast_detail) do %>
+               <%= wine_cover_tag(wine, :alt => releast_detail.en_zh_name, :thumb_name => "thumb_x", :size => "70x70" )%>
+            <% end %>
+            <div class="info">
+              <h1 class="zh"><%= link_to wine.name_zh, wine_path(releast_detail) %></h1>
+              <h1 class="en"><%= link_to wine.name_en, wine_path(releast_detail) %></h1>
+              <p><strong>年份：</strong></p>
+              <p class="year">
+                <% wine.details.order("year desc").each do |detail| %>
+                    <span> <%= link_to detail.show_year, wine_path(detail)  %></span>
+                <% end %>
+              </p>
+            </div>
+            <div class="clear"></div>
           </div>
-          <div class="clear"></div>
+          <div class="box590_b"></div>
         </div>
-        <div class="box590_b"></div>
-      </div>
+      <% end %>
     </div>
-    <% end %>
 
       <div class="pagination">
         <%= paginate @wines %>

@@ -14,7 +14,7 @@ class Users::WineCellar < ActiveRecord::Base
            :foreign_key => "user_wine_cellar_id",
            :include => [:wine_cellar, :wine_detail => [:covers, :wine]],
            :conditions => "private_type = 0"
-  #登陆时访问自己的酒窖
+  #登录时访问自己的酒窖
   has_many :mine_items, :class_name => "Users::WineCellarItem",
            :foreign_key => "user_wine_cellar_id",
            :include => [:wine_cellar, :wine_detail => [:covers, :wine]]
