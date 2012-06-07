@@ -179,8 +179,9 @@ Patrick::Application.routes.draw do
 
   # API
   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
-  ## STATIC
-  statics = %w(about_us contact_us help private site_map home feedback)
+
+  # STATIC
+  statics = %w(about_us contact_us help private agreement site_map home feedback)
   statics.each do |i|
      match "/#{i}", :to => "static##{i}"
   end

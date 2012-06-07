@@ -12,6 +12,10 @@ class StaticController < ApplicationController
     @title =  t("nav.private")
   end
 
+  def agreement
+    @title =  t("nav.agreement")
+  end
+
   def help
     @title = t("nav.help")
   end

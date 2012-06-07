@@ -237,23 +237,18 @@ class User < ActiveRecord::Base
   end
 
   def mail_contacts email, login, password
-
     if email == 'gmail'
       email_list = []
       data = Contacts::Gmail.new( login , password ).contacts
-
       data.each do |email|
         email_list.push( email[1] )
       end
-
       return User.all :conditions => { :email => email_list }
-
     elsif email == 'sina'
       #TODO
     elsif email == 'qq'
       #TODO
     end
-
   end
 
   # 关注某支酒
@@ -301,6 +296,7 @@ class User < ActiveRecord::Base
     end # end users
   end
 
+  # 用户更新密码需要输入原始密码
   def update_with_password(params={})
 
     current_password = params[:current_password] if !params[:current_password].blank?
@@ -324,6 +320,12 @@ class User < ActiveRecord::Base
 
   def has_no_password?
     self.encrypted_password.blank?
+  end
+
+  # 当用户激活帐号， 发送Welcome Email
+  def confirm!
+    UserMailer.welcome_alert(self).deliver
+    super
   end
 
   private
