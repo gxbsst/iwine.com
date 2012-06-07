@@ -19,4 +19,8 @@ class Wines::VarietyPercentage < ActiveRecord::Base
     Wines::VarietyPercentage.build_variety_percentage(percentage[:variety_name], percentage[:variety_percentage], parent.id)
     Wines::VarietyPercentage.delete(percentage[:destroy]) if percentage[:destroy]
   end
+
+  def show_percentage
+    percentage.to_s.include?("%") ? percentage : "#{percentage}%"
+  end
 end

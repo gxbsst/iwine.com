@@ -42,10 +42,12 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    if current_user.sign_in_count == 1
-      return start_user_path(current_user)
-    else
-      return request.env['omniauth.origin'] || stored_location_for(resource) || home_index_path
+    if current_user #跳过admin,因为后台登陆只有current_admin_user 没有current_user
+      if current_user.sign_in_count == 1
+        return start_user_path(current_user)
+      else
+        return request.env['omniauth.origin'] || stored_location_for(resource) || home_index_path
+      end
     end
   end
 end

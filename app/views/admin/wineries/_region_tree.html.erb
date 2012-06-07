@@ -1,6 +1,6 @@
 <span id="region_tree" style="<%= "display:none;" if @winery.region_tree_id %>">
         <span id="tree_one">
-	        <%= select_tag "region[one]",  options_for_select(Wines::RegionTree.region(0).collect{ |l| [l.name_en + "/" + l.name_zh, l.id] }), :prompt => '-请选择-', :class => "select_region" %>
+	        <%= select_tag "region[one]",  options_for_select(Wines::RegionTree.select_region.collect{ |l| [l.name_en + "/" + l.name_zh, l.id] }), :prompt => '-请选择-', :class => "select_region" %>
         </span>
 
         <span id="tree_two" class="tree" style="display: none" >

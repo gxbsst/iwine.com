@@ -63,7 +63,7 @@ $(document).ready(function(){
 
 });
 
-//add info_items
+//add info_items or photo for nested model
 function add_fields(link, association, content) {
     var new_id = new Date().getTime();
     var regexp = new RegExp("new_" + association, "g");

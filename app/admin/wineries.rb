@@ -40,22 +40,42 @@ ActiveAdmin.register Winery do
   end
 
   show do |winery|
-    attributes_table :name_en, :name_zh, :address, :official_site, :email, :cellphone, :fax
     attributes_table do
+      row "英文名" do
+        winery.name_en
+      end
+      row "中文名" do
+        winery.name_zh
+      end
+      row "地址" do
+        winery.address
+      end
+      row "官方网址" do
+        winery.official_site
+      end
+      row "Email" do
+        winery.email
+      end
+      row "联系电话" do
+        winery.cellphone
+      end
+      row "传真" do
+        winery.fax
+      end
+      row "第三方微博网址" do
+        render "show_winery_config", :config => winery.config
+      end
       row "区域" do
         winery.region_path_zh(winery.region_tree_id)
       end
       row "LOGO" do
-        image_tag(winery.logo_url(:thumb))
+        image_tag(winery.logo_url(:thumb)) unless winery.logo_url.include?("default")
       end
       row "图片" do
         render "show_photos", :photos => winery.photos
       end
       row "酒庄信息" do
         render "show_info_items", :info_items => winery.info_items
-      end
-      row "第三方微博网址" do
-        render "show_winery_config", :config => winery.config
       end
     end
   end
