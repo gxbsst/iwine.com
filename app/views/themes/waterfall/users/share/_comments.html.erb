@@ -31,7 +31,8 @@
         <div class="winename">
           评论了酒庄: 
           <%= link_to comment.commentable.name_zh, winery_path(comment.commentable) %>
-          <span class="date"><%= comment.created_at.to_s(:normal)%></span><span class=" star_s3_h"></span>
+          <span class="date"><%= comment.created_at.to_s(:normal)%>
+          <span class=" star_s<%= comment.point %>"></span>
         </div>
         <div class="content"><%= comment.body %></div>
     </div>
@@ -56,7 +57,7 @@
       <div class="main">
         <div class="winename">
           评论了图片
-          <span class="date"><%= comment.created_at.to_s(:normal)%></span><span class=" star_s3_h"></span>
+          <span class="date"><%= comment.created_at.to_s(:normal)%>
         </div>
         <div class="content"><%= comment.body %></div>
     </div>
