@@ -1,5 +1,6 @@
 <div class='admin_wine_register'>
-<%= javascript_include_tag 'wine_registers_variety', 'region_world' %>
+  <%= theme_stylesheet_link_tag "admin" %>
+<%= theme_javascript_include_tag 'wine_registers_variety', 'region_world' %>
 <%= form_for @wines_detail, :url => {:action => :update} , :mutipart => true do |d| %>
     <table cellspacing="10" cellpadding="5">
       <h3>酒的基本信息</h3>
@@ -26,83 +27,60 @@
       <tr><td></td><td><%= link_to "更新基本信息", edit_admin_wine_path(@wines_detail.wine) %></td></tr>
       <tr></tr>
         <tr>
-          <td><%= d.label :wine_style_id %></td>
+          <td><label>种类</label></td>
           <td><%= d.select :wine_style_id, Wines::Style.all.collect{|s| ["#{s.name_zh}/#{s.name_en}", s.id]} %></td>
         </tr>
         <tr>
-          <td><%= d.label :region_tree_id %></td>
+          <td><label>区域</label></td>
           <td><%= render :partial => 'admin/share/region_tree', :locals => {:wine_parent => @wines_detail, :region_tree_id => @wines_detail.wine.region_tree_id } %></td>
         </tr>
         <tr>
-          <td><%= d.label :price %></td>
+          <td><label>价格</label></td>
           <td><%= d.text_field :price %></td>
         </tr>
         <tr>
-          <td><%= d.label :drinkable_begin %></td>
+          <td><label>起始年代</label></td>
           <td><%= d.date_select :drinkable_begin, :discard_day => true, :discard_month => true, :start_year => 1990, :end_year => Time.now.year + 150 %>年</td>
         </tr>
         <tr>
-          <td><%= d.label :drinkable_end %></td>
+          <td><label>截止年代</label></td>
           <td><%= d.date_select :drinkable_end, :discard_day => true, :discard_month => true, :start_year => 1990, :end_year => Time.now.year + 150 %>年</td>
         </tr>
         <tr>
-          <td><%= d.label :alcoholicity %></td>
+          <td><label>酒精度</label></td>
           <td><%= d.text_field :alcoholicity %></td>
         </tr>
         <tr>
-          <td><%= d.label :capacity %></td>
-          <td><%= d.text_field :capacity %></td>
+          <td><label>容量</label></td>
+          <td><%= d.select :capacity, APP_DATA['wines']['capacity'].each{|key, value| [key, value]} %></td>
         </tr>
         <tr>
-          <td><%= d.label :year %></td>
-          <td><%= d.date_select :year, :discard_day => true, :discard_month => true, :start_year => 1990, :end_year => Time.now.year + 150 %>年</td>
+          <td><label>年代</label></td>
+          <td><%= d.date_select :year, :discard_day => true, :discard_month => true, :start_year => 1990, :end_year => Time.now.year %>年</td>
         </tr>
         <tr>
-          <td><label>专家评价</label></td>
+          <td><label>专家评分</label></td>
           <td>
             <%= d.fields_for :special_comments do |special| %>
               <label>评论家</label>
               <%= special.text_field :name, :name => "special_comment[name][]", :id => "special_comment_name", :size => 20 %>
               <label>得分</label>
-              <%= special.text_field :score, :score => "special_comment[score][]", :id => "special_comment_score", :size => 10 %>
+              <%= special.text_field :score, :name => "special_comment[score][]", :id => "special_comment_score", :size => 10 %>
               <label>适饮年限</label>
               <%= special.date_select :drinkable_begin, {:discard_day => true, :discard_month => true, :start_year => 1990, :end_year => Time.now.year + 150 }, {:id => "special_drinkable_begin", :name => "special_comment[drinkable_begin][]"} %><span class="gray">年至</span>
               <%= special.date_select :drinkable_end, {:discard_day => true, :discard_month => true, :start_year => 1990, :end_year => Time.now.year + 150}, {:id => "special_drinkable_end", :name => "special_comment[drinkable_end][]"} %><span class="gray">年</span>
-              <span id="create_special_comment">添加</span>
+                <%= link_to "", "javascript:void(0);", :id => "create_special_comment", :class => "icon_add" %>
             <% end %>
-            <ul id="special_comment_items">
-              <% @wines_detail.special_comments.each do |s| %>
-                <% next if s.name.blank? %>
-                  <li>
-                    <span class="extra_attribute"><%= s.name %></span>
-                    <span class="extra_attribute"><%= s.score %></span>
-                    <span class="extra_attribute"><%= s.drinkable %></span>
-                    <input name="special_comment[name][]" type="hidden" value="<%= s.name %>"/>
-                    <input name="special_comment[score][]" type="hidden" value="<%= s.score %>"/>
-                    <input name='special_comment[drinkable_begin][]' type='hidden' value="<%= s.drinkable_begin %>" />
-                    <input name='special_comment[drinkable_end][]' type='hidden' value="<%= s.drinkable_end %>" />
-                    <input type="checkbox" name="special_comment[destroy][]" value="<%=s.id%>"/>删除
-                  </li>
-              <% end %>
-            </ul>
+            <%= render "wine_details/special_comment", :parent => @wines_detail %>
           </td>
         </tr>
         <tr>
           <td><label>葡萄酒品种</label></td>
           <td>
             <label>名称</label><%= text_field_tag "variety_percentage[variety_name][]", nil, :id => "variety_name", data: { autocomplete_source: '/api/wine_varieties/index' } %>
-            <label>含量</label><%= text_field_tag "variety_percentage[variety_percentage][]", nil, :id => "variety_percentage" %>% <span id="add_detail_variety"><%= t :add %></span>
-            <ul id="variety_items">
-              <% @wines_detail.variety_percentages.each do |v| %>
-                  <li>
-                    <span class="extra_attribute"><%= v.variety.name_en %></span>
-                    <span class="extra_attribute"><%= v.percentage %></span>
-                    <input type="hidden" name="variety_percentage[variety_name][]" value="<%= v.variety.name_en %>"/>
-                    <input type="hidden" name="variety_percentage[variety_percentage][]" value="<%= v.percentage %>"/>
-                    <input type="checkbox" name="variety_percentage[destroy][]" value="<%= v.id %>">删除
-                  </li>
-              <% end %>
-            </ul>
+            <label>百分比</label><%= text_field_tag "variety_percentage[variety_percentage][]", nil, :id => "variety_percentage" %>%
+            <%= link_to "", "javascript:void(0);", :id => "add_detail_variety", :class => "icon_add" %>
+            <%= render "variety_percentage", :object => @wines_detail %>
           </td>
         </tr>
         <tr>
@@ -124,16 +102,6 @@
         <tr>
           <td><label>酒标</label></td>
           <td><%= image_tag @wines_detail.label.image_url(:thumb) if @wines_detail.label %></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>
-          <%#  @wines_detail.photos.build(:photo_type => APP_DATA["photo"]["photo_type"]["cover"]) unless @wines_detail.label %>
-          <% @wines_detail.build_label(:photo_type => APP_DATA["photo"]["photo_type"]["label"]) unless @wines_detail.label%>
-          <%= d.fields_for :label do |l| %>
-            <%= l.file_field :image %>
-          <% end %>
-          </td>
         </tr>
         <tr><td></td><td><%= d.submit "提交" %></td></tr>
     </table>

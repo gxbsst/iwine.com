@@ -1,0 +1,11 @@
+<table id="variety_items" class="data_style1 mt10" width="200" border="0" cellpadding="0" cellspacing="0">
+  <% @wines_detail.variety_percentages.each do |percentage| %>
+      <tr>
+        <td class="extra_attribute"><%= percentage.name_en %></td>
+        <td class="extra_attribute"><%= percentage.show_percentage %></td>
+        <th><input type="checkbox" name="variety_percentage[destroy][]" value="<%= percentage.id %>">删除</th>
+        <input type="hidden" name="variety_percentage[variety_name][]" value="<%= percentage.name_en %>"/>
+        <input type="hidden" name="variety_percentage[variety_percentage][]" value="<%= percentage.percentage %>"/>
+      </tr>
+  <% end %>
+</table>
