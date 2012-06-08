@@ -8,5 +8,5 @@ $(document).ready(function() {
     function hideStikie(){
     	$('#stickies').fadeOut('slow');
     }
-     setTimeout(hideStikie, 5000)
+     setTimeout(hideStikie, 3000) // 3秒
 });
