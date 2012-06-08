@@ -51,12 +51,12 @@
       if @message.conversation_id # 回复
         @conversation = Conversation.find(@message.conversation_id)
         unless @conversation.is_participant?(current_user)
-          notice_stickie("你不能回复这个私信。")
+          notice_stickie t("notice.message.reply_reject")
           return redirect_to root_path
         end
         receipt = current_user.reply_to_conversation(@conversation, @message.body, nil, true, true, @message.attachment)
         unless receipt.errors.empty?
-           notice_stickie("不能回复自己.")
+           notice_stickie t("notice.message.reply_self")
         end
         redirect_to conversation_path(@conversation)
       else # 新的私信
@@ -107,11 +107,11 @@
       conversation = Conversation.find_by_id(params[:id])
       if conversation
         current_user.trash(conversation)
-        flash[:notice] = "Message sent to trash."
+        notice_stickie t("notice.message.trash")
       else
         conversations = Conversation.find(params[:conversations])
         conversations.each { |c| current_user.trash(c) }
-        flash[:notice] = "Messages sent to trash."
+        notice_stickie t("notice.message.trash")
       end
       redirect_to messages_path(box: params[:current_box])
     end
@@ -119,7 +119,7 @@
     def untrash
       conversation = Conversation.find(params[:id])
       current_user.untrash(conversation)
-      flash[:notice] = "Message untrashed."
+      notice_stickie t("notice.message.untrash")
       redirect_to messages_path(box: 'inbox')
     end
 
@@ -155,11 +155,11 @@
         user = User.where("username = ?", params[:message][:recipients]).first
         if user
           if user.profile.config.notice.message.to_i == 3 && !user.following_ids.include?(current_user.id)
-            notice_stickie("只有关注 <strong>#{params[:message][:recipients]}</trong> 后才能给TA发送私信。")
+            notice_stickie t("notice.message.reply_no_ability")
             redirect_to conversations_path
           end
         else
-          notice_stickie("没有找到用户 <strong>#{params[:message][:recipients]}</trong>，请检查用户名是否填写正确。")
+          notice_stickie t("notice.message.reply_no_user")
           redirect_to conversations_path
         end
       end

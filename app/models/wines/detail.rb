@@ -85,7 +85,8 @@ class Wines::Detail < ActiveRecord::Base
         :wine_style_id => register.wine_style_id,
         :audit_id => audit_log_id,
         :user_id => register.user_id,
-        :is_nv => register.is_nv
+        :is_nv => register.is_nv,
+        :description => register.description
       )
     end
     return wine_detail

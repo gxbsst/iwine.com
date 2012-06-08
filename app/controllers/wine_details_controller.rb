@@ -74,7 +74,7 @@ class WineDetailsController < ApplicationController
       @register.attributes = params[:wines_register]
       @register.owner_type = OWNER_TYPE_WINE_REGISTER
       if @register.save
-        flash[:notice] =  :save_success
+        notice_stickie t("notice.save_success")
       end
     end
   end
@@ -86,7 +86,6 @@ class WineDetailsController < ApplicationController
     @register.variety_name = @register.variety_name_value
     @register.variety_percentage = @register.variety_percentage_value
     if @register.save
-      notice_stickie("成功上传新酒款！")
       redirect_to edit_wine_path @register
     else
       render :action => "new"
@@ -144,7 +143,7 @@ class WineDetailsController < ApplicationController
 
   def check_edit_register
     if @register.result.to_i == 1
-      notice_stickie("已经成功上传，不能再次修改")
+      notice_stickie t("notice.wine_detail.check_edit_register")
       # redirect_to mine_wine_path(@register)
       render "add_success"
     end

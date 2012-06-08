@@ -10,7 +10,7 @@ class FeedbacksController < ApplicationController
     if @feedback.save
       redirect_to(success_feedbacks_path(:for => @for))
     else
-      notice_stickie("您的提交有误， 请重新填写.")
+      notice_stickie t("notice.feedback.create_failure")
       redirect_to(request.referer)
     end
   end
