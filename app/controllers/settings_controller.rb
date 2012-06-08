@@ -19,7 +19,7 @@ class SettingsController < ApplicationController
       if current_user.update_attributes(params[:user]) &&
         current_user.profile.update_attributes(params[:user][:profile_attributes])
         
-        notice_stickie("更新成功.")
+        notice_stickie t("notice.update_success")
         
       end
       redirect_to basic_settings_path
@@ -31,7 +31,7 @@ class SettingsController < ApplicationController
     @user = current_user
     if request.put?
       if params[:user][:password].blank?
-        error_stickie "更新失败: 请确认当前密码或者新密码是否错误"
+        error_stickie t("notice.password.reset_password_failure")
         redirect_to update_password_settings_path
         return 
       end
@@ -40,10 +40,10 @@ class SettingsController < ApplicationController
 
         # Sign in the user by passing validation in case his password changed
         sign_in @user, :bypass => true
-        notice_stickie "更新成功"
+        notice_stickie t("notice.update_success")
         redirect_to basic_settings_path
       else
-        error_stickie "更新失败: 请确认当前密码或者新密码是否错误"
+        error_stickie t("notice.password.reset_password_failure")
         redirect_to update_password_settings_path
       end
     end
@@ -57,7 +57,7 @@ class SettingsController < ApplicationController
     if request.put?
       set_config
       if @profile.save
-        notice_stickie t("update_success")
+        notice_stickie t("notice.update_success")
         redirect_to basic_settings_path
       end
     end
@@ -108,12 +108,12 @@ class SettingsController < ApplicationController
     if request.put?
       if params[:user].present?
         if save_avatar
-          notice_stickie "上传图片成功."
+          notice_stickie t("notice.upload_photo_success")
         else
-          notice_stickie "上传图片失败."
+          notice_stickie t("notice.upload_photo_failure")
         end
       else
-        notice_stickie "请上传图片."
+        notice_stickie t("notice.photo.please_upload")
       end
       redirect_to avatar_settings_path
     end
@@ -122,7 +122,7 @@ class SettingsController < ApplicationController
     if request.post?
       if params[:user][:crop_x].present?
         crop_avatar
-        notice_stickie "设置头像成功."
+        notice_stickie t("notice.photo.upload_avatar_success")
       end
       redirect_to basic_settings_path
     end
