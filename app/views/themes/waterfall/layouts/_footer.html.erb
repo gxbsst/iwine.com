@@ -5,6 +5,7 @@
 						# :help => '/help', 
 						:private => '/private',
 						:agreement => '/agreement',
+                        :terms_and_conditions => '/terms_and_conditions',
 						# :site_map => '/site_map',
 						:feedback => '/feedback'} %>
 		<%= raw foot_nav.collect { |k, v| link_to t("nav.#{k}"), v }.join(" | ") %>

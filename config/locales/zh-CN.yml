@@ -7,7 +7,7 @@ zh-CN:
     upload_photo_success: "成功上传图片。"
     upload_photo_failure: "上传图片失败。"
     cellar_item:
-      create_success: "成功收藏酒款。"
+      create_success: "成功添加酒款到您的酒窖。"
     comment:
       comment_success: "评论成功。"
       follow_success: "关注成功。"

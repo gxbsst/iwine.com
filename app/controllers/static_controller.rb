@@ -16,6 +16,10 @@ class StaticController < ApplicationController
     @title =  t("nav.agreement")
   end
 
+  def terms_and_conditions
+    @title = "免责声明"
+  end
+
   def help
     @title = t("nav.help")
   end
