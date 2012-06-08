@@ -1,0 +1,58 @@
+		<% if user_signed_in? %>
+		<%= form_for [@commentable, @comment], :validate => true, :html => {:id => "list_comment_form"} do |f| -%>
+		<%= f.hidden_field :do %>
+		<%= hidden_field_tag "return_url", request.fullpath %>
+		<a name="01" id="01"></a>
+
+		<div class="evaluate">
+			<% #图片不需要评星 %>
+			<% unless @comment.commentable_type == "Photo"   %>
+			想给个评价么？
+			<div class="star_rate" id="wine_profile_star_bar">
+				<ul id="stars">
+				</ul>
+				<input type="hidden" name="rate_value" value=<%= @comment.point || 0 %> />
+			</div>
+			<div class="clear"></div>
+			<!-- <span class="text_value"></span> -->
+
+			<script type="text/template" id="star_item">
+			<%= image_tag 'base/star_gray.gif', :width => 15, :height => 14 %>
+			</script>
+			<% end %>
+			<div class="clear"></div>
+			<a href="javascript:void(0)" class="btn_gray button"><span>加上去</span></a>
+			<br />
+			<span class="red text_error"></span>
+		</div>
+		<% unless @comment.commentable_type == "Photo"   %>
+		<%= theme_javascript_include_tag :star_rate %>
+		<% end %>
+		<div class="userpic">
+			<%= link_to_user @user, 
+			user_path(@user, :trailing_slash => true),  
+			{:with_avatar => true, :avatar_version => :middle},  
+			{:width => 50, :height => 50} %>     
+		</div>
+		<div class="post_main">
+			<div class="post">
+				<%= f.text_area :body,  :class => [:mb10, :comment_body] %>
+				<p class="text_count" style="display:none">您正在输入<span></span>个字。</p>
+			</div>
+		</div>
+		<div class="clear"></div>
+
+		<% end %>
+		<% "评论验证" %>
+		<%= content_for :js do %>
+			<%= theme_javascript_include_tag "comment.form.validator" %>
+		<% end %>
+		<script type="text/javascript">
+		 $(function(){
+		   window.commentFormView = new CommentFormView({"show_text_count": true, "el": "#list_comment_form"});
+		 });
+		</script>
+		
+		<% else %>
+		<p><%= link_to "登录发表评论", login_path() %></p>
+		<% end %>
