@@ -79,6 +79,20 @@ img.cover_s {background:url(../images/bg/bg_album_s.gif) no-repeat left top;padd
 input.photo_name, textarea.photo_des {width:178px;}
 textarea.photo_des {min-height: 70px;_height:70px;} 
 li.photo_des p {margin: 0 0 5px 0;}
+.uploade {margin-bottom:20px;}
+.uploade table {border-top:1px solid #ccc;border-right:1px solid #ccc;border-left:1px solid #ccc;}
+.uploade td{border-bottom:1px solid #ccc;padding:5px 10px;}
+.uploade td.delet {width:50px;text-align:right;}
+.uploade_done td {padding:10px 0;}
+.uploade_done td.pic {width:100px;}
+.uploade_done td.pic img {margin-bottom:5px;}
+.uploade_done td.des {padding-left:20px;}
+.uploade_done td.des textarea {width:400px;}
+.uploade_done li {width:590px;float:left;margin-bottom:20px;}
+.uploade_done .thumb {width:100px;float:left;padding-right:20px;}
+.uploade_done .thumb img {margin-bottom:5px;}
+.uploade_done .des {width:470px;float:left;}
+.uploade_done .des textarea {width:470px;height:70px;}
 
 /*------------cellar style--------------*/
 .sort_search { vertical-align:middle;}

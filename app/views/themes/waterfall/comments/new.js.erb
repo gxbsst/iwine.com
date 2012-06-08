@@ -23,3 +23,12 @@ $.fancybox({
 });
 
 <%= render "comments/star_rate.js" %>
+
+ <%= render :partial => "comments/share/validator.js" %>
+     $(function(){
+       window.commentFormView = new CommentFormView({el: "#do_comment_form"});
+       // 主要是为了“关注"不验证
+       $(".do_follow_button").click(function(){
+         $(this).parents('form').submit();
+       });
+ });
