@@ -1,8 +1,8 @@
 class PhotosController < ApplicationController
   before_filter :get_photo, :only => [:show, :edit, :update, :destroy, :reply, :vote]
-  before_filter :get_imageable
+  before_filter :get_imageable, :except => [:new, :create]
   before_filter :get_user
-
+  before_filter :authenticate_user!, :only => [:new, :create]
   def index
     @photos = @imageable.photos.page(params[:page] || 1).per(8)
     case @resource
@@ -38,6 +38,35 @@ class PhotosController < ApplicationController
   def vote
     @photo.liked_by @user
      render :json => @photo.likes.size.to_json
+  end
+
+   def new
+    @photo = Photo.new
+  end
+
+
+  def create
+      # 多图片上传
+      params[:photo][:image].each do |i|
+        @photo = Photo.new()
+        @photo.imageable_id = 1
+        @photo.imageable_type = "Wines::Detail"
+        @photo.image = i
+        if @photo.save
+          respond_to do |format|
+          format.html {                                         #(html response is for browsers using iframe sollution)
+            render :json => [@photo.to_jq_upload].to_json,
+            :content_type => 'text/html',
+            :layout => false
+          }
+          format.json {
+            render :json => [@photo.to_jq_upload].to_json
+          }
+        end
+      else
+        render :json => [{:error => "custom_failure"}], :status => 304
+      end
+    end
   end
 
   private
@@ -94,4 +123,5 @@ class PhotosController < ApplicationController
     @winery = Winery.find params[:winery_id]
     @hot_wines = Wines::Detail.hot_wines(5)
   end
+
 end

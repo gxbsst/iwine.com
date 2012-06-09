@@ -1,12 +1,21 @@
 <div class="top"></div>
 <div class="middle">
   <%= form_for @comment, :url =>  reply_comment_path(@comment), :remote => true, :method => :post do |f| -%>
+  <span class="red text_error"></span>
+  <span class="text_success"></span>
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
-      <td class="td_1"><%= text_area_tag "comment[body]" %></td>
-      <td class="td_2" valign="top"><%= image_submit_tag "v2/button/reply.png" %></td>
+      <td class="td_1">
+        <%= text_area_tag "comment[body]" %>
+      </td>
+      <td class="td_2" valign="top">
+        <%= link_to "javascript:void(0)", :class => "btn_gray float_r", :style => "margin-left: 4px" do  %>
+          <span>回复</span>
+        <% end %>
+      </td>
     </tr>
   </table>
+
   <% end -%>
 
   <ul class="reply_list clearfix">
@@ -18,7 +27,7 @@
                          user_path(comment.user, 
                          :trailing_slash => true), 
                          {:with_avatar => true, :avatar_version => :thumb},
-                         {:size => "50x50"} %>
+                         {:size => "30x30"} %>
       </div>
       <div class="main">
          <div class="username">
@@ -35,4 +44,3 @@
 </div>
 
 <div class="botton"></div>
-
