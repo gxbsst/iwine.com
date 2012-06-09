@@ -11,7 +11,7 @@ zh-CN:
       send_instructions: "您会在几分钟内收到一封邮件，它将指引您完成帐号确认步骤。"
     failure:
       inactive: "你的帐号尚未激活。"
-      invalid: "邮箱或密码有误。"
+      invalid: "啊哦，E-mail或密码错误！"
       invalid_token: "验证信息不合法。"
       locked: "您的帐号已锁定。"
       timeout: "会话超时。若要继续，请重新登录。"
@@ -94,6 +94,6 @@ zh-CN:
   errors:
     messages:
       already_confirmed: "您的激活邮件已经重发， 请到您的Email查收。"
-      not_found: "未找到您的帐号"
+      not_found: "很遗憾，该邮箱地址不存在..."
       not_locked: "未锁定"
       not_saved: "未保存"

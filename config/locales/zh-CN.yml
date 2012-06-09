@@ -30,6 +30,7 @@ zh-CN:
       untrash: "信息复原成功。"
     password:
       reset_password_failure: "更新失败: 请确认当前密码或者新密码是否错误！"
+      reset_password_success: "已成功重置密码，可以再次登录iWine啦！"
     photo:
       please_upload: "请上传图片。"
       upload_avatar_success: "成功设置头像。"

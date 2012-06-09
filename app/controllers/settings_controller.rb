@@ -40,7 +40,7 @@ class SettingsController < ApplicationController
 
         # Sign in the user by passing validation in case his password changed
         sign_in @user, :bypass => true
-        notice_stickie t("notice.update_success")
+        notice_stickie t("notice.password.reset_password_success")
         redirect_to basic_settings_path
       else
         error_stickie t("notice.password.reset_password_failure")
