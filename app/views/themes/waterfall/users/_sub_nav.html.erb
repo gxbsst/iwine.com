@@ -37,7 +37,7 @@
         <%= @user.profile.bio %>
       </div>
       <div class="item">
-        <%= link_to "私信", conversations_path, :class => :icon_mail %> |
+        <%= conversation_url(@user) %> |
         <%= link_to "设置", basic_settings_path %>
       </div>
       <% else %>
@@ -64,8 +64,8 @@
               <% end %>
              
         <% end %>
-        <%= link_to "私信", conversations_path(), :class => :icon_mail %> 
-        </div> 
+         <%= conversation_url(@user) %>
+       </div>
       <% end %>      
       <ul class="hp_navi">
         <% sub_menu.each do |action_name, url| %>
@@ -78,3 +78,7 @@
     </div>
     <div class="clear"></div>
   </div>
+
+<div class="reply_form" id="send_message_form" style="display: none">
+  <%= render "conversations/send_message_form", :receiver => @user.username %>
+</div>

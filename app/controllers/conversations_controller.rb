@@ -5,8 +5,7 @@ class ConversationsController < ApplicationController
   before_filter :get_mailbox, :get_box
   before_filter :check_current_subject_in_conversation, :only => [:show, :update, :destroy,:reply]
   def index
-    # binding.pry 
-    @message = Message.new
+    # binding.pry
     @conversations = @mailbox.conversations.order("created_at DESC").page(params[:page]).per(9)
     
     # mask all items as read
