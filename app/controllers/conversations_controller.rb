@@ -28,7 +28,7 @@ class ConversationsController < ApplicationController
   def show
     @conversation = Conversation.find_by_id(params[:id])
     unless @conversation.is_participant?(current_user)
-      notice_stickie("您没有权限执行此操作！")
+      notice_stickie t("notice.no_ability")
       return redirect_to root_path
     end
     @message = Message.new conversation_id: @conversation.id

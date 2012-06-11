@@ -1,5 +1,8 @@
 <div id="login">
   <div class="password">
+    <% if devise_error_messages!.present? %>
+        <div class="error"><%= devise_error_messages! %></div>
+    <% end %>
     <div class="boxstyle2">
       <div class="top"></div>
       <div class="mid">
@@ -11,7 +14,12 @@
                 <%= f.email_field :email, :placeholder => "请输入邮箱地址", :class => "text" %>
             <% end %>
           </div>
-          
+          <style type="text/css">
+              .field_with_errors label {
+                  display: none;
+              }
+          </style>
+
           <%= link_to "javascript:void(0);", :class => "float_l ml10 save" do %>
             <%= image_tag "/assets/waterfall/images/common/btn_submit.jpg", :alt => "登录", :width => "96", :height => "41" %>
           <% end %>

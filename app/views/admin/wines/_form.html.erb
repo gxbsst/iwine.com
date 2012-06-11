@@ -1,5 +1,5 @@
 <div class="admin_wine_register">
-  <%= form_for @wine, :url => {:action => :update} do |w| %>
+  <%= form_for [:admin, @wine] do |w| %>
      <table cellpadding="5" cellspacing="10">
         <tr>
           <td><label>中文名</label></td>
@@ -19,7 +19,7 @@
         </tr>
         <tr>
           <td><label>官方网址</label></td>
-          <td><%= w.text_field :official_site %></td>
+          <td>http://<%= w.text_field :official_site %></td>
         </tr>
        <tr><td></td><td><%= w.submit "提交" %></td></tr>
      </table>

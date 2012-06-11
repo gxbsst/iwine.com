@@ -5,11 +5,13 @@
 
 <div class="title_btn">
   <div class="btn_action">
-      <%= link_to edit_album_path(:album_id => @album.id), :class => "btn_gray mr5" do %>
-       <span>编辑相册属性</span>
-      <% end %>
-      <%= link_to upload_albums_path(:album_id => @album.id), :class => "btn_gray mr5" do %>  
-       <span>添加照片</span>
+      <% if current_user && current_user == @user %>
+        <%= link_to edit_album_path(:album_id => @album.id), :class => "btn_gray mr5" do %>
+            <span>编辑相册属性</span>
+        <% end %>
+        <%= link_to upload_albums_path(:album_id => @album.id), :class => "btn_gray mr5" do %>  
+            <span>添加照片</span>
+        <% end %>
       <% end %>
       <%= link_to albums_user_path(@user), :class => "btn_gray" do %>  
       <span>返回相册首页</span>

@@ -58,7 +58,7 @@ class CommentsController < ApplicationController
       # TODO
       # 1. 广播
       # 2. 分享到SNS
-      notice_stickie("评论成功.")
+      notice_stickie t("notice.comment.#{@comment.do == 'follow' ? 'follow' : 'comment'}_success")
       redirect_to params[:return_url] ?  params[:return_url] : @commentable_path
     end
   end
@@ -69,7 +69,6 @@ class CommentsController < ApplicationController
       # TODO
       # 1. 广播
       # 2. 分享到SNS
-      notice_stickie("取消关注成功.")
       redirect_to "/wines/show?wine_detail_id=#{@wine_detail.id}"
     end
   end
@@ -78,7 +77,7 @@ class CommentsController < ApplicationController
   def cancle_follow
     follow_item = @commentable.find_follow @user
     if follow_item.update_attribute("deleted_at", Time.now)
-      notice_stickie("取消关注成功.")
+      notice_stickie t("notice.comment.cancle_follow")
       redirect_to @commentable_path
     end
   end
@@ -147,13 +146,15 @@ class CommentsController < ApplicationController
 
   def check_followed
     if params[:do] == "follow" && @commentable.is_followed?(@user)
-      redirect_to(@commentable_path, :notice => "已经关注过")
+      notice_stickie t("notice.comment.cancle_follow")
+      redirect_to(@commentable_path)
     end
   end
 
   def check_cancle_follow
     if params[:do] == "follow" && !@commentable.is_followed?(@user)
-      redirect_to(@commentable_path, :notice => "请先关注")
+      notice_stickie t("notice.comment.check_cancle_follow")
+      redirect_to(@commentable_path)
     end
   end
 
@@ -176,7 +177,7 @@ class CommentsController < ApplicationController
       user = @commentable.user
       if current_user != user  #跳过用户自己评论自己的照片
         if user.profile.config.notice.comment.to_i == 2 && !current_user.is_following(user)#2只有关注的人才能评论自己，1所有人
-          notice_stickie("只有此用户关注的人才有权限发表评论。")
+          notice_stickie t("notice.comment.check_can_comment")
           redirect_to params[:return_url] ?  params[:return_url] : @commentable_path
         end
       end

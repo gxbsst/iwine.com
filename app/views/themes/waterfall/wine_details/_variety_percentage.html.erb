@@ -1,12 +1,12 @@
 <table id="variety_items" class="data_style1 mt10" width="200" border="0" cellpadding="0" cellspacing="0">
-  <% percentage_arr = @register.variety_percentage %>
-  <% @register.variety_name.each_with_index do |variety_name, index| %>
+  <% percentage_arr = register.variety_percentage %>
+  <% register.variety_name.each_with_index do |variety_name, index| %>
     <% next if variety_name.blank? %>
     <tr>
       <td class="extra_attribute"><%= variety_name %></td>
-      <td class="extra_attribute"><%= percentage_arr[index] %></td>
-      <input type="hidden" name="wines_register[variety_name_value][]" value="<%= variety_name %>"/>
-      <input type="hidden" name="wines_register[variety_percentage_value][]" value="<%= percentage_arr[index] %>"/>
+      <td class="extra_attribute"><%= percentage_arr[index] %>%</td>
+      <input type="hidden" name="wines_register[variety_name][]" value="<%= variety_name %>"/>
+      <input type="hidden" name="wines_register[variety_percentage][]" value="<%= percentage_arr[index] %>"/>
       <th><%= link_to "", "javascript:void(0);", :class => "delete_variety icon_delet2" %></th>
     </tr>
   <% end %>

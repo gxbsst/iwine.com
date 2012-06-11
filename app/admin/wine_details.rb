@@ -18,8 +18,22 @@ ActiveAdmin.register Wines::Detail do
   end
 
   show do |detail|
-    attributes_table :drinkable_begin, :drinkable_end, :price, :alcoholicity, :capacity, :year
     attributes_table do
+      row "年代" do
+        detail.year.to_s
+      end
+      row "容量" do
+        detail.capacity
+      end
+      row "酒精度" do
+        detail.alcoholicity
+      end
+      row "价格" do
+        detail.price
+      end
+      row "适饮年限" do
+        detail.drinkable
+      end
       row "中文名" do
         detail.wine.name_zh
       end
@@ -36,10 +50,10 @@ ActiveAdmin.register Wines::Detail do
         detail.wine.other_cn_name
       end
       row "酒的类型" do
-        detail.style.name
+        detail.wine.style.name
       end
       row "酒区" do
-        render "share/region_tree", :region_tree => detail.get_region_path(detail.wine.region_tree_id)
+        detail.region_path_zh(detail.wine.region_tree_id)
       end
       row "酒的品种" do
         detail.show_region_percentage
@@ -48,7 +62,7 @@ ActiveAdmin.register Wines::Detail do
         image_tag(detail.photos.first.image_url(:thumb)) if detail.photos.first
       end
       row "标签" do
-        image_tag(detail.label.image_url(:middle)) if detail.label
+        image_tag(detail.photos.label.first.image_url(:middle)) if detail.photos.label.first
       end
     end
   end

@@ -1,6 +1,5 @@
 <%= form_for @register, :validate => true, :url => {:action => :create}, :method => :post ,:html => { :class => 'form-horizontal', :multipart => true } do |f| %>
     <% unless @register.new_record? %><input type="hidden" name="register_id" value="<%= @register.id %>"/><% end %>
-    <%= render 'share/error_messages', :target => @register %>
     <div class="left">
       <div class="required">
         <label><span>*</span>葡萄酒英文名</label>
@@ -22,7 +21,7 @@
       </div>
       <div class="required">
         <label><span>*</span>容量</label>
-        <%= f.select :capacity, APP_DATA['wines']['capacity'].collect{|i| [i, i]} %>
+        <%= f.select :capacity, APP_DATA['wines']['capacity'].each{|key, value| [key, value]} %>
       </div>
       <div class="optional">
         <%= f.label :photo_name %>

@@ -9,7 +9,7 @@ class FriendsController < ApplicationController
         friendship.user_id = user_id
         friendship.follower_id = current_user.id
         friendship.save
-        notice_stickie("关注成功.")
+        notice_stickie t("notice.friend.follow")
       end
     end
     redirect_to request.referer
@@ -19,7 +19,7 @@ class FriendsController < ApplicationController
     friendship = Friendship.first :conditions => { :user_id => params[:user_id] , :follower_id => current_user.id }
     if friendship.present?
       friendship.destroy
-      notice_stickie("取消关注成功.")
+      notice_stickie t("notice.friend.unfollow")
     end
     # redirect_to :action => 'find'
     redirect_to request.referer
@@ -110,7 +110,8 @@ class FriendsController < ApplicationController
   def email_invite
     email_arr = params[:email_address].to_s.split("\n")
     if email_arr.blank?
-      redirect_to find_friends_path, :notice => "收件人不能为空！"
+      notice_stickie t("notice.friend.email_invite")
+      redirect_to find_friends_path
     else
       email_arr.each do |email|
         ::UserMailer.invoting_friends(email, params[:description], current_user).deliver

@@ -21,7 +21,7 @@
       @cellar_item.year = @wine_detail.year
 
       if @cellar_item.update_attributes(params[:users_wine_cellar_item])
-        notice_stickie("更新成功.")
+        notice_stickie t("notice.update_success")
         redirect_to cellars_user_path(@user, @cellar)
       else
         render :action => 'edit'
@@ -31,7 +31,7 @@
 
     def destroy
       if @cellar_item.delete
-        notice_stickie("删除成功.")
+        notice_stickie t("notice.destroy_success")
        redirect_to cellars_user_path(@user, @cellar)
       end
     end
@@ -62,7 +62,7 @@
       ## TODO: 如果这个年份的酒不存在， 则创建这个年份的酒记录 new = old.dup to clone
 
       if @cellar_item.save
-        notice_stickie("添加成功.")
+        notice_stickie t("notice.cellar_item.create_success")
         redirect_to cellars_user_path(@user, @cellar)
       else
         render :action => 'new'

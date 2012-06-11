@@ -1,6 +1,41 @@
 zh-CN:
-  save_successed: "保存成功。"
-  update_success: "成功更新。"
+  notice:
+    save_success: "保存成功。"
+    update_success: "更新成功。"
+    destroy_success: "删除成功。"
+    no_ability: "您没有权限执行此操作！"
+    upload_photo_success: "成功上传图片。"
+    upload_photo_failure: "上传图片失败。"
+    cellar_item:
+      create_success: "成功添加酒款到您的酒窖。"
+    comment:
+      comment_success: "评论成功。"
+      follow_success: "关注成功。"
+      cancle_follow: "成功取消关注。"
+      check_can_comment: "只有此用户关注的人才有权限发表评论。"
+      check_follow: "已经关注过。"
+      check_cancle_follow: "请先关注。"
+    feedback:
+      create_failure: "您的提交有误， 请重新填写。"
+    friend:
+      follow: "关注成功。"
+      unfollow: "成功取消关注。"
+      email_invite: "收件人不能为空！"
+    message:
+      reply_reject: "你不能回复此私信！"
+      reply_self: "不能回复自己。"
+      reply_no_user: "没有找到此用户，请检查用户名填写是否正确。"
+      reply_no_ability: "只有关注该用户后才能给TA发送私信。"
+      trash: "删除成功。"
+      untrash: "信息复原成功。"
+    password:
+      reset_password_failure: "更新失败: 请确认当前密码或者新密码是否错误！"
+      reset_password_success: "已成功重置密码，可以再次登录iWine啦！"
+    photo:
+      please_upload: "请上传图片。"
+      upload_avatar_success: "成功设置头像。"
+    wine_detail:
+      check_edit_register: "已经成功上传，不能再次修改！"
   helpers:
     submit:
       create: "创建 %{model}"

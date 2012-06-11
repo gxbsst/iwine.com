@@ -3,13 +3,14 @@
   <%= render "users/sub_nav" %>
 <div class="title_btn">
       <div class="btn_action">
-          <%= link_to upload_albums_path(), :class => "btn_gray mr5" do %>
-          <span>添加照片</span>
+          <% if current_user && current_user == @user %>
+             <%= link_to upload_albums_path(), :class => "btn_gray mr5" do %>
+                <span>添加照片</span>
+             <% end %>
+             <%= link_to new_album_path(), :class => "new_album fancybox.ajax btn_gray"  do  %>
+                <span>创建相册</span>
+             <% end %>
           <% end %>
-          <%= link_to new_album_path(), :class => "new_album fancybox.ajax btn_gray"  do  %>
-          <span>创建相册</span>
-          <% end %>
-        </a>
       </div>
       <h1>相册 <span class="font12">(共<%= @albums.count %>个)</span></h1>
       <div class="clear"></div>

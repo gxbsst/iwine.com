@@ -38,29 +38,49 @@ ActiveAdmin.register Wines::Register do
     end
   end
 
-  show do |register|
-    attributes_table :name_en, :origin_name, :name_zh, :other_cn_name, :official_site, :vintage, :drinkable_begin, :drinkable_end, :alcoholicity
+  show do |r|
     attributes_table do
+      row "英文名" do
+        r.name_en
+      end
+      row "中文名" do
+        r.name_zh
+      end
+      row '其它中文名' do
+        r.other_cn_name
+      end
+      row '原名' do
+        r.origin_name
+      end
+      row '年代' do
+        r.show_vintage
+      end
+      row '适饮年限' do
+       "#{r.drinkable_begin.to_s} - #{r.drinkable_end.to_s}"
+      end
+      row '酒精度' do
+        r.alcoholicity
+      end
       row "状态" do
-        register.show_status
+        r.show_status
       end
       row "结果" do
-        register.show_result
+        r.show_result
       end
       row "酒区" do
-        render "share/region_tree", :region_tree => register.get_region_path(register.region_tree_id)
+        r.region_path_zh(r.region_tree_id)
       end
       row "图片" do
-        image_tag(register.photo_name)  unless register.photo_name.blank?
+        image_tag(r.photo_name)  unless r.photo_name.blank?
       end
       row "百分比" do
-        register.variety_percentage.join ' , '
+        r.variety_percentage.join ' , '
       end
       row "酒的品种" do
-        register.variety_name.join ' , '
+        r.variety_name.join ' , '
       end
       row "酒类"  do
-        register.style.name
+        r.style.name
       end
     end
   end

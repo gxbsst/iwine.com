@@ -40,7 +40,7 @@ class Winery < ActiveRecord::Base
                            }
   mount_uploader :logo, WineryUploader
 
-  accepts_nested_attributes_for :photos
+  accepts_nested_attributes_for :photos, :allow_destroy => true
   accepts_nested_attributes_for :info_items, :reject_if => lambda {|t| t[:title].blank? }, :allow_destroy => true
   serialize :config, Hash
 

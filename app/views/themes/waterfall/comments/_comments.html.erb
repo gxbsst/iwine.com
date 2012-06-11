@@ -52,25 +52,27 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-  // "有用" 成功时，更新有用的数量
-  $("a.vote").bind("ajax:success", function(event, data, textStatus, jqXHR){
-    $(this).find("span.likes_count").text(data);
-  });
-  // 评论按钮
-  $("a.reply_comment_button").click(function(){
-  // $(".reply_comment_outer").html("");
-  });
-  $("a.reply_comment_button").bind("ajax:success", function(event, data, textStatus, jqXHR){
-  $comment_outer = $(this).parent().parent().children(".replybox");
-  if($comment_outer.is(":hidden")){
-  	$comment_outer.slideDown("slow");
-  }
-  else
-  {
-  	$comment_outer.slideUp("slow");
-  }
-  });
+	  // "有用" 成功时，更新有用的数量
+	  $("a.vote").bind("ajax:success", function(event, data, textStatus, jqXHR){
+	    $(this).find("span.likes_count").text(data);
+	  });
+	  // 回复按钮
+	  $("a.reply_comment_button").click(function(){
+		  // $(".reply_comment_outer").html("");
+		  // Close All Reply Form
+		  $(".comment_list li").find(".replybox").hide();
+	  });
 
+	  $("a.reply_comment_button").bind("ajax:success", function(event, data, textStatus, jqXHR){
+		  $comment_outer = $(this).parent().parent().children(".replybox");
+		  if($comment_outer.is(":hidden")){
+		  	$comment_outer.show();
+		  }
+		  else
+		  {
+		  	$comment_outer.hide();
+		  }
+	  });
 
   });
 </script>

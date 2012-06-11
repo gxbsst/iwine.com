@@ -19,9 +19,9 @@
       <div class="optional">
         <label>葡萄品种</label>
         <div class="content2" id="auto_variety_name">
-          <%= f.text_field :variety_name_value, :name => "wines_register[variety_name_value][]", data: { autocomplete_source: '/api/wine_varieties/index' }, :class => "text"  %>
-          成分百分比 <%= f.text_field :variety_percentage_value, :name => "wines_register[variety_percentage_value][]", :id => 'new_variety', :size => 10, :class => "text percent" %>% <%= link_to "", "javascript:void(0);", :class => "icon_add", :id => "create_variety" %><span class="variety_percentage_error"></span>
-          <%= render "variety_percentage", :object => @register %>
+          <%= f.text_field :variety_name_value, :name => "wines_register[variety_name][]", data: { autocomplete_source: '/api/wine_varieties/index' }, :class => "text"  %>
+          成分百分比 <%= f.text_field :variety_percentage_value, :name => "wines_register[variety_percentage][]", :id => 'new_variety', :size => 10, :class => "text percent" %>% <%= link_to "", "javascript:void(0);", :class => "icon_add", :id => "create_variety" %><span class="variety_percentage_error"></span>
+          <%= render "variety_percentage", :register => @register %>
         </div>
 
       </div>
@@ -40,7 +40,7 @@
               <%= s.date_select :drinkable_end, {:discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150}, {:name => "special_comment[drinkable_end][]", :id => "special_drinkable_end"}%>
               <%= link_to "", "javascript:void(0);", :id => "create_special_comment", :class => "icon_add" %>
           <% end %>
-          <%=  render "special_comment", :object => @register %>
+          <%=  render "special_comment", :parent => @register %>
         </div>
       </div>
       <div class="optional">
