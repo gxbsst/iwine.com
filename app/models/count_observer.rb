@@ -61,11 +61,11 @@ class CountObserver < ActiveRecord::Observer
 
   #相册
   def increment_albums_count model
-    User.increment_counter :albums_count, model.user_id
+    User.increment_counter :albums_count, model.created_by
   end
 
   def decrement_albums_count model
-    User.decrement_counter :albums_count, model.user_id
+    User.decrement_counter :albums_count, model.created_by
   end
 
   #关注用户

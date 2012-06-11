@@ -3,7 +3,7 @@
 <% end %>
 
 <% sub_menu = {
-     "wine_favorite"   =>  [cellars_user_path(@user.id, @user.cellar), @user.cellar.items.count],
+     "cellars"   =>  [cellars_user_path(@user.id, @user.cellar), @user.cellar.items_count],
      "wine_follows"     => [wine_follows_user_path(@user.id), @user.wine_followings_count],
      "winery_follows"   => [winery_follows_user_path(@user.id), @user.winery_followings_count],
      "comments"  => [comments_user_path(@user.id), @user.comments_count],
@@ -69,7 +69,7 @@
       <% end %>      
       <ul class="hp_navi">
         <% sub_menu.each do |action_name, url| %>
-          <%= content_tag :li, :class => ( if params[:action] == action_name; :current; end) do %>
+          <%= content_tag :li, :class => ( if (params[:action] == action_name) || (params[:controller] == action_name); :current; end) do %>
             <%= link_to "#{url[1]} <br />".html_safe + t("nav.sub_nav.mine.#{action_name}"),  url[0] %>
           <% end %>
         <% end %>
