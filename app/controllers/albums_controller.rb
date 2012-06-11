@@ -21,11 +21,11 @@ class AlbumsController < ApplicationController
     end
 
     def upload_list
-      @photos = Photo.all :conditions => { :id => params[:photo_ids].split(',') }
+      @photos = @user.photos.where(:id => params[:photo_ids].split(','))
     end
 
     def save_upload_list
-      photos = Photo.all :conditions => { :id => params[:photo].keys , :album_id => params[:id] }
+      photos = @user.photos.where(:id => params[:photo].keys)
       cover = @album.covers.first
       photos.each do |photo|
         if params[:photo][photo.id.to_s].present?
@@ -43,7 +43,7 @@ class AlbumsController < ApplicationController
       if params[:deleted_ids].present?
         Photo.delete params[:deleted_ids].split(',')
       end
-      redirect_to albums_user_path(current_user, params[:id])
+      redirect_to album_show_user_path(current_user, @album)
     end
 
     def new

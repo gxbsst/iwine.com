@@ -4,7 +4,7 @@
 <div class="title_btn">
       <div class="btn_action">
           <% if current_user && current_user == @user %>
-             <%= link_to upload_albums_path(), :class => "btn_gray mr5" do %>
+             <%= link_to new_photo_path(), :class => "btn_gray mr5" do %>
                 <span>添加照片</span>
              <% end %>
              <%= link_to new_album_path(), :class => "new_album fancybox.ajax btn_gray"  do  %>

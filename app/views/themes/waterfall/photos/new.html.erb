@@ -1,0 +1,72 @@
+<div class="whitespace">
+  <div id="hp" class="min_height" >
+   <%= render "users/sub_nav" %>
+   <div class="content">
+    <div class="album_left">
+      <div class="title_btn">
+           <h1>上传照片<span class="font12"></span></h1>
+      </div>
+      <%= form_for @photo, :html => { :multipart => true, :id => "fileupload"  } do |f| %>
+      <p class="mb20">选择相册 
+        <%= select_tag("album_id", 
+                   options_from_collection_for_select(@albums, "id", "name", params[:album_id] || @albums.first.id) ) %>
+        <%= link_to "新建相册", new_album_path(), :class => "new_album fancybox.ajax icon_add_album ml20" %>
+      </p>
+
+      <!-- The fileinput-button span is used to style the file input field as button -->
+      <p class="mb20">
+        <span class="btn btn-success fileinput-button">
+          <i class="icon-plus icon-white"></i>
+          <a href="javascript:void(0)" class="btn_blue_b mr5">
+            <span>选择图片</span>
+         </a>
+          <%= f.file_field :image, :multiple => true %>
+        </span>
+        
+      </p>
+      <div class="clear"></div>
+      <p>一次只能上传10张图片, 图片大小为5MB.</p>
+      <!-- The table listing the files available for upload/download -->
+      <table class="table table-striped" width="100%" cellpadding="5" cellspacing="5">
+        <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+      </table>
+      <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+      <div class="row fileupload-buttonbar" style="display: none">
+        <div class="span7">
+
+          <a href="javascript:void(0)" class="btn_gray mr5">
+              <button type="submit" class="btn btn-primary start" style="margin:0;padding:0;background:none;border: 0">
+                <!-- <i class="icon-upload icon-white"></i> -->
+                <span>开始上传 </span>
+              </button>
+          </a>
+            <a href="javascript:void(0)" class="btn_gray">
+              <button type="reset" class="btn btn-warning cancel" style="margin:0;padding:0;background:none;border: 0">
+                <!-- <i class="icon-ban-circle icon-white"></i> -->
+                <span>取消上传</span>
+              </button>
+          </a>
+  
+        </div>
+        <div class="span5">
+          <!-- The global progress bar -->
+          <div class="progress progress-success progress-striped active fade" style="background: #CCC;">
+            <div class="bar" style="width:0%; background: #CCC;"></div>
+          </div>
+        </div>
+      </div>
+      <!-- The loading indicator is shown during image processing -->
+      <div class="fileupload-loading">....</div>
+      <% end %>
+      <script>
+
+      $('.new_album').fancybox({padding:0, margin: 0, width: 450, height: 'auto', autoSize: false, modal: true});
+      </script>
+      <%= render "photos/fileupload/queue" %>
+      <%= render "photos/fileupload/index" %>
+      <%= render "photos/fileupload/js_include_local" %>
+   </div>
+  </div>
+  <div class="clear"></div>
+ </div>
+</div>
