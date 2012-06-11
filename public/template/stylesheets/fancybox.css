@@ -324,3 +324,7 @@
 .fancybox-inner table td, .fancybox-inner table th {padding:5px;}
 .fancybox-inner table th {text-align:right;}
 .fancybox-inner .comment_box {padding:15px 20px;}
+.new_message .field_with_errors .message {padding:0;display:block;color: #8A1F11;padding: 5px;}
+.new_message .label {width:50px;}
+#comment_form .new_message  textarea {width:300px;}
+#comment_form .new_message .text_area {padding:5px;}
