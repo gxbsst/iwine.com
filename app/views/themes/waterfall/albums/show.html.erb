@@ -9,7 +9,7 @@
         <%= link_to edit_album_path(:album_id => @album.id), :class => "btn_gray mr5" do %>
             <span>编辑相册属性</span>
         <% end %>
-        <%= link_to upload_albums_path(:album_id => @album.id), :class => "btn_gray mr5" do %>  
+        <%= link_to new_photo_path(:album_id => @album.id), :class => "btn_gray mr5" do %>  
             <span>添加照片</span>
         <% end %>
       <% end %>
