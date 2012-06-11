@@ -41,7 +41,7 @@ class AlbumsController < ApplicationController
         cover.save
       end
       if params[:deleted_ids].present?
-        Photo.delete params[:deleted_ids].split(',')
+        Photo.destroy params[:deleted_ids].split(',')
       end
       redirect_to album_show_user_path(current_user, @album)
     end
@@ -64,7 +64,7 @@ class AlbumsController < ApplicationController
         @album = Album.first :conditions => { :id => params[:id] , :created_by => current_user.id }
         if @album.present? && @album.name != 'avatar'
           Photo.delete_all '`album_id`=' + @album.id.to_s
-          @album.delete
+          @album.destroy
         end
         redirect_to albums_user_path(@user)
         return
