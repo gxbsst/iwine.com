@@ -109,7 +109,8 @@ $(document).ready(function(){
     // 发送信息
     $("a.send_message").fancybox({
         maxWidth        : 500,
-        maxHeight       : 260,
+        maxHeight       : 360,
+        padding         : 0,
         fitToView       : false,
         width           : '70%',
         height          : '100%',
