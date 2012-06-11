@@ -312,7 +312,7 @@ class User < ActiveRecord::Base
     # 关注的酒Timeline
     wines = wine_followings
     wines.each do |wine|
-      if timeline_wine = TimelineEvent.where(:secondary_actor_type => "Wines::Detail", :secondary_actor => wine.id).first
+      if timeline_wine = TimelineEvent.where(:secondary_actor_type => "Wines::Detail", :secondary_actor_id => wine.id).first
         push_one_event_item(self, timeline_wine)
       end
     end
@@ -320,7 +320,7 @@ class User < ActiveRecord::Base
     # 关注的酒庄Timeline
     wineries = winery_followings
     wines.each do |wine|
-      if timeline_wine = TimelineEvent.where(:secondary_actor_type => "Wines::Detail", :secondary_actor => wine.id).first
+      if timeline_wine = TimelineEvent.where(:secondary_actor_type => "Winery", :secondary_actor_id => wine.id).first
         push_one_event_item(self, timeline_wine)
       end
     end
