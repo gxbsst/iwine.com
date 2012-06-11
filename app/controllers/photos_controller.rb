@@ -1,3 +1,4 @@
+# encoding: utf-8
 class PhotosController < ApplicationController
   before_filter :get_photo, :only => [:show, :edit, :update, :destroy, :reply, :vote]
   before_filter :get_imageable, :except => [:new, :create]
@@ -40,18 +41,23 @@ class PhotosController < ApplicationController
      render :json => @photo.likes.size.to_json
   end
 
-   def new
+  def new
+    @user = current_user
+    @albums = @user.albums
+    if @albums.blank?
+       @albums.create!([{:user_id => @user.id, :name => "酒"},
+                        {:user_id => @user.id, :name => "酒庄"},
+                        {:user_id => @user.id, :name => "其他"},])
+    end
+    @album_id = params[:album_id] ||  @albums.first.id
     @photo = Photo.new
   end
 
-
   def create
+      @user = current_user
       # 多图片上传
-      params[:photo][:image].each do |i|
-        @photo = Photo.new()
-        @photo.imageable_id = 1
-        @photo.imageable_type = "Wines::Detail"
-        @photo.image = i
+      params[:photo][:image].each do |image|
+        @photo = create_photo(image)
         if @photo.save
           respond_to do |format|
           format.html {                                         #(html response is for browsers using iframe sollution)
@@ -67,6 +73,11 @@ class PhotosController < ApplicationController
         render :json => [{:error => "custom_failure"}], :status => 304
       end
     end
+  end
+
+  def destroy
+
+    
   end
 
   private
@@ -122,6 +133,26 @@ class PhotosController < ApplicationController
   def find_winery_and_hot_wine
     @winery = Winery.find params[:winery_id]
     @hot_wines = Wines::Detail.hot_wines(5)
+  end
+
+  def get_imageable
+    if params[:wine_id].present?
+      @resource, @id = ["Wines::Detail", params[:wine_id]]
+    elsif params[:winery_id].present?
+      @resource, @id = ["Winery", params[:winery_id]]
+    else
+      @resource, @id = ["Album",  params[:album_id]]
+    end
+    @imageable = @resource.singularize.classify.constantize.find(@id)
+  end
+
+  def create_photo(image)
+    @imageable = get_imageable
+    @photo = @imageable.photos.build
+    @photo.album_id = params[:album_id]
+    @photo.image = image
+    @photo.user_id = @user.id
+    return @photo    
   end
 
 end
