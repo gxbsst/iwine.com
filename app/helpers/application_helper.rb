@@ -242,7 +242,14 @@ module ApplicationHelper
       false
     end
   end
-  
+
+  def conversation_url(user)
+    if is_login_user?(user)
+      link_to "私信", conversations_path, :class => "icon_mail"
+    else
+      link_to "私信", "#send_message_form", :class => "icon_mail send_message"
+    end
+  end
   #  下拉菜单: 获取热门酒款
   def get_hot_wine(limit)
     Wines::Detail.hot_wines(1)
