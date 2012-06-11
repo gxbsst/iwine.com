@@ -3,6 +3,7 @@
 # * created_at [datetime, not null] - creation time
 # * subject [string, default=] - TODO: document me
 # * updated_at [datetime, not null] - last update time
+
 class Conversation < ActiveRecord::Base
   has_many :messages, :dependent => :destroy, :order => "created_at DESC"
   has_many :receipts, :through => :messages
@@ -124,6 +125,12 @@ class Conversation < ActiveRecord::Base
     return self.receipts_for(participant).not_trash.unread.count!=0
   end
 
+  # 取出和你会话的人
+  def get_reply_user(current_user)
+    receivers_id_arr = receipts.inject([]){|receiver_ids, r| receiver_ids << r.receiver_id}.uniq
+    receivers_id_arr.delete current_user.id
+    receivers_id_arr.present? ? User.find(receivers_id_arr[0]).username : current_user.username
+  end
   #
 
   protected

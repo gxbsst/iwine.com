@@ -58,5 +58,9 @@ zh-CN:
               email_format: "Email格式不正确"
             msn:
               email_format: "Email格式不正确"
+        users/wine_cellar_item:
+          attributes:
+            price:
+              not_a_number: "请填写数字"
               
                 
