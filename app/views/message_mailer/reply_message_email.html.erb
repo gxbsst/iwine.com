@@ -4,17 +4,14 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <h1>You have a new reply: <%= @message.subject.html_safe? ? @message.subject : strip_tags(@message.subject) %></h1>
-    <p>
-      You have received a new reply:
-    </p>
+    <h1><%= @message.sender.username %> 回复了你的消息。</h1>
     <blockquote>
       <p>
         <%= raw @message.body %>
       </p>
     </blockquote>
     <p>
-      Visit <%= link_to root_url,root_url %> and go to your inbox for more info.
+     访问 <%= link_to root_url + conversations_path,root_url + conversations_path %> 查看回复消息.
     </p>
   </body>
 </html>
