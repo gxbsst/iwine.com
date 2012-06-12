@@ -50,4 +50,8 @@ class Wine < ActiveRecord::Base
     end
     return wine
   end
+
+  def get_latest_detail
+    details.order("year desc").first
+  end
 end
