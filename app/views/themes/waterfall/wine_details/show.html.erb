@@ -22,7 +22,9 @@
   <div class="wp_space_line ptb30">
     <h2>介绍</h2>
     <% unless @wine_detail.description.nil? %>
+    <% cache("#{@wine_detail.id}-#{@wine_detail.updated_at.to_i}-data") do %>
     <div> <%= @wine_detail.description %></div>
+    <% end %>
     <% else %>
     <div>暂时没有介绍...</div>
     <% end %>
@@ -41,7 +43,9 @@
 </div>
 <div id="wp_right">
   <%= render "wine_details/share/resource" %>
-  <%= render "wine_details/share/spec"%>
+  <% cache("#{@wine_detail.id}-#{@wine_detail.updated_at.to_i}-data") do %>
+   <%= render "wine_details/share/spec"%>
+  <% end %>
   <%= render "wine_details/share/score"%>
   <%= render "wine_details/share/special_comments"%>
   <%= render "wine_details/share/price"%>
