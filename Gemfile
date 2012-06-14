@@ -26,6 +26,9 @@ gem 'omniauth'
 gem 'oauth'
 gem 'oauth_china'
 
+# Memcache
+gem 'memcache-client'
+
 gem 'rails-i18n'
 
 gem 'fancybox-rails', :git => 'git://github.com/sverigemeny/fancybox-rails'
@@ -114,8 +117,10 @@ group :test do
   gem "guard-rspec"
   gem "database_cleaner"
   # Pretty printed test output
-
   gem 'turn', :require => false
+  gem "spork"
+  gem 'growl'
+  gem "guard-spork"
 end
 
 gem 'user_resource_init', :path => 'lib/patrick/user_resource_init'
