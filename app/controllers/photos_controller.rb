@@ -135,7 +135,7 @@ class PhotosController < ApplicationController
     @hot_wines = Wines::Detail.hot_wines(5)
   end
 
-  def get_imageable
+  def get_photo_imageable
     if params[:wine_id].present?
       @resource, @id = ["Wines::Detail", params[:wine_id]]
     elsif params[:winery_id].present?
@@ -147,7 +147,7 @@ class PhotosController < ApplicationController
   end
 
   def create_photo(image)
-    @imageable = get_imageable
+    @imageable = get_photo_imageable
     @photo = @imageable.photos.build
     @photo.album_id = params[:album_id]
     @photo.image = image

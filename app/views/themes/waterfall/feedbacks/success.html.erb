@@ -4,5 +4,10 @@
 <% feedbacks = {"normal_feedback" => "意见反馈", "error_feedback" => "纠错/补充", "complement_feedback" => "纠错/补充"} %>
 <div class="whitespace about">
 	<h1 class="main_title"><%= feedbacks[params[:for]]%></h1>
-	<div class="success">提交成功，感谢您的支持！您的建议将帮助我们不断完善爱红酒（iWIne）的产品与服务。</div>
+	<div class="success">提交成功，感谢您的支持！您的建议将帮助我们不断完善爱红酒（iWine）的产品与服务。</div>
+    <div class="align_c mt30">
+      <%= link_to request.referer, :class => "btn_gray_b" do %>
+        <span>返回</span>
+      <% end %>
+    </div>
 </div>
