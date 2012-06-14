@@ -26,7 +26,7 @@
 </div>
 <% if region_tree_id %>
     <div id="region_tree_text" style="<%= "display:none;" unless region_tree_id %>">
-      <%= render 'share/region_tree', :region_tree => wine_parent.get_region_path(region_tree_id) %>
+      <%= render 'share/region_tree', :region_tree => Wine.get_region_path(region_tree_id) %>
       <%= link_to "编辑", "javascript: void(0)", :id => "edit_region_tree" %>
     </div>
 <% end %>

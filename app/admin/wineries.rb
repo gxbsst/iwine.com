@@ -72,7 +72,7 @@ ActiveAdmin.register Winery do
         image_tag(winery.logo_url(:thumb)) unless winery.logo_url.include?("default")
       end
       row "图片" do
-        render "show_photos", :photos => winery.photos
+        render "admin/share/show_photos", :photos => winery.photos
       end
       row "酒庄信息" do
         render "show_info_items", :info_items => winery.info_items

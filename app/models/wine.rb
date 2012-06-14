@@ -54,4 +54,21 @@ class Wine < ActiveRecord::Base
   def get_latest_detail
     details.order("year desc").first
   end
+
+  def self.region_path_zh(region_tree_id, options = {})
+    region_trees = get_region_path(region_tree_id)
+    options[:connector] = "-" unless options.has_key? :connector
+    region_trees.collect{|r| r.name_zh }.join(options[:connector] )
+  end
+
+  def self.get_region_path(region_tree_id)
+    region = Wines::RegionTree.find(region_tree_id)
+    parent = region.parent
+    path = [region]
+    until parent == nil
+      path << parent
+      parent = parent.parent
+    end
+    path.reverse!
+  end
 end

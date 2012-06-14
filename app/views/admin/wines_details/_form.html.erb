@@ -30,10 +30,7 @@
           <td><label>种类</label></td>
           <td><%= d.select :wine_style_id, Wines::Style.all.collect{|s| ["#{s.name_zh}/#{s.name_en}", s.id]} %></td>
         </tr>
-        <tr>
-          <td><label>区域</label></td>
-          <td><%= render :partial => 'admin/share/region_tree', :locals => {:wine_parent => @wines_detail, :region_tree_id => @wines_detail.wine.region_tree_id } %></td>
-        </tr>
+
         <tr>
           <td><label>价格</label></td>
           <td><%= d.text_field :price %></td>
@@ -86,24 +83,19 @@
         <tr>
           <td><label>图片</label></td>
           <td>
-            <%=  image_tag @wines_detail.photos.first.image_url(:thumb) if @wines_detail.photos.first %>
+            <% @wines_detail.photos.each do |photo| %>
+                <%= image_tag photo.image_url(:thumb) if photo%>
+            <% end %>
+            <%= link_to "上传或编辑图片", edit_images_admin_photos_path(:imageable_type => "Detail",
+                                                            :imageable_id => @wines_detail.id),
+                                                            :target => "_blank" %>
           </td>
         </tr>
+        <tr><td></td></tr>
         <tr>
           <td></td>
-          <td>
-            <%  @wines_detail.photos.build( :photo_type => APP_DATA["photo"]["photo_type"]["cover"])  if @wines_detail.photos.blank? %>
-            <%= d.fields_for :photos do |p| %>
-                <%= p.file_field :image %>
-                <%= p.hidden_field :image_cache %>
-            <% end %>
-          </td>
+          <td><%= d.submit "提交" %></td>
         </tr>
-        <tr>
-          <td><label>酒标</label></td>
-          <td><%= image_tag @wines_detail.label.image_url(:thumb) if @wines_detail.label %></td>
-        </tr>
-        <tr><td></td><td><%= d.submit "提交" %></td></tr>
     </table>
 <% end %>
 </div>

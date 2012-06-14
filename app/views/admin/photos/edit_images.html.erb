@@ -1,0 +1,51 @@
+<p>
+  <%= link_to "上传新照片", upload_images_admin_photos_path(:imageable_type => params[:imageable_type],
+                                                       :imageable_id => params[:imageable_id]) %>
+</p>
+<% if @photos.present? %>
+    <%= form_tag 'update_images', :method => :put do %>
+        <%= hidden_field_tag "imageable_type", params[:imageable_type] %>
+        <%= hidden_field_tag "imageable_id", params[:imageable_id] %>
+        <table cellpadding="0" cellspacing="0">
+
+          <% @photos.each do |photo| %>
+              <tr>
+                <td><%= check_box_tag("photos[destroy][]", photo.id) %>删除</td>
+                <td style="width:150px;"><%= image_tag(photo.image_url(:thumb)) %></td>
+                <td>
+                  <label>类型</label>
+                  标志<%= radio_button_tag "photos[#{photo.id}][photo_type]",
+                                         APP_DATA['photo']['photo_type']['label'],
+                                         APP_DATA['photo']['photo_type']['label'] == photo.photo_type.to_i %>
+                  封面<%= radio_button_tag "photos[#{photo.id}][photo_type]",
+                                         APP_DATA['photo']['photo_type']['cover'],
+                                         APP_DATA['photo']['photo_type']['cover'] == photo.photo_type.to_i %>
+                  正常<%= radio_button_tag "photos[#{photo.id}][photo_type]",
+                                         APP_DATA['photo']['photo_type']['normal'],
+                                         APP_DATA['photo']['photo_type']['normal'] == photo.photo_type.to_i %>
+                  <br/>
+                  <label>状态</label>  <%= radio_button_tag "photos[#{photo.id}][audit_status]",
+                                         APP_DATA['photo']['audit_status']['submitted'],
+                                         APP_DATA['photo']['audit_status']['submitted'] == photo.audit_status.to_i %> 已提交
+
+                  <%= radio_button_tag "photos[#{photo.id}][audit_status]",
+                                       APP_DATA['photo']['audit_status']['approved'],
+                                       APP_DATA['photo']['audit_status']['approved'] == photo.audit_status %>  已发布
+
+                  <%= radio_button_tag "photos[#{photo.id}][audit_status]",
+                                       APP_DATA['photo']['audit_status']['reject'],
+                                       APP_DATA['photo']['audit_status']['reject'] == photo.audit_status %> 被拒绝
+
+                  <br/>
+                  描述信息
+                  <%= text_area_tag "photos[#{photo.id}][intro]", photo.intro, :style => "width:400px;", :rows => "3" %>
+                </td>
+              </tr>
+          <% end %>
+        </table>
+        <%= submit_tag "提交" %>
+    <% end %>  
+<% else %>
+    <p>没有找到图片，请上传。</p>
+<% end %>
+
