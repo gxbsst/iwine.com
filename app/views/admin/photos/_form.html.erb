@@ -1,0 +1,42 @@
+<%= form_for [:admin, @photo], :mutipart => true do |p| %>
+    <table cellspacing="5" cellpadding="5">
+       <tr>
+         <td><label>图片</label></td>
+         <td>
+           <%= image_tag(@photo.image_url(:thumb)) %>
+           <%= p.file_field :image %>
+         </td>
+       </tr>
+      <tr>
+        <td><label>类型</label></td>
+        <td>
+          <%= radio_button_tag  "photo[photo_type]",
+                                  APP_DATA['photo']['photo_type']['label'],
+                                  APP_DATA['photo']['photo_type']['label'] == @photo.photo_type.to_i%>标志
+          <%= radio_button_tag  "photo[photo_type]",
+                                APP_DATA['photo']['photo_type']['cover'],
+                                APP_DATA['photo']['photo_type']['cover'] == @photo.photo_type.to_i%>封面
+          <%= radio_button_tag  "photo[photo_type]",
+                                APP_DATA['photo']['photo_type']['normal'],
+                                APP_DATA['photo']['photo_type']['normal'] == @photo.photo_type.to_i%>正常
+        </td>
+      </tr>
+      <tr>
+        <td><label>状态</label></td>
+        <td>
+          <%= radio_button_tag "photo[audit_status]",
+                               APP_DATA['photo']['audit_status']['submitted'],
+                               APP_DATA['photo']['audit_status']['submitted'] == @photo.audit_status %> 已提交
+
+          <%= radio_button_tag "photo[audit_status]",
+                               APP_DATA['photo']['audit_status']['approved'],
+                               APP_DATA['photo']['audit_status']['approved'] == @photo.audit_status %>  已发布
+
+          <%= radio_button_tag "photo[audit_status]",
+                               APP_DATA['photo']['audit_status']['reject'],
+                               APP_DATA['photo']['audit_status']['reject'] == @photo.audit_status %> 被拒绝
+        </td>
+      </tr>
+      <tr><td></td><td><%=p.submit "提交" %></td></tr>
+    </table>
+<% end %>
