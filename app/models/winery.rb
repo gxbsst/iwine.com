@@ -23,6 +23,17 @@ class Winery < ActiveRecord::Base
   set_table_name "wineries"
   include Wines::WineSupport
   include Common
+  # 统计评论数量
+  counts :comments_count => {:with => "Comment", 
+                             :on => :create, 
+                             :receiver => lambda {|comment| comment.commentable },
+                             :if => lambda {|comment| comment.commentable_type== "Winery" && comment.do == "comment"}},
+         :followers_count => {
+                             :with => "Comment",
+                             :on => :create,
+                             :receiver => lambda {|comment| comment.commentable },
+                             :if => lambda {|comment| comment.commentable_type== "Winery" && comment.do == "follow"}
+                            }
   has_many :registers
   has_many :info_items, :class_name => "InfoItem"
   has_many :photos, :as => :imageable
