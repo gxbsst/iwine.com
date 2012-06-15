@@ -1,15 +1,15 @@
 
-## photos
+## audit_log
 OWNER_TYPE_USER = 1
 OWNER_TYPE_WINE = 2
 OWNER_TYPE_WINERY = 3
 OWNER_TYPE_WINE_REGISTER = 4
-
+OWNER_TYPE_PHOTO = 5
 ## info_items
 INFO_TYPE_WINEMAKER = 1
 INFO_TYPE_HISTORY = 2
 
-
+## audit_log
 OWNER_TYPES = {
   OWNER_TYPE_USER => 'user',
   OWNER_TYPE_WINE => 'wine',

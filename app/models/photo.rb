@@ -9,7 +9,7 @@ class Photo < ActiveRecord::Base
   belongs_to :imageable, :polymorphic => true
   belongs_to :user
   has_many :comments, :class_name => "PhotoComment", :as => :commentable, :include => [:user]
-
+  has_many :audit_logs, :class_name => "AuditLog", :foreign_key => "audit_id"
   acts_as_commentable
 
   acts_as_votable
@@ -17,10 +17,10 @@ class Photo < ActiveRecord::Base
   paginates_per 12
 
   mount_uploader :image, ImageUploader
-  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :is_audit_status_changed #在update_photo的地方将此字段设置为true
   #after_update :crop_avatar
   after_save :recreate_delayed_versions!
-
+  before_update :set_audit_status_changed?
   serialize :counts, Hash
 
   scope :covers, where(:photo_type => APP_DATA["photo"]["photo_type"]["cover"])
@@ -74,4 +74,10 @@ class Photo < ActiveRecord::Base
     }
   end
 
+  #audit_status 改变就在audit_log 增加一条记录
+  def set_audit_status_changed?
+    if audit_status_changed?
+      self.is_audit_status_changed = true
+    end
+  end
 end

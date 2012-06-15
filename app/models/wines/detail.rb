@@ -118,8 +118,8 @@ class Wines::Detail < ActiveRecord::Base
 
   def show_region_percentage
     show_percentage = ""
-    variety_percentages.each do |p|
-      show_percentage << " #{p.variety.name_zh}-#{p.variety.name_en}/#{p.percentage} "
+    variety_percentages.includes(:variety).each do |p|
+      show_percentage << " #{p.name_zh}-#{p.name_en}/#{p.percentage} "
     end
     return show_percentage
   end
