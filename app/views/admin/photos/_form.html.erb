@@ -26,7 +26,7 @@
         <td>
           <%= radio_button_tag "photo[audit_status]",
                                APP_DATA['photo']['audit_status']['submitted'],
-                               APP_DATA['photo']['audit_status']['submitted'] == @photo.audit_status %> 已提交
+                               APP_DATA['photo']['audit_status']['submitted'] == @photo.audit_status.to_i %> 已提交
 
           <%= radio_button_tag "photo[audit_status]",
                                APP_DATA['photo']['audit_status']['approved'],

@@ -9,16 +9,11 @@
       @wine_detail = Wines::Detail.includes( :covers, :photos, { :wine => [:style, :winery]} ).find(  @cellar_item.wine_detail_id )
       @wine = @wine_detail.wine
       @cellar_item.wine_detail_id = @wine_detail.id
-      @cellar_item.capacity = @wine_detail.capacity
-      @cellar_item.year = @wine_detail.year
     end
 
     def update
       @wine_detail = Wines::Detail.includes( :covers, :photos, { :wine => [:style, :winery]} ).find(  @cellar_item.wine_detail_id )
       @wine = @wine_detail.wine
-
-      @cellar_item.capacity = @wine_detail.capacity
-      @cellar_item.year = @wine_detail.year
 
       if @cellar_item.update_attributes(params[:users_wine_cellar_item])
         notice_stickie t("notice.update_success")
@@ -39,11 +34,7 @@
     def new
       @wine_detail = Wines::Detail.includes( :covers, :photos, { :wine => [:style, :winery]} ).find( params[:wine_detail_id].to_i )
       @wine = @wine_detail.wine
-      @cellar_item = Users::WineCellarItem.new
-      @cellar_item.year = @wine_detail.year
-      @cellar_item.number = 1
-      @cellar_item.wine_detail_id = @wine_detail.id
-      @cellar_item.capacity = @wine_detail.capacity
+      @cellar_item = Users::WineCellarItem.new(:number => 1, :wine_detail_id => @wine_detail.id)
     end
 
     def create
@@ -56,7 +47,6 @@
       @cellar_item.attributes = params[:users_wine_cellar_item]
       @cellar_item.wine_detail_id = @wine_detail.id
       @cellar_item.user_wine_cellar_id = @cellar.id
-      @cellar_item.year ||= @wine_detail.year
       @cellar_item.user_id = current_user.id
 
       ## TODO: 如果这个年份的酒不存在， 则创建这个年份的酒记录 new = old.dup to clone

@@ -15,6 +15,12 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
+
+  # CarrierWave::MiniMagick api http://rdoc.info:8080/github/jnicklas/carrierwave/master/CarrierWave/MiniMagick
+  # resize_to_fill(width, height, gravity = 'Center'): 如果图片大于给定尺寸，截取图片（gravity）指定位置部分图片，然后进行缩放.
+  # resize_and_pad(width, height, background = :transparent, gravity = 'Center'):同 fill 但是会在空白部分填充颜色
+  # resize_to_fit(width, height): 处理所有大小的图片， 处理后的图片可能比给定尺寸窄或者短
+  # resize_to_limit(width, height): 如果图片比给定尺寸大就进行处理， 处理后的图片可能比给定尺寸窄或者短
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{model.imageable_type.constantize.table_name}/#{model.imageable_id}"
   end
@@ -36,24 +42,30 @@ class ImageUploader < CarrierWave::Uploader::Base
     var = :"@#{mounted_as}_timestamp"
     model.instance_variable_get(var) or model.instance_variable_set(var, Time.now.to_i)
   end
+  version :large_x do
+    process :resize_to_fit => [APP_DATA["image"]["wine"]["large_x"]["width"],
+                               APP_DATA["image"]["wine"]["large_x"]["height"]]
+  end
 
   version :large do
-    process :resize_to_limit => [APP_DATA["image"]["wine"]["large"]["width"], '']
+    process :resize_to_fit => [APP_DATA["image"]["wine"]["large"]["width"],
+                               APP_DATA["image"]["wine"]["large"]["height"]]
   end
   #200*200
   version :middle, :from_version => :large do
-    process :resize_to_limit => [APP_DATA["image"]["wine"]["middle"]["width"],'']
+    process :resize_to_fit => [APP_DATA["image"]["wine"]["middle"]["width"],
+                               APP_DATA["image"]["wine"]["middle"]["height"]]
     process :store_geometry
   end
 
   #100*100
   version :thumb_x, :from_version => :large  do
-    process :resize_to_fit => [APP_DATA["image"]["wine"]["x_thumb"]["width"],
+    process :resize_to_fill => [APP_DATA["image"]["wine"]["x_thumb"]["width"],
                                 APP_DATA["image"]["wine"]["x_thumb"]["height"]]
   end
   #130*130
   version :thumb, :from_version => :large  do
-    process :resize_to_fit => [APP_DATA["image"]["wine"]["thumb"]["width"],
+    process :resize_to_fill => [APP_DATA["image"]["wine"]["thumb"]["width"],
                                 APP_DATA["image"]["wine"]["thumb"]["height"]]
   end
   

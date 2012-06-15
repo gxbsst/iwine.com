@@ -259,6 +259,7 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .userlist .userinfo {width:105px;float:left;}
 .userlist .userinfo .userlocation {color:#999;}
 .follower li {position:relative;}
+.sidebox .userlist li {padding:0 10px 30px 0;_pading:0 10px 20px 0;zoom:1;}
 
 /*---------table style-----------*/
 .data_style1 td {background-color:#f3f3f3;border-right:2px solid #fff;border-bottom:2px solid #fff;padding:2px 10px;}
@@ -343,9 +344,8 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .winery_list .logo {width:100px;float:left;margin-right:20px;}
 .winery_list .meta {width:470px;float:left;}
 .sidebar .title {margin-bottom:20px;font-size:13px;font-weight:bold;}
-.sidebar .username {margin-bottom:5px;}
-.sidebar .userlist li {margin:0 0 20px 0;}
-.sidebar .location {color:#999;margin-left:10px;display:inline-block;}
+.sidebar .username, .sidebox .username {margin-bottom:5px;}
+.sidebar .location, .sidebox .location {color:#999;margin-left:10px;display:inline-block;}
 
 
 /*button style*/

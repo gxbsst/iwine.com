@@ -62,7 +62,7 @@ class Wines::Detail < ActiveRecord::Base
 
   # 获取产区
   def get_region_path_html( symbol = " > " )
-    get_region_path.reverse!.collect { |region| region.name_en + '/' + region.name_zh }.join( symbol )
+    wine.get_region_path.reverse!.collect { |region| region.name_en + '/' + region.name_zh }.join( symbol )
   end
 
   # 适饮年限
@@ -101,7 +101,7 @@ class Wines::Detail < ActiveRecord::Base
   end
   
   def show_capacity
-    "#{capacity.gsub('ml', '')}ml" unless capacity.blank?
+    capacity.present? ? APP_DATA['wines']['capacity'].invert[capacity] : "其他"
   end
   
   # 谁拥有这些酒
@@ -138,10 +138,6 @@ class Wines::Detail < ActiveRecord::Base
 
   def show_alcoholicity
     alcoholicity.blank? ? nil : "#{alcoholicity}%Vol"
-  end
-
-  def show_capacity
-    capacity.blank? ? nil : "#{capacity}ml"
   end
 
   def all_photo_ids

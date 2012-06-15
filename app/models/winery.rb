@@ -21,7 +21,7 @@
 # * wines_count [integer, default=0, limit=4] - TODO: document me
 class Winery < ActiveRecord::Base
   set_table_name "wineries"
-  include Wines::WineSupport
+  include Wines::WineSupport, Common
   include Common
   has_many :registers
   has_many :info_items, :class_name => "InfoItem"

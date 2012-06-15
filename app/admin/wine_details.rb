@@ -51,7 +51,7 @@ ActiveAdmin.register Wines::Detail do
         detail.wine.style.name
       end
       row "酒区" do
-        detail.region_path_zh(detail.wine.region_tree_id)
+        detail.wine.region_path_zh
       end
       row "酒的品种" do
         detail.show_region_percentage

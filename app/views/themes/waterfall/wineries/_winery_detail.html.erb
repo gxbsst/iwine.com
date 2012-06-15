@@ -32,7 +32,7 @@
      <h1 class="winery_name_ch"><%= @winery.name_zh %></h1>
      <h1 class="winery_name_en"><%= @winery.name_en %></h1>
      <div class="baseinfo">
-       地区：<%= @winery.region_path_zh(@winery.region_tree_id) %><br/>
+       地区：<%= @winery.region_path_zh %><br/>
        地址：<%= @winery.address %><br/>
        官网网站：<a href="http://<%= @winery.official_site %>"><%= @winery.official_site %></a><br/>
        电子邮件：<%= @winery.email %> <br/>

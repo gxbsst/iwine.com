@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class Wines::Register < ActiveRecord::Base
 
-  include Wines::WineSupport
+  include Wines::WineSupport, Common
 
   belongs_to :user
   belongs_to :style, :foreign_key => 'wine_style_id'

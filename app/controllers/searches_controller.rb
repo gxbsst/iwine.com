@@ -1,5 +1,7 @@
 # encoding: UTF-8
 class SearchesController < ApplicationController
+  before_filter :get_recommend_users, :only => [:results, :search_wines, :winery]
+
   def new
     @search = Search.new
   end
@@ -10,7 +12,6 @@ class SearchesController < ApplicationController
   end
 
   def search_wines
-    @recommend_users = User.recommends(5)
     @search = Search.create!(params[:search])
     redirect_to add_wines_path(:step => 2, :id => @search.id)
   end
@@ -35,7 +36,6 @@ class SearchesController < ApplicationController
   end
 
   def winery
-    @recommend_users = User.recommends(5)
     server = HotSearch.new
     # @page = params[:page].to_i || 1
     # if @page < 1 
@@ -54,7 +54,6 @@ class SearchesController < ApplicationController
   end
 
   def results
-    @recommend_users = User.recommends(5) #获取推荐用户
     server = HotSearch.new
     # @page = params[:page].to_i || 1
     # if @page < 1 
@@ -84,4 +83,13 @@ class SearchesController < ApplicationController
 
   end
 
+  private
+
+  def get_recommend_users
+    if current_user
+      @recommend_users = User.where("id != ?", current_user.id).recommends(5)
+    else
+      @recommend_users = User.recommends(5)
+    end
+  end
 end

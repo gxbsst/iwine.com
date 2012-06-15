@@ -27,7 +27,7 @@
     </span>
     <% if @wines_register && @wines_register.region_tree %>
     <div id="region_tree_text" style="<%= "display:none;" unless @wines_register.region_tree_id %>">
-        <%= render 'share/region_tree', :region_tree => @wines_register.get_region_path(@wines_register.region_tree_id) %>
+        <%= render 'share/region_tree', :region_tree => @wines_register.get_region_path %>
         <%= link_to "编辑", "javascript: void(0)", :id => "edit_region_tree" %>
     </div>
     <% end %>

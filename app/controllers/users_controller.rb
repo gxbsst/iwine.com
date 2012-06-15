@@ -2,7 +2,7 @@
 class UsersController < ApplicationController
   # before_filter :authenticate_user!
   before_filter :get_user, :except => [:register_success]
-
+  before_filter :get_recommend_users, :only => [:followings, :followers]
   def show
     @followers = @user.followers
     @followings = @user.followings
@@ -31,13 +31,11 @@ class UsersController < ApplicationController
 
   def followings
     @followings = @user.followings.page(params[:page] || 1).per(10)
-    @recommend_users = User.recommends(5)
     # @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
   end
 
   def followers
     @followers = @user.followers.page(params[:page] || 1).per(10)
-    @recommend_users = User.recommends(5)
     # @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
   end
 
@@ -87,5 +85,9 @@ class UsersController < ApplicationController
   # 关注某个人
   def follow_one_user(user_id)
     current_user.follow_user(user_id)
+  end
+
+  def get_recommend_users
+    @recommend_users = User.where("id != ?", @user.id).recommends(5)
   end
 end
