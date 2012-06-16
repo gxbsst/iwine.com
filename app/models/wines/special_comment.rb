@@ -27,6 +27,6 @@ class Wines::SpecialComment  < ActiveRecord::Base
   #添加酒款"完善信息"时展示时间
 
   def drinkable
-    "#{drinkable_begin.to_s(:year)}-#{drinkable_end.to_s(:year)}"
+    "#{drinkable_begin.to_s(:year) if drinkable_begin}-#{drinkable_end.to_s(:year) if drinkable_end}"
   end
 end

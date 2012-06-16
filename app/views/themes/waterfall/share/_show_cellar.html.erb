@@ -41,7 +41,7 @@
               <% wine_detail = item.wine_detail %>
               <tr>
                 <td class="img">
-                  <%= link_to (wine_cover_tag wine_detail, :thumb_name => :thumb, :title => wine_detail.name, :width => 50, :height => 63, :alt => wine_detail.name), wine_path(wine_detail) %>
+                  <%= link_to (wine_label_tag wine_detail, :thumb_name => :thumb, :title => wine_detail.name, :width => 50, :height => 63, :alt => wine_detail.name), wine_path(wine_detail) %>
                 </td>
                 <td class="year">
                   <%= wine_detail.show_year %>

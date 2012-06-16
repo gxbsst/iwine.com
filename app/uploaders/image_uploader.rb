@@ -42,6 +42,7 @@ class ImageUploader < CarrierWave::Uploader::Base
     var = :"@#{mounted_as}_timestamp"
     model.instance_variable_get(var) or model.instance_variable_set(var, Time.now.to_i)
   end
+  #610*640
   version :large_x do
     process :resize_to_fit => [APP_DATA["image"]["wine"]["large_x"]["width"],
                                APP_DATA["image"]["wine"]["large_x"]["height"]]
@@ -51,7 +52,7 @@ class ImageUploader < CarrierWave::Uploader::Base
     process :resize_to_fit => [APP_DATA["image"]["wine"]["large"]["width"],
                                APP_DATA["image"]["wine"]["large"]["height"]]
   end
-  #200*200
+  #200*440
   version :middle, :from_version => :large do
     process :resize_to_fit => [APP_DATA["image"]["wine"]["middle"]["width"],
                                APP_DATA["image"]["wine"]["middle"]["height"]]

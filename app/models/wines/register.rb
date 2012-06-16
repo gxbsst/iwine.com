@@ -53,6 +53,7 @@ class Wines::Register < ActiveRecord::Base
     wine = Wine.approve_wine(self)
     wine_detail = Wines::Detail.approve_wine_detail(wine.id, self, audit_log.id)
     Wines::VarietyPercentage.build_variety_percentage(variety_name, variety_percentage, wine_detail.id)
+    Wines::SpecialComment.change_special_comment_to_wine(wine_detail, self)
     return wine_detail.id
   end
 

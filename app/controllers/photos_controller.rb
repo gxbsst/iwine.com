@@ -5,7 +5,7 @@ class PhotosController < ApplicationController
   before_filter :get_user
   before_filter :authenticate_user!, :only => [:new, :create]
   def index
-    @photos = @imageable.photos.page(params[:page] || 1).per(8)
+    @photos = @imageable.photos.approved.page(params[:page] || 1).per(8)
     case @resource
       when "Wines::Detail"
       # 包括detail和wine的图片
@@ -90,7 +90,8 @@ class PhotosController < ApplicationController
   end
 
   def get_photo
-    @photo = Photo.find(params[:id])
+    @photo = Photo.approved.where("id = ?", params[:id]).first
+    render(:status => 404) unless @photo
   end
 
   def get_user
@@ -113,9 +114,9 @@ class PhotosController < ApplicationController
 
   def render_winery_photo_detail
     find_winery_and_hot_wine
-    @photo = @winery.photos.find(params[:id])
     @multiple = true #此页面有两个分享
     render "winery_photo_detail"
+
   end
 
   def render_wine_photo_list
@@ -126,7 +127,6 @@ class PhotosController < ApplicationController
 
   def render_winery_photo_list
     find_winery_and_hot_wine
-    @photos = @winery.photos.order("updated_at desc").page(params[:page] || 1).per(8)
     render "winery_photo_list"
   end
 

@@ -3,7 +3,7 @@
   <% @words['wines'].each do |wine|%>
   <dl onmouseover="$(this).addClass( 'current' );" onmouseout="$(this).removeClass('current')" class="clearfix" onclick="location.href='<%= url_for( '/wines/' + wine.id.to_s )%>'">
       <dt>
-      <%= wine_cover_tag( wine , :width => 30 , :height => 30 )%>
+      <%= wine_label_tag(wine, :thumb_name => :thumb, :width => 30 , :height => 30 )%>
       </dt>
       <dd>
         <span><%= wine.cname%></span>
@@ -18,7 +18,7 @@
   <% @words['wineries'].each do |winery| %>
     <dl class="clearfix" onclick="location.href='<%= url_for( '/wineries/' + winery.id.to_s )%>'">
       <dt>
-      <img src="<%= winery.logo_url(:thumb)%>" width="30" height="15" />
+        <%= winery_label_tag(winery, :thumb_name => :thumb, :width => 30, :height => 30) %>
       </dt>
       <dd><span><%= winery.name_zh %></span>
         <p><%= winery.name_en%></p></dd>

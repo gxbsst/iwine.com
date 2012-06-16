@@ -63,8 +63,8 @@ class AlbumsController < ApplicationController
       if request.post?
         @album = Album.first :conditions => { :id => params[:id] , :created_by => current_user.id }
         if @album.present? && @album.name != 'avatar'
-          Photo.delete_all '`album_id`=' + @album.id.to_s
           @album.destroy
+          @blbum.photos.each{|photo| photo.update_attribute(:deleted_at, Time.now)}
         end
         redirect_to albums_user_path(@user)
         return
@@ -75,7 +75,7 @@ class AlbumsController < ApplicationController
     def delete_photo
       if request.post?
         photo = Photo.find params[:photo_id]
-        photo.destroy if photo && photo.user_id == @user.id
+        photo.update_attribute(:deleted_at, Time.now) if photo && photo.user_id == current_user.id
         redirect_to request.referer
         return
       end
@@ -112,6 +112,7 @@ class AlbumsController < ApplicationController
       # order = params[:order] === 'time' ? 'created_at' : 'liked_num';
       order = 'created_at'
       @photos = Photo
+      .visible
       .where(["album_id= ?", params[:album_id]])
       .order("#{order} DESC,id DESC")
       .page params[:page] || 1

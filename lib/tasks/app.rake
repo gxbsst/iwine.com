@@ -101,7 +101,7 @@ namespace :app do
             :capacity => item[13]
           )
           puts register.id
-
+          build_special_comment(register, {"RP" => item[14], "JR" => item[16]})
         rescue Exception => e
           puts e
         end
@@ -224,14 +224,7 @@ namespace :app do
             puts winery.id
 
             #save_info_items
-            unless item[13].blank?
-              info_arr = item[13].split('#').collect{|i| i.to_ascii_brutal}
-              info_arr.delete("") #delete ""
-              info_hash = Hash[*info_arr]
-              info_hash.each do |key, value|
-                winery.info_items.where("title = ?", key).first_or_create!(:title => key, :description => value)
-              end
-            end
+            build_info_item(item[0], winery)
           rescue Exception => e
             puts e
           end
@@ -241,43 +234,6 @@ namespace :app do
     end
 
 
-  end
-
-  task :init_other_photos => :environment do
-    require 'csv'
-    file_path = Rails.root.join("lib/tasks/data/wines_datas.csv")
-    csv  = CSV.read(file_path)
-    begin
-      csv.each do |item|
-        item.collect{|i| i.to_s.force_encoding('utf-8')} #编码转换
-        #获得图片路径
-        photo_path  = Rails.root.join('lib', 'tasks','data', 'wine_photos', item[0])
-
-        if Dir.exist? photo_path
-          photos_path = []
-          Dir.entries(photo_path).select{|x| x != '.' && x != '..' && x != '.DS_Store'}.each do |file_path|
-            photos_path.push Rails.root.join(photo_path, file_path)
-          end
-        end
-
-        next if item[9].blank? || photos_path.blank? #跳过年代为空和图片为空的
-        name_en = item[1].to_s.to_ascii_brutal
-        if wine_detail = Wines::Detail.joins(:wine).where("name_en = ? and year = ? ", name_en, "#{item[9]}-01-01").first
-          photos_path.each do |path|
-            wine_detail.photos.create(
-                :category => 1,
-                :album_id => -1, # no user id
-                :is_cover => path.to_s.include?("cover") ? APP_DATA["photo"]["photo_type"]["cover"] : 0,
-                :image => open(path)
-            )
-          end
-          puts wine_detail.id
-        end
-
-      end
-    rescue Exception => e
-      puts e
-    end
   end
 
   #处理酒的品种和百分比
@@ -337,4 +293,32 @@ namespace :app do
     string.to_s.force_encoding('utf-8')
   end
 
+  def build_info_item(winery_number, winery)
+    file_directory = Rails.root.join("lib", "tasks", "data", "winery", "info_items")
+    info_item_file = Dir.glob("#{file_directory}/#{winery_number}_*.txt")[0]
+    if info_item_file
+      #读出文件内容
+      info_text = File.open(info_item_file)
+      #将内容转化为hash
+      info_arr = info_text.read.split('#').collect{|i| i.to_ascii_brutal}
+      info_arr.delete("") #delete ""
+      info_hash = Hash[*info_arr]
+
+      info_hash.each do |key, value|
+        winery.info_items.where("title = ?", key).first_or_create!(:title => key, :description => value)
+      end
+      info_text.close
+    end
+  end
+
+  def build_special_comment(register, special_hash)
+    special_hash.each do |name, score|
+      next if score.blank?
+      register.special_comments.
+          where("name = ? and score = ?", name, score).
+          first_or_create!(:name => name,
+                           :score => score)
+    end
+
+  end
 end

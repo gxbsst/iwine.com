@@ -105,7 +105,7 @@ image:
       height: 130
     middle:
       width: 200
-      height: 200
+      height: 440
     large:
       width: 440
       height: 440
@@ -169,10 +169,12 @@ photo:
     label: 1
     cover: 2
     normal: 0
-  audit_status:
-    submitted: 0
-    approved: 1
-    reject: 2
+
+audit_log:
+ status:
+   submitted: 0
+   approved: 1
+   rejected: 2
 
 email:
   welcome:

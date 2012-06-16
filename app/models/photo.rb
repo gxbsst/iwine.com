@@ -27,10 +27,21 @@ class Photo < ActiveRecord::Base
   scope :labels, where(:photo_type => APP_DATA["photo"]["photo_type"]["label"])
   scope :label, labels.limit(1) #取出一个 label
   scope :cover, covers.limit(1) #取出一个 cover
+  scope :approved, where(:audit_status => APP_DATA['photo']['audit_status']['approved'])  # for wine and winery
+  scope :visible, where("deleted_at is null")                                             # 展示用户上传的酒和酒庄
+  # for wine and winery
+  # covers.approved
+
+  #for user
+  # covers.visible
+
   #def crop_avatar
   #  image.recreate_versions! if crop_x.present?
   #end
 
+  def approve_photo
+    update_attribute(:audit_status, APP_DATA['audit_log']['status']['approved'])
+  end
   def recreate_delayed_versions!
       image.should_process = true
       image.recreate_versions!

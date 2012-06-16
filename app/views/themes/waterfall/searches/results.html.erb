@@ -59,7 +59,7 @@
           <div class="box590_main">
             <% releast_detail = wine.details.order("year desc").first  %>
             <%= link_to wine_path(releast_detail) do %>
-               <%= wine_cover_tag(wine, :alt => releast_detail.en_zh_name, :thumb_name => "thumb_x", :size => "70x70" )%>
+               <%= wine_label_tag(wine, :alt => releast_detail.en_zh_name, :thumb_name => "thumb_x", :size => "70x70" )%>
             <% end %>
             <div class="info">
               <h1 class="zh"><%= link_to wine.name_zh, wine_path(releast_detail) %></h1>

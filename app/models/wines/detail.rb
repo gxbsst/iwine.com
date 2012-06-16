@@ -128,10 +128,10 @@ class Wines::Detail < ActiveRecord::Base
 
   #展示detail covers 如果没有则展示wine 的covers
   def show_covers
-    if covers.present?
-      photo_covers = covers
-    elsif wine.covers.present?
-      photo_covers = wine.covers
+    if covers.approved.present?
+      photo_covers = covers.approved
+    elsif wine.covers.approved.present?
+      photo_covers = wine.covers.approved
     end
     return photo_covers
   end
@@ -145,7 +145,7 @@ class Wines::Detail < ActiveRecord::Base
   end
 
   def all_photos
-    Photo.where(["(imageable_type=? AND imageable_id = ?) OR (imageable_type=? AND imageable_id =? )", "Wines::Detail", id, "Wine", wine_id])
+    Photo.approved.where(["(imageable_type=? AND imageable_id = ?) OR (imageable_type=? AND imageable_id =? )", "Wines::Detail", id, "Wine", wine_id])
   end
 
   def all_photo_counts
