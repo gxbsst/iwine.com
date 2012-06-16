@@ -155,7 +155,7 @@ namespace :app do
     # TODO: “请修改下面的路径”
     file_directories = Rails.root.join("lib/tasks/data/region_tree/region_tree/*.csv")
     Dir.glob(file_directories).each do |csv_file|
-      puts "开始加载 #{csv_file}"
+      puts "begin load #{csv_file}"
       csv = CSV.read(csv_file)
       csv.each do |item|
         item.collect{|i| i.to_s.force_encoding('utf-8')}
@@ -199,7 +199,7 @@ namespace :app do
 
     file_directory = Rails.root.join("lib", "tasks", "data", "winery", "*.csv")
     Dir.glob(file_directory).each do |csv_file|
-      puts "开始加载 #{csv_file}"
+      puts "begin load #{csv_file}"
       csv  = CSV.read(csv_file)
       csv.each_with_index do |item, index|
         next if index == 0 # 跳过csv文件标题
