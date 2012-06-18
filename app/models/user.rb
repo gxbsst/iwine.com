@@ -40,6 +40,11 @@
 class User < ActiveRecord::Base
 
   init_resources "Users::Profile", "Users::WineCellar"
+
+  counts :comments_count => {:with => "Comment", 
+                             :on => :create, 
+                             :receiver => lambda {|comment| comment.user },
+                             :if => lambda {|comment| comment.do == "comment"}}
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
