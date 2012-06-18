@@ -180,12 +180,6 @@ module ApplicationHelper
   #   mine_messages_path(m)
   # end
 
-  def special_comments_list(parent)
-    parent.special_comments.each do |s|
-      "#{s.name} #{s.score} #{s.drinkable_begin.strftime('%Y') if s.drinkable_begin} - #{s.drinkable_end.strftime('%Y') if s.drinkable_end}"
-    end
-  end
-
 
   # 显示评星
   def star_rate_tag(point)
@@ -288,4 +282,21 @@ module ApplicationHelper
     end
   end
 
+  def drinkable(object)
+    date_begin = object.drinkable_begin
+    date_end = object.drinkable_end
+    if date_begin || date_end
+      "#{date_begin.to_s(:year) if date_begin} - #{date_end.to_s(:year) if date_end}"
+    end
+  end
+
+  #展示所有的 variety_percentage
+  def variety_percentage_lists(variety_percentages)
+    count = variety_percentages.length
+    show_list = ''
+    variety_percentages.each_with_index do |v, index|
+     show_list << "#{v.name_en} (#{v.show_percentage})#{' 、' if index + 1 != count}"
+    end
+    return show_list
+  end
 end

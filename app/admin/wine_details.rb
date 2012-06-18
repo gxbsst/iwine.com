@@ -30,7 +30,7 @@ ActiveAdmin.register Wines::Detail do
         detail.price
       end
       row "适饮年限" do
-        detail.drinkable
+        "#{detail.drinkable_begin.to_s} - #{detail.drinkable_end.to_s}"
       end
       row "中文名" do
         detail.wine.name_zh

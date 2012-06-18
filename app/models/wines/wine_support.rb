@@ -16,10 +16,6 @@ module Wines
        # Wine 项目要用到的公共 class methods       
      end
 
-     def drinkable
-       "#{drinkable_begin.strftime('%Y') if drinkable_begin}-#{drinkable_end.strftime('%Y') if drinkable_end}"
-     end
-
      # 当前关注该支酒的用户列表
      def followers(options = { })
        User.joins(:comments).

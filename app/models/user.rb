@@ -111,6 +111,7 @@ class User < ActiveRecord::Base
   end
   # 推荐的用户
   scope :recommends, lambda { |limit| order("followers_count DESC").limit(limit) }
+  scope :no_self_recommends, lambda {|limit, user_id| recommends(limit).where("id != ?", user_id)}
   accepts_nested_attributes_for :profile, :allow_destroy => true
 
   # validates :username, :presence => false, :allow_blank => true, :numericality => true

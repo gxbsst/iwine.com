@@ -65,11 +65,6 @@ class Wines::Detail < ActiveRecord::Base
     wine.get_region_path.reverse!.collect { |region| region.name_en + '/' + region.name_zh }.join( symbol )
   end
 
-  # 适饮年限
-  def drinkable
-    drinkable_begin.to_s + ' - ' + drinkable_end.to_s
-  end
-
   def show_year
     year.strftime("%Y") unless year.blank?
   end

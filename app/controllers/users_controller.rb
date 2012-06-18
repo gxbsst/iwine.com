@@ -2,7 +2,7 @@
 class UsersController < ApplicationController
   # before_filter :authenticate_user!
   before_filter :get_user, :except => [:register_success]
-  before_filter :get_recommend_users, :only => [:followings, :followers]
+  before_filter :get_recommend_users, :only => [:followings, :followers, :start]
   def show
     @followers = @user.followers
     @followings = @user.followings
@@ -43,7 +43,6 @@ class UsersController < ApplicationController
   def start
     if current_user.sign_in_count == 1
       @hot_wines = Wines::Detail.hot_wines(6)
-      @recommend_users = User.recommends(5)
       if request.post?
 
         # follow wines
@@ -88,6 +87,6 @@ class UsersController < ApplicationController
   end
 
   def get_recommend_users
-    @recommend_users = User.where("id != ?", @user.id).recommends(5)
+    @recommend_users = User.no_self_recommends(5, @user.id)
   end
 end

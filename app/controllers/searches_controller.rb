@@ -87,7 +87,7 @@ class SearchesController < ApplicationController
 
   def get_recommend_users
     if current_user
-      @recommend_users = User.where("id != ?", current_user.id).recommends(5)
+      @recommend_users = User.no_self_recommends(5, current_user.id)
     else
       @recommend_users = User.recommends(5)
     end

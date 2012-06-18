@@ -48,7 +48,7 @@ class ImageUploader < CarrierWave::Uploader::Base
                                APP_DATA["image"]["wine"]["large_x"]["height"]]
   end
 
-  version :large do
+  version :large, :from_version => :large_x do
     process :resize_to_fit => [APP_DATA["image"]["wine"]["large"]["width"],
                                APP_DATA["image"]["wine"]["large"]["height"]]
   end

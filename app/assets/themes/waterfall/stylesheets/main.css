@@ -278,14 +278,13 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 #header #top_right .userbox a {float:left;}
 .drop_down_menu {
     /* border: 1px solid #1C1C1C; */
-    display: none;
     width: 117px;
-    display: none;
     position: absolute;
+    display: none;
     z-index: 10000;
     background: #f3f3f3;
-    top: 32px;
-	left: -67px;
+    top: 30px;
+	left: -68px;
 	border:1px solid #ccc;
     /* -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -314,7 +313,7 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .globel_navi {padding:10px;text-align:center;background-color:#fff;border-bottom:1px solid #ccc;font-size:14px;}
 .globel_navi li {display:inline;position:relative;}
 .globel_navi li.current {font-weight:bold;}
-.globel_navi li.arrow {background:url(../images/icon/xstb_276.gif) no-repeat 50px 0;}
+.globel_navi li.arrow {background:url(../images/icon/xstb_276.gif) no-repeat 50px 0;padding-bottom:15px;}
 .globel_navi li a{display:inline-block;padding:0 20px;color:#000;}
 .globel_navi li.last a {background:none;}
 .globel_navi li a:hover {color:#000;}
