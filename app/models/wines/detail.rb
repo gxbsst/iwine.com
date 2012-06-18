@@ -1,6 +1,30 @@
 # -*- coding: utf-8 -*-
 
 class Wines::Detail < ActiveRecord::Base
+  # Count resource, e.g: photos_count, coments_count...
+
+  counts :comments_count => {:with => "Comment", 
+                             :on => :create, 
+                             # :for => :wine_detail,
+                             :receiver => lambda {|comment| comment.commentable },
+                             :if => lambda {|comment| comment.commentable_type== "Wines::Detail" && comment.do == "comment"}},
+         :followers_count => {:with => "Comment", 
+                              :on => :create,
+                              # :for => :wine_detail 
+                              :receiver => lambda {|comment| comment.commentable },
+                              :if => lambda {|comment| comment.commentable_type== "Wines::Detail" && comment.do == "follow"}},
+         :photos_count => {:with => "Photo", 
+                              :on => :update,
+                              # :for => :wine_detail 
+                              :receiver => lambda {|photo| photo.imageable},
+                              :if => lambda {|photo| photo.imageable_type== "Wines::Detail" && photo.audit_status == 1}}
+
+          # :photos_counts => {:with => "Photo", 
+          #                             :on => :create, 
+          #                             :receiver => lambda {|photo| photo.imageable},
+          #                             :if => lambda {|photo| photo.imageable_type == "Wines::Detail"}
+          #                            },                    
+
   include Common
 
   paginates_per 10
@@ -94,8 +118,8 @@ class Wines::Detail < ActiveRecord::Base
 
   def show_region_percentage
     show_percentage = ""
-    variety_percentages.each do |p|
-      show_percentage << " #{p.variety.name_zh}-#{p.variety.name_en}/#{p.percentage} "
+    variety_percentages.includes(:variety).each do |p|
+      show_percentage << " #{p.name_zh}-#{p.name_en}/#{p.percentage} "
     end
     return show_percentage
   end

@@ -1,5 +1,6 @@
 <div class="admin_wine_register">
-  <%= javascript_include_tag "wine_registers_variety", "region_world" %>
+  <%= theme_stylesheet_link_tag "admin" %>
+  <%= theme_javascript_include_tag "wine_registers_variety", "region_world" %>
   <%= form_for [:admin, @winery], :mutipart => true do |w| %>
     <table cellspacing="10" cellpadding="5">
       <h3>酒庄得信息</h3>
@@ -59,13 +60,12 @@
       <tr>
         <td><label>酒庄图片</label></td>
         <td>
-          <% unless @winery.photos.blank? %><%= render "show_photos", :photos => @winery.photos %> <br/><% end %>
-          <%= w.fields_for :photos do |p| %>
-            <%= render "photo", :p => p %>
+          <% unless @winery.photos.blank? %>
+              <%= render "admin/share/show_photos", :photos => @winery.photos %>
           <% end %>
+          <%= link_to "编辑或上传图片", edit_images_admin_photos_path(:imageable_type => "Winery", :imageable_id => @winery.id), :target => "_blank" %>
         </td>
       </tr>
-      <tr><td></td><td><%= link_to_add_fields "再传一张", w, :photos %></td></tr>
       <%= w.fields_for :info_items do |item| %>
          <%= render "update_info_items", :item => item %>
       <% end %>

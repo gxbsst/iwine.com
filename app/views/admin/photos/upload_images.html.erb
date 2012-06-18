@@ -1,0 +1,40 @@
+<%= form_for [@imageable, @photo], :url => "create_images", :html => {:multipart => true, :id => "fileupload"} do |f| %>
+    <%= hidden_field_tag "imageable_type", params[:imageable_type] %>
+    <%= hidden_field_tag "imageable_id", params[:imageable_id] %>
+    <p class="mb20">
+      <span class="btn btn-success fileinput-button">
+        <i class="icon-plus icon-white"></i>
+        <%= link_to "javascript:void(0);", :class => "btn_blue_b mr5" do %>
+            <span>选择图片</span>
+        <% end %>
+        <%= f.file_field :image, :multiple => true %>
+      </span>
+    </p>
+    <div class="clear"></div>
+    <p>可以拖拽图片到页面上传，一次只能上传10张图片，图片最大为5M</p>
+    <table class="table table-striped" width="100%" cellpadding="5" cellspacing="5">
+      <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+    </table>
+    <div class="row fileupload-buttonbar" style="display:none">
+       <div class="span7">
+         <%= link_to "javascript:void(0);", :class => "btn_gray mr5" do %>
+            <button type="submit" class="btn btn-primary start" style="margin:0;padding:0;background:none;border: 0">
+              <span>开始上传</span>
+            </button>
+         <% end %>
+         <%= link_to "javascript:void(0);", :class => "btn_gray" do %>
+            <button type="reset" class="btn btn-warning cancel" style="margin:0;padding:0;background:none;border: 0">
+              <span>取消上传</span>
+            </button>
+         <% end %>
+       </div>
+       <div class="span5">
+         <div class="progress progress-success progress-striped active fade" style="background: #CCC;">
+           <div class="bar" style="width:0%; background: #CCC;"></div>
+         </div>
+       </div>
+    </div>
+<% end %>
+<%= render "photos/fileupload/queue" %>
+<%= render "photos/fileupload/index" %>
+<%= render "jquery_upload" %>

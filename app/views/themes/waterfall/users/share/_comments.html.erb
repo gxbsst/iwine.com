@@ -42,12 +42,15 @@
 <li>
     <div class="pic">
     <% 
-    commentable_path = if comment.commentable.imageable_type == "Wines::Detail"
+    commentable_path = case comment.commentable.imageable_type
+    when "Wines::Detail"
       wine_photo_path(comment.commentable.imageable, comment.commentable)
-    elsif comment.commentable.imageable_type == "Winery"
+    when "Winery"
       winery_photo_path(comment.commentable.imageable, comment.commentable)
-    elsif comment.commentable.imageable_type == "Album"
+    when "Album"
       album_photo_show_user_path(comment.commentable.user_id, comment.commentable.imageable, comment.commentable)
+    when "Wine"
+      wine_photo_path(comment.commentable.imageable.get_latest_detail, comment.commentable)
     end
     %>
      <%= link_to commentable_path do %>

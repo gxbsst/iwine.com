@@ -7,8 +7,6 @@ ActiveAdmin.register Wines::Detail do
       params[:wines_detail].delete('special_comments')
       Wines::SpecialComment.build_special_comment(@wines_detail, params[:special_comment])
       Wines::VarietyPercentage.build_variety_and_percentage(@wines_detail, params[:variety_percentage])
-      region_tree_id = params[:region].values.delete_if{|a| a == ''}.pop
-      @wines_detail.wine.update_attribute(:region_tree_id,  region_tree_id) unless region_tree_id.blank?
       if @wines_detail.update_attributes(params[:wines_detail])
         redirect_to admin_wines_detail_path(@wines_detail)
       else
@@ -59,10 +57,7 @@ ActiveAdmin.register Wines::Detail do
         detail.show_region_percentage
       end
       row "图片" do
-        image_tag(detail.photos.first.image_url(:thumb)) if detail.photos.first
-      end
-      row "标签" do
-        image_tag(detail.photos.label.first.image_url(:middle)) if detail.photos.label.first
+        render "admin/share/show_photos", :photos => detail.photos  #只有使用render才能展示多张图片
       end
     end
   end

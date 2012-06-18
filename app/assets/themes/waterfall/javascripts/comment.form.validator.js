@@ -28,7 +28,7 @@
 				strCount: "", // 计数
 				events: {
 					"click a.btn_gray"  : "submit",
-					"keyup textarea" : "countText",
+					// "keyup textarea" : "countText",
 					'ajax:success'   : 'ajaxSuccess',
 					'ajax:error'            : 'ajaxError'
 				},
@@ -41,7 +41,8 @@
 				submit: function(){
 					this.showError('');
 					this.showSuccess('');
-					if(this.$('textarea').val() == '' )
+					var str = this.$('textarea').val();
+					if(this.isEmpty(str) || this.isBlank(str))
 					{
 						this.showError("评论不能为空");
 						return;
@@ -89,6 +90,12 @@
 				setTextCount: function(count){
 					// $(this.el).find(this.countEl).show();
 					// $(this.el).find(this.countEl + ' span').text(count);
+				},
+				isEmpty: function(str) {
+				    return (!str || 0 === str.length);
+				},
+				isBlank: function(str) {
+				    return (!str || /^\s*$/.test(str));
 				}
 
 			});

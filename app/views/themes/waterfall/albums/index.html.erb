@@ -39,7 +39,27 @@
  <%= paginate @albums, :outer_window => 2 %>
 </div>
 <script type="text/javascript">
-$('.new_album').fancybox({padding:0, margin: 0, width: 450, height: 'auto', autoSize: false, modal: true});
+$("a.new_album").fancybox({
+    maxWidth        : 500,
+    maxHeight       : 360,
+    padding         : 0,
+    fitToView       : false,
+    width           : 450,
+    height          : 'auto',
+    autoSize        : false,
+    closeClick      : false,
+    openEffect      : 'none',
+    closeEffect     : 'none',
+    helpers : {
+        overlay : {
+            opacity : 0.8,
+            css : {
+                'background-color' : '#FFF'
+            }
+        }
+    } // end helper
+
+});
 </script>
 <!-- end mine -->
 </div>

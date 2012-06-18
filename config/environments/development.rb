@@ -57,13 +57,15 @@ Patrick::Application.configure do
   UniformNotifier.rails_logger = true
 
   # customized logger
-  logger = File.open('notify.log', 'a+')
-  logger.sync = true
-  UniformNotifier.customized_logger = logger
+  # logger = File.open('notify.log', 'a+')
+  # logger.sync = true
+  # UniformNotifier.customized_logger = logger
 
   # growl without password
   # UniformNotifier.growl = true
 
   # config.slowgrowl.warn = 1000    # growl any action which takes > 1000ms (1s)
   # config.slowgrowl.sticky = true  # make really slow (2x warn) alerts sticky
+  config.action_controller.perform_caching = true
+  config.cache_store = :mem_cache_store, "192.168.11.31"
 end

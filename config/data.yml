@@ -167,6 +167,10 @@ photo:
     label: 1
     cover: 2
     normal: 0
+  audit_status:
+    submitted: 0
+    approved: 1
+    reject: 2
 
 email:
   welcome:
@@ -176,4 +180,4 @@ email:
     #TODO: 根据不同需要在这里继续添加
   to:
     normal: "non-reply@iWine.com"
-    feedback: "support@sidways.zendesk.com" # 接收用户反馈的邮箱帐号
+    feedback: "suggestion@iwine.com" # 接收用户反馈的邮箱帐号
