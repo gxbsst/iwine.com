@@ -97,6 +97,7 @@ FactoryGirl.define do
   end
 
   factory :photo do
+    
 
   end
 
