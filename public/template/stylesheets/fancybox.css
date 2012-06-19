@@ -329,3 +329,4 @@
 #comment_form .new_message  textarea {width:300px;}
 #comment_form .new_message .text_area {padding:5px;}
 .light_nor {padding:10px 20px;}
+li.ui-menu-item {float:none;}
