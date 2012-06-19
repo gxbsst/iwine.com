@@ -87,7 +87,7 @@ input.common_search {width:250px;}
 .myform .left {width:500px;float:left;margin-right:20px;}
 .myform .right {float:left;}
 /*--------- stylized ---------- */
-.myform .required, .myform .optional  {float:left;display:block;margin-bottom:10px;width:800px;}
+.myform .required, .myform .optional  {float:left;display:block;margin-bottom:10px;width:800px;} 
 .myform .left .required, .myform .left .optional {width:500px;}
 .myform .main div {float:left;display:block;margin-bottom:10px;width:680px;}
 .myform .error {padding:5px 10px;width:150px;text-align:left;display:inline-block;}
@@ -180,7 +180,7 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .icon_fol {background-position:3px -172px;padding-left:15px;color:#999;}
 .icon_fol_e {background-position:1px -159px;padding-left:15px;color:#999;}
 .cancl_fol a {color:#a8bbc6;}
-
+ 
 /*--------------star style---------------*/
 .star_s0, .star_s1, .star_s2, .star_s3, .star_s4, .star_s5, .star_s_h, .star_s1_h, .star_s2_h, .star_s3_h, .star_s4_h, .star_s5_h {background:url(../images/icon/allstar.gif) no-repeat;display:inline-block;width:65px;height:12px;_height:7px;}
 .star_b_s00, .star_b_s05, .star_b_s10, .star_b_s15, .star_b_s20, .star_b_s25, .star_b_s30, .star_b_s35, .star_b_s40, .star_b_s45, .star_b_s50 {background:url(../images/icon/allstar.gif) no-repeat;display:inline-block;width:79px;height:14px;}

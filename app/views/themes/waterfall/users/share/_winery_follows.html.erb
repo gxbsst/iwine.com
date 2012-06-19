@@ -4,7 +4,7 @@
   <li>
   	<div class="logo">
   	  <%= link_to winery_path(winery) do  %>
-      <%= image_tag winery.logo_url(:thumb), :widht => 100, :height => 100 %>
+      <%= winery_label_tag winery, :thumb_name => :thumb, :width => 100, :height => 100 %>
   	  <% end %>
   	</div>
       <div class="meta">

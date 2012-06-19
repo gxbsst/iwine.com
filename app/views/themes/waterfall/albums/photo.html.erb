@@ -32,8 +32,8 @@
         </div>
         <div class="photo">
           <%= image_tag @photo.image_url(:large) %>
-          <p class="name"><%= @photo.intro %></p>
         </div>
+        <div><p class="name"><%= @photo.intro %></p></div>
         <div class="info">
           <%= render "photos/liked"%>
           <div class="share float_r">
