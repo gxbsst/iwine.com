@@ -4,12 +4,12 @@
 .hp_header {margin:0 0 50px 0;}
 .hp_userimg {float:left;width:130px;margin:0 20px 0 0;}
 .hp_header .hp_right {float:right;}
-.hp_info {float:left;width:550px;position:relative;_line-height:22px;}
+.hp_info {float:left;width:720px;position:relative;_line-height:22px;}
 .hp_info .username {font-size:20px;font-weight:bold;margin:0 0 5px 0;_margin:0;}
 .hp_info .mystatu {margin:0 0 20px 0;color:#666;}
 .hp_info .mystatu span {display:inline-block;margin-left:20px;}
 .hp_info .item {line-height:18px;}
-.hp_info ul.hp_navi{position:absolute; width:550px;top:100px;}
+.hp_info ul.hp_navi{position:absolute; width:720px;top:100px;}
 .hp_navi li {float:left;height:50px;line-height:15px;}
 .hp_navi li a {display:block;height:38px;padding:7px 15px 0 15px;text-align:center;color:#333;float:left;}
 .hp_navi li a:hover {background:url(../images/bg/bg_navi.gif) repeat-x left top;text-decoration:none;}
