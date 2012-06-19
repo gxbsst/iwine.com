@@ -30,7 +30,7 @@
     end
 
     def destroy
-      if @cellar_item.delete
+      if @cellar_item.destroy
         notice_stickie t("notice.destroy_success")
        redirect_to cellars_user_path(@user, @cellar)
       end

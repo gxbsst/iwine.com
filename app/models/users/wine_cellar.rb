@@ -18,4 +18,10 @@ class Users::WineCellar < ActiveRecord::Base
   has_many :mine_items, :class_name => "Users::WineCellarItem",
            :foreign_key => "user_wine_cellar_id",
            :include => [:wine_cellar, :wine_detail => [:covers, :wine]]
+
+  counts :items_count  =>  {:with => "Users::WineCellarItem",
+                            :receiver => lambda {|cellar_item| cellar_item.wine_cellar},
+                            :increment => {:on => :create},
+                            :decrement => {:on => :destroy}
+                           }
 end

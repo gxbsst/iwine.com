@@ -25,14 +25,15 @@ class Winery < ActiveRecord::Base
   include Common
   # 统计评论数量
   counts :comments_count => {:with => "Comment", 
-                             :on => :create, 
                              :receiver => lambda {|comment| comment.commentable },
-                             :if => lambda {|comment| comment.commentable_type== "Winery" && comment.do == "comment"}},
+                             :increment => {:on => :create, :if => lambda {|comment| comment.commentable_type== "Winery" && comment.do == "comment"}},
+                             :decrement => {:on => :save, :if   => lambda {|comment| comment.commentable_type == "Winery" && comment.do == "comment" && !comment.deleted_at.blank?}}                              
+                             },
          :followers_count => {
                              :with => "Comment",
-                             :on => :create,
                              :receiver => lambda {|comment| comment.commentable },
-                             :if => lambda {|comment| comment.commentable_type== "Winery" && comment.do == "follow"}
+                             :increment => {:on => :create, :if => lambda {|comment| comment.commentable_type== "Winery" && comment.do == "follow"}},
+                             :decrement => {:on => :save, :if => lambda {|comment| comment.commentable_type == "Winery" && comment.do == "follow" && !comment.deleted_at.blank?}}                              
                             }
   has_many :registers
   has_many :info_items, :class_name => "InfoItem"

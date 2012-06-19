@@ -125,6 +125,8 @@ end
 
 gem 'user_resource_init', :path => 'lib/patrick/user_resource_init'
 
+# 计数
+gem 'counter', :path => 'lib/patrick/counter'
 # 模板
 gem 'themes_for_rails', :path => "lib/gems"
 

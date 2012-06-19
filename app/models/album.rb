@@ -21,6 +21,11 @@ class Album < ActiveRecord::Base
   has_many :covers, :as => :imageable, :class_name => "Photo", :conditions => { :photo_type => APP_DATA["photo"]["photo_type"]["cover"] }
 
   acts_as_votable
+  counts :photos_count => {:with => "Photo",
+                           :receiver => lambda {|photo| photo.album }, 
+                           :increment => {:on => :create, :if => lambda {|photo| photo.album_id > 0}},
+                           :decrement => {:on => :save,   :if => lambda {|photo| photo.album_id > 0 && !photo.deleted_at.blank? }}                              
+                          }
 
   #使用photos 的scope
   # def cover

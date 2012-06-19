@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 class Comment < ActiveRecord::Base
+ counts :votes_count => {:with => "ActsAsVotable::Vote", 
+                         :receiver => lambda {|vote| vote.votable },
+                         :increment => {:on => :create,  :if => lambda {|vote| vote.votable_type == "Comment" && vote.vote_flag == true}},
+                         :decrement => {:on => :destroy, :if => lambda {|vote| vote.votable_type == "Comment" && vote.vote_flag == true}}                              
+                        }
+
   # default_scope where('deleted_at IS NULL')
   scope :with_wine_follows, where(:commentable_type => "Wines::Detail", :do => "follow")
 
@@ -89,6 +95,14 @@ class Comment < ActiveRecord::Base
       :select => "comments.*, count(votes.id) as votes_count",
       :conditions => ["parent_id is null and do = 'comment'"], :group => "comments.id",
       :order => "votes_count DESC, created_at DESC", :limit => option[:limit] )
+  end
+
+  ## 通过deleted_at  判断评论的数量是否应该减少
+  ## 适用于 after_update
+  def counts_should_decrement?
+   if !deleted_at.blank? 
+     true
+   end
   end
 
 end
