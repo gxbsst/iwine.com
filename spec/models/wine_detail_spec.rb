@@ -1,64 +1,81 @@
 require 'spec_helper'
 describe Wines::Detail do
-	# let(:user) { Factory(:user) }
-	it "comments_count will +1 when Comment create" do
-		# @wine_detail = create(:wine_detail)
-		# # @user = create(:user, city: "Shanghai", username: "user3")
-		# # @user.errors.on(:email) 
-		# # @user.should_not_be_valid
-		# @comment = Comment.build_from @wine_detail, user.id, "Comment content"
-		# @comment.save
-		# @comment = Comment.build_from @wine_detail, user.id, "Comment content"
-		# @comment.save
-		# @comment = Comment.build_from @wine_detail, user.id, "Comment content"
-		# @comment.save
-		# @new_wine_detail = Wines::Detail.find(@wine_detail)
-		# # Rails.logger("....")
-		# @new_wine_detail.comments_count.should  be(3)
+  # let(:wine_detail) { Factory(:wine_detail)}
+  describe "#photos_count" do
+    let(:wine_detail_with_photo) { Factory(:wine_detail_with_photo)}
+    # before(:each) do 
+    #    @wine_detail_with_photo =  Wines::Detail.find(14)
+    # end
+    context "When Audit Log items is  Null" do
 
-		# @winery = create(:winery)
-		# @comment1 = Comment.build_from @winery, user.id, "Comment content"
-		# @comment1.save
+      it "should increment if photo's audit status change from 0 to 1" do
+        wine_detail_with_photo.photos.first.audit_status = 1
+        wine_detail_with_photo.photos.first.save!
+       
+        # # wine_detail_with_photo.photos.first.update_attributes(:audit_status => 1)
+        # puts ("#{@wine_detail_with_photo.photos.first.counts_should_increment?}")
+        Wines::Detail.find(wine_detail_with_photo).photos_count.should be(1)
+      end
 
-		# @reply_comment = Comment.build_from(@winery,
-		# 	user.id,
-		# 	"comment body",
-		# 	:parent_id => @comment1.id,
-		# 	:do => "comment")
-		# @reply_comment.save
-		# @reply_comment.move_to_child_of(@comment1)
+      it "should not increment if photo's audit status change from 0 to 2" do
+        wine_detail_with_photo.photos.first.audit_status = 2
+        wine_detail_with_photo.photos.first.save!
+        Wines::Detail.find(wine_detail_with_photo).photos_count.should be(0)
+      end
+    end
 
-		# @user = User.find(user)
-		# @user.comments_count.should be(4)
+    context "When Audit Log  items is not Null" do
+      context "default audit_status 0" do
+        before(:each) do
+          create(:audit_log, :result => 0, :owner_type => 5, :business_id => wine_detail_with_photo.photos.first.id)
+        end
+        it "should increment if photo's audit status change from 0 to 1" do
+          wine_detail_with_photo.photos.first.audit_status = 1
+          wine_detail_with_photo.photos.first.save!
+          Wines::Detail.find(wine_detail_with_photo).photos_count.should be(1)
+        end
 
-		# @new_winery = Winery.find(@winery)
-		# @new_winery.comments_count.should be(1)
-	end
+        it "should increment if photo's audit status change from 0 to 2" do
+          wine_detail_with_photo.photos.first.audit_status = 2
+          wine_detail_with_photo.photos.first.save!
+          Wines::Detail.find(wine_detail_with_photo).photos_count.should be(0)
+        end
 
-end
+        it "should increment if photo's audit status change from 0 to 0" do
+          wine_detail_with_photo.photos.first.audit_status = 0
+          wine_detail_with_photo.photos.first.save!
+          Wines::Detail.find(wine_detail_with_photo).photos_count.should be(0)
+        end
 
-describe Wines::Detail do
-	let(:user) { Factory(:user) }
-	it "winery's comments count will be + 1" do
-		# @winery = create(:winery)
-		# @comment1 = Comment.build_from @winery, user.id, "Comment content"
-		# @comment1.save
-		# @new_winery = Winery.find(@winery)
-		# @new_winery.comments_count.should be(1)
-	end
-end
+      end
+      context "default audit_status 1" do
+        before(:each) do
+          create(:audit_log, :result => 1, :owner_type => 5, :business_id => wine_detail_with_photo.photos.first.id)
+        end
+        it "should increment if photo's audit status change from 1 to 0" do
+          wine_detail_with_photo.photos.first.update_attributes(:audit_status => 2)
+          # wine_detail_with_photo.photos.first.save!
+          Wines::Detail.find(wine_detail_with_photo).photos_count.should be(0) # 这里应该是0, 因为第一次创建audit logs时， 已经+1, 现在-1 正好等于0
+        end
+      end
+    end
+  end
 
-describe Wines::Detail, "About Counter" do
-	# let(:user) { Factory(:user) }
-	it "create new photo, photos_count should +1 " do
-		# # wine_detail = Factory(:wine_detail)
-		# # wine_detail.photos.create(:image => open("/Users/weston/Desktop/button_1.png"))
-		# @wine_detail = create(:wine_detail)
-		# @comment = Comment.build_from @wine_detail, user.id, "Comment content"
-		# # @comment.save
-		# # wine_detail.photos_count.should == 0
-		# @new_wine_detail = Wines::Detail.find(@wine_detail)
-		# @wine_detail.comments_count.should be(1)
-	end
-  
+  describe  "#owners_count" do
+    let(:wine_detail) { Factory(:wine_detail)}
+    it "should increment if cellar item is created" do
+      @wine_cellar_item = build(:wine_cellar_item, :wine_detail_id => wine_detail.id)
+      @wine_cellar_item.save
+      Wines::Detail.find(wine_detail).owners_count.should be(1)
+    end
+
+    it "should decrement if cellar item is destroy" do
+      @wine_cellar_item = build(:wine_cellar_item)
+      @wine_cellar_item.save
+      @wine_detail = @wine_cellar_item.wine_detail
+      @wine_cellar_item.destroy
+      Wines::Detail.find(@wine_detail).owners_count.should be(0)
+    end
+  end
+
 end

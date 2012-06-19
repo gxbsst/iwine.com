@@ -1,4 +1,5 @@
 # encoding: utf-8
+# example https://github.com/drhenner/ror_ecommerce/tree/master/spec/factories
 # Factory.define :user do |f|
 #   f.sequence(:email) { |n| "foo#{n}@example.com" }
 #   f.password "secret"
@@ -53,26 +54,31 @@ FactoryGirl.define do
   end
 
   factory :comment do
-  	# commentable_id
-  	# commentable_type
+  	commentable  { |c| c.association(:wine_detail) }
+    user  { |c| c.association(:user) }
+    parent_id ""
+    point 3
   	# title
-  	# body
-  	# subject
-  	# user_id
-  	# parent_id
-  	# lft
-  	# rgt
-  	# created_at
-  	# updated_at
-  	# point
-  	# private
-  	# is_share
-  	# _config
-  	# do
-  	# deleted_at
-  	# votes_count
-  	# children_count
+    body "Comment Body"
+    votes_count 0
+    children_count 0
+    private 1
+    is_share 1
   end
+
+  factory :comment_with_winery, :class => "Comment" do
+    commentable  { |c| c.association(:winery) }
+    user  { |c| c.association(:user) }
+    parent_id ""
+    point 3
+    # title
+    body "Comment Body"
+    votes_count 0
+    children_count 0
+    private 1
+    is_share 1
+  end
+
 
   factory :winery do
   	name_en "ename"
@@ -96,9 +102,100 @@ FactoryGirl.define do
   	followers_count 0
   end
 
-  factory :photo do
-    
 
+  factory :photo do
+    valid_file = File.new(File.join(Rails.root, 'spec', 'support', 'rails.png'))
+    audit_status 0
+    image File.open(valid_file)
+    imageable_type "Wines::Detail"
+    user {|c| c.association(:user)}
+    album {|c| c.association(:album)}
   end
 
+  factory :audit_log do
+    result 0
+    owner_type 5
+    created_by 1
+    # business_id {|c| c.id }
+    # sequence(:business_id) { i }
+  end
+
+  factory :wine_detail_with_photo, :parent => :wine_detail do |w|
+    # valid_file = File.new(File.join(Rails.root, 'spec', 'support', 'rails.png'))
+    # images {
+    #   [
+    #     ActionController::TestUploadedFile.new(valid_file, Mime::Type.new('application/png'))
+    #   ]
+    # }
+    w.photos {|p|[p.association(:photo),
+                  p.association(:photo)]}
+  end
+
+  factory :wine_detail_with_photo_and_audit_log, :parent => :wine_detail do |w|
+    # valid_file = File.new(File.join(Rails.root, 'spec', 'support', 'rails.png'))
+    # images {
+    #   [
+    #     ActionController::TestUploadedFile.new(valid_file, Mime::Type.new('application/png'))
+    #   ]
+    # }
+    w.photos {|p|[p.association(:photo_with_audit_log),
+                  p.association(:photo_with_audit_log)]}
+  end
+
+  factory :wine_cellar, :class => "Users::WineCellar" do
+    user {|c|c.association(:user)}
+    items_count 0
+  end
+  factory :wine_cellar_item, :class => "Users::WineCellarItem" do |i|
+    price "22"
+    inventory 11
+    drinkable_begin Time.now
+    drinkable_end   Time.now + 2.years
+    buy_from "Shanghai"
+    buy_date 2.days.ago
+    location "Baise"
+    private_type 1
+    value 22.22
+    number 11
+    user_wine_cellar_id 1
+    user {|c| c.association(:user)}
+    wine_detail {|c| c.association(:wine_detail)}
+    wine_cellar {|c| c.association(:wine_cellar)}
+  end
+
+  factory :album do
+    user {|c| c.association(:user)}
+    is_order_asc 1
+    name "album title"
+  end
+
+  factory :album_with_photo, :parent => :album do |p|
+    p.photos {|m|[m.association(:photo), m.association(:photo)]}
+  end
+
+  # factory :photo_with_audit_log, :parent => :photo, :class => Photo do |p|
+  #   p.audit_logs {|p| [p.association(:audit_log),p.association(:audit_log)]}
+  # end
+
+  factory :comment_with_photo, :class => "Comment" do
+    commentable  { |c| c.association(:photo) }
+    user  { |c| c.association(:user) }
+    parent_id ""
+    point 3
+    # title
+    body "Comment Body"
+    votes_count 0
+    children_count 0
+    private 1
+    is_share 1
+  end
+
+  factory :vote, :class => "ActsAsVotable::Vote" do
+    votable {|c| c.association(:photo)}
+    voter {|c| c.association(:user)} 
+    vote_flag 1
+  end
+
+
+  
 end

@@ -3,27 +3,28 @@
 class Wines::Detail < ActiveRecord::Base
   # Count resource, e.g: photos_count, coments_count...
 
-  counts :comments_count => {:with => "Comment", 
-                             :on => :create, 
-                             # :for => :wine_detail,
+  counts  :photos_count   => {:with => "AuditLog",
+                              :receiver => lambda {|audit_log| audit_log.logable.imageable }, 
+                              :increment => {:on => :create, :if => lambda {|audit_log| audit_log.owner_type == OWNER_TYPE_PHOTO && audit_log.counts_should_increment? }},
+                              :decrement => {:on => :save, :if => lambda {|audit_log| audit_log.owner_type == OWNER_TYPE_PHOTO && audit_log.counts_should_decrement? }}                              
+                             },              
+          :comments_count => {:with => "Comment", 
                              :receiver => lambda {|comment| comment.commentable },
-                             :if => lambda {|comment| comment.commentable_type== "Wines::Detail" && comment.do == "comment"}},
+                             :increment => {:on => :create, :if => lambda {|comment| comment.commentable_type == "Wines::Detail" && comment.do == "comment"}},
+                             :decrement => {:on => :save,   :if => lambda {|comment| comment.commentable_type == "Wines::Detail" && comment.do == "comment" && !comment.deleted_at.blank?}}                              
+                             },
          :followers_count => {:with => "Comment", 
                               :on => :create,
-                              # :for => :wine_detail 
                               :receiver => lambda {|comment| comment.commentable },
-                              :if => lambda {|comment| comment.commentable_type== "Wines::Detail" && comment.do == "follow"}},
-         :photos_count => {:with => "Photo", 
-                              :on => :update,
-                              # :for => :wine_detail 
-                              :receiver => lambda {|photo| photo.imageable},
-                              :if => lambda {|photo| photo.imageable_type== "Wines::Detail" && photo.audit_status == 1}}
-
-          # :photos_counts => {:with => "Photo", 
-          #                             :on => :create, 
-          #                             :receiver => lambda {|photo| photo.imageable},
-          #                             :if => lambda {|photo| photo.imageable_type == "Wines::Detail"}
-          #                            },                    
+                              :increment => {:on => :create, :if => lambda {|comment| comment.commentable_type == "Wines::Detail" && comment.do == "follow"}},
+                              :decrement => {:on => :save,   :if => lambda {|comment| comment.commentable_type == "Wines::Detail" && comment.do == "follow" && !comment.deleted_at.blank?}}                              
+                              },
+           :owners_count  =>  {:with => "Users::WineCellarItem",
+                              :receiver => lambda {|cellar_item| cellar_item.wine_detail},
+                              :increment => {:on => :create},
+                              :decrement => {:on => :destroy}
+                             }                    
+        
 
   include Common
 
