@@ -7,8 +7,8 @@ class Photo < ActiveRecord::Base
 
   counts :comments_count => {:with => "Comment", 
                              :receiver => lambda {|comment| comment.commentable },
-                             :increment => {:on => :create, :if => lambda {|comment| comment.commentable_type == "Photo" && comment.do == "comment"}},
-                             :decrement => {:on => :save,   :if => lambda {|comment| comment.commentable_type == "Photo" && comment.do == "comment" && !comment.deleted_at.blank?}}                              
+                             :increment => {:on => :create, :if => lambda {|comment| comment.counter_should_increment_for("Photo")}},
+                             :decrement => {:on => :save,   :if => lambda {|comment| comment.counter_should_decrement_for("Photo")}}                              
                              },
          :votes_count =>    {:with => "ActsAsVotable::Vote", 
                              :receiver => lambda {|vote| vote.votable },
@@ -75,7 +75,6 @@ class Photo < ActiveRecord::Base
     Dir.mkdir "#{Rails.root}/public/uploads/photo" unless Dir.exist? "#{Rails.root}/public/uploads/photo"
     Dir.mkdir "#{Rails.root}/public/uploads/photo/wine" unless Dir.exist? "#{Rails.root}/public/uploads/photo/wine"
     Dir.mkdir("#{Rails.root}/public/uploads/photo/wine/#{wine_detail_id}") unless Dir.exist? "#{Rails.root}/public/uploads/photo/wine/#{wine_detail_id}"
-
   end
 
   def self.copy_photo(wine_register_id, wine_detail_id)

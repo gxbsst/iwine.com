@@ -49,16 +49,21 @@ describe User do
 
   describe "#winery_followings_count" do
     before(:each) do
-      @comment = build(:comment_with_winery, :do => "follow")
+      @winery = create(:winery)
+      @comment = Comment.build_from( @winery,
+                                     user.id,
+                                     'Comment body',
+                                     :do => "follow")
     end
     it "should increment if do follow" do
       @comment.save
-      User.find(@comment.user).winery_followings_count.should be(1)
+      User.find(user).winery_followings_count.should be(1)
     end
     it "should decrement if do follow" do
+      @comment.save
       @comment.deleted_at = Time.now
       @comment.save
-      User.find(@comment.user).winery_followings_count.should be(0)
+      User.find(user).winery_followings_count.should be(0)
     end
   end
   describe "#comments_count" do
