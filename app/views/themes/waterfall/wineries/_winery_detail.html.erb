@@ -41,10 +41,7 @@
      </div>
      <div class="mt20">
        <ul class="count">
-         <li class="follow">
-
-          <%= link_to "#{@winery.followers_count}个关注", followers_list_winery_path(@winery) %>
-        </li>
+         <li class="follow"><%= link_to "#{@winery.followers_count}个关注", followers_list_winery_path(@winery) %></li>
          <li class="comment"><%= link_to "#{@winery.comments_count}条评论", winery_comments_path(@winery) %></li>
        </ul>
 
@@ -56,8 +53,8 @@
            <%# 用户已经登录， 检查是否已经关注 %>
        <% else %>
            <%  if @winery.is_followed? current_user %>
-			<span class="icon_fol mr5">已关注<span class="cancl_fol">
-				 <%= link_to "取消", cancle_follow_winery_comments_path(@winery.id) %>
+			<span class="icon_fol mr5">已关注
+				 <span class="cancl_fol"><%= link_to "取消", cancle_follow_winery_comments_path(@winery.id) %></span>
 			</span>
            <% else %>
                <%= link_to new_winery_comment_path(@winery.id, :do => "follow"), :class => [:btn_gray_b, :mr5, :ajax], :remote => true do %>

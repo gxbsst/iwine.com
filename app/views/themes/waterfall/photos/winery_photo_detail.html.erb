@@ -40,7 +40,7 @@
             </div>
 
             <div class="info">
-              <div class="like float_r"><%= link_to "赞(#{@photo.votes_count})", "#", :class => "icon_like" %></div>
+              <%= render :partial => 'liked' %>
               <div class="share float_r">
                 <%= render "share/sns_icons_second",
                    :image_url => sns_image_url(@photo, :thumb_name => :large),
