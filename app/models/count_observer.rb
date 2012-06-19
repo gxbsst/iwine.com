@@ -1,6 +1,6 @@
 # encoding: utf-8
 class CountObserver < ActiveRecord::Observer
-  observe :comment, :photo, Users::WineCellarItem, Wines::Detail, ActsAsVotable::Vote, :friendship, :album
+  # observe :comment, :photo, Users::WineCellarItem, Wines::Detail, ActsAsVotable::Vote, :friendship, :album
 
   def after_create model
     target_id, target_type, target_type_class = get_target model

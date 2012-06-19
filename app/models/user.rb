@@ -41,10 +41,49 @@ class User < ActiveRecord::Base
 
   init_resources "Users::Profile", "Users::WineCellar"
 
-  counts :comments_count => {:with => "Comment", 
-                             :on => :create, 
-                             :receiver => lambda {|comment| comment.user },
-                             :if => lambda {|comment| comment.do == "comment"}}
+  counts   :comments_count => {:with => "Comment", 
+                               :receiver => lambda {|comment| comment.user },
+                               :increment => {:on => :create, :if => lambda {|comment| comment.do == "comment"}},
+                               :decrement => {:on => :save,   :if => lambda {|comment| comment.do == "comment" && !comment.deleted_at.blank? }}                              
+                               },
+            :wines_count  =>  {:with => "Users::WineCellarItem",
+                               :receiver => lambda {|cellar_item| cellar_item.user},
+                               :increment => {:on => :create},
+                               :decrement => {:on => :destroy}
+                              },   
+            :photos_count =>  {:with => "Photo",
+                               :receiver => lambda {|photo| photo.user }, 
+                               :increment => {:on => :create},
+                               :decrement => {:on => :save, :if => lambda {|photo| !photo.deleted_at.blank? }}                              
+                              },  
+   :wine_followings_count =>  {:with => "Comment",
+                               :receiver => lambda {|comment| comment.user }, 
+                               :increment => {:on => :create, :if => lambda{|comment| comment.commentable_type == 'Wines::Detail' && comment.do == 'follow'}},
+                               :decrement => {:on => :save,   :if => lambda{|comment| comment.commentable_type == "Wines::Detail" && comment.do == "follow" && !comment.deleted_at.blank?}}                              
+                              }, 
+ :winery_followings_count =>  {:with => "Comment",
+                               :receiver => lambda {|comment| comment.user }, 
+                               :increment => {:on => :create, :if => lambda{|comment| comment.commentable_type == 'Winery' && comment.do == 'follow'}},
+                               :decrement => {:on => :save,   :if => lambda{|comment| comment.commentable_type == "Winery" && comment.do == "follow" && !comment.deleted_at.blank?}}                              
+                               },  
+         :followers_count =>  {:with => "Friendship",
+                               :receiver => lambda {|friendship| friendship.user }, 
+                               :increment => {:on => :create},
+                               :decrement => {:on => :destroy}                              
+                              }, 
+         :followings_count =>  {:with => "Friendship",
+                               :receiver => lambda {|friendship| friendship.follower }, 
+                               :increment => {:on => :create},
+                               :decrement => {:on => :destroy}                              
+                              },   
+            :albums_count =>  {:with => "Album",
+                               :receiver => lambda {|album| album.user }, 
+                               :increment => {:on => :create},
+                               :decrement => {:on => :destroy}                              
+                              }                                                  
+
+
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
@@ -270,6 +309,16 @@ class User < ActiveRecord::Base
   def follow_user(user_id)
     unless is_following user_id
       friendship = Friendship.create(:user_id => user_id, :follower_id => id)
+    else
+      false
+    end
+  end
+
+  # 取消关注
+  def unfollow(user)
+    friendship = Friendship.where(:user_id => user.id, :follower_id => id)
+    if !friendship.blank?
+      Friendship.destroy(friendship.first.id)    
     else
       false
     end

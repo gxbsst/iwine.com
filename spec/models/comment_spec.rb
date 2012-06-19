@@ -22,7 +22,7 @@ describe Comment, "About WineDetail Comment" do
   it " comments_count should be decrement" do
     @comment.do ="comment"
     @comment.save 
-    @comment.destroy
+    @comment.update_attribute(:deleted_at, Time.now)
     Wines::Detail.find(@wine_detail).comments_count.should be(0)
     # expect {
     #   @comment.destroy
@@ -42,7 +42,7 @@ describe Comment, "About WineDetail Comment" do
   it " followers_count should be decrement" do
     @comment.do ="follow"
     @comment.save 
-    @comment.destroy
+    @comment.update_attribute(:deleted_at, Time.now)
     Wines::Detail.find(@wine_detail).followers_count.should be(0)
     # expect {
     #   @comment.destroy
@@ -50,10 +50,10 @@ describe Comment, "About WineDetail Comment" do
   end
 
   it " deleted_at is time now, followers_count should be decrement" do
-    @comment.do ="follow"
+    @comment.do = "follow"
     @comment.save 
-    @comment.deleted_at = Time.now
-    @comment.save
+    @comment.update_attribute(:deleted_at, Time.now)
+    
     Wines::Detail.find(@wine_detail).followers_count.should be(0)
     # expect {
     #   @comment.destroy
@@ -81,7 +81,7 @@ describe Comment, "About Winery Comment" do
   it " comments_count should be decrement" do
     @comment.do = "comment"
     @comment.save 
-    @comment.destroy
+    @comment.update_attribute(:deleted_at, Time.now)
     Winery.find(@winery).comments_count.should be(0)
     # expect {
     #   @comment_1.destroy
@@ -102,11 +102,21 @@ describe Comment, "About Winery Comment" do
     @comment.do = "follow"
     
     @comment.save 
-    @comment.destroy
+    @comment.update_attribute(:deleted_at, Time.now)
     Winery.find(@winery).followers_count.should be(0)
     # expect {
     #   @comment_1.destroy
     # }.to change { Winery.find(@winery).comments_count }.from(1).to(0)
+  end
+
+  describe "#votes_count" do
+   let(:comment) { Factory(:comment)}
+   let(:user)  { Factory(:user)}
+
+   it "should increment if photo is commented" do
+     @vote = comment.liked_by user
+     Comment.find(comment).votes_count.should be(1)
+   end 
   end
 
 end

@@ -1,6 +1,20 @@
 # -*- coding: utf-8 -*-
 require 'fileutils'
 class Photo < ActiveRecord::Base
+  acts_as_commentable
+
+  acts_as_votable
+
+  counts :comments_count => {:with => "Comment", 
+                             :receiver => lambda {|comment| comment.commentable },
+                             :increment => {:on => :create, :if => lambda {|comment| comment.commentable_type == "Photo" && comment.do == "comment"}},
+                             :decrement => {:on => :save,   :if => lambda {|comment| comment.commentable_type == "Photo" && comment.do == "comment" && !comment.deleted_at.blank?}}                              
+                             },
+         :votes_count =>    {:with => "ActsAsVotable::Vote", 
+                             :receiver => lambda {|vote| vote.votable },
+                             :increment => {:on => :create,  :if => lambda {|vote| vote.votable_type == "Photo" && vote.vote_flag == true}},
+                             :decrement => {:on => :destroy, :if => lambda {|vote| vote.votable_type == "Photo" && vote.vote_flag == true}}                              
+                            }
   # fires :new_photo, :on                 => :create,
   #                     :actor              => :user,
   #                     :secondary_actor => :imageable,
@@ -10,14 +24,12 @@ class Photo < ActiveRecord::Base
   belongs_to :user
   has_many :comments, :class_name => "PhotoComment", :as => :commentable, :include => [:user]
   has_many :audit_logs, :class_name => "AuditLog", :foreign_key => "audit_id"
-  acts_as_commentable
-
-  acts_as_votable
+ 
 
   paginates_per 12
 
   mount_uploader :image, ImageUploader
-  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :is_audit_status_changed #在update_photo的地方将此字段设置为true
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :is_audit_status_changed #, :audit_migrate_status #在update_photo的地方将此字段设置为true
   #after_update :crop_avatar
   after_save :recreate_delayed_versions!
   before_update :set_audit_status_changed?
@@ -91,4 +103,5 @@ class Photo < ActiveRecord::Base
       self.is_audit_status_changed = true
     end
   end
+
 end
