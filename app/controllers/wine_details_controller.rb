@@ -18,10 +18,7 @@ class WineDetailsController < ApplicationController
     @comments         = @wine_detail.all_comments(:limit => 6)
     @owners           = @wine_detail.owners(:limit => 4)
     @followers        = @wine_detail.followers(:limit => 11)
-    @photos = []
-    @photos << @wine_detail.photos.approved.limit(6)
-    @photos << @wine_detail.wine.photos.approved.limit(3)  if @photos.flatten.blank?
-    @photos = @photos.flatten
+    @photos           = @wine_detail.all_photos.limit(6)
     @covers           = @wine_detail.show_covers
   end
 
