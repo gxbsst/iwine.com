@@ -29,7 +29,7 @@
 $(document).ready(function(){
 
     // 下拉菜单
-    $("li.userbox").bind('mouseenter mouseleave', function(e){
+    $(".user-select").bind('mouseenter mouseleave', function(e){
        $(".drop_down_menu", this).toggle();
     });
     $('.globel_navi li.arrow').bind('mouseenter mouseleave', function(e) {
