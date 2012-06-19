@@ -24,7 +24,7 @@
 <li>
     <div class="pic">
      <%= link_to winery_path(comment.commentable) do %>
-        <%=  winery_label_tag( comment.commentable) %>
+        <%=  winery_label_tag(comment.commentable, :thumb_name => :thumb_x, :size => "70x70") %>
       <% end %>
     </div>
       <div class="main">
