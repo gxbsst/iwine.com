@@ -66,6 +66,7 @@ ul.photo_list li {display:inline-block;float:left; vertical-align:top; width:190
 ul.photo_list li img {margin:0 0 10px 0;}
 ul.photo_list li .intro, .album_left .photo .intro{margin:0 0 5px 0;}
 .content .album_left {width:590px;float:left;margin:0 28px 0 0;}
+.content .album_left .photo {text-align:center;}
 .content .album_right {width:200px;float:left;padding-left:50px;}
 .album_left .info {border-top:1px solid #ccc;padding:10px 0 0 0;margin:15px 0 40px 0;color:#666;}
 .album_left .photo img {margin:0 0 10px 0;}
