@@ -113,7 +113,7 @@ class PhotosController < ApplicationController
   end
 
   def render_winery_photo_detail
-    find_winery_and_hot_wine
+    find_winery_and_hot_winery
     @multiple = true #此页面有两个分享
     render "winery_photo_detail"
 
@@ -126,13 +126,13 @@ class PhotosController < ApplicationController
   end
 
   def render_winery_photo_list
-    find_winery_and_hot_wine
+    find_winery_and_hot_winery
     render "winery_photo_list"
   end
 
-  def find_winery_and_hot_wine
+  def find_winery_and_hot_winery
     @winery = Winery.find params[:winery_id]
-    @hot_wines = Wines::Detail.hot_wines(5)
+    @hot_wineries = Winery.hot_wineries(5) 
   end
 
   def get_photo_imageable
