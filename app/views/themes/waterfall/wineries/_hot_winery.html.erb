@@ -1,0 +1,20 @@
+<div class="sidebox">
+  <div class="title"><h3><a name="05" id="05"></a>热门酒庄</h3></div>
+  <div class="main">
+    <ul class="sidewine">
+      <% @hot_wineries.each do |winery| %>
+          <li>
+            <%= link_to winery_path(winery) do %>
+                <%= winery_label_tag winery, :thumb_name => :thumb_x, :width => 70, :height => 70 %>
+                <div class="info">
+                  <h3 class="zh"><%= link_to winery.name_zh, winery_path(winery) %></h3>
+                  <h3 class="en"><%= link_to winery.name_en, winery_path(winery) %></h3>
+                </div>
+            <% end %>
+          </li>
+      <% end %>
+      <div class="clear"></div>
+    </ul>
+  </div>
+</div>
+

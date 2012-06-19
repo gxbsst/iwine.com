@@ -130,7 +130,7 @@ image:
       height: 200
     middle_x:
       width: 360
-      height: 360
+      height: 330
     large:
       width: 360
       height: 360
