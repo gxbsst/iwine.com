@@ -130,7 +130,7 @@ image:
       height: 200
     middle_x:
       width: 360
-      height: 360
+      height: 330
     large:
       width: 360
       height: 360
@@ -177,6 +177,7 @@ audit_log:
    rejected: 2
 
 email:
+  developers: ["shanhua.chen@sidways.com", "weston.wei@sidways.com"]
   welcome:
     subject: "注册成功！到各个版块转转吧？"
   from:
@@ -185,3 +186,7 @@ email:
   to:
     normal: "non-reply@iWine.com"
     feedback: "suggestion@iwine.com" # 接收用户反馈的邮箱帐号
+
+memcache:
+  servers: 
+    first: "192.168.11.31"

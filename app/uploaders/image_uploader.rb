@@ -70,9 +70,9 @@ class ImageUploader < CarrierWave::Uploader::Base
                                 APP_DATA["image"]["wine"]["thumb"]["height"]]
   end
   
-  # Winery360*360
+  # Winery360*330
   version :middle_x, :from_version => :large, :if => :is_winery? do
-    process :resize_to_limit => [APP_DATA["image"]["winery"]["middle_x"]["width"],'']
+    process :resize_to_fit => [APP_DATA["image"]["winery"]["middle_x"]["width"],APP_DATA["image"]["winery"]["middle_x"]["height"]]
   end
 
   def should_process?

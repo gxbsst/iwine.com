@@ -23,8 +23,10 @@
 			<div class="main">
 				<div class="username">
 					<%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true ) %>
-					<span class="date"> <%= comment.created_at.to_s(:normal) %></span><!--<span class="control"><a href="#">回复</a> | <a href="#">删除</a></span>-->
-					<%=  star_rate_tag(comment.point.to_i) %>
+					<span class="date"> <%= comment.created_at.to_s(:normal) %></span>
+					<% if comment.commentable_type !='Photo' %>
+					 <%= star_rate_tag(comment.point.to_i) %>
+					<% end %>
 				</div>
 				<div class="content"><%= comment.body %></div>
 				<div class="userful">

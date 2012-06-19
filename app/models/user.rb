@@ -43,8 +43,8 @@ class User < ActiveRecord::Base
 
   counts   :comments_count => {:with => "Comment", 
                                :receiver => lambda {|comment| comment.user },
-                               :increment => {:on => :create, :if => lambda {|comment| comment.do == "comment"}},
-                               :decrement => {:on => :save,   :if => lambda {|comment| comment.do == "comment" && !comment.deleted_at.blank? }}                              
+                               :increment => {:on => :create, :if => lambda {|comment| comment.comments_counter_should_increment? }},
+                               :decrement => {:on => :save,   :if => lambda {|comment| comment.comments_counter_should_decrement? }}                              
                                },
             :wines_count  =>  {:with => "Users::WineCellarItem",
                                :receiver => lambda {|cellar_item| cellar_item.user},
@@ -52,19 +52,19 @@ class User < ActiveRecord::Base
                                :decrement => {:on => :destroy}
                               },   
             :photos_count =>  {:with => "Photo",
-                               :receiver => lambda {|photo| photo.user }, 
+                               :receiver => lambda {|photo| photo.user}, 
                                :increment => {:on => :create},
                                :decrement => {:on => :save, :if => lambda {|photo| !photo.deleted_at.blank? }}                              
                               },  
    :wine_followings_count =>  {:with => "Comment",
                                :receiver => lambda {|comment| comment.user }, 
-                               :increment => {:on => :create, :if => lambda{|comment| comment.commentable_type == 'Wines::Detail' && comment.do == 'follow'}},
-                               :decrement => {:on => :save,   :if => lambda{|comment| comment.commentable_type == "Wines::Detail" && comment.do == "follow" && !comment.deleted_at.blank?}}                              
+                               :increment => {:on => :create, :if => lambda{|comment| comment.followers_counter_should_increment_for("Wines::Detail")}},
+                               :decrement => {:on => :save,   :if => lambda{|comment| comment.followers_counter_should_decrement_for("Wines::Detail")}}                              
                               }, 
  :winery_followings_count =>  {:with => "Comment",
                                :receiver => lambda {|comment| comment.user }, 
-                               :increment => {:on => :create, :if => lambda{|comment| comment.commentable_type == 'Winery' && comment.do == 'follow'}},
-                               :decrement => {:on => :save,   :if => lambda{|comment| comment.commentable_type == "Winery" && comment.do == "follow" && !comment.deleted_at.blank?}}                              
+                               :increment => {:on => :create, :if => lambda{|comment| comment.followers_counter_should_increment_for("Winery")}},
+                               :decrement => {:on => :save,   :if => lambda{|comment| comment.followers_counter_should_decrement_for("Winery")}}                              
                                },  
          :followers_count =>  {:with => "Friendship",
                                :receiver => lambda {|friendship| friendship.user }, 
