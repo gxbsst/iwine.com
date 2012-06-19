@@ -45,8 +45,17 @@ module ApplicationHelper
     end
   end
 
-  def winery_cover_tag(object, options = {})
-    cover = get_cover(object)
+  def wine_label_tag(object, options = {})
+    label = get_label(object)
+    if label
+      image_tag label.image_url(options[:thumb_name]), options
+    else
+      theme_image_tag "common/wine_#{options[:thumb_name]}.png", options
+    end
+  end
+
+  def winery_cover_tag(winery, options = {})
+    cover = get_cover(winery)
     if cover
       image_tag cover.image_url(options[:thumb_name]), options
     else
@@ -55,10 +64,9 @@ module ApplicationHelper
   end
 
   def winery_label_tag(winery, options ={})
-    if winery.logo.present?
-      image_tag winery.logo_url(options[:thumb_name]), options
-    elsif winery.photos.label.first
-      image_tag winery.photos.label.first.image_url(options[:thumb_name]), options
+    label = get_label winery
+    if label
+      image_tag label.image_url(options[:thumb_name]), options
     else
       theme_image_tag "common/winery_#{options[:thumb_name]}.png", options
     end
@@ -79,14 +87,19 @@ module ApplicationHelper
   end
 
   def get_cover(object)
-    case object.class.name
-      when "Wine", "Winery"
-        cover = object.photos.cover.first
-      when "Wines::Detail"
-        cover = object.photos.cover.first
-        cover = object.wine.photos.cover.first unless cover
+    cover = object.photos.cover.approved.first
+    if object.class.name == "Wines::Detail" && cover.nil?
+      cover = object.wine.photos.cover.approved.first
     end
     return cover
+  end
+
+  def get_label(object)
+    label = object.photos.label.approved.first
+    if object.class.name == 'Wines::Detail' && label.nil?
+      label = object.wine.photos.label.approved.first
+    end
+    return label
   end
   ## 显示用户头像
   def user_avatar_tag(object, options = {} )
@@ -167,12 +180,6 @@ module ApplicationHelper
   #   mine_messages_path(m)
   # end
 
-  def special_comments_list(parent)
-    parent.special_comments.each do |s|
-      "#{s.name} #{s.score} #{s.drinkable_begin.strftime('%Y') if s.drinkable_begin} - #{s.drinkable_end.strftime('%Y') if s.drinkable_end}"
-    end
-  end
-
 
   # 显示评星
   def star_rate_tag(point)
@@ -222,15 +229,6 @@ module ApplicationHelper
   def wine_default_image(version)
     return theme_image_tag("avatar_default_bg_#{version.to_s}.png") if version.present?
     theme_image_tag("avatar_default_bg.png")
-  end
-  
-  def wine_label_tag(wine, options = {})
-    label = wine.get_label
-      if label
-        image_tag label.image_url(options[:thumb_name]), options
-      else
-        theme_image_tag "wine_img.png", options
-      end    
   end
 
   
@@ -284,4 +282,21 @@ module ApplicationHelper
     end
   end
 
+  def drinkable(object)
+    date_begin = object.drinkable_begin
+    date_end = object.drinkable_end
+    if date_begin || date_end
+      "#{date_begin.to_s(:year) if date_begin} - #{date_end.to_s(:year) if date_end}"
+    end
+  end
+
+  #展示所有的 variety_percentage
+  def variety_percentage_lists(variety_percentages)
+    count = variety_percentages.length
+    show_list = ''
+    variety_percentages.each_with_index do |v, index|
+     show_list << "#{v.name_en} (#{v.show_percentage})#{' 、' if index + 1 != count}"
+    end
+    return show_list
+  end
 end

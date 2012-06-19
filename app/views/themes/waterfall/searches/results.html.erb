@@ -4,7 +4,7 @@
       <a href="<%= url_for( '/searches/results?tab=all&word=' )%>" onclick="this.href+=$('#search_input').val()" id="search_link" class="btn_gray float_r">
         <span>搜索</span>
       </a>
-      <input class="text"  name="" id="search_input" type="text" placeholder="请输入酒款或酒庄的名称" />
+      <input class="text"  name="" id="search_input" type="text" placeholder="请输入酒款或酒庄的名称" value="<%= params[:word] %>"/>
     </div>
     <div class="clear"></div>
     <div class="tabs">
@@ -40,7 +40,7 @@
             <h1 class="en">
               <%= link_to winery.name_en, winery_path(winery) %>
             </h1>
-            <p class="location"><%= winery.region_path_zh(winery.region_tree_id)%></p>
+            <p class="location"><%= winery.region_path_zh %></p>
           </div>
         </li>
         <% end %>
@@ -59,7 +59,7 @@
           <div class="box590_main">
             <% releast_detail = wine.details.order("year desc").first  %>
             <%= link_to wine_path(releast_detail) do %>
-               <%= wine_cover_tag(wine, :alt => releast_detail.en_zh_name, :thumb_name => "thumb_x", :size => "70x70" )%>
+               <%= wine_label_tag(wine, :alt => releast_detail.en_zh_name, :thumb_name => "thumb_x", :size => "70x70" )%>
             <% end %>
             <div class="info">
               <h1 class="zh"><%= link_to wine.name_zh, wine_path(releast_detail) %></h1>

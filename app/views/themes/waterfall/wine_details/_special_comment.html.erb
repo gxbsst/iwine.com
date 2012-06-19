@@ -4,7 +4,7 @@
       <tr>
         <td class="extra_attribute"><%=s.name %></td>
         <td class="extra_attribute"><%= s.score %></td>
-        <td class="extra_attribute"><%= s.drinkable %></td>
+        <td class="extra_attribute"><%= drinkable(s) %></td>
         <th><input type="checkbox" name="special_comment[destroy][]" value="<%= s.id %>"/>删除</th>
         <input name="special_comment[name][]" type="hidden" value="<%= s.name %>"/>
         <input name="special_comment[score][]" type="hidden" value="<%= s.score %>"/>

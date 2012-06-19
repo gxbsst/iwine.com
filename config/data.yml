@@ -1,23 +1,23 @@
 wines:
   capacity:
-    750ml: 750
-    620ml: 620
-    500ml: 500
-    375ml: 375
-    250ml: 250
-    187.5ml: 187.5
-    1.5l: 1500
-    2.25l: 2250
-    3l: 3000
-    4.5l: 4500
-    6l: 6000
-    9l: 9000
-    12l: 12000
-    15l: 15000
-    20l: 20000
-    25l: 25000
-    27l: 27000
-    30l: 30000
+    750ml: '750'
+    620ml: '620'
+    500ml: '500'
+    375ml: '375'
+    250ml: '250'
+    187.5ml: '187.5'
+    1.5l: '1500'
+    2.25l: '2250'
+    3l: '3000'
+    4.5l: '4500'
+    6l: '6000'
+    9l: '9000'
+    12l: '12000'
+    15l: '15000'
+    20l: '20000'
+    25l: '25000'
+    27l: '27000'
+    30l: '30000'
     其他:      #设置为空
 
 users:
@@ -105,11 +105,13 @@ image:
       height: 130
     middle:
       width: 200
-      height: 200
+      height: 440
     large:
       width: 440
       height: 440
-      
+    large_x:
+      width: 610
+      height: 640
   winery:
     xxx_thumb: 
       width: 50
@@ -167,10 +169,12 @@ photo:
     label: 1
     cover: 2
     normal: 0
-  audit_status:
-    submitted: 0
-    approved: 1
-    reject: 2
+
+audit_log:
+ status:
+   submitted: 0
+   approved: 1
+   rejected: 2
 
 email:
   welcome:

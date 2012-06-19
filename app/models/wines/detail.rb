@@ -87,12 +87,7 @@ class Wines::Detail < ActiveRecord::Base
 
   # 获取产区
   def get_region_path_html( symbol = " > " )
-    get_region_path.reverse!.collect { |region| region.name_en + '/' + region.name_zh }.join( symbol )
-  end
-
-  # 适饮年限
-  def drinkable
-    drinkable_begin.to_s + ' - ' + drinkable_end.to_s
+    wine.get_region_path.reverse!.collect { |region| region.name_en + '/' + region.name_zh }.join( symbol )
   end
 
   def show_year
@@ -126,7 +121,7 @@ class Wines::Detail < ActiveRecord::Base
   end
   
   def show_capacity
-    "#{capacity.gsub('ml', '')}ml" unless capacity.blank?
+    capacity.present? ? APP_DATA['wines']['capacity'].invert[capacity] : "其他"
   end
   
   # 谁拥有这些酒
@@ -153,10 +148,10 @@ class Wines::Detail < ActiveRecord::Base
 
   #展示detail covers 如果没有则展示wine 的covers
   def show_covers
-    if covers.present?
-      photo_covers = covers
-    elsif wine.covers.present?
-      photo_covers = wine.covers
+    if covers.approved.present?
+      photo_covers = covers.approved
+    elsif wine.covers.approved.present?
+      photo_covers = wine.covers.approved
     end
     return photo_covers
   end
@@ -165,16 +160,12 @@ class Wines::Detail < ActiveRecord::Base
     alcoholicity.blank? ? nil : "#{alcoholicity}%Vol"
   end
 
-  def show_capacity
-    capacity.blank? ? nil : "#{capacity}ml"
-  end
-
   def all_photo_ids
    all_photos.inject([]) {|memo, p| memo << p.id}
   end
 
   def all_photos
-    Photo.where(["(imageable_type=? AND imageable_id = ?) OR (imageable_type=? AND imageable_id =? )", "Wines::Detail", id, "Wine", wine_id])
+    Photo.approved.where(["(imageable_type=? AND imageable_id = ?) OR (imageable_type=? AND imageable_id =? )", "Wines::Detail", id, "Wine", wine_id])
   end
 
   def all_photo_counts

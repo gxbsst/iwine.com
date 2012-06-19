@@ -2,7 +2,7 @@
   <% @hot_wines.each do |wine|%>
   <li>
     <%= link_to wine_path(wine) do %>
-    <%= wine_cover_tag wine, :thumb_name => :thumb, :width => 70, :height => 70 %>
+    <%= wine_label_tag wine, :thumb_name => :thumb, :width => 70, :height => 70 %>
     <% end %>
     <div class="info">
     <h3 class="zh">

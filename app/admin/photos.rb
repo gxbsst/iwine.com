@@ -113,7 +113,11 @@ def callback_url(imageable_type, imageable_id)
 end
 
 def destroy_photos(photo_ids)
-  Photo.destroy(photo_ids) if photo_ids.present?
+  if photo_ids.present?
+    photo_ids.each do |photo_id|
+      Photo.find(photo_id).update_attribute(:deleted_at, Time.now)
+    end
+  end
 end
 
 def update_photos(photos)

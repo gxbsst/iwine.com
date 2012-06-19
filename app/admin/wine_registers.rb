@@ -68,7 +68,7 @@ ActiveAdmin.register Wines::Register do
         r.show_result
       end
       row "酒区" do
-        r.region_path_zh(r.region_tree_id)
+        r.region_path_zh
       end
       row "图片" do
         image_tag(r.photo_name)  unless r.photo_name.blank?

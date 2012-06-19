@@ -25,16 +25,16 @@
                                          APP_DATA['photo']['photo_type']['normal'] == photo.photo_type.to_i %>
                   <br/>
                   <label>状态</label>  <%= radio_button_tag "photos[#{photo.id}][audit_status]",
-                                         APP_DATA['photo']['audit_status']['submitted'],
-                                         APP_DATA['photo']['audit_status']['submitted'] == photo.audit_status.to_i %> 已提交
+                                         APP_DATA['audit_log']['status']['submitted'],
+                                         APP_DATA['audit_log']['status']['submitted'] == photo.audit_status.to_i %> 已提交
 
                   <%= radio_button_tag "photos[#{photo.id}][audit_status]",
-                                       APP_DATA['photo']['audit_status']['approved'],
-                                       APP_DATA['photo']['audit_status']['approved'] == photo.audit_status %>  已发布
+                                       APP_DATA['audit_log']['status']['approved'],
+                                       APP_DATA['audit_log']['status']['approved'] == photo.audit_status %>  已发布
 
                   <%= radio_button_tag "photos[#{photo.id}][audit_status]",
-                                       APP_DATA['photo']['audit_status']['reject'],
-                                       APP_DATA['photo']['audit_status']['reject'] == photo.audit_status %> 被拒绝
+                                       APP_DATA['audit_log']['status']['rejected'],
+                                       APP_DATA['audit_log']['status']['rejected'] == photo.audit_status %> 被拒绝
 
                   <br/>
                   描述信息

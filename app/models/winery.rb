@@ -21,7 +21,7 @@
 # * wines_count [integer, default=0, limit=4] - TODO: document me
 class Winery < ActiveRecord::Base
   set_table_name "wineries"
-  include Wines::WineSupport
+  include Wines::WineSupport, Common
   include Common
   # 统计评论数量
   counts :comments_count => {:with => "Comment", 

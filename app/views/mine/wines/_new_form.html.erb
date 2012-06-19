@@ -12,7 +12,7 @@
       </div>
       <div class="required">
         <%= f.label :region_tree_id %>
-        <% if @read_only %><%= render 'share/region_tree', :region_tree => @register.get_region_path(@wine.region_tree_id) %> <% else %><%= render "region_tree" %><% end %>
+        <% if @read_only %><%= render 'share/region_tree', :region_tree => @register.get_region_path %> <% else %><%= render "region_tree" %><% end %>
       </div>
 
       <div class="required">
