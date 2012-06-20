@@ -14,7 +14,7 @@
         <h1 class="en">
            <%= link_to winery.name_en, winery_path(winery) %>
         </h1>
-          <p class="mt10">地区：<%= winery.region_path_zh(:connector => "<") %>(<%= winery.region_path_en(:connector => "<") %>)
+          <p class="mt10">地区：<%= winery.region_path_zh %>(<%= winery.region_path_en %>)
             <br />
             地址：<%= winery.address %>
             <br />

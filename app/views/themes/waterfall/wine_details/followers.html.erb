@@ -54,7 +54,11 @@
 		<%= render "wine_details/share/special_comments"%>
 		<%= render "wine_details/share/price"%>
 		<%= render "wine_details/share/vintage"%>
-		<div class=""><a href="#" class="btn_gray"><span>信息纠错与补充</span></a></div>
+		<div class="">
+			 <%= link_to feedback_path(:for => "error_feedbacks" ), :class => "btn_gray" do %>
+      			<span>信息纠错与补充</span>
+    		<% end %>
+		</div>
 	</div>
 	<div class="clear"></div>   
 
