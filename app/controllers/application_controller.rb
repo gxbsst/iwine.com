@@ -29,6 +29,25 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def store_location
+    session[:return_to] = request.referer
+  end
+
+  def clear_stored_location
+    session[:return_to] = nil
+  end
+
+  def redirect_back_or_root_url
+    redirect_to(session[:return_to] || root_url)
+    clear_stored_location
+  end
+  
+  def devise_return_location
+    url = session[:return_to]
+    clear_stored_location
+    return url || home_index_path  
+  end
+
   def mine_equal_current_user?(user)
     if current_user
       return user.id == current_user.id ? true : false
@@ -46,7 +65,7 @@ class ApplicationController < ActionController::Base
       if current_user.sign_in_count == 1
         return start_user_path(current_user)
       else
-        return request.env['omniauth.origin'] || stored_location_for(resource) || home_index_path
+        return request.env['omniauth.origin'] || devise_return_location
       end
     end
   end
