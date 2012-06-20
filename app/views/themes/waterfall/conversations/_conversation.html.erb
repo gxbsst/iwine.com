@@ -1,16 +1,16 @@
 <li class="clearfix">
 	<div class="userimg">
     <% if conversation.originator == current_user %> 
-		<%= link_to_user conversation.receipts.first.receiver, 
+		<%= link_to_user current_user, 
 		    { :controller => :users, :action => :show, :id => conversation.last_sender}, 
 		    {:with_avatar => true, :avatar_version => :middle},
 		    {:size => "50x50"} %>
-		<% else %>
+	<% else %>
 		<%= link_to_user conversation.originator, 
 		    { :controller => :users, :action => :show, :id => conversation.last_sender}, 
 		    {:with_avatar => true, :avatar_version => :middle},
 		    {:size => "50x50"} %>
-		<% end %>
+	<% end %>
 	</div>
 	<div class="content clearfix">
 			<div >

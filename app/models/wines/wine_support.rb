@@ -52,7 +52,8 @@ module Wines
 
      # 星级
      def stars
-       (@score / 2).round(0)
+       
+       (score / 2).round(0)
      end
 
      # 评分总数

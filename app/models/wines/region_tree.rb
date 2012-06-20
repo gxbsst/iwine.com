@@ -8,7 +8,7 @@ class Wines::RegionTree < ActiveRecord::Base
 
   #清晰数据时查询region_tree的id
   def self.get_region_tree_id(name)
-    region_tree = self.where("name_en = ?", name).order("level desc").first
-    region_tree ? region_tree.id : nil
+    region_tree = self.where("name_en = ?", name).order("level desc")
+    region_tree.blank? || region_tree.size > 1 ? nil : region_tree.first.id
   end
 end

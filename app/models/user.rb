@@ -413,6 +413,19 @@ class User < ActiveRecord::Base
     super
   end
 
+  #检查是否和user2有过私信会话， 如果有会话则返回conversation
+  def has_conversation_with?(user2)
+    current_conversation = nil
+    mailbox.conversations.each do |c|
+      receipts = c.receipts_for user2
+      if receipts.present?
+        current_conversation = c
+        break
+      end
+    end
+    return current_conversation
+  end
+
   private
 
   def resize_avatar(from_version, to_version)
@@ -433,4 +446,5 @@ class User < ActiveRecord::Base
       resize_avatar(:large, :thumb)
     end
   end
+
 end
