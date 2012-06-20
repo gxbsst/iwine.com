@@ -2,6 +2,7 @@
 class FeedbacksController < ApplicationController
 
   def new
+    @title = "反馈"
     build_feedback
   end
 
@@ -21,7 +22,7 @@ class FeedbacksController < ApplicationController
   end
 
   def success
-
+      @title = "反馈成功"
   end
 
   private

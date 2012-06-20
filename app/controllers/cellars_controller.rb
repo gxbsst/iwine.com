@@ -6,6 +6,7 @@ class CellarsController < ApplicationController
   before_filter :get_order_type
 
   def show
+    @title = ["酒窖", @user.username].join("-")
     if params[:wine_name]
       if mine_equal_current_user?(@user)
         @cellar_items = @cellar.mine_items.joins(:wine_detail => :wine).

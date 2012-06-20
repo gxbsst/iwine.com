@@ -1,3 +1,4 @@
+site: "iWine.com"
 wines:
   capacity:
     750ml: '750'
