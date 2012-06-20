@@ -46,7 +46,7 @@
                 <td class="des">
                   <%= wine_detail.wine.name_zh %><br/>
                   <%= wine_detail.wine.name_en %><br/>
-                  <%= render 'share/region_tree', :region_tree => wine_detail.get_region_path(wine_detail.id) %><br/>
+                  <%= render 'share/region_tree', :region_tree => wine_detail.wine.get_region_path %><br/>
                   <%= wine_detail.wine.winery.name_zh %><br/>
                   <%= wine_detail.wine.style.name_zh %>
                 </td>

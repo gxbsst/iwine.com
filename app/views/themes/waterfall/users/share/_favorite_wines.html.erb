@@ -3,12 +3,12 @@
 <span>
   <%= link_to wine_path(item.wine_detail) do %>
   <% if index > 1 %>
-  <%= wine_cover_tag(item.wine_detail, 
+  <%= wine_label_tag(item.wine_detail,
       :thumb_name => :thumb_x,
       :width => 100,
       :height => 100) %>
   <% else %>
-  <%= wine_cover_tag(item.wine_detail, 
+  <%= wine_label_tag(item.wine_detail,
       :thumb_name => :middle,
       :width => 201, 
       :height => 201) %>

@@ -3,7 +3,7 @@
 <% if comment.commentable_type == "Wines::Detail" %>
 <div class="item relative dotted">
   <div class="pic">
-	<%= wine_cover_tag comment.commentable, :thumb_name => :thumb, :width => 90, :height => 90 %>
+	<%= wine_label_tag comment.commentable, :thumb_name => :thumb, :width => 90, :height => 90 %>
   </div>
   <p class="comment_info">
     评论  <%= raw link_to comment.commentable.name, wine_path(comment.commentable.id) %>

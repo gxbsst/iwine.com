@@ -48,6 +48,7 @@ namespace :photo do
                  :photo_type => get_photo_type(file),
                  :image => open(file)
              )
+             photo.approve_photo
              puts "winery_id #{winery.id}  photo_id #{photo.id}  #{photo.photo_type}"
            end
 
@@ -80,6 +81,7 @@ namespace :photo do
           :photo_type => get_photo_type(file),
           :image => open(file)
       )
+      photo.approve_photo
       puts "wine #{photo.id}"
     end
   end
@@ -94,6 +96,8 @@ namespace :photo do
         :photo_type => get_photo_type(file),
         :image => open(file)
       )
+      #发布图片
+      photo.approve_photo
       puts "wine_detail #{photo.id}"
     end
   end

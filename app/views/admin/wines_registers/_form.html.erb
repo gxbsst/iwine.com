@@ -23,7 +23,7 @@
         <tr>
           <td><%= f.label :region_tree_id %></td>
 
-          <td><%= render "wine_details/region_tree" %></td>
+          <td><%= render :partial => "admin/share/region_tree", :locals => {:wine_parent => @wines_register, :region_tree_id => @wines_register.region_tree_id} %></td>
         </tr>
         <tr>
           <td><%= f.label :wine_style_id %></td>

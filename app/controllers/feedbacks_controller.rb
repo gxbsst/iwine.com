@@ -8,7 +8,12 @@ class FeedbacksController < ApplicationController
   def create
     build_feedback
     if @feedback.save
-      redirect_to(success_feedbacks_path(:for => @for))
+      notice_stickie("成功提交，我们会尽快处理您的反馈意见。")
+      if current_user
+        redirect_to home_index_path
+      else
+        redirect_to root_url
+      end
     else
       notice_stickie t("notice.feedback.create_failure")
       redirect_to(request.referer)

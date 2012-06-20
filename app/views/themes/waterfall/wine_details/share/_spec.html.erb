@@ -12,14 +12,12 @@
   <br />
 	<% end %>
 	官网：<%= link_to @wine.official_site, 'http://' + @wine.official_site, :target => '_blank' %><br />
-	产区：<%= render 'share/region_tree', :region_tree => @wine_detail.get_region_path(@wine_detail.wine.region_tree_id) %><br />
-	类型： <%= link_to @wine.style.name_zh,
-				results_searches_path(:tab => :wine, :word => @wine.style.name_en) %><br />
+	产区：<%= @wine.region_path_zh(:connector => ">") %><br />
+    <%= @wine.region_path_en(:connector => ">") %><br/>
+	类型：<%= @wine.style.name_zh %><br />
 	容量：<%= @wine_detail.show_capacity %><br />
 	酒精度：<%= @wine_detail.show_alcoholicity %><br />
-	葡萄品种： <% @wine_detail.variety_percentages.each do |i| %>
-        <%= i.name_zh %> (<%= i.percentage %>)、
-        <% end %>
+	葡萄品种： <%= variety_percentage_lists(@wine_detail.variety_percentages) %>
 </div>
 
 

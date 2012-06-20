@@ -19,6 +19,24 @@ describe Comment, "About WineDetail Comment" do
     # }.to change { Wines::Detail.find(@wine_detail).comments_count }.from(0).to(1)
    end
 
+   it "comemnts_count should not be increment if comment is reply" do
+     puts Wines::Detail.find(@wine_detail).comments_count.to_s + "....."
+     @comment.do = "comment"
+     @comment.save
+     @comment_2 = Comment.build_from(@wine_detail,
+                                     user.id,
+                                     'Comment body',
+                                     :parent_id => @comment.id,
+                                     :do => "comment")
+     @comment_2.save
+     
+     Wines::Detail.find(@wine_detail).comments_count.should be(1)
+     # expect {
+     #   @comment.save
+     # }.to change { Wines::Detail.find(@wine_detail).comments_count }.from(0).to(1)
+    end
+
+
   it " comments_count should be decrement" do
     @comment.do ="comment"
     @comment.save 

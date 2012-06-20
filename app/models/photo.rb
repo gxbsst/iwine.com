@@ -7,8 +7,8 @@ class Photo < ActiveRecord::Base
 
   counts :comments_count => {:with => "Comment", 
                              :receiver => lambda {|comment| comment.commentable },
-                             :increment => {:on => :create, :if => lambda {|comment| comment.commentable_type == "Photo" && comment.do == "comment"}},
-                             :decrement => {:on => :save,   :if => lambda {|comment| comment.commentable_type == "Photo" && comment.do == "comment" && !comment.deleted_at.blank?}}                              
+                             :increment => {:on => :create, :if => lambda {|comment| comment.counter_should_increment_for("Photo")}},
+                             :decrement => {:on => :save,   :if => lambda {|comment| comment.counter_should_decrement_for("Photo")}}                              
                              },
          :votes_count =>    {:with => "ActsAsVotable::Vote", 
                              :receiver => lambda {|vote| vote.votable },
@@ -39,10 +39,21 @@ class Photo < ActiveRecord::Base
   scope :labels, where(:photo_type => APP_DATA["photo"]["photo_type"]["label"])
   scope :label, labels.limit(1) #取出一个 label
   scope :cover, covers.limit(1) #取出一个 cover
+  scope :approved, where(:audit_status =>  APP_DATA['audit_log']['status']['approved'])  # for wine and winery
+  scope :visible, where("deleted_at is null")                                             # 展示用户上传的酒和酒庄
+  # for wine and winery
+  # covers.approved
+
+  #for user
+  # covers.visible
+
   #def crop_avatar
   #  image.recreate_versions! if crop_x.present?
   #end
 
+  def approve_photo
+    update_attribute(:audit_status, APP_DATA['audit_log']['status']['approved'])
+  end
   def recreate_delayed_versions!
       image.should_process = true
       image.recreate_versions!
@@ -64,7 +75,6 @@ class Photo < ActiveRecord::Base
     Dir.mkdir "#{Rails.root}/public/uploads/photo" unless Dir.exist? "#{Rails.root}/public/uploads/photo"
     Dir.mkdir "#{Rails.root}/public/uploads/photo/wine" unless Dir.exist? "#{Rails.root}/public/uploads/photo/wine"
     Dir.mkdir("#{Rails.root}/public/uploads/photo/wine/#{wine_detail_id}") unless Dir.exist? "#{Rails.root}/public/uploads/photo/wine/#{wine_detail_id}"
-
   end
 
   def self.copy_photo(wine_register_id, wine_detail_id)

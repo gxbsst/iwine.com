@@ -46,7 +46,7 @@ ActiveAdmin.register Wine do
       end
 
       row "区域" do
-        Wine.region_path_zh(wine.region_tree_id) if wine.region_tree_id
+        wine.region_path_zh if wine.region_tree_id
       end
       row "默认图片" do
         render "admin/share/show_photos", :photos => wine.photos

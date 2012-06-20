@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
 class Comment < ActiveRecord::Base
- counts :votes_count => {:with => "ActsAsVotable::Vote", 
-                         :receiver => lambda {|vote| vote.votable },
-                         :increment => {:on => :create,  :if => lambda {|vote| vote.votable_type == "Comment" && vote.vote_flag == true}},
-                         :decrement => {:on => :destroy, :if => lambda {|vote| vote.votable_type == "Comment" && vote.vote_flag == true}}                              
-                        }
 
-  # default_scope where('deleted_at IS NULL')
+  counts :votes_count => {:with => "ActsAsVotable::Vote",
+                          :receiver => lambda {|vote| vote.votable },
+                          :increment => {:on => :create,  :if => lambda {|vote| vote.votable_type == "Comment" && vote.vote_flag == true}},
+                          :decrement => {:on => :destroy, :if => lambda {|vote| vote.votable_type == "Comment" && vote.vote_flag == true}}
+                          }
+
+  default_scope where('deleted_at IS NULL')
   scope :with_wine_follows, where(:commentable_type => "Wines::Detail", :do => "follow")
 
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
   validates_presence_of :body, :if => :is_comment?
   validates_presence_of :user
-  scope :recent, lambda { |limit| order("created_at DESC").limit(limit) } 
+  scope :recent, lambda { |limit| order("created_at DESC").limit(limit) }
   scope :with_point_is, lambda {|point| where(["point = ?", point])}
 
   # NOTE: install the acts_as_votable plugin if you
@@ -66,7 +67,7 @@ class Comment < ActiveRecord::Base
     where(:commentable_type => commentable_str.to_s, :commentable_id => commentable_id).order('created_at DESC')
   }
 
-  scope :real_comments, lambda {where(" do = 'comment' ")}
+  scope :real_comments, lambda {where(" do = 'comment' AND parent_id IS NULL")}
   # Helper class method to look up a commentable object
   # given the commentable class name and id
   def self.find_commentable(commentable_str, commentable_id)
@@ -91,18 +92,65 @@ class Comment < ActiveRecord::Base
 
   def self.get_comments(commentable, option = {})
     commentable.comments.all(:include => [:user],
-      :joins => "LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id",
-      :select => "comments.*, count(votes.id) as votes_count",
-      :conditions => ["parent_id is null and do = 'comment'"], :group => "comments.id",
-      :order => "votes_count DESC, created_at DESC", :limit => option[:limit] )
+                             :joins => "LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id",
+                             :select => "comments.*, count(votes.id) as votes_count",
+                             :conditions => ["parent_id is null and do = 'comment'"], :group => "comments.id",
+                             :order => "votes_count DESC, created_at DESC", :limit => option[:limit] )
   end
 
-  ## 通过deleted_at  判断评论的数量是否应该减少
-  ## 适用于 after_update
-  def counts_should_decrement?
-   if !deleted_at.blank? 
-     true
-   end
+  # COUNTER
+  # comments_count
+  def comments_counter_should_increment?
+    if self.do == "comment" && self.parent_id.blank?
+      true
+    end
+  end
+
+  def comments_counter_should_decrement?
+    if self.do == "comment" && self.parent_id.blank? && !deleted_at.blank?
+      true
+    end
+  end
+
+  # increment
+  def counter_should_increment_for(commentable_type)
+    if self.commentable_type == commentable_type && self.comments_counter_should_increment?
+      true
+    end
+  end
+
+  # decrement
+  def counter_should_decrement_for(commentable_type)
+    if self.commentable_type == commentable_type && self.comments_counter_should_decrement?
+      true
+    end
+  end
+
+  # followers_count
+  def follower_counter_should_increment?
+    if self.do == "follow" && self.parent_id.nil?
+      true
+    end
+  end
+
+  def follower_counter_should_decrement?
+    if self.do == "follow" && self.parent_id.blank? && !deleted_at.blank?
+      true
+    end
+  end
+
+  # increment
+  def followers_counter_should_increment_for(commentable_type)
+    if self.commentable_type == commentable_type && self.follower_counter_should_increment?
+      true
+    end
+  end
+
+  # decrement
+  def followers_counter_should_decrement_for(commentable_type)
+    if self.commentable_type == commentable_type && self.follower_counter_should_decrement?
+      true
+    end
   end
 
 end

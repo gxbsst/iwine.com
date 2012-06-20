@@ -29,35 +29,13 @@
 $(document).ready(function(){
 
     // 下拉菜单
-    $('a.arrow_down').mouseover(function (event) {
-        // $(this).preventDefault();
-        event.preventDefault();
-        $('ul.drop_down_menu').slideToggle('medium');
+    $(".user-select").bind('mouseenter mouseleave', function(e){
+       $(".drop_down_menu", this).toggle();
+    });
+    $('.globel_navi li.arrow').bind('mouseenter mouseleave', function(e) {
+        $('.CategoryDropdown', this).toggle();
     });
 
-    $('ul.drop_down_menu').mouseleave(function (event) {
-        $(this).slideToggle('medium');
-    });
-
-    $('.globel_navi li.arrow').bind('mouseover mouseout', function(e) {
-        if(e.type == 'mouseover') {
-            $(this).parents().find('.CategoryDropdown').hide();
-            $(this).find('.CategoryDropdown').show();
-        }
-        else
-        {
-            // $(this).find('.CategoryDropdown').hide();
-        } 
-      
-    });
-
-    // Wine 下拉菜单 
-    // $(".globel_navi li.arrow").mouseover(function(event){
-    //     $(this).find('.CategoryDropdown').slideToggle('medium');
-    // });
-    $('.CategoryDropdown').mouseleave(function(){
-      $(this).slideToggle('medium'); 
-    });
 
     // 酒详细页面
     $("a.wine_profile").fancybox();
@@ -161,7 +139,7 @@ $(document).ready(function(){
     // a变成submit
     $("a.submit").click(function(){
 			$(this).parents("form").submit();
-		});
+	});
    
 });
 

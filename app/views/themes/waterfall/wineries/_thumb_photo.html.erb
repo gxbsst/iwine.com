@@ -1,5 +1,5 @@
 <ul class="winery_pic">
-  <% @winery.photos.limit(4).each_with_index do |photo, index| %>
+  <% @winery.photos.approved.limit(4).each_with_index do |photo, index| %>
       <li class="<%= 'last' if index == 3 %>">
         <%= link_to winery_photo_path(@winery, photo) do %>
             <%= image_tag photo.image_url(:thumb), :alt => "酒庄图片" %>

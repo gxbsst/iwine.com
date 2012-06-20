@@ -2,7 +2,7 @@
   <div class="left">
     <div class="searchbox">
       <a href="#" class="btn_gray float_r"><span>搜索</span></a>
-      <input class="text" name="" type="text" placeholder="请输入酒款或酒庄的名称" />
+      <input class="text" name="" type="text" placeholder="请输入酒款或酒庄的名称" value="<%= params[:word] %>"/>
     </div>
     <div class="clear"></div>
     <div class="tabs">
@@ -39,7 +39,7 @@
             <%= link_to  winery.name_en, winery_path(winery)  %>
           </h1>
           <p class="mt10">
-            地区：<%= winery.region_path_zh(winery.region_tree_id)%>
+            地区：<%= winery.region_path_zh %>
             <br />
             地址：Screaming Eagle PO Box 12 Oakville, CA 94562
             <br />

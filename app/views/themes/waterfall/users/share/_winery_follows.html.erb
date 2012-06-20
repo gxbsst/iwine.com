@@ -14,7 +14,7 @@
         <h1 class="en">
            <%= link_to winery.name_en, winery_path(winery) %>
         </h1>
-          <p class="mt10">地区：<%= winery.region_path_zh(winery.region_tree_id, :connector => "<") %>(<%= winery.region_path_en(winery.region_tree_id, :connector => "<") %>)
+          <p class="mt10">地区：<%= winery.region_path_zh(:connector => "<") %>(<%= winery.region_path_en(:connector => "<") %>)
             <br />
             地址：<%= winery.address %>
             <br />
@@ -29,5 +29,5 @@
 </ul>
 
 <% else %>
-<p> 暂时没有评论. </p>
+<p> 暂时没有关注的酒庄. </p>
 <% end %>

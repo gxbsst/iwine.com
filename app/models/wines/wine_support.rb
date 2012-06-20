@@ -16,34 +16,6 @@ module Wines
        # Wine 项目要用到的公共 class methods       
      end
 
-     def region_path_zh(region_tree_id, options = {})
-       region_trees = get_region_path(region_tree_id)
-       options[:connector] = "-" unless options.has_key? :connector
-       region_trees.collect{|r| r.name_zh }.join(options[:connector] )
-     end
-     
-     def region_path_en(region_tree_id, options = {})
-       region_trees = get_region_path(region_tree_id)
-       options[:connector] = "-" unless options.has_key? :connector
-       region_trees.collect{|r| r.name_en }.join(options[:connector] )
-     end
-     
-
-     def get_region_path(region_tree_id)
-       region = Wines::RegionTree.find(region_tree_id)
-       parent = region.parent
-       path = [region]
-       until parent == nil
-         path << parent
-         parent = parent.parent
-       end
-       path.reverse!
-     end
-
-     def drinkable
-       "#{drinkable_begin.strftime('%Y') if drinkable_begin}-#{drinkable_end.strftime('%Y') if drinkable_end}"
-     end
-
      # 当前关注该支酒的用户列表
      def followers(options = { })
        User.joins(:comments).

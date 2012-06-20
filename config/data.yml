@@ -1,23 +1,23 @@
 wines:
   capacity:
-    750ml: 750
-    620ml: 620
-    500ml: 500
-    375ml: 375
-    250ml: 250
-    187.5ml: 187.5
-    1.5l: 1500
-    2.25l: 2250
-    3l: 3000
-    4.5l: 4500
-    6l: 6000
-    9l: 9000
-    12l: 12000
-    15l: 15000
-    20l: 20000
-    25l: 25000
-    27l: 27000
-    30l: 30000
+    750ml: '750'
+    620ml: '620'
+    500ml: '500'
+    375ml: '375'
+    250ml: '250'
+    187.5ml: '187.5'
+    1.5l: '1500'
+    2.25l: '2250'
+    3l: '3000'
+    4.5l: '4500'
+    6l: '6000'
+    9l: '9000'
+    12l: '12000'
+    15l: '15000'
+    20l: '20000'
+    25l: '25000'
+    27l: '27000'
+    30l: '30000'
     其他:      #设置为空
 
 users:
@@ -105,11 +105,13 @@ image:
       height: 130
     middle:
       width: 200
-      height: 200
+      height: 440
     large:
       width: 440
       height: 440
-      
+    large_x:
+      width: 610
+      height: 640
   winery:
     xxx_thumb: 
       width: 50
@@ -128,7 +130,7 @@ image:
       height: 200
     middle_x:
       width: 360
-      height: 360
+      height: 330
     large:
       width: 360
       height: 360
@@ -167,12 +169,15 @@ photo:
     label: 1
     cover: 2
     normal: 0
-  audit_status:
-    submitted: 0
-    approved: 1
-    reject: 2
+
+audit_log:
+ status:
+   submitted: 0
+   approved: 1
+   rejected: 2
 
 email:
+  developers: ["shanhua.chen@sidways.com", "weston.wei@sidways.com"]
   welcome:
     subject: "注册成功！到各个版块转转吧？"
   from:
@@ -181,3 +186,7 @@ email:
   to:
     normal: "non-reply@iWine.com"
     feedback: "suggestion@iwine.com" # 接收用户反馈的邮箱帐号
+
+memcache:
+  servers: 
+    first: "192.168.11.31"

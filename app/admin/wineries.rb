@@ -66,7 +66,7 @@ ActiveAdmin.register Winery do
         render "show_winery_config", :config => winery.config
       end
       row "区域" do
-        winery.region_path_zh(winery.region_tree_id)
+        winery.region_path_zh
       end
       row "LOGO" do
         image_tag(winery.logo_url(:thumb)) unless winery.logo_url.include?("default")

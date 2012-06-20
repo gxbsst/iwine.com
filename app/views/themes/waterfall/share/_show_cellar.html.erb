@@ -41,7 +41,7 @@
               <% wine_detail = item.wine_detail %>
               <tr>
                 <td class="img">
-                  <%= link_to (wine_cover_tag wine_detail, :thumb_name => :thumb, :title => wine_detail.name, :width => 50, :height => 63, :alt => wine_detail.name), wine_path(wine_detail) %>
+                  <%= link_to (wine_label_tag wine_detail, :thumb_name => :thumb, :title => wine_detail.name, :width => 50, :height => 63, :alt => wine_detail.name), wine_path(wine_detail) %>
                 </td>
                 <td class="year">
                   <%= wine_detail.show_year %>
@@ -49,7 +49,7 @@
                 <td class="des">
                   <%= wine_detail.wine.name_zh %><br/>
                   <%= wine_detail.wine.name_en %><br/>
-                  <%= wine_detail.region_path_zh(wine_detail.wine.region_tree_id)%><br/>
+                  <%= wine_detail.wine.region_path_zh %><br/>
                   <%= wine_detail.wine.winery.name_zh %><br/>
                   <%= wine_detail.wine.style.name_zh %>
                 </td>
@@ -57,10 +57,10 @@
                   容量:<%= wine_detail.show_capacity %><br/>
                   购买时间:<%= item.buy_date.strftime("%Y年") unless item.buy_date.blank? %><br/>
                   酒商:<%= item.buy_from %><br/>
-                  适饮年限:<%= "#{item.drinkable_begin.strftime('%Y年') if item.drinkable_begin} - #{item.drinkable_end.strftime('%Y年') if item.drinkable_end}年" %>
+                  适饮年限:<%= drinkable(item) %>
                 </td>
                 <td class=“count”><%= item.number %></td>
-                <td class="price"><%= number_to_currency(item.price) %></td>
+                <td class="price"><%= number_to_currency(item.price,  :unit => "CNY") %></td>
                 <td class="place"><%= item.location %></td>
                 <% if current_user.id == @user.id %>
                     <td>

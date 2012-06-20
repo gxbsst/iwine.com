@@ -3,7 +3,7 @@
 		<div id="preview_inner">
 		  <% if @covers.present? %>
 			<% @covers.each do |photo,index| %>
-		    <div>
+		    <div class="cover">
               <%= link_to wine_photo_path(@wine_detail, photo) do %>
 		         <%= image_tag photo.image_url(:large) %>
               <% end %>

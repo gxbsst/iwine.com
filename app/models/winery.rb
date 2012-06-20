@@ -21,19 +21,19 @@
 # * wines_count [integer, default=0, limit=4] - TODO: document me
 class Winery < ActiveRecord::Base
   set_table_name "wineries"
-  include Wines::WineSupport
+  include Wines::WineSupport, Common
   include Common
   # 统计评论数量
   counts :comments_count => {:with => "Comment", 
                              :receiver => lambda {|comment| comment.commentable },
-                             :increment => {:on => :create, :if => lambda {|comment| comment.commentable_type== "Winery" && comment.do == "comment"}},
-                             :decrement => {:on => :save, :if   => lambda {|comment| comment.commentable_type == "Winery" && comment.do == "comment" && !comment.deleted_at.blank?}}                              
+                             :increment => {:on => :create, :if => lambda {|comment| comment.counter_should_increment_for("Winery")}},
+                             :decrement => {:on => :save, :if   => lambda {|comment| comment.counter_should_decrement_for("Winery")}}                              
                              },
          :followers_count => {
                              :with => "Comment",
                              :receiver => lambda {|comment| comment.commentable },
-                             :increment => {:on => :create, :if => lambda {|comment| comment.commentable_type== "Winery" && comment.do == "follow"}},
-                             :decrement => {:on => :save, :if => lambda {|comment| comment.commentable_type == "Winery" && comment.do == "follow" && !comment.deleted_at.blank?}}                              
+                             :increment => {:on => :create, :if => lambda {|comment| comment.followers_counter_should_increment_for("Winery")}},
+                             :decrement => {:on => :save,   :if => lambda {|comment| comment.followers_counter_should_decrement_for("Winery")}}                              
                             }
   has_many :registers
   has_many :info_items, :class_name => "InfoItem"
