@@ -11,18 +11,21 @@ module Common
 
   def region_path_zh(options = {})
     region_trees = get_region_path
+    return nil if region_trees.blank?
     options[:connector] = ">" unless options.has_key? :connector
     region_trees.collect{|r| r.name_zh }.join(options[:connector] )
   end
 
   def region_path_en(options = {})
     region_trees = get_region_path
+    return nil if region_trees.blank?
     options[:connector] = ">" unless options.has_key? :connector
     region_trees.collect{|r| r.name_en }.join(options[:connector] )
   end
 
 
   def get_region_path
+    return nil unless region_tree_id
     region = Wines::RegionTree.find(region_tree_id)
     parent = region.parent
     path = [region]
