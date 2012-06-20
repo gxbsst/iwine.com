@@ -8,7 +8,7 @@ Patrick::Application.routes.draw do
      match '*not_found', to: 'errors#error_404'
   end
 
-  root :to => 'wine_details#index'
+  root :to => 'static#index'
   ## ADMIN
   ActiveAdmin.routes(self)
   devise_for :admin_users, ActiveAdmin::Devise.config

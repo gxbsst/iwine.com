@@ -1,5 +1,14 @@
- <div class="whitespace">
-  <%= title @title %>
-  <p>Coming Soon...</p>
-  <div class="clear"></div>
- </div>
+<% content_for :title, @title%>
+<% content_for :css  do %>
+<%= theme_stylesheet_link_tag :home %>
+<% end %>
+
+<div id="container" style="position: relative; ">
+<%= render "timeline" %>
+<div style="display: none">
+<%= paginate @timelines %>
+</div>
+<div class="clear"></div>
+</div>
+
+<%= render "layouts/waterfall_js" %>

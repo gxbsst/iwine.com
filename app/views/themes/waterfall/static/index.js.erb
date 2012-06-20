@@ -1,0 +1,9 @@
+$('#container').append('<%= j render "timeline" %>');
+<% unless @timelines.last_page? %>
+$('.pagination').replaceWith('<%= j paginate(@timelines) %>');
+<% else %>
+$('.pagination').remove();
+// TODO: 提示用户已经没有数据可以加载了
+<% end %>
+
+ $('#container').masonry( 'reload');
