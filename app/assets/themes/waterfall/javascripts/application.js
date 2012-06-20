@@ -24,6 +24,7 @@
 //= require waterfall/javascripts/waterfall
 //= require waterfall/javascripts/home
 //= require waterfall/javascripts/jquery.placeholder.min
+//= require waterfall/javascripts/scrolling
 
 
 $(document).ready(function(){

@@ -5,10 +5,23 @@
 
 <div id="container" style="position: relative; ">
 <%= render "timeline" %>
+
 <div style="display: none">
 <%= paginate @timelines %>
 </div>
+
 <div class="clear"></div>
+
 </div>
 
+<div class="loading" id="waterfall_loading" style="display: none">
+  <%= theme_image_tag "common/loading.gif", :size => "16x16", :alt => "loading", :align => :absmiddle %>
+  <span>更多的内容正在载入中，请稍等...</span>
+</div>
+<p align="center" class="end_waterfall_text_info"></p>
+<div id="gototop" class="indicator">
+  <a href="#header">
+     <%= theme_image_tag "common/totop.png", :size => "86x39", :alt => "回到页首" %>
+  </a>
+</div>
 <%= render "layouts/waterfall_js" %>
