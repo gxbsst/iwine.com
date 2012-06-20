@@ -1,8 +1,10 @@
 <div class="whitespace normal search">
   <div class="left">
     <div class="searchbox">
-      <a href="#" class="btn_gray float_r"><span>搜索</span></a>
-      <input class="text" name="" type="text" placeholder="请输入酒款或酒庄的名称" value="<%= params[:word] %>"/>
+      <a href="<%= url_for( '/searches/winery?word=' )%>" onclick="this.href+=$('#search_input').val()" id="search_link" class="btn_gray float_r">
+        <span>搜索</span>
+      </a>
+      <input class="text" name="" id= "search_input" type="text" placeholder="请输入酒款或酒庄的名称" value="<%= params[:word] %>"/>
     </div>
     <div class="clear"></div>
     <div class="tabs">
