@@ -60,7 +60,7 @@
                   适饮年限:<%= drinkable(item) %>
                 </td>
                 <td class=“count”><%= item.number %></td>
-                <td class="price"><%= number_to_currency(item.price) %></td>
+                <td class="price"><%= number_to_currency(item.price,  :unit => "CNY") %></td>
                 <td class="place"><%= item.location %></td>
                 <% if current_user.id == @user.id %>
                     <td>
