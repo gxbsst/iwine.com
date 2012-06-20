@@ -65,6 +65,9 @@ class Winery < ActiveRecord::Base
     self.region_tree_id = region_tree_id unless region_tree_id.blank?
   end
 
+  def all_comments_count
+    comments_count + followers_count
+  end
   # 类方法
   class << self
     def timeline_events

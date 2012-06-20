@@ -420,3 +420,10 @@ div.pagination span.disabled {padding-right: 6px; padding-left: 6px; padding-bot
 
 .errorpage {text-align:center;font-size:16px;font-weight:bold;margin-top:100px;}
 .errorpage p {line-height:24px;}
+
+/*--------------loading pins----------*/
+.loading {text-align:center;margin-top:10px;padding-top:10px;border-top:1px dotted #ccc;}
+.loading img {display:inline-block;}
+.loading span {line-height:16px;}
+.indicator {display: block;font-size: 15px; position: fixed; text-align: center; z-index: 4;}
+#gototop {bottom: -31px; padding: 20px 10px 30px; right: 15px; width: 70px;}

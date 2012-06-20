@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
+  
+
   themes_for_rails
+
+  unless Rails.application.config.consider_all_requests_local
+     match '*not_found', to: 'errors#error_404'
+  end
 
   root :to => 'wine_details#index'
   ## ADMIN
