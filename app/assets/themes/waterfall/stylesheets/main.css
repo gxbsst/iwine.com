@@ -284,8 +284,8 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
     z-index: 10000;
     background: #f3f3f3;
     top: 30px;
-    left: -68px;
-    border:1px solid #ccc;
+	left: -68px;
+	border:1px solid #ccc;
     /* -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 2px 0 2px 2px;    
