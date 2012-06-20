@@ -295,7 +295,7 @@ module ApplicationHelper
     count = variety_percentages.length
     show_list = ''
     variety_percentages.each_with_index do |v, index|
-     show_list << "#{v.name_en} (#{v.show_percentage})#{' 、' if index + 1 != count}"
+     show_list << "#{v.origin_name} (#{v.show_percentage})#{' 、' if index + 1 != count}"
     end
     return show_list
   end

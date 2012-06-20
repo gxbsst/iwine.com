@@ -31,14 +31,14 @@
         <% @entries['wineries'][0..1].each do|winery| %>
         <li>
           <%= link_to  winery_path(winery) do %>
-            <%= winery_label_tag winery, :thumb_name => :thumb_x, :size => "70x70", :alt => winery.name_en %>
+            <%= winery_label_tag winery, :thumb_name => :thumb_x, :size => "70x70", :alt => winery.origin_name %>
           <% end %>
           <div class="meta">
             <h1 class="zh">
               <%= link_to winery.name_zh, winery_path(winery) %>
             </h1>
             <h1 class="en">
-              <%= link_to winery.name_en, winery_path(winery) %>
+              <%= link_to winery.origin_name, winery_path(winery) %>
             </h1>
             <p class="location"><%= winery.region_path_zh %></p>
           </div>
@@ -59,11 +59,11 @@
           <div class="box590_main">
             <% releast_detail = wine.details.order("year desc").first  %>
             <%= link_to wine_path(releast_detail) do %>
-               <%= wine_label_tag(wine, :alt => releast_detail.en_zh_name, :thumb_name => "thumb_x", :size => "70x70" )%>
+               <%= wine_label_tag(wine, :alt => releast_detail.origin_zh_name, :thumb_name => "thumb_x", :size => "70x70" )%>
             <% end %>
             <div class="info">
               <h1 class="zh"><%= link_to wine.name_zh, wine_path(releast_detail) %></h1>
-              <h1 class="en"><%= link_to wine.name_en, wine_path(releast_detail) %></h1>
+              <h1 class="en"><%= link_to wine.origin_name, wine_path(releast_detail) %></h1>
               <p><strong>年份：</strong></p>
               <p class="year">
                 <% wine.details.order("year desc").each do |detail| %>

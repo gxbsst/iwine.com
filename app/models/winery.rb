@@ -57,7 +57,7 @@ class Winery < ActiveRecord::Base
   serialize :config, Hash
 
   def name
-    name_en + '/' + name_zh    
+    origin_name + '/' + name_zh    
   end
 
   def save_region_tree(region)

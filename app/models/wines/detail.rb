@@ -69,16 +69,16 @@ class Wines::Detail < ActiveRecord::Base
     "#{show_year} #{wine.name_zh.to_s}"
   end
 
-  def ename
-    "#{show_year} #{wine.name_en.to_s}"
+  def origin_name
+    "#{show_year} #{wine.origin_name.to_s}"
   end
 
   def name
-    cname + ename
+    cname + origin_name
   end
 
-  def en_zh_name
-    "#{wine.name_en.to_s}#{wine.name_zh.to_s}"
+  def origin_zh_name
+    "#{wine.origin_name.to_s} #{wine.name_zh.to_s}"
   end
 
   def other_cn_name
@@ -87,7 +87,7 @@ class Wines::Detail < ActiveRecord::Base
 
   # 获取产区
   def get_region_path_html( symbol = " > " )
-    wine.get_region_path.reverse!.collect { |region| region.name_en + '/' + region.name_zh }.join( symbol )
+    wine.get_region_path.reverse!.collect { |region| region.origin_name + '/' + region.name_zh }.join( symbol )
   end
 
   def show_year
@@ -115,7 +115,7 @@ class Wines::Detail < ActiveRecord::Base
   def show_region_percentage
     show_percentage = ""
     variety_percentages.includes(:variety).each do |p|
-      show_percentage << " #{p.name_zh}-#{p.name_en}/#{p.percentage} "
+      show_percentage << " #{p.name_zh}-#{p.origin_name}/#{p.percentage} "
     end
     return show_percentage
   end

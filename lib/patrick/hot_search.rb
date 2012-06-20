@@ -19,7 +19,7 @@ class HotSearch
     end
 
     words['winery'][0..1].each do |winery|
-      wineries.push( Winery.find( winery['id'] ) );
+      wineries.push( Winery.find( winery['id'] ) ) if winery['id']
     end
 
     { 'wines' => wines , 'wineries' => wineries }
@@ -47,7 +47,7 @@ class HotSearch
     data = words['winery'][start..end_count]
     if data.present?
       data.each do |winery|
-        wineries.push( Winery.find( winery['id'] ) )
+        wineries.push( Winery.find( winery['id'] ) ) if winery['id']
       end
   end
 

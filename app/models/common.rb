@@ -20,7 +20,7 @@ module Common
     region_trees = get_region_path
     return nil if region_trees.blank?
     options[:connector] = ">" unless options.has_key? :connector
-    region_trees.collect{|r| r.name_en }.join(options[:connector] )
+    region_trees.collect{|r| r.origin_name }.join(options[:connector] )
   end
 
 
