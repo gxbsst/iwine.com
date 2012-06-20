@@ -24,15 +24,7 @@ module ApplicationHelper
   end
 
   def title(page_title, options={})
-    content_for(:title, page_title.to_s)
-    # return content_tag(:h2, page_title, options)
-    html = <<-HTML
-      <div id="main_t" class="clearfix">
-      <h1>#{page_title}</h1>
-      <div class="clear"></div>
-     </div>
-    HTML
-    return html.html_safe
+    content_for(:title) { page_title }
   end
 
   ## 显示酒的封面
@@ -298,5 +290,15 @@ module ApplicationHelper
      show_list << "#{v.origin_name} (#{v.show_percentage})#{' 、' if index + 1 != count}"
     end
     return show_list
+  end
+
+  def yield_for(content_sym, default)
+    output = content_for(content_sym)
+    if output.blank?
+      output = default
+    else
+      output += "-#{APP_DATA['site']}"
+    end
+    output
   end
 end

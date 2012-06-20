@@ -13,28 +13,33 @@ class UsersController < ApplicationController
 
   # 关注的酒
   def wine_follows
+    @title = ["关注的酒", @user.username].join("-")
     @comments = @user.wine_followings.order("created_at DESC").page(params[:page] || 1).per(10)
     @hot_wines = Wines::Detail.hot_wines(5)
   end
 
   # 关注的酒庄
   def winery_follows
+    @title = ["关注的酒庄", @user.username].join("-")
     @comments = @user.winery_followings.order("created_at DESC").page(params[:page] || 1).per(10)
     @hot_wines = Wines::Detail.hot_wines(5)
   end
 
   # 我的评论
   def comments
+    @title = ["评论", @user.username].join("-")
     @hot_wines = Wines::Detail.hot_wines(5)
     @comments = @user.comments.real_comments.order("created_at DESC").page(params[:page] || 1).per(10)
   end
 
   def followings
+    @title = ["关注的人", @user.username].join("-")
     @followings = @user.followings.page(params[:page] || 1).per(10)
     # @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
   end
 
   def followers
+    @title = ["粉丝", @user.username].join("-")
     @followers = @user.followers.page(params[:page] || 1).per(10)
     # @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
   end
