@@ -37,7 +37,7 @@ Patrick::Application.configure do
   # config.logger = SyslogLogger.new
 
   # Use a different cache store in production
-  config.cache_store = :mem_cache_store, APP_DATA["memcache"]["servers"]["first"]
+  config.cache_store = :mem_cache_store, "192.168.11.31"
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
@@ -62,7 +62,7 @@ Patrick::Application.configure do
   config.middleware.use ExceptionNotifier,
     :email_prefix => "[Exception] ",
     :sender_address => %{"Exception Notifier" <support@sidways.com>},
-    :exception_recipients => APP_DATA["email"]["developers"]
+    :exception_recipients => ["shanhua.chen@sidways.com", "weston.wei@sidways.com"]
 
   config.action_mailer.default_url_options = { :host => 'iwine.com' }
     
