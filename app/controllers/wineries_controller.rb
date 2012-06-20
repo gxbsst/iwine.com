@@ -1,5 +1,5 @@
 class WineriesController < ApplicationController
-  before_filter :get_hot_wines, :except => :index
+  before_filter :get_hot_wineries, :except => :index
   before_filter :get_winery, :except => [:show, :index]
   def index
     @timelines = Winery.timeline_events.page(params[:page] || 1 ).per(6)
@@ -24,8 +24,14 @@ class WineriesController < ApplicationController
   def get_winery
     @winery = Winery.find(params[:id])
   end
+
   #热门酒款
   def get_hot_wines
     @hot_wines = Wines::Detail.hot_wines(5)
+  end
+
+  #热门酒庄
+  def get_hot_wineries
+    @hot_wineries = Winery.hot_wineries(5)
   end
 end

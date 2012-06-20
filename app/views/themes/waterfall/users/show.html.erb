@@ -6,7 +6,7 @@
             	<div class="title_btn">
                   <h1>藏酒 
                     <span class="font12 more">
-                      <%= link_to "共#{@user.cellar.items.count}支...", cellars_user_path(@user.id, @user.cellar) %>
+                      <%= link_to "共#{@user.wines_count}支...", cellars_user_path(@user.id, @user.cellar) %>
                     </span>
                 </h1>
                 </div>

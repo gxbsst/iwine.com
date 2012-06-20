@@ -48,7 +48,7 @@ class CellarsController < ApplicationController
     if params[:search_order]
       @order = order_hash[params[:search_order]]
     else
-      @order = "buy_date asc"
+      @order = "updated_at DESC"
     end
   end
 end

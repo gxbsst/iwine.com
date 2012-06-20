@@ -34,7 +34,10 @@
     def new
       @wine_detail = Wines::Detail.includes( :covers, :photos, { :wine => [:style, :winery]} ).find( params[:wine_detail_id].to_i )
       @wine = @wine_detail.wine
-      @cellar_item = Users::WineCellarItem.new(:number => 1, :wine_detail_id => @wine_detail.id)
+      @cellar_item = Users::WineCellarItem.new(:number => 1, 
+                                               :wine_detail_id => @wine_detail.id, 
+                                               :location => current_user.city,
+                                               :private_type => false)
     end
 
     def create
