@@ -78,4 +78,21 @@ describe Wines::Detail do
     end
   end
 
+  describe  "#followers_count" do 
+    before(:each) do
+      @follow = create(:follow)
+    end
+    it "followers_count should be increment" do
+      Wines::Detail.find(@follow.followable).followers_count.should be(1)
+      # expect {
+      #   @comment.save
+      # }.to change { Wines::Detail.find(@wine_detail).comments_count }.from(0).to(1)
+     end
+
+    it " followers_count should be decrement" do
+      @follow.destroy
+      Wines::Detail.find(@follow.followable).followers_count.should be(0)
+    end
+  end
+
 end

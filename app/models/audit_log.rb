@@ -27,13 +27,9 @@ class AuditLog < ActiveRecord::Base
     when OWNER_TYPE_PHOTO
       Photo.find(business_id)
     when OWNER_TYPE_WINE_REGISTER
-      # TODO ....
+      WineRegister.find(business_id)
     when OWNER_TYPE_WINERY
-      # TODO ....
-    when OWNER_TYPE_WINE
-      # TODO ....
-    when OWNER_TYPE_USER
-      # TODO ....
+      Winery.find(business_id)
     end
   end
 
@@ -94,6 +90,21 @@ class AuditLog < ActiveRecord::Base
    # decrement
    def photos_counter_should_decrement?
      if self.owner_type == OWNER_TYPE_PHOTO && self.counter_should_decrement? 
+        true
+     end
+   end
+
+   # wines_count
+   # increment 
+   def wines_counter_should_increment?
+     if self.owner_type == OWNER_TYPE_WINE_REGISTER && self.counter_should_increment? 
+        true
+     end
+   end
+
+   # decrement
+   def wines_counter_should_decrement?
+     if self.owner_type == OWNER_TYPE_WINE_REGISTER && self.counter_should_decrement? 
         true
      end
    end

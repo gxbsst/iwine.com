@@ -1,3 +1,4 @@
+
 # Attributes:
 # * id [integer, primary, not null, limit=4] - primary key
 # * address [string] - TODO: document me
@@ -34,7 +35,13 @@ class Winery < ActiveRecord::Base
                              :receiver => lambda {|comment| comment.commentable },
                              :increment => {:on => :create, :if => lambda {|comment| comment.followers_counter_should_increment_for("Winery")}},
                              :decrement => {:on => :save,   :if => lambda {|comment| comment.followers_counter_should_decrement_for("Winery")}}                              
-                            }
+                            },
+             :wines_count => {
+                              :with => "Wines::Detail",
+                              :receiver => lambda {|detail| detail.winery },
+                              :increment => {:on => :create},
+                              :decrement => {:on => :destroy} # TODO: Won't Destroy, Will Be Update deleted_at                              
+                             }                  
   has_many :registers
   has_many :info_items, :class_name => "InfoItem"
   has_many :photos, :as => :imageable
@@ -68,6 +75,15 @@ class Winery < ActiveRecord::Base
   def all_comments_count
     comments_count + followers_count
   end
+
+  # 当前关注该支酒庄的用户列表
+  def followers(options = { })
+    User.joins(:comments).
+      where("commentable_type = ? and commentable_id = ? and do = ? and deleted_at is null", self.class.name, id, 'follow').
+      page(options[:page] || 1).
+      per(options[:per] || 16) #如果想使用limit而不用分页效果可以使用per
+  end
+
   # 类方法
   class << self
     def timeline_events

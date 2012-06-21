@@ -1,9 +1,16 @@
-<% @following_wines.each_with_index do  |comment, index| %>
+<% @following_wines.each_with_index do  |follow, index| %>
 <% if index > 1 %>
-<%= link_to wine_cover_tag(comment.commentable, :thumb_name => :thumb, :width => 100, :height => 100, :align => "center"), wine_path(comment.commentable.id) %>
+<%= link_to wine_cover_tag(follow.followable, 
+						   :thumb_name => :thumb, 
+						   :size => "100x100", 
+						   :align => "center"), 
+						   wine_path(follow.followable.id) %>
 <% else %>
 <div class="large_list">
-  <%= link_to wine_cover_tag(comment.commentable, :thumb_name => :thumb, :width => 203, :height => 203, :align => "left"), wine_path(comment.commentable.id) %>
+  <%= link_to wine_cover_tag(follow.followable, 
+  							:thumb_name => :thumb, 
+  							:size => "203x203",
+  							 :align => "left"), wine_path(follow.followable.id) %>
 </div>
 <% end %>
 <% end %>
