@@ -11,46 +11,30 @@ class HotSearch
 
   def hot_words( letters )
     words = JSON.parse @http.post( @word_url , 'query=' + letters ).body
-    wines = []
-    wineries = []
+    
+    wine_detail_ids = get_ids(words['wine'][0..3])
+    wine_details = Wines::Detail.find(wine_detail_ids)
 
-    words['wine'][0..3].each do |wine|
-      wines.push( Wines::Detail.find( wine['id'] ) );
-    end
+    winery_ids = get_ids(words['winery'][0..1])
+    wineries = Winery.find(winery_ids)
 
-    words['winery'][0..1].each do |winery|
-      wineries.push( Winery.find( winery['id'] ) ) if winery['id']
-    end
-
-    { 'wines' => wines , 'wineries' => wineries }
+    { 'wines' => wine_details , 'wineries' => wineries }
   end
 
-  def all_entries( letters , page = 1 , count = 50 )
+  def all_entries(letters)
     words = JSON.parse @http.post( @entry_url , 'query=' + letters ).body
-    words = JSON.parse @http.post( @entry_url , 'query=' + letters ).body
-    wines = []
-    wineries = []
 
-    if !page || page < 1
-      page = 1
-    end
+    wine_ids = get_ids(words['wine'])
+    wines = Wine.find(wine_ids) if wine_ids.present?
 
-    start = ( page - 1 ) * count
-    end_count = start + count - 1
-    data = words['wine'][start..end_count]
-    if data.present?
-      data.each do |wine|
-        wines.push Wine.find(wine['id'])
-      end
-    end
-
-    data = words['winery'][start..end_count]
-    if data.present?
-      data.each do |winery|
-        wineries.push( Winery.find( winery['id'] ) ) if winery['id']
-      end
-  end
+    winery_ids = get_ids(words['winery'])
+    wineries = Winery.find(winery_ids) if winery_ids.present?
 
     { 'wines' => wines , 'wineries' => wineries}
+  end
+  
+  #从搜到的数据获得wine_ids或winery_ids
+  def get_ids(objects)
+    objects.inject([]){|memo, obj| memo << obj['id']}.compact
   end
 end
