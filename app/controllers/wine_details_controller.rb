@@ -10,7 +10,7 @@ class WineDetailsController < ApplicationController
   def index
     @title = "酒款"
     # @wines = Wines::Detail.includes(:wine, :cover).order("created_at ASC").page params[:page] || 1
-    @timelines = Wines::Detail.timeline_events.page(params[:page] || 1 ).per(12)
+    @timelines = Wines::Detail.timeline_events.page(params[:page] || 1 ).per(20)
   end
 
   # Wine Profile
