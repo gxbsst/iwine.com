@@ -42,6 +42,7 @@ class PhotosController < ApplicationController
   end
 
   def new
+    @title = "上传图片"
     @user = current_user
     @albums = @user.albums
     if @albums.blank?
@@ -109,12 +110,14 @@ class PhotosController < ApplicationController
     # @comment = @commentable.comments.build
     @wine_detail = Wines::Detail.find(params[:wine_id])
     @wine = @wine_detail.wine
+    @title = ["图片", @wine_detail.name].join('-')
     render "wine_photo_detail"
   end
 
   def render_winery_photo_detail
-    find_winery_and_hot_wine
+    find_winery_and_hot_winery
     @multiple = true #此页面有两个分享
+    @title = ["图片", @winery.name].join('-')
     render "winery_photo_detail"
 
   end
@@ -122,17 +125,19 @@ class PhotosController < ApplicationController
   def render_wine_photo_list
     @wine_detail = Wines::Detail.find(params[:wine_id])
     @wine = @wine_detail.wine
+    @title = ["图片", @wine_detail.name].join('-')
     render "wine_photo_list"
   end
 
   def render_winery_photo_list
-    find_winery_and_hot_wine
+    find_winery_and_hot_winery
+    @title = ["图片", @winery.name].join('-')
     render "winery_photo_list"
   end
 
-  def find_winery_and_hot_wine
+  def find_winery_and_hot_winery
     @winery = Winery.find params[:winery_id]
-    @hot_wines = Wines::Detail.hot_wines(5)
+    @hot_wineries = Winery.hot_wineries(5) 
   end
 
   def get_photo_imageable

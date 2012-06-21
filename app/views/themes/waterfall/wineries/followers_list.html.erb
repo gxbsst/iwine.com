@@ -1,9 +1,10 @@
+<% content_for :title, @title %>
 <% content_for :css do  %>
     <%= theme_stylesheet_link_tag "winery" %>
 <% end %>
 
 <div id="wrapper950">
-  <div class="whitesspace mb30">
+  <div class="whitespace mb30">
     <%= render "winery_detail" %>
   </div>
 
@@ -24,12 +25,12 @@
                 <li>
                   <div class="userpic">
                     <%= link_to user_path(user) do %>
-                        <%= image_tag user.avatar_url(:middle), :alt => user.username %>
+                        <%= image_tag user.avatar_url(:middle), :alt => user.username, :size => "50x50" %>
                     <% end %>
                   </div>
                   <div class="userinfo">
                     <div class="username"><%= link_to user.username, user %></div>
-                    <div class="userlocation">上海</div>
+                    <div class="userlocation"><%= user.city %></div>
                   </div>
                 </li>
             <% end %>
@@ -41,7 +42,7 @@
     </div>
     
     <div class="right">
-      <%= render "hot_wine" %>
+      <%= render "hot_winery" %>
     </div>
     
     <div class="clear"></div>

@@ -1,5 +1,6 @@
 # All Devise controllers are inherited from here.
 class DeviseController < Devise.parent_controller.constantize
+  before_filter :store_location, :only => :new
   include Devise::Controllers::ScopedViews
 
   helper DeviseHelper
@@ -11,7 +12,6 @@ class DeviseController < Devise.parent_controller.constantize
 
   prepend_before_filter :assert_is_devise_resource!
   respond_to *Mime::SET.map(&:to_sym) if mimes_for_respond_to.empty?
-
   # Gets the actual resource stored in the instance variable
   def resource
     instance_variable_get(:"@#{resource_name}")
@@ -162,4 +162,5 @@ MESSAGE
       super
     end
   end
+
 end

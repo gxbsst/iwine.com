@@ -1,8 +1,10 @@
+# encoding: utf-8
 class HomeController < ApplicationController
   before_filter :authenticate_user!
   before_filter :get_user
 
   def index
+    @title = "我的首页"
     @timelines = @user.feeds.page(params[:page] || 1 ).per(12)
   end
 

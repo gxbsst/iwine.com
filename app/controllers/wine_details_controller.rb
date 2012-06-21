@@ -8,8 +8,9 @@ class WineDetailsController < ApplicationController
   before_filter :check_edit_register, :only => [:edit, :update]
   
   def index
+    @title = "酒款"
     # @wines = Wines::Detail.includes(:wine, :cover).order("created_at ASC").page params[:page] || 1
-    @timelines = Wines::Detail.timeline_events.page(params[:page] || 1 ).per(10)
+    @timelines = Wines::Detail.timeline_events.page(params[:page] || 1 ).per(12)
   end
 
   # Wine Profile
@@ -18,11 +19,9 @@ class WineDetailsController < ApplicationController
     @comments         = @wine_detail.all_comments(:limit => 6)
     @owners           = @wine_detail.owners(:limit => 4)
     @followers        = @wine_detail.followers(:limit => 11)
-    @photos = []
-    @photos << @wine_detail.photos.approved.limit(6)
-    @photos << @wine_detail.wine.photos.approved.limit(3)  if @photos.flatten.blank?
-    @photos = @photos.flatten
+    @photos           = @wine_detail.all_photos.limit(6)
     @covers           = @wine_detail.show_covers
+    @title = @wine_detail.name
   end
 
   #搜索要添加的酒款

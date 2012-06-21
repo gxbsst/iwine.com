@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
+  
+
   themes_for_rails
 
-  root :to => 'wine_details#index'
+  # unless Rails.application.config.consider_all_requests_local
+  #    match '*not_found', to: 'errors#error_404'
+  # end
+
+  root :to => 'static#index'
   ## ADMIN
   ActiveAdmin.routes(self)
   devise_for :admin_users, ActiveAdmin::Devise.config

@@ -10,5 +10,7 @@
 						:feedback => '/feedback'} %>
 		<%= raw foot_nav.collect { |k, v| link_to t("nav.#{k}"), v }.join(" | ") %>
 	</div>
-	<div class="copyright">Copyright © <%= Time.now.year %> iWine, Inc. All rights reserved. <a href="#">沪ICP备12345678号</a></div>
+	<div class="copyright">Copyright &copy; <%= Time.now.year %> <%= link_to "iWine.com", root_path %>, Inc. All rights reserve.
+	 <!-- <a href="#">沪ICP备12345678号</a> -->
+	</div>
 </div>

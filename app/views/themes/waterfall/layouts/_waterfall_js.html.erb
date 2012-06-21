@@ -3,11 +3,12 @@ $('#container').masonry({
 		itemSelector: '.item',
 		resizeable: true,
 		isFitWidth: true
-	}).on('mouseenter', 'div.gulu', function(){
-		$(this).addClass('ghover');
-	}).on('mouseleave', 'div.gulu', function(){
-		$(this).removeClass('ghover');
 	});
+	// .on('mouseenter', 'div.gulu', function(){
+	// 	$(this).addClass('ghover');
+	// }).on('mouseleave', 'div.gulu', function(){
+	// 	$(this).removeClass('ghover');
+	// });
 	setTimeout(function(){
 		$('#container').masonry();
 	}, 200);

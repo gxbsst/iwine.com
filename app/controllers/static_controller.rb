@@ -5,7 +5,8 @@ class StaticController < ApplicationController
     @title =  t("nav.home")
   end
   def index
-    @title =  t("nav.root")
+    @title =  "首页"
+    @timelines = Wines::Detail.timeline_events.page(params[:page] || 1 ).per(12)
   end
 
   def private

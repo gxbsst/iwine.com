@@ -14,15 +14,6 @@
  } %>
 
   <div class="hp_header">
-    <div class="hp_right">
-      <%= link_to cellars_user_path(@user, @user.cellar), :class => "btn_red_sb" do %>
-        <% if is_login_user? @user %>
-        <span>我的酒窖</span>
-        <% else %>
-        <span><%= @user.username %>的酒窖</span>
-        <% end %>
-      <% end %>
-    </div>
     <div class="hp_userimg">
        <%= link_to_user @user,
                         user_path(@user, :trailing_slash => true),
@@ -31,6 +22,15 @@
                         {:width => 130, :height => 130}  %>
     </div>
     <div class="hp_info">
+      <div class="hp_right">
+        <%= link_to cellars_user_path(@user, @user.cellar), :class => "btn_red_sb" do %>
+          <% if is_login_user? @user %>
+            <span>我的酒窖</span>
+          <% else %>
+            <span><%= @user.username %>的酒窖</span>
+          <% end %>
+        <% end %>
+      </div>
       <% if is_login_user? @user  # 如果用户登录而且访问自己的页面 %>
       <div class="username"><%= @user.username %></div>
       <div class="mystatu">
