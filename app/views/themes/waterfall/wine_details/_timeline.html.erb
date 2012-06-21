@@ -2,45 +2,6 @@
 <!-- 关注的酒被评论 -->
 <% if l.event_type == "new_comment" %>
 <div class="iw item">
-  	<div class="iw_img">
-			<%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), wine_path(l.secondary_actor) %>
-		</div>
-      <div class="iw_info">
-          <h1>
-						<%= raw link_to l.secondary_actor.cname, wine_path(l.secondary_actor) %>
-					</h1>
-          <h2>
-			      <%= raw link_to l.secondary_actor.origin_name, wine_path(l.secondary_actor) %>
-					</h2>
-          <p class="iw_action">有了新评论</p>
-      </div>
-      <div class="iw_main">
-      	<ul>
-					 <% l.secondary_actor.comments.recent(6).each do |comment|%>
-          	<li>
-              	<div class="left">
-									<%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true), {:with_avatar => true, :avatar_version => :thumb}, {:width => 30, :height => 30} %>
-								</div>
-                  <div class="right">
-                  	<p class="username">
-											<%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true) %>
-										</p>
-                      <p class="content"><%= comment.body %></p>
-                  </div>
-                  <div class="clear"></div>
-              </li>
-            <% end %>
-         </ul>
-      </div>
-      <div class="iw_more">
-				<%= link_to  wine_comments_path(l.secondary_actor) do %>
-				共<%= l.secondary_actor.all_comments_count %>条评论
-				<% end %>
-				</div>
-</div>
-<!-- 酒被关注 -->
-<% elsif l.event_type == "new_follow" %>
-<div class="iw item">
     <div class="iw_img">
       <%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), wine_path(l.secondary_actor) %>
     </div>
@@ -49,9 +10,9 @@
             <%= raw link_to l.secondary_actor.cname, wine_path(l.secondary_actor) %>
           </h1>
           <h2>
-            <%= raw link_to l.secondary_actor.origin_name, wine_path(l.secondary_actor) %>
+            <%= raw link_to l.secondary_actor.ename, wine_path(l.secondary_actor) %>
           </h2>
-          <p class="iw_action">这支酒被关注.</p>
+          <p class="iw_action">有了新评论</p>
       </div>
       <div class="iw_main">
         <ul>
@@ -73,44 +34,83 @@
       </div>
       <div class="iw_more">
         <%= link_to  wine_comments_path(l.secondary_actor) do %>
-        共<%= l.secondary_actor.all_comments_count  %>条评论
+        共<%= l.secondary_actor.all_comments_count %>条评论
+        <% end %>
+        </div>
+</div>
+<!-- 酒被关注 -->
+<% elsif l.event_type == "new_follow" %>
+<div class="iw item">
+    <div class="iw_img">
+      <%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), wine_path(l.secondary_actor) %>
+    </div>
+      <div class="iw_info">
+          <h1>
+            <%= raw link_to l.secondary_actor.cname, wine_path(l.secondary_actor) %>
+          </h1>
+          <h2>
+            <%= raw link_to l.secondary_actor.ename, wine_path(l.secondary_actor) %>
+          </h2>
+          <p class="iw_action">这支酒被关注.</p>
+      </div>
+      <div class="iw_main">
+        <ul>
+           <% l.secondary_actor.follows.recent(6).each do |follow|%>
+            <li>
+                <div class="left">
+                  <%= link_to_user follow.user, user_path(follow.user, :trailing_slash => true), {:with_avatar => true, :avatar_version => :thumb}, {:width => 30, :height => 30} %>
+                </div>
+                  <div class="right">
+                    <p class="username">
+                      <%= link_to_user follow.user, user_path(follow.user, :trailing_slash => true) %>
+                    </p>
+                      <p class="content"><%= follow.body %></p>
+                  </div>
+                  <div class="clear"></div>
+              </li>
+            <% end %>
+         </ul>
+      </div>
+      <div class="iw_more">
+        <%= link_to followers_wine_path(l.secondary_actor) do %>
+        共<%= l.secondary_actor.followers_count  %>人关注
         <% end %>
         </div>
 </div>
 <!-- 关注的酒被加入酒窖 -->
 <% elsif l.event_type == "add_to_cellar" %>
 <div class="iw item">
-  	<div class="iw_img">
-				<%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), wine_path(l.secondary_actor) %>
-		</div>
+    <div class="iw_img">
+        <%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), wine_path(l.secondary_actor) %>
+    </div>
       <div class="iw_info">
         <h1>
-					<%= raw link_to l.secondary_actor.cname, wine_path(l.secondary_actor) %>
-				</h1>
+          <%= raw link_to l.secondary_actor.cname, wine_path(l.secondary_actor) %>
+        </h1>
         <h2>
-		      <%= raw link_to l.secondary_actor.origin_name, wine_path(l.secondary_actor) %>
-				</h2>							
+          <%= raw link_to l.secondary_actor.ename, wine_path(l.secondary_actor) %>
+        </h2>             
           <p class="iw_action">有人把它加入了酒窖</div>
       <div class="iw_main">
-      	<ul>
-          	<li>
-              	<div class="left">
-									<%= link_to_user l.actor, 
+        <ul>
+            <li>
+                <div class="left">
+                  <%= link_to_user l.actor, 
                                    user_path(l.actor, :trailing_slash => true), 
                                    { :with_avatar => true, :avatar_version => :thumb },
                                    { :size => "30x30"} %>
-								</div>
+                </div>
                   <div class="right">
-                  	<p class="username">
-                   	<%= link_to_user l.actor, user_path(l.actor, :trailing_slash => true) %>
-										</p>
+                    <p class="username">
+                    <%= link_to_user l.actor, user_path(l.actor, :trailing_slash => true) %>
+                    </p>
                   </div>
                   <div class="clear"></div>
               </li>
           </ul>
       </div>
       <div class="iw_more">
-      	<%= link_to "去看看他的酒窖", cellars_user_path(l.actor, l.actor.cellar)%>
+        <%= link_to "去看看他的酒窖", cellars_user_path(l.actor, l.actor.cellar)%>
       </div>
 </div>
 

@@ -55,16 +55,16 @@
       </div>
       <div class="iw_main">
         <ul>
-           <% l.secondary_actor.comments.recent(6).each do |comment|%>
+           <% l.secondary_actor.follows.recent(6).each do |follow|%>
             <li>
                 <div class="left">
-                  <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true), {:with_avatar => true, :avatar_version => :thumb}, {:width => 30, :height => 30} %>
+                  <%= link_to_user follow.user, user_path(follow.user, :trailing_slash => true), {:with_avatar => true, :avatar_version => :thumb}, {:width => 30, :height => 30} %>
                 </div>
                   <div class="right">
                     <p class="username">
-                      <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true) %>
+                      <%= link_to_user follow.user, user_path(follow.user, :trailing_slash => true) %>
                     </p>
-                      <p class="content"><%= comment.body %></p>
+                      <p class="content"><%= follow.body %></p>
                   </div>
                   <div class="clear"></div>
               </li>
@@ -72,8 +72,8 @@
          </ul>
       </div>
       <div class="iw_more">
-        <%= link_to  wine_comments_path(l.secondary_actor) do %>
-        共<%= l.secondary_actor.all_comments_count  %>条评论
+        <%= link_to followers_wine_path(l.secondary_actor) do %>
+        共<%= l.secondary_actor.followers_count  %>人关注
         <% end %>
         </div>
 </div>

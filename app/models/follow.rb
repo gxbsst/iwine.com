@@ -3,7 +3,7 @@ class Follow < ActiveRecord::Base
   belongs_to :followable, :polymorphic => true
   belongs_to :user
   validates :followable_type, :followable_id, :user_id, :presence => true
-
+  scope :recent, lambda { |limit| order("created_at DESC").limit(limit) }
  # COUNTER
  # increment
  def wine_follow_counter_should_increment_for(followable_type)
