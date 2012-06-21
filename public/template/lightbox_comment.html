@@ -41,10 +41,9 @@
         <div class="fancybox-outer" style="width: auto; height: auto;">
             <div class="fancybox-inner">
             <div style="" id="comment_form">
-                <h3 class="title">关注这支酒</h3>
-                <p class="light_nor"><a href="#">同时写几句评论吧？</a><a href="#"><img src="images/icon/open.gif" width="13" height="13" /></a></p>
+                <h3 class="title">我要评论</h3>
                 <form novalidate="novalidate" method="post" id="new_wine_comment" data-validate="true" class="new_wine_comment" action="/wines/254/comments" accept-charset="UTF-8"><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="XIKuWYLJfskIi11fzIhaYh3NcsDoLu479/qy/xf8sHc=" name="authenticity_token"></div><input type="hidden" value="comment" name="wine_comment[do]" id="wine_comment_do">
-                <div style="display:none">
+                <div style="display:">
                 <div id="wine_profile_star_bar" class="star_rate">
                   <table cellspacing="5" cellpadding="5" border="0">
                     <tbody><tr>
@@ -80,6 +79,7 @@
               <div class="share relative">
                 <a href="#" class="btn_gray float_r"><span>保存</span></a>
                 分享到 <input type="hidden" value="0" name="wine_comment[is_share]"><input type="checkbox" value="1" name="wine_comment[is_share]" id="wine_comment_is_share" checked="checked"> 广播
+                <label class="follow"> <input name="" type="checkbox" value="" checked="checked" /> 同时关注这支酒</label>
               </div>
             </form>
         <script id="star_item" type="text/template">
