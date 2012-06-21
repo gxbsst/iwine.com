@@ -48,25 +48,6 @@ describe Comment, "About WineDetail Comment" do
     
   end
 
-  it "followers_count should be increment" do
-    @comment.do = "follow"
-    @comment.save
-    Wines::Detail.find(@wine_detail).followers_count.should be(1)
-    # expect {
-    #   @comment.save
-    # }.to change { Wines::Detail.find(@wine_detail).comments_count }.from(0).to(1)
-   end
-
-  it " followers_count should be decrement" do
-    @comment.do ="follow"
-    @comment.save 
-    @comment.update_attribute(:deleted_at, Time.now)
-    Wines::Detail.find(@wine_detail).followers_count.should be(0)
-    # expect {
-    #   @comment.destroy
-    # }.to change { Wines::Detail.find(@wine_detail).comments_count }.from(1).to(0)
-  end
-
   it " deleted_at is time now, followers_count should be decrement" do
     @comment.do = "follow"
     @comment.save 

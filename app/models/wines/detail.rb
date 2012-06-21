@@ -13,13 +13,12 @@ class Wines::Detail < ActiveRecord::Base
                              :increment => {:on => :create, :if => lambda {|comment| comment.counter_should_increment_for("Wines::Detail") }},
                              :decrement => {:on => :save,   :if => lambda {|comment| comment.counter_should_decrement_for("Wines::Detail") }}                              
                              },
-         :followers_count => {:with => "Comment", 
-                              :on => :create,
-                              :receiver => lambda {|comment| comment.commentable },
-                              :increment => {:on => :create, :if => lambda {|comment| comment.followers_counter_should_increment_for("Wines::Detail")}},
-                              :decrement => {:on => :save,   :if => lambda {|comment| comment.followers_counter_should_decrement_for("Wines::Detail")}}                              
+         :followers_count => {:with => "Follow", 
+                              :receiver => lambda {|follow| follow.followable },
+                              :increment => {:on => :create, :if => lambda {|follow| follow.wine_follow_counter_should_increment_for("Wines::Detail")}},
+                              :decrement => {:on => :destroy, :if => lambda {|follow| follow.wine_follow_counter_should_decrement_for("Wines::Detail")}}                              
                               },
-           :owners_count  =>  {:with => "Users::WineCellarItem",
+          :owners_count  =>  {:with => "Users::WineCellarItem",
                               :receiver => lambda {|cellar_item| cellar_item.wine_detail},
                               :increment => {:on => :create},
                               :decrement => {:on => :destroy}
@@ -47,6 +46,8 @@ class Wines::Detail < ActiveRecord::Base
   has_many :prices, :class_name => "Price", :foreign_key => "wine_detail_id"
   has_many :variety_percentages, :class_name => 'VarietyPercentage', :foreign_key => 'wine_detail_id', :dependent => :destroy
   has_many :special_comments, :as => :special_commentable
+  has_many :follows, :as => :followable, :class_name => "WineFollow"
+  has_one  :winery, :through => :wine
   scope :hot_wines, lambda { |limit| joins(:comments).
                                      includes([:wine, :covers]).
                                      where("do = ?", "follow").
@@ -67,6 +68,10 @@ class Wines::Detail < ActiveRecord::Base
 
   def cname
     "#{show_year} #{wine.name_zh.to_s}"
+  end
+
+  def ename
+    "#{show_year} #{wine.origin_name.to_s}"
   end
 
   def origin_name
@@ -175,6 +180,18 @@ class Wines::Detail < ActiveRecord::Base
   def all_photo_counts
     photos_count.to_i + wine.photos.count.to_i
   end
+
+  # 是否已经关注酒
+  def is_followed_by? user
+    return follows.where("user_id = ? ", user.id).first ? true : false
+  end
+
+  # 当前关注该支酒的用户列表
+  def followers(options = { })
+    User.joins(:follows).
+      where("followable_type = ? AND followable_id = ?", self.class.name, id)
+  end
+
   # 类方法
   class << self
    def timeline_events

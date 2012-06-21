@@ -22,7 +22,7 @@ FactoryGirl.define do
     price 12
     capacity "10"
     wine_style_id 1
-    wine_id 1 
+    wine  { |c| c.association(:wine) } 
     year Time.now
     audit_id 1
     created_at Time.now
@@ -41,16 +41,16 @@ FactoryGirl.define do
   end
 
   factory :wine do
+    winery  { |c| c.association(:winery) }
   	name_zh "中国"
   	name_en "ename"
   	official_site "http://www.example.com"
   	wine_style_id 1
-  	winery_id 1
-  	region_tree 1
+  	region_tree_id 1
   	created_at Time.now
   	updated_at Time.now
   	origin_name "origin_name" 
-  	other_cn "中文名1， 中文名2"
+  	other_cn_name "中文名1， 中文名2"
   end
 
   factory :comment do
@@ -195,6 +195,11 @@ FactoryGirl.define do
     vote_flag 1
   end
 
+  factory :follow do
+    followable {|c| c.association(:wine_detail)}
+    user {|c| c.association(:user)} 
+    private_type 1
+    is_share true
+  end
 
-  
 end

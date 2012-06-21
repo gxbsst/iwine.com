@@ -2,6 +2,8 @@
 Patrick::Application.routes.draw do
   
 
+  resources :follows
+
   themes_for_rails
 
   # unless Rails.application.config.consider_all_requests_local
@@ -67,6 +69,7 @@ Patrick::Application.routes.draw do
       end
     end    
     resources :photos
+    resources :follows, :controller => "follows" 
   end
   
   # PHOTO
