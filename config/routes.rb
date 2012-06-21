@@ -4,11 +4,11 @@ Patrick::Application.routes.draw do
 
   themes_for_rails
 
-  unless Rails.application.config.consider_all_requests_local
-     match '*not_found', to: 'errors#error_404'
-  end
+  # unless Rails.application.config.consider_all_requests_local
+  #    match '*not_found', to: 'errors#error_404'
+  # end
 
-  root :to => 'wine_details#index'
+  root :to => 'static#index'
   ## ADMIN
   ActiveAdmin.routes(self)
   devise_for :admin_users, ActiveAdmin::Devise.config

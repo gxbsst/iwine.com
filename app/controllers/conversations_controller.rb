@@ -5,7 +5,7 @@ class ConversationsController < ApplicationController
   before_filter :get_mailbox, :get_box
   before_filter :check_current_subject_in_conversation, :only => [:show, :update, :destroy,:reply]
   def index
-    # binding.pry
+    @title = "我的私信"
     @conversations = @mailbox.conversations.order("created_at DESC").page(params[:page]).per(9)
     
     # mask all items as read
@@ -25,6 +25,7 @@ class ConversationsController < ApplicationController
   end
 
   def show
+    @title = "对话"
     @conversation = Conversation.find_by_id(params[:id])
     unless @conversation.is_participant?(current_user)
       notice_stickie t("notice.no_ability")

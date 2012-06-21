@@ -12,6 +12,7 @@ class SearchesController < ApplicationController
   end
 
   def search_wines
+    @title = "搜索酒"
     @search = Search.create!(params[:search])
     redirect_to add_wines_path(:step => 2, :id => @search.id)
   end
@@ -36,6 +37,7 @@ class SearchesController < ApplicationController
   end
 
   def winery
+    @title = "搜索酒庄"
     server = HotSearch.new
     # @page = params[:page].to_i || 1
     # if @page < 1 
@@ -54,6 +56,7 @@ class SearchesController < ApplicationController
   end
 
   def results
+    @title = "搜索"
     server = HotSearch.new
     @entries = server.all_entries( params[:word])
     @all_wines = @entries['wines']
