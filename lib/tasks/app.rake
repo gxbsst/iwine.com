@@ -58,7 +58,7 @@ namespace :app do
     ## 导入酒和详细信息
     file_directories = Rails.root.join("lib", "tasks","data", "wine", "*.csv")
     Dir.glob(file_directories).each do |csv_file|
-      puts "开始加载 #{csv_file} ================================="
+      puts "begin load #{csv_file} ================================="
       csv = CSV.read(csv_file)
       csv.each_with_index do |item, index|
         next if index == 0 #跳过标题
