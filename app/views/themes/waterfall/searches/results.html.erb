@@ -22,14 +22,14 @@
       </ul>
     </div>
     <div class="clear"></div>
-    <% if @entries['wines'].blank? && @entries['wineries'].blank? %>
+    <% if @all_wines.blank? && @wineries.blank? %>
     不好意思，没有找到相关内容
     <% else %>
     <div class="nor_notice mb20">太好了，我们找到了一些相关内容：</div>
-    <% if @entries['wineries'].length > 1 && @all_tab == 'current'%>
+    <% if @wineries.present? && @all_tab == 'current'%>
     <div class="winery_result">
       <ul>
-        <% @entries['wineries'][0..1].each do|winery| %>
+        <% @wineries[0..1].each do|winery| %>
         <li>
           <%= link_to  winery_path(winery) do %>
             <%= winery_label_tag winery, :thumb_name => :thumb_x, :size => "70x70", :alt => winery.origin_name %>

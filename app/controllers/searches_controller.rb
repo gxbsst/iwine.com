@@ -62,7 +62,7 @@ class SearchesController < ApplicationController
     @all_wines = @entries['wines']
     @wineries = @entries['wineries']
     page = params[:page] || 1
-    if !(@all_wines.nil?)
+    if @all_wines.present?
       unless @all_wines.kind_of?(Array)
         @wines = @all_wines.page(page).per(10)
       else
