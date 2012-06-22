@@ -15,7 +15,6 @@ class WineDetailsController < ApplicationController
 
   # Wine Profile
   def show
-    raise 'error'
     @wine             = @wine_detail.wine
     @comments         = @wine_detail.all_comments(:limit => 6)
     @owners           = @wine_detail.owners(:limit => 4)
