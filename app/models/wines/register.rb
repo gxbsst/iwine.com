@@ -65,7 +65,11 @@ class Wines::Register < ActiveRecord::Base
     result.to_i == 0 ? "未发布" : (result.to_i == 1 ? "已发布" : "发布失败")
   end
 
-  def origin_name
+  def ename
+    "#{show_vintage} #{name_en.to_s}"
+  end
+
+  def oname
     "#{show_vintage} #{origin_name.to_s}"
   end
 

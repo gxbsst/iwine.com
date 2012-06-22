@@ -82,7 +82,7 @@ namespace :app do
           register = Wines::Register.where("name_en = ? and vintage = ?", to_ascii(item[1]), item[9]).first_or_create!(
             :origin_name => item[1].force_encoding('utf-8'),
             :name_en => to_ascii(item[1]),
-            :name_zh => name_zh_arr.pop,
+            :name_zh => name_zh_arr.reverse.pop,                                   #去除第一个当做名字
             :other_cn_name => name_zh_arr.blank? ? nil : name_zh_arr.join(' '),
             :vintage => vintage,
             :is_nv => item[9].to_s == "NV" ? 1 : 0,
@@ -98,7 +98,8 @@ namespace :app do
             :status => 0, #0表示此条记录没有发布
             :result => 0,
             :user_id => -1, #-1说明是程序填充的数据
-            :capacity => item[13]
+            :capacity => item[13],
+            :description => to_ascii(item[18])
           )
           puts register.id
           build_special_comment(register, {"RP" => item[14], "JR" => item[16]})
@@ -173,7 +174,7 @@ namespace :app do
             # 1. 法国,France,波尔多,Bordeaux,梅多克,Médoc,梅多克,Médoc
             # 2. 添加一个字段， 保存原生文字，如:RhÃ´ne Valley, name_en 保存 RhA´ne Valley
             # 转换方法: "Moulis/ Moulis-en-MÃ©doc".to_ascii_brutal => https://github.com/tomash/ascii_tic
-            region = Wines::RegionTree.where("name_en = ? and level = ? ", ascii_value, level).first
+            region = Wines::RegionTree.where("name_en = ? and level = ? and parent_id = ? ", ascii_value, level, parent).first
             region = Wines::RegionTree.create(:doc => to_ascii(doc),
                                               :name_zh => name_zh,
                                               :name_en => ascii_value,
@@ -273,7 +274,7 @@ namespace :app do
   #适饮年限
   def get_drinkable_time(date)
     return [nil, nil] if date.blank?
-    if data.include?('+')  #只有起始年代
+    if date.include?('+')  #只有起始年代
       drinkable_begin = date.gsub(/\+/, '')
       drinkable_end = nil
     else

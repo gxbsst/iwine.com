@@ -5,8 +5,8 @@ class Wines::Detail < ActiveRecord::Base
 
   counts  :photos_count   => {:with => "AuditLog",
                               :receiver => lambda {|audit_log| audit_log.logable.imageable }, 
-                              :increment => {:on => :create, :if => lambda {|audit_log| audit_log.photos_counter_should_increment? }},
-                              :decrement => {:on => :save,   :if => lambda {|audit_log| audit_log.photos_counter_should_decrement? }}                              
+                              :increment => {:on => :create, :if => lambda {|audit_log| audit_log.photos_counter_should_increment? && audit_log.logable.imageable_type == "Wines::Detail" }},
+                              :decrement => {:on => :save,   :if => lambda {|audit_log| audit_log.photos_counter_should_decrement? && audit_log.logable.imageable_type == "Wines::Detail" }}                              
                              },              
           :comments_count => {:with => "Comment", 
                              :receiver => lambda {|comment| comment.commentable },
@@ -71,6 +71,10 @@ class Wines::Detail < ActiveRecord::Base
 
   def origin_name
     "#{show_year} #{wine.origin_name.to_s}"
+  end
+  
+  def ename
+    "#{show_year} #{wine.name_en.to_s}"
   end
 
   def name

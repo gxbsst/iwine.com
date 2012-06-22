@@ -125,7 +125,7 @@ module ApplicationHelper
     end
 
 
-    link_to(image_tag("v2/icon/#{icon_name}.png", { :title => icon_name }),
+    link_to(image_tag("v2/icon/#{icon_name}.png", { :title => icon_name, :align => "absmiddle" }),
             url_or_object,
             options)
   end

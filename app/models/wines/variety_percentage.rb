@@ -5,6 +5,7 @@ class Wines::VarietyPercentage < ActiveRecord::Base
   belongs_to :variety
   delegate :name_zh, :to => :variety
   delegate :name_en, :to => :variety
+  delegate :origin_name, :to => :variety
 
   def self.build_variety_percentage(variety_name, variety_percentage, wine_detail_id)
     variety_name.each_with_index do |value, index|

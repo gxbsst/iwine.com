@@ -8,9 +8,9 @@ namespace :photo do
     Dir.glob(file_directories).each do |csv_file|
       csv = CSV.read(csv_file)
       csv.each_with_index do |item, index|
-        next if index == 0 #跳过标题
-        photo_directory = Rails.root.join("lib", "tasks", "data", "wine", "wine_photos", item[0])
         begin
+          next if index == 0 || item[0].blank?#跳过标题
+          photo_directory = Rails.root.join("lib", "tasks", "data", "wine", "wine_photos", item[0])
           wine = Wine.where("name_en = ? ", to_ascii(item[1])).first
           if wine
             save_default_photos(wine, photo_directory)
@@ -70,7 +70,8 @@ namespace :photo do
   end
 
   def get_photo_type(file)
-    file.include?("cover") ? APP_DATA['photo']['photo_type']['cover'] : (file.include?("label") ? APP_DATA['photo']['photo_type']['label'] : 0)
+    type = file.include?("cover") ? APP_DATA['photo']['photo_type']['cover'] : (file.include?("label") ? APP_DATA['photo']['photo_type']['label'] : 0)
+    return type
   end
 
   def save_default_photos(wine, photo_directory)

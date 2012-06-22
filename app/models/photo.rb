@@ -16,7 +16,7 @@ class Photo < ActiveRecord::Base
                              :decrement => {:on => :destroy, :if => lambda {|vote| vote.votable_type == "Photo" && vote.vote_flag == true}}                              
                             }
   # fires :new_photo, :on                 => :create,
-  #                     :actor              => :user,
+  #                     :actor            => :user,
   #                     :secondary_actor => :imageable,
   #                     :if => lambda { |imageable| imageable.imageable_type == "Wines::Detail" }
   belongs_to :album, :touch => true
@@ -54,6 +54,7 @@ class Photo < ActiveRecord::Base
   def approve_photo
     update_attribute(:audit_status, APP_DATA['audit_log']['status']['approved'])
   end
+
   def recreate_delayed_versions!
       image.should_process = true
       image.recreate_versions!

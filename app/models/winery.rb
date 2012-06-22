@@ -34,7 +34,13 @@ class Winery < ActiveRecord::Base
                              :receiver => lambda {|comment| comment.commentable },
                              :increment => {:on => :create, :if => lambda {|comment| comment.followers_counter_should_increment_for("Winery")}},
                              :decrement => {:on => :save,   :if => lambda {|comment| comment.followers_counter_should_decrement_for("Winery")}}                              
-                            }
+                            },
+           :photos_count   => {:with => "AuditLog",
+                                        :receiver => lambda {|audit_log| audit_log.logable.imageable }, 
+                                        :increment => {:on => :create, :if => lambda {|audit_log| audit_log.photos_counter_should_increment? && audit_log.logable.imageable_type == "Winery"}},
+                                        :decrement => {:on => :save,   :if => lambda {|audit_log| audit_log.photos_counter_should_decrement? && audit_log.logable.imageable_type == "Winery"}}                              
+                             }
+
   has_many :registers
   has_many :info_items, :class_name => "InfoItem"
   has_many :photos, :as => :imageable

@@ -53,8 +53,8 @@ class User < ActiveRecord::Base
                               },   
             :photos_count =>  {:with => "Photo",
                                :receiver => lambda {|photo| photo.user}, 
-                               :increment => {:on => :create},
-                               :decrement => {:on => :save, :if => lambda {|photo| !photo.deleted_at.blank? }}                              
+                               :increment => {:on => :create, :if => lambda {|photo| photo.album_id > 0}},
+                               :decrement => {:on => :save, :if => lambda {|photo| !photo.deleted_at.blank? && photo.album_id > 0 }}                              
                               },  
    :wine_followings_count =>  {:with => "Comment",
                                :receiver => lambda {|comment| comment.user }, 
