@@ -33,3 +33,4 @@ lib/wines_photos
 /Gemfile.lock
 /db/schema.rb
 /notify.log
+public/assets
