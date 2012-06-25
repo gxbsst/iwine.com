@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'fileutils'
 class Photo < ActiveRecord::Base
+  # TODO: audit_status, 设置 is admin 才能修改
   acts_as_commentable
 
   acts_as_votable
@@ -95,6 +96,10 @@ class Photo < ActiveRecord::Base
       "delete_url" => "...",
       "delete_type" => "DELETE"
     }
+  end
+
+  def is_owned_by? user
+    self.user == user
   end
 
   #audit_status 改变就在audit_log 增加一条记录

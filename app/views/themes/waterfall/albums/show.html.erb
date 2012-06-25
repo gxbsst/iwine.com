@@ -1,4 +1,4 @@
-<% content_for :title, @title%>
+<% content_for :title, @title %>
 <div class="whitespace">
 <div id="hp">
 <%= render "users/sub_nav", :action => params[:action] %>
@@ -21,24 +21,25 @@
   <h1><%= @album.name %> <span class="font12">(共<%= @album.photos_count%>张)</span></h1>
   <div class="clear"></div>
 </div>
+<%#= form_for @album, :remote => true do |f| -%>
 <ul class="photo_list">
   <% @photos.each_with_index do |photo, i| %>
     <li>
         <%= link_to album_photo_show_user_path(@user, @album.id, photo.id)  do %>
          <%= image_tag photo.image_url( :thumb ), :class => 'cover' %>
-        <% end %>
-        
-      <% if photo.intro.present? %>
-        <p class="intro">
-          <% if @is_owner %>
-          <%= best_in_place photo, :intro, {:path => {:action => 'update_photo_intro', :photo_id => photo.id } } %>
-          <% else %>
-          <%= photo.intro %>
-          <% end %>
-        </p>
-      <% elsif @is_owner %>
+        <% end %> 
+      <% if @is_owner %>
         <p class="intro">
           <%= best_in_place photo, :intro, { :nil => '点击添加描述', :path => {:action => 'update_photo_intro', :photo_id => photo.id} } %>
+        </p>
+        <p class="is_cover">
+          <label>
+            <%= radio_button_tag :photo_type, photo.id, photo.photo_type == 2 %> 设为封面
+          </label>   
+        </p>
+     <% else %>
+         <p class="intro">
+           <%= photo.intro %>
         </p>
       <% end %>
       <p class="info">
@@ -53,6 +54,7 @@
   <% end %>
   <div class="clear"></div>
 </ul>
+<% #end -%>
 <div class="pagination">
  <%= paginate @photos, :outer_window => 2 %>
 </div>
@@ -78,7 +80,23 @@ function delete_upload_photo( id ){
   $('#delete_photo_id').val( id ).parent().submit();
 };
 $('.best_in_place').best_in_place();
+
+$(document).ready(function(){
+  $("p.is_cover label input").click(function(){
+    var value = "";
+    value = $(this).val();
+    $.ajax({
+      type: "PUT",
+      url: "/photos/" + value,
+      dataType: 'script',
+      data: { is_cover: 2 }
+    });
+  });
+});
+
 </script>
+
+
 <!-- end mine -->
 </div>
 </div>

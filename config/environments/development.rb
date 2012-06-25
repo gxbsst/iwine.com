@@ -66,6 +66,6 @@ Patrick::Application.configure do
 
   # config.slowgrowl.warn = 1000    # growl any action which takes > 1000ms (1s)
   # config.slowgrowl.sticky = true  # make really slow (2x warn) alerts sticky
-  config.action_controller.perform_caching = true
+  config.action_controller.perform_caching = false
   config.cache_store = :mem_cache_store, "192.168.11.31"
 end

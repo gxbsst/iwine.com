@@ -1,9 +1,11 @@
 # encoding: utf-8
 class PhotosController < ApplicationController
-  before_filter :get_photo, :only => [:show, :edit, :update, :destroy, :reply, :vote]
+  before_filter :get_approved, :only => [:show]
+  before_filter :get_photo, :only => [:edit, :update, :destroy, :reply, :vote]
   before_filter :get_imageable, :except => [:new, :create]
   before_filter :get_user
   before_filter :authenticate_user!, :only => [:new, :create]
+
   def index
     @photos = @imageable.photos.approved.page(params[:page] || 1).per(8)
     case @resource
@@ -78,7 +80,21 @@ class PhotosController < ApplicationController
 
   def destroy
 
-    
+  end
+
+  def update
+
+    # set as cover 
+    if @photo.is_owned_by? current_user
+      if params[:is_cover].present? && params[:is_cover].to_i == APP_DATA["photo"]["photo_type"]["cover"].to_i
+        Photo.where(:album_id => @photo.album_id)
+          .update_all(:photo_type => APP_DATA["photo"]["photo_type"]["normal"])
+        @photo.update_column(:photo_type, APP_DATA["photo"]["photo_type"]["cover"])
+      end
+    end
+    respond_to do |format|
+       format.js { render :json => {:id => params[:id]} }
+    end
   end
 
   private
@@ -90,9 +106,13 @@ class PhotosController < ApplicationController
     @imageable = @resource.singularize.classify.constantize.find(@id)
   end
 
-  def get_photo
+  def get_approved 
     @photo = Photo.approved.where("id = ?", params[:id]).first
     render(:status => 404) unless @photo
+  end
+
+  def get_photo
+    @photo = Photo.find(params[:id])
   end
 
   def get_user
