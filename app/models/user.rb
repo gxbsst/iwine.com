@@ -53,13 +53,13 @@ class User < ActiveRecord::Base
                               },   
             :photos_count =>  {:with => "Photo",
                                :receiver => lambda {|photo| photo.user}, 
-                               :increment => {:on => :create},
-                               :decrement => {:on => :save, :if => lambda {|photo| !photo.deleted_at.blank? }}                              
+                               :increment => {:on => :create, :if => lambda {|photo| photo.album_id > 0}},
+                               :decrement => {:on => :save, :if => lambda {|photo| !photo.deleted_at.blank? && photo.album_id > 0 }}                              
                               },  
-   :wine_followings_count =>  {:with => "Comment",
-                               :receiver => lambda {|comment| comment.user }, 
-                               :increment => {:on => :create, :if => lambda{|comment| comment.followers_counter_should_increment_for("Wines::Detail")}},
-                               :decrement => {:on => :save,   :if => lambda{|comment| comment.followers_counter_should_decrement_for("Wines::Detail")}}                              
+   :wine_followings_count =>  {:with => "Follow",
+                               :receiver => lambda {|follow| follow.user }, 
+                               :increment => {:on => :create,  :if => lambda{|follow| follow.wine_follow_counter_should_increment_for("Wines::Detail")}},
+                               :decrement => {:on => :destroy, :if => lambda{|follow| follow.wine_follow_counter_should_decrement_for("Wines::Detail")}}                              
                               }, 
  :winery_followings_count =>  {:with => "Comment",
                                :receiver => lambda {|comment| comment.user }, 
@@ -128,9 +128,9 @@ class User < ActiveRecord::Base
   has_many :timeline_events, :as => :actor
 
   has_many :wine_followings,
-           :include => :commentable,
-           :class_name => "Comment",
-           :conditions => {:commentable_type => "Wines::Detail", :do => "follow"}
+           :include => :followable,
+           :class_name => "Follow",
+           :conditions => {:followable_type => "Wines::Detail"}
 
   has_many :winery_followings,
            :include => :commentable,
@@ -152,7 +152,10 @@ class User < ActiveRecord::Base
     def map_user
       map {|f| f.user }
     end
-  end
+  end 
+
+  has_many :follows, :include =>[:user]
+
   # 推荐的用户
   scope :recommends, lambda { |limit| order("followers_count DESC").limit(limit) }
   scope :no_self_recommends, lambda {|limit, user_id| recommends(limit).where("id != ?", user_id)}
@@ -413,6 +416,19 @@ class User < ActiveRecord::Base
     super
   end
 
+  #检查是否和user2有过私信会话， 如果有会话则返回conversation
+  def has_conversation_with?(user2)
+    current_conversation = nil
+    mailbox.conversations.each do |c|
+      receipts = c.receipts_for user2
+      if receipts.present?
+        current_conversation = c
+        break
+      end
+    end
+    return current_conversation
+  end
+
   private
 
   def resize_avatar(from_version, to_version)
@@ -433,4 +449,5 @@ class User < ActiveRecord::Base
       resize_avatar(:large, :thumb)
     end
   end
+
 end

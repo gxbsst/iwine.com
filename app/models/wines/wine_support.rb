@@ -15,14 +15,6 @@ module Wines
      module ClassMethods
        # Wine 项目要用到的公共 class methods       
      end
-
-     # 当前关注该支酒的用户列表
-     def followers(options = { })
-       User.joins(:comments).
-         where("commentable_type = ? and commentable_id = ? and do = ? and deleted_at is null", self.class.name, id, 'follow').
-         page(options[:page] || 1).
-         per(options[:per] || 16) #如果想使用limit而不用分页效果可以使用per
-     end
      
      # 官方网站
      def html_official_site
@@ -52,7 +44,8 @@ module Wines
 
      # 星级
      def stars
-       (@score / 2).round(0)
+       
+       (score / 2).round(0)
      end
 
      # 评分总数

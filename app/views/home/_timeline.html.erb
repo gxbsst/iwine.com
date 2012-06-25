@@ -13,7 +13,7 @@
        <h3>
          <%= link_to  wine_path(l.timeline_event.secondary_actor) do %>
            <%= raw l.timeline_event.secondary_actor.cname %><br />
-           <span class="font_14"><%= raw l.timeline_event.secondary_actor.ename %></span>
+           <span class="font_14"><%= raw l.timeline_event.secondary_actor.origin_name %></span>
          <% end %>
        </h3>
        <p class="body"><%= l.timeline_event.subject.body %></p>
@@ -28,7 +28,7 @@
      <h3>
        <%= link_to  wine_path(l.timeline_event.secondary_actor) do %>
          <%= raw l.timeline_event.secondary_actor.cname %><br />
-         <span class="font_14"><%= raw l.timeline_event.secondary_actor.ename %></span>
+         <span class="font_14"><%= raw l.timeline_event.secondary_actor.origin_name %></span>
        <% end %>
      </h3>
      <p class="event_type">
@@ -51,7 +51,7 @@
        <h3>
          <%= link_to  wine_path(l.timeline_event.secondary_actor) do %>
            <%= raw l.timeline_event.secondary_actor.cname %><br />
-           <span class="font_14"><%= raw l.timeline_event.secondary_actor.ename %></span>
+           <span class="font_14"><%= raw l.timeline_event.secondary_actor.origin_name %></span>
          <% end %>
        </h3>
        <p class="event_type">

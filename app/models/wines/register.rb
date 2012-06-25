@@ -69,6 +69,10 @@ class Wines::Register < ActiveRecord::Base
     "#{show_vintage} #{name_en.to_s}"
   end
 
+  def oname
+    "#{show_vintage} #{origin_name.to_s}"
+  end
+
   def show_vintage
     vintage.strftime("%Y") unless vintage.blank?
   end

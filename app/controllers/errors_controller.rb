@@ -1,4 +1,4 @@
-
+# encoding: utf-8
 class ErrorsController < ApplicationController
   def error_404
   	@title = "404 错误"

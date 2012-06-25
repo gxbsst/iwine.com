@@ -1,0 +1,18 @@
+<div style="" id="comment_form">
+  <h3 class="title"> 我要关注 </h3>
+  <%= form_for [follow] do |f| -%>
+  <div class="share relative" style="border: 0">
+    <%= link_to "javascript:void(0)", :class => "btn_gray float_r", :onclick => "$(this).parents('form').submit()" do  %>
+    <span>关注</span>
+    <% end %>
+
+    分享到
+    <%= f.check_box :is_share, 
+    :checked => current_user.profile.config.share.wine_simple_comment.to_i == 1 %> 
+    广播
+  </div>
+  <span class="red text_error" style="display: block; float: right; margin-right: 20px"></span>
+  <% end -%>
+</div>
+</div>
+

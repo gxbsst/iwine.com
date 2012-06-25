@@ -5,21 +5,20 @@ class Wines::Detail < ActiveRecord::Base
 
   counts  :photos_count   => {:with => "AuditLog",
                               :receiver => lambda {|audit_log| audit_log.logable.imageable }, 
-                              :increment => {:on => :create, :if => lambda {|audit_log| audit_log.photos_counter_should_increment? }},
-                              :decrement => {:on => :save,   :if => lambda {|audit_log| audit_log.photos_counter_should_decrement? }}                              
+                              :increment => {:on => :create, :if => lambda {|audit_log| audit_log.photos_counter_should_increment? && audit_log.logable.imageable_type == "Wines::Detail" }},
+                              :decrement => {:on => :save,   :if => lambda {|audit_log| audit_log.photos_counter_should_decrement? && audit_log.logable.imageable_type == "Wines::Detail" }}                              
                              },              
           :comments_count => {:with => "Comment", 
                              :receiver => lambda {|comment| comment.commentable },
                              :increment => {:on => :create, :if => lambda {|comment| comment.counter_should_increment_for("Wines::Detail") }},
                              :decrement => {:on => :save,   :if => lambda {|comment| comment.counter_should_decrement_for("Wines::Detail") }}                              
                              },
-         :followers_count => {:with => "Comment", 
-                              :on => :create,
-                              :receiver => lambda {|comment| comment.commentable },
-                              :increment => {:on => :create, :if => lambda {|comment| comment.followers_counter_should_increment_for("Wines::Detail")}},
-                              :decrement => {:on => :save,   :if => lambda {|comment| comment.followers_counter_should_decrement_for("Wines::Detail")}}                              
+         :followers_count => {:with => "Follow", 
+                              :receiver => lambda {|follow| follow.followable },
+                              :increment => {:on => :create, :if => lambda {|follow| follow.wine_follow_counter_should_increment_for("Wines::Detail")}},
+                              :decrement => {:on => :destroy, :if => lambda {|follow| follow.wine_follow_counter_should_decrement_for("Wines::Detail")}}                              
                               },
-           :owners_count  =>  {:with => "Users::WineCellarItem",
+          :owners_count  =>  {:with => "Users::WineCellarItem",
                               :receiver => lambda {|cellar_item| cellar_item.wine_detail},
                               :increment => {:on => :create},
                               :decrement => {:on => :destroy}
@@ -47,6 +46,8 @@ class Wines::Detail < ActiveRecord::Base
   has_many :prices, :class_name => "Price", :foreign_key => "wine_detail_id"
   has_many :variety_percentages, :class_name => 'VarietyPercentage', :foreign_key => 'wine_detail_id', :dependent => :destroy
   has_many :special_comments, :as => :special_commentable
+  has_many :follows, :as => :followable, :class_name => "WineFollow"
+  has_one  :winery, :through => :wine
   scope :hot_wines, lambda { |limit| joins(:comments).
                                      includes([:wine, :covers]).
                                      where("do = ?", "follow").
@@ -70,15 +71,23 @@ class Wines::Detail < ActiveRecord::Base
   end
 
   def ename
+    "#{show_year} #{wine.origin_name.to_s}"
+  end
+
+  def origin_name
+    "#{show_year} #{wine.origin_name.to_s}"
+  end
+  
+  def ename
     "#{show_year} #{wine.name_en.to_s}"
   end
 
   def name
-    cname + ename
+    cname + origin_name
   end
 
-  def en_zh_name
-    "#{wine.name_en.to_s}#{wine.name_zh.to_s}"
+  def origin_zh_name
+    "#{wine.origin_name.to_s} #{wine.name_zh.to_s}"
   end
 
   def other_cn_name
@@ -87,7 +96,7 @@ class Wines::Detail < ActiveRecord::Base
 
   # 获取产区
   def get_region_path_html( symbol = " > " )
-    wine.get_region_path.reverse!.collect { |region| region.name_en + '/' + region.name_zh }.join( symbol )
+    wine.get_region_path.reverse!.collect { |region| region.origin_name + '/' + region.name_zh }.join( symbol )
   end
 
   def show_year
@@ -115,7 +124,7 @@ class Wines::Detail < ActiveRecord::Base
   def show_region_percentage
     show_percentage = ""
     variety_percentages.includes(:variety).each do |p|
-      show_percentage << " #{p.name_zh}-#{p.name_en}/#{p.percentage} "
+      show_percentage << " #{p.name_zh}-#{p.origin_name}/#{p.percentage} "
     end
     return show_percentage
   end
@@ -171,6 +180,18 @@ class Wines::Detail < ActiveRecord::Base
   def all_photo_counts
     photos_count.to_i + wine.photos.count.to_i
   end
+
+  # 是否已经关注酒
+  def is_followed_by? user
+    return follows.where("user_id = ? ", user.id).first ? true : false
+  end
+
+  # 当前关注该支酒的用户列表
+  def followers(options = { })
+    User.joins(:follows).
+      where("followable_type = ? AND followable_id = ?", self.class.name, id)
+  end
+
   # 类方法
   class << self
    def timeline_events

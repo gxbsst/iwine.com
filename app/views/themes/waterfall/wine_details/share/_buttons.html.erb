@@ -4,29 +4,29 @@
 <div class="share float_r pt5">
 	<%= render "share/sns_icons",
         :image_url => sns_image_url(@wine_detail, :thumb_name => :large),
-        :title => sns_title(@wine_detail.en_zh_name),
+        :title => sns_title(@wine_detail.origin_zh_name),
         :summary => wine_summary(@wine_detail.description),
         :url => request.url %>
 </div>
 <div>
 	
 	<% unless user_signed_in? %>
-	<%= link_to  new_wine_comment_path(@wine_detail.id), 
+	<%= link_to  new_wine_follow_path(@wine_detail.id), 
 	                                   :class => [:btn_gray, :mr5, :ajax], 
 	                                   :remote => true do %>
 		<span>关注</span>
 	<% end %>
 	<%# 用户已经登录， 检查是否已经关注 %>
 	<% else %>
-		 <%  if @wine_detail.is_followed? current_user %>
+		 <%  if @wine_detail.is_followed_by? current_user %>
 			<span class="icon_fol mr5">
 					已关注
 				<span class="cancl_fol">
-					 <%= link_to "(取消)", cancle_follow_wine_comments_path(@wine_detail) %>
+					 <%= link_to "(取消)", wine_follow_path(@wine_detail), :method => :delete %>
 				</span>
 		  </span>
 		 <% else %>
-				<%= link_to new_wine_comment_path(@wine_detail.id, :do => "follow"), 
+				<%= link_to new_wine_follow_path(@wine_detail.id), 
 							                            :class => [:btn_gray, :mr5, :ajax], 
 							                            :remote => true do %>
 					<span>关注</span>

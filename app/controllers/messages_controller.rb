@@ -67,8 +67,13 @@
         @message.recipients.split(',').each do |s|
           @recipient_list << User.find_by_username(s.strip) unless s.blank?
         end
-                
-        receipt = current_user.send_message(@recipient_list, @message.body, "subject_#{current_user.id}", true)
+        conversation = current_user.has_conversation_with? @recipient_list.first
+        if conversation 
+          receipt = current_user.reply_to_conversation(conversation, @message.body, nil, true, true, @message.attachment)
+        else
+          receipt = current_user.send_message(@recipient_list, @message.body, "subject_#{current_user.id}", true)
+        end        
+
         redirect_to conversations_path
       end
       # flash[:notice] = "Message sent."

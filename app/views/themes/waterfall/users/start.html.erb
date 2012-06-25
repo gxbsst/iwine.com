@@ -20,7 +20,7 @@
       <% end %>
        <div class="meta">
          <h1 class="zh"><%= link_to wine_detail.cname, wine_path(wine_detail) %></h1>
-         <h1 class="en"><%= link_to wine_detail.ename, wine_path(wine_detail) %></h1>
+         <h1 class="en"><%= link_to wine_detail.origin_name, wine_path(wine_detail) %></h1>
          <span class="gray"><%= wine_detail.wine.style.name_zh %></span>
         <%= check_box_tag "wine_detail_ids[]", wine_detail.id, true  %> 
        </div>

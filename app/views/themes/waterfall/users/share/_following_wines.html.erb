@@ -1,5 +1,5 @@
 <% if !@following_wines.blank? %>
-<% @following_wines.collect{|i| i.commentable }.each_with_index do |wine, index| %>
+<% @following_wines.collect{|i| i.followable }.each_with_index do |wine, index| %>
 <span>
   <%= link_to wine_path(wine) do %>
   <% if index > 1 %>

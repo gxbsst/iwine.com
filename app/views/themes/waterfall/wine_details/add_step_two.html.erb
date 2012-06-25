@@ -26,7 +26,7 @@
                 <div class="wine_img"><%= wine_label_tag( detail, :thumb_name => "thumb_x", :width => "70", :height => "70" )%></div>
                 <div class="wine_info">
                   <h2><%= detail.wine.name_zh %></h2>
-                  <h3><%= detail.wine.name_en %></h3>
+                  <h3><%= detail.wine.origin_name %></h3>
                   <p><strong>已有年份：</strong></p>
                   <p class="year">
                     <% Wines::Detail.where("wine_id = ?", detail.wine_id).select('id, year').each do |wine_detail| %>

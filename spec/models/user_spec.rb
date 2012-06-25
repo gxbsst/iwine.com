@@ -47,25 +47,25 @@ describe User do
     end
   end
 
-  describe "#winery_followings_count" do
-    before(:each) do
-      @winery = create(:winery)
-      @comment = Comment.build_from( @winery,
-                                     user.id,
-                                     'Comment body',
-                                     :do => "follow")
-    end
-    it "should increment if do follow" do
-      @comment.save
-      User.find(user).winery_followings_count.should be(1)
-    end
-    it "should decrement if do follow" do
-      @comment.save
-      @comment.deleted_at = Time.now
-      @comment.save
-      User.find(user).winery_followings_count.should be(0)
-    end
-  end
+  # describe "#winery_followings_count" do
+  #   before(:each) do
+  #     @winery = create(:winery)
+  #     @comment = Comment.build_from( @winery,
+  #                                    user.id,
+  #                                    'Comment body',
+  #                                    :do => "follow")
+  #   end
+  #   it "should increment if do follow" do
+  #     @comment.save
+  #     User.find(user).winery_followings_count.should be(1)
+  #   end
+  #   it "should decrement if do follow" do
+  #     @comment.save
+  #     @comment.deleted_at = Time.now
+  #     @comment.save
+  #     User.find(user).winery_followings_count.should be(0)
+  #   end
+  # end
   describe "#comments_count" do
     before(:each) do
       @comment = build(:comment, :do => "comment")

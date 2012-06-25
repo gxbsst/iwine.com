@@ -8,7 +8,7 @@
       </dt>
       <dd>
         <span><%= wine.cname%></span>
-        <p><%= wine.ename%></p>
+        <p><%= wine.origin_name%></p>
       </dd>
       <div class="clear"></div>
     </dl>
@@ -22,7 +22,7 @@
         <%= winery_label_tag(winery, :thumb_name => :thumb, :width => 30, :height => 30) %>
       </dt>
       <dd><span><%= winery.name_zh %></span>
-        <p><%= winery.name_en%></p></dd>
+        <p><%= winery.origin_name %></p></dd>
       <div class="clear"></div>
     </dl>
   <% end %>

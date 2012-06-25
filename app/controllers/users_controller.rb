@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   # 关注的酒
   def wine_follows
     @title = ["关注的酒", @user.username].join("-")
-    @comments = @user.wine_followings.order("created_at DESC").page(params[:page] || 1).per(10)
+    @follows = @user.wine_followings.order("created_at DESC").page(params[:page] || 1).per(10)
     @hot_wines = Wines::Detail.hot_wines(5)
   end
 

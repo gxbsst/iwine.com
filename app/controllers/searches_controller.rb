@@ -58,15 +58,11 @@ class SearchesController < ApplicationController
   def results
     @title = "搜索"
     server = HotSearch.new
-    # @page = params[:page].to_i || 1
-    # if @page < 1 
-    #   @page = 1
-    # end
-    @entries = server.all_entries( params[:word] )
+    @entries = server.all_entries( params[:word])
     @all_wines = @entries['wines']
     @wineries = @entries['wineries']
     page = params[:page] || 1
-    if !(@all_wines.nil?)
+    if @all_wines.present?
       unless @all_wines.kind_of?(Array)
         @wines = @all_wines.page(page).per(10)
       else

@@ -1,5 +1,5 @@
 <%= content_for :wine_title do  %>
-  <div class="wineprofile_name"><h1><%= @wine_detail.cname %></h1><h2><%= @wine_detail.ename %></h2></div>
+  <div class="wineprofile_name"><h1><%= @wine_detail.cname %></h1><h2><%= @wine_detail.origin_name %></h2></div>
 <% end %>
 <div id="wp_left">
 
