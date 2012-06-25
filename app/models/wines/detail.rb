@@ -15,8 +15,8 @@ class Wines::Detail < ActiveRecord::Base
                              },
          :followers_count => {:with => "Follow", 
                               :receiver => lambda {|follow| follow.followable },
-                              :increment => {:on => :create, :if => lambda {|follow| follow.wine_follow_counter_should_increment_for("Wines::Detail")}},
-                              :decrement => {:on => :destroy, :if => lambda {|follow| follow.wine_follow_counter_should_decrement_for("Wines::Detail")}}                              
+                              :increment => {:on => :create, :if => lambda {|follow| follow.follow_counter_should_increment_for("Wines::Detail")}},
+                              :decrement => {:on => :destroy, :if => lambda {|follow| follow.follow_counter_should_decrement_for("Wines::Detail")}}                              
                               },
           :owners_count  =>  {:with => "Users::WineCellarItem",
                               :receiver => lambda {|cellar_item| cellar_item.wine_detail},

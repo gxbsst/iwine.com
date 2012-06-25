@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   # 关注的酒庄
   def winery_follows
     @title = ["关注的酒庄", @user.username].join("-")
-    @comments = @user.winery_followings.order("created_at DESC").page(params[:page] || 1).per(10)
+    @follows = @user.winery_followings.order("created_at DESC").page(params[:page] || 1).per(10)
     @hot_wines = Wines::Detail.hot_wines(5)
   end
 
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
   # 用户第一次登录
   def start
     if current_user.sign_in_count == 1
-      @hot_wines = Wines::Detail.hot_wines(6)
+      @hot_wines = Wines::Detail.hot_wines(12)
       if request.post?
 
         # follow wines

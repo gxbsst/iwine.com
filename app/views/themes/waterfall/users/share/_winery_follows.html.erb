@@ -1,6 +1,6 @@
-<% if !@comments.blank?  %>
+<% if !@follows.blank?  %>
 <ul class="winery_list">
-   <% @comments.collect{|i| i.commentable }.each do |winery| %>
+   <% @follows.collect{|i| i.followable }.each do |winery| %>
   <li>
   	<div class="logo">
   	  <%= link_to winery_path(winery) do  %>

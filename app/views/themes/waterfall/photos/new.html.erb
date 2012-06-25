@@ -15,7 +15,7 @@
       </p>
 
       <!-- The fileinput-button span is used to style the file input field as button -->
-      <p class="mb20">
+      <p class="mb10">
         <span class="btn btn-success fileinput-button">
           <i class="icon-plus icon-white"></i>
           <a href="javascript:void(0)" class="btn_blue_b mr5">
@@ -23,10 +23,10 @@
          </a>
           <%= f.file_field :image, :multiple => true %>
         </span>
-        
       </p>
       <div class="clear"></div>
-      <p>每次最多上传10张图片；每张图片最大为5MB。</p>
+      <br />
+      <p class="mb20">每次最多上传10张图片；每张图片最大为5MB。我们仅支持以下格式图片：JPEG、PNG、GIF。</p>
       <!-- The table listing the files available for upload/download -->
       <table class="table table-striped" width="100%" cellpadding="5" cellspacing="5">
         <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
