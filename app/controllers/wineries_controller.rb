@@ -4,7 +4,7 @@ class WineriesController < ApplicationController
   before_filter :get_winery, :except => [:show, :index]
   def index
     @title = "酒庄"
-    @timelines = Winery.timeline_events.page(params[:page] || 1 ).per(50)
+    @timelines = Winery.timeline_events.page(params[:page] || 1 ).per(30)
   end
 
   def show
