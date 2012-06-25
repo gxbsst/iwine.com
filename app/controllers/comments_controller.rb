@@ -7,6 +7,7 @@ class CommentsController < ApplicationController
   before_filter :check_followed, :only => :create
   before_filter :check_cancle_follow, :only => :cancle_follow
   before_filter :check_can_comment, :only => :create
+  after_filter  :send_reply_email, :only => :reply
   def new   
     if params[:do].present? && params[:do] == "follow"
       new_follow_comment
@@ -99,6 +100,7 @@ class CommentsController < ApplicationController
       @reply_comment.save
       @reply_comment.move_to_child_of(@comment)
       render :json =>  @comment.children.all.size.to_json
+      @success_create = true #for after_filter(send_reply_email)
     end
   end
 
@@ -183,5 +185,17 @@ class CommentsController < ApplicationController
         end
       end
     end
+  end
+  
+  #评论用户的照片发送邮件提醒
+  def send_reply_email
+    if @success_create && @reply_comment.parent_id
+      @parent_comment = Comment.find(@reply_comment.parent_id)
+      user = @parent_comment.user 
+      if user && user.profile.config[:notice][:email].include?("2") #用户设置发送邮件 
+        UserMailer.reply_comment(:parent_user => user, :reply_user => @user).deliver
+      end
+    end
+
   end
 end

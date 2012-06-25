@@ -5,11 +5,15 @@ class FriendsController < ApplicationController
   def follow
     params[:user_id].split(',').each do |user_id|
       if current_user.is_following( user_id ).blank? && current_user.id != user_id.to_i
+        following_user = User.find user_id.to_i
         friendship = Friendship.new
         friendship.user_id = user_id
         friendship.follower_id = current_user.id
         friendship.save
         notice_stickie t("notice.friend.follow")
+        UserMailer.follow_user(
+          :following => following_user, 
+          :follower => current_user).deliver if following_user.profile.config[:notice][:email].include? "3" #被关注发送提醒邮件
       end
     end
     redirect_to request.referer

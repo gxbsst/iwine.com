@@ -18,8 +18,8 @@ class Users::WineCellarItem < ActiveRecord::Base
     # paginate config
     paginates_per 6
     
-    fires :add_to_cellar, :on                 => :create,
-                        :actor              => :user,
+    fires :add_to_cellar, :on            => :create,
+                        :actor           => :user,
                         :secondary_actor => :wine_detail,
                         :if => lambda {|item| item.user.profile.config.share.wine_cellar.to_i == 1}
     
