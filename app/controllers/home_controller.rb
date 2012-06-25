@@ -5,7 +5,7 @@ class HomeController < ApplicationController
 
   def index
     @title = "我的首页"
-    @timelines = @user.feeds.page(params[:page] || 1 ).per(12)
+    @timelines = @user.feeds.page(params[:page] || 1 ).per(30)
   end
 
   def show
