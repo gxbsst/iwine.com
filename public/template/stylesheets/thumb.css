@@ -3,7 +3,7 @@
 			margin: 30px auto 10px auto;
 			width: 440px; 
 			height: 440px;
-			background: url('../image/test/bg_previe.gif') top left no-repeat;
+			background: url('../images/test/bg_previe.gif') top left no-repeat;
 		}
 
 		#preview_outer {
@@ -45,14 +45,14 @@
 			width: 50px;
 			height: 50px;
 			cursor: pointer;
-			background: url('../image/test/bg_thum.gif') top left no-repeat;
+			background: url('../images/test/bg_thum.gif') top left no-repeat;
 			display: inline-block;
 		}
 
 		#arrow {
 			position: absolute;
 			top: -13px;
-			background: url('../image/test/bg_arrow.gif') top center no-repeat;
+			background: url('../images/test/bg_arrow.gif') top center no-repeat;
 			width: 104px;
 			height: 39px;
 			display: none;
