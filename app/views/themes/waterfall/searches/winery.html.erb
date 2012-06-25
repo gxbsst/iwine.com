@@ -44,13 +44,12 @@
           <p class="mt10">
             地区：<%= winery.region_path_zh %>
             <br />
-            地址：Screaming Eagle PO Box 12 Oakville, CA 94562
+            地址：<%= winery.address %>
             <br />
-            官方网站：<a href="#">http://www.romanee-conti.fr/</a><br />
-            电子邮件：<a href="#">bernardo@gmail.com</a><br />
-            电话：(707) 944-0749
-            <br />
-            传真：(707) 944-9271
+            官方网站：<%=link_to winery.official_site, winery.official_site %><br />
+            电子邮件：<%= winery.email %><br />
+            电话：<%= winery.cellphone %><br />
+            传真：<%= winery.fax %>
           </p>
         </div>
       </li>

@@ -11,7 +11,7 @@
       <div class="main">
         <div class="winename">
           评论了酒: 
-          <%= link_to comment.commentable.cname, wine_path(comment.commentable) %>
+          <%= wine_name_zh_link(comment.commentable.cname, comment.commentable) %>
           <span class="date"><%= comment.created_at.to_s(:normal)%></span>
           <span class=" star_s<%= comment.point %>"></span>
 

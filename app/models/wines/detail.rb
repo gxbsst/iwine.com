@@ -48,11 +48,10 @@ class Wines::Detail < ActiveRecord::Base
   has_many :special_comments, :as => :special_commentable
   has_many :follows, :as => :followable, :class_name => "WineFollow"
   has_one  :winery, :through => :wine
-  scope :hot_wines, lambda { |limit| joins(:comments).
+  scope :hot_wines, lambda { |limit| joins(:follows).
                                      includes([:wine, :covers]).
-                                     where("do = ?", "follow").
                                      select("wine_details.*, count(*) as c").
-                                     group("commentable_id").
+                                     group("followable_id").
                                      order("c DESC").
                                      limit(limit)
                            }

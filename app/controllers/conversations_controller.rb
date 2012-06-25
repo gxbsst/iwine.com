@@ -100,18 +100,16 @@ class ConversationsController < ApplicationController
 
   def search
     @message = Message.new
+    #搜索私信内容
+    @conversations = current_user.mailbox.conversations.
+        joins([:messages, :receipts]).
+        where("notifications.body like ? ", "%#{params[:search]}%")
+    #搜索私信用户
     if user = User.find_by_username(params[:search])
-      conditions = ["receipts.receiver_id=? AND (notifications.body like ? OR notifications.sender_id=?)", current_user.id, "%" + params[:search] + "%", user.id]
-    else
-      conditions = ["receipts.receiver_id=? AND (notifications.body like ?)", current_user.id, "%" + params[:search] + "%"]
+      conversation = current_user.has_conversation_with?(user)
+      @conversations << conversation if conversation
     end
-    @receipts = Receipt.all(:joins => "LEFT OUTER JOIN `notifications` ON notifications.id = receipts.notification_id",
-      :include => [:notification => :conversation],
-    :conditions => conditions)
-    if !@receipts.blank?
-      @conversations = @receipts.inject([]) do |memo, receipt|
-        memo << receipt.notification.conversation
-      end
+
       #TODO: 加分页
       # page = params[:page] || 1
       # if !(@conversations.nil?)
@@ -121,8 +119,6 @@ class ConversationsController < ApplicationController
       #     @conversations = Kaminari.paginate_array(@conversations).page(page).per(10)
       #   end
       # end
-    end
-
   end
 
   private

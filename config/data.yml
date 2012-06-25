@@ -49,7 +49,7 @@ user_profile:
       4: 与我有共同好友的人
     email:
       1: 我收到一条私信
-      2: 我收到一条回复或评论
+      2: 我收到一条回复
       3: 我被某人关注
       5: 关于新 iWine 产品功能和技巧的更新
       6: 关于我的 iWine 账号的产品或服务更新
@@ -181,6 +181,10 @@ email:
   developers: ["shanhua.chen@sidways.com", "weston.wei@sidways.com"]
   welcome:
     subject: "注册成功！到各个版块转转吧？"
+  follow:
+    subject: "恭喜您被人关注了。"
+  reply:
+    subject: "有人回复您的评论。"
   from:
     normal: "爱红酒 <non-reply@iWine.com>"
     #TODO: 根据不同需要在这里继续添加

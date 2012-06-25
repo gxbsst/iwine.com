@@ -4,12 +4,12 @@
 	<% end %>
 </div>
 <div class="info">
-	<% unless  @wine.winery.nil? %>
+	<% if @wine.winery %>
 	酒庄：<%= link_to @wine.winery.name,
               :controller => "wineries",
               :action => 'show',
               :id => @wine.winery.id %>
-  <br />
+    <br />
 	<% end %>
 	官网：<%= link_to @wine.official_site, 'http://' + @wine.official_site, :target => '_blank' %><br />
 	产区：<%= @wine.region_path_zh(:connector => ">") %><br />

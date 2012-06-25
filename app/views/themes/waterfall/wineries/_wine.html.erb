@@ -4,7 +4,7 @@
     <%= wine_label_tag(wine, :thumb_name => :thumb_x, :height => 100, :width => 100) %>
   <% end %>
   <div class="info">
-    <h3 class="zh"><%= link_to wine.name_zh, wine_path(releast_detail) %></h3>
+    <h3 class="zh"><%= wine_name_zh_link(wine.name_zh, releast_detail) %></h3>
     <h3 class="en"><%= link_to wine.origin_name, wine_path(releast_detail) %></h3>
     <p><strong>年份：</strong></p>
     <p class="year">

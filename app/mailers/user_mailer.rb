@@ -15,4 +15,18 @@ class UserMailer < ActionMailer::Base
   	@user = user
   	mail(:to => @user.email, :subject => APP_DATA["email"]["welcome"]["subject"])
   end
+
+  #被关注发送邮件
+
+  def follow_user(options = {})
+    @following_user = options[:following] #被关注的人
+    @follower_user = options[:follower] #关注的人
+    mail(:to => @following_user.email, :subject => APP_DATA["email"]["follow"]["subject"])  
+  end
+
+  def reply_comment(options = {})
+    @parent_user = options[:parent_user]
+    @reply_user  = options[:reply_user]
+    mail(:to => @parent_user.email, :subject => APP_DATA["email"]["reply"]["subject"])
+  end
 end

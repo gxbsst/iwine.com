@@ -21,7 +21,7 @@
   
   <div class="message_list">
     
-    <% if !@conversations.blank? %>
+    <% if @conversations.present? %>
     <ul class="private_list">
       <% @conversations.each do |conversation| %>
       <%= render conversation %>	
