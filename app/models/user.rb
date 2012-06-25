@@ -58,14 +58,14 @@ class User < ActiveRecord::Base
                               },  
    :wine_followings_count =>  {:with => "Follow",
                                :receiver => lambda {|follow| follow.user }, 
-                               :increment => {:on => :create,  :if => lambda{|follow| follow.wine_follow_counter_should_increment_for("Wines::Detail")}},
-                               :decrement => {:on => :destroy, :if => lambda{|follow| follow.wine_follow_counter_should_decrement_for("Wines::Detail")}}                              
+                               :increment => {:on => :create,  :if => lambda{|follow| follow.follow_counter_should_increment_for("Wines::Detail")}},
+                               :decrement => {:on => :destroy, :if => lambda{|follow| follow.follow_counter_should_decrement_for("Wines::Detail")}}                              
                               }, 
- :winery_followings_count =>  {:with => "Comment",
-                               :receiver => lambda {|comment| comment.user }, 
-                               :increment => {:on => :create, :if => lambda{|comment| comment.followers_counter_should_increment_for("Winery")}},
-                               :decrement => {:on => :save,   :if => lambda{|comment| comment.followers_counter_should_decrement_for("Winery")}}                              
-                               },  
+   :winery_followings_count =>{:with => "Follow",
+                               :receiver => lambda {|follow| follow.user }, 
+                               :increment => {:on => :create,  :if => lambda{|follow| follow.follow_counter_should_increment_for("Winery")}},
+                               :decrement => {:on => :destroy, :if => lambda{|follow| follow.follow_counter_should_decrement_for("Winery")}}                              
+                              }, 
          :followers_count =>  {:with => "Friendship",
                                :receiver => lambda {|friendship| friendship.user }, 
                                :increment => {:on => :create},
@@ -133,9 +133,9 @@ class User < ActiveRecord::Base
            :conditions => {:followable_type => "Wines::Detail"}
 
   has_many :winery_followings,
-           :include => :commentable,
-           :class_name => "Comment",
-           :conditions => {:commentable_type => "Winery", :do => "follow"}
+           :include => :followable,
+           :class_name => "Follow",
+           :conditions => {:followable_type => "Winery"}
 
   has_many :feeds,
   :class_name => "Users::Timeline",

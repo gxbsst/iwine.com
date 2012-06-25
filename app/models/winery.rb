@@ -30,12 +30,11 @@ class Winery < ActiveRecord::Base
                              :increment => {:on => :create, :if => lambda {|comment| comment.counter_should_increment_for("Winery")}},
                              :decrement => {:on => :save, :if   => lambda {|comment| comment.counter_should_decrement_for("Winery")}}                              
                              },
-         :followers_count => {
-                             :with => "Comment",
-                             :receiver => lambda {|comment| comment.commentable },
-                             :increment => {:on => :create, :if => lambda {|comment| comment.followers_counter_should_increment_for("Winery")}},
-                             :decrement => {:on => :save,   :if => lambda {|comment| comment.followers_counter_should_decrement_for("Winery")}}                              
-                            },
+         :followers_count => {:with => "Follow", 
+                             :receiver => lambda {|follow| follow.followable },
+                             :increment => {:on => :create, :if => lambda {|follow| follow.follow_counter_should_increment_for("Winery")}},
+                             :decrement => {:on => :destroy, :if => lambda {|follow| follow.follow_counter_should_decrement_for("Winery")}}                              
+                             },
            :photos_count   => {:with => "AuditLog",
                                         :receiver => lambda {|audit_log| audit_log.logable.imageable }, 
                                         :increment => {:on => :create, :if => lambda {|audit_log| audit_log.photos_counter_should_increment? && audit_log.logable.imageable_type == "Winery"}},
@@ -54,11 +53,11 @@ class Winery < ActiveRecord::Base
   has_one :label, :as => :imageable, :class_name => "Photo", :conditions => {:photo_type => APP_DATA["photo"]["photo_type"]["label"]}
   has_many :wines
   has_many :comments, :class_name => "WineryComment", :as => :commentable
-  scope :hot_wineries, lambda { |limit| joins(:comments).
+  has_many :follows, :as => :followable, :class_name => "WineryFollow"
+  scope :hot_wineries, lambda { |limit| joins(:follows).
                                         includes([:covers]).
-                                        where("do = ?", "follow").
                                         select("wineries.*, count(*) as c").
-                                        group("commentable_id").
+                                        group("followable_id").
                                         order("c DESC").
                                         limit(limit)
                            }
@@ -87,6 +86,11 @@ class Winery < ActiveRecord::Base
       where("commentable_type = ? and commentable_id = ? and do = ? and deleted_at is null", self.class.name, id, 'follow').
       page(options[:page] || 1).
       per(options[:per] || 16) #如果想使用limit而不用分页效果可以使用per
+  end
+
+  # 是否已经关注酒
+  def is_followed_by? user
+    return follows.where("user_id = ? ", user.id).first ? true : false
   end
 
   # 类方法

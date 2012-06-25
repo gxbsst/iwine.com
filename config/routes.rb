@@ -164,6 +164,7 @@ Patrick::Application.routes.draw do
         post :create, :as => "winery" # 这里主要是为了使评论表单的URL为一致
       end
     end
+    resources :follows, :controller => "follows" 
   end
   # SETTINGS
   resources :settings do
