@@ -47,9 +47,7 @@
 </div>
 <div id="wp_right">
   <%= render "wine_details/share/resource" %>
-  <% cache("#{@wine_detail.id}-#{@wine_detail.updated_at.to_i}-data") do %>
-   <%= render "wine_details/share/spec"%>
-  <% end %>
+  <%= render "wine_details/share/spec"%>
   <%= render "wine_details/share/score"%>
   <%= render "wine_details/share/special_comments"%>
   <%= render "wine_details/share/price"%>
