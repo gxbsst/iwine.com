@@ -1,6 +1,6 @@
 <div class="winery_header">
    <div class="cover">
-     <%= winery_cover_tag(@winery, :thumb_name => :middle_x, :width => 360, :height => 330, :alt => @winery.origin_name) %>
+     <%= winery_cover_tag(@winery, :thumb_name => :middle_x, :width => 360, :alt => @winery.origin_name) %>
    </div>
 
    <div class="info">
@@ -28,7 +28,7 @@
        <% end %>
      </div>
 
-     <div class="logo"><%= image_tag(@winery.logo_url(:thumb), :width => 100, :height => 50, :alt => @winery.origin_name) if @winery.logo.present? %></div>
+     <div class="logo"><%= image_tag(@winery.logo_url(:thumb), :height => 50, :alt => @winery.origin_name) if @winery.logo.present? %></div>
      <h1 class="winery_name_ch"><%= @winery.name_zh %></h1>
      <h1 class="winery_name_en"><%= @winery.origin_name %></h1>
      <div class="baseinfo">
