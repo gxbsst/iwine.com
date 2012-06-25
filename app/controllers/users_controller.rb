@@ -47,7 +47,7 @@ class UsersController < ApplicationController
   # 用户第一次登录
   def start
     if current_user.sign_in_count == 1
-      @hot_wines = Wines::Detail.hot_wines(6)
+      @hot_wines = Wines::Detail.hot_wines(12)
       if request.post?
 
         # follow wines
