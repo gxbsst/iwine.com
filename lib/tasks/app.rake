@@ -174,7 +174,8 @@ namespace :app do
             # 1. 法国,France,波尔多,Bordeaux,梅多克,Médoc,梅多克,Médoc
             # 2. 添加一个字段， 保存原生文字，如:RhÃ´ne Valley, name_en 保存 RhA´ne Valley
             # 转换方法: "Moulis/ Moulis-en-MÃ©doc".to_ascii_brutal => https://github.com/tomash/ascii_tic
-            region = Wines::RegionTree.where("name_en = ? and level = ? and parent_id = ? ", ascii_value, level, parent).first
+            parent_condition = parent ? " parent_id = #{parent} " : " parent_id is null "
+            region = Wines::RegionTree.where("name_en = ? and level = ? and #{parent_condition}", ascii_value, level).first
             region = Wines::RegionTree.create(:doc => to_ascii(doc),
                                               :name_zh => name_zh,
                                               :name_en => ascii_value,
@@ -240,7 +241,7 @@ namespace :app do
   #处理酒的品种和百分比
   def get_variety_percentage(variety)
     return [nil, nil] if variety.blank?
-    #将variety 格式化为类似于[‘Cf', '!0', "DE", '', 'MER'. '12']
+    #将variety 格式化为类似于[‘Cf', '10', "DE", '', 'MER'. '12']
     variety_arr = to_ascii(variety).split("\n")
     new_variety_arr = variety_arr.collect{|v| v.split "/"}
     #没有百分比的将百分比设置为空

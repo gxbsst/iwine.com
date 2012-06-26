@@ -25,7 +25,7 @@ module Common
 
 
   def get_region_path
-    return nil unless region_tree_id
+    return nil if region_tree_id.blank? || Wines::RegionTree.where("id = #{region_tree_id}").blank?
     region = Wines::RegionTree.find(region_tree_id)
     parent = region.parent
     path = [region]
