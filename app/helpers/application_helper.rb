@@ -27,6 +27,12 @@ module ApplicationHelper
     content_for(:title) { page_title }
   end
 
+  def wine_name_zh_link(name, wine_detail, options = {})
+    if name.present?
+      link_to(name, wine_path(wine_detail), options)
+    end
+  end
+
   ## 显示酒的封面
   def wine_cover_tag(object, options = {})
     cover = get_cover object

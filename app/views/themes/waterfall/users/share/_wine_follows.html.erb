@@ -7,7 +7,7 @@
     <% end %>
     <div class="info">
       <h3 class="zh">
-        <%= link_to follow.followable.cname, wine_path(follow.followable.id) %>
+        <%= wine_name_zh_link(follow.followable.cname, follow.followable) %>
       </h3>
       <h3 class="en">
         <%= link_to follow.followable.origin_name, wine_path(follow.followable.id) %>
