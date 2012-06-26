@@ -10,7 +10,7 @@ class Wines::VarietyPercentage < ActiveRecord::Base
   def self.build_variety_percentage(variety_name, variety_percentage, wine_detail_id)
     variety_name.each_with_index do |value, index|
       next if value.blank?
-      if wine_variety = Wines::Variety.where("name_en = ? ", value.strip).first
+      if wine_variety = Wines::Variety.where("name_en = ? and wine_detail_id = ? ", value.strip, wine_detail_id).first
         wine_variety.variety_percentages.first_or_create(:wine_detail_id => wine_detail_id, :percentage => variety_percentage[index])
       end
     end

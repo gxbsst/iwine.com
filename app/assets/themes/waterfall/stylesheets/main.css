@@ -187,25 +187,25 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .star_s5 {background-position: 0 0;}
 .star_s4_h {background-position: 0 -13px;}
 .star_s4 {background-position: 0 -25px;}
-.star_s3_h {background-position: 0 -37px;_background-position: 0 -35px;}
-.star_s3 {background-position: 0 -49px;}
-.star_s2_h {background-position: 0 -61px;}
-.star_s2 {background-position: 0 -73px;}
-.star_s1_h {background-position: 0 -85px;}
-.star_s1 {background-position: 0 -97px;}
-.star_s_h {background-position: 0 -109px;}
-.star_s0 {background-position: 0 -121px;}
-.star_b_s50 {background-position: 0 -142px;}
-.star_b_s45 {background-position: 0 -156px;}
-.star_b_s40 {background-position: 0 -170px;}
-.star_b_s35 {background-position: 0 -184px;}
-.star_b_s30 {background-position: 0 -198px;}
-.star_b_s25 {background-position: 0 -212px;}
-.star_b_s20 {background-position: 0 -226px;}
-.star_b_s15 {background-position: 0 -240px;}
-.star_b_s10 {background-position: 0 -254px;}
-.star_b_s05 {background-position: 0 -268px;}
-.star_b_s00 {background-position: 0 -282px;}
+.star_s3_h {background-position: 0 -39px;_background-position: 0 -37px;}
+.star_s3 {background-position: 0 -53px;}
+.star_s2_h {background-position: 0 -66px;}
+.star_s2 {background-position: 0 -79px;}
+.star_s1_h {background-position: 0 -93px;}
+.star_s1 {background-position: 0 -106px;}
+.star_s_h {background-position: 0 -119px;}
+.star_s0 {background-position: 0 -132px;}
+.star_b_s50 {background-position: 0 -152px;}
+.star_b_s45 {background-position: 0 -168px;}
+.star_b_s40 {background-position: 0 -184px;}
+.star_b_s35 {background-position: 0 -200px;}
+.star_b_s30 {background-position: 0 -216px;}
+.star_b_s25 {background-position: 0 -232px;}
+.star_b_s20 {background-position: 0 -248px;}
+.star_b_s15 {background-position: 0 -264px;}
+.star_b_s10 {background-position: 0 -280px;}
+.star_b_s05 {background-position: 0 -296px;}
+.star_b_s00 {background-position: 0 -312px;}
 .star_rate {float:left;}
 .star_rate img {margin-right:1px;}
 
@@ -278,13 +278,14 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 #header #top_right .userbox a {float:left;}
 .drop_down_menu {
     /* border: 1px solid #1C1C1C; */
+    display: none;
     width: 117px;
     display: none;
     position: absolute;
     z-index: 10000;
     background: #f3f3f3;
-    top: 30px;
-	left: -68px;
+    top: 32px;
+	left: -67px;
 	border:1px solid #ccc;
     /* -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
