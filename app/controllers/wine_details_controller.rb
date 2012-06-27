@@ -10,7 +10,18 @@ class WineDetailsController < ApplicationController
   def index
     @title = "酒款"
     # @wines = Wines::Detail.includes(:wine, :cover).order("created_at ASC").page params[:page] || 1
-    @timelines = Wines::Detail.timeline_events.page(params[:page] || 1 ).per(30)
+    @timelines = Wines::Detail.timeline_events
+
+    page = params[:page] || 1
+
+    if !(@timelines.nil?)
+      unless @timelines.kind_of?(Array)
+        @timelines = @timelines.page(page).per(30)
+      else
+        @timelines = Kaminari.paginate_array(@timelines).page(page).per(30)
+      end
+    end
+
   end
 
   # Wine Profile
