@@ -41,8 +41,8 @@ class Winery < ActiveRecord::Base
                                         :decrement => {:on => :save,   :if => lambda {|audit_log| audit_log.photos_counter_should_decrement? && audit_log.logable.imageable_type == "Winery"}}                              
                              },
              :wines_count => {
-                              :with => "Wines::Detail",
-                              :receiver => lambda {|detail| detail.winery },
+                              :with => "Wine",
+                              :receiver => lambda {|wine| wine.winery },
                               :increment => {:on => :create},
                               :decrement => {:on => :destroy} # TODO: Won't Destroy, Will Be Update deleted_at                              
                              }                  

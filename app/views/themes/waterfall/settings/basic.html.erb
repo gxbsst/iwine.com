@@ -31,7 +31,10 @@
       </div>
       <div class="required">
         <label>生日</label>
-        <%= p.date_select :birthday, :start_year => 1910, :end_year => Time.now.year, :prompt => '' %>
+        <%= p.date_select :birthday, 
+                          :start_year => Time.now.year - 18, 
+                          :end_year => 1910, 
+                          :prompt => {:year => '选择年代', :month => '选择月份', :day => '选择日份'} %>
       </div>
         <% end %>
       <div class="required">

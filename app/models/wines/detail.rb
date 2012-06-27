@@ -177,7 +177,7 @@ class Wines::Detail < ActiveRecord::Base
   end
 
   def all_photo_counts
-    photos_count.to_i + wine.photos.count.to_i
+    photos_count.to_i + wine.photos_count.to_i
   end
 
   # 是否已经关注酒
