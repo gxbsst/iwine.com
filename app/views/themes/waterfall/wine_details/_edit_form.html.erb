@@ -2,13 +2,30 @@
     <%= render 'share/error_messages', :target => @register %>
     <div class="main">
       <div class="required">
-        <%= f.label :name_zh %>
+        <%= f.label :name_zh, :class => "vm" %>
         <%= f.text_field :name_zh, :class => "text name" %>
         多个名称用“；”隔开
       </div>
       <div class="required">
-        <%= f.label :official_site %>
-        http://<% if @register.official_site %><%= @register.official_site %><% else %><%= f.text_field :official_site, :class => "text name" %><% end %>
+        <%= f.label :official_site, :class => "vm" %>
+        http://<% if @register.official_site.present? %><%= @register.official_site %><% else %><%= f.text_field :official_site, :class => "text name" %><% end %>
+      </div>
+      <div class="required">
+        <label class="vm">酒庄英文名</label>
+        <% if @register.winery && @register.winery.name_en.present? %>
+          <%= @register.winery.name_en %>
+        <% else %>
+          <input name="winery[name_en]" type="text" class="text name" value="<%= @register.winery.name_en if @register.winery %>"/>
+        <% end %>
+      </div>
+      <div class="required">
+        <label class="vm">酒庄中文名</label>
+        <% if @register.winery && @register.winery.name_zh.present? %>
+          <%= @register.winery.name_zh %>
+        <% else %>
+          <input name="winery[name_zh]" type="text" class="text name" value="<%= @register.winery.name_zh if @register.winery %>" />
+          多个名称用“；”隔开
+        <% end %>
       </div>
       <div class="optional">
         <%= f.label :drinkable_begin %>
@@ -17,7 +34,7 @@
         <%= f.date_select :drinkable_end, :discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150 %>
       </div>
       <div class="optional">
-        <label>葡萄品种</label>
+        <label class="vm">葡萄品种</label>
         <div class="content2" id="auto_variety_name">
           <%= f.text_field :variety_name_value, :name => "wines_register[variety_name][]", data: { autocomplete_source: '/api/wine_varieties/index' }, :class => "text"  %>
           成分百分比 <%= f.text_field :variety_percentage_value, :name => "wines_register[variety_percentage][]", :id => 'new_variety', :size => 10, :class => "text percent" %>% <%= link_to "", "javascript:void(0);", :class => "icon_add", :id => "create_variety" %><span class="variety_percentage_error"></span>
@@ -26,11 +43,11 @@
 
       </div>
       <div class="optional">
-        <%= f.label :alcoholicity %>
+        <%= f.label :alcoholicity, :class => "vm" %>
         <td><%= f.text_field :alcoholicity, :size => 10, :class => "text percent" %> %
       </div>
       <div class="optional">
-        <label>评分</label>
+        <label class="vm">评分</label>
         <div class="content2">
           <%= f.fields_for :special_comments do |s| %>
               评论家<%= s.text_field :name, :name => "special_comment[name][]", :id => "special_comment_name", :size => 20, :class => "text" %>
