@@ -43,8 +43,8 @@ class Winery < ActiveRecord::Base
              :wines_count => {
                               :with => "Wine",
                               :receiver => lambda {|wine| wine.winery },
-                              :increment => {:on => :create},
-                              :decrement => {:on => :destroy} # TODO: Won't Destroy, Will Be Update deleted_at                              
+                              :increment => {:on => :create, :if => lambda {|wine| if wine.winery.present? }},
+                              :decrement => {:on => :destroy, :if => lambda{|wine| if wine.winery.present? }} # TODO: Won't Destroy, Will Be Update deleted_at                              
                              }                  
   has_many :registers
   has_many :info_items, :class_name => "InfoItem"
