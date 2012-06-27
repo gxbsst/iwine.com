@@ -16,7 +16,12 @@
 
       <div class="required">
         <label><span>*</span>年份</label>
-        <%= f.date_select :vintage, :discard_day => true, :discard_month => true, :start_year => 1950, :end_year => Time.now.year, :prompt => {:year => "选择年份"} %>年
+        <%= f.date_select :vintage, 
+                          :discard_day => true, 
+                          :discard_month => true, 
+                          :start_year => Time.now.year, 
+                          :end_year => 1950, 
+                          :prompt => {:year => "选择年份"} %>年
         <label class="nv"><%= check_box_tag("wines_register[is_nv]", 1, @register.is_nv.to_i == 1, :id => "check_nv") %>NV/无年份葡萄酒</label>
       </div>
       <div class="required">
