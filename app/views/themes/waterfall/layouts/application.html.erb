@@ -7,6 +7,8 @@
     </title>
     <%= theme_stylesheet_link_tag    "application" %>
     <%= theme_javascript_include_tag "application" %>
+    <%= theme_javascript_include_tag "jquery.html5-placeholder-shim" %>
+    
     <%= csrf_meta_tags %>
     <%= yield :css %>
     <%= yield :js %>
