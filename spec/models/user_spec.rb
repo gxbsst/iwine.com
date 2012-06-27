@@ -34,16 +34,17 @@ describe User do
 
   describe "#wine_followings_count" do
     before(:each) do
-      @comment = build(:comment, :do => "follow")
+      @follow = build(:follow)
+      @user = @follow.user
     end
     it "should increment if do follow" do
-      @comment.save
-      User.find(@comment.user).wine_followings_count.should be(1)
+      @follow.save
+      User.find(@user).wine_followings_count.should be(1)
     end
     it "should decrement if do follow" do
-      @comment.deleted_at = Time.now
-      @comment.save
-      User.find(@comment.user).wine_followings_count.should be(0)
+      @follow.save
+      @follow.destroy
+      User.find(@user).wine_followings_count.should be(0)
     end
   end
 

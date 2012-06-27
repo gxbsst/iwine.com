@@ -51,6 +51,7 @@ FactoryGirl.define do
   	updated_at Time.now
   	origin_name "origin_name" 
   	other_cn_name "中文名1， 中文名2"
+    photos_count 0
   end
 
   factory :comment do
@@ -106,7 +107,16 @@ FactoryGirl.define do
     valid_file = File.new(File.join(Rails.root, 'spec', 'support', 'rails.png'))
     audit_status 0
     image File.open(valid_file)
-    imageable_type "Wines::Detail"
+    imageable {|c| c.association(:wine_detail)}
+    user {|c| c.association(:user)}
+    album {|c| c.association(:album)}
+  end
+
+  factory :photo_with_wine, :class => "Photo" do
+    valid_file = File.new(File.join(Rails.root, 'spec', 'support', 'rails.png'))
+    audit_status 0
+    image File.open(valid_file)
+    imageable {|c| c.association(:wine)}
     user {|c| c.association(:user)}
     album {|c| c.association(:album)}
   end
@@ -129,6 +139,18 @@ FactoryGirl.define do
     w.photos {|p|[p.association(:photo),
                   p.association(:photo)]}
   end
+
+  factory :wine_with_photo, :parent => :wine do |w|
+    # valid_file = File.new(File.join(Rails.root, 'spec', 'support', 'rails.png'))
+    # images {
+    #   [
+    #     ActionController::TestUploadedFile.new(valid_file, Mime::Type.new('application/png'))
+    #   ]
+    # }
+    w.photos {|p|[p.association(:photo_with_wine),
+                  p.association(:photo_with_wine)]}
+  end
+
 
   factory :wine_detail_with_photo_and_audit_log, :parent => :wine_detail do |w|
     # valid_file = File.new(File.join(Rails.root, 'spec', 'support', 'rails.png'))
@@ -197,6 +219,13 @@ FactoryGirl.define do
 
   factory :follow do
     followable {|c| c.association(:wine_detail)}
+    user {|c| c.association(:user)} 
+    private_type 1
+    is_share true
+  end
+
+  factory :follow_with_winery, :class => 'Follow' do
+    followable {|c| c.association(:winery)}
     user {|c| c.association(:user)} 
     private_type 1
     is_share true

@@ -87,27 +87,6 @@ describe Comment, "About Winery Comment" do
     # }.to change { Winery.find(@winery).comments_count }.from(1).to(0)
   end
 
-  it "followers_count should be increment" do
-    @comment.do = "follow"
-    @comment.save
-
-    Winery.find(@winery).followers_count.should be(1)
-    # expect {
-    #   @comment_1.save
-    # }.to change { Winery.find(@winery).comments_count }.from(0).to(1)
-   end
-
-  it " followers_count should be decrement" do
-    @comment.do = "follow"
-    
-    @comment.save 
-    @comment.update_attribute(:deleted_at, Time.now)
-    Winery.find(@winery).followers_count.should be(0)
-    # expect {
-    #   @comment_1.destroy
-    # }.to change { Winery.find(@winery).comments_count }.from(1).to(0)
-  end
-
   describe "#votes_count" do
    let(:comment) { Factory(:comment)}
    let(:user)  { Factory(:user)}
@@ -118,4 +97,26 @@ describe Comment, "About Winery Comment" do
    end 
   end
 
+  describe "#followers_count" do
+    before(:each) do
+      @follow = build(:follow_with_winery)
+      @winery = @follow.followable
+    end
+    it "followers_count should be increment" do
+      @follow.save
+      Winery.find(@winery).followers_count.should be(1)
+      # expect {
+      #   @comment_1.save
+      # }.to change { Winery.find(@winery).comments_count }.from(0).to(1)
+     end
+
+    it " followers_count should be decrement" do
+      @follow.save 
+      @follow.destroy
+      Winery.find(@winery).followers_count.should be(0)
+      # expect {
+      #   @comment_1.destroy
+      # }.to change { Winery.find(@winery).comments_count }.from(1).to(0)
+    end
+  end
 end

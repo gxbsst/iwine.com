@@ -8,6 +8,13 @@ class Wine < ActiveRecord::Base
   has_many   :photos, :as => :imageable
   has_many   :covers, :as => :imageable, :class_name => "Photo", :conditions => {:photo_type => APP_DATA["photo"]["photo_type"]["cover"]}
   has_one    :label, :as => :imageable, :class_name => "Photo", :conditions => {:photo_type => APP_DATA["photo"]["photo_type"]["label"]}
+
+  counts  :photos_count   => {:with => "AuditLog",
+                              :receiver => lambda {|audit_log| audit_log.logable.imageable }, 
+                              :increment => {:on => :create, :if => lambda {|audit_log| audit_log.photos_counter_should_increment? && audit_log.logable.imageable_type == "Wine" }},
+                              :decrement => {:on => :save,   :if => lambda {|audit_log| audit_log.photos_counter_should_decrement? && audit_log.logable.imageable_type == "Wine" }}                              
+                             }
+
   # Setup accessible (or protected) attributes for your model
   #attr_accessible :email, :password, :password_confirmation, :remember_me, :username
 
