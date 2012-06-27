@@ -16,7 +16,6 @@ a:hover {text-decoration:underline;}
 .username a{color:#333;}
 .control a:hover {text-decoration:underline;}
 .date {font-size:11px;color:#999;}
-.price {color:#C00;}
 .price_b {color:#c00;font-size:16px;font-weight:bold;}
 .redscore {font-size:24px;font-weight:bold;color:#990000;}
 img {border:none;}
@@ -107,6 +106,7 @@ input.year, input.percent  {width:50px;}
 textarea.wine_intro {width:500px;height:200px;}
 #stylized label.w50 {width:50px;text-align:left;margin:0;}
 .form th, .form td {padding:5px;}
+label.vm {line-height:25px;}
 
 /*----------login register---------*/
 #login {width:772px;margin:0 auto;padding-top:30px;}
@@ -124,8 +124,9 @@ textarea.wine_intro {width:500px;height:200px;}
 #register {width:376px;margin:0 auto;padding-top:30px;}
 #register .boxstyle .mid {padding:20px 28px;}
 #register p {font-size:13px;padding:0 0 5px 5px;}
+#register p.agree {margin-bottom:20px;}
 #register .location {padding-left:5px;}
-#register .submit {margin-top:20px;overflow:hidden;}
+#register .submit {margin-top:20px;overflow:hidden;text-align:center;}
 #register .message {color:#C00;padding:10px 0 0 0;display:block;}
 #register span .message {padding:0;}
 #register .agree .field_with_errors .message {display:inline;}
