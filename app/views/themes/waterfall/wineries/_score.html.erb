@@ -1,10 +1,10 @@
 <div class="score_star mb20">
   <% if @winery.rate_comments_count < 5 %>
   	<span class="star star_b_s00"></span>
-  	<span class="iw_score">少于5人评分，<%= @winery.rate_comments_count %> 人评分</span>
+  	<span class="iw_score">少于5人评分(<%= @winery.rate_comments_count %>人评分)</span>
   <% else %>
   	<span class="star star_b_s<%= @winery.stars %>0"></span>
-    <span class="iw_score"><span class="redscore"><%= @winery.score %></span> 分，<%= @winery.rate_comments_count %>人评价</span>
+    <span class="iw_score"><span class="redscore"><%= @winery.score %></span> 分(<%= @winery.rate_comments_count %>人评价)</span>
   <% end %>
 
   <div class="clear"></div>
