@@ -52,12 +52,7 @@
                 </td>
                 <td class="des">
                   <%= wine_detail.wine.name_zh %><br/>
-                  <%= wine_detail.wine.origin_name %><br/>
-                  <%= wine_detail.wine.region_path_zh %><br/>
-                  <% if wine_detail.wine.winery %>
-                    <%= wine_detail.wine.winery.name_zh %><br/>
-                    <%= wine_detail.wine.style.name_zh %>
-                  <% end %>
+                  <%= wine_detail.wine.origin_name %>
                 </td>
                 <td class="info">
                   容量:<%= wine_detail.show_capacity %><br/>

@@ -4,6 +4,7 @@ class WineDetailsController < ApplicationController
   before_filter :set_current_user
   before_filter :get_wine_detail, :only => [:show, :owners, :followers]
   before_filter :find_register, :only => [:edit, :update]
+  before_filter :find_winery, :only => [:update]
   before_filter :check_region_tree, :only => :create
   before_filter :check_edit_register, :only => [:edit, :update]
   
@@ -167,5 +168,30 @@ class WineDetailsController < ApplicationController
 
   def find_register
     @register = Wines::Register.find(params[:id])
+  end
+  
+  #根据用户输入查找匹配的第一个酒庄
+  def find_winery
+    if params[:winery] 
+      if params[:winery][:name_en]
+        @winery = Winery.where("name_en = ? or origin_name = ? ", params[:winery][:name_en], params[:winery][:name_en]).first
+      end
+      if !@winery && params[:winery][:name_zh]
+        name_zh_arr = change_name_zh(params[:winery][:name_zh])
+        name_zh_arr.each do |name_zh|
+          @winery = Winery.where("name_zh = ?", name_zh).first
+          break if @winery
+        end
+      end
+
+      #赋值
+      @register.winery_id = @winery.id if @winery
+    end
+  end
+
+  def change_name_zh(name_zh)
+    if name_zh.present?
+      name_zh_arr = name_zh.gsub(";", "；").split("；")#处理英文";"并转换化为数组
+    end
   end
 end

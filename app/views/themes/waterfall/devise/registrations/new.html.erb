@@ -3,27 +3,23 @@
   <div class="boxstyle">
     <div class="top">注册iWine</div>
     <div class="mid">
-      <p>用户名<span class="red">*</span></p>
-      <div class="un">
-        <%= f.text_field :username, :class => "text", :placeholder => "用户名"  %>
+      <p>邮件地址<span class="red">*</span></p>
+      <div class="pw">
+        <%= f.email_field :email, :class => "text", :placeholder => "Email"%>
       </div>
       <p>密码<span class="red">*</span></p>
       <div class="pw">
         <%= f.password_field :password, :class => "text", :placeholder => "密码"%>
       </div>
-      <p>邮件地址<span class="red">*</span></p>
-      <div class="pw">
-        <%= f.email_field :email, :class => "text", :placeholder => "Email"%>
-      </div>
-      <p>所在地<span class="red">*</span></p>
+      <p>用户名<span class="red">*</span></p>
       <div class="un">
-           <%= f.text_field :city, :class => "text", :placeholder => "目前所在城市"%>
+        <%= f.text_field :username, :class => "text", :placeholder => "用户名"  %>
       </div>
         <div class="submit">
           <span class="float_r agree">
               <%= f.check_box :agree_term, :checked => "checked" %>
-              我已阅读并同意
-              <%= link_to "使用条款", "/private" %>
+              我已阅读并同意 <%= link_to "《使用条款》", "/private" %>，
+              同时确认已达当地法定饮酒年龄。
           </span>
           <%= link_to  "javascript:void(0)", :onclick => "$(this).parents('form').submit()" do %>
           <%= theme_image_tag "common/register_submit.jpg", 

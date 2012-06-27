@@ -1,7 +1,7 @@
 <%= render 'share/error_messages', :target => @cellar_item %>
 <div class="left">
     <div class="optional">
-      <label>酒名</label>
+      <label class="vm">酒名</label>
       <div class="content"><%= @wine_detail.origin_zh_name %></div>
     </div>
     <div class="optional">
@@ -17,19 +17,19 @@
       <div class="content"><%= @wine.winery.name if @wine.winery%></div>
     </div>
     <div class="optional">
-      <label>酒商</label>
+      <label class="vm">酒商</label>
       <div class="content"><%= f.text_field :buy_from, :class => 'text winemaker', :placeholder => '请输入酒商' %></div>
     </div>
     <div class="required">
-      <label><span>*</span>库存</label>
+      <label class="vm"><span>*</span>库存</label>
       <%= f.text_field :number, :class => 'text count' %>支
     </div>
     <div class="required">
-      <label>所在位置</label>
+      <label class="vm">所在位置</label>
       <%= f.text_field :location, :class => 'text' %>
     </div>
     <div class="required">
-      <label>购入价格</label>
+      <label class="vm"p>购入价格</label>
       <%= f.text_field :price, :class => 'text price' %>元/支
     </div>
     <div class="optional">

@@ -20,29 +20,32 @@
         <%= link_to "修改密码", update_password_settings_path %>
       </div>
       <div class="required">
-        <label><span>*</span>昵称</label>
+        <label class="vm"><span>*</span>昵称</label>
         <%= f.text_field :username , :class => "text name"%>
       </div>
         <%= f.fields_for :profile do |p| %>
       <div class="required">
         <label>性别</label>
-        <%= p.radio_button :gender, 1  %>男
-        <%= p.radio_button :gender, 0 %>女
+        <label class="w50"><%= p.radio_button :gender, 1  %>男</label>
+        <label class="w50"><%= p.radio_button :gender, 0 %>女</label>
       </div>
       <div class="required">
         <label>生日</label>
-        <%= p.date_select :birthday, :start_year => 1910, :end_year => Time.now.year, :prompt => '' %>
+        <%= p.date_select :birthday, 
+                          :start_year => Time.now.year - 18, 
+                          :end_year => 1910, 
+                          :prompt => {:year => '选择年代', :month => '选择月份', :day => '选择日份'} %>
       </div>
         <% end %>
       <div class="required">
-        <label><span>*</span>所在地</label>
+        <label class="vm"><span>*</span>所在地</label>
         <div class="content">
           <%= f.text_field :city, :class => "text" %>
         </div>
       </div>
        <%= f.fields_for :profile do |p| %>
       <div class="optional">
-        <label>博客地址</label>
+        <label class="vm">博客地址</label>
         <%= p.text_field :website, :class => "text name mr5" %>
       </div>
       <div class="optional">
