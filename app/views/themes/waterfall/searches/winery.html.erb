@@ -85,3 +85,12 @@
   </div>
   <div class="clear"></div>
 </div>
+<script type="text/javascript" >
+    $("#search_input").bind("keyup",
+        function(e){
+            if(e.keyCode == 13){
+                location.href = '/searches/winery?word=' + this.value;
+            }
+        }
+    );
+</script>
