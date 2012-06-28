@@ -429,6 +429,22 @@ class User < ActiveRecord::Base
     return current_conversation
   end
 
+  # 判断用户是否已经关注酒或者酒庄或者其他
+  def is_following_resource? resource
+    followable_type, followable_id = [resource.class.to_s, resource.id]
+    return follows.where(:followable_type => followable_type, :followable_id => followable_id).first
+  end
+
+  # 关注酒或者酒庄或者其他
+  def following_resource resource
+   if is_following_resource? resource
+    false
+   else
+    followable_type, followable_id = [resource.class.to_s, resource.id]
+    follows.create(:followable_type => followable_type, :followable_id => followable_id)
+   end
+  end
+
   private
 
   def resize_avatar(from_version, to_version)

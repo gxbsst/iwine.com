@@ -3,6 +3,7 @@ class WineDetailsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show, :comments, :owners, :followers]
   before_filter :set_current_user
   before_filter :get_wine_detail, :only => [:show, :owners, :followers]
+  before_filter :get_follow_item
   before_filter :find_register, :only => [:edit, :update]
   before_filter :find_winery, :only => [:update]
   before_filter :check_region_tree, :only => :create
@@ -194,4 +195,18 @@ class WineDetailsController < ApplicationController
       name_zh_arr = name_zh.gsub(";", "；").split("；")#处理英文";"并转换化为数组
     end
   end
+
+  # 登录用户是否关注酒
+  def get_follow_item
+    if !user_signed_in? 
+      nil
+    else
+      if @follow_item = (@wine_detail.is_followed_by? current_user)
+        @follow_item 
+      else
+        nil
+      end
+    end
+  end
+
 end

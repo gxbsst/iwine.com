@@ -74,6 +74,10 @@ gem 'rmmseg-cpp-huacnlee', '0.2.9'
 #  查找图片的宽度／高度
 # gem 'dimensions-rails'
 
+# Friendly URL
+
+gem "friendly_id"
+
 group :development, :test do
   gem 'i18n'
   gem 'pry'  # "binding.pry" in action
