@@ -4,7 +4,17 @@ class WineriesController < ApplicationController
   before_filter :get_winery, :except => [:show, :index]
   def index
     @title = "酒庄"
-    @timelines = Winery.timeline_events.page(params[:page] || 1 ).per(30)
+    @timelines = Winery.timeline_events
+    
+    page = params[:page] || 1
+
+    if !(@timelines.nil?)
+      unless @timelines.kind_of?(Array)
+        @timelines = @timelines.page(page).per(30)
+      else
+        @timelines = Kaminari.paginate_array(@timelines).page(page).per(30)
+      end
+    end
   end
 
   def show
