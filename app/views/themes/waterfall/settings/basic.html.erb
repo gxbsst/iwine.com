@@ -34,11 +34,11 @@
         <%= p.date_select :birthday, 
                           :start_year => Time.now.year - 18, 
                           :end_year => 1910, 
-                          :prompt => {:year => '选择年代', :month => '选择月份', :day => '选择日份'} %>
+                          :prompt => {:year => '请选择年', :month => '请选择月', :day => '请选择日'} %>
       </div>
         <% end %>
-      <div class="optional">
-        <label class="vm">所在地</label>
+      <div class="required">
+        <label class="vm"><span>*</span>所在地</label>
         <div class="content">
           <%= f.text_field :city, :class => "text" %>
         </div>

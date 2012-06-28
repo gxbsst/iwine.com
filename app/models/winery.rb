@@ -23,7 +23,6 @@
 class Winery < ActiveRecord::Base
   set_table_name "wineries"
   include Wines::WineSupport, Common
-  include Common
   # 统计评论数量
   counts :comments_count => {:with => "Comment", 
                              :receiver => lambda {|comment| comment.commentable },

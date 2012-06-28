@@ -74,6 +74,7 @@ class Users::Profile < ActiveRecord::Base
       config.share.wine_cellar         = public
       config.share.wine_detail_comment = public
       config.share.wine_simple_comment = public
+      config.share.follow_wine_or_winery = public
 
       # 通知设置
       config.notice.email   = email_config

@@ -8,7 +8,7 @@ class WineriesController < ApplicationController
     
     page = params[:page] || 1
 
-    if !(@timelines.nil?)
+    if @timelines.present?
       unless @timelines.kind_of?(Array)
         @timelines = @timelines.page(page).per(30)
       else

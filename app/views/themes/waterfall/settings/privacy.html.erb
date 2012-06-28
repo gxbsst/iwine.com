@@ -20,10 +20,13 @@
           <h3>发表了新的评论</h3>
           <p><label> <%= check_box_tag "config[share][wine_simple_comment]", 1,  @profile.config.share.wine_simple_comment.to_i == 1  %>默认分享</label></p>
         </div>
-      </div>
 
-      <div class="set_optional">
-          <div class="set_optional">
+        <div class="set_optional">
+          <h3>关注了酒/酒庄</h3>
+          <p><label><%= check_box_tag "config[share][follow_wine_or_winery]", 1, @profile.config.share.follow_wine_or_winery.to_i == 1%>默认分享</label><p>
+        </div>
+
+        <div class="set_optional">
             <h3>私信<span class="gray">（设置谁可以给我发私信）</span></h3>
               <% APP_DATA["user_profile"]["configs"]["message"].each do |key, value | %>
                 <p>
@@ -35,6 +38,8 @@
               <% end %>
           </div>
       </div>
+      
+
 
       <div class="set_module">
         <h2>通知设置</h2>
