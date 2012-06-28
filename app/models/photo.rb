@@ -32,7 +32,7 @@ class Photo < ActiveRecord::Base
   mount_uploader :image, ImageUploader
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :is_audit_status_changed #, :audit_migrate_status #在update_photo的地方将此字段设置为true
   #after_update :crop_avatar
-  # after_save :recreate_delayed_versions!
+  after_save :recreate_delayed_versions!
   before_update :set_audit_status_changed?
   serialize :counts, Hash
 
