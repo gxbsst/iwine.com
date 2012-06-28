@@ -2,7 +2,7 @@
 class WineriesController < ApplicationController
   before_filter :get_hot_wineries, :except => :index
   before_filter :get_winery, :except => [:show, :index]
-  before_filter :get_follow_item
+  before_filter :get_follow_item, :except => [:index]
 
   def index
     @title = "酒庄"
