@@ -26,6 +26,7 @@ users:
     item:
       location: [北京, 上海, 香港,广州, 深圳, 其他]
 user_profile:
+  no_bio: 快来介绍一下自己吧！
   configs:
     defaults:
       normal: 1 #默认分享或者所有人可见

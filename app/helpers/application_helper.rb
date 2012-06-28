@@ -307,4 +307,15 @@ module ApplicationHelper
     end
     output
   end
+
+  def link_to_outside_website(website, options = {})
+    if website.present?
+      final_url = website.include?("http://") ? website : "http://#{website}"
+      link_to website, final_url, options
+    end
+  end
+
+  def show_bio(bio)
+    bio.present? ? bio : APP_DATA["user_profile"]["no_bio"]
+  end
 end

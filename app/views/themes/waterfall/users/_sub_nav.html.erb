@@ -34,7 +34,11 @@
       <% if is_login_user? @user  # 如果用户登录而且访问自己的页面 %>
       <div class="username"><%= @user.username %></div>
       <div class="mystatu">
-        <%= @user.profile.bio %>
+        <p>
+          <%= show_bio @user.profile.bio %>
+          <span><%= link_to "修改", basic_settings_path %></span>
+        </p>
+        <p>博客：<%= link_to_outside_website(@user.profile.website, :target => "_blank") %></p>
       </div>
       <div class="item">
         <%= conversation_url(@user) %> |
@@ -42,7 +46,10 @@
       </div>
       <% else %>
        <div class="username"><%= @user.username %></div>
-       <div class="mystatu"><%= @user.profile.bio %></div>
+       <div class="mystatu">
+        <p><%= show_bio @user.profile.bio %></p>
+        <p>博客：<%= link_to_outside_website(@user.profile.website, :target => "_blank") %></p>
+      </div>
        <div class="item">
         <% if user_signed_in? %>
             <% if (current_user.is_following @user) && (@user.is_following current_user) # 如果用户互相关注%>
