@@ -1,5 +1,5 @@
 <% @timelines.each do |l| %>
-<!-- 关注的酒被评论 -->
+<!-- 酒庄被评论 -->
 <% if l.event_type == "new_comment" %>
 <div class="iw item">
  <div class="iw_img">
@@ -38,6 +38,46 @@
   <% end %>
 </div>
 </div>
+<!-- 酒庄被关注 -->
+<% elsif l.event_type == 'new_follow' %>
+
+<div class="iw item">
+ <div class="iw_img">
+   <%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), winery_path(l.secondary_actor) %>
+ </div>
+ <div class="iw_info">
+  <h1>
+    <%= raw link_to l.secondary_actor.name_zh, winery_path(l.secondary_actor) %>
+  </h1>
+  <h2>
+   <%= raw link_to l.secondary_actor.origin_name, winery_path(l.secondary_actor) %>
+ </h2>
+ <p class="iw_action">这个酒庄被关注</p>
+</div>
+<div class="iw_main">
+ <ul>
+  <% l.secondary_actor.follows.recent(6).each do |follow|%>
+  <li>
+   <div class="left">
+     <%= link_to_user follow.user, user_path(follow.user, :trailing_slash => true), {:with_avatar => true, :avatar_version => :thumb}, {:width => 30, :height => 30} %>
+   </div>
+   <div class="right">
+     <p class="username">
+       <%= link_to_user follow.user, user_path(follow.user, :trailing_slash => true) %>
+     </p>
+   </div>
+   <div class="clear"></div>
+ </li>
+ <% end %>
+</ul>
+</div>
+<div class="iw_more">
+  <%= link_to  followers_list_winery_path(l.secondary_actor) do %>
+  共<%= l.secondary_actor.followers_count %>个关注
+  <% end %>
+</div>
+</div>
+
 <% end %>
 
 
