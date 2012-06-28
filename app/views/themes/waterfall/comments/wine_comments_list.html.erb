@@ -17,13 +17,13 @@
 			<div class="sort">
 				<% if params[:sort_by] == "hot" %>
 				<span class="current">热门评论</span>
-				<span><%= link_to "最新评论", wine_comments_path(@wine_detail.id, :sort_by => "new"), :class => 'new' %></span>
+				<span><%= link_to "最新评论", wine_comments_path(@wine_detail, :sort_by => "new"), :class => 'new' %></span>
 				<% elsif  params[:sort_by] == "new" %>
-				<span><%= link_to "热门评论", wine_comments_path(@wine_detail.id, :sort_by => "hot"), :class => 'hot' %></span>
+				<span><%= link_to "热门评论", wine_comments_path(@wine_detail, :sort_by => "hot"), :class => 'hot' %></span>
 				<span class="current">最新评论</span>
 				<% else %>
 				<span class="current">热门评论</span>
-				<span><%= link_to "最新评论", wine_comments_path(@wine_detail.id, :sort_by => "new"), :class => 'new' %></span>
+				<span><%= link_to "最新评论", wine_comments_path(@wine_detail, :sort_by => "new"), :class => 'new' %></span>
 				<% end %>
 				<div class="clear"></div>
 			</div>

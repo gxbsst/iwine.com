@@ -2,7 +2,7 @@
 	<% if params[:controller] == "wine_details" &&  params[:action] == "show" %>	
 	<div class="title_btn">
 		<h2>他们拥有，或许也愿意出售<span class="font12 more">
-			<%= link_to "（共#{@wine_detail.owners_count}人...)", owners_wine_path(@wine_detail.id) %>
+			<%= link_to "（共#{@wine_detail.owners_count}人...)", owners_wine_path(@wine_detail) %>
 			</span>
 		</h2>
 	</div>

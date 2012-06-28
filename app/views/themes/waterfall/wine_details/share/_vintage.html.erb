@@ -2,7 +2,7 @@
 	<p>更多年份</p>
 	<p class="year">
 		<% @wine_detail.all_vintage.each do  |item| %>
-		  <span><%= link_to item.show_year, wine_path(item.id) %></span>
+		  <span><%= link_to item.show_year, wine_path(item) %></span>
 		<% end %>
 	</p>
 

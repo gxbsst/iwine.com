@@ -8,7 +8,7 @@ module Wines
      end
     
      def all_vintage
-       Wines::Detail.where(["wine_id = ?", wine_id]).select("year, id")
+       Wines::Detail.where(["wine_id = ?", wine_id]).select("year, id, is_nv,slug")
      end
 
      # Class Methods

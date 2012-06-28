@@ -67,6 +67,10 @@ class Winery < ActiveRecord::Base
   accepts_nested_attributes_for :info_items, :reject_if => lambda {|t| t[:title].blank? }, :allow_destroy => true
   serialize :config, Hash
 
+  # Friendly Url
+  extend FriendlyId
+  friendly_id :origin_name, :use => [:slugged]
+
   def name
     origin_name + '/' + name_zh    
   end
@@ -88,7 +92,7 @@ class Winery < ActiveRecord::Base
       per(options[:per] || 16) #如果想使用limit而不用分页效果可以使用per
   end
 
-  # 是否已经关注酒
+  # 是否已经关注酒庄
   def is_followed_by? user
     return follows.where("user_id = ? ", user.id).first ? true : false
   end
