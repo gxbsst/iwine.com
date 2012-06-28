@@ -5,7 +5,7 @@ class PhotosController < ApplicationController
   before_filter :get_imageable, :except => [:new, :create]
   before_filter :get_user
   before_filter :authenticate_user!, :only => [:new, :create]
-  before_filter :get_follow_item
+  before_filter :get_follow_item, :only => [:show, :index]
 
   def index
     @photos = @imageable.photos.approved.page(params[:page] || 1).per(8)

@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
   before_filter :get_comment, :only => [:show, :edit, :update, :destroy, :reply, :vote, :children]
   before_filter :get_commentable
   before_filter :get_user
-  before_filter :get_follow_item
+  before_filter :get_follow_item, :only => [:index]
 
   # before_filter :check_followed, :only => :create
   # before_filter :check_cancle_follow, :only => :cancle_follow
