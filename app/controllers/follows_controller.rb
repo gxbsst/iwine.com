@@ -12,7 +12,7 @@ class FollowsController < ApplicationController
 
   def create
     @follow = build_follow
-    if @follow
+    if @follow.save
       notice_stickie t("notice.comment.follow_success")
       redirect_to params[:return_url] ?  params[:return_url] : @followable_path
     else
@@ -57,7 +57,12 @@ class FollowsController < ApplicationController
   end
 
   def build_follow
-    @user.following_resource @followable
+   @resource, @id = request.path.split('/')[1, 2]
+   values = params[(@resource.singularize + "_follow").to_sym]
+   @follow = @followable.follows.build(values)
+   @follow.user_id = @user.id
+   @follow
+    # @user.following_resource @followable # 主要是为了让fire能工作
   end
 
   def get_user_follow_item
