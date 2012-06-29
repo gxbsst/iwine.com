@@ -12,7 +12,7 @@ class FollowsController < ApplicationController
 
   def create
     @follow = build_follow
-    if @follow
+    if @follow.save
       notice_stickie t("notice.comment.follow_success")
       redirect_to params[:return_url] ?  params[:return_url] : @followable_path
     else
