@@ -5,6 +5,7 @@ class PhotosController < ApplicationController
   before_filter :get_imageable, :except => [:new, :create]
   before_filter :get_user
   before_filter :authenticate_user!, :only => [:new, :create]
+  before_filter :get_follow_item, :only => [:show, :index]
 
   def index
     @photos = @imageable.photos.approved.page(params[:page] || 1).per(8)
@@ -101,9 +102,11 @@ class PhotosController < ApplicationController
 
   def get_imageable
     @resource, @id = request.path.split('/')[1, 2]
-    @commentable_path = eval(@resource.singularize + "_path(#{@id})")
+    @resource_path = @resource 
+    # @commentable_path = eval(@resource.singularize + "_path(#{@id})")
     @resource = "Wines::Detail" if @resource == "wines"
     @imageable = @resource.singularize.classify.constantize.find(@id)
+    @imageable_path = self.send("#{@resource_path.singularize}_path", @imageable)
   end
 
   def get_approved 
@@ -178,6 +181,19 @@ class PhotosController < ApplicationController
     @photo.image = image
     @photo.user_id = @user.id
     return @photo    
+  end
+
+  # 登录用户是否关注酒或者酒庄
+  def get_follow_item
+    if !user_signed_in? 
+      nil
+    else
+      if @follow_item = (@imageable.is_followed_by? current_user)
+        @follow_item 
+      else
+        nil
+      end
+    end
   end
 
 end

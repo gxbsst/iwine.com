@@ -29,8 +29,9 @@
                   <h3><%= detail.wine.origin_name %></h3>
                   <p><strong>已有年份：</strong></p>
                   <p class="year">
-                    <% Wines::Detail.where("wine_id = ?", detail.wine_id).select('id, year').each do |wine_detail| %>
-                        <span><%= link_to wine_detail.show_year, wine_path(wine_detail.id) %></span>
+                    
+                    <% detail.all_vintage.each do |wine_detail| %>
+                        <span><%= link_to wine_detail.show_year, wine_path(wine_detail) %></span>
                     <% end %>
                   </p>
                   <p class="mt10">

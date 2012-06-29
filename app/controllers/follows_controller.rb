@@ -12,8 +12,11 @@ class FollowsController < ApplicationController
 
   def create
     @follow = build_follow
-    if @follow.save
+    if @follow
       notice_stickie t("notice.comment.follow_success")
+      redirect_to params[:return_url] ?  params[:return_url] : @followable_path
+    else
+      notice_stickie('已经被关注')
       redirect_to params[:return_url] ?  params[:return_url] : @followable_path
     end
   end
@@ -30,9 +33,12 @@ class FollowsController < ApplicationController
 
   def get_followable
     @resource, @id = request.path.split('/')[1, 2]
-    @followable_path = eval(@resource.singularize + "_path(#{@id})")
+    @resource_path = @resource 
+    # @followable_path = eval(@resource.singularize + "_path(#{@id})")
     @resource = "Wines::Detail" if @resource == "wines"
     @followable = @resource.singularize.classify.constantize.find(@id)
+    @followable_path = self.send("#{@resource_path.singularize}_path", @followable)
+    @followable
   end
 
   def check_followed
@@ -51,11 +57,7 @@ class FollowsController < ApplicationController
   end
 
   def build_follow
-    @resource, @id = request.path.split('/')[1, 2]
-    values = params[(@resource.singularize + "_follow").to_sym]
-    @follow = @followable.follows.build(values)
-    @follow.user_id = @user.id
-    @follow
+    @user.following_resource @followable
   end
 
   def get_user_follow_item

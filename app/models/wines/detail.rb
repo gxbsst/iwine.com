@@ -59,6 +59,14 @@ class Wines::Detail < ActiveRecord::Base
   accepts_nested_attributes_for :photos, :reject_if => proc { |attributes| attributes['image'].blank? }
   accepts_nested_attributes_for :label, :reject_if => proc { |attributes| attributes['filename'].blank? }
 
+  # Friendly Url
+  extend FriendlyId
+  friendly_id :pretty_url, :use => [:slugged]
+
+  def pretty_url
+    "#{wine.origin_name} #{show_year.downcase}"
+  end
+
   # scope :with_recent_comment, joins(:comments) & ::CommenGt.recent(6)
 
   def comment( user_id )
@@ -98,8 +106,16 @@ class Wines::Detail < ActiveRecord::Base
     wine.get_region_path.reverse!.collect { |region| region.origin_name + '/' + region.name_zh }.join( symbol )
   end
 
+  def is_nv?
+    self.is_nv == 1
+  end
+  
   def show_year
-    year.strftime("%Y") unless year.blank?
+    if is_nv?
+      'NV'
+    else
+      year.strftime("%Y") unless year.blank?
+    end
   end
 
   def self.approve_wine_detail(wine_id, register, audit_log_id)
@@ -182,7 +198,7 @@ class Wines::Detail < ActiveRecord::Base
 
   # 是否已经关注酒
   def is_followed_by? user
-    return follows.where("user_id = ? ", user.id).first ? true : false
+   follows.where("user_id = ? ", user.id).first
   end
 
   # 当前关注该支酒的用户列表

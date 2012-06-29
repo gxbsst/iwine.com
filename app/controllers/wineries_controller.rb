@@ -2,6 +2,8 @@
 class WineriesController < ApplicationController
   before_filter :get_hot_wineries, :except => :index
   before_filter :get_winery, :except => [:show, :index]
+  before_filter :get_follow_item, :except => [:index]
+
   def index
     @title = "酒庄"
     @timelines = Winery.timeline_events
@@ -18,7 +20,6 @@ class WineriesController < ApplicationController
   end
 
   def show
-
     @winery   = Winery.includes([:info_items, :photos]).find(params[:id])
     @wines    = @winery.wines.includes([:details => :photos]).limit(5)
     @users    = @winery.followers #关注酒庄的人
@@ -50,4 +51,20 @@ class WineriesController < ApplicationController
   def get_hot_wineries
     @hot_wineries = Winery.hot_wineries(5)
   end
+
+  private
+  # 登录用户是否关注酒庄
+  def get_follow_item
+    @winery = Winery.find(params[:id])
+    if !user_signed_in? 
+      nil
+    else
+      if @follow_item = (@winery.is_followed_by? current_user)
+        @follow_item 
+      else
+        nil
+      end
+    end
+  end
+
 end

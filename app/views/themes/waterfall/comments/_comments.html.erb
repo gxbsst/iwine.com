@@ -1,13 +1,13 @@
 	<% if params[:controller] == "wine_details" &&  params[:action] == "show" %>
 	<div class="title_btn">
-		<%= link_to new_wine_comment_path(@wine_detail.id, :do => "comment"), :class => [:btn_gray, :float_r, :ajax], :remote => true do %>
+		<%= link_to new_wine_comment_path(@wine_detail, :do => "comment"), :class => [:btn_gray, :float_r, :ajax], :remote => true do %>
 		<span>添加评论</span>
 	<% end %>
 		<% unless params[:controller] == "wine_details/comments" %>
 		<h2>
 		  评论
 		  <span class="font12 more">
-		    <%= link_to "(共#{@wine_detail.comments_count}条...)", wine_comments_path(@wine_detail.id)%>
+		    <%= link_to "(共#{@wine_detail.comments_count}条...)", wine_comments_path(@wine_detail)%>
 		  </span>
 		</h2>
 		<% end %>

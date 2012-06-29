@@ -300,13 +300,13 @@ class User < ActiveRecord::Base
   end
 
   # 关注某支酒
-  def follow_wine(wine_detail)
-    unless wine_detail.is_followed? self # 如果还没有被关注了
-      Comment.build_from(wine_detail, id, "关注", options = {:do => "follow"} )
-    else
-      false
-    end
-  end
+  # def follow_wine(wine_detail)
+  #   unless wine_detail.is_followed? self # 如果还没有被关注了
+  #     Comment.build_from(wine_detail, id, "关注", options = {:do => "follow"} )
+  #   else
+  #     false
+  #   end
+  # end
 
   # 关注某人
   def follow_user(user_id)
@@ -427,6 +427,22 @@ class User < ActiveRecord::Base
       end
     end
     return current_conversation
+  end
+
+  # 判断用户是否已经关注酒或者酒庄或者其他
+  def is_following_resource? resource
+    followable_type, followable_id = [resource.class.to_s, resource.id]
+    return follows.where(:followable_type => followable_type, :followable_id => followable_id).first
+  end
+
+  # 关注酒或者酒庄或者其他
+  def following_resource resource
+   if is_following_resource? resource
+    false
+   else
+    followable_type, followable_id = [resource.class.to_s, resource.id]
+    follows.create(:followable_type => followable_type, :followable_id => followable_id)
+   end
   end
 
   private

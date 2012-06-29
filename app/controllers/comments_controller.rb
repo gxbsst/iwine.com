@@ -4,8 +4,10 @@ class CommentsController < ApplicationController
   before_filter :get_comment, :only => [:show, :edit, :update, :destroy, :reply, :vote, :children]
   before_filter :get_commentable
   before_filter :get_user
-  before_filter :check_followed, :only => :create
-  before_filter :check_cancle_follow, :only => :cancle_follow
+  before_filter :get_follow_item, :only => [:index]
+
+  # before_filter :check_followed, :only => :create
+  # before_filter :check_cancle_follow, :only => :cancle_follow
   before_filter :check_can_comment, :only => :create
   after_filter  :send_reply_email, :only => :reply
   def new   
@@ -60,7 +62,7 @@ class CommentsController < ApplicationController
       # 1. 广播
       # 2. 分享到SNS
       notice_stickie t("notice.comment.#{@comment.do == 'follow' ? 'follow' : 'comment'}_success")
-      redirect_to params[:return_url] ?  params[:return_url] : @commentable_path
+      redirect_to params[:return_url] ?  params[:return_url] : @commentable_comments_path
     end
   end
   
@@ -74,14 +76,14 @@ class CommentsController < ApplicationController
     end
   end
 
-  # 取消关注
-  def cancle_follow
-    follow_item = @commentable.find_follow @user
-    if follow_item.update_attribute("deleted_at", Time.now)
-      notice_stickie t("notice.comment.cancle_follow")
-      redirect_to @commentable_path
-    end
-  end
+  # # 取消关注
+  # def cancle_follow
+  #   follow_item = @commentable.find_follow @user
+  #   if follow_item.update_attribute("deleted_at", Time.now)
+  #     notice_stickie t("notice.comment.cancle_follow")
+  #     redirect_to @commentable_path
+  #   end
+  # end
 
   # 有用
   def vote
@@ -113,9 +115,13 @@ class CommentsController < ApplicationController
   
   def get_commentable
     @resource, @id = request.path.split('/')[1, 2]
-    @commentable_path = eval(@resource.singularize + "_path(#{@id})")
+    @resource_path = @resource 
     @resource = "Wines::Detail" if @resource == "wines"
     @commentable = @resource.singularize.classify.constantize.find(@id)
+     # @commentable_path = eval(@wine_resource.singularize + "_path(#{@commentable.id})")
+    @commentable_path = self.send("#{@resource_path.singularize}_path", @commentable)
+    @commentable_comments_path = self.send("#{@resource_path.singularize}_comments_path", @commentable)
+    @commentable
   end
   
   def new_follow_comment
@@ -146,19 +152,19 @@ class CommentsController < ApplicationController
     @user = current_user
   end
 
-  def check_followed
-    if params[:do] == "follow" && @commentable.is_followed?(@user)
-      notice_stickie t("notice.comment.cancle_follow")
-      redirect_to(@commentable_path)
-    end
-  end
+  # def check_followed
+  #   if params[:do] == "follow" && @commentable.is_followed?(@user)
+  #     notice_stickie t("notice.comment.cancle_follow")
+  #     redirect_to(@commentable_path)
+  #   end
+  # end
 
-  def check_cancle_follow
-    if params[:do] == "follow" && !@commentable.is_followed?(@user)
-      notice_stickie t("notice.comment.check_cancle_follow")
-      redirect_to(@commentable_path)
-    end
-  end
+  # def check_cancle_follow
+  #   if params[:do] == "follow" && !@commentable.is_followed?(@user)
+  #     notice_stickie t("notice.comment.check_cancle_follow")
+  #     redirect_to(@commentable_path)
+  #   end
+  # end
 
   def render_wine_comments
     @wine_detail = @commentable
@@ -196,6 +202,19 @@ class CommentsController < ApplicationController
         UserMailer.reply_comment(:parent_user => user, :reply_user => @user).deliver
       end
     end
-
   end
+
+  # 登录用户是否关注酒或者酒庄
+  def get_follow_item
+    if !user_signed_in? 
+      nil
+    else
+      if @follow_item = (@commentable.is_followed_by? current_user)
+        @follow_item 
+      else
+        nil
+      end
+    end
+  end
+
 end
