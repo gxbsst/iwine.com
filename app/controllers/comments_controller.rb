@@ -2,7 +2,7 @@
 class CommentsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show, :list]
   before_filter :get_comment, :only => [:show, :edit, :update, :destroy, :reply, :vote, :children]
-  before_filter :get_commentable
+  before_filter :get_commentable, :except => [:vote, :reply, :children]
   before_filter :get_user
   before_filter :get_follow_item, :only => [:index]
 
