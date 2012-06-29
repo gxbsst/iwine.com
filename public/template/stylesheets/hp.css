@@ -62,7 +62,7 @@ ul.album_list li h2 a, .side_album_list h3 a, .like a {color:#333;}
 ul.album_list li h2 a:hover, .side_album_list h3 a:hover, .like a:hover {color:#cc3333;text-decoration:none;}
 ul.album_list li .info, ul.photo_list li .info, .side_album_list .info  {color:#999;}
 ul.photo_list {zoom:1;}
-ul.photo_list li {display:inline-block;float:left; vertical-align:top; width:190px;height:200px;padding:0 14px 40px 13px;_padding: 0 14px 40px 12px;}
+ul.photo_list li {display:inline-block;float:left; vertical-align:top; width:190px;padding:0 14px 40px 13px;_padding: 0 14px 40px 12px;}
 ul.photo_list li img {margin:0 0 10px 0;}
 ul.photo_list li .intro, .album_left .photo .intro{margin:0 0 5px 0;}
 .content .album_left {width:590px;float:left;margin:0 28px 0 0;}
