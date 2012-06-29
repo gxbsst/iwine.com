@@ -14,7 +14,7 @@
 	官网：<%= link_to @wine.official_site, 'http://' + @wine.official_site, :target => '_blank' %><br />
 	产区：<%= @wine.region_path_zh(:connector => ">") %><br />
     <%= @wine.region_path_en(:connector => ">") %><br/>
-	类型：<%= @wine.style.name_zh %><br />
+	类型：<%= @wine.style.name_zh if @wine.style%><br />
 	容量：<%= @wine_detail.show_capacity %><br />
 	酒精度：<%= @wine_detail.show_alcoholicity %><br />
 	葡萄品种： <%= variety_percentage_lists(@wine_detail.variety_percentages) %>

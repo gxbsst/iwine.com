@@ -17,21 +17,17 @@
       <div class="clear"></div>
 </div>
 <ul class="album_list">
-  <% @albums.each do |album| %>
-       	<li> 
-          <%= link_to album_show_user_path(@user, album.id) do %>
-            <% if album.covers.present? %>
-             <%= image_tag album.covers.first.image_url :thumb, :class => 'cover' %>
-            <% else %>
-             <%= theme_image_tag "album.jpg", :class => :cover, :width => 150, :height => 150 %>
-            <% end %>
-          <% end %>
-          <h2>
-            <%= link_to album.name, album_show_user_path(@user, album) %>
-          </h2>
-          <p class="info"><%= album.photos_count %>张照片 <%= album.updated_at.to_s(:normal) %>更新<br/>
-          <%= album.viewed_num %>浏览 | <%= album.commented_num %>评论 | <%= album.likes.count %>赞</p>
-        </li>
+  <% @albums.each_with_index do |album, index| %>
+    <%= raw show_clear_div(index) %>
+    <li> 
+      <%= album_cover_tag(@user, album) %>
+      <h2><%= album.is_public.to_i == 0 && !is_login_user?(@user) ? album.name : 
+                 link_to(album.name, album_show_user_path(@user, album)) %></h2>
+      <p class="info">
+        <%= album.photos_count %>张照片 <%= album.updated_at.to_s(:normal) %>更新<br/>
+        <%= album.viewed_num %>浏览 | <%= album.commented_num %>评论 | <%= album.likes.count %>赞
+      </p>
+    </li>
     <% end %>
     <div class="clear"></div>
 </ul>

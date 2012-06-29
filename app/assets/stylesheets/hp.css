@@ -70,3 +70,5 @@ li.photo_des p {margin: 0 0 5px 0;}
 .wine_list .wine_info {float:left;width:600px;}
 .wine_list .wine_info h2 {font-size:14px;}
 .wine_list .wine_info h3 {font-size:12px;font-weight:normal;color:#666;}
+td.img div {position:relative;}
+.non_public {position:absolute;top:40px;left:40px;}

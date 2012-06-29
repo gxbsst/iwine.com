@@ -36,6 +36,15 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # 主要为了在User Controller 判断是否为当前用户
+  def is_login_user?(user)
+    if user_signed_in?
+      user == current_user
+    else
+      false
+    end
+  end
+
   def store_location
     session[:return_to] = request.referer
   end

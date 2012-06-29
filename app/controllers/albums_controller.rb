@@ -4,7 +4,7 @@ class AlbumsController < ApplicationController
   before_filter :get_current_user, :except => [:index, :show, :photo]
   before_filter :get_user, :only => [:index, :show, :photo] 
   before_filter :get_album, :except => [:index, :upload, :new, :delete_photo, :update_photo_intro, :delete]
-
+  before_filter :check_is_public, :only => [:show]
   def upload
     @albums = @user.albums
     if @albums.blank?
@@ -184,4 +184,10 @@ def new_normal_comment
  return @comment   
 end
 
+def check_is_public
+  if @album.is_public.to_i == 0 && !is_login_user?(@user)
+    notice_stickie t("notice.album.check_is_public")
+    redirect_to albums_user_path(@user)
+  end
+end
 end

@@ -15,11 +15,11 @@ window.locale = {
             "maxFileSize": "图片不能大于5MB",
             "minFileSize": "图片太小了:(",
             "acceptFileTypes": "请上传JPG/PNG/GIF格式的图片",
-            "maxNumberOfFiles": "一次只能上传10张图片",
+            "maxNumberOfFiles": "一次只能上传10张图片，该图片不会被上传。",
             "uploadedBytes": "Uploaded bytes exceed file size",
             "emptyResult": "Empty file upload result"
         },
-        "error": "错误：",
+        "error": "",
         "start": "Start",
         "cancel": "Cancel",
         "destroy": "Delete"

@@ -1,5 +1,5 @@
 <% @photos.each_with_index do  |photo, index| %>
-    <% value = index/4.0 ; if index != 0 && value != 0 && value.to_i == value %><div class="clear"></div><% end %>
+<%= raw show_clear_div(index) %>
     <li id="<%= index%>">
       <%= link_to winery_photo_path(@winery, photo) do %>
           <%= image_tag(photo.image_url(:thumb), :alt => @winery.origin_name) %>

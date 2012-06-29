@@ -23,10 +23,11 @@
 </div>
 <%#= form_for @album, :remote => true do |f| -%>
 <ul class="photo_list">
-  <% @photos.each_with_index do |photo, i| %>
+  <% @photos.each_with_index do |photo, index| %>
+    <%= raw show_clear_div(index) %> 
     <li>
         <%= link_to album_photo_show_user_path(@user, @album.id, photo.id)  do %>
-         <%= image_tag photo.image_url( :thumb ), :class => 'cover' %>
+         <%= image_tag photo.image_url(:x_middle), :class => 'cover' %>
         <% end %> 
       <% if @is_owner %>
         <p class="intro">

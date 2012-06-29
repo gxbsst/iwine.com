@@ -29,6 +29,14 @@
       <tr>
         <td>&nbsp;</td>
         <td>
+          <label>
+              <%= f.check_box :is_public, {:checked => @album.is_public.to_i == 0}, 0, 1 %>不公开
+          </label>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>
           <a href="javascript:$('#edit_album_<%= @album.id%>').submit();" class="btn_gray ml5">
             <span>保存修改</span>
           </a>

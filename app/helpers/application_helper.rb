@@ -233,7 +233,7 @@ module ApplicationHelper
   # 主要为了在User Controller 判断是否为当前用户
   def is_login_user?(user)
     if user_signed_in?
-      @user == current_user
+      user == current_user
     else
       false
     end
@@ -317,5 +317,30 @@ module ApplicationHelper
 
   def show_bio(bio)
     bio.present? ? bio : APP_DATA["user_profile"]["no_bio"]
+  end
+
+ def album_cover_tag(user, album)
+    cover = album.photos.visible.cover.first
+    if album.is_public.to_i == 0 && !is_login_user?(user)
+      tag = theme_image_tag("common/p_album.png", :class => :cover, :width => 150, :height => 150)
+    else
+      if cover
+       tag =  image_tag(cover.image_url(:xx_middle), :class => 'cover')
+      else
+        tag = theme_image_tag( "album.jpg", :class => :cover, :width => 150, :height => 150)
+      end
+    end
+    if album.is_public.to_i == 0 && !is_login_user?(user) #非公开
+      tag
+    else
+      link_to tag, album_show_user_path(user, album) 
+    end
+  end
+
+  def show_clear_div(index)
+    value = index/4.0
+    if index != 0 && value != 0 && value.to_i == value
+      "<div class='clear'></div>"
+    end
   end
 end

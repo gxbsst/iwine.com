@@ -3,11 +3,11 @@ class UsersController < ApplicationController
   # before_filter :authenticate_user!
   before_filter :get_user, :except => [:register_success]
   before_filter :get_recommend_users, :only => [:followings, :followers, :start]
+  before_filter :get_cellar_items, :only => [:show]
   def show
     @followers = @user.followers
     @followings = @user.followings
     @comments = @user.comments.real_comments.limit(6)
-    @cellar_items = @user.cellar.items.limit(6)
     @following_wines = @user.wine_followings.limit(6)
   end
 
@@ -93,5 +93,13 @@ class UsersController < ApplicationController
 
   def get_recommend_users
     @recommend_users = User.no_self_recommends(5, @user.id)
+  end
+
+  def get_cellar_items
+    if current_user && current_user == @user
+      @cellar_items = @user.cellar.mine_items.limit(6)
+    else
+      @cellar_items = @user.cellar.user_items.limit(6)
+    end
   end
 end

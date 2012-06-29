@@ -42,6 +42,7 @@ class ImageUploader < CarrierWave::Uploader::Base
     var = :"@#{mounted_as}_timestamp"
     model.instance_variable_get(var) or model.instance_variable_set(var, Time.now.to_i)
   end
+
   #610*640
   version :large_x do
     process :resize_to_fit => [APP_DATA["image"]["wine"]["large_x"]["width"],
@@ -52,11 +53,28 @@ class ImageUploader < CarrierWave::Uploader::Base
     process :resize_to_fit => [APP_DATA["image"]["wine"]["large"]["width"],
                                APP_DATA["image"]["wine"]["large"]["height"]]
   end
+
+  # Winery360*330
+  version :middle_x, :from_version => :large, :if => :is_winery? do
+    process :resize_to_fit => [APP_DATA["image"]["winery"]["middle_x"]["width"],APP_DATA["image"]["winery"]["middle_x"]["height"]]
+  end
+  
   #200*440
   version :middle, :from_version => :large do
     process :resize_to_fit => [APP_DATA["image"]["wine"]["middle"]["width"],
                                APP_DATA["image"]["wine"]["middle"]["height"]]
     process :store_geometry
+  end
+  #190*190 for album list
+  version :x_middle, :if => :has_album? do
+    process :resize_to_fit => [APP_DATA["image"]["album"]["x_middle"]["width"],
+                               APP_DATA["image"]["album"]["x_middle"]["height"]]
+  end
+
+  #150*150 for album cover
+  version :xx_middle, :if => :has_album? do
+    process :resize_to_fit => [APP_DATA["image"]["album"]["xx_middle"]["width"],
+                               APP_DATA["image"]["album"]["xx_middle"]["height"]]
   end
 
   #100*100
@@ -64,16 +82,13 @@ class ImageUploader < CarrierWave::Uploader::Base
     process :resize_to_fill => [APP_DATA["image"]["wine"]["x_thumb"]["width"],
                                 APP_DATA["image"]["wine"]["x_thumb"]["height"]]
   end
+
   #130*130
   version :thumb, :from_version => :large  do
     process :resize_to_fill => [APP_DATA["image"]["wine"]["thumb"]["width"],
                                 APP_DATA["image"]["wine"]["thumb"]["height"]]
   end
-  
-  # Winery360*330
-  version :middle_x, :from_version => :large, :if => :is_winery? do
-    process :resize_to_fit => [APP_DATA["image"]["winery"]["middle_x"]["width"],APP_DATA["image"]["winery"]["middle_x"]["height"]]
-  end
+
 
   def should_process?
     @should_process ||= false
@@ -93,6 +108,11 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   def is_winery? picture
     model.imageable_type == "Winery"
+  end
+  
+  #判断一张图片是否有指定相册
+  def has_album? picture
+    model.album_id.to_i != -1
   end
 
   #def secure_token

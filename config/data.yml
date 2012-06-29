@@ -64,6 +64,13 @@ friends:
     
 # 图片缩略图
 image:
+  album:
+    x_middle:
+      width: 190
+      height: 190
+    xx_middle:
+      width: 150
+      height: 150
   user:
     origin:
       width: 280

@@ -36,6 +36,8 @@ zh-CN:
       upload_avatar_success: "成功设置头像。"
     wine_detail:
       check_edit_register: "已经成功上传，不能再次修改！"
+    album:
+      check_is_public: "此相册仅用户自己可见！"
   helpers:
     submit:
       create: "创建 %{model}"
