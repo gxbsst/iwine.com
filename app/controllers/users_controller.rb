@@ -82,8 +82,7 @@ class UsersController < ApplicationController
   # 关注某支酒
   def follow_one_wine(wine_detail_id)
     wine_detail = Wines::Detail.find(wine_detail_id)
-    follow = current_user.follow_wine(wine_detail)
-    follow.save
+    follow = current_user.following_resource(wine_detail)
   end
 
   # 关注某个人
