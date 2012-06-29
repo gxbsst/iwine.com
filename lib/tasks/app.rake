@@ -76,14 +76,14 @@ namespace :app do
           #查找酒庄
           winery = Winery.where("name_en = ? ", to_ascii(item[7])).first
           #中文名处理
-          name_zh_arr = item[2].to_s.split('/')
+          name_zh_arr = change_name_zh_to_arr item[2]
           #年代
           vintage = (item[9] != "NV" && item[9].present?) ? DateTime.parse("#{item[9]}-01-01") : nil
           register = Wines::Register.where("name_en = ? and vintage = ?", to_ascii(item[1]), item[9]).first_or_create!(
             :origin_name => item[1].force_encoding('utf-8'),
             :name_en => to_ascii(item[1]),
-            :name_zh => name_zh_arr.reverse.pop,                                   #去除第一个当做名字
-            :other_cn_name => name_zh_arr.blank? ? nil : name_zh_arr.join(' '),
+            :name_zh => first_name_zh(name_zh_arr),                                   #去除第一个当做名字
+            :other_cn_name => other_name_zh(name_zh_arr),
             :vintage => vintage,
             :is_nv => item[9].to_s == "NV" ? 1 : 0,
             :official_site => to_utf8(item[3]).gsub(/http:\/\//, ''),
@@ -208,6 +208,7 @@ namespace :app do
         item.collect{|i| i.to_s.force_encoding('utf-8')} #转换数据类型
         # find region_tree_id
         region_tree_id = Wines::RegionTree.get_region_tree_id(item[12].to_s.to_ascii_brutal)
+        name_zh_arr = change_name_zh_to_arr(item[2])
         Winery.transaction do
           begin
             name_en = item[1].to_s.to_ascii_brutal
@@ -215,7 +216,8 @@ namespace :app do
                 first_or_create!(
                 :name_en => name_en,
                 :origin_name => item[1],
-                :name_zh => item[2],
+                :name_zh => first_name_zh(name_zh_arr),
+                :other_cn_name => other_name_zh(name_zh_arr),
                 :cellphone => item[3].to_s.gsub(" ", ''),
                 :fax => item[4],
                 :email => item[5],
@@ -236,6 +238,20 @@ namespace :app do
     end
 
 
+  end
+  
+
+  #处理多个中文名
+  def change_name_zh_to_arr(name)
+    name.to_s.split('/').reverse 
+  end
+
+  def first_name_zh(name_zh_arr)
+    name_zh_arr.pop #取出reverse后的最后一个name
+  end
+
+  def other_name_zh(name_zh_arr)
+    name_zh_arr.blank? ? nil : name_zh_arr.reverse.join('/') #将顺序调整为原始数据顺序
   end
 
   #处理酒的品种和百分比
