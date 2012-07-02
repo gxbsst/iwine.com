@@ -44,6 +44,17 @@ class WineDetailsController < ApplicationController
       render :template => "wine_details/add_step_one"
     elsif params[:step].to_i == 2
       @search = Search.find(params[:id])
+      server = HotSearch.new
+      @entries = server.all_entries(@search.keywords)
+      @all_wines = @entries['wines']
+      page = params[:page] || 1
+      if @all_wines.present?
+        unless @all_wines.kind_of?(Array)
+          @wines = @all_wines.page(page).per(10)
+        else
+          @wines = Kaminari.paginate_array(@all_wines).page(page).per(10)
+        end
+      end
       render :template => "wine_details/add_step_two"
     end
   end
@@ -66,14 +77,14 @@ class WineDetailsController < ApplicationController
 
   #添加新酒款
   def new
-    if params[:wine_detail_id]
+    if params[:wine_id]
       @read_only = true
-      @wine_detail = Wines::Detail.find(params[:wine_detail_id].to_i)
-      @wine = @wine_detail.wine
+      @wine = Wine.find(params[:wine_id])
+      #保存酒的基本信息
       @register = Wines::Register.create(
           :name_en => @wine.name_en,
-          :vintage => @wine_detail.year,
           :official_site => @wine.official_site,
+          :vintage => @wine.details.releast_detail.first.year,
           :wine_style_id => @wine.wine_style_id,
           :region_tree_id => @wine.region_tree_id,
           :user_id => current_user.id,

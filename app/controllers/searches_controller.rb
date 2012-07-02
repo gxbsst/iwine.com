@@ -39,10 +39,6 @@ class SearchesController < ApplicationController
   def winery
     @title = "搜索酒庄"
     server = HotSearch.new
-    # @page = params[:page].to_i || 1
-    # if @page < 1 
-    #   @page = 1
-    # end
     @entries = server.all_entries( params[:word])
     @wineries = @entries['wineries']
     page = params[:page] || 1

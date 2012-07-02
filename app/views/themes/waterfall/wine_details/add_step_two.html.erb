@@ -3,7 +3,7 @@
 <% end %>
   <div class="whitespace addwine">
     <%= render "wine_details/addwine_step", :step => "step_fir" %>
-    <% unless @search.wines.blank? %>
+    <% unless @wines.blank? %>
         <div class="search mb20">
           <%= render :partial => "wine_details/search_wine", :object => @search %>
         </div>
@@ -19,23 +19,24 @@
           <div class="clear"></div>
         </div>
 
-        <% @search.wines.each do |detail| %>
+        <% @wines.each do |wine| %>
+            <% releast_detail = wine.details.releast_detail.first %>
             <div class="box">
               <div class="box_t"></div>
               <div class="box_main">
-                <div class="wine_img"><%= wine_label_tag( detail, :thumb_name => "thumb_x", :width => "70", :height => "70" )%></div>
+                <div class="wine_img"><%= wine_label_tag( releast_detail, :thumb_name => "thumb_x", :width => "70", :height => "70" )%></div>
                 <div class="wine_info">
-                  <h2><%= detail.wine.name_zh %></h2>
-                  <h3><%= detail.wine.origin_name %></h3>
+                  <h2><%= releast_detail.wine.name_zh %></h2>
+                  <h3><%= releast_detail.wine.origin_name %></h3>
                   <p><strong>已有年份：</strong></p>
                   <p class="year">
                     
-                    <% detail.all_vintage.each do |wine_detail| %>
+                    <% wine.details.order("year desc").each do |wine_detail| %>
                         <span><%= link_to wine_detail.show_year, wine_path(wine_detail) %></span>
                     <% end %>
                   </p>
                   <p class="mt10">
-                    <%= link_to new_wine_path(:wine_detail_id => detail.id), :class => "btn_gray" do %>
+                    <%= link_to new_wine_path(:wine_id => wine.id), :class => "btn_gray" do %>
                         <span>添加新年份</span>
                     <% end %>
                   </p>
@@ -45,6 +46,9 @@
               <div class="box_b"></div>
             </div>
         <% end %>
+        <div class="pagination">
+          <%= paginate @wines %>
+        </div>
     <% else %>
         <div class="notice mb20">没有找到相关酒款，您愿意帮助我们添加么？</div>
         <div class="align_c">
