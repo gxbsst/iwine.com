@@ -101,11 +101,7 @@ module ApplicationHelper
   end
   ## 显示用户头像
   def user_avatar_tag(object, options = {} )
-    if object.avatar.respond_to? "image_url"
-      image_tag object.avatar.image_url( options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt]
-    else
-      theme_image_tag "userpic.jpg", :width => options[:width], :height => options[:height], :alt => options[:alt]
-    end
+    image_tag avatar(object, options[:thumb_name] ), :width => options[:width], :height => options[:height], :alt => options[:alt]
   end
 
   ## 更改用户登录后跳转的URL

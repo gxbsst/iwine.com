@@ -1,0 +1,17 @@
+<div class="gray_box">
+	<h3>搜寻站内好友</h3>
+	<p>
+		<%= form_for @search ||= Search.new, 
+			:url => "/searches/search_user", 
+			:html => {:class => "search_user"}, :method => :post do |f| %>
+			<%= f.text_field :keywords, :class => "text", :value => @search.keywords, :style => "width:200px;", :placeholder => "请输入好友昵称，如：小白" %>
+		<a href="javascript:void(0);" class="btn_gray ml10 search_user" onclick="this.blur();" title="搜索"><span>搜寻好友</span></a>	
+		<% end %>
+	</p>
+</div>
+<script type="text/javascript" charset="utf-8">
+	$("a.search_user").click(function(){
+		$("form.search_user").submit();
+		return false;
+	})
+</script>

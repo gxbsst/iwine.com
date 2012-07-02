@@ -17,6 +17,12 @@ class SearchesController < ApplicationController
     redirect_to add_wines_path(:step => 2, :id => @search.id)
   end
 
+  def search_user
+    @title = "搜寻好友"
+    @search = Search.create!(params[:search])
+    redirect_to search_friends_path(:id => @search.id)
+  end
+
   def suggestion
     if params[:word].blank?
       render :json => { 'wines' =>  [] , 'wineries' => [] }

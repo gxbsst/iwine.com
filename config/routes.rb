@@ -42,6 +42,7 @@ Patrick::Application.routes.draw do
       get :setting_sns
       get :delete_sns
       get :unfollow
+      get :search
     end
     member do
       post :email_invite
@@ -183,6 +184,7 @@ Patrick::Application.routes.draw do
       get :winery, :via => [:get , :put]
       get :suggestion, :via => [:get , :put]
       get :results, :via => [:get , :put]
+      post :search_user
     end
   end
 

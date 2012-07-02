@@ -34,6 +34,12 @@ class FriendsController < ApplicationController
     @availabe_sns = current_user.available_sns
   end
 
+  def search
+    @search = Search.find(params[:id])
+    @users = User.where("username like ? and id != ?", "%#{@search.keywords}%", current_user.id).order("followers_count desc")
+    @user_ids = @users.pluck(:id).join(",")
+  end
+
   # 设置同步
   def setting_sns
     @availabe_sns = current_user.available_sns
