@@ -3,19 +3,20 @@ require 'fileutils'
 class Photo < ActiveRecord::Base
   # TODO: audit_status, 设置 is admin 才能修改
   acts_as_commentable
-
   acts_as_votable
-
   counts :comments_count => {:with => "Comment", 
                              :receiver => lambda {|comment| comment.commentable },
-                             :increment => {:on => :create, :if => lambda {|comment| comment.counter_should_increment_for("Photo")}},
-                             :decrement => {:on => :save,   :if => lambda {|comment| comment.counter_should_decrement_for("Photo")}}                              
-                             },
+                             :increment => {:on => :create, 
+                                            :if => lambda {|comment| comment.counter_should_increment_for("Photo")}},
+                             :decrement => {:on => :save,   
+                                            :if => lambda {|comment| comment.counter_should_decrement_for("Photo")}}                              
+                            },
          :votes_count =>    {:with => "ActsAsVotable::Vote", 
                              :receiver => lambda {|vote| vote.votable },
-                             :increment => {:on => :create,  :if => lambda {|vote| vote.votable_type == "Photo" && vote.vote_flag == true}},
-                             :decrement => {:on => :destroy, :if => lambda {|vote| vote.votable_type == "Photo" && vote.vote_flag == true}}                              
-                            }
+                             :increment => {:on => :create,  
+                                            :if => lambda {|vote| vote.votable_type == "Photo" && vote.vote_flag == true}},
+                             :decrement => {:on => :destroy, 
+                                            :if => lambda {|vote| vote.votable_type == "Photo" && vote.vote_flag == true}}                                            }
   # fires :new_photo, :on                 => :create,
   #                     :actor            => :user,
   #                     :secondary_actor => :imageable,
@@ -25,14 +26,18 @@ class Photo < ActiveRecord::Base
   belongs_to :user
   has_many :comments, :class_name => "PhotoComment", :as => :commentable, :include => [:user]
   has_many :audit_logs, :class_name => "AuditLog", :foreign_key => "audit_id"
- 
 
   paginates_per 12
-
   mount_uploader :image, ImageUploader
-  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :is_audit_status_changed #, :audit_migrate_status #在update_photo的地方将此字段设置为true
+
+  attr_accessor :crop_x, 
+                :crop_y, 
+                :crop_w, 
+                :crop_h, 
+                :is_audit_status_changed
   #after_update :crop_avatar
-  after_save :recreate_delayed_versions!
+  #after_save :recreate_delayed_versions!
+  before_save :set_geometry
   before_update :set_audit_status_changed?
   serialize :counts, Hash
 
@@ -40,8 +45,10 @@ class Photo < ActiveRecord::Base
   scope :labels, where(:photo_type => APP_DATA["photo"]["photo_type"]["label"])
   scope :label, labels.limit(1) #取出一个 label
   scope :cover, covers.limit(1) #取出一个 cover
-  scope :approved, where(:audit_status =>  APP_DATA['audit_log']['status']['approved'])  # for wine and winery
-  scope :visible, where("deleted_at is null")                                             # 展示用户上传的酒和酒庄
+  scope :approved, where(
+    :audit_status => APP_DATA['audit_log']['status']['approved']
+  )  # for wine and winery
+  scope :visible, where("deleted_at is null")   # 展示用户上传的酒和酒庄
   # for wine and winery
   # covers.approved
 
@@ -56,9 +63,17 @@ class Photo < ActiveRecord::Base
     update_attribute(:audit_status, APP_DATA['audit_log']['status']['approved'])
   end
 
+  def set_geometry
+    geometry = self.image.middle.geometry
+    if (! geometry.nil?)
+      self.width = geometry[:width]
+      self.height = geometry[:height]
+    end
+  end
+ 
   def recreate_delayed_versions!
-      image.should_process = true
-      image.recreate_versions!
+    self.should_recreate_version = true
+    image.recreate_versions!
   end
 
   def self.build_wine_photo(opts = {})

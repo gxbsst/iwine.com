@@ -2,9 +2,6 @@
 # encoding: utf-8
 
 class ImageUploader < CarrierWave::Uploader::Base
-
-  attr_accessor :should_process
-
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
    include CarrierWave::MiniMagick
@@ -56,16 +53,20 @@ class ImageUploader < CarrierWave::Uploader::Base
   version :middle, :from_version => :large do
     process :resize_to_fit => [APP_DATA["image"]["wine"]["middle"]["width"],
                                APP_DATA["image"]["wine"]["middle"]["height"]]
-    process :store_geometry
+   # process :store_geometry
+    process :get_geometry
+    def geometry
+      @geometry
+    end
   end
 
   #100*100
-  version :thumb_x, :from_version => :large  do
+  version :thumb_x, :from_version => :large do
     process :resize_to_fill => [APP_DATA["image"]["wine"]["x_thumb"]["width"],
                                 APP_DATA["image"]["wine"]["x_thumb"]["height"]]
   end
   #130*130
-  version :thumb, :from_version => :large  do
+  version :thumb, :from_version => :large do
     process :resize_to_fill => [APP_DATA["image"]["wine"]["thumb"]["width"],
                                 APP_DATA["image"]["wine"]["thumb"]["height"]]
   end
@@ -75,30 +76,21 @@ class ImageUploader < CarrierWave::Uploader::Base
     process :resize_to_fit => [APP_DATA["image"]["winery"]["middle_x"]["width"],APP_DATA["image"]["winery"]["middle_x"]["height"]]
   end
 
-  def should_process?
-    @should_process ||= false
-  end
-
   protected
-
-  def is_crop? picture
-    return false unless should_process?
-    return model.crop_x.present?
-  end
-
-  def is_wine? picture
-    return false unless should_process?
-    model.imageable_type == "Wines::Detail"
+  
+  def get_geometry
+    @geometry = {} 
+    manipulate! do |img|
+     @geometry[:width] = img[:width] 
+     @geometry[:height] = img[:height] 
+     return @geometry
+    end
   end
 
   def is_winery? picture
     model.imageable_type == "Winery"
   end
 
-  #def secure_token
-  #  var = :"@#{mounted_as}_secure_token"
-  #  model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.uuid)
-  #end
   def secure_token
     ivar = "@#{mounted_as}_secure_token"
     token = model.instance_variable_get(ivar)
