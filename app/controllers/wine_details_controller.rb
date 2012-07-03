@@ -2,13 +2,13 @@
 class WineDetailsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show, :comments, :owners, :followers]
   before_filter :set_current_user
-  before_filter :get_wine_detail, :only => [:show, :owners, :followers]
+  before_filter :get_wine_detail, :only => [:show, :owners, :followers, :photo_upload]
   before_filter :get_follow_item, :only => [:show]
   before_filter :find_register, :only => [:edit, :update]
   before_filter :find_winery, :only => [:update]
   before_filter :check_region_tree, :only => :create
   before_filter :check_edit_register, :only => [:edit, :update]
-  
+  before_filter :check_and_create_albums, :only => [:photo_upload]
   def index
     @title = "酒款"
     # @wines = Wines::Detail.includes(:wine, :cover).order("created_at ASC").page params[:page] || 1
@@ -153,6 +153,11 @@ class WineDetailsController < ApplicationController
     
   end
 
+  #上传照片
+  def photo_upload
+    @photo = @wine_detail.photos.new
+    @wine = @wine_detail.wine
+  end
   private
 
   def set_current_user

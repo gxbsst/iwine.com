@@ -36,6 +36,16 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def check_and_create_albums
+    @user = current_user
+    @albums = @user.albums
+    if @albums.blank?
+       @albums.create!([{:user_id => @user.id, :name => "酒"},
+                        {:user_id => @user.id, :name => "酒庄"},
+                        {:user_id => @user.id, :name => "其他"},])
+    end
+    @album_id = params[:album_id] ||  @albums.first.id
+  end  
   # 主要为了在User Controller 判断是否为当前用户
   def is_login_user?(user)
     if user_signed_in?

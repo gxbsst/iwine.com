@@ -55,6 +55,7 @@ Patrick::Application.routes.draw do
       get :followers
       get :owners
       get :add_to_cellar
+      get :photo_upload
     end
     collection do
       get :add

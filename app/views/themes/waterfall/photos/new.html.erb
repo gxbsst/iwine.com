@@ -10,7 +10,7 @@
       <%= form_for @photo, :html => { :multipart => true, :id => "fileupload"  } do |f| %>
       <p class="mb20">选择相册 
         <%= select_tag("album_id", 
-                   options_from_collection_for_select(@albums, "id", "name", params[:album_id] || @albums.first.id) ) %>
+                   options_from_collection_for_select(@albums, "id", "name", @album_id) ) %>
         <%= link_to "新建相册", new_album_path(), :class => "new_album fancybox.ajax icon_add_album ml20" %>
       </p>
 

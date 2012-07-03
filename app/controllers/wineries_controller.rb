@@ -1,9 +1,10 @@
 # encoding: utf-8
 class WineriesController < ApplicationController
-  before_filter :get_hot_wineries, :except => :index
+  before_filter :authenticate_user!, :only => [:photo_upload]
+  before_filter :get_hot_wineries, :except => [:index, :photo_upload]
   before_filter :get_winery, :except => [:show, :index]
   before_filter :get_follow_item, :except => [:index]
-
+  before_filter :check_and_create_albums, :only => [:photo_upload]
   def index
     @title = "酒庄"
     @timelines = Winery.timeline_events
@@ -36,8 +37,13 @@ class WineriesController < ApplicationController
     @title = ["关注者", @winery.name].join("-")
     @users = @winery.followers(:page => params[:page], :per => 10)
   end
+  
+  def photo_upload
+    @photo = @winery.photos.new
+  end 
 
   private
+
   def get_winery
     @winery = Winery.find(params[:id])
   end

@@ -6,7 +6,7 @@ class PhotosController < ApplicationController
   before_filter :get_user
   before_filter :authenticate_user!, :only => [:new, :create]
   before_filter :get_follow_item, :only => [:show, :index]
-
+  before_filter :check_and_create_albums, :only => :new
   def index
     @photos = @imageable.photos.approved.page(params[:page] || 1).per(8)
     case @resource
@@ -46,14 +46,6 @@ class PhotosController < ApplicationController
 
   def new
     @title = "上传图片"
-    @user = current_user
-    @albums = @user.albums
-    if @albums.blank?
-       @albums.create!([{:user_id => @user.id, :name => "酒"},
-                        {:user_id => @user.id, :name => "酒庄"},
-                        {:user_id => @user.id, :name => "其他"},])
-    end
-    @album_id = params[:album_id] ||  @albums.first.id
     @photo = Photo.new
   end
 
@@ -63,6 +55,7 @@ class PhotosController < ApplicationController
       params[:photo][:image].each do |image|
         @photo = create_photo(image)
         if @photo.save
+          @photo.approve_photo
           respond_to do |format|
           format.html {                                         #(html response is for browsers using iframe sollution)
             render :json => [@photo.to_jq_upload].to_json,
@@ -177,9 +170,10 @@ class PhotosController < ApplicationController
   def create_photo(image)
     @imageable = get_photo_imageable
     @photo = @imageable.photos.build
-    @photo.album_id = params[:album_id]
+    @photo.album_id = params[:album_id] || -1 #上传酒或酒庄图片
     @photo.image = image
     @photo.user_id = @user.id
+
     return @photo    
   end
 
