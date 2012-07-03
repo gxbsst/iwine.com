@@ -53,7 +53,7 @@ $(function(){
         input: $("input[name='rate_value']"),
         tagName: 'li',
         template: _.template($('#star_item').html()),
-        textValue: ['','欠佳', '可接受', '出色', '非常不错', '质量一流'],
+        textValue: ["欠佳", "尚可", "良好", "推荐", "力荐"],
         events: {
             "mouseover .star img"  : "changeStarColorAsYellow",
             'mouseleave .star img': 'initializeRateValue',
