@@ -12,7 +12,7 @@
       <%= form_tag :action => "email_invite" do %>
         <p>
           <%= text_area_tag "email_address", nil, :placeholder => '输入邮件地址' %>
-          <%= text_area_tag "description", nil,  :placeholder => '输入邀请留言' %>
+          <%= text_area_tag "description", "iWine（爱红酒）是个很有用的葡萄酒网站，快来看看吧～" %>
           <%= text_field_tag "name", current_user.username, :placeholder => "输入你的姓名" %>
         </p>
         <p>

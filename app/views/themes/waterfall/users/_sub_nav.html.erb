@@ -38,7 +38,9 @@
           <%= show_bio @user.profile.bio %>
           <span><%= link_to "修改", basic_settings_path %></span>
         </p>
-        <p>博客：<%= link_to_outside_website(@user.profile.website, :target => "_blank") %></p>
+        <% if @user.profile.website.present? %>
+           <p>博客：<%= link_to_outside_website(@user.profile.website, :target => "_blank") %></p>
+        <% end %>
       </div>
       <div class="item">
         <%= conversation_url(@user) %> |
@@ -47,8 +49,10 @@
       <% else %>
        <div class="username"><%= @user.username %></div>
        <div class="mystatu">
-        <p><%= show_bio @user.profile.bio %></p>
-        <p>博客：<%= link_to_outside_website(@user.profile.website, :target => "_blank") %></p>
+        <p><%= show_bio(@user.profile.bio, false) %></p>
+        <% if @user.profile.website.present? %>
+          <p>博客：<%= link_to_outside_website(@user.profile.website, :target => "_blank") %></p>
+        <% end %>
       </div>
        <div class="item">
         <% if user_signed_in? %>
