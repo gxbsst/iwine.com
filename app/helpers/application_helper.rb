@@ -311,8 +311,8 @@ module ApplicationHelper
     end
   end
 
-  def show_bio(bio)
-    bio.present? ? bio : APP_DATA["user_profile"]["no_bio"]
+  def show_bio(bio, myself = true)
+    bio.present? ? bio : (myself ? APP_DATA["user_profile"]["myself_no_bio"] : APP_DATA["user_profile"]["no_bio"])
   end
 
  def album_cover_tag(user, album)
