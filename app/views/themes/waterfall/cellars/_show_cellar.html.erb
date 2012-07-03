@@ -63,7 +63,7 @@
                 </td>
                 <td class="info">
                   容量:<%= wine_detail.show_capacity %><br/>
-                  购买时间:<%= item.buy_date.strftime("%Y年") unless item.buy_date.blank? %><br/>
+                  购买时间:<%= item.buy_date.strftime("%Y年%m月%d日") unless item.buy_date.blank? %><br/>
                   酒商:<%= item.buy_from %><br/>
                   适饮年限:<%= drinkable(item) %>
                 </td>
