@@ -44,7 +44,12 @@
 				<div class="clear"></div>
 			</ul>
 		<% else %>
-			<p>暂时没有找到用户 </p>
+			<p class="mb30"><span class="font14">啊哦，没有找到你的朋友哎...</span></p>
+			<p>
+				<%= link_to find_friends_path, :class => "btn_gray" do %>
+					<span>选择其他方式寻找好友</span>
+				<% end %>
+			</p>
 		<% end %>
 	</div>
 </div>

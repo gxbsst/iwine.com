@@ -14,7 +14,7 @@
         <%= link_to winery_path(@winery), :class => "btn_gray float_r" do%>
             <span>返回</span>
         <% end %>
-        <%= link_to new_photo_path(:winery_id => @winery), :class => "btn_gray float_r mr5" do %>
+        <%= link_to photo_winery_load_path(@winery), :class => "btn_gray float_r mr5" do %>
             <span>上传照片</span>
         <% end %>
         <h2>所有照片<span class="font12 more">(共<%= @winery.photos_count %>张)</span></h2>

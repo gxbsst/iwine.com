@@ -153,6 +153,7 @@ Patrick::Application.routes.draw do
     member do
       get "wines_list"
       get "followers_list"
+      get "photo_upload"
     end
     resources :photos
     resources :comments, :controller => "comments" do
