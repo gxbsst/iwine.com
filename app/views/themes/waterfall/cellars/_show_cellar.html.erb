@@ -31,9 +31,10 @@
           <tr>
             <th class="img">酒标</th>
             <th class="year">年份</th>
-            <th class="des">名称&描述</th>
-            <th class="info">相关信息</th>
+            <th class="des">名称</th>
+            <th class="price">容量</th>
             <th class="count">数量</th>
+            <th class="price">购买时间</th>
             <th class="price">购入价格</th>
             <th class="place">所在地</th>
             <% if is_login_user? @user %>
@@ -61,13 +62,9 @@
                   <%= wine_detail.wine.name_zh %><br/>
                   <%= wine_detail.wine.origin_name %>
                 </td>
-                <td class="info">
-                  容量:<%= wine_detail.show_capacity %><br/>
-                  购买时间:<%= item.buy_date.strftime("%Y年%m月%d日") unless item.buy_date.blank? %><br/>
-                  酒商:<%= item.buy_from %><br/>
-                  适饮年限:<%= drinkable(item) %>
-                </td>
+                <td class="price"><%= wine_detail.show_capacity %></td>         
                 <td class="count"><%= item.number %></td>
+                <td class="price"><%= item.buy_date.strftime("%Y年%m月%d日") unless item.buy_date.blank? %></td>
                 <td class="price"><%= number_to_currency(item.price,  :unit => "CNY") %></td>
                 <td class="place"><%= item.location %></td>
                 <% if is_login_user? @user %>
