@@ -76,7 +76,7 @@ Patrick::Application.routes.draw do
   
   # PHOTO
   resources :photos do
-    resources :comments, :as => "photo_comments"
+    resources :comments#, :as => "photo_comments"
     # resources :comments, :controller => "comments"
     member do
       get "vote"

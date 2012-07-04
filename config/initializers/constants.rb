@@ -30,3 +30,5 @@ EMAIL_SERVERS = [
 
 
 APP_DATA = YAML.load_file(Rails.root.join('config', 'data.yml'))
+
+EMAIL_SITE = YAML.load_file(Rails.root.join('config', 'email_site.yml'))

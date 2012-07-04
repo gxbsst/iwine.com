@@ -2,7 +2,14 @@
 <div class="success">
   感谢您成为iWine会员！<br />
   我们已将激活邮件发送至您的邮箱：
-  <%= params[:email] %>
+  <% if params[:email] %>
+    <% email_end = params[:email].split("@").pop %>
+    <% if EMAIL_SITE["#{email_end}"] %>
+      <%= link_to params[:email], EMAIL_SITE["#{email_end}"] %>
+    <% else %>
+      <%= params[:email] %>
+    <% end %>
+  <% end %>
   <br />
   请登录邮箱并激活，即可完成注册！
 </div>
