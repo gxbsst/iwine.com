@@ -120,4 +120,20 @@ describe Photo do
    #  end
   end
 
+  describe "#image" do
+    before(:each) do
+     @photo = build(:photo)  
+    end
+    it "should have image name" do
+      @photo.save
+      Photo.find(@photo).image_url.should_not be_empty 
+    end
+
+    it "should not have thumb url" do
+      @photo.save
+      Photo.find(@photo).image_url(:thumb).should_not be_empty 
+    end
+  end
+
+
 end

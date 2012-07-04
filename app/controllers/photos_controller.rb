@@ -57,7 +57,7 @@ class PhotosController < ApplicationController
         if @photo.save
           @photo.approve_photo
           respond_to do |format|
-          format.html {                                         #(html response is for browsers using iframe sollution)
+          format.html { #(html response is for browsers using iframe sollution)
             render :json => [@photo.to_jq_upload].to_json,
             :content_type => 'text/html',
             :layout => false
