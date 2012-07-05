@@ -163,6 +163,7 @@ search_server:
   port: 8080
   entry_url: /patrick/query/all
   word_url: /patrick/query/associate
+  user_url: /patrick/query/user
 
 search:
   wine:

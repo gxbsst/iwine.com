@@ -3,19 +3,19 @@ class FriendsController < ApplicationController
   before_filter :authenticate_user!
 
   def follow
-    params[:user_id].split(',').each do |user_id|
-      if current_user.is_following( user_id ).blank? && current_user.id != user_id.to_i
-        following_user = User.find user_id.to_i
-        friendship = Friendship.new
-        friendship.user_id = user_id
-        friendship.follower_id = current_user.id
-        friendship.save
-        notice_stickie t("notice.friend.follow")
-        UserMailer.follow_user(
-          :following => following_user, 
-          :follower => current_user).deliver if following_user.profile.config[:notice][:email].include? "3" #被关注发送提醒邮件
+      params[:user_id].split(',').each_with_index do |user_id, index|
+        if current_user.is_following( user_id ).blank? && current_user.id != user_id.to_i
+          following_user = User.find user_id.to_i
+          friendship = Friendship.new
+          friendship.user_id = user_id
+          friendship.follower_id = current_user.id
+          friendship.save
+          notice_stickie t("notice.friend.follow") if index == 0 #避免同时关注多人出现多条提示信息
+          UserMailer.follow_user(
+            :following => following_user, 
+            :follower => current_user).deliver if following_user.profile.config[:notice][:email].include? "3" #被关注发送提醒邮件
+        end
       end
-    end
     redirect_to request.referer
   end
 
@@ -36,8 +36,17 @@ class FriendsController < ApplicationController
 
   def search
     @search = Search.find(params[:id])
-    @users = User.where("username like ? and id != ?", "%#{@search.keywords}%", current_user.id).order("followers_count desc")
-    @user_ids = @users.pluck(:id).join(",")
+    server = HotSearch.new
+    @users = server.search_user(@search.keywords)
+    @user_ids = get_user_ids
+    page = params[:page] || 1
+    if @users.present?
+      unless @users.kind_of?(Array)
+        @users = @users.page(page).per(10)
+      else
+        @users = Kaminari.paginate_array(@users).page(page).per(10)
+      end
+    end
   end
 
   # 设置同步
@@ -134,5 +143,16 @@ class FriendsController < ApplicationController
 
   def build_oauth_token_key(name, oauth_token)
     [name, oauth_token].join("_")
+  end
+
+  def get_user_ids
+    if @users.present?
+      if @users.kind_of?(Array)
+        ids = @users.inject([]){|memo, u| memo << u.id}
+      else
+        ids = @users.pluck(:id)
+      end
+    end
+    return ids.join(",") #转化为字符串
   end
 end
