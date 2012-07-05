@@ -166,7 +166,7 @@ class User < ActiveRecord::Base
   validates :agree_term, :acceptance => true, :on => :create
   validates :email, :username, :uniqueness => true
   validates :username, :presence => true
-  validates :city, :presence => true, :on => :update
+  # validates :city, :presence => true, :on => :update
   # validates :current_password, :presence => true
   validates_confirmation_of :password
 
