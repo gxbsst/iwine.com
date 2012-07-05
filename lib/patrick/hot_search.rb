@@ -6,6 +6,7 @@ class HotSearch
     server = APP_DATA['search_server']
     @entry_url = server['entry_url']
     @word_url = server['word_url']
+    @user_url = server['user_url']
     @http = Net::HTTP.start( server['host'] , server['port'] )
   end
 
@@ -31,6 +32,12 @@ class HotSearch
     wineries = Winery.find(winery_ids) if winery_ids.present?
 
     { 'wines' => wines , 'wineries' => wineries}
+  end
+
+  def search_user(word)
+    words = JSON.parse @http.post(@user_url, "query=#{word}").body
+    user_ids = get_ids(words['users'])
+    users = User.order("followers_count desc").find(user_ids) if user_ids.present?
   end
   
   #从搜到的数据获得wine_ids或winery_ids
