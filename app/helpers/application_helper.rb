@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 module ApplicationHelper
 
+  def photo_photo_comments_path(commentable,comment)
+    return "/photos/#{commentable.id}/comments"
+  end
+
   def set_layout_class_name
 
     if params[:action] ==  'show' && params[:controller] == "wines"
