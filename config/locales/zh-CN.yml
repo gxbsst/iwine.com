@@ -21,6 +21,7 @@ zh-CN:
       follow: "关注成功。"
       unfollow: "成功取消关注。"
       email_invite: "收件人不能为空！"
+      search_failure: "查询好友失败，请重新搜索！"
     message:
       reply_reject: "你不能回复此私信！"
       reply_self: "不能回复自己。"

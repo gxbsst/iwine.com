@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     @followers = @user.followers
     @followings = @user.followings
     @comments = @user.comments.real_comments.limit(6)
-    @following_wines = @user.wine_followings.limit(6)
+    @following_wines = @user.wine_followings.limit(4)
   end
 
   # 关注的酒
@@ -96,9 +96,9 @@ class UsersController < ApplicationController
 
   def get_cellar_items
     if current_user && current_user == @user
-      @cellar_items = @user.cellar.mine_items.limit(6)
+      @cellar_items = @user.cellar.mine_items.limit(4)
     else
-      @cellar_items = @user.cellar.user_items.limit(6)
+      @cellar_items = @user.cellar.user_items.limit(4)
     end
   end
 end

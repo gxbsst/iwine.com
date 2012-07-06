@@ -35,17 +35,23 @@ class FriendsController < ApplicationController
   end
 
   def search
-    @search = Search.find(params[:id])
-    server = HotSearch.new
-    @users = server.search_user(@search.keywords)
-    @user_ids = get_user_ids
-    page = params[:page] || 1
-    if @users.present?
-      unless @users.kind_of?(Array)
-        @users = @users.page(page).per(10)
-      else
-        @users = Kaminari.paginate_array(@users).page(page).per(10)
+    begin
+      @search = Search.find(params[:id])
+      server = HotSearch.new
+      @users = server.search_user(@search.keywords)
+      @user_ids = get_user_ids
+      page = params[:page] || 1
+      if @users.present?
+        unless @users.kind_of?(Array)
+          @users = @users.page(page).per(10)
+        else
+          @users = Kaminari.paginate_array(@users).page(page).per(10)
+        end
       end
+    rescue Exception => e
+      logger.error(e)
+      notice_stickie t("notice.friend.search_failure")
+      redirect_to  find_friends_path
     end
   end
 
@@ -152,7 +158,7 @@ class FriendsController < ApplicationController
       else
         ids = @users.pluck(:id)
       end
+      return ids.join(",") #转化为字符串
     end
-    return ids.join(",") #转化为字符串
   end
 end

@@ -343,4 +343,17 @@ module ApplicationHelper
       "<div class='clear'></div>"
     end
   end
+
+  def item_non_public(is_public)
+    if is_public.to_i == 1
+      %Q[<span class="non_public"> \
+        #{image_tag("/assets/waterfall/images/icon/non_public.png", 
+          :width => "16",
+          :height => "16",
+          :alt => "仅自己可见", 
+          :title => "仅自己可见")}
+        </span>]
+    end
+
+  end
 end

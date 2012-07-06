@@ -28,6 +28,13 @@
 .home_right {width:220px;float:left;}
 .puzzle {margin-bottom:50px;}
 .puzzle span {display:block;float:left; margin:0 1px 1px 0;}
+.puzzle dl {width:282px;float:left;height:115px;background:url(../images/common/bg_hp_item.jpg) no-repeat left top;padding:10px;margin:0 10px 5px 0;position:relative;}
+.puzzle dl.last {margin-right:0;}
+.puzzle dt {width:100px;float:left;margin-right:15px;background-color:#fdfdfd;text-align:center;}
+.puzzle dd {width:167px;float:left;}
+.puzzle dd h1.zh {margin-bottom:5px;}
+.puzzle dd h1.en {line-height:16px;}
+.puzzle dl .non_public {position:absolute;left:275px;top:97px;}
 #hp .home_left .comment_list li {width:620px;}
 #hp .home_left .comment_list .pic { width:70px;float:left;margin-right:20px;}
 #hp .home_left .comment_list .main {width:530px;float:left;}

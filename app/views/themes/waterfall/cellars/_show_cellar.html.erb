@@ -47,11 +47,8 @@
               <tr>
                 <td class="img">
                   <div>
-                    <% if item.private_type.to_i == 1 %>
-                      <span class="non_public"> 
-                         <%= image_tag "/assets/waterfall/images/icon/non_public.png", :width => "16", :height => "16", :alt => "仅自己可见", :title => "仅自己可见"%>
-                      </span>
-                    <% end %>
+             
+                    <%= raw item_non_public(item.private_type) %>
                     <%= link_to (wine_label_tag wine_detail, :thumb_name => :thumb, :title => wine_detail.name, :width => 50, :height => 63, :alt => wine_detail.name), wine_path(wine_detail) %>
                   </div>
                 </td>
