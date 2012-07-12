@@ -1,0 +1,91 @@
+<% content_for :title, @title %>
+<% content_for :css do %>
+	<%= theme_stylesheet_link_tag "guide", "basic" %>
+<% end %>
+
+<style type="text/css">
+ .field_with_errors label.message {
+ 	background: none repeat scroll 0 0 #FBE3E4;
+  	color: #8A1F11;
+    display: inline;
+    float: none;
+    padding: 0;
+    margin: 0;
+  }
+  .field_with_errors .message {
+    padding: 0;
+  }
+</style>
+<div id="guide">
+	<div class="wel">
+		<span class="step">
+			<%= theme_image_tag "common/guide_step2_icon.png", :width => "109", :height => "109", :alt => "第二步" %>
+		</span>
+		<%= theme_image_tag "common/guide_step2_t.gif", :width => "811", :height => "100" %>
+	</div>
+
+	<div class="paper">
+		<div class="top"></div>
+		<div class='mid clearfix'>
+			<div class="step2">
+				<div class="left">
+					<%= form_for @user, :url => wizard_path, 
+										:validate => true,
+										:html => {:id => "update_basic_form", :method => :put } do |f| %>
+						<div class="required">
+							<label><span>*</span>邮箱</label>
+							<%= @user.email %>
+						</div>
+						<div class="required">
+							<label class="vm"><span>*</span>昵称</label>
+							<%= f.text_field :username, :class => "text name" %>
+						</div>
+						<%= f.fields_for :profile do |p| %>
+							<div class="optional">
+								<label>性别</label>
+								<label class="w50"><%= p.radio_button :gender, 1 %>男</label>
+								<label class="w50"><%= p.radio_button :gender, 0 %>女</label>
+							</div>
+							<div class="optional">
+								<label>生日</label>
+								<%= p.date_select :birthday, 
+		                            :start_year => Time.now.year - 18, 
+		                            :end_year => 1910, 
+		                            :prompt => {:year => '请选择年', :month => '请选择月', :day => '请选择日'} %>
+		                    </div>
+		                    <div class="optional">
+						        <label class="vm">所在地</label>
+						        <div class="content">
+						          <%= f.text_field :city, :class => "text" %>
+						        </div>
+						      </div>
+					      	<div class="optional">
+					        	<label class="vm">博客地址</label>
+					        	<%= p.text_field :website, :class => "text name mr5" %>
+					      	</div>
+					      	<div class="optional">
+					        	<label>介绍</label>
+					        	<%= p.text_area :bio, :size => "48x5" %>
+					     	 </div>
+						<% end %>
+					<% end %>
+				</div>
+			
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="bot"></div>
+	</div>
+
+	<div class="align_c mt20">
+		<%= link_to "javascript:void(0);", :class => "update_basic" do %>
+			<%= theme_image_tag "common/btn_next.jpg", :width => "176", :height => "51" %>
+		<% end %>
+	</div>
+</div>
+<script type="text/javascript">
+	$(".update_basic").click(function(){
+		$("form#update_basic_form").submit();
+		return false;
+	});
+</script>

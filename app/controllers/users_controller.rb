@@ -79,17 +79,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  # 关注某支酒
-  def follow_one_wine(wine_detail_id)
-    wine_detail = Wines::Detail.find(wine_detail_id)
-    follow = current_user.following_resource(wine_detail)
-  end
-
-  # 关注某个人
-  def follow_one_user(user_id)
-    current_user.follow_user(user_id)
-  end
-
   def get_recommend_users
     @recommend_users = User.no_self_recommends(5, @user.id)
   end

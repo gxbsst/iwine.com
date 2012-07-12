@@ -142,17 +142,6 @@ class SettingsController < ApplicationController
     [name, oauth_token].join("_")
   end
 
-  ## 保存图片
-  def save_avatar
-    current_user.avatar = params[:user][:avatar]
-    current_user.save
-  end
-
-  # ## 更新图片
-  def crop_avatar
-    current_user.update_attributes(params[:user])
-  end
-
   def get_profile
     @profile = current_user.profile
   end

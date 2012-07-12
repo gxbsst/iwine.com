@@ -137,27 +137,6 @@ label.vm {line-height:25px;}
 .boxstyle2 h2, .boxstyle2 h3 {margin-bottom:20px;}
 
 
-/*-------------first recommend--------------*/
-#recommend .wel {background:url(../images/common/recommend_top.jpg) no-repeat left top;height:138px;padding:40px 0 0 70px;}
-#recommend .paper {background:url(../images/bg/paper_mid.jpg) repeat-y left top;}
-#recommend .paper .mid {padding:10px 0;}
-#recommend .paper .top {background:url(../images/bg/paper_top.jpg) no-repeat left top;height:30px;}
-#recommend .paper .bot {background:url(../images/bg/paper_bot.jpg) no-repeat left bottom;height:40px;}
-#recommend h1.zh {font-size:14px;}
-#recommend h1.en {font-size:12px;}
-#recommend span {display:block;}
-#recommend .wine {margin-bottom:20px;}
-#recommend ul {padding: 0 70px;zoom:1;}
-#recommend .wine ul.line {border-bottom:1px dotted #ccc;padding-bottom:40px;margin-bottom:40px;}
-#recommend .wine li {float:left;width:250px;margin-right:25px;}
-#recommend .wine li.last {margin-right:0;}
-#recommend .wine img {width:130px;float:left;margin-right:20px;}
-#recommend .wine .meta {width:100px;float:left;}
-#recommend .user li {float:left;width:140px;margin-right:25px;}
-#recommend .user li.last {margin-right:0;}
-#recommend .user img {width:50px;float:left;margin-right:15px;}
-#recommend .user .meta {width:75px;float:left;}
-
 /*icon*/
 .icon_mail, .icon_like, .icon_add_album, .icon_delet, .icon_edit, .icon_add, .icon_delet2, .icon_comment, .icon_fol, .icon_fol_e, .icon_cellar {background:url(../images/icon/icon_all.gif) no-repeat;display:inline-block;}
 a.icon_delet, a.icon_edit, a.icon_add, a.icon_delet2, a.icon_cellar {text-indent: -9999px;display:inline-block;}
