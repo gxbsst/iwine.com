@@ -364,12 +364,15 @@ module ApplicationHelper
       link_to "返回", winery_comments_url(comment.commentable)
     when "Photo"
       photo = comment.commentable
-      if photo.imageable_type == "Wines:Detail"
-              link_to "返回", wine_photo_url(photo)
-      elsif photo.imageable_type == "Winery"
-              link_to "返回", winery_photo_url(photo.imageable, photo)
-      else photo.imageable_type == "Album"
-              link_to "返回", album_photo_show_user_url(photo.user, photo.album, photo)
+      case photo.imageable_type
+      when "Wines:Detail"
+        link_to "返回", wine_photo_url(photo.imageable, photo)
+      when "Wine"
+        link_to "返回", wine_photo_url(photo.imageable.details.releast_detail.first, photo)
+      when "Winery"
+        link_to "返回", winery_photo_url(photo.imageable, photo)
+      when "Album"
+        link_to "返回", album_photo_show_user_url(photo.user, photo.album, photo)
       end
     end
   end
