@@ -157,8 +157,9 @@ class User < ActiveRecord::Base
   has_many :follows, :include =>[:user]
 
   # 推荐的用户
-  default_scope where('sign_in_count > 0 and confirmation_token is null')
-  scope :recommends, lambda { |limit| order("followers_count DESC").limit(limit) }
+  # default_scope where('sign_in_count > 0 and confirmation_token is null')
+  scope :active_user, where('sign_in_count > 0 and confirmation_token is null')
+  scope :recommends, lambda { |limit| active_user.order("followers_count DESC").limit(limit) }
   scope :no_self_recommends, lambda {|limit, user_id| recommends(limit).where("id != ?", user_id)}
   accepts_nested_attributes_for :profile, :allow_destroy => true
 
