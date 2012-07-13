@@ -1,4 +1,5 @@
 class UserMailer < ActionMailer::Base
+  add_template_helper(ApplicationHelper)
   default from: APP_DATA["email"]["from"]["normal"]
 
   # email 收件人地址， body邮件内容，user发件人
@@ -27,6 +28,8 @@ class UserMailer < ActionMailer::Base
   def reply_comment(options = {})
     @parent_user = options[:parent_user]
     @reply_user  = options[:reply_user]
+    @parent_comment = options[:parent_comment]
+    @children = options[:children]
     mail(:to => @parent_user.email, :subject => APP_DATA["email"]["reply"]["subject"])
   end
 end

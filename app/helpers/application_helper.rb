@@ -343,7 +343,6 @@ module ApplicationHelper
       "<div class='clear'></div>"
     end
   end
-
   def item_non_public(is_public)
     if is_public.to_i == 1
       %Q[<span class="non_public"> \
@@ -356,4 +355,23 @@ module ApplicationHelper
     end
 
   end
+
+  def reply_email(comment)
+    case comment.commentable_type
+    when "Wines::Detail"
+       link_to "返回", wine_comments_url(comment.commentable)
+    when "Winery"
+      link_to "返回", winery_comments_url(comment.commentable)
+    when "Photo"
+      photo = comment.commentable
+      if photo.imageable_type == "Wines:Detail"
+              link_to "返回", wine_photo_url(photo)
+      elsif photo.imageable_type == "Winery"
+              link_to "返回", winery_photo_url(photo.imageable, photo)
+      else photo.imageable_type == "Album"
+              link_to "返回", album_photo_show_user_url(photo.user, photo.album, photo)
+      end
+    end
+  end
+
 end

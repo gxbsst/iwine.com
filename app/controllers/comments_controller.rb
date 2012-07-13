@@ -199,7 +199,7 @@ class CommentsController < ApplicationController
       @parent_comment = Comment.find(@reply_comment.parent_id)
       user = @parent_comment.user 
       if user && user.profile.config[:notice][:email].include?("2") #用户设置发送邮件 
-        UserMailer.reply_comment(:parent_user => user, :reply_user => @user).deliver
+        UserMailer.reply_comment(:parent_user => user, :reply_user => @user, :parent_comment => @parent_comment, :children => @parent_comment.children.limit(5).reorder("id DESC")).deliver
       end
     end
   end
