@@ -26,7 +26,11 @@
  */
 
 $(function(){
-
+    <% if @comment.commentable_type == "Winery" %>
+        var star_desc = [" ", "欠佳", "尚可", "良好", "推荐", "力荐"];
+    <% else %>
+        var star_desc = [" ", "欠佳", "尚可", "良好", "出色", "顶级佳酿"];
+    <% end %>
     window.StarsView = Backbone.View.extend({
         initialize: function() {
             self = this
@@ -53,7 +57,7 @@ $(function(){
         input: $("input[name='rate_value']"),
         tagName: 'li',
         template: _.template($('#star_item').html()),
-        textValue: [" ", "欠佳", "尚可", "良好", "推荐", "力荐"],
+        textValue: star_desc,
         events: {
             "mouseover .star img"  : "changeStarColorAsYellow",
             'mouseleave .star img': 'initializeRateValue',
