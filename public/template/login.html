@@ -20,12 +20,17 @@
             </form>
             <div id="top_right">
             	<ul>
-                	<li class="userbox">
-                    	<a class="userpic" href="#"><img src="images/userimage/06.jpg" width="20" height="20" /></a><a href="#"><img src="images/common/userbox_arrow.jpg" width="22" height="30" /></a>
+                	<li class="sns">
+                    	<span>其他帐号登陆：</span><a href="/users/sign_up" target="#" class=""><img src="images/icon/icon_sina.gif" alt="新浪微博帐号登录" width="24" height="24" /></a><a href="/users/sign_up" target="#" class=""><img src="images/icon/icon_qq.gif" alt="QQ帐号登录" width="24" height="24" /></a><a href="/users/sign_up" target="#" class=""><img src="images/icon/icon_renren.gif" alt="人人网帐号登录" width="24" height="24" /></a>
                     </li>
-                    <li class="top_add"><a href="#" class="btn_add">添加</a></li>
+                    <li>
+                    	<a class="btn_green" href="/users/sign_up"><span>注册</span></a>
+                    </li>
+    				<li>
+                    	<a class="btn_green" href="/users/sign_in"><span>登录</span></a>
+                    </li>
                 </ul>
-            </div>
+      </div>
             <div class="clear"></div>
         </div>
     </div>
@@ -40,14 +45,39 @@
     <div id="wrapper950">
     	<div id="login">
         	<div class="error">啊哦，E-mail或密码错误！</div>
-            <div class="login">
+            <div class="logreg_box">
+            	<div class="top">欢迎登录iWine.com!</div>
+                <div class="mid">
+                	<div class="left">
+                    	<div class="un"><input class="text"  type="text" value="E-mail" onclick="clearDefaultText(this,'E-mail')" /></div>
+                        <div class="pw"><input class="text"  type="password" value="密码" onclick="clearDefaultText(this,'密码')" /></div>
+                        <div class="rember_pw">
+                            <a href="index.html"><img class="float_r" src="images/common/btn_login.jpg" width="96" height="41" alt="登陆" /></a>
+                        <label><input class="checkbox" name="" type="checkbox" value="" /> 记住我</label> 
+                            | <a href="password_forget.html">忘记密码了？</a>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                      <div class="right">
+                        <div class="sns">
+                            <p><span>你也可以通过站外账号进行登录：</span></p>
+                            <p ><a href="#" target="_blank"><img src="images/common/sina-connect.gif" alt="用微博帐号登录" width="126" height="24" /></a></p>
+                            <p><a href="#" target="_blank"><img src="images/common/qq-connect.gif" alt="用QQ帐号登录" width="126" height="24" /></a></p>
+                            <p><a href="#" target="_blank"><img src="images/common/renren_login_w.png" alt="用人人帐号登录" width="126" height="24" /></a></p>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    </div>
+                <div class="bot"></div>
+            </div>
+            <!--<div class="login">
                 <div class="boxstyle">
-                    <div class="top">欢迎登录iWine!</div>
+                    <div class="top">欢迎登陆iWine!</div>
                     <div class="mid">
                       <div class="un"><input class="text"  type="text" value="E-mail" onclick="clearDefaultText(this,'E-mail')" /></div>
                       <div class="pw"><input class="text"  type="password" value="密码" onclick="clearDefaultText(this,'密码')" /></div>
                         <div class="rember_pw">
-                            <a href="index.html"><img class="float_r" src="images/common/btn_login.jpg" width="96" height="41" alt="登录" /></a>
+                            <a href="index.html"><img class="float_r" src="images/common/btn_login.jpg" width="96" height="41" alt="登陆" /></a>
                         <label><input class="checkbox" name="" type="checkbox" value="" /> 记住我</label> 
                             | <a href="password_forget.html">忘记密码了？</a>
                             <div class="clear"></div>
@@ -55,14 +85,14 @@
                   </div>
                     <div class="bot"></div>
                 </div>
-            </div>
-            <div class="register">
+            </div>-->
+            <!--<div class="register">
                 <div class="boxstyle">
                     <div class="top">还没有iWine帐号？</div>
                     <div class="mid align_c"> <a href="register.html"><img src="images/common/btn_register.jpg" width="176" height="51" alt="马上注册" /></a></div>
                     <div class="bot"></div>
               </div>
-          </div>
+          </div>-->
             <div class="clear"></div>
         </div>
     </div>
