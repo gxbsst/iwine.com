@@ -208,7 +208,11 @@ module ApplicationHelper
     next_id = ids_arr[current_index + 1]
     return next_id ? next_id : false
   end
-
+  
+  def photo_number(ids_arr, current_id)
+    ids_arr, current_index = page_ids(ids_arr, current_id)
+    return "#{current_index.to_i + 1} / #{ids_arr.count}"
+  end
   def page_ids(ids_arr, current_id)
     ids_arr = ids_arr.sort
     current_index  = ids_arr.sort.index(current_id)
