@@ -1,6 +1,6 @@
 # encoding: utf-8
 class Users::WineCellarItem < ActiveRecord::Base
-    include Users::UserSupport
+    set_table_name "user_wine_cellar_items"
     belongs_to :wine_cellar, :class_name => 'Users::WineCellar', :foreign_key => 'user_wine_cellar_id'
     belongs_to :user
     belongs_to :wine_detail, :class_name => 'Wines::Detail', :foreign_key => 'wine_detail_id'

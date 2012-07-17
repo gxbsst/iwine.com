@@ -29,6 +29,7 @@
         <label class="w50"><%= p.radio_button :gender, 1  %>男</label>
         <label class="w50"><%= p.radio_button :gender, 0 %>女</label>
       </div>
+     
       <div class="required">
         <label>生日</label>
         <%= p.date_select :birthday, 
@@ -43,11 +44,27 @@
           <%= f.text_field :city, :class => "text" %>
         </div>
       </div>
+      
        <%= f.fields_for :profile do |p| %>
       <div class="optional">
         <label class="vm">博客地址</label>
         <%= p.text_field :website, :class => "text name mr5" %>
       </div>
+      <% if @user.domain.present? %> 
+        <div class="optional">
+          <label>个性域名</label>
+          <%= @user.domain_url %><span class=" icon_fol">您已经设置了个性域名</span>
+        </div>
+      <% else %>
+        <div class="optional">
+          <label class="vm">个性域名</label>
+          您还没有设置个性域名 
+          <%= link_to domain_settings_path, :class => :btn_gray do %> 
+            <span>现在设置</span>
+          <% end %>
+        </div>
+      <% end %>
+
       <div class="optional">
         <label>介绍</label>
         <%= p.text_area :bio, :size => "48x5" %>

@@ -1,5 +1,5 @@
 class Users::WineCellar < ActiveRecord::Base
-
+  set_table_name "user_wine_cellars"
   PRIVATE_TYPE_SECRET = 1
   PRIVATE_TYPE_FRIEND = 2
   PRIVATE_TYPE_USER = 3

@@ -13,6 +13,7 @@
       <span class="location">上海</span>
     </p>
      <p class="statu">
+      <%= link_to follow_user_path(user) do %>
       <%= link_to "/friends/follow?user_id="+user.id.to_s, :class => "btn_gray" do  %>
       <span>加关注</span>
       <% end %>

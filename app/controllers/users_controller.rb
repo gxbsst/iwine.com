@@ -1,9 +1,10 @@
 # encoding: utf-8
 class UsersController < ApplicationController
-  # before_filter :authenticate_user!
+  before_filter :authenticate_user!, :only => [:follow, :unfollow]
   before_filter :get_user, :except => [:register_success]
   before_filter :get_recommend_users, :only => [:followings, :followers, :start]
   before_filter :get_cellar_items, :only => [:show]
+
   def show
     @followers = @user.followers
     @followings = @user.followings
@@ -71,6 +72,33 @@ class UsersController < ApplicationController
       end # end post
     else
       redirect_to home_index_path
+    end
+  end
+
+  def follow
+    
+    if params[:user_id].present?
+      # 关注多个
+      params[:user_id].split(',').each do |user_id|
+        if current_user.id != user_id.to_i
+          current_user.follow_user user_id
+          # notice_stickie t("notice.friend.follow")
+        end
+      end
+      
+    else
+      # 关注一个
+      if current_user.follow_user params[:id]
+        notice_stickie t("notice.friend.follow")
+      end
+    end
+    redirect_to(followings_user_path(@user))
+  end
+
+  def unfollow
+    if current_user.unfollow(@user)
+      notice_stickie t("notice.friend.unfollow")
+      redirect_to(followings_user_path(@user))
     end
   end
 

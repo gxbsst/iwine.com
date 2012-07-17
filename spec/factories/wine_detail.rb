@@ -1,4 +1,5 @@
 # encoding: utf-8
+# http://arjanvandergaag.nl/blog/factory_girl_tips.html
 FactoryGirl.define do
 	factory :wine_detail, :class => "Wines::Detail" do
     drinkable_begin Time.now
@@ -23,4 +24,27 @@ FactoryGirl.define do
     # city       
     # user
   end
+
+  trait :with_comments do
+    ignore do
+      number_of_comments 3
+    end
+
+    after :create do |wine_detail|
+      FactoryGirl.create_list :comment, 3, :wine_detail=> wine_detail
+    end
+  end
+
+  # USAGE
+  # FactoryGirl.create :post, :with_comments, :number_of_comments => 4
 end
+
+#FactoryGirl.define do
+  #factory :user, :aliases => [:author] do
+    #username 'anonymous'
+  #end
+
+  #factory :post do
+    #author # => populated with the user factory
+  #end
+#end

@@ -7,7 +7,7 @@
             	<div class="title_btn">
                   <h1>藏酒 
                     <span class="font12 more">
-                      <%= link_to "共#{@user.wines_count}支...", cellars_user_path(@user.id, @user.cellar) %>
+                      <%= link_to "共#{@user.wines_count}支...", cellars_user_path(@user, @user.cellar) %>
                     </span>
                 </h1>
                 </div>
@@ -17,7 +17,7 @@
                 <div class="title_btn">
                   <h1>关注的酒 
                     <span class="font12 more">
-                      <%= link_to "共#{@user.wine_followings_count}支...", wine_follows_user_path(@user.id) %>
+                      <%= link_to "共#{@user.wine_followings_count}支...", wine_follows_user_path(@user) %>
                     </span>
                   </h1>
                 </div>
@@ -27,7 +27,7 @@
                 <div class="title_btn">
                   <h1>评论 
                     <span class="font12 more">
-                      <%= link_to "共#{@user.comments_count}条...", comments_user_path(@user.id) %>
+                      <%= link_to "共#{@user.comments_count}条...", comments_user_path(@user) %>
                     </span>
                   </h1>
                 </div>
@@ -37,7 +37,7 @@
             	<div class="title_btn">
                   <h1>关注的人 
                     <span class="font12 more">
-                      <%= link_to "共#{@user.followings_count}人...", followings_user_path(@user.id) %>
+                      <%= link_to "共#{@user.followings_count}人...", followings_user_path(@user) %>
                     </span>
                   </h1>
                 </div>
@@ -47,7 +47,7 @@
                 <div class="title_btn">
                   <h1>粉丝 
                     <span class="font12 more">
-                      <%= link_to "共#{@user.followers_count}人...", followers_user_path(@user.id) %>
+                      <%= link_to "共#{@user.followers_count}人...", followers_user_path(@user) %>
                     </span>
                   </h1>
                 </div>

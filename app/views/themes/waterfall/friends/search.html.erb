@@ -28,12 +28,16 @@
 							<p>
 								<% if current_user.is_following(user.id)  && user.is_following(current_user.id) %>
 									<span class="icon_fol_e">互相关注</span>
-									<span class="cancl_fol"><%= link_to "(取消)", unfollow_friends_path(:user_id => user.id) %></span>
+         <span class="cancl_fol">
+           <%= link_to "(取消)", unfollow_user_path(user) %>
+         </span>
 								<% elsif current_user.is_following user.id %>
 									<span class="icon_fol">已关注</span>
-									<span class="cancl_fol"><%= link_to "(取消)", unfollow_friends_path(:user_id => user.id) %></span>
+         <span class="cancl_fol">
+           <%= link_to "(取消)", unfollow_user_path(user) %>
+         </span>
 								<% else %>
-									<%= link_to follow_friends_path(:user_id => user.id), :class => "btn_gray" do %>
+									<%= link_to follow_user_path(user), :class => "btn_gray" do %>
 										<span>加关注</span>
 									<% end %>
 								<% end %>
