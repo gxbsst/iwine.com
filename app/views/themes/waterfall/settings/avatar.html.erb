@@ -1,56 +1,8 @@
 <% content_for :title, @title%>
 <% content_for :css do  %>
-<%= theme_stylesheet_link_tag "setting" %>
+<%= theme_stylesheet_link_tag "setting", "jcrop" %>
 <%#= theme_stylesheet_link_tag :jcrop %>
 <% end %>
-<style type="text/css">
-  <style>
-  /* Fixes issue here http://code.google.com/p/jcrop/issues/detail?id=1 */
-  .jcrop-holder {
-    text-align: left; }
-
-  .jcrop-vline, .jcrop-hline {
-    font-size: 0px;
-    position: absolute;
-    background: white url(image-path("jcrop/Jcrop.gif")) top left repeat; }
-
-  .jcrop-vline {
-    height: 100%;
-    width: 1px !important; }
-
-  .jcrop-hline {
-    width: 100%;
-    height: 1px !important; }
-
-  .jcrop-vline.right {
-    right: 0px; }
-
-  .jcrop-hline.bottom {
-    bottom: 0px; }
-
-  .jcrop-handle {
-    font-size: 1px;
-    width: 7px !important;
-    height: 7px !important;
-    border: 1px #eee solid;
-    background-color: #333; }
-
-  .jcrop-tracker {
-    width: 100%;
-    height: 100%; }
-
-  .custom .jcrop-vline,
-  .custom .jcrop-hline {
-    background: yellow; }
-
-  .custom .jcrop-handle {
-    border-color: black;
-    background-color: #C7BB00;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px; }
-  </style>
-</style>
-<div id="wrapper950">
   <div class="whitespace setting">
     <h1 class="main_title">头像修改</h1>
     <div id="stylized" class="myform">
@@ -89,27 +41,11 @@
          <% end %>
          <% end %>
        </p>
-     </div>
-     <div class="right">
-      <div class="avatar">
-       <p class="mb10">您上传的头像会自动生成以下三种尺寸，<br />
-         请确保中小尺寸的头像是否清晰。</p>
-         <p class="sample">
-          <%= theme_image_tag "common/userpic_sample130.jpg", :size => "130x130" %>
-          <span>大图 130*130px</span>
-        </p>
-        <p class="sample">
-          <%= theme_image_tag "common/userpic_sample50.jpg", :size => "50x50" %>
-          <span>中图 50*50px</span>
-        </p>
-        <p class="sample">
-          <%= theme_image_tag "common/userpic_sample30.jpg", :size => "30x30" %>
-          <span>小图 30*30px</span>
-        </p>
       </div>
-    </div>
+      <div class="right">
+        <%= render "update_avatar" %>
+      </div>
     <div class="clear"></div>
     
   </div>
-</div>
 </div>

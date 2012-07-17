@@ -1,4 +1,15 @@
 site: "iWine.com"
+rate:
+  CNY: 1.00
+  HKD: 0.95
+  JPY: 0.07
+  SGD: 4.95
+  USD: 6.37
+  GBP: 9.82
+  AUD: 6.49
+  NZD: 5.21
+  EUR: 7.78
+  CAD: 6.35
 wines:
   capacity:
     750mL: '750'
@@ -163,9 +174,11 @@ search_server:
   port: 8080
   entry_url: /patrick/query/all
   word_url: /patrick/query/associate
+  user_url: /patrick/query/user
 
 search:
   wine:
+    variety: ["赤霞珠", "西拉", "梅洛", "黑皮诺", "霞多丽", "长相思", "雷司令"]
     style: ["红葡萄酒", "白葡萄酒", "起泡酒", "粉红葡萄酒"]
     country: ["法国", "意大利", "西班牙", "德国", "奥地利", "澳洲", "新西兰", "智利", "阿根廷", "美国", "南非"]
     hot_area: ["波尔多", "勃艮第", "纳帕谷"]

@@ -89,11 +89,12 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     if current_user #跳过admin,因为后台登陆只有current_admin_user 没有current_user
       if current_user.sign_in_count == 1
-        return start_user_path(current_user)
+        return after_first_signins_path
       else
         return request.env['omniauth.origin'] || devise_return_location
       end
     end
+
   end
 
   def render_404(exception)
@@ -111,4 +112,31 @@ class ApplicationController < ActionController::Base
        format.all  { render nothing: true, status: 500}
      end
    end
+
+  ## 保存图片
+  def save_avatar
+    current_user.avatar = params[:user][:avatar]
+    current_user.save
+  end
+
+  # ## 更新图片
+  def crop_avatar
+    current_user.update_attributes(params[:user])
+  end
+
+  # 关注某支酒
+  def follow_one_wine(wine_detail_id)
+    wine_detail = Wines::Detail.find(wine_detail_id)
+    follow = current_user.following_resource(wine_detail)
+  end
+  #关注某个酒庄
+  def follow_one_winery(winery_id)
+    winery = Winery.find(winery_id)
+    follow = current_user.following_resource(winery)
+  end
+
+  # 关注某个人
+  def follow_one_user(user_id)
+    current_user.follow_user(user_id)
+  end
 end

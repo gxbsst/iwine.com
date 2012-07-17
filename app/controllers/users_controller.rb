@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @followers = @user.followers
     @followings = @user.followings
     @comments = @user.comments.real_comments.limit(6)
-    @following_wines = @user.wine_followings.limit(6)
+    @following_wines = @user.wine_followings.limit(4)
   end
 
   # 关注的酒
@@ -107,26 +107,15 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  # 关注某支酒
-  def follow_one_wine(wine_detail_id)
-    wine_detail = Wines::Detail.find(wine_detail_id)
-    follow = current_user.following_resource(wine_detail)
-  end
-
-  # 关注某个人
-  def follow_one_user(user_id)
-    current_user.follow_user(user_id)
-  end
-
   def get_recommend_users
     @recommend_users = User.no_self_recommends(5, @user.id)
   end
 
   def get_cellar_items
     if current_user && current_user == @user
-      @cellar_items = @user.cellar.mine_items.limit(6)
+      @cellar_items = @user.cellar.mine_items.limit(4)
     else
-      @cellar_items = @user.cellar.user_items.limit(6)
+      @cellar_items = @user.cellar.user_items.limit(4)
     end
   end
 end

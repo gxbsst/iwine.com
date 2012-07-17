@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
   
+  resources :after_first_signins do
+    collection do
+      match :upload_avatar, :via => [:get, :post, :put]
+    end
+  end
 
   resources :follows
 

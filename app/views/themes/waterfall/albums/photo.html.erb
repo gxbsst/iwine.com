@@ -18,18 +18,7 @@
              <span>返回该相册</span>
             <% end %>
           </div>
-          <div class="pre_next">
-            <% if previous_photo = previous_page(@album.image_ids, @photo.id) %>
-                <%= link_to album_photo_show_user_path(@user, @album, previous_photo), :class => "btn_gray mr5" do %>
-                    <span>前一张</span>
-                <% end %>
-            <% end %>
-            <% if next_photo = next_page(@album.image_ids, @photo.id) %>
-                <%= link_to album_photo_show_user_path(@user, @album, next_photo), :class => "btn_gray" do %>
-                    <span>后一张</span>
-                <% end %>
-            <% end %>              
-          </div>
+          <%= render :partial => "share/photo_page_number", :locals => {:parent => @album} %>
         </div>
         <div class="photo">
           <%= image_tag @photo.image_url(:large) %>
@@ -50,7 +39,6 @@
         <div class="comment">
           <div class="mb20 clearfix">
             <div class="title">
-              <a href="#01" class="btn_gray float_r" onclick="javascript:$('#photo_comment_body').focus()"><span>添加评论</span></a>
               <h3>评论</h3>
             </div>
           </div>

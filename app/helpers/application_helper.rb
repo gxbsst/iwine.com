@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 module ApplicationHelper
 
+  def photo_photo_comments_path(commentable,comment)
+    return "/photos/#{commentable.id}/comments"
+  end
+
   def set_layout_class_name
 
     if params[:action] ==  'show' && params[:controller] == "wines"
@@ -204,7 +208,11 @@ module ApplicationHelper
     next_id = ids_arr[current_index + 1]
     return next_id ? next_id : false
   end
-
+  
+  def photo_number(ids_arr, current_id)
+    ids_arr, current_index = page_ids(ids_arr, current_id)
+    return "#{current_index.to_i + 1} / #{ids_arr.count}"
+  end
   def page_ids(ids_arr, current_id)
     ids_arr = ids_arr.sort
     current_index  = ids_arr.sort.index(current_id)
@@ -339,4 +347,38 @@ module ApplicationHelper
       "<div class='clear'></div>"
     end
   end
+  def item_non_public(is_public)
+    if is_public.to_i == 1
+      %Q[<span class="non_public"> \
+        #{image_tag("/assets/waterfall/images/icon/non_public.png", 
+          :width => "16",
+          :height => "16",
+          :alt => "仅自己可见", 
+          :title => "仅自己可见")}
+        </span>]
+    end
+
+  end
+
+  def reply_email(comment)
+    case comment.commentable_type
+    when "Wines::Detail"
+       link_to "返回", wine_comments_url(comment.commentable)
+    when "Winery"
+      link_to "返回", winery_comments_url(comment.commentable)
+    when "Photo"
+      photo = comment.commentable
+      case photo.imageable_type
+      when "Wines:Detail"
+        link_to "返回", wine_photo_url(photo.imageable, photo)
+      when "Wine"
+        link_to "返回", wine_photo_url(photo.imageable.details.releast_detail.first, photo)
+      when "Winery"
+        link_to "返回", winery_photo_url(photo.imageable, photo)
+      when "Album"
+        link_to "返回", album_photo_show_user_url(photo.user, photo.album, photo)
+      end
+    end
+  end
+
 end

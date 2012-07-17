@@ -61,7 +61,6 @@ namespace :app do
       puts "begin load #{csv_file} ================================="
       csv = CSV.read(csv_file)
       csv.each_with_index do |item, index|
-        next if index == 0 #跳过标题
         begin
           #转换数据类型
           item.collect{|i| i.to_s.force_encoding('utf-8')}
@@ -204,7 +203,6 @@ namespace :app do
       puts "begin load #{csv_file}"
       csv  = CSV.read(csv_file)
       csv.each_with_index do |item, index|
-        next if index == 0 # 跳过csv文件标题
         item.collect{|i| i.to_s.force_encoding('utf-8')} #转换数据类型
         # find region_tree_id
         region_tree_id = Wines::RegionTree.get_region_tree_id(item[12].to_s.to_ascii_brutal)
@@ -223,12 +221,14 @@ namespace :app do
                 :email => item[5],
                 :official_site => item[6].to_s.gsub(/http:\/\//, ''),
                 :address => item[7].to_s.to_ascii_brutal,
-                :config => {"Facebook" => item[8], "Twitter" => item[8], "Sina" => item[9]},
+                :config => {"Facebook" => item[8], "Twitter" => item[9], "Sina" => item[10]},
                 :region_tree_id => region_tree_id)
-            puts winery.id
 
             #save_info_items
-            build_info_item(item[0], winery)
+            # build_info_item(item[0], winery)
+            #info重新放回wineries.csv里
+            new_build_info_item(winery, item[13])
+            puts winery.id
           rescue Exception => e
             puts e
           end
@@ -326,6 +326,15 @@ namespace :app do
         winery.info_items.where("title = ?", key).first_or_create!(:title => key, :description => value)
       end
       info_text.close
+    end
+  end
+
+  def new_build_info_item(winery, info)
+    info_arr = info.split('#').collect{|i| i.to_ascii_brutal}
+    info_arr.delete("") #delete ""
+    info_hash = Hash[*info_arr]
+    info_hash.each do |key, value|
+      winery.info_items.where("title = ?", key).first_or_create!(:title => key, :description => value)
     end
   end
 

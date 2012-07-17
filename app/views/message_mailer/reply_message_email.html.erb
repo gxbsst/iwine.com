@@ -4,9 +4,16 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
+    <p>您好：<%= @message.conversation.get_reply_user(@message.sender) %></p>
     <p><%= @message.sender.username %> 回复了你的消息。</p>
+    <p><%= @message.body %></p>
+    <br/>
+    <p>对话历史记录:</p>
+    <% @message.conversation.receipts_for(@message.sender).limit(5).order("id desc").each do |receipt| %>
+      <p><b><%= receipt.message.sender.username %>：</b><%= receipt.message.body %></p>
+    <% end %>
     <p>
-     访问 <%= link_to root_url + conversations_path,root_url + conversations_path %> 查看回复消息.
+     访问 <%= link_to root_url + conversation_path(@message.conversation),root_url + conversation_path(@message.conversation) %> 查看回复消息.
     </p>
     <p><b>--爱红酒（iWine.com）</b></p>
 

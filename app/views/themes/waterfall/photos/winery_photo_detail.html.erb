@@ -22,18 +22,7 @@
         <div class="content">
           <div class="album_left">
             <div class="mb20">
-              <div class="pre_next">
-                <% if previous_photo = previous_page(@winery.photo_ids, @photo.id) %>
-                    <%= link_to winery_photo_path(@winery, previous_photo), :class => "btn_gray" do %>
-                        <span>前一张</span>
-                    <% end %>
-                <% end %>
-                <% if next_photo = next_page(@winery.photo_ids, @photo.id) %>
-                    <%= link_to winery_photo_path(@winery, next_photo), :class => "btn_gray" do %>
-                        <span>后一张</span>
-                    <% end %>
-                <% end %>
-              </div>
+              <%= render :partial => "share/photo_page_number", :locals => {:parent => @winery} %>      
             </div>
 
             <div class="photo">
@@ -55,9 +44,6 @@
             <div class="comment">
               <div class="mb20 clearfix">
                 <div class="title">
-                  <%=link_to current_user ? '#01' : new_user_session_path, :class => "btn_gray float_r" do %>
-                    <span>添加评论</span>
-                  <% end %>
                   <h3>评论</h3>
                 </div>
               </div>

@@ -136,4 +136,5 @@ gem 'counter', :path => 'lib/patrick/counter'
 # 模板
 gem 'themes_for_rails', :path => "lib/gems"
 
-
+# step form
+gem 'wicked'

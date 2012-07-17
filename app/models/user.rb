@@ -116,11 +116,12 @@ class User < ActiveRecord::Base
     end
   end 
   has_many :follows, :include =>[:user]
+
   # validates :username, :presence => false, :allow_blank => true, :numericality => true
   validates :agree_term, :acceptance => true, :on => :create
   validates :email, :username, :uniqueness => true
   validates :username, :presence => true
-  validates :city, :presence => true, :on => :update
+  # validates :city, :presence => true, :on => :update
   # validates :current_password, :presence => true
   validates_confirmation_of :password
   validates :domain, 
@@ -128,8 +129,11 @@ class User < ActiveRecord::Base
             :length => { :maximum => 30 },
             :format => { :with => /^[a-zA-Z\-_\d]+$/},
             :allow_blank => true
+
   # 推荐的用户
-  scope :recommends, lambda { |limit| order("followers_count DESC").limit(limit) }
+  # default_scope where('sign_in_count > 0 and confirmation_token is null')
+  scope :active_user, where('sign_in_count > 0 and confirmation_token is null')
+  scope :recommends, lambda { |limit| active_user.order("followers_count DESC").limit(limit) }
   scope :no_self_recommends, lambda {|limit, user_id| recommends(limit).where("id != ?", user_id)}
   accepts_nested_attributes_for :profile, :allow_destroy => true
 

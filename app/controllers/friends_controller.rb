@@ -1,16 +1,30 @@
 # -*- coding: utf-8 -*-
 class FriendsController < ApplicationController
   before_filter :authenticate_user!
-
   # 查找好友
   def find
     @availabe_sns = current_user.available_sns
   end
 
   def search
-    @search = Search.find(params[:id])
-    @users = User.where("username like ? and id != ?", "%#{@search.keywords}%", current_user.id).order("followers_count desc")
-    @user_ids = @users.pluck(:id).join(",")
+    begin
+      @search = Search.find(params[:id])
+      server = HotSearch.new
+      @users = server.search_user(@search.keywords)
+      @user_ids = get_user_ids
+      page = params[:page] || 1
+      if @users.present?
+        unless @users.kind_of?(Array)
+          @users = @users.page(page).per(10)
+        else
+          @users = Kaminari.paginate_array(@users).page(page).per(10)
+        end
+      end
+    rescue Exception => e
+      logger.error(e)
+      notice_stickie t("notice.friend.search_failure")
+      redirect_to  find_friends_path
+    end
   end
 
   # 设置同步
@@ -107,5 +121,16 @@ class FriendsController < ApplicationController
 
   def build_oauth_token_key(name, oauth_token)
     [name, oauth_token].join("_")
+  end
+
+  def get_user_ids
+    if @users.present?
+      if @users.kind_of?(Array)
+        ids = @users.inject([]){|memo, u| memo << u.id}
+      else
+        ids = @users.pluck(:id)
+      end
+      return ids.join(",") #转化为字符串
+    end
   end
 end
