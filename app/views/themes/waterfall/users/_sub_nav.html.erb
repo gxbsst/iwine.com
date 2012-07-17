@@ -70,7 +70,7 @@
               <% end %>
             <% end %>
         <% else %>  
-              <%= link_to follow_friends_path(:user_id => @user.id ), :class => "btn_gray" do  %>
+              <%= link_to follow_user_path(@user), :class => "btn_gray" do  %>
               <span>加关注</span>
               <% end %>
              

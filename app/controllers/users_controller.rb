@@ -92,13 +92,13 @@ class UsersController < ApplicationController
         notice_stickie t("notice.friend.follow")
       end
     end
-    redirect_to(followings_user_path(@user))
+    redirect_to(followings_user_path(current_user))
   end
 
   def unfollow
     if current_user.unfollow(@user)
       notice_stickie t("notice.friend.unfollow")
-      redirect_to(followings_user_path(@user))
+      redirect_to(followings_user_path(current_user))
     end
   end
 

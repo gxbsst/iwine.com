@@ -9,7 +9,7 @@
       
       <div class="userinfo">
         <div class="username"><%= link_to friend.user.username, user_path(friend.user_id) %></div>
-        <p><%= link_to follow_friends_path(:user_id => friend.user_id), :class => "btn_gray" do %>
+        <p><%= link_to follow_user_path(friend.user), :class => "btn_gray" do %>
               <span>加关注</span>
            <% end %>
          </p>
