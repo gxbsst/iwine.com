@@ -77,6 +77,9 @@ context "Imageable is Winery" do
     @uploader.remove!
   end
   context 'the middle_x version' do
+    it "does something" do
+      @uploader.model.imageable_type.should == 'Winery'
+    end
     it "should scale down a landscape image to be exactly 360 by 330 pixels" do
       @uploader.middle_x.should be_no_larger_than(360, 330)
     end
