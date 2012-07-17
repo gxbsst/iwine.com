@@ -18,21 +18,21 @@
     <p>    
       <span class="icon_fol_e mr5">互相关注
         <span class="cancl_fol">
-         <%= link_to "(取消)", "/mine/unfollow?user_id="+user.id.to_s  %>
+          <%= link_to "(取消)", unfollow_user_path(user) %> </span>
         </span>
       </span>    
     </p>
     <% else %>
     <p>
-      <%= link_to "/friends/follow?user_id="+user.id.to_s, :class => "btn_gray" do  %>
-      <span>加关注</span>
-      <% end %>      
+       <%= link_to follow_user_path(user), :class => "btn_gray" do  %>
+           <span>加关注</span>
+       <% end %>    
     </p>
     <% end %> 
-    <% else %>     
-    <%= link_to "/friends/follow?user_id="+user.id.to_s, :class => "btn_gray" do  %>
-    <span>加关注</span>
-    <% end %>      
+    <% else %>  
+    <%= link_to follow_user_path( user ), :class => "btn_gray" do  %>
+        <span>加关注</span>
+    <% end %>         
     <% end # if user_signin? %>
   </div>
 </li>

@@ -11,7 +11,7 @@
     <% if @authorized %>
         <p class="mb30">
           <span class="font14">共找到<%= @recommend_friends.length %>好友</span>
-          <%= link_to follow_friends_path(:user_id=> @user_ids.join(',')), :class => "btn_gray mr5" do %>
+          <%= link_to follow_user_path(current_user, :user_id=> @user_ids.join(',')), :class => "btn_gray mr5" do %>
               <span>全部加为好友</span>
           <% end %>
           <%= link_to find_friends_path(), :class => "btn_gray" do %>

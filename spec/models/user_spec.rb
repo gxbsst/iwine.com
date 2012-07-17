@@ -70,60 +70,110 @@ describe User do
   describe "#comments_count" do
     before(:each) do
       @comment = build(:comment, :do => "comment")
+      end
+      it "should increment if do comment" do
+        @comment.save
+        User.find(@comment.user).comments_count.should be(1)
+      end
+      it "should decrement if do follow" do
+        @comment.deleted_at = Time.now
+        @comment.save
+        User.find(@comment.user).comments_count.should be(0)
+      end
     end
-    it "should increment if do comment" do
-      @comment.save
-      User.find(@comment.user).comments_count.should be(1)
+
+
+    describe "#followings_count" do
+      before(:each) do
+        @follower = create(:user)
+      end
+      it "should increment if follower follow user" do
+        @follower.follow_user(user.id)
+        User.find(@follower).followings_count.should be(1)
+      end
+      it "should increment if follower follow user" do
+        @follower.unfollow(user)
+        User.find(@follower).followings_count.should be(0)
+      end
     end
-    it "should decrement if do follow" do
-      @comment.deleted_at = Time.now
-      @comment.save
-      User.find(@comment.user).comments_count.should be(0)
+
+    describe "#followers_count" do
+      before(:each) do
+        @follower = create(:user)
+      end
+      it "should increment if follower follow user" do
+        @follower.follow_user(user.id)
+        User.find(user).followers_count.should be(1)
+      end
+      it "should increment if follower follow user" do
+        @follower.unfollow(user)
+        User.find(user).followers_count.should be(0)
+      end
     end
+
+    describe "#albums_count" do
+      before(:each) do
+        @album = build(:album)
+      end
+      it "should increment if album is created" do
+        @album.save
+        User.find(@album.user).albums_count.should be(1)
+      end
+      it "should increment if album is destroy" do
+        @album.save
+        @album.destroy
+        User.find(@album.user).albums_count.should be(0)
+      end
+    end
+
+    describe "#domain" do
+
+      context "user is a new record" do
+        before(:each) do
+          @user = create(:user, :draft) 
+        end
+
+        it "should be null" do
+         @user.domain.should be_blank 
+        end
+
+        it "should be changed" do
+         @user.domain = "AAA"
+         @user.domain_changed?.should be_true
+        end
+
+        it "should not save when domain is not valid" do
+          @user.domain = "^^^^^^"
+          @user.save
+          @user.should have(1).errors_on(:domain)
+        end
+
+        it "should be valid when set domain" do
+          @user.domain = "weixuhong-111" 
+          @user.save
+          @user.reload.domain.should eql "weixuhong-111"
+        end
+   
+      end    
+
+      context "user is not a new record" do
+        before(:each) do
+          @user =  create(:user, :domained)
+        end
+
+        it "should be changed when set domain" do
+          @user.domain = "aaaa"
+          @user.domain_changed?.should_not be_true
+        end
+
+        it "should not save when have set domained" do
+          @user.domain = "aaaa"
+          @user.save
+          @user.reload.domain.should_not eql'aaaa'
+        end
+
+      end
+
+    end
+
   end
-
-
-  describe "#followings_count" do
-    before(:each) do
-      @follower = create(:user)
-    end
-    it "should increment if follower follow user" do
-      @follower.follow_user(user.id)
-      User.find(@follower).followings_count.should be(1)
-    end
-    it "should increment if follower follow user" do
-      @follower.unfollow(user)
-      User.find(@follower).followings_count.should be(0)
-    end
-  end
-
-  describe "#followers_count" do
-    before(:each) do
-      @follower = create(:user)
-    end
-    it "should increment if follower follow user" do
-      @follower.follow_user(user.id)
-      User.find(user).followers_count.should be(1)
-    end
-    it "should increment if follower follow user" do
-      @follower.unfollow(user)
-      User.find(user).followers_count.should be(0)
-    end
-  end
-
-  describe "#albums_count" do
-    before(:each) do
-      @album = build(:album)
-
-    end
-    it "should increment if album is created" do
-      @album.save
-      User.find(@album.user).albums_count.should be(1)
-    end
-    it "should increment if album is destroy" do
-      @album.save
-      @album.destroy
-      User.find(@album.user).albums_count.should be(0)
-    end
-  end
-end
