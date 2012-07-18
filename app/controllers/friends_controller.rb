@@ -2,33 +2,6 @@
 class FriendsController < ApplicationController
   before_filter :authenticate_user!
 
-  def follow
-      params[:user_id].split(',').each_with_index do |user_id, index|
-        if current_user.is_following( user_id ).blank? && current_user.id != user_id.to_i
-          following_user = User.find user_id.to_i
-          friendship = Friendship.new
-          friendship.user_id = user_id
-          friendship.follower_id = current_user.id
-          friendship.save
-          notice_stickie t("notice.friend.follow") if index == 0 #避免同时关注多人出现多条提示信息
-          UserMailer.follow_user(
-            :following => following_user, 
-            :follower => current_user).deliver if following_user.profile.config[:notice][:email].include? "3" #被关注发送提醒邮件
-        end
-      end
-    redirect_to request.referer
-  end
-
-  def unfollow
-    friendship = Friendship.first :conditions => { :user_id => params[:user_id] , :follower_id => current_user.id }
-    if friendship.present?
-      friendship.destroy
-      notice_stickie t("notice.friend.unfollow")
-    end
-    # redirect_to :action => 'find'
-    redirect_to request.referer
-  end
-
   # 查找好友
   def find
     @availabe_sns = current_user.available_sns

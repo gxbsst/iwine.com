@@ -1,6 +1,6 @@
 # encoding: utf-8
 class Users::Profile < ActiveRecord::Base
-  include Users::UserSupport
+  set_table_name "user_profiles"
   belongs_to :user
   # delegate :username, :to => :user
   delegate :email, :to => :user

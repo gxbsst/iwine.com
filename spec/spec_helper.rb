@@ -32,8 +32,11 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
       DatabaseCleaner.strategy = :transaction
     end
 
+    config.include(MailerMacros)
+
     config.before(:each) do
       DatabaseCleaner.start
+      reset_email
     end
 
     config.after(:each) do
