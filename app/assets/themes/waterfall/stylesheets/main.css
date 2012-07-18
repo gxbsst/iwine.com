@@ -363,6 +363,10 @@ a.btn_green {background-position:left -62px;display:inline-block;padding-left:15
 a.btn_green span {background-position:right -62px;display:inline-block;height:30px;line-height:30px;padding-right:15px;}
 a.btn_green:hover {background-position:left -92px;text-decoration:none;}
 a.btn_green:hover span {background-position:right -92px;}
+.off a.btn_gray {color:#ccc;}
+.off a.btn_gray:hover {background-position:left top;text-decoration:none;color:#CCC;}
+.off a.btn_gray:hover span {background-position:right top;}
+
 
 /*------------box style---------------*/
 .wine_list .wine_info h2, .addwine .box .wine_info h2 {font-size:14px;}

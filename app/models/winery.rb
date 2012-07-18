@@ -79,8 +79,9 @@ class Winery < ActiveRecord::Base
     self.region_tree_id = region_tree_id unless region_tree_id.blank?
   end
 
+  #仅显示评论数目
   def all_comments_count
-    comments_count + followers_count
+    comments_count
   end
 
   # 当前关注该支酒庄的用户列表

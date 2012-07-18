@@ -165,9 +165,9 @@ class Wines::Detail < ActiveRecord::Base
                                 :order => "votes_count DESC, created_at DESC", :limit => options[:limit] )
   end
 
-  # 所有评论的总数（评论数+关注数量)
+  # 所有评论的总数（评论数)
   def all_comments_count
-    comments_count + followers_count
+    comments_count
   end
 
   #展示detail covers 如果没有则展示wine 的covers
