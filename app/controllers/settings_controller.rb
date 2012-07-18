@@ -143,6 +143,7 @@ class SettingsController < ApplicationController
   end
   def domain
     @user = current_user
+    redirect_to basic_settings_path if @user.domain.present?
     if request.put?
       respond_to do |wants|
         @user.domain=params[:user][:domain]
