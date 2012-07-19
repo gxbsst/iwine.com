@@ -138,3 +138,6 @@ gem 'themes_for_rails', :path => "lib/gems"
 
 # step form
 gem 'wicked'
+
+# API VERSION
+gem 'versionist'

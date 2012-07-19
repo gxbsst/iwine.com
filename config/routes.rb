@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
-  
+ 
   resources :after_first_signins do
     collection do
       match :upload_avatar, :via => [:get, :post, :put]
@@ -199,6 +199,12 @@ Patrick::Application.routes.draw do
 
 
   # API
+  namespace :api do
+    api_version(:module => "v1", :header => "Accept", :value => "application/vnd.iwine.com; version=1") do
+      resources :registrations
+      resources :sessions
+    end
+   end
   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
 
   # STATIC
