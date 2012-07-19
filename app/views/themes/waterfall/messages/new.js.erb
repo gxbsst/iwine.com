@@ -1,0 +1,27 @@
+$("#send_message_form").html("<%= escape_javascript(render('conversations/send_message_form', :object => @message)) %>");
+	
+$.fancybox({
+        padding: 0,
+         maxWidth       : 500,
+        maxHeight       : 330,
+        fitToView       : false,
+        width           : '70%',
+        height          : '100%',
+        autoSize        : false,
+        closeClick      : false,
+        openEffect      : 'none',
+        closeEffect     : 'none',
+        'href'                  : '#send_message_form',
+         helpers        :         {
+        overlay                      : {
+            opacity                 : 0.8,
+            css                     : {
+                'background-color'  : '#FFF'
+            }
+        }
+    } // end helper
+});
+$("#message_recipients").autocomplete({
+    source: $("#message_recipients").data("autocomplete-source"),
+    appendTo: '.text_input'
+});
