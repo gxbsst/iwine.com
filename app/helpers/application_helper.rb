@@ -247,7 +247,7 @@ module ApplicationHelper
     if is_login_user?(user)
       link_to "私信", conversations_path, :class => "icon_mail"
     else
-      link_to "私信", "#send_message_form", :class => "icon_mail send_message"
+      link_to "私信", new_message_path(:receiver => user.username), :remote => true, :class => "icon_mail ajax"
     end
   end
   #  下拉菜单: 获取热门酒款
