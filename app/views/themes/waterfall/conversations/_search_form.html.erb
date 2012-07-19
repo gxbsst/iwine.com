@@ -3,6 +3,6 @@
     <input class="text search" name="search" type="text" placeholder="查找联系人或私信内容"/>
   <% end -%>
   
-  <%= link_to "#send_message_form", :class => "btn_gray send_message"  do %>
+  <%= link_to new_message_path, :remote => true, :class => "btn_gray send_message ajax"  do %>
   <span>发送私信</span>
   <% end %>

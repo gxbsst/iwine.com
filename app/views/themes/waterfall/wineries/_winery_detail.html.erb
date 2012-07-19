@@ -8,21 +8,21 @@
 
    <div class="info">
      <div class="float_r">
-       <% if @winery.config["Sina"] %>
+       <% if @winery.config["Sina"] && @winery.config["Sina"].present? %>
          <%= link_to "http://#{@winery.config['Sina']}", :target => "_blank" do %>
            <span class="icon_sina mr5"></span>
          <% end %>
        <% else %>
          <span class="icon_sina_off mr5"></span>
        <% end %>
-       <% if @winery.config["Twitter"] %>
+       <% if @winery.config["Twitter"] && @winery.config["Twitter"].present? %>
          <%= link_to "http://#{@winery.config['Twitter']}", :target => "_blank" do %>
             <span class="icon_tt mr5"></span>   
          <% end %>
        <% else %>
          <span class="icon_tt_off mr5"></span>
        <% end %>
-       <% if @winery.config["Facebook"] %>
+       <% if @winery.config["Facebook"] && @winery.config["Facebook"].present? %>
          <%= link_to "http://#{@winery.config['Facebook']}", :target => "_blank" do %>
              <span class="icon_fb mr5"></span>
          <% end %>
