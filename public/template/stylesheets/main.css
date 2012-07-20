@@ -51,7 +51,7 @@ input.radio, input.checkbox{border:none;padding:0;margin:0;}
 input.common_search {width:250px;}
 #top_search {background: none repeat scroll 0 0 #fff;box-shadow:inset 0px 1px 2px #666;border-radius: 30px 30px 30px 30px;height: 30px;overflow: hidden;width: 300px;}
 #top_search input.search_btn {float:right;margin:-3px 0 0 0;}
-#top_search input.search {padding:0;margin: 4px 0 4px 10px;width:240px;border:1px solid #fff;height:20px;line-height:20px;font-size:13px;color:#999;}
+#top_search input.search {padding:0;margin: 4px 0 4px 14px;width:240px;border:1px solid #fff;height:20px;line-height:20px;font-size:13px;color:#999;}
 #top_search .search_submit {background: -moz-linear-gradient(center top , #e61b23 0%, #9d0a0e 100%) repeat scroll 0 0 transparent;border: 1px solid rgba(0, 0, 0, 0.1);border-bottom-right-radius: 5px;border-top-right-radius: 5px;color: #FFFFFF;top: -1px;line-height: 24px;margin: 0;padding: 5px;position: relative;}
 .float_l {float:left;}
 .float_r {float:right;}
@@ -73,6 +73,7 @@ input.common_search {width:250px;}
 /*----------hack for safari-----------*/
 .mac.safari #top_search input.search {
  padding:5px 0 0 0;
+ height: 18px;line-height:18px;
 }
 
 /*-------------notice style-------------*/
