@@ -27,6 +27,9 @@
 
 
       <div class="wine_data">
+        <%= link_to "csv", cellars_user_path(@user, @cellar, :format => "csv") %> |
+        <%= link_to "xls", cellars_user_path(@user, @cellar, :format => "xls") %>
+        
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <th class="img">酒标</th>
