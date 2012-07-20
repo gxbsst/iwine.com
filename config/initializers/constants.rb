@@ -28,8 +28,12 @@ EMAIL_SERVERS = [
   'qq'
 ]
 
-
-APP_DATA = YAML.load_file(Rails.root.join('config', 'data.yml'))
+if Rails.env == 'production'
+  OAUTH_DATA = YAML.load_file(Rails.root.join('config', 'oauth', 'production_all.yml'))
+else
+  OAUTH_DATA = YAML.load_file(Rails.root.join('config', 'oauth', 'development_all.yml'))
+end
+APP_DATA = YAML.load_file(Rails.root.join('config', 'data.yml')) 
 
 EMAIL_SITE = YAML.load_file(Rails.root.join('config', 'email_site.yml'))
 
