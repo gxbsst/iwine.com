@@ -70,7 +70,12 @@ input.common_search {width:250px;}
 .year span a:hover {text-decoration:none;color:#993333;}
 .gray_box {padding:20px;background-color:#f3f3f3;}
 
-/*notice style*/
+/*----------hack for safari-----------*/
+.mac.safari #top_search input.search {
+ padding:5px 0 0 0;
+}
+
+/*-------------notice style-------------*/
 .error, .alert, .notice, .success, .information {padding:0.8em;text-align:center;}
 .error, .alert {background:#fbe3e4;color:#8a1f11;}
 .notice {background:#fff6bf;color:#514721;}
