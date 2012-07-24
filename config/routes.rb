@@ -21,8 +21,11 @@ Patrick::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   ## USER
-  devise_for :users, :controllers => { :sessions => "devise/sessions", :registrations => "registrations" }
+  devise_for :users, :controllers => { :sessions => "devise/sessions",
+                                       :registrations => "registrations",
+                                       :omniauth_callbacks => "omniauth_callbacks"}
   
+
   devise_scope :user do
     get :login , :to => "devise/sessions#new"
     get :logout , :to => 'devise/sessions#destroy'

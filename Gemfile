@@ -136,3 +136,8 @@ gem 'themes_for_rails', :path => "lib/gems"
 
 # step form
 gem 'wicked'
+
+gem 'omniauth-qq-connect'
+gem 'omniauth-weibo-oauth2'
+gem 'omniauth-renren', :path => 'lib/gems/ballantyne-omniauth-renren'
+
