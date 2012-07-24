@@ -38,64 +38,18 @@
 # * winery_followings_count [integer, default=0, limit=4] - TODO: document me
 # * wines_count [integer, default=0, limit=4] - TODO: document me
 class User < ActiveRecord::Base
-
+  include Users::UserSupport
   init_resources "Users::Profile", "Users::WineCellar"
 
-  counts   :comments_count => {:with => "Comment", 
-                               :receiver => lambda {|comment| comment.user },
-                               :increment => {:on => :create, :if => lambda {|comment| comment.comments_counter_should_increment? }},
-                               :decrement => {:on => :save,   :if => lambda {|comment| comment.comments_counter_should_decrement? }}                              
-                               },
-            :wines_count  =>  {:with => "Users::WineCellarItem",
-                               :receiver => lambda {|cellar_item| cellar_item.user},
-                               :increment => {:on => :create},
-                               :decrement => {:on => :destroy}
-                              },   
-            :photos_count =>  {:with => "Photo",
-                               :receiver => lambda {|photo| photo.user}, 
-                               :increment => {:on => :create, :if => lambda {|photo| photo.album_id > 0}},
-                               :decrement => {:on => :save, :if => lambda {|photo| !photo.deleted_at.blank? && photo.album_id > 0 }}                              
-                              },  
-   :wine_followings_count =>  {:with => "Follow",
-                               :receiver => lambda {|follow| follow.user }, 
-                               :increment => {:on => :create,  :if => lambda{|follow| follow.follow_counter_should_increment_for("Wines::Detail")}},
-                               :decrement => {:on => :destroy, :if => lambda{|follow| follow.follow_counter_should_decrement_for("Wines::Detail")}}                              
-                              }, 
-   :winery_followings_count =>{:with => "Follow",
-                               :receiver => lambda {|follow| follow.user }, 
-                               :increment => {:on => :create,  :if => lambda{|follow| follow.follow_counter_should_increment_for("Winery")}},
-                               :decrement => {:on => :destroy, :if => lambda{|follow| follow.follow_counter_should_decrement_for("Winery")}}                              
-                              }, 
-         :followers_count =>  {:with => "Friendship",
-                               :receiver => lambda {|friendship| friendship.user }, 
-                               :increment => {:on => :create},
-                               :decrement => {:on => :destroy}                              
-                              }, 
-         :followings_count =>  {:with => "Friendship",
-                               :receiver => lambda {|friendship| friendship.follower }, 
-                               :increment => {:on => :create},
-                               :decrement => {:on => :destroy}                              
-                              },   
-            :albums_count =>  {:with => "Album",
-                               :receiver => lambda {|album| album.user }, 
-                               :increment => {:on => :create},
-                               :decrement => {:on => :destroy}                              
-                              }                                                  
+  cattr_accessor :current_user
+  attr_accessor :crop_x, 
+                :crop_y, 
+                :crop_w, 
+                :crop_h, 
+                :agree_term, 
+                :profile_attributes,
+                :current_password
 
-
-
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable,
-         :registerable,
-         :recoverable,
-         :rememberable,
-         :trackable,
-         :validatable,
-         :confirmable,
-         :lockable,
-         :timeoutable,
-         :omniauthable
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email,
                   :password,
@@ -111,6 +65,18 @@ class User < ActiveRecord::Base
                   :profile_attributes,
                   :current_password
 
+  devise :database_authenticatable,
+         :registerable,
+         :recoverable,
+         :rememberable,
+         :trackable,
+         :validatable,
+         :confirmable,
+         :lockable,
+         :timeoutable,
+         :omniauthable,
+         :token_authenticatable
+
   has_one  :profile,
             :class_name => 'Users::Profile',
             :dependent => :destroy
@@ -121,28 +87,25 @@ class User < ActiveRecord::Base
            :class_name => "::Comment",
            :foreign_key => 'user_id',
            :include => [:user]
-
   has_many :photo_comments
   has_many :photos #关于用户上传的所有图片
   has_many :oauths, :class_name => 'Users::Oauth'
   has_many :timeline_events, :as => :actor
-
   has_many :wine_followings,
            :include => :followable,
            :class_name => "Follow",
            :conditions => {:followable_type => "Wines::Detail"}
-
   has_many :winery_followings,
            :include => :followable,
            :class_name => "Follow",
            :conditions => {:followable_type => "Winery"}
 
+  #TODO: 现在只是调用酒的部分， 如果调用酒庄， 请把include wine去掉， 因为酒庄没有wine
   has_many :feeds,
-  :class_name => "Users::Timeline",
-  :include => [:ownerable, {:timeline_event => [:actor]}, {:receiverable =>  [:covers, :wine]}],
-  :order => "created_at DESC",
-  :conditions => ["receiverable_type = ?", "Wines::Detail"] #TODO: 现在只是调用酒的部分， 如果调用酒庄， 请把include wine去掉， 因为酒庄没有wine
-
+    :class_name => "Users::Timeline",
+    :include => [:ownerable, {:timeline_event => [:actor]}, {:receiverable =>  [:covers, :wine]}],
+    :order => "created_at DESC",
+    :conditions => ["receiverable_type = ?", "Wines::Detail"] 
   has_many :followers, :class_name => 'Friendship', :include => :follower do
     def map_user
       map {|f| f.follower }
@@ -153,15 +116,7 @@ class User < ActiveRecord::Base
       map {|f| f.user }
     end
   end 
-
   has_many :follows, :include =>[:user]
-
-  # 推荐的用户
-  # default_scope where('sign_in_count > 0 and confirmation_token is null')
-  scope :active_user, where('sign_in_count > 0 and confirmation_token is null')
-  scope :recommends, lambda { |limit| active_user.order("followers_count DESC").limit(limit) }
-  scope :no_self_recommends, lambda {|limit, user_id| recommends(limit).where("id != ?", user_id)}
-  accepts_nested_attributes_for :profile, :allow_destroy => true
 
   # validates :username, :presence => false, :allow_blank => true, :numericality => true
   validates :agree_term, :acceptance => true, :on => :create
@@ -170,25 +125,112 @@ class User < ActiveRecord::Base
   # validates :city, :presence => true, :on => :update
   # validates :current_password, :presence => true
   validates_confirmation_of :password
+  validates :domain, 
+            :uniqueness => true,
+            :length => { :maximum => 30 },
+            :format => { :with => /^[a-zA-Z\-_\d]+$/},
+            :allow_blank => true
+
+  # 推荐的用户
+  # default_scope where('sign_in_count > 0 and confirmation_token is null')
+  scope :active_user, where('sign_in_count > 0 and confirmation_token is null')
+  scope :recommends, lambda { |limit| active_user.order("followers_count DESC").limit(limit) }
+  scope :no_self_recommends, lambda {|limit, user_id| recommends(limit).where("id != ?", user_id)}
+  accepts_nested_attributes_for :profile, :allow_destroy => true
+
+  ## crop avatar
+  after_update :crop_avatar
 
   # upload avatar
   mount_uploader :avatar, AvatarUploader
 
-  attr_accessor :crop_x, 
-                :crop_y, 
-                :crop_w, 
-                :crop_h, 
-                :agree_term, 
-                :profile_attributes,
-                :current_password
-
-  cattr_accessor :current_user
-
-  ## extend message for user
+  # extend message for user
   acts_as_messageable
 
-  ## crop avatar
-  after_update :crop_avatar
+  # Friendly Url
+  extend FriendlyId
+  friendly_id :pretty_url, :use => [:slugged]
+
+  counts :comments_count => {
+          :with => "Comment",
+          :receiver => lambda {|comment| comment.user },
+          :increment => {
+            :on => :create, 
+            :if => lambda {|comment| comment.comments_counter_should_increment? }},
+          :decrement => {
+            :on => :save,  
+            :if => lambda {|comment| comment.comments_counter_should_decrement? }}                              
+         },
+         :wines_count => {
+          :with => "Users::WineCellarItem",
+          :receiver => lambda {|cellar_item| cellar_item.user},
+          :increment => {:on => :create},
+          :decrement => {:on => :destroy}
+         },   
+         :photos_count => {
+          :with => "Photo",
+          :receiver => lambda {|photo| photo.user}, 
+          :increment => {
+           :on => :create, 
+           :if => lambda {|photo| photo.album_id > 0}},
+          :decrement => {
+           :on => :save,
+           :if => lambda {|photo| !photo.deleted_at.blank? && photo.album_id > 0 }}                              
+         },  
+         :wine_followings_count => {
+          :with => "Follow",
+          :receiver => lambda {|follow| follow.user }, 
+          :increment => {
+           :on => :create,  
+           :if => lambda{|follow| follow.follow_counter_should_increment_for("Wines::Detail")}},
+          :decrement => {
+           :on => :destroy, 
+           :if => lambda{|follow| follow.follow_counter_should_decrement_for("Wines::Detail")}}
+         }, 
+         :winery_followings_count => {
+           :with => "Follow",
+           :receiver => lambda {|follow| follow.user }, 
+           :increment => {
+            :on => :create, 
+            :if => lambda{|follow| follow.follow_counter_should_increment_for("Winery")}},
+           :decrement => {
+            :on => :destroy, 
+            :if => lambda{|follow| follow.follow_counter_should_decrement_for("Winery")}}                              
+         }, 
+         :followers_count =>  {
+           :with => "Friendship",
+           :receiver => lambda {|friendship| friendship.user }, 
+           :increment => {:on => :create},
+           :decrement => {:on => :destroy}                              
+         }, 
+         :followings_count => {
+           :with => "Friendship",
+           :receiver => lambda {|friendship| friendship.follower }, 
+           :increment => {:on => :create},
+           :decrement => {:on => :destroy}                              
+         },   
+         :albums_count => {
+           :with => "Album",
+           :receiver => lambda {|album| album.user }, 
+           :increment => {:on => :create},
+           :decrement => {:on => :destroy}                              
+         }                                                  
+
+  def domain=(value)
+    if self.domain.present?
+      write_attribute(:domain, self.domain)
+    else
+      write_attribute(:domain, value)
+    end
+  end
+
+  def pretty_url
+    if domain.present?
+      domain
+    else
+      (id + 10000) if  id.present? # 用户以10000开始
+    end
+  end
 
   def name
     self.to_s
@@ -204,7 +246,10 @@ class User < ActiveRecord::Base
 
   def top_albums count
     count = 0 if count < 0
-    Album.all :conditions => { :created_by => id }, :order => 'photos_num DESC', :limit => count
+    Album.all :conditions => { 
+      :created_by => id }, 
+      :order => 'photos_num DESC', 
+      :limit => count
   end
 
   def oauth_client( sns_name )
@@ -213,7 +258,9 @@ class User < ActiveRecord::Base
     end
 
     if @client[ sns_name ].blank?
-      oauth = Users::Oauth.first :conditions => { :user_id => id , :sns_name => sns_name.to_s }
+      oauth = Users::Oauth.first :conditions => { 
+        :user_id => id ,
+        :sns_name => sns_name.to_s }
       return if oauth.blank?
       sns_class_name = sns_name.capitalize
       oauth_module = eval( "OauthChina::#{sns_class_name}" )
@@ -242,48 +289,22 @@ class User < ActiveRecord::Base
   end
 
   def oauth_token( sns_name )
-    token = Users::Oauth.first :conditions => { :user_id => id , :sns_name => sns_name }
-
+    token = Users::Oauth.first :conditions => {
+      :user_id => id , 
+      :sns_name => sns_name }
     if token.blank?
       token = Users::Oauth.new
       token.user_id = id
       token.sns_name = sns_name
     end
-
     token
   end
 
-  def remove_followings_from_user data
-    users = []
-
-    data.each do |f|
-      if !is_following f.id
-        users.push( f )
-      end
-    end
-
-    users
-  end
-
   def following_wines
-    Comment.all :conditions => { :user_id => id , :do => 'follow', :commentable_type => 'Wines::Detail' }
-  end
-
-  def remove_followings sns_friends
-    users = []
-
-    sns_friends.each do |f|
-      if !is_following f.user_id
-        users.push( f )
-      end
-    end
-
-    users
-  end
-
-  # 判断是否已经关注某人
-  def is_following user_id
-    Friendship.first :conditions => { :user_id => user_id , :follower_id => id }
+    Comment.all :conditions => { 
+      :user_id => id , 
+      :do => 'follow', 
+      :commentable_type => 'Wines::Detail' }
   end
 
   def mail_contacts email, login, password
@@ -299,113 +320,6 @@ class User < ActiveRecord::Base
     elsif email == 'qq'
       #TODO
     end
-  end
-
-  # 关注某支酒
-  # def follow_wine(wine_detail)
-  #   unless wine_detail.is_followed? self # 如果还没有被关注了
-  #     Comment.build_from(wine_detail, id, "关注", options = {:do => "follow"} )
-  #   else
-  #     false
-  #   end
-  # end
-
-  # 关注某人
-  def follow_user(user_id)
-    unless is_following user_id
-      friendship = Friendship.create(:user_id => user_id, :follower_id => id)
-    else
-      false
-    end
-  end
-
-  # 取消关注
-  def unfollow(user)
-    friendship = Friendship.where(:user_id => user.id, :follower_id => id)
-    if !friendship.blank?
-      Friendship.destroy(friendship.first.id)    
-    else
-      false
-    end
-  end
-
-  # 当关注某人时， 可以压入该用户的events到当前用户的Timline中
-  def push_one_user_events(user, events)
-    events = user.timeline_events
-    unless events.blank?
-      events.each do |event|
-        user_timeline = Users::Timeline.create(:user_id => id, 
-                                               :timeline_event_id => event.id, 
-                                               :ownerable_type => event.actor_type, # 谁做(User)
-                                               :ownerable_id => event.actor_id,
-                                               :receiverable_type => event.secondary_actor_type, # 谁被做（Wine, Winery)
-                                               :receiverable_id => event.secondary_actor_id,
-                                               :event_type => event.event_type,
-                                               :created_at => event.created_at,
-                                               :updated_at => event.updated_at)
-      end # end events
-    end # end unless
-  end
-
-  # 将酒或者酒庄压入某个用户的Timeline
-  def push_one_event_item(user, event)
-    user_timeline = Users::Timeline.create(:user_id => user.id, 
-                                           :timeline_event_id => event.id, 
-                                           :ownerable_type => event.actor_type, # 谁做(User)
-                                           :ownerable_id => event.actor_id,
-                                           :receiverable_type => event.secondary_actor_type, # 谁被做（Wine, Winery)
-                                           :receiverable_id => event.secondary_actor_id,
-                                           :event_type => event.event_type,
-                                           :created_at => event.created_at,
-                                           :updated_at => event.updated_at)
-  end
-
-  # 当用户第一次注册成功，初始化用户的首页数据
-  def init_events_from_followings
-    # 关注用户的Timeline
-    users = followings.map_user
-    users.each do |user|
-      events = user.timeline_events
-      push_one_user_events(user, events) unless events.blank?
-    end # end users
-
-    # 关注的酒Timeline
-    wines = wine_followings
-    wines.each do |wine|
-      if timeline_wine = TimelineEvent.where(:secondary_actor_type => "Wines::Detail", :secondary_actor_id => wine.id).first
-        push_one_event_item(self, timeline_wine)
-      end
-    end
-
-    # 关注的酒庄Timeline
-    wineries = winery_followings
-    wines.each do |wine|
-      if timeline_wine = TimelineEvent.where(:secondary_actor_type => "Winery", :secondary_actor_id => wine.id).first
-        push_one_event_item(self, timeline_wine)
-      end
-    end
-  end
-
-  # 用户更新密码需要输入原始密码
-  def update_with_password(params={})
-
-    current_password = params[:current_password] if !params[:current_password].blank?
-
-    if params[:password].blank?
-      params.delete(:password)
-      params.delete(:password_confirmation) if params[:password_confirmation].blank?
-    end
-
-    result = if has_no_password?  || valid_password?(current_password)
-      update_attributes(params) 
-    else
-      self.errors.add(:current_password, current_password.blank? ? :blank : :invalid)
-      self.attributes = params
-      false
-    end
-
-    clean_up_passwords
-    result
   end
 
   def has_no_password?
@@ -431,20 +345,8 @@ class User < ActiveRecord::Base
     return current_conversation
   end
 
-  # 判断用户是否已经关注酒或者酒庄或者其他
-  def is_following_resource? resource
-    followable_type, followable_id = [resource.class.to_s, resource.id]
-    return follows.where(:followable_type => followable_type, :followable_id => followable_id).first
-  end
-
-  # 关注酒或者酒庄或者其他
-  def following_resource resource
-   if is_following_resource? resource
-    false
-   else
-    followable_type, followable_id = [resource.class.to_s, resource.id]
-    follows.create(:followable_type => followable_type, :followable_id => followable_id)
-   end
+  def domain_url
+    "http://iwine.com/users/#{domain}"
   end
 
   private

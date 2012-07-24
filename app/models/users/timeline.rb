@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class Users::Timeline < ActiveRecord::Base
-  include Users::UserSupport
+  set_table_name "user_timelines"
   belongs_to :timeline_event
   belongs_to :ownerable, :polymorphic => true
   belongs_to :receiverable, :polymorphic => true

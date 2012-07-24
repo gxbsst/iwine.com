@@ -1,6 +1,7 @@
 # encoding: utf-8
 # require 'icov'
 class Users::WineCellarItem < ActiveRecord::Base
+    set_table_name "user_wine_cellar_items"
     include Users::UserSupport
     belongs_to :wine_cellar, :class_name => 'Users::WineCellar', :foreign_key => 'user_wine_cellar_id'
     belongs_to :user

@@ -79,9 +79,6 @@ class AfterFirstSigninsController < ApplicationController
           follow_one_user(user_id)
         end
       end # end users
-
-      # 填充用户的Home内容
-      current_user.init_events_from_followings
     end # end post
   end
 
@@ -93,7 +90,6 @@ class AfterFirstSigninsController < ApplicationController
           follow_one_wine(wine_detail_id)
         end
       end # end wines
-      current_user.init_events_from_followings
     end
   end
 

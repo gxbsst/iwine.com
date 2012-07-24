@@ -125,6 +125,8 @@ group :test do
   gem "spork"
   gem 'growl'
   gem "guard-spork"
+  gem "autotest-rails"
+  gem "ZenTest"
 end
 
 gem 'user_resource_init', :path => 'lib/patrick/user_resource_init'
@@ -136,3 +138,6 @@ gem 'themes_for_rails', :path => "lib/gems"
 
 # step form
 gem 'wicked'
+
+# API VERSION
+gem 'versionist'

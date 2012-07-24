@@ -37,6 +37,7 @@
       #   @recipient = nil if Actor.normalize(@recipient)==Actor.normalize(current_subject)
       # end
       @message = Message.new
+      @message.recipients = params[:receiver] if params[:receiver]
     end
 
     # GET /messages/1/edit

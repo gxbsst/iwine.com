@@ -23,6 +23,7 @@
 //= require jquery-tools/tabs/tabs.slideshow
 //= require waterfall/javascripts/waterfall
 //= require waterfall/javascripts/home
+//= require waterfall/javascripts/css_browser_selector
 
 
 $(document).ready(function(){

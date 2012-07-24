@@ -46,7 +46,7 @@
       {:with_avatar => true, :avatar_version => :large}, 
       {:width => 50, :height => 50} %>
       <div class="meta">
-       <%= link_to_user user, user_path(user.id,:trailing_slash => true) %> 
+       <%= link_to_user user, user_path(user,:trailing_slash => true) %> 
        <span class="location"><%= user.city %></span>
        <%= check_box_tag "user_ids[]", user.id, true  %> 
      </div>
