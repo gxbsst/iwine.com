@@ -3,14 +3,14 @@
 <% end %>
 
 <% sub_menu = {
-     "cellars"   =>  [cellars_user_path(@user.id, @user.cellar), @user.cellar.items_count],
-     "wine_follows"     => [wine_follows_user_path(@user.id), @user.wine_followings_count],
-     "winery_follows"   => [winery_follows_user_path(@user.id), @user.winery_followings_count],
-     "comments"  => [comments_user_path(@user.id), @user.comments_count],
+     "cellars"   =>  [cellars_user_path(@user, @user.cellar), @user.cellar.items_count],
+     "wine_follows"     => [wine_follows_user_path(@user), @user.wine_followings_count],
+     "winery_follows"   => [winery_follows_user_path(@user), @user.winery_followings_count],
+     "comments"  => [comments_user_path(@user), @user.comments_count],
      # "testing_notes"  => ["testing_notes", 0],
-     "followings"     => [followings_user_path(@user.id), @user.followings_count],
-     "followers"    => [followers_user_path(@user.id), @user.followers_count],
-     "albums"       => [albums_user_path(@user.id, :trailing_slash => true), @user.albums_count]
+     "followings"     => [followings_user_path(@user), @user.followings_count],
+     "followers"    => [followers_user_path(@user), @user.followers_count],
+     "albums"       => [albums_user_path(@user, :trailing_slash => true), @user.albums_count]
  } %>
 
   <div class="hp_header">
@@ -58,19 +58,19 @@
         <% if user_signed_in? %>
             <% if (current_user.is_following @user) && (@user.is_following current_user) # 如果用户互相关注%>
               <span class="icon_fol_e mr5">互相关注<span class="cancl_fol">
-                <%= link_to "(取消)", unfollow_friends_path(:user_id => @user.id) %>
+                <%= link_to "(取消)", unfollow_user_path(@user) %>
               </span></span>
             <% elsif current_user.is_following @user %>
               <span class="icon_fol mr5">已关注<span class="cancl_fol">
-                <%= link_to "(取消)", unfollow_friends_path(:user_id => @user.id) %>
+                <%= link_to "(取消)", unfollow_user_path(@user) %>
               </span></span>
             <% else %>
-            <%= link_to follow_friends_path(:user_id => @user.id ), :class => "btn_gray" do  %>
+            <%= link_to follow_user_path(@user), :class => "btn_gray" do  %>
               <span>加关注</span>
               <% end %>
             <% end %>
         <% else %>  
-              <%= link_to follow_friends_path(:user_id => @user.id ), :class => "btn_gray" do  %>
+              <%= link_to follow_user_path(@user), :class => "btn_gray" do  %>
               <span>加关注</span>
               <% end %>
              
@@ -91,5 +91,4 @@
   </div>
 
 <div class="reply_form" id="send_message_form" style="display: none">
-  <%= render "conversations/send_message_form", :receiver => @user.username %>
 </div>

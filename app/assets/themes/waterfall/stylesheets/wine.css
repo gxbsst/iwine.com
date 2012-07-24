@@ -71,6 +71,8 @@ ul.photo_list li img {margin:0 0 10px 0;}
 ul.photo_list li .intro, .album_left .photo .intro{margin:0 0 5px 0;}
 .content .album_left {width:590px;float:left;margin:0 28px 0 0;}
 .content .album_right {width:210px;float:left;}
+.album_left .pre_next {text-align:center;}
+.album_left .count {display:inline-block;margin:0 10px;}
 .album_left .info {margin-bottom:15px;color:#666;}
 .album_left .photo {text-align:center;margin-bottom:20px;background-color:#f3f3f3;}
 .album_left .comment_list .main {width:520px;}

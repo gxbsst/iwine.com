@@ -127,6 +127,37 @@ class SettingsController < ApplicationController
       redirect_to basic_settings_path
     end
   end
+ 
+  def update
+    @user = current_user
+    respond_to do |wants|
+      if @user.update_attributes(params[:user])
+        notice_stickie "设置成功" 
+        wants.html { redirect_to(basic_settings_path) }
+        wants.xml  { head :ok }
+      else
+        wants.html { render :action => :domain }
+        wants.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  def domain
+    @user = current_user
+    redirect_to basic_settings_path if @user.domain.present?
+    if request.put?
+      respond_to do |wants|
+        @user.domain=params[:user][:domain]
+        if @user.save
+          notice_stickie "设置成功" 
+          wants.html { redirect_to(basic_settings_path) }
+          wants.xml  { head :ok }
+        else
+          wants.html { render :action => :domain }
+          wants.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+        end
+      end
+    end
+  end
 
   private
 

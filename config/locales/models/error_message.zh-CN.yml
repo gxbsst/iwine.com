@@ -52,6 +52,12 @@ zh-CN:
               blank: 请输入目前所在城市
             agree_term:
               accepted: 请接受服务条款
+            domain:
+              too_long: '用户设置域名最长可使用32个字符，可由数字、字母、“-”、“-” 组成'
+              taken: '真可惜，这个个性域名已经被人使用啦，换一个试试吧。'
+              invalid: '用户设置域名最长可使用32个字符，可由数字、字母、“-”、“-” 组成'
+
+              
         users/profile:
           attributes:
             contact_email:

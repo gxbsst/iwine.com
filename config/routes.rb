@@ -45,11 +45,9 @@ Patrick::Application.routes.draw do
       get :find
       get :sync
       get :sns
-      get :follow
       get :new_sns
       get :setting_sns
       get :delete_sns
-      get :unfollow
       get :search
     end
     member do
@@ -123,6 +121,8 @@ Patrick::Application.routes.draw do
       match "albums/:album_id/photo/:photo_id", :via => [:get], :to => "albums#photo", :as => :album_photo_show
       # Cellars
       match "cellars/:cellar_id", :via => [:get], :to => "cellars#show", :as => :cellars
+      get :follow
+      get :unfollow
     end
     collection do
       get "register_success"
@@ -183,9 +183,11 @@ Patrick::Application.routes.draw do
       match :basic, :via => [:get, :put]
       match :privacy, :via => [:get, :put]
       match :avatar, :via => [:get, :post, :put]
+      match :domain, :via => [:get, :put]
       get :sync
       get :syncs
       match :update_password, :via => [:get, :put]
+      put :update
     end
   end
   # Search

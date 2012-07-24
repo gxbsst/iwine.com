@@ -67,9 +67,8 @@ context "Imageable is Winery" do
   before do
     path_to_file = File.join(Rails.root, 'spec', 'support', 'rails.png')
     @photo = create(:photo_with_winery)
-    # ImageUploader.enable_processing = true
+     ImageUploader.enable_processing = true
     @uploader = ImageUploader.new(@photo, :image)
-    #@uploader.should_process = false
     @uploader.store!(File.open(path_to_file))
   end
 
@@ -78,8 +77,10 @@ context "Imageable is Winery" do
     @uploader.remove!
   end
   context 'the middle_x version' do
+    it "does something" do
+      @uploader.model.imageable_type.should == 'Winery'
+    end
     it "should scale down a landscape image to be exactly 360 by 330 pixels" do
-      # @uploader.middle_x.should have_dimensions(360, 330)
       @uploader.middle_x.should be_no_larger_than(360, 330)
     end
   end
