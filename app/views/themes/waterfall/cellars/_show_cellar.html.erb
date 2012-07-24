@@ -5,7 +5,7 @@
 
       <div class="sort_search mb20">
         <div class="float_r">
-               <%= link_to cellars_user_path(@user, @cellar, :format => "csv") ,:class => "btn_blue_b" do %>                   
+               <%= link_to cellars_user_path(@user, @cellar, :format => "xls") ,:class => "btn_blue_b" do %>                   
                 <span>导出数据</span>
               <% end %>
             </div>
@@ -16,7 +16,7 @@
                 <% end %>
               <% end %>
             </div>
-                       
+            
         <% # TODO: 添加搜索功能  %>
         <div class="sort pt5">
           <select name="order" id="search_order">
@@ -33,7 +33,6 @@
 
 
       <div class="wine_data">
-        
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <th class="img">酒标</th>
