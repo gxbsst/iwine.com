@@ -102,6 +102,7 @@ input.common_search {width:250px;}
 #stylized label.nv {display:inline-block;float:none;width:auto;margin:0 0 0 10px;font-weight:normal;text-align:left;}
 #stylized .small{color:#666666;display:block;font-size:11px;font-weight:normal;text-align:right;width:140px;}
 #stylized input{margin-right:5px;}
+#stylized .nor input {margin-right:10px;}
 #stylized .content {float:left;width:380px;}
 #stylized .content2 {float:left;width:560px;}
 #stylized button{clear:both;margin-left:150px;width:125px;height:31px;background:#666666 url(../css/img/button.png) no-repeat;text-align:center;line-height:31px;color:#FFFFFF;font-size:11px; font-weight:bold;}
@@ -125,6 +126,7 @@ label.vm {line-height:25px;}
 .register .boxstyle .mid {padding:60px 28px 20px 28px;height:110px;}
 .logreg_box input.text, .logreg_box input.text {border:1px solid #fff;background-color:#fff;height:25px;width:270px;padding:0;line-height:25px; vertical-align:middle;}
 .logreg_box .un, .logreg_box .pw {background:url(../images/bg/login_input.jpg) no-repeat left top;padding:8px 10px;width:270px;margin:0 0 10px 0;}
+.logreg_box .nor .un {width:auto;}
 .logreg_box .rember_pw {line-height:41px;}
 .logreg_box .rember_pw a:hover {text-decoration:none;}
 .logreg_box .un2, .logreg_box .pw2 {background:url(../images/bg/login_input2.jpg) no-repeat left top;padding:8px 10px;width:240px;margin:0 0 10px 0;}
