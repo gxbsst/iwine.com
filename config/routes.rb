@@ -7,6 +7,10 @@ Patrick::Application.routes.draw do
     end
   end
 
+
+  #first login iWine
+  resources :oauth_logins
+
   resources :follows
 
   themes_for_rails
@@ -21,7 +25,7 @@ Patrick::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   ## USER
-  devise_for :users, :controllers => { :sessions => "devise/sessions",
+  devise_for :users, :controllers => { :sessions => "sessions",
                                        :registrations => "registrations",
                                        :omniauth_callbacks => "omniauth_callbacks"}
   
@@ -31,6 +35,8 @@ Patrick::Application.routes.draw do
     get :logout , :to => 'devise/sessions#destroy'
     get :register , :to => 'devise/registrations#new'
   end
+
+
   
   # COMMENT
   resources :comments do 

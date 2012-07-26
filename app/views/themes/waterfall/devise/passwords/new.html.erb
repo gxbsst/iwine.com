@@ -1,33 +1,39 @@
 <div id="login">
+  <% if devise_error_messages!.present? %>
+    <div class="error"><%= devise_error_messages! %></div>
+  <% end %>
   <div class="password">
-    <% if devise_error_messages!.present? %>
-        <div class="error"><%= devise_error_messages! %></div>
-    <% end %>
-    <div class="boxstyle2">
-      <div class="top"></div>
+    <div class="logreg_box">
+      <div class="top2"></div>
       <div class="mid">
-        <h2>忘记密码了？</h2>
-        <h3>请输入注册时的邮箱地址，我们会帮助你重置密码。</h3>
-        <div class="clearfix">
-          <div class="un float_l">
-            <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-                <%= f.email_field :email, :placeholder => "请输入邮箱地址", :class => "text" %>
-            <% end %>
-          </div>
-          <style type="text/css">
+        <div class="content">
+          <h2>忘记密码了？</h2>
+          <h3>请输入注册时的邮箱地址，我们会帮助你重置密码。</h3>
+          <div class="clearfix">
+            <div class="un float_l">
+              <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+                  <%= f.email_field :email, :placeholder => "请输入邮箱地址", :class => "text" %>
+              <% end %>
+            </div>
+            <style type="text/css">
               .field_with_errors label {
                   display: none;
               }
-          </style>
+            </style>
 
-          <%= link_to "javascript:void(0);", :class => "float_l ml10 save" do %>
-            <%= image_tag "/assets/waterfall/images/common/btn_submit.jpg", :alt => "登录", :width => "96", :height => "41" %>
-          <% end %>
+            <%= link_to "javascript:void(0);", :class => "float_l ml10 save" do %>
+              <%= image_tag "/assets/waterfall/images/common/btn_submit.jpg", :alt => "登录", :width => "96", :height => "41" %>
+            <% end %>
+          </div>
+          <div class="mt10">
+            <%= link_to "登陆", new_user_session_path %> | <%= link_to "注册", new_user_registration_path %> 
+          </div>
         </div>
       </div>
       <div class="bot"></div>
     </div>
   </div>
+
 </div>
 <script type="text/javascript">
     $(".save").click(function(){

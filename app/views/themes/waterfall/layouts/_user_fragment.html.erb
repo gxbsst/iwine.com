@@ -38,6 +38,18 @@
   </div>
 <% else %>
   <ul>
+    <li class="sns">
+      <span>其他账号登陆：</span>
+      <%= link_to user_omniauth_authorize_path(:weibo) do %>
+        <%= theme_image_tag "icon/icon_sina.gif", :alt => "新浪微博账号登陆", :width => "24", :height => "24" %>
+      <% end %>
+      <%= link_to user_omniauth_authorize_path(:qq_connect) do %>
+        <%= theme_image_tag "icon/icon_qq.gif", :alt => "QQ账号登陆", :width => "24", :height => "24" %>
+      <% end %>
+      <%= link_to user_omniauth_authorize_path(:renren) do %>
+        <%= theme_image_tag "icon/icon_renren.gif", :alt => "人人网账号登陆", :width => "24", :height => "24" %>
+      <% end %>
+    </li>
     <li>
       <%= link_to new_user_registration_path, :class => 'btn_green' do  %>
        <span>注册</span>

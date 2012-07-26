@@ -1,15 +1,16 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def all
-    user = Users::Oauth.from_omniauth(request.env["omniauth.auth"])
-    if user.persisted?
-      flash.notice = "Signed in!"
-      @user = User.find(user.user_id)
-      sign_in_and_redirect @user
+    oauth_user = Users::Oauth.from_omniauth(request.env["omniauth.auth"])
+    if oauth_user.new_record?
+      session["devise.user_attributes"] = oauth_user.attributes
+      redirect_to new_oauth_login_path
     else
-      session["devise.user_attributes"] = user.attributes
-      redirect_to new_user_registration_url
+      notice_stickie t("notice.login_success")
+      @user = User.find(oauth_user.user_id)
+      sign_in_and_redirect @user
     end
   end
+  
   #alias_method :twitter, :all
   alias_method :qq_connect, :all
   alias_method :weibo, :all
