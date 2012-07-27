@@ -1,11 +1,14 @@
 # encoding: UTF-8
+Mime::Type.register "application/xls", :xls
 class CellarsController < ApplicationController
 
   before_filter :get_user
   before_filter :get_cellar
   before_filter :get_order_type
 
+ 
   def show
+    @items = Users::WineCellarItem.order(:price)
     @title = ["酒窖", @user.username].join("-")
     if params[:wine_name]
       if mine_equal_current_user?(@user)
@@ -31,9 +34,16 @@ class CellarsController < ApplicationController
             order(@order).
             page params[:page] || 1
       end
+      # @cellar_items = @cellar.items
+      respond_to do |format|
+        format.html
+        format.csv {render text: Users::WineCellarItem.to_csv}
+        format.xls
+      end
     end
-  end
 
+  end
+   
   private 
 
   def get_cellar
@@ -52,4 +62,5 @@ class CellarsController < ApplicationController
       @order = "updated_at DESC"
     end
   end
+
 end

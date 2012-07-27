@@ -74,7 +74,8 @@ class User < ActiveRecord::Base
          :confirmable,
          :lockable,
          :timeoutable,
-         :omniauthable
+         :omniauthable,
+         :token_authenticatable
 
   has_one  :profile,
             :class_name => 'Users::Profile',

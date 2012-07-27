@@ -1,0 +1,73 @@
+<div id="register">
+	<div class="logreg_box">
+		<div class="top2"></div>
+		<div class="mid">
+			<div class="welcome">欢迎来到 iWine.com</div>
+			<div class="left">
+				<div class="info">
+					第一次来？<br />
+					请补充资料，完成注册：
+				</div>
+				<%= form_for(@binding_user || User.new, :url => registration_path(resource_name)) do |f| %>
+					<input name="oauth" value="update" type="hidden"/>
+					<p>邮件地址<span class="red">*</span></p>
+					<div class="un">
+						<%= f.email_field :email, :class => "text", :placeholder => "Email" %>
+					</div>
+					<p>密码<span class="red">*</span></p>
+					<div class="pw">
+						<%= f.password_field :password, :class => "text", :placeholder => "密码" %>
+					</div>
+					<p>昵称<span class="red"></span></p>
+					<div class="pw">
+						<%= f.text_field :username, :class => "text", :placeholder => "昵称"  %>
+					</div>
+					<p class="agree">
+						<%= f.check_box :agree_term, :checked => "checked", :class => "checkbox" %>
+              				我已阅读并同意 <%= link_to "《使用条款》", "/private" %>，
+              				同时确认已达当地法定饮酒年龄。
+					</p>
+					<div class="submit">
+						<%= link_to  "javascript:void(0)", :onclick => "$(this).parents('form').submit()" do %>
+          					<%= theme_image_tag "common/register_submit_s.jpg", 
+          						:width => 96, 
+          						:height => 41, 
+         						:alt => "提交" %>
+         				<% end %> 
+					</div>
+				<% end %>					
+			</div>
+			<div class="right">
+				<div class="info">
+					已经在 iWine 注册过?<br/>
+					请输入iWine账户进行绑定：
+				</div>
+				<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+					<% if @error %>
+						<div class="error"><%= t('devise.failure.invalid') %></div>
+					<% end %>
+					<input name="oauth" value="sign_in" type="hidden"/>
+					<p>邮件地址</p>
+					<div class="un2">
+						<%= f.email_field :email, :class => "text2", :placeholder => "Email" %>
+					</div>
+					<p>密码</p>
+					<div class="un2">
+						<%= f.password_field :password, :class => "text2", :placeholder => "密码" %>
+					</div>
+					<div class="submit">
+						<%= link_to  "javascript:void(0)", :onclick => "$(this).parents('form').submit()" do %>
+				            <%= theme_image_tag "common/btn_login.jpg",
+				              :width => 96,
+				              :height => 41,
+				              :alt => "登录" %>
+            			<% end %>
+					</div>
+				<% end %>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="bot"></div>
+	</div>
+	<div class="clear"></div>
+</div>

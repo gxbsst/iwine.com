@@ -44,10 +44,10 @@ namespace :photo do
            #其他图片
            Dir.glob("#{photo_directory}/*").each do |file|
              next if file.include?("logo")
-             photo = winery.photos.create!(
-                 :photo_type => get_photo_type(file),
-                 :image => open(file)
-             )
+             photo = winery.photos.build
+             photo.photo_type  =  get_photo_type(file)
+             photo.image = open(file) #需要单独赋值          
+             photo.save
              photo.approve_photo
              puts "winery_id #{winery.id}  photo_id #{photo.id}  #{photo.photo_type}"
            end

@@ -7,15 +7,15 @@ module SNS
       followers_json = self.get("http://api.t.sina.com.cn/statuses/followers.json").body
       data = JSON.parse followers_json
       list = []
-
-      data.each do |friend|
-        list.push( {
-          :sns_user_id => friend['id'],
-          :username => friend['screen_name'],
-          :avatar => friend['profile_image_url']
-        })
+      unless data["error_code"].present?
+        data.each do |friend|
+          list.push( {
+            :sns_user_id => friend['id'].to_i,
+            :username => friend['screen_name'],
+            :avatar => friend['profile_image_url']
+          })
+        end
       end
-
       list
     end
 
