@@ -5,6 +5,7 @@ class Users::Oauth < ActiveRecord::Base
   scope :oauth_record, ->(sns_name){ where(["sns_name = ?", sns_name])}
   scope :oauth_login, where("setting_type = ? ", APP_DATA['user_oauths']['setting_type']['login'])
   scope :oauth_binding, where("setting_type = ? ", APP_DATA['user_oauths']['setting_type']['binding'])
+  
   def tokens
     { :access_token => access_token, :access_token_secret => refresh_token }
   end
