@@ -5,6 +5,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       session["devise.user_attributes"] = oauth_user.attributes
       redirect_to new_oauth_login_path
     else
+      Users::Oauth.update_token(request.env["omniauth.auth"]) #刷新access_token
       notice_stickie t("notice.login_success")
       @user = User.find(oauth_user.user_id)
       sign_in_and_redirect @user

@@ -18,7 +18,7 @@ class Users::Oauth < ActiveRecord::Base
                                    :sns_name    => provider_info[:provider]).
                             first_or_initialize(:sns_name => auth.provider,
                                                 :sns_user_id => auth.uid,
-                                                :setting_type => APP_DATA['user_oauths']['setting_type']['login'])
+                                                :access_token => auth.credentials.token)
     # TODO
     # 1. 先检查user_oauth表有没有记录
     # 如果没有，则在user是表创建记录， 然后在oauth表创建记录
@@ -41,12 +41,25 @@ class Users::Oauth < ActiveRecord::Base
   end
   
   def self.build_oauth(user, attributes)
-    oauth_user = oauth_login.where(:sns_user_id => attributes["sns_user_id"], 
-                                   :sns_name    => attributes["sns_name"]).first
-    unless oauth_user
-      oauth_user = Users::Oauth.new(attributes)
-      oauth_user.user_id = user.id
-      oauth_user.save
+    type = [APP_DATA['user_oauths']['setting_type']['login'], APP_DATA['user_oauths']['setting_type']['binding']]
+    type.each do |t|
+      oauth_user = where(:sns_user_id => attributes["sns_user_id"], 
+                          :sns_name    => attributes["sns_name"],
+                          :setting_type => t).first
+      unless oauth_user
+        oauth_user = Users::Oauth.new(attributes)
+        oauth_user.user_id = user.id
+        oauth_user.setting_type = t
+        oauth_user.save
+      end
+    end
+  end
+
+  def self.update_token(oauth)
+    oauth_user = oauth_binding.where(:sns_user_id => oauth.uid,
+                                      :sns_name => oauth.provider).first
+    if oauth_user
+      oauth_user.update_attribute(:access_token, oauth.credentials.token)
     end
   end
 end
