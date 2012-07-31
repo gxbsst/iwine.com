@@ -18,7 +18,7 @@ OWNER_TYPES = {
 }
 
 SNS_SERVERS = [
-  'sina',
+  'weibo',
   'qq',
   'douban'
 ]
