@@ -212,6 +212,9 @@ Patrick::Application.routes.draw do
     api_version(:module => "v1", :header => "Accept", :value => "application/vnd.iwine.com; version=1") do
       resources :registrations
       resources :sessions
+      resources :uploads
+      resources :profiles
+      resources :oauths
     end
    end
   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
