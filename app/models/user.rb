@@ -39,6 +39,7 @@
 # * wines_count [integer, default=0, limit=4] - TODO: document me
 class User < ActiveRecord::Base
   include Users::UserSupport
+  include Users::SnsOauth
   init_resources "Users::Profile", "Users::WineCellar"
 
   cattr_accessor :current_user
@@ -274,12 +275,12 @@ class User < ActiveRecord::Base
 
   #判断是否和给定得网站绑定
   def check_oauth?(type)
-    return self.oauths.where("sns_name = ?", type).first ? true : false
+    return self.oauths.oauth_binding.where("sns_name = ?", type).first ? true : false
   end
 
   def available_sns
     list = {}
-    tokens = Users::Oauth.all :conditions => { :user_id => id }
+    tokens = Users::Oauth.oauth_binding.all :conditions => { :user_id => id }
 
     tokens.each do |token|
       list[token[:sns_name]] = token

@@ -12,7 +12,12 @@ Patrick::Application.routes.draw do
   resources :oauth_logins
 
   resources :follows
-
+  resources :oauth_logins do
+    collection do 
+      get :sns_login
+      get :update_info
+    end
+  end
   themes_for_rails
 
   # unless Rails.application.config.consider_all_requests_local
@@ -162,6 +167,10 @@ Patrick::Application.routes.draw do
 
   match "/friends/:type/sync" => "friends#new", :as => :sync_new
   match "/friends/:type/callback" => "friends#callback", :as => :sync_callback
+
+  match "oauth_logins/:type/sns_login" => "oauth_logins#sns_login" 
+  match "oauth_logins/:type/update_info" => "oauth_logins#update_info"
+  
 
   # WINERIES
   resources :wineries do

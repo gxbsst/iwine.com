@@ -1,14 +1,28 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def all
-    oauth_user = Users::Oauth.from_omniauth(request.env["omniauth.auth"])
-    if oauth_user.new_record?
-      session["devise.user_attributes"] = oauth_user.attributes
-      redirect_to new_oauth_login_path
-    else
-      Users::Oauth.update_token(request.env["omniauth.auth"]) #刷新access_token
-      notice_stickie t("notice.login_success")
-      @user = User.find(oauth_user.user_id)
-      sign_in_and_redirect @user
+
+    if current_user #绑定操作
+      oauth_user = Users::Oauth.build_binding_oauth(current_user, request.env["omniauth.auth"])
+      oauth_user.save
+      if oauth_user.new_record?
+        oauth_user.save
+        redirect_to setting_sns_friends_path
+      else
+        Users::Oauth.update_token(request.env["omniauth.auth"])
+        notice_stickie t('notice.oauth.update_oauth')
+        redirect_to setting_sns_friends_path
+      end
+    else #登陆操作
+      oauth_user = Users::Oauth.from_omniauth(request.env["omniauth.auth"])
+      if oauth_user.new_record?
+        session["devise.user_attributes"] = oauth_user.attributes
+        redirect_to new_oauth_login_path
+      else
+        notice_stickie t("notice.login_success")
+        Users::Oauth.update_token(request.env["omniauth.auth"])
+        @user = User.find(oauth_user.user_id)
+        sign_in_and_redirect @user
+      end
     end
   end
   

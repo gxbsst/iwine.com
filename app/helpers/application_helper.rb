@@ -147,7 +147,7 @@ module ApplicationHelper
   def link_to_sync_button(sns_name, url_or_object, options={})
 
     button_name = 'btn_syn_' + sns_name
-    link_to(image_tag("v2/button/#{button_name}.jpg", { :title => button_name }),
+    link_to(theme_image_tag("common/#{button_name}.jpg", { :title => button_name }),
             url_or_object,
             options)
   end

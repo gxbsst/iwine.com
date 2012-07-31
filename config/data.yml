@@ -73,6 +73,10 @@ user_profile:
 friends:
   oauth:
     sync_url: /friends/sync
+user_oauths:
+  setting_type:
+    login: 1 #用户通过第三方登陆
+    binding: 2 # 用户登录后得绑定操作
     
 user_oauths:
   setting_type:

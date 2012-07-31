@@ -5,6 +5,7 @@ class Users::Oauth < ActiveRecord::Base
   scope :oauth_record, ->(sns_name){ where(["sns_name = ?", sns_name])}
   scope :oauth_login, where("setting_type = ? ", APP_DATA['user_oauths']['setting_type']['login'])
   scope :oauth_binding, where("setting_type = ? ", APP_DATA['user_oauths']['setting_type']['binding'])
+  
   def tokens
     { :access_token => access_token, :access_token_secret => refresh_token }
   end
@@ -24,6 +25,16 @@ class Users::Oauth < ActiveRecord::Base
     # 绑定帐号
   end
 
+  def self.build_binding_oauth(user, auth)
+    oauth_user = user.oauths.oauth_binding.where(:sns_user_id => auth.uid, 
+                                     :sns_name    => auth.provider).
+                        first_or_initialize(:sns_name => auth.provider,
+                                            :sns_user_id => auth.uid,
+                                            :access_token => auth.credentials.token,
+                                            :user_id => user.id,
+                                            :setting_type => APP_DATA['user_oauths']['setting_type']['binding'])
+  end 
+
   def self.new_with_session(params, session)
     if session["devise.user_attributes"]
       new(session["devise.user_attributes"], without_protection: true) do |user|
@@ -39,8 +50,9 @@ class Users::Oauth < ActiveRecord::Base
     super && provider.blank?
   end
   
+  #如果是第三方登陆操作同时创建两个user_oauth记录
   def self.build_oauth(user, attributes)
-    type = [APP_DATA['user_oauths']['setting_type']['login'], APP_DATA['user_oauths']['setting_type']['binding']]
+    type = [APP_DATA['user_oauths']['setting_type']['binding'], APP_DATA['user_oauths']['setting_type']['login']]
     type.each do |t|
       oauth_user = where(:sns_user_id => attributes["sns_user_id"], 
                           :sns_name    => attributes["sns_name"],
