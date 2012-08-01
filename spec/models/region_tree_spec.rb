@@ -31,10 +31,10 @@ describe Wines::RegionTree do
   describe "#root_parent_id" do
     context "parent is itself" do
       before(:each) do
-        @region = Wines::RegionTree.find(377) #China
+        @region = Wines::RegionTree.find(2270) #China
       end
       it "should be 377" do
-        @region.root_parent_id.should be(377)
+        @region.root_parent_id.should be(1520)
       end
     end
 

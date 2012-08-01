@@ -2,15 +2,23 @@
   <input type="text" name="query" id="query" value="" />
 </div>
 
+<div id="region_tree"> </div>
+
 <script type="text/template" id="regiontree-template">
- <ul id="gaggle-list">
-  <@ _.each(collection, function(goose) { @>
-     <li><@= goose.id @> <@= goose.name_en @></li>
-  <@ }); @>
-  </ul>
+  <div class="region">
+    <h2><@= origin_name @> </h2>
+    <ul>
+      <@ _.each(children, function(child){ @>
+        <li>
+          <a href="javascript:void(0)" data-value=<@= child.id @>>
+            <@= child.origin_name @><@= child.name_zh @><@= child.level @>
+          </a>
+          </li>
+      <@ }); @>
+    </ul>
+  </div>
 </script>
-<div id="region_tree">
-</div>
+
 <%= form_for @register, :validate => true, :url => {:action => :create}, :method => :post ,:html => { :class => 'form-horizontal', :multipart => true } do |f| %>
     <% unless @register.new_record? %><input type="hidden" name="register_id" value="<%= @register.id %>"/><% end %>
     <div class="left">

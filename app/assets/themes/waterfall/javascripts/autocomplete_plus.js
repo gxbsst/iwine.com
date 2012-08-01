@@ -14,10 +14,13 @@ $(document).ready(function(){
   var RegionTreeView = Backbone.View.extend({
     template: "#regiontree-template",
       className: 'album',
+      events: {
+        "click .region ul li a" : "selectRegion"
+      },
 
       initialize: function() {
         _.bindAll(this, 'render');
-        this.collection.bind('reset', this.render);
+        //this.collection.bind('reset', this.render);
         this.initializeTemplate();
       },
 
@@ -26,32 +29,50 @@ $(document).ready(function(){
       },
 
       render: function() {
-        $(this.el).html(this.template({collection:this.collection.toJSON()}));
+        $(this.el).html(this.template(this.model.toJSON()));
         return this;
+      },
+      selectRegion: function(event){
+        debugger;
+        var target = event.target
+        this.setInputText(target.text)
+        console.log($(target).attr('data-value'));
+      },
+      setInputText: function(text){
+        //this.inputView
+        debugger;
+        console.log(this.inputView);
       }
   });
+  
 
   var InputView = Backbone.View.extend({
 
       el: $('#query_outer'),
 
       events: {
-        "keypress #query" : "showRegionTree"
+        "keyup #query" : "showRegionTree"
       },
 
       showRegionTree: function(event){
+        self = this;
         str = $(this.el).find('input').val();
-        if(str.length > 3) {
-          var collection = new RegionTrees();
-          collection.url += "?query=" + str 
-          collection.fetch({success:function(){
-            var regionTreeView = new RegionTreeView({collection: collection});
-            $("#region_tree").html("");
-            $("#region_tree").append(regionTreeView.render().el);
+        if(str.length > 2) {
+          var collections = new RegionTrees();
+          collections.url += "?query=" + str 
+          collections.fetch({success:function(){
+             self.renderRegions(collections);
           }})
         }
       },
-
+      renderRegions: function(collections){
+        $("#region_tree").html("");
+        self = this;
+        collections.each(function(model){
+          var regionTreeView = new RegionTreeView({model: model, inputView: self});
+          $("#region_tree").append(regionTreeView.render().el);
+        });
+      },
       // 计数
       countText: function(event){
         this.showError('');
