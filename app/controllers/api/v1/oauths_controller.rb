@@ -5,6 +5,9 @@ module Api
 
       def create
         # user_id, sns_name, sns_user_id
+        #@oauth_user = Users::Oauth.
+          #find_by_sns_name_and_sns_user_id(params[:oauth_user][:sns_name], 
+                                           #params[:oauth_user][:sns_user_id])
         @oauth_user = Users::Oauth.new(params[:oauth_user])
         respond_to do |wants|
           if @oauth_user.save

@@ -34,6 +34,15 @@ describe Api::V1::ProfilesController do
        @response.body.should include("hellomyname")
   end
 
+  describe "#birthday" do 
+
+    it "birthday shoud be 2002-12-03" do
+      @user = User.find_by_email("gxbsst@gmail.com")
+      @user.birthday.should == Time.parse "2002-12-03"
+    end  
+  
+  end
+
   describe "#index" do
    it "shoud get user profile info" do
     get api_profiles_path, {:auth_token => @token},  {'Accept' => 'application/vnd.iwine.com; version=1'}

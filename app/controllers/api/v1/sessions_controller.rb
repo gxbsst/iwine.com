@@ -6,6 +6,7 @@
 module Api
   module V1
     class SessionsController < ::Api::BaseApiController
+      before_filter :authenticate_user!, :except => [:create, :destroy]
       before_filter :ensure_params_exist
       respond_to :json
 
@@ -45,7 +46,8 @@ module Api
                           :email => resource.email,
                           :username => resource.username,
                           :id => resource.id,
-                          :slug => resource.slug }}
+                          :slug => resource.slug,
+                          :profile_id => resource.profile.id }}
       end
 
     end

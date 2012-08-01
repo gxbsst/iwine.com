@@ -10,6 +10,7 @@ module Api
       # :birthday => "yyyy-MM-dd", 
       # :bio => "..big text.."}}
       def update
+        params[:user][:profile_attributes][:birthday] = Time.parse params[:user][:profile_attributes][:birthday]
         if current_user.update_attributes(params[:user]) &&
           current_user.profile.update_attributes(params[:user][:profile_attributes])
           success_json(current_user)
