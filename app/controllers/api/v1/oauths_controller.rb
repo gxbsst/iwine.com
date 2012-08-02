@@ -2,21 +2,37 @@ module Api
   module V1
     class OauthsController < ::Api::BaseApiController
       before_filter :authenticate_user!
+      before_filter :get_user
 
       def create
         # user_id, sns_name, sns_user_id
-        #@oauth_user = Users::Oauth.
-          #find_by_sns_name_and_sns_user_id(params[:oauth_user][:sns_name], 
-                                           #params[:oauth_user][:sns_user_id])
-        @oauth_user = Users::Oauth.new(params[:oauth_user])
-        respond_to do |wants|
-          if @oauth_user.save
-            wants.json  {render :json => {:success => true}}
-          else
-            wants.json  {render :json => {:sucess => false}}
-          end
+        if create_user_oauth(params[:oauth_user])
+          render :json =>  user_info_json
+        else
+          render :json => @user_oauth.errors, :status => 422
         end
       end
+      
+      protected
+     
+      def create_user_oauth(params)
+       if @user.has_oauth_item? params
+         true
+       else
+         params[:user_id] = @user.id
+        if @user_oauth = Users::Oauth.create(params)
+          true
+        else
+          false
+        end
+        
+       end
+      end
+
+      def get_user
+       @user = current_user 
+      end
+
     end
   end
 end

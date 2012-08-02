@@ -33,19 +33,6 @@ module Api
         render :json => user_info_json 
       end
 
-      def user_info_json
-        return {:success => true, 
-          :user => {
-          :id => @user.id,
-          :email => @user.email,
-          :username => @user.username,
-          :slug => @user.slug,
-          :avatar => @user.avatar.url,
-          :city => @user.city ? @user.city : "",
-          :bio => @user.profile.bio ? @user.profile.bio : "",
-          :pofile_id => @user.profile.id}} 
-      end
-
       def get_user
        @user = current_user 
       end

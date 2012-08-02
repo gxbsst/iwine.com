@@ -24,6 +24,7 @@ gem "fileutils"
 
 gem 'omniauth'
 gem 'oauth'
+gem 'oauth2'
 gem 'oauth_china'
 
 # Memcache

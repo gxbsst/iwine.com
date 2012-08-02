@@ -41,6 +41,9 @@ zh-CN:
       check_edit_register: "已经成功上传，不能再次修改！"
     album:
       check_is_public: "此相册仅用户自己可见！"
+    oauth:
+      update_oauth: "同步第三方成功。"
+
   helpers:
     submit:
       create: "创建 %{model}"
