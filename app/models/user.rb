@@ -350,6 +350,12 @@ class User < ActiveRecord::Base
     "http://iwine.com/users/#{domain}"
   end
 
+  def has_oauth_item?(params)
+    Users::Oauth.where(
+      ["user_id = ? AND sns_name= ? AND sns_user_id = ?", 
+        id, params[:sns_name], params[:sns_user_id]]).present?
+  end
+
   private
 
   def resize_avatar(from_version, to_version)

@@ -33,7 +33,15 @@ $(document).ready(function(){
         return this;
       },
       selectRegion: function(event){
-        console.log($(event.target).attr('data-value'));
+        debugger;
+        var target = event.target
+        this.setInputText(target.text)
+        console.log($(target).attr('data-value'));
+      },
+      setInputText: function(text){
+        //this.inputView
+        debugger;
+        console.log(this.inputView);
       }
   });
   
@@ -58,10 +66,10 @@ $(document).ready(function(){
         }
       },
       renderRegions: function(collections){
-        //debugger;
         $("#region_tree").html("");
+        self = this;
         collections.each(function(model){
-          var regionTreeView = new RegionTreeView({model: model});
+          var regionTreeView = new RegionTreeView({model: model, inputView: self});
           $("#region_tree").append(regionTreeView.render().el);
         });
       },
