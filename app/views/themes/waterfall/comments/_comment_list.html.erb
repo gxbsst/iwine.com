@@ -34,7 +34,11 @@
 		      <% end %>
 					| 
 					<%=  reply_comment(comment) %>
-				</div>		
+				</div>
+
+				<% comment.oauth_comments.each do |oauth_comment| %>
+					<p><strong><%= oauth_comment.sns_type %></strong><%= oauth_comment.sns_comments %></p>
+				<% end %>
 				<div id="reply_comment_<%= comment.id %>" class="replybox" style="display: none"></div>			
 			</div>
 			<div class="clear"></div>

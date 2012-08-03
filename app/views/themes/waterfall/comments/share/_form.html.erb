@@ -21,7 +21,14 @@
 			</script>
 			<% end %>
 			<div class="clear"></div>
-			<a href="javascript:void(0)" class="btn_gray button"><span>加上去</span></a>
+			<a href="javascript:void(0)" class="btn_gray button"><span>加上去</span></a><br/>
+			分享评论到：<br/>
+			<input type="checkbox" checked="checked" name="sns_type[]" value="weibo"/>
+			<%= theme_image_tag "icon/icon_sina.gif", :alt => "新浪微博账号登陆", :width => "24", :height => "24" %>
+			<input type="checkbox" checked="checked" name="sns_type[]" value="qq"/>
+			<%= theme_image_tag "icon/icon_qq.gif", :alt => "QQ账号登陆", :width => "24", :height => "24" %>
+			<input type="checkbox" checked="checked" name="sns_type[]" value="douban"/>
+			<%= image_tag("http://img3.douban.com/pics/doubanicon-16.png") %>
 			<br />
 			<span class="red text_error"></span>
 		</div>
@@ -39,6 +46,7 @@
 				<%= f.text_area :body,  :class => [:mb10, :comment_body] %>
 				<p class="text_count" style="display:none">您正在输入<span></span>个字。</p>
 			</div>
+
 		</div>
 		<div class="clear"></div>
 

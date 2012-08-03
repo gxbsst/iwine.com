@@ -145,3 +145,4 @@ gem 'omniauth-weibo-oauth2'
 gem 'omniauth-renren', :path => 'lib/gems/ballantyne-omniauth-renren'
 # API VERSION
 gem 'versionist'
+gem 'delayed_job_active_record'
