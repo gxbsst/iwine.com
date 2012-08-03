@@ -39,6 +39,8 @@ class FriendsController < ApplicationController
 
   #新浪微博单独使用oauth2获取粉丝
   def sync
+    #找到对应的oauth
+    oauth = current_user.oauths.oauth_binding.where("sns_name = ? ", params[:sns_name]).first
     if params[:sns_name] == "weibo"
       @oauth_user = current_user.oauths.oauth_binding.where("sns_name = 'weibo'").first
     else
@@ -47,7 +49,9 @@ class FriendsController < ApplicationController
     @availabe_sns = current_user.available_sns
     @user_ids = []
     if client.present? || @oauth_user
-      oauth_users = @oauth_user ? current_user.weibo_friends('weibo', @oauth_user.access_token, @oauth_user.sns_user_id) : client.possible_local_friends
+      oauth_users = @oauth_user ? current_user.weibo_friends('weibo', 
+                                            @oauth_user.access_token, 
+                                            @oauth_user.sns_user_id) :  client.possible_local_friends(oauth)
       @recommend_friends = current_user.remove_followings oauth_users
       @authorized = true
       @recommend_friends.each do |f|
