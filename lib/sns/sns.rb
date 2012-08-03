@@ -19,7 +19,7 @@ module SNS
       list
     end
 
-    def possible_local_friends
+    def possible_local_friends(user_oauth)
       sns_user_ids = []
       friends_hash = {}
 
@@ -57,8 +57,8 @@ module SNS
       me['data']['name']
     end
 
-    def friends
-      data = self.get('http://open.t.qq.com/api/friends/mutual_list').body
+    def friends(user_oauth)
+      data = self.get("http://open.t.qq.com/api/friends/mutual_list?name=#{user_oauth.sns_user_id}").body
       data = JSON.parse data
       list = []
 
@@ -72,11 +72,11 @@ module SNS
       list
     end
         
-    def possible_local_friends
+    def possible_local_friends(user_oauth)
       sns_user_ids = []
       friends_hash = {}
 
-      friends.each do |friend|
+      friends(user_oauth).each do |friend|
         sns_user_ids.push friend[:sns_user_id]
         friends_hash[ friend[:sns_user_id] ] = friend
       end
@@ -100,6 +100,7 @@ module SNS
       me['db:uid']['$t']
     end
 
+
     def friends
       data = self.get('http://api.douban.com/people/'+ @sns_user_id +'/contacts?alt=json').body
       data = JSON.parse data
@@ -116,7 +117,7 @@ module SNS
       list
     end
     
-    def possible_local_friends
+    def possible_local_friends(user_oauth)
       sns_user_ids = []
       friends_hash = {}
 
@@ -131,6 +132,16 @@ module SNS
       end
 
       local_user
+    end
+    
+    #重写oauth_china上的方法，将返回数据类型定义为json
+    def add_douban_status(content, options = {})
+      self.post("http://api.douban.com/miniblog/saying", <<-XML, {"Content-Type" =>  "application/atom+xml", "alt" => "json"})
+        <?xml version='1.0' encoding='UTF-8'?>
+        <entry xmlns:ns0="http://www.w3.org/2005/Atom" xmlns:db="http://www.douban.com/xmlns/">
+        <content>#{content}</content>
+        </entry>
+        XML
     end
   end
 end
