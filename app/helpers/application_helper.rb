@@ -147,7 +147,7 @@ module ApplicationHelper
   def link_to_sync_button(sns_name, url_or_object, options={})
 
     button_name = 'btn_syn_' + sns_name
-    link_to(image_tag("v2/button/#{button_name}.jpg", { :title => button_name }),
+    link_to(theme_image_tag("common/#{button_name}.jpg", { :title => button_name }),
             url_or_object,
             options)
   end
@@ -247,7 +247,7 @@ module ApplicationHelper
     if is_login_user?(user)
       link_to "私信", conversations_path, :class => "icon_mail"
     else
-      link_to "私信", "#send_message_form", :class => "icon_mail send_message"
+      link_to "私信", new_message_path(:receiver => user.username), :remote => true, :class => "icon_mail ajax"
     end
   end
   #  下拉菜单: 获取热门酒款
@@ -379,6 +379,19 @@ module ApplicationHelper
         link_to "返回", album_photo_show_user_url(photo.user, photo.album, photo)
       end
     end
+  end
+  
+  #使用第三方账号登陆iWine
+  def resource_name
+    :user
+  end
+ 
+  def resource
+    @resource ||= User.new
+  end
+ 
+  def devise_mapping
+    @devise_mapping ||= Devise.mappings[:user]
   end
 
 end

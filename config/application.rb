@@ -1,6 +1,7 @@
 # encoding: utf-8
 require File.expand_path('../boot', __FILE__)
 
+require 'csv'
 require 'rails/all'
 
 if defined?(Bundler)
@@ -62,6 +63,10 @@ module Patrick
     Time::DATE_FORMATS[:year] = "%Y"
     
     ThemesForRails.config.default_theme = "waterfall"
+
+    # if Rails.env.development?
+    #   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+    # end
     
   end
 end

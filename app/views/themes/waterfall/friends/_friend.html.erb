@@ -3,7 +3,7 @@
     <li>
       <div class="userpic">
         <%= link_to user_path(friend) do %>
-          <%= image_tag friend.user.avatar_url(:middle), :alt => friend.sns_name %>
+          <%= image_tag friend.user.avatar_url(:middle), :alt => friend.sns_name, :height => 50, :width => 50 %>
         <% end %>
       </div>
       

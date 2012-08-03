@@ -1,0 +1,4 @@
+weibo:
+  key:    721657578 # iwine 
+  secret: 91d9d64624ae1efb1bd88c935c35b3c0
+  site:   https://api.weibo.com

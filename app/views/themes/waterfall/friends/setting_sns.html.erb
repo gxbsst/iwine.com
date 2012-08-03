@@ -12,18 +12,18 @@
   <div class="sys">
     <ul>
       <li>
-        <% if current_user.check_oauth?("sina") %>
+        <% if current_user.check_oauth?("weibo") %>
         <span class="sys_on"></span>
-        <%= image_tag("/assets/waterfall/images/common/btn_syn_sina.jpg", :alt => "新浪微博") %>
+        <%= image_tag("/assets/waterfall/images/common/btn_syn_weibo.jpg", :alt => "新浪微博") %>
         <p>
           <em>已设置同步到新浪微博</em><br/>
-          <%= link_to "取消同步", delete_sns_friends_path(:sns_name => "sina") %>
+          <%= link_to "取消同步", delete_sns_friends_path(:sns_name => "weibo") %>
         </p>
       <% else %>
-        <%= image_tag("/assets/waterfall/images/common/btn_syn_sina_off.jpg", :alt => "新浪微博") %>
+        <%= image_tag("/assets/waterfall/images/common/btn_syn_weibo_off.jpg", :alt => "新浪微博") %>
         <p> <span>尚未设置同步</span> </p>
         <p>
-          <%= link_to new_sns_friends_path(:sns_name => "sina"), :class => "btn_gray" do %>
+          <%= link_to user_omniauth_authorize_path(:weibo), :class => "btn_gray" do %>
             <span>同步到新浪微博</span>
           <% end %>
         </p>

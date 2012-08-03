@@ -331,7 +331,7 @@ namespace :app do
 
   def new_build_info_item(winery, info)
     info_arr = info.split('#').collect{|i| i.to_ascii_brutal}
-    info_arr.delete("") #delete ""
+    info_arr.delete_at(0) #删掉第一个元素
     info_hash = Hash[*info_arr]
     info_hash.each do |key, value|
       winery.info_items.where("title = ?", key).first_or_create!(:title => key, :description => value)

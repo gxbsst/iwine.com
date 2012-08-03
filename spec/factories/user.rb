@@ -32,5 +32,11 @@ FactoryGirl.define do
        FactoryGirl.create_list :profile, 1, :user => user
     end
   end
+
+  trait :with_oauth do
+    after :create do |user|
+       FactoryGirl.create_list :user_oauths, 1, :user=> user
+    end
+  end
   
 end

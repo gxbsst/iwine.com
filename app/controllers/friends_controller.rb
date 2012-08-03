@@ -37,12 +37,23 @@ class FriendsController < ApplicationController
     @followings = current_user.followings
   end
 
+
+  #新浪微博单独使用oauth2获取粉丝
   def sync
-    client = current_user.oauth_client( params[:sns_name] )
+    #找到对应的oauth
+    oauth = current_user.oauths.oauth_binding.where("sns_name = ? ", params[:sns_name]).first
+    if params[:sns_name] == "weibo"
+      @oauth_user = current_user.oauths.oauth_binding.where("sns_name = 'weibo'").first
+    else
+      client = current_user.oauth_client( params[:sns_name] )
+    end
     @availabe_sns = current_user.available_sns
     @user_ids = []
-    if client.present?
-      @recommend_friends = current_user.remove_followings client.possible_local_friends
+    if client.present? || @oauth_user
+      oauth_users = @oauth_user ? current_user.weibo_friends('weibo', 
+                                            @oauth_user.access_token, 
+                                            @oauth_user.sns_user_id) :  client.possible_local_friends(oauth)
+      @recommend_friends = current_user.remove_followings oauth_users
       @authorized = true
       @recommend_friends.each do |f|
         @user_ids.push( f.user_id )
@@ -54,7 +65,7 @@ class FriendsController < ApplicationController
   end
 
   def delete_sns
-    user_oauth = Users::Oauth.first :conditions => { :user_id => current_user.id , :sns_name => params[:sns_name] }
+    user_oauth = Users::Oauth.oauth_binding.where("user_id = ? and sns_name  = ? ", current_user.id, params[:sns_name]).first
     if user_oauth.present?
       user_oauth.delete
     end

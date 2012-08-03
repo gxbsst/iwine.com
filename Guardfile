@@ -2,8 +2,7 @@
 # More info at https://github.com/guard/guard#readme
 
 guard 'rspec', :version => 2, 
-               :cli => "--drb",
-               :color => true,
+               :cli => "--drb --color",
                :all_on_start => false, :all_after_pass => false do
 
   watch(%r{^spec/.+_spec\.rb$})

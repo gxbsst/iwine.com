@@ -1,14 +1,23 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
-  
+ 
   resources :after_first_signins do
     collection do
       match :upload_avatar, :via => [:get, :post, :put]
     end
   end
 
-  resources :follows
 
+  #first login iWine
+  resources :oauth_logins
+
+  resources :follows
+  resources :oauth_logins do
+    collection do 
+      get :sns_login
+      get :update_info
+    end
+  end
   themes_for_rails
 
   # unless Rails.application.config.consider_all_requests_local
@@ -21,13 +30,18 @@ Patrick::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   ## USER
-  devise_for :users, :controllers => { :sessions => "devise/sessions", :registrations => "registrations" }
+  devise_for :users, :controllers => { :sessions => "sessions",
+                                       :registrations => "registrations",
+                                       :omniauth_callbacks => "omniauth_callbacks"}
   
+
   devise_scope :user do
     get :login , :to => "devise/sessions#new"
     get :logout , :to => 'devise/sessions#destroy'
     get :register , :to => 'devise/registrations#new'
   end
+
+
   
   # COMMENT
   resources :comments do 
@@ -154,6 +168,10 @@ Patrick::Application.routes.draw do
   match "/friends/:type/sync" => "friends#new", :as => :sync_new
   match "/friends/:type/callback" => "friends#callback", :as => :sync_callback
 
+  match "oauth_logins/:type/sns_login" => "oauth_logins#sns_login" 
+  match "oauth_logins/:type/update_info" => "oauth_logins#update_info"
+  
+
   # WINERIES
   resources :wineries do
     member do
@@ -199,6 +217,15 @@ Patrick::Application.routes.draw do
 
 
   # API
+  namespace :api do
+    api_version(:module => "v1", :header => "Accept", :value => "application/vnd.iwine.com; version=1") do
+      resources :registrations
+      resources :sessions
+      resources :uploads
+      resources :profiles
+      resources :oauths
+    end
+   end
   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
 
   # STATIC

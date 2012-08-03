@@ -24,6 +24,7 @@ gem "fileutils"
 
 gem 'omniauth'
 gem 'oauth'
+gem 'oauth2'
 gem 'oauth_china'
 
 # Memcache
@@ -138,3 +139,13 @@ gem 'themes_for_rails', :path => "lib/gems"
 
 # step form
 gem 'wicked'
+
+gem 'omniauth-qq-connect'
+gem 'omniauth-weibo-oauth2'
+gem 'omniauth-renren', :path => 'lib/gems/ballantyne-omniauth-renren'
+# API VERSION
+gem 'versionist'
+# XML Parser
+gem 'nokogiri'
+
+gem 'delayed_job_active_record'
