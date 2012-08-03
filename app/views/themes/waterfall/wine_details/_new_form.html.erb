@@ -1,82 +1,67 @@
-<div id="query_outer">
-  <input type="text" name="query" id="query" value="" />
-</div>
-
-<div id="region_tree"> </div>
-
-<script type="text/template" id="regiontree-template">
-  <div class="region">
-    <h2><@= origin_name @> </h2>
-    <ul>
-      <@ _.each(children, function(child){ @>
-        <li>
-          <a href="javascript:void(0)" data-value=<@= child.id @>>
-            <@= child.origin_name @><@= child.name_zh @><@= child.level @>
-          </a>
-          </li>
-      <@ }); @>
-    </ul>
-  </div>
-</script>
-
 <%= form_for @register, :validate => true, :url => {:action => :create}, :method => :post ,:html => { :class => 'form-horizontal', :multipart => true } do |f| %>
-    <% unless @register.new_record? %><input type="hidden" name="register_id" value="<%= @register.id %>"/><% end %>
-    <div class="left">
-      <div class="required">
-        <label class="vm"><span>*</span>葡萄酒英文名</label>
-        <% if @read_only %> <%= @register.name_en %> <% else %><%= f.text_field :name_en, :class => "name text" %><% end %>
-      </div>
-      <div class="required">
-        <label><span>*</span>类型</label>
-        <% if @read_only %> <%= @register.style.name %> <% else %> <%= f.select :wine_style_id, Wines::Style.all.collect{ |s| [s.name_zh + '/' + s.name_en, s.id] } %><% end %>
-      </div>
-      <div class="required">
-        <label><span>*</span>产区</label>
-      </div>
+   <% unless @register.new_record? %><input type="hidden" name="register_id" value="<%= @register.id %>"/><% end %>
+   <%= render 'share/error_messages', :target => @register %>
+   <div class="left">
+     <div class="required">
+       <label><span>*</span>葡萄酒英文名</label>
+       <% if @read_only %> <%= @register.name_en %> <% else %><%= f.text_field :name_en %><% end %>
+     </div>
+     <div class="required">
+       <label><span>*</span>类型</label>
+       <% if @read_only %> <%= @register.style.name %> <% else %> <%= f.select :wine_style_id, Wines::Style.all.collect{ |s| [s.name_zh + '/' + s.name_en, s.id] } %><% end %>
+     </div>
+     <div class="required">
+       <label><span>*</span>产区</label>
+       <% if @read_only %><%=  @register.region_path_zh(@wine.region_tree_id) %> <% else %><%= render "region_tree" %><% end %>
 
-      <div class="required">
-        <label><span>*</span>年份</label>
-        <%= f.date_select :vintage, 
-                          :discard_day => true, 
-                          :discard_month => true, 
-                          :start_year => Time.now.year, 
-                          :end_year => 1950, 
-                          :prompt => {:year => "选择年份"} %>年
-        <label class="nv"><%= check_box_tag("wines_register[is_nv]", 1, @register.is_nv.to_i == 1, :id => "check_nv") %>NV/无年份葡萄酒</label>
-      </div>
-      <div class="required">
-        <label><span>*</span>容量</label>
-        <div class="text"><%= f.select :capacity, APP_DATA['wines']['capacity'].each{|key, value| [key, value]} %></div>
-      </div>
-      <div class="optional">
-        <%= f.label :photo_name, :class => "vm" %>
-        <%= f.file_field :photo_name, :class => "text name mr5" %>
-      </div>
-      <div class="mt10">
-        <label>&nbsp;</label>
-        <div class="content">
-          <%= link_to "#", :class => "btn_gray mr5", :id => "submit_register" do %>
-              <span>下一步</span>
-          <% end %>
-          <%= link_to root_url, :class => "btn_gray" do %>
-              <span>取消</span>
-          <% end %>
-        </div>
-      </div>
-      <div class="clear"></div>
-    </div>
-    <div class="clear"></div>
+         <div id="query_outer">
+           <input type="text" name="query" id="query" value="" />
+         </div>
+
+         <div id="region_tree_auto"> </div>
+
+         <script type="text/template" id="regiontree-template">
+           <div class="region">
+             <h2><@= origin_name @> </h2>
+             <ul>
+               <@ _.each(children, function(child){ @>
+                 <li>
+                   <a href="javascript:void(0)" data-value=<@= child.id @>>
+                     <@= child.origin_name @><@= child.name_zh @><@= child.level @>
+                   </a>
+                 </li>
+                 <@ }); @>
+             </ul>
+           </div>
+         </script>
+
+     </div>
+
+     <div class="required">
+       <label><span>*</span>年份</label>
+       <%= f.date_select :vintage, :discard_day => true, :discard_month => true, :start_year => 1950, :end_year => Time.now.year, :prompt => {:year => "选择年份"} %>年
+       <label class="nv"><%= check_box_tag("wines_register[is_nv]", 1, @register.is_nv.to_i == 1) %>NV/无年份葡萄酒</label>
+     </div>
+     <div class="required">
+       <label><span>*</span>容量</label>
+       <%= f.select :capacity, APP_DATA['wines']['capacity'].collect{|i| [i, i]} %>
+     </div>
+     <div class="optional">
+       <%= f.label :photo_name %>
+       <%= f.file_field :photo_name %>
+     </div>
+     <div class="mt10">
+       <label>&nbsp;</label>
+       <div class="content">
+         <%= link_to "#", :class => "btn_gray mr5", :id => "submit_register" do %>
+             <span>下一步</span>
+         <% end %>
+         <%= link_to root_url, :class => "btn_gray" do %>
+             <span>取消</span>
+         <% end %>
+       </div>
+     </div>
+     <div class="clear"></div>
+   </div>
+   <div class="clear"></div>
 <% end %>
-<script type="text/javascript">
-    $("#check_nv").change(function(){
-       if ($(this).attr("checked") == "checked") {
-           $("#wines_register_vintage_1i").attr("disabled", "disabled");
-           $("#wines_register_vintage_2i").attr("disabled", "disabled");
-           $("#wines_register_vintage_3i").attr("disabled", "disabled");
-       }else{
-           $("#wines_register_vintage_1i").removeAttr('disabled');
-           $("#wines_register_vintage_2i").removeAttr('disabled');
-           $("#wines_register_vintage_3i").removeAttr('disabled');
-       }
-    });
-</script>
