@@ -58,6 +58,7 @@ class CommentsController < ApplicationController
   def create
     @comment = build_comment
     if @comment.save
+      @comment.share_comment_to_weibo(params[:sns_type])
       # TODO
       # 1. 广播
       # 2. 分享到SNS
