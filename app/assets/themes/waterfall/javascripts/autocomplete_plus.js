@@ -66,7 +66,7 @@ $(document).ready(function(){
         }
       },
       renderRegions: function(collections){
-        $("#region_tree").html("");
+        $("#region_tree_auto").html("");
         self = this;
         collections.each(function(model){
           var regionTreeView = new RegionTreeView({model: model, inputView: self});
