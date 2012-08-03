@@ -1,8 +1,9 @@
+#encoding: utf-8
 require 'oauth2'
 module Users
   module SnsOauth
     #oauth2找好友
-    def init_client(type)
+    def init_client(type, token)
       client = case type
       when 'weibo'
         OAuth2::Client.new(OAUTH_DATA['weibo']['key'], OAUTH_DATA['weibo']['secret'],{
@@ -11,14 +12,16 @@ module Users
           :token_url => "/oauth2/access_token"
         })
       end
+      access_token = OAuth2::AccessToken.new(client, token)
+      access_token.options[:mode] = :query
+      access_token.options[:param_name] = 'access_token'
+      return access_token
     end
 
     def weibo_friends(type, token, uid)
       #发送请求获得好友
-      client = init_client(type)
-      access_token = OAuth2::AccessToken.new(client, token)
-      access_token.options[:mode] = :query
-      access_token.options[:param_name] = 'access_token'
+      access_token = init_client(type, token)
+     
       response = access_token.get('/2/friendships/followers.json', :params => {:uid => uid}).parsed
 
       follower_list = []
@@ -50,5 +53,6 @@ module Users
       end
       return oauth_users
     end
+
   end
 end
