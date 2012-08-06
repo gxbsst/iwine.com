@@ -24,6 +24,7 @@
 //= require waterfall/javascripts/waterfall
 //= require waterfall/javascripts/home
 //= require waterfall/javascripts/css_browser_selector
+//= require waterfall/javascripts/autocomplete_plus
 
 
 $(document).ready(function(){

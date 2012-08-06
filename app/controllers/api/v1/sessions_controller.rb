@@ -46,7 +46,8 @@ module Api
                           :email => resource.email,
                           :username => resource.username,
                           :id => resource.id,
-                          :slug => resource.slug }}
+                          :slug => resource.slug,
+                          :profile_id => resource.profile.id }}
       end
 
     end

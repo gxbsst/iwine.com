@@ -1,0 +1,19 @@
+<div class="sns">
+  <p><span>您也可以通过站外账号进行登录：</span></p>
+  <p>
+    <%= link_to  user_omniauth_authorize_path(:weibo), :target => "_blank" do %>
+      <%= theme_image_tag('common/sina-connect.gif', :alt => "用微博账号登陆", :width => "126", :height => "24") %>
+    <% end %>
+  </p>
+  <p>
+    <%= link_to user_omniauth_authorize_path(:qq_connect), :target => "_blank" do %>
+      <%= theme_image_tag('common/qq-connect.gif', :alt => "用QQ账号登陆", :width => "126", :height => "24") %>
+    <% end %>
+  </p>
+  <p>
+    <%= link_to user_omniauth_authorize_path(:renren), :target => "_blank" do %>
+      <%= theme_image_tag('common/renren_login_w.png', :alt => "用人人账号登陆", :width => "126", :height => "24") %>
+    <% end %>
+  </p>
+       
+</div>
