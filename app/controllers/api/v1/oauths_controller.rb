@@ -9,7 +9,10 @@ module Api
         if create_user_oauth(params[:oauth_user])
           render :json =>  user_info_json
         else
-          render :json => @user_oauth.errors, :status => 422
+          render :json => {:success => false,
+            :resultCode =>  APP_DATA["api"]["return_json"]["normal_failed"]["code"],
+            :errorDesc =>  APP_DATA["api"]["return_json"]["normal_failed"]["message"],
+            :message => @user_oauth.errors }, :status => 422
         end
       end
       

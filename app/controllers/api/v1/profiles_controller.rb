@@ -15,7 +15,6 @@ module Api
         if birthday.present? 
           params[:user][:profile_attributes][:birthday] = Time.parse birthday
         end
-
         if current_user.update_attributes(params[:user]) &&
           current_user.profile.update_attributes(params[:user][:profile_attributes])
           success_json(current_user)
@@ -31,7 +30,11 @@ module Api
       protected
 
       def invalid_update_json(user)
-        render :json=> {:success=>false, :message => user.errors.messages , :status => 422 }
+        render :json=> {:success=>false, 
+          :resultCode => APP_DATA["api"]["return_json"]["normal_failed"]["code"],
+          :errorDesc =>  APP_DATA["api"]["return_json"]["normal_failed"]["message"],
+          :message => user.errors.messages,
+          :status => 422 }
       end
 
       def success_json(user)

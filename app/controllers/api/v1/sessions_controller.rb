@@ -33,15 +33,23 @@ module Api
       protected
       def ensure_params_exist
         return unless params[:user].blank?
-        render :json=>{:success=>false, :message=>"missing user parameter"}, :status => 422
+        render :json=>{:success=>false, 
+          :resultCode => APP_DATA["api"]["return_json"]["miss_parameter"]["code"], 
+          :errorDesc => APP_DATA["api"]["return_json"]["miss_parameter"]["message"] }, 
+          :status => 422
       end
 
       def invalid_login_attempt
-        render :json=> {:success=>false, :message=>"Error with your login or password"}, :status => 401
+        render :json=> {:success=>false,
+          :resultCode => APP_DATA["api"]["return_json"]["auth_failed"]["code"], 
+          :errorDesc => APP_DATA["api"]["return_json"]["auth_failed"]["message"] }, 
+          :status => 401
       end
 
       def build_json(resource)
         return {:success => true, 
+                :resultCode => APP_DATA["api"]["return_json"]["normal_success"]["code"],
+                :errorDesc => APP_DATA["api"]["return_json"]["normal_success"]["message"],
                 :user => {:auth_token => resource.authentication_token,
                           :email => resource.email,
                           :username => resource.username,
