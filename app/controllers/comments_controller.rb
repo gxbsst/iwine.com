@@ -64,6 +64,7 @@ class CommentsController < ApplicationController
       # 2. 分享到SNS
       notice_stickie t("notice.comment.#{@comment.do == 'follow' ? 'follow' : 'comment'}_success")
       redirect_to params[:return_url] ?  params[:return_url] : @commentable_comments_path
+
     end
   end
   

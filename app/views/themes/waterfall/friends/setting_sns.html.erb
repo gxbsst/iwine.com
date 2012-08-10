@@ -16,14 +16,14 @@
         <span class="sys_on"></span>
         <%= image_tag("/assets/waterfall/images/common/btn_syn_weibo.jpg", :alt => "新浪微博") %>
         <p>
-          <em>已设置同步到新浪微博</em><br/>
+          <em>已设置同步到新浪微博</em>
           <%= link_to "取消同步", delete_sns_friends_path(:sns_name => "weibo") %>
         </p>
       <% else %>
         <%= image_tag("/assets/waterfall/images/common/btn_syn_weibo_off.jpg", :alt => "新浪微博") %>
         <p> <span>尚未设置同步</span> </p>
         <p>
-          <%= link_to user_omniauth_authorize_path(:weibo), :class => "btn_gray" do %>
+          <%= link_to user_omniauth_authorize_path(:weibo, :display => "popup"), :class => "btn_gray", :target => "_blank" do %>
             <span>同步到新浪微博</span>
           <% end %>
         </p>
@@ -42,7 +42,7 @@
             <%= image_tag("/assets/waterfall/images/common/btn_syn_qq_off.jpg", :alt => "腾讯微博") %>
             <p><span>尚未设置同步</span></p>
             <p>
-              <%= link_to new_sns_friends_path(:sns_name => "qq"), :class => "btn_gray" do %>
+              <%= link_to new_sns_friends_path(:sns_name => "qq"), :class => "btn_gray", :target => "_blank" do %>
                 <span>同步到腾讯微博</span>
               <% end %>
             </p>
@@ -61,7 +61,7 @@
             <%= image_tag("/assets/waterfall/images/common/btn_syn_douban_off.jpg", :alt => "豆瓣") %>
             <p><span>尚未设置同步</span></p>
             <p>
-              <%= link_to new_sns_friends_path(:sns_name => "douban"), :class => "btn_gray" do %>
+              <%= link_to new_sns_friends_path(:sns_name => "douban"), :class => "btn_gray", :target => "_blank" do %>
                 <span>同步到豆瓣</span>
               <% end %>
             </p>
@@ -70,5 +70,9 @@
       <div class="clear"></div>
     </ul>
   </div>
-
 </div>
+<script type="text/javascript">
+  <% if params[:failure] %>
+    parent.$.fancybox({content:'同步失败'});
+  <% end %>
+</script>

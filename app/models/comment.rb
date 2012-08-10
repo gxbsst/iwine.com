@@ -157,6 +157,7 @@ class Comment < ActiveRecord::Base
   #分享评论到第三方网站
   def share_comment_to_weibo(weibo_type)
     if parent_id.nil? && weibo_type.present?
+      sleep 10
       share_comment(weibo_type)
     end
   end
@@ -165,7 +166,8 @@ class Comment < ActiveRecord::Base
   def send_weibo(content)
     oauth_weibo = user.oauths.oauth_binding.where('sns_name = ?', 'weibo').first
     access_token = user.init_client('weibo', oauth_weibo.access_token)
-    response = access_token.post("/2/statuses/update.json", :params => {:status => content}).body
+    response = access_token.post("https://upload.api.weibo.com/2/statuses/upload.json", :params => {:status => content, :pic => Photo.first.image}).body
+    Rails.logger.info "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ #{response}"
     new_oauth_comment(JSON.parse(response)['id'], 'weibo')
   end
 
