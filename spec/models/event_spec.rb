@@ -1,0 +1,176 @@
+# encoding: utf-8
+require 'spec_helper'
+
+describe Event do
+
+  context "initialize event" do
+    before(:each) do 
+      @event = Event.new  
+    end
+
+    describe "#title" do
+      it "should be nil" do
+        @event.title.should be_nil
+      end
+    end
+
+    describe "#desription" do
+      it "should be nil" do
+        @event.description.should be_nil
+      end
+    end
+
+    describe "#poster" do
+      it "should eql /assets/userpic.jpg" do
+        @event.poster_url.should == "/assets/userpic.jpg"
+      end
+    end
+
+    describe "#begin_at" do
+      it "should be nil" do
+        @event.begin_at.should be_nil
+      end
+    end
+
+    describe "#end_at" do
+      it "should be nil" do
+        @event.begin_at.should be_nil
+      end
+    end
+
+    describe "#end_at" do
+      it "should be nil" do
+        @event.begin_at.should be_nil
+      end
+    end
+
+    describe "#address" do
+      it "should be nil" do
+        @event.address.should be_nil
+      end
+    end
+
+    describe "#pulish_status" do
+      it "should be 1" do
+        @event.pulish_status.should be(1) # 草稿状态 
+      end
+    end
+
+    describe "#followers_count" do
+      it "should be 0" do
+        @event.followers_count.should be(0)
+      end
+    end
+
+    describe "#participants_count" do
+      it "should be 0" do
+        @event.participants_count.should be(0)
+      end
+    end
+  end
+
+  context "create a events" do
+    before(:each) do
+      @event = create :event
+    end
+    describe "#title" do
+      it "should be not nil" do
+        @event.title.should_not be_nil
+      end
+    end
+
+    describe "#desription" do
+      it "should be not nil" do
+        @event.description.should_not be_nil
+      end
+    end
+
+    #describe "#poster" do
+      #it "should be nil" do
+        #@event.poster.should be_nil
+      #end
+    #end
+
+    describe "#begin_at" do
+      it "should be nil" do
+        @event.begin_at.should == Time.parse('2008-12-20 00:00:00 ') 
+      end
+    end
+
+    describe "#end_at" do
+      it "should be nil" do
+        @event.end_at.should == Time.parse('2008-12-30 00:00:00 ') 
+      end
+    end
+
+    describe "#address" do
+      it "should include 上海" do
+        @event.address.should include("上海") 
+      end
+
+      
+      it "latitude longitude" do
+       Geocoder.coordinates(@event.address).first.should eql(31.230393)
+       Geocoder.coordinates(@event.address).last.should  eql(121.473704)
+      end
+
+      it "should get near address" do
+        result = Geocoder.coordinates("上海江桥")
+        @client = GooglePlaces::Client.new("AIzaSyAA-avxg99B5P-rTQHuItTBZ17FvbbGI8A") 
+        array =  @client.spots(result.first, result.last, :language => 'zh-CN') 
+        array.size.should  be(20)
+        array.first.name.should include("嘉定区")
+      end
+
+    end
+
+    describe "#pulish_status" do
+      it "should be 1" do
+        @event.pulish_status.should be(1) # 草稿状态 
+      end
+    end
+
+    describe "#followers_count" do
+      it "should be 0" do
+        @event.followers_count.should be(0)
+      end
+    end
+
+    describe "#participants_count" do
+      it "should be 0" do
+        @event.participants_count.should be(0)
+      end
+    end
+
+    describe "#tags" do
+      it "should have 2 tags" do
+        @event.should have(2).tags
+      end
+
+      it "should can find tags with 故事" do
+        Event.tagged_with("故事").first.title.should include("活动")
+      end
+    end
+
+    describe "block_in" do
+      it "should be 10" do
+        @event.block_in.should be(10) 
+      end
+    end
+
+  end
+
+  context "validate Event" do
+    before(:each) do
+      @event = Event.create(:title => "test")
+    end
+
+    describe "#errors" do
+      it "should have 3 errors" do
+        @event.should have(4).errors 
+      end
+    end
+
+  end
+
+end

@@ -57,6 +57,16 @@ class SearchesController < ApplicationController
     end
   end
 
+  def wine 
+    server = HotSearch.new
+    @entries = server.all_entries( params[:word])
+    @wines= @entries['wines']
+    respond_to do |format|
+      format.html  
+      format.json {render :json => @wines}
+    end
+  end
+
   def results
     @title = "搜索"
     server = HotSearch.new

@@ -1,0 +1,3 @@
+
+class EventWinesController < ApplicationController
+end

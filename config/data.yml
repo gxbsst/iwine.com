@@ -164,6 +164,21 @@ image:
     large:
       width: 360
       height: 360
+  poster:
+    origin:
+      width: 280
+      height: 280
+    large:
+      width: 130
+      height: 130
+    middle:
+      width: 50
+      height: 50
+    thumb:
+      width: 30
+      height: 30
+
+   
         
 timeline:
    event:

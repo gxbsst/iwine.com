@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
  
+  resources :event_invitees
+
+  resources :event_wines
+
+  resources :event_participants
+
   resources :after_first_signins do
     collection do
       match :upload_avatar, :via => [:get, :post, :put]
@@ -211,6 +217,7 @@ Patrick::Application.routes.draw do
       get :winery, :via => [:get , :put]
       get :suggestion, :via => [:get , :put]
       get :results, :via => [:get , :put]
+      get :wine
       post :search_user
     end
   end
