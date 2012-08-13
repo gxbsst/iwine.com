@@ -3,7 +3,6 @@ tmp/*
 .DS_Store
 *.tmproj
 Thumbs.db
-.*
 ._*
 nbproject/
 .project
@@ -20,7 +19,6 @@ Capfile
 Gemfile.lock
 .idea/workspace.xml
 db/schema.rb
-
 .idea/workspace.xml
 db/wine_variety_i18n.csv
 .rakeTasks
@@ -34,3 +32,4 @@ lib/wines_photos
 public/assets
 /lib/region_tree.csv
 lib/tasks/data
+lig/gem
