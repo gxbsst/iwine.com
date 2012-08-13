@@ -50,9 +50,9 @@ describe Event do
       end
     end
 
-    describe "#pulish_status" do
+    describe "#publish_status" do
       it "should be 1" do
-        @event.pulish_status.should be(1) # 草稿状态 
+        @event.publish_status.should be(1) # 草稿状态 
       end
     end
 
@@ -124,9 +124,9 @@ describe Event do
 
     end
 
-    describe "#pulish_status" do
+    describe "#publish_status" do
       it "should be 1" do
-        @event.pulish_status.should be(1) # 草稿状态 
+        @event.publish_status.should be(2) # 发布状态 
       end
     end
 
@@ -170,7 +170,35 @@ describe Event do
         @event.should have(4).errors 
       end
     end
-
   end
 
+  context "user join in a event" do
+    before(:each) do
+      @user = create(:user)
+      @event = create(:event)
+      @ep_info = {:telephone => '13472466606',
+        :user_id => @user.id,
+        :email => @user.email,
+        :note => "here is note",
+        :username => @user.username}
+    end
+    describe "#participants_count"  do
+      it "should be  1" do
+       @user.join_event(@event, @ep_info)
+       Event.find(@event).participants_count.should be(1)
+       @participant = @user.cancle_join_event(@event, :cancle_note => 'cancle note') 
+       @participant.join_status.should be(0)
+       Event.find(@event).participants_count.should be(0)
+      end
+    end
+
+    describe "#followers_count" do
+      it "should have some change" do
+       @user.follow_event(@event) 
+       Event.find(@event).followers_count.should be(1)
+       @user.cancle_follow_event(@event)
+       Event.find(@event).followers_count.should be(0)
+      end
+    end
+  end
 end

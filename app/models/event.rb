@@ -7,10 +7,10 @@ class Event < ActiveRecord::Base
   has_many :participants, :class_name => "EventParticipant"
   has_many :invitees, :class_name => "EventInvitee"
   has_many :comments,  :class_name => 'EventComment', :as => :commentable
-  has_many :followers, :as => :followable, :class_name => "EventFollow"
+  has_many :follows, :as => :followable, :class_name => "EventFollow"
 
   attr_accessible :address, :begin_at, :block_in, :description, :end_at, :followers_count,
-  :latitude, :longitude, :participants_count, :poster, :pulish_status, :title,
+  :latitude, :longitude, :participants_count, :poster, :publish_status, :title,
   :crop_x, :crop_y, :crop_w, :crop_h
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
@@ -30,6 +30,76 @@ class Event < ActiveRecord::Base
 
   # Crop poster
   after_update :crop_poster
+
+  # 统计
+  counts :participants_count => {
+          :with => "EventParticipant",
+          :receiver => lambda {|participant| participant.event },
+          :increment => {:on => :create},
+          :decrement => {
+            :on => :update,  
+            :if => lambda {|participant| participant.cancle? }}                              
+         },
+         :followers_count => {:with => "Follow", 
+           :receiver => lambda {|follow| follow.followable },
+           :increment => {
+            :on => :create, 
+            :if => lambda {|follow| follow.follow_counter_should_increment_for("Event")}},
+           :decrement => {
+            :on => :destroy, 
+            :if => lambda {|follow| follow.follow_counter_should_decrement_for("Event")}}                              
+         }
+
+  # 活动是否已经锁定
+  def locked?
+    if publish_status == APP_DATA['event']['publish_status']['locked']
+      true
+    else
+      false
+    end
+  end
+
+  # 将活动锁定
+  def locked!
+   update_attribute(:publish_status,  APP_DATA['event']['publish_status']['locked'])
+  end
+
+  # 活动是否可参加
+  def joinedable?
+    if publish_status == APP_DATA['event']['publish_status']['locked'] ||
+      publish_status == APP_DATA['event']['publish_status']['draft'] ||
+      publish_status == APP_DATA['event']['publish_status']['cancle'] 
+      false 
+    else
+     true 
+    end
+  end
+
+  # 活动是否设定人数
+  def set_blocked?
+   block_in > 0 ? true : false
+  end
+  
+  # 人数已经订满?
+  def ausgebucht?
+    return false  unless set_blocked?
+    block_in > get_participant_number ? false : true
+  end
+
+  def get_participant_number
+   EventParticipant.where(:event_id => id, 
+                          :join_status =>  APP_DATA['event_participant']['join_status']['cancle']).count 
+  end
+
+  # 是否已经被关注
+  def have_been_followed?(user_id)
+     Follow.get_my_follow_item(self.class.to_s, id, user_id) 
+  end
+
+  # 是否已经参加
+  def have_been_joined?(user_id)
+     EventParticipant.get_my_participant_info(id, user_id)
+  end
 
   private
 

@@ -9,7 +9,7 @@ FactoryGirl.define do
     begin_at (Time.parse '2008-12-10') + 10.days
     end_at (Time.parse '2008-12-10') + 20.days
     block_in 10
-    pulish_status 1
+    publish_status 2 
     followers_count 0
     participants_count 0
     longitude "22222"
@@ -36,7 +36,7 @@ FactoryGirl.define do
       number_of_participants 3
     end
     after :create do |event, evaluator|
-      FactoryGirl.create_list :event_participants, 
+      FactoryGirl.create_list :event_participant, 
         evaluator.number_of_participants, 
         :event => event
     end

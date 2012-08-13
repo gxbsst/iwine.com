@@ -14,7 +14,7 @@ class CreateEvents < ActiveRecord::Migration
       t.string :longitude
       t.string :latitude
       t.belongs_to :audit_log
-      t.integer :pulish_status, :default => 1 # 1 => 草稿, 2 => 已经发布, 0 => 取消
+      t.integer :pulish_status, :default => 1 # 1 => 草稿, 2 => 已经发布, 0 => 取消, 3 => 正在进行或者过期
       t.integer :followers_count, :default => 0
       t.integer :participants_count, :default => 0
 

@@ -261,8 +261,17 @@ api:
      message: ""
    
 
-
-   
+event:
+ publish_status:
+  cancle: 0
+  draft: 1
+  published: 2
+  locked: 3
+event_participant:
+ join_status:
+  joined: 1
+  cancle: 0
+ 
 
 
      
