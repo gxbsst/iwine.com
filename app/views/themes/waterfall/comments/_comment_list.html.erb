@@ -31,8 +31,7 @@
 				<div class="userful">
 					<%= link_to  vote_comment_path(comment.id), :remote => true, :class => "ajax vote"  do %>
 		        有用(<span class="likes_count"><%=comment.votes_count %></span>)
-		      <% end %>
-					| 
+		      <% end %> 
 					<%=  reply_comment(comment) %>
 				</div>		
 				<div id="reply_comment_<%= comment.id %>" class="replybox" style="display: none"></div>			
@@ -41,9 +40,10 @@
 		</li>
 		<% end %>
 		</ul>
+
 		 <div class="pagination">
              <%= paginate @comments %>
-          </div>
+         </div>
 
 
 		<% else %>

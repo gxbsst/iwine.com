@@ -30,15 +30,13 @@ class PhotosController < ApplicationController
     :conditions => ["parent_id IS NULL"], :group => "comments.id",
     :order => order )
     # page = params[:params] || 1
+    page = params[:page] || 1
+    @comments =  @photo.comments.page(page).per(20)
 
     case @resource
     when "Wines::Detail"
-      page = params[:page] || 1
-      @comments =  @photo.comments.page(page).per(4)
       render_wine_photo_detail
     when "wineries"
-      page = params[:page] || 1
-      @comments =  @photo.comments.page(page).per(4)
       render_winery_photo_detail
     end
   end
