@@ -6,8 +6,8 @@ FactoryGirl.define do
     title "这个是一个活动"
     description "这个是活动的内容"
     address "上海市内茶陵北路20号"
-    begin_at (Time.parse '2008-12-10') + 10.days
-    end_at (Time.parse '2008-12-10') + 20.days
+    begin_at (Time.parse '2014-12-10') + 10.days
+    end_at (Time.parse '2014-12-10') + 20.days
     block_in 10
     publish_status 2 
     followers_count 0

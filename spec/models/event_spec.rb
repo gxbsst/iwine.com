@@ -93,13 +93,13 @@ describe Event do
 
     describe "#begin_at" do
       it "should be nil" do
-        @event.begin_at.should == Time.parse('2008-12-20 00:00:00 ') 
+        @event.begin_at.should == Time.parse('2014-12-20 00:00:00 ') 
       end
     end
 
     describe "#end_at" do
       it "should be nil" do
-        @event.end_at.should == Time.parse('2008-12-30 00:00:00 ') 
+        @event.end_at.should == Time.parse('2014-12-30 00:00:00 ') 
       end
     end
 
@@ -201,4 +201,32 @@ describe Event do
       end
     end
   end
+
+  context "Invite User" do
+   before(:each) do
+     @event = create(:event)
+     @inviter = create(:user)
+     @invitee = create(:user)
+   end
+
+   describe "Invite on user" do
+     it "should be successful" do
+       @inviter.invite_one(@invitee.id, @event).confirm_status.should be(0)
+     end
+   end
+  end
+
+  context "Add a Wine" do
+    before(:each) do
+     @event = create(:event) 
+     @wine = create(:wine_detail)
+    end
+    describe "#add_one_wine" do
+      it "should be true" do
+       @wine = @event.add_one_wine(@wine.id)
+       @wine.wine_detail.name.should include("中国")
+      end
+    end
+  end
+
 end
