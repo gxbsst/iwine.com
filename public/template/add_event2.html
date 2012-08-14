@@ -52,11 +52,11 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
             <form id="form" name="form" method="post" action="#">
             <table class="form" width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <th width="90">活动标题</th>
+                <th width="90"><span class="red">*</span>活动标题</th>
                 <td><input name="text" type="text" class="text name" value="鸡尾酒初级品鉴会" /></td>
               </tr>
               <tr>
-                <th valign="top">活动标签</th>
+                <th valign="top"><span class="red">*</span>活动标签</th>
                 <td><input name="text" type="text" class="text tag" value="鸡尾酒;品鉴会" />
                       多个名称用“；”隔开
                 <p class="mt10">热门活动标签：</p>
@@ -73,13 +73,13 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
               </td>
               </tr>
               <tr>
-                <th>活动时间</th>
+                <th><span class="red">*</span>活动时间</th>
                 <td><input name="text" type="text" class="text date" value="8月1日" /><input name="text" type="text" class="text time" value="10:00" />
                        至 
                 <input name="text" type="text" class="text date" value="8月1日" /><input name="text" type="text" class="text time" value="20:00" /></td>
               </tr>
               <tr>
-                <th>活动地点</th>
+                <th><span class="red">*</span>活动地点</th>
                 <td>
                   <select name="select2" id="select2" class="mr5">
                     <option selected="selected">上海</option>
@@ -101,18 +101,7 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 元 （留空表示免费）</td>
               </tr>
               <tr>
-                <th>由iWine <br />
-                代收定金</th>
-                <td class="daishou">
-                <span class="tips"><span class="red">（定金将会在活动举办后的7个工作日里由支付宝转账给活动组织者，
-                <br />
-                支付宝将收取5%的手续费）</span></span>
-                <input name="text" type="text" class="text price" value="5" />
-                元 
-                </td>
-              </tr>
-              <tr>
-                <th>活动介绍</th>
+                <th><span class="red">*</span>活动介绍</th>
                 <td><textarea class="wine_intro" name="" cols="" rows=""></textarea></td>
               </tr>
             </table>
