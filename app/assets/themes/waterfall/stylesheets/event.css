@@ -1,0 +1,108 @@
+@charset "UTF-8";
+.kv_2col h1 a, .event_list h2 a, .side_event dd h3 a {color:#990000;}
+.kv_2col {margin-bottom:30px;}
+.kv_2col .col {width:453px;float:left;background-color:#fff;box-shadow: 0 1px 2px 1px #E0E0E0;border:1px solid #ccc;padding:5px;}
+.kv_2col .col dl {background:url(../images/bg/bg_gray_change.gif) repeat-x left bottom;padding:20px;}
+.kv_2col .col dl dt {width:130px;float:left;margin-right:25px;}
+.kv_2col .col dl dd {width:248px;float:left;}
+.eventmain .type, .kv_2col .type {color:#996666;display:block;margin-bottom:2px;}
+.kv_2col h1 {font-size:16px;margin:0 0 15px 0;}
+.kv_2col .info {margin:0 0 20px 0;}
+.p_count {color:#fff;background-color:#3d9b35;padding:2px 10px;height:25px;line-height:25px;display:inline-block;border-radius:3px 3px 3px 3px;}
+.p_count span {background:url(../images/bg/bg_green_right.gif) no-repeat right top;height:25px;line-height:25px;display:inline-block;color:#fff;padding: 0 10px 0 6px;}
+.p_count2 {color:#999;}
+.event_tag {border-bottom:1px solid #ccc;padding: 0 0 15px 0;margin-bottom:20px;}
+.event_tag span {float:left;width:100px;}
+.event_tag .tags {float:left;width:490px;}
+.event_list dl {margin: 0 0 25px 0;}
+.event_list dt {width:100px;float:left;margin-right:25px;}
+.event_list dd {width:465px;float:left;}
+.event_list h2 {font-size:14px;margin:0 0 15px 0;}
+.event_list .info {margin:0 0 10px 0;}
+.base {margin:0 0 40px 0;}
+.base .poster {width:150px;float:left;margin:0 25px 0 0;}
+.base .base_content {width:415px;float:left;}
+.base h1 {font-size:20px;margin:0 0 15px 0;}
+.base .info {margin:0 0 15px 0;}
+.base .p_count {margin:0 0 15px 0;}
+.base .action {line-height:40px;margin:0 0 10px 0;}
+.base .share {float:right;}
+
+.eventmain {padding:30px 40px;}
+.eventmain .left {width:590px;float:left;margin-right:28px;}
+.eventmain .left .last {margin-bottom:0;}
+.eventmain .right {width:250px;float:left;}
+.eventmain .section {margin-bottom:50px;}
+.eventmain .section .title {border-bottom:1px solid #cccccc;padding-bottom:15px;margin-bottom:20px;}
+.eventmain .section h2 {font-size:16px;}
+.event_pic li {width:130px;float:left;margin-right:20px;}
+.event_pic li.last {margin-right:0;}
+.event_pic_list {width:590px;float:left;margin-bottom:20px;}
+.event_pic_list li {width:130px;float:left;margin:0 8px;_margin: 0 7px;}
+.event_pic_list li img {margin-bottom:5px;}
+.event_wine .wine_list li {width: 275px;float:left;margin:0 20px 20px 0;}
+.event_wine .wine_list a img{width:70px;float:left;margin-right:20px;}
+.event_wine .wine_list .info {width:185px;float:left;}
+.event_wine .wine_list .info p {margin-bottom:0;}
+.event_wine .wine_list .info h3.en a{color:#999;font-weight:normal;}
+/*.eventmain .wine_list .year span a {margin:0 5px 0 0;color:#993333;text-decoration:underline;display:inline-block;}
+.eventmain .wine_list .year span a:hover {text-decoration:none;color:#993333;}
+*/
+.eventmain .sidebox {margin: 0 0 20px 0;}
+.eventmain .sidebox .title {border-radius:0;background-color:#e6e6e6;padding:5px 15px;margin: 0 0 20px 0;}
+.eventmain .sidebox .title h3 {font-size:14px;}
+.eventmain .sidebox .main {padding:15px;background-color:#f7f7f7;}
+.side_event dl {margin:0 0 20px 0;}
+.side_event dt {width:70px;float:left;float:left;margin-right:15px;}
+.side_event dd {width:165px;float:left;}
+.side_event dd h3 {font-size:12px;margin-bottom:10px;}
+.side_event dd .info {margin:0 0 5px 0;}
+.event_people li {width:50px;float:left;margin:0 3px 0 0;}
+.eventmain .sidewine {zoom:1;}
+.eventmain .sidewine li {margin-bottom:20px;width:220px;float:left;}
+.eventmain .sidewine li.last {margin-bottom:0;}
+.eventmain .sidewine a img {width:70px;float:left;margin-right:10px;}
+.eventmain .sidewine .info {width:130px;float:left;}
+.eventmain .sidewine .info h3.zh {font-size:12px;}
+.eventmain .sidewine .info h3.en a {font-size:12px;font-weight:normal;color:#999;}
+.eventmain .sidewine .info h3.en a:hover {color:#999;text-decoration:none;}
+.eventmain .sidebox .follower {zoom:1;}
+.eventmain .sidebox .follower li {width:50px;height:50px;float:left;margin: 0 2px 5px 2px;}
+.eventmain .comment_post_star .post_main {width:390px;}
+.eventmain .comment_post_star .post_main textarea {width:370px;}
+
+/*-------------album style----------------*/
+ul.album_list {padding:0 0 0 10px}
+ul.album_list li {float:left;width:163px; margin:0 25px 40px 25px;}
+ul.album_list li img.cover {background:url(../images/bg/bg_album.gif) no-repeat left top;padding:5px 8px 8px 5px;margin:0 0 10px 0;}
+ul.album_list li h2, ul.photo_list li .name, .album_left .photo .name, .side_album_list h3 {font-size:13px;margin:0 0 5px 0;}
+ul.album_list li h2 a, .side_album_list h3 a, .like a {color:#333;}
+ul.album_list li h2 a:hover, .side_album_list h3 a:hover, .like a:hover {color:#cc3333;text-decoration:none;}
+ul.album_list li .info, ul.photo_list li .info, .side_album_list .info  {color:#999;}
+ul.photo_list li {display:inline-block; vertical-align:top; width:190px;margin:0 33px 40px 0;}
+ul.photo_list li.last {margin-right:0;}
+ul.photo_list li img {margin:0 0 10px 0;}
+ul.photo_list li .intro, .album_left .photo .intro{margin:0 0 5px 0;}
+.content .album_left {width:590px;float:left;}
+.content .album_left .photo {text-align:center;}
+.content .album_right {width:210px;float:left;}
+.album_left .info {margin:15px 0 40px 0;color:#666;}
+.album_left .photo img {margin:0 0 10px 0;}
+.album_left .comment_list .main {width:520px;}
+.album_left .post_main {width:490px;}
+.album_left .post_main textarea {width:470px;height:80px;background-color:#fff;}
+.album_left .pre_next {text-align:center;}
+.album_left .count {display:inline-block;margin:0 10px;}
+.album_right h2 {margin:0 0 20px 0;}
+img.cover_s {background:url(../images/bg/bg_album_s.gif) no-repeat left top;padding:5px 8px 8px 5px;margin:0 0 5px 0;}
+.side_album_list li {margin:0 0 30px 0;}
+.add_album {margin:0 0 0 20px;}
+input.photo_name, textarea.photo_des {width:184px;}
+textarea.photo_des {min-height: 70px;} 
+li.photo_des p {margin: 0 0 5px 0;} 
+
+.photolist li {width:130px;float:left;margin-right:20px;}
+.photolist li.last {margin-right:0;}
+.photolist {width:590px;float:left;margin-bottom:20px;}
+.photolist li {width:130px;float:left;margin:0 8px;_margin: 0 7px;}
+.photolist li img {margin-bottom:5px;}

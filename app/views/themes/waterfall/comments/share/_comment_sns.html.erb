@@ -1,6 +1,6 @@
-<div class="com_s">
-	同时发布到：
-	<span class="sns_switch share_weibo">
+
+同时发布到：
+<span class="sns_switch share_weibo">
 	<% if current_user && current_user.check_oauth?('weibo') %>
 		<input type="hidden" name="sns_type[]" value="weibo"/>
 		<%= link_to "javascript:void(0);" do %>
@@ -15,8 +15,8 @@
 			<%= theme_image_tag "icon/weibo_s_off.png", :alt => "新浪微博", :width => "17", :height => "17", :class => "share_weibo_image", :align => "absmiddle" %>
 		<% end %>
 	<% end %>
-	</span>
-	<span class="sns_switch share_qq">
+</span>
+<span class="sns_switch share_qq">
 	<% if current_user && current_user.check_oauth?('qq') %>
 		<input type="hidden"  name="sns_type[]" value="qq"/>
 		<%= link_to "javascript:void(0);" do %>
@@ -30,8 +30,8 @@
 			<%= theme_image_tag "icon/tencen_s_off.png", :alt => "腾讯微博", :width => "17", :height => "17", :align => "absmiddle", :class => "share_qq_image" %>
 		<% end %>
 	<% end %> 
-	</span>
-	<span class="sns_switch share_douban">
+</span>
+<span class="sns_switch share_douban">
 	<% if current_user && current_user.check_oauth?('douban') %>
 		<input type="hidden" name="sns_type[]" value="douban"/>
 		<%= link_to "javascript:void(0);" do %>
@@ -45,9 +45,7 @@
 			<%= theme_image_tag "icon/douban_s_off.png", :alt => "豆瓣", :width => "17", :height => "17", :align => "absmiddle", :class => "share_douban_image" %>
 		<% end %>
 	<% end %>
-	</span>
-
-</div>
+</span>
 <script type="text/javascript">
 	$("span.sns_switch").click(function(){
 		if ($("img.image_on", this).length > 0){
