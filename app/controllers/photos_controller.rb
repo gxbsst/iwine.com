@@ -29,7 +29,9 @@ class PhotosController < ApplicationController
     :select => "comments.*, count(votes.id) as votes_count",
     :conditions => ["parent_id IS NULL"], :group => "comments.id",
     :order => order )
-    page = params[:params] || 1
+    # page = params[:params] || 1
+    page = params[:page] || 1
+    @comments =  @photo.comments.page(page).per(20)
 
     case @resource
     when "Wines::Detail"
