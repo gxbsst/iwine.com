@@ -10,6 +10,11 @@ class CommentsController < ApplicationController
   # before_filter :check_cancle_follow, :only => :cancle_follow
   before_filter :check_can_comment, :only => :create
   after_filter  :send_reply_email, :only => :reply
+
+  def show
+
+  end
+
   def new   
     if params[:do].present? && params[:do] == "follow"
       new_follow_comment
@@ -58,7 +63,8 @@ class CommentsController < ApplicationController
   def create
     @comment = build_comment
     if @comment.save
-      @comment.share_comment_to_weibo(params[:sns_type])
+      init_oauth_comments
+      @comment.delay.share_comment_to_weibo
       # TODO
       # 1. 广播
       # 2. 分享到SNS
@@ -217,6 +223,40 @@ class CommentsController < ApplicationController
         nil
       end
     end
+  end
+  
+  #初始化oauth_comment
+  def init_oauth_comments
+    sns_arr = params[:sns_type] 
+    if sns_arr.present?
+      sns_arr.each do |sns_type|
+        oauth = @comment.user.oauths.oauth_binding.where('sns_name = ?', sns_type).first
+        next unless oauth #再次检测是否绑定此网站
+        if @comment.commentable_type == "Photo" 
+          photo = @comment.commentable
+        else
+          photo = @comment.commentable.get_cover
+        end
+        content = build_content(sns_type)
+        oauth_comment = @comment.oauth_comments.build(:sns_type => sns_type,
+                                                      :body => content,  
+                                                      :sns_user_id => oauth.sns_user_id, 
+                                                      :user_id => @comment.user_id)
+        oauth_comment.image_url  =  photo.image_url if photo
+        oauth_comment.save
+      end
+    end
+  end
+  
+  #得到要分享的内容
+  def build_content(sns_type)
+    url = root_url[0..-2]#将"http://localhost:3000/" 改为 "http://localhost:3000"
+    if @comment.commentable_type == "Photo"
+      url << photo_comment_path(@comment.commentable, @comment)
+    else
+      url << "#{@commentable_comments_path}/#{@comment.id}"
+    end
+    content = @comment.share_content(url, sns_type)
   end
 
 end

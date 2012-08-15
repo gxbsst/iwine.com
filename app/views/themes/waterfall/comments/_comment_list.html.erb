@@ -1,3 +1,6 @@
+	<% content_for :css do %>
+		<%= theme_stylesheet_link_tag :hp %>
+	<% end %>
 	<% if params[:controller] == "wine_details" &&  params[:action] == "show" %>
 	<div class="title_btn">
 		<% unless params[:controller] == "wine_details/comments" %>
@@ -36,9 +39,7 @@
 					<%=  reply_comment(comment) %>
 				</div>
 
-				<% comment.oauth_comments.each do |oauth_comment| %>
-					<p><strong><%= oauth_comment.sns_type %></strong><%= oauth_comment.sns_comments %></p>
-				<% end %>
+				
 				<div id="reply_comment_<%= comment.id %>" class="replybox" style="display: none"></div>			
 			</div>
 			<div class="clear"></div>
@@ -51,7 +52,12 @@
 		<div class="clear"></div>
 		
 		<div class="comment_post_star mt30">
-			<%= render "comments/share/form" %>
+			<% if @comment.commentable_type == "Photo" %>
+				<%= render "comments/share/photo_comment_form" %>
+			<% else %>
+				<%= render "comments/share/form" %>
+			<% end %>
+
 		</div>
 
 

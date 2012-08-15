@@ -77,10 +77,6 @@ class Wines::Detail < ActiveRecord::Base
     "#{show_year} #{wine.name_zh.to_s}"
   end
 
-  def ename
-    "#{show_year} #{wine.origin_name.to_s}"
-  end
-
   def origin_name
     "#{show_year} #{wine.origin_name.to_s}"
   end
@@ -91,6 +87,11 @@ class Wines::Detail < ActiveRecord::Base
 
   def name
     cname + origin_name
+  end
+
+  #发评论时分享用
+  def share_name
+    "【#{origin_name}】"
   end
 
   def origin_zh_name

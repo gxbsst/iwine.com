@@ -155,64 +155,17 @@ class Comment < ActiveRecord::Base
   end
   
   #分享评论到第三方网站
-  def share_comment_to_weibo(weibo_type)
-    if parent_id.nil? && weibo_type.present?
-      sleep 10
-      share_comment(weibo_type)
+  def share_comment_to_weibo
+    sleep 10
+    oauth_comments.unshare.each do |oauth_comment|
+      oauth_comment.share_to_sns
     end
   end
 
-  
-  def send_weibo(content)
-    oauth_weibo = user.oauths.oauth_binding.where('sns_name = ?', 'weibo').first
-    access_token = user.init_client('weibo', oauth_weibo.access_token)
-    response = access_token.post("https://upload.api.weibo.com/2/statuses/upload.json", :params => {:status => content, :pic => Photo.first.image}).body
-    Rails.logger.info "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ #{response}"
-    new_oauth_comment(JSON.parse(response)['id'], 'weibo')
-  end
-
-  def send_qq(content)
-    qq_client = user.oauth_client('qq')
-    #TODO 修改ip
-    response = qq_client.add_status(content, :clientip => "180.168.220.98").body
-    new_oauth_comment(JSON.parse(response)['data']['id'], 'qq')
-  end
-
-  def send_douban(content)
-    douban_client = user.oauth_client('douban')
-    response = douban_client.add_douban_status(content).body
-    new_oauth_comment(JSON.parse(response)['id']['$t'], 'douban')
-  end
-  
-  #检查并发送信息到对应网站
-  def check_oauth(content, weibo_type)
-    sns_name = user.oauths.oauth_binding.map{|oauth| oauth.sns_name}#找到用户已绑定得网站
-    weibo_type.each do |w|
-      if w == "qq" && sns_name.include?("qq")
-        send_qq(content)
-      elsif w == "weibo" && sns_name.include?("weibo")
-        send_weibo(content)
-      elsif w ==  "douban" && sns_name.include?("douban")
-        send_douban(content)
-      end
-    end
-  end
-
-  def share_comment(weibo_type)
-    #处理要发送的内容
-    short_content = cut_content(body)
-    #检查并发送微博
-    check_oauth(short_content, weibo_type)
-  end
 
   #截取部分评论内容
-  def cut_content(content)
-    #TODO 修改发送内容
-    "测试分享内容到微博#{Time.now}"
-  end
-
-  def new_oauth_comment(sns_id, type)
-    oauth_comments.create(:sns_type => type, :sns_id => sns_id)
+  def share_content(url, sns_type)
+    content = %Q(对#{commentable.share_name}发表了评论："#{body.to_s.strip.mb_chars[0, 20]}...#{url}"#{"（分享自 @iWine爱红酒）" unless sns_type == "douban"})
   end
 
   def get_sns_comments(oauth_comment)

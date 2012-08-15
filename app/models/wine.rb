@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Wine < ActiveRecord::Base
   include Common
   has_many   :details, :class_name => '::Wines::Detail'
@@ -57,6 +58,11 @@ class Wine < ActiveRecord::Base
       )
     end
     return wine
+  end
+
+  #发评论时分享用
+  def share_name
+    "【#{origin_name}】"
   end
 
   def get_latest_detail

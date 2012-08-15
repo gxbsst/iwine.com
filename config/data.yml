@@ -1,15 +1,4 @@
 site: "iWine.com"
-rate:
-  CNY: 1.00
-  HKD: 0.95
-  JPY: 0.07
-  SGD: 4.95
-  USD: 6.37
-  GBP: 9.82
-  AUD: 6.49
-  NZD: 5.21
-  EUR: 7.78
-  CAD: 6.35
 wines:
   capacity:
     750mL: '750'
@@ -82,6 +71,11 @@ user_oauths:
   setting_type:
     login: 1 #用户通过第三方登陆
     binding: 2 # 用户登录后得绑定操作
+oauth_comments:
+  status:
+   no_share: 0 #没有同步
+   success: 1 #同步成功
+   failure: 2 #同步失败
 
 # 图片缩略图
 image:

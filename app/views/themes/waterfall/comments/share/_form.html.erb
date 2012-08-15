@@ -1,5 +1,5 @@
-		<% if user_signed_in? %>
-		<%= form_for [@commentable, @comment], :validate => true, :html => {:id => "list_comment_form"} do |f| -%>
+<% if user_signed_in? %>
+	<%= form_for [@commentable, @comment], :validate => true, :html => {:id => "list_comment_form"} do |f| -%>
 		<%= f.hidden_field :do %>
 		<%= hidden_field_tag "return_url", request.fullpath %>
 		<a name="01" id="01"></a>
@@ -21,37 +21,7 @@
 			</script>
 			<% end %>
 			<div class="clear"></div>
-			<a href="javascript:void(0)" class="btn_gray button"><span>加上去</span></a><br/>
-			分享评论到：<br/>
-			<% if current_user && current_user.check_oauth?('weibo') %>
-				<input type="checkbox" checked="checked" name="sns_type[]" value="weibo"/>
-				<%= theme_image_tag "icon/icon_sina.gif", :alt => "新浪微博账号登陆", :width => "24", :height => "24" %>
-			<% else %>
-				<input type="checkbox" name="sns_type[]" value="weibo" class="share_weibo_checkbox" style="display:none"/>
-				<%= link_to user_omniauth_authorize_path(:weibo, :display => "popup"), :class => "sns_fancybox iframe" do %>
-					<%= theme_image_tag "common/icon_sina_off.png", :alt => "新浪微博账号登陆", :width => "24", :height => "24", :class => "share_weibo_image" %>
-				<% end %>
-			<% end %>
-			<% if current_user && current_user.check_oauth?('qq') %>
-				<input type="checkbox" checked="checked" name="sns_type[]" value="qq"/>
-				<%= theme_image_tag "icon/icon_qq.gif", :alt => "qq_weibo", :width => "24", :height => "24" %>
-			<% else %>
-				<input type="checkbox" name="sns_type[]" value="qq" class="share_qq_checkbox" style="display:none"/>
-				<%= link_to new_sns_friends_path(:sns_name => "qq"), :class => "sns_fancybox iframe" do %>
-					<%= theme_image_tag "common/icon_qq_off.png", :alt => "绑定腾讯微博", :width => "24", :height => "24", :class => "share_qq_image" %>
-				<% end %>
-			<% end %> 
-			<% if current_user && current_user.check_oauth?('douban') %>
-				<input type="checkbox" checked="checked" name="sns_type[]" value="douban"/>
-				<%= image_tag("http://img3.douban.com/pics/doubanicon-16.png") %>
-			<% else %>
-				<input type="checkbox" name="sns_type[]" value="douban" class="share_douban_checkbox" style="display:none"/>
-				<%= link_to new_sns_friends_path(:sns_name => "douban"), :class => "sns_fancybox iframe" do %>
-					<%= theme_image_tag "common/icon_douban_off.png", :alt => "绑定豆瓣", :width => "24", :height => "24", :class => "share_douban_image" %>
-				<% end %>
-			<% end %>
-			<br />
-			<span class="red text_error"></span>
+			<a href="javascript:void(0)" class="btn_gray"><span>加上去</span></a>
 		</div>
 		<% unless @comment.commentable_type == "Photo"   %>
 		<%= theme_javascript_include_tag :star_rate %>
@@ -67,7 +37,7 @@
 				<%= f.text_area :body,  :class => [:mb10, :comment_body] %>
 				<p class="text_count" style="display:none">您正在输入<span></span>个字。</p>
 			</div>
-
+			<%= render "comments/share/comment_sns" %>
 		</div>
 		<div class="clear"></div>
 
@@ -82,6 +52,6 @@
 		 });
 		</script>
 		
-		<% else %>
-		<p><%= link_to "登录发表评论", login_path() %></p>
-		<% end %>
+<% else %>
+	<p><%= link_to "登录发表评论", login_path() %></p>
+<% end %>
