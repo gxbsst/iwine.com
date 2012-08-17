@@ -2,7 +2,7 @@
 module Api
   module V1
     class ProfilesController < ::Api::BaseApiController
-      before_filter :authenticate_user!
+      before_filter :authenticate_user!, :except => [:show]
       before_filter :get_user
 
       # {:user[city] => {:usename => "Weixuhong", 
@@ -25,6 +25,17 @@ module Api
 
       def index
        render :json =>  user_info_json
+      end
+
+      def show
+        if @user = User.find(params[:id])  
+          render :json => user_info_json(true)
+        else
+          render :json => {:success => false,
+            :resultCode => 404,
+            :errorDesc => 'Record Not Found'
+          }
+        end
       end
 
       protected
