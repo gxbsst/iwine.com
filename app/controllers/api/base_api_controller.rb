@@ -10,7 +10,7 @@ module Api
         :errorDesc =>  APP_DATA["api"]["return_json"]["normal_success"]["message"],
         :user => 
         {
-          :auth_toke => @user.authentication_token,
+          :auth_token => @user.authentication_token,
           :id => @user.id,
           :email => is_public ? '' : @user.email,
           :username => @user.username,
