@@ -50,8 +50,9 @@ module Api
           @user = User.new(:username => oauth_user[:nickname], 
                            :email => email,
                            :password => password,
-                           :password_confirmation => password,
-                           :confirmed_at => DateTime.now)
+                           :password_confirmation => password
+                           )
+          @user.confirmed_at = Time.now
           @user.save
         end
         @user
