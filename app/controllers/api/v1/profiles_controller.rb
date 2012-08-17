@@ -2,7 +2,7 @@
 module Api
   module V1
     class ProfilesController < ::Api::BaseApiController
-      before_filter :authenticate_user!
+      before_filter :authenticate_user!, :except => [:show]
       before_filter :get_user
 
       # {:user[city] => {:usename => "Weixuhong", 
@@ -15,7 +15,6 @@ module Api
         if birthday.present? 
           params[:user][:profile_attributes][:birthday] = Time.parse birthday
         end
-
         if current_user.update_attributes(params[:user]) &&
           current_user.profile.update_attributes(params[:user][:profile_attributes])
           success_json(current_user)
@@ -28,10 +27,25 @@ module Api
        render :json =>  user_info_json
       end
 
+      def show
+        if @user = User.find(params[:id])  
+          render :json => user_info_json(true)
+        else
+          render :json => {:success => false,
+            :resultCode => 404,
+            :errorDesc => 'Record Not Found'
+          }
+        end
+      end
+
       protected
 
       def invalid_update_json(user)
-        render :json=> {:success=>false, :message => user.errors.messages , :status => 422 }
+        render :json=> {:success=>false, 
+          :resultCode => APP_DATA["api"]["return_json"]["normal_failed"]["code"],
+          :errorDesc =>  APP_DATA["api"]["return_json"]["normal_failed"]["message"],
+          :message => user.errors.messages,
+          :status => 422 }
       end
 
       def success_json(user)
