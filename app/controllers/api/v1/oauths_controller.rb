@@ -6,9 +6,8 @@ module Api
 
       def create
         @user = create_new_user
-        #sign_in(:user, @user) #登陆用户
-        #sign_in @user, :event => :authentication
-         sign_in @user, :bypass => true  
+        sign_in @user, :bypass => true  
+        @user.reset_authentication_token!
         # user_id, sns_name, sns_user_id
         params[:oauth_user][:user_id] = @user.id
         if create_user_oauth(params[:oauth_user])

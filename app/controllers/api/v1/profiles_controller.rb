@@ -31,7 +31,7 @@ module Api
         if @user = User.find(params[:id])  
           render :json => user_info_json(true)
         else
-          render :json => {:success => false,
+          render :json => {:success => 0,
             :resultCode => 404,
             :errorDesc => 'Record Not Found'
           }
@@ -41,7 +41,7 @@ module Api
       protected
 
       def invalid_update_json(user)
-        render :json=> {:success=>false, 
+        render :json=> {:success=> 0, 
           :resultCode => APP_DATA["api"]["return_json"]["normal_failed"]["code"],
           :errorDesc =>  APP_DATA["api"]["return_json"]["normal_failed"]["message"],
           :message => user.errors.messages,

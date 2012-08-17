@@ -5,11 +5,12 @@ module Api
     protected
 
     def user_info_json( is_public = false)
-      return {:success => true, 
-        :resultCode =>  APP_DATA["api"]["return_json"]["normal_success"]["code"],
+      return {:success => 1, 
+        :resultCode =>  APP_DATA["api"]["return_json"]["normal_success"]["code"].to_i,
         :errorDesc =>  APP_DATA["api"]["return_json"]["normal_success"]["message"],
         :user => 
         {
+          :auth_toke => @user.authentication_token,
           :id => @user.id,
           :email => is_public ? '' : @user.email,
           :username => @user.username,

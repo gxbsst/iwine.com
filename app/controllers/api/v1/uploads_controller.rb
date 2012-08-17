@@ -35,7 +35,7 @@ module Api
       end
 
       def invalid_json(object)
-        render :json => {:success => false, 
+        render :json => {:success => 0, 
           :resultCode => APP_DATA["api"]["return_json"]["normal_failed"]["code"],
           :errorDesc => APP_DATA["api"]["return_json"]["normal_failed"]["message"],
           :message => object.errors.messages
@@ -43,7 +43,7 @@ module Api
       end
 
       def build_json(user)
-        return {:success => true, 
+        return {:success => 1, 
           :resultCode => APP_DATA["api"]["return_json"]["normal_success"]["code"],
           :errorDesc => APP_DATA["api"]["return_json"]["normal_success"]["message"],
           :avatar => user.avatar.url(:large)}
