@@ -41,11 +41,16 @@
 		</li>
 		<% end %>
 		</ul>
+		 <div class="pagination">
+             <%= paginate @comments %>
+          </div>
+
+
 		<% else %>
 		<p>暂时没有评论...</p>
 		<% end %>
 		<div class="clear"></div>
-		
+		   
 		<div class="comment_post_star mt30">
 			<%= render "comments/share/form" %>
 		</div>
