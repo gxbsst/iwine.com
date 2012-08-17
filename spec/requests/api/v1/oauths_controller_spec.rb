@@ -30,6 +30,7 @@ describe Api::V1::OauthsController do
             @response.status.should be(200)
             @parsed_body = JSON.parse(@response.body)
             @parsed_body['user']['email'].should eql("1111sina@iwine.com")
+            User.find_by_email( @parsed_body['user']['email'] ).confirmed_at.should_not be_nil
       end
     end
 

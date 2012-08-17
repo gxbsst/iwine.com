@@ -3,7 +3,7 @@ module Api
   module V1
     class ProfilesController < ::Api::BaseApiController
       before_filter :authenticate_user!, :except => [:show]
-      before_filter :get_user
+      before_filter :get_user, :except => [:show]
 
       # {:user[city] => {:usename => "Weixuhong", 
       # :phone_number => "", 
@@ -53,7 +53,7 @@ module Api
       end
 
       def get_user
-       @user = current_user 
+       @user = current_user  
       end
 
     end
