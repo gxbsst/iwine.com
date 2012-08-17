@@ -14,7 +14,7 @@ FactoryGirl.define do
     participants_count 0
     longitude "22222"
     latitude "33333"
-    tag_list "产品, 故事"
+    tag_list "产品, 故事, 品酒, 展会, 新品发布"
     # profile  { |c| c.association(:profile) }
   end
 

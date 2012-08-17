@@ -150,6 +150,14 @@ describe Event do
       it "should can find tags with 故事" do
         Event.tagged_with("故事").first.title.should include("活动")
       end
+
+      it "get hot tags" do
+          @tags = Event.tag_counts_on(:tags)
+          @tags.all.should include("产品")
+          @tags.all.should include("故事")
+          @tags.all.should include("品酒")
+      end
+
     end
 
     describe "block_in" do

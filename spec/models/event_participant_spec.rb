@@ -122,7 +122,7 @@ describe EventParticipant do
       end
      describe "#email" do
        it "should have error on email"  do
-        @participant.should have(1).errors_on(:email)  
+        @participant.should have(2).errors_on(:email)  
        end
      end
     end

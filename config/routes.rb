@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
  
+  resources :events
+
   resources :event_invitees
 
   resources :event_wines
