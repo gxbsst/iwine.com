@@ -1,0 +1,74 @@
+<% content_for :title, @title%>
+<% content_for :js do %>
+  <%= theme_javascript_include_tag "events" %>
+<% end %>
+<% content_for :css do %>
+	<%= theme_stylesheet_link_tag "event" %>
+	<%= theme_stylesheet_link_tag "add" %>
+<% end %>
+<div class="whitespace addwine">
+  <h1 class="main_title">添加活动用酒</h1>
+  <div class="search mb20">
+    <input name="请输入酒款名称" type="text" class="text common_search mr5" 
+    value="请输入酒款名称" onclick="clearDefaultText(this,'请输入酒款名称')" />
+    <a href="cellar_wine_add_year.html" class="btn_gray"><span>搜索</span></a>
+    <!--end mb20-->
+  </div>
+  <div class="mb30">
+    <div class="float_r">
+      <span class="notice_b">这些都不是您要找的酒？</span>
+      <a href="add_wine_new_detail_1.html" class="btn_gray">
+        <span>添加酒款</span>
+      </a>
+    </div>
+    <p class="notice_b">我们为您搜寻到以下酒款</p>
+    <div class="clear"></div>
+    <!--end mb30-->
+  </div>
+  <div class="search_result_space">
+    <div class="box_ew">
+      <div class="wine_img">
+        <a href="wine_profile.html">
+          <img src="images/test/wine70.jpg" width="70" height="70" alt="wine name" />
+        </a>
+      </div>
+      <div class="wine_info">
+        <h2><a href="wine_profile.html">2005 波特米勒站赤霞珠干红葡萄酒</a></h2>
+        <h3>2005 PORTER MILL STATION Cabernet Sauvignon</h3>
+        <p class="year">
+          已有年份：
+          <span><a href="#">2010</a></span>
+        </p>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <!--end search_result_space-->
+  </div>
+  <div class="wine_select">
+    <p class="notice_b mb20">已选择的活动用酒：</p>
+    <dl>
+      <dt>
+        <a href="#">
+          <span class="delet"></span>
+        </a>
+        <a href="wine_profile.html">
+          <img src="images/test/wine70.jpg" width="70" height="70" alt="wine name" />
+        </a>
+      </dt>
+      <dd>
+        <h2>2005 波特米勒站赤霞珠干红葡萄酒</h2>
+        <h3>2005 PORTER MILL STATION Cabernet Sauvignon</h3>
+      </dd>
+    </dl>
+    <div class="clear"></div>
+    <!--end wine_select-->
+  </div>
+  <div class="btn_submit">
+    <a href="add_event2.html" class="btn_bluesky_s mr10">
+      <span>保存</span>
+    </a>
+    <a href="add_event.html" class="btn_gray_b"><span>取消</span></a>
+  </div>
+  <!--end whitespace-->
+</div>
+

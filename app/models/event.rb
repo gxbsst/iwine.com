@@ -11,7 +11,7 @@ class Event < ActiveRecord::Base
 
   attr_accessible :address, :begin_at, :block_in, :description, :end_at, :followers_count,
   :latitude, :longitude, :participants_count, :poster, :publish_status, :title,
-  :crop_x, :crop_y, :crop_w, :crop_h
+  :crop_x, :crop_y, :crop_w, :crop_h, :region_id, :tags, :tag_list
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 

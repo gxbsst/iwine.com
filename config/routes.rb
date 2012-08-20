@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
  
-  resources :events
-
-  resources :event_invitees
-
-  resources :event_wines
-
-  resources :event_participants
+  resources :events do
+    resources :event_wines
+    resources :event_invitees
+    resources :event_participants
+  end
 
   resources :after_first_signins do
     collection do

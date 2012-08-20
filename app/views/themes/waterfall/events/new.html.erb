@@ -2,7 +2,6 @@
 <% content_for :js do %>
 <%= theme_javascript_include_tag "events" %>
 <%= theme_javascript_include_tag "jquery-ui-timepicker-addon" %>
-<%= theme_javascript_include_tag "autocomplete_plus_e" %>
 <script language="javascript" type="text/javascript">
   $(document).ready(function(){
       $('input.date').datetimepicker({
@@ -42,7 +41,14 @@
     <%= theme_image_tag "common/add_event_step2.gif", :size => "180x22", :alt => "添加活动用酒" %>
   </div>
   <div class="mb30 align_c">
-    <a href="add_event_wine.html" class=" btn_gray_b"><span>添加活动用酒</span></a>
+    <a href="#" id="button_add_wines" class="btn_gray_b"><span>添加活动用酒</span></a>
+    <script language="javascript" type="text/javascript">
+      $(document).ready(function(){
+          $("#button_add_wines").click(function(){
+            $("#form").submit();
+            });
+          });
+    </script>
   </div>
   <div class="add_event_step">
     <%= theme_image_tag "common/add_event_step2.gif", :size => "180x22", :alt => "上传活动海报" %>

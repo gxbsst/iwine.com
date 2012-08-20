@@ -5,8 +5,6 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    @tags = Event.tag_counts_on(:tags)
-  
     respond_to do |format|
       format.html # new.html.erb
       format.json  { render :json => @event }
@@ -14,17 +12,21 @@ class EventsController < ApplicationController
   end
 
   def create
-    @model_class_name = ModelClassName.new(params[:model_class_name])
-
-    respond_to do |wants|
-      if @model_class_name.save
-        flash[:notice] = 'ModelClassName was successfully created.'
-        wants.html { redirect_to(@model_class_name) }
-        wants.xml  { render :xml => @model_class_name, :status => :created, :location => @model_class_name }
-      else
-        wants.html { render :action => "new" }
-        wants.xml  { render :xml => @model_class_name.errors, :status => :unprocessable_entity }
-      end
+    event = params[:event]
+    @event = Event.new(
+      :title => event[:title],
+      :description => event[:description],
+      :begin_at => event[:begin_at],
+      :end_at => event[:end_at],
+      :block_in=> event[:block_in],
+      :tag_list => event[:tag_list],
+      :region_id => event[:region_id].to_i,
+      :address => event[:address]
+    )
+    if @event.save
+      redirect_to new_event_event_wine_path(@event)
+    else
+      render :action => :new
     end
   end
 

@@ -207,6 +207,13 @@ class Wines::Detail < ActiveRecord::Base
       where("followable_type = ? AND followable_id = ?", self.class.name, id)
   end
 
+  def get_cover_url(version)
+    cover = photos.cover.approved.first
+    if cover.nil?
+      cover = wine.photos.cover.approved.first
+    end
+    cover.image_url(version)
+  end
   # 类方法
   class << self
    def timeline_events

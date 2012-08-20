@@ -10,12 +10,14 @@
           <th valign="top">活动标签</th>
           <td>
             <div id="tag_container">
-              <div id="auto_complete_input_view">
-                <%= f.text_field :tag_list, :class => [:text, :tag] %>
-                请按回车确定
-              </div>
+              <%= f.hidden_field :tag_list  %> 
+              <div id="input_tag_view">
+                <%= f.text_field :tags, :class => [:text, :tag], :placeholder => '按回车确定' %>
+                </div>
+              <span class="red" id="warning" style="display:none">不能为空</span>
               <div id="resource_container"></div>
               <div id="select_tags_container"></div>
+              <div class="clear"></div>
               <div id="hot_tags_container"></div>
 
               <script type="text/template" id="auto_compleate_view">
@@ -31,7 +33,7 @@
                 </ul>
               </script>
               <script type="text/template" id="tags_template">
-                 <a href="#" data-value= "<@= id @>"><@= name @></a>
+                 <a href="#" data-value= ""><@= name @></a>
               </script>
 
               
@@ -68,5 +70,6 @@
           </td>
         </tr>
       </table>
+
     <% end -%>
  
