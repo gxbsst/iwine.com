@@ -132,7 +132,8 @@ class AlbumsController < ApplicationController
       :select => "comments.*, count(votes.id) as votes_count",
       :conditions => ["parent_id IS NULL"], :group => "comments.id",
       :order => order )
-    page = params[:params] || 1
+    page = params[:page] || 1
+    @comments =  @photo.comments.page(page).per(20)
     @commentable = @photo
     new_normal_comment
     @other_albums = @user.albums.where("id != #{@album.id}")
