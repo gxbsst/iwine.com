@@ -346,7 +346,7 @@ module ApplicationHelper
       tag = theme_image_tag("common/p_album.png", :class => :cover, :width => 150, :height => 150)
     else
       if cover
-       tag =  image_tag(cover.image_url(:xx_middle), :class => 'cover')
+       tag =  image_tag(cover.image_url(:xx_middle), :class => 'cover', :size => '150x150')
       else
         tag = theme_image_tag( "album.jpg", :class => :cover, :width => 150, :height => 150)
       end

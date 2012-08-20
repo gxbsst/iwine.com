@@ -220,3 +220,31 @@ email:
 memcache:
   servers: 
     first: "192.168.11.31"
+
+api:
+  return_json:
+   normal_success:
+     code: 200 
+     message: 'Successful'
+   normal_failed:
+     code: 422 
+     message: 'Failed'
+   miss_parameter: 
+     coode: 422
+     message: "Missing some parameter"
+   auth_failed:
+     code: 401
+     message: 'Error with your login or password'
+   register_failed:
+     code: 422
+     message: ""
+   
+
+
+   
+
+
+     
+    
+   
+  
