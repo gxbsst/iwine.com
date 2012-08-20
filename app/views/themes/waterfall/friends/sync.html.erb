@@ -29,7 +29,7 @@
 </div>
 <script type="text/javascript">
   <% if params[:success] %>
-    var href = parent.$('iframe').attr('src');
+    var href = parent.$('iframe.fancybox-iframe').attr('src');
     var patt_weibo = new RegExp("weibo");
     var patt_qq = new RegExp("qq");
     var patt_douban = new RegExp('douban');

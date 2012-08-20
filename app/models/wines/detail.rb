@@ -162,7 +162,7 @@ class Wines::Detail < ActiveRecord::Base
                                 # :joins => :votes,
                                 :joins => "LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id",
                                 :select => "comments.*, count(votes.id) as votes_count",
-                                :conditions => ["commentable_id=? AND parent_id IS NULL", id ], :group => "comments.id",
+                                :conditions => ["commentable_id= ? AND parent_id IS NULL and commentable_type = ?", id, self.class.name], :group => "comments.id",
                                 :order => "votes_count DESC, created_at DESC", :limit => options[:limit] )
   end
 

@@ -8,7 +8,7 @@
 		<%= link_to wine_photos_path(@wine_detail), :class => [:btn_gray, :float_r] do %>
 		<span>返回</span>
 		<% end %>
-    <%= link_to new_photo_path(:wine_id => @wine_detail), :class => [:btn_gray, :float_r, :mr5] do %>
+    <%= link_to photo_upload_wine_path(@wine_detail), :class => [:btn_gray, :float_r, :mr5] do %>
       <span>上传照片</span>
     <% end %>
 		<h1 class="wine_name_ch"><%= raw @wine_detail.cname %>的图片</h1>

@@ -4,24 +4,112 @@ class OauthComment < ActiveRecord::Base
   belongs_to :user
   scope :unshare, where("status = #{APP_DATA['oauth_comments']['status']['no_share']}")
 
-  def sns_comments
-  	comment.get_sns_comments(self)
+  def get_sns_reply
+  	reply_list = search_comments
+    return reply_list
   end
 
   def share_to_sns
-  	case sns_type
-  	when 'qq'
-  	  send_qq
-  	when 'weibo'
-  	  send_weibo
-  	when 'douban'
-  	  send_douban
-  	end
+    if user.check_oauth?(sns_type)
+    	case sns_type
+    	when 'qq'
+    	  send_qq
+    	when 'weibo'
+    	  send_weibo
+    	when 'douban'
+    	  send_douban
+    	end
+    end
+  end
+
+  def search_comments
+    begin
+      if user.check_oauth?(sns_type) && sns_comment_id #检测是否被同步，是否分享成功
+        case sns_type
+        when 'qq'
+          qq_comments 
+        when 'weibo'
+          weibo_comments
+        when 'douban'
+          douban_comments
+        end
+      end
+    rescue Exception => e
+      Rails.logger.error e
+    end
   end
 
   
   private
+  #获取回复
 
+  def weibo_comments
+    oauth_weibo = user.oauths.oauth_binding.where('sns_name = ?', 'weibo').first
+    access_token = user.init_client('weibo', oauth_weibo.access_token)
+    response = access_token.get("/2/comments/show.json", :params => {:id => sns_comment_id}).body
+    data = JSON.parse response
+    return nil if data['comments'].blank?
+    reply_list = []
+    data['comments'].each do |reply|
+      reply_hash = {:type => 'weibo'}
+      reply_list << reply_hash.merge({
+        :name => reply['user']['screen_name'],
+        :created_at => Time.parse(reply['created_at']).to_i,
+        :content => reply['text'],
+        :head_url => reply['user']['profile_image_url']
+      })
+    end
+    return reply_list
+  end
+  
+  def qq_comments
+    qq_client = user.oauth_client('qq')
+    response = qq_client.get("http://open.t.qq.com/api/t/re_list?flag=1&rootid=#{sns_comment_id}").body
+    data = JSON.parse response
+    return nil if data['data'].blank?
+    reply_list = []
+    data['data']['info'].each do |reply|
+      reply_hash = {:type => 'qq'}
+      reply_list << reply_hash.merge({
+        :name => reply['nick'],
+        :created_at => reply['timestamp'],
+        :content => reply['text'],
+        :head_url => "#{reply['head']}/30"
+      })
+    end
+    return reply_list
+  end
+  
+  #得到[{:type => '', :name => ''}, {:type = '', :name => ''}]
+  #JSON::ParserError 对应广播被删除得情况
+  def douban_comments
+    begin
+      douban_client = user.oauth_client('douban')
+      response = douban_client.get("#{sns_comment_id}/comments", "alt" => "json").body
+      data = JSON.parse response
+      return nil if data['entry'].blank?
+      reply_list = []
+      data['entry'].each do |reply|
+        reply_hash = {:type => 'douban'}
+        head_url = nil
+        head_url = reply['author']['link'].each{|link|}
+        reply['author']['link'].each do |link| 
+          head_url = link['@href'] if link.has_value?('icon') #获取用户头像
+        end
+        reply_list << reply_hash.merge({
+          :content => reply['content']['$t'],
+          :head_url => head_url,
+          :created_at => Time.parse(reply['published']['$t']).to_i,
+          :name => reply['author']['name']['$t']
+        })
+      end
+      return reply_list
+    rescue JSON::ParserError => e
+      return nil
+    end
+  end
+
+  #发送评论
   def send_weibo
     oauth_weibo = user.oauths.oauth_binding.where('sns_name = ?', 'weibo').first
     if image_url
@@ -48,9 +136,10 @@ class OauthComment < ActiveRecord::Base
     qq_client = user.oauth_client('qq')
     #TODO 修改ip
     if image_url
-      response = qq_client.post(" http://open.t.qq.com/api/t/add_pic_url", 
+      # :pic_url =>  "http://patrickdev.sidways.com#{image_url}", 
+      response = qq_client.post("http://open.t.qq.com/api/t/add_pic_url", 
       	             {:content => body, 
-      	              :pic_url =>  "http://patrickdev.sidways.com#{image_url}", 
+                      :pic_url => "http://www.baidu.com/img/baidu_sylogo1.gif",
       	              :clientip => "180.168.220.98"}).body
     else
    	  response = qq_client.add_status(body, :clientip => "180.168.220.98").body
@@ -66,7 +155,7 @@ class OauthComment < ActiveRecord::Base
 
   def send_douban
     douban_client = user.oauth_client('douban')
-    response = douban_client.add_douban_status('')
+    response = douban_client.add_douban_status(body)
     if response.code > "202" #豆瓣的文档，大于202则为错误代码
       failure_share(response.msg)
     else
