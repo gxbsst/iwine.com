@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Wine < ActiveRecord::Base
   attr_accessor :all_years, :image_url, :slug
   include Common
@@ -42,6 +43,11 @@ class Wine < ActiveRecord::Base
       )
     end
     return wine
+  end
+
+  #发评论时分享用
+  def share_name
+    "【#{origin_name}】"
   end
 
   def get_latest_detail

@@ -1,0 +1,23 @@
+<% if @reply_list.present? %>
+	<ul class="reply_list clearfix">
+		<% @reply_list.each do |reply| %>
+			<li>
+				<div class="userpic">
+					<%= image_tag reply[:head_url], :width => 30, :height => 30 %>    
+				</div>
+				<div class="main">
+					<div class="username">
+						<%= reply[:name] %>
+						<span class="date"><%= Time.at(reply[:created_at]).to_s(:normal) %></span>
+						<span class="sns">来自<%= sns_come_from(reply[:type]) %></span>
+					</div>
+					<div class="content"><%= reply[:content] %></div>
+				</div>
+			</li>
+		<% end %>
+		
+		<div class="clear"></div>
+	</ul>
+<% else %>
+	<p>暂无站外评论</p>
+<% end %>

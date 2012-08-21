@@ -213,10 +213,25 @@ module ApplicationHelper
     ids_arr, current_index = page_ids(ids_arr, current_id)
     return "#{current_index.to_i + 1} / #{ids_arr.count}"
   end
+
   def page_ids(ids_arr, current_id)
     ids_arr = ids_arr.sort
     current_index  = ids_arr.sort.index(current_id)
     return [ids_arr, current_index]
+  end
+
+  def comment_detail_url(comment)
+    url = case comment.commentable_type
+    when "Photo"
+      photo_comment_path(comment.commentable, comment)
+    when "Wines::Detail", "Wine"
+      wine_comment_path(comment.commentable, comment)
+    when "Winery"
+      winery_comment_path(comment.commentable, comment)
+    end
+    link_to url do
+      raw "回复<span class='reply_comment_count'>(#{comment.children.all.size })</span><span class='reply_result'></span>"
+    end
   end
 
   def reply_comment(comment)
@@ -250,11 +265,13 @@ module ApplicationHelper
       link_to "私信", new_message_path(:receiver => user.username), :remote => true, :class => "icon_mail ajax"
     end
   end
+
   #  下拉菜单: 获取热门酒款
   def get_hot_wine(limit)
     Wines::Detail.hot_wines(1)
   end
-    #  下拉菜单: 获取热门酒款
+
+  #  下拉菜单: 获取热门酒款
   def get_hot_wineries(limit)
     Winery.hot_wineries(1)
   end
@@ -323,7 +340,7 @@ module ApplicationHelper
     bio.present? ? bio : (myself ? APP_DATA["user_profile"]["myself_no_bio"] : APP_DATA["user_profile"]["no_bio"])
   end
 
- def album_cover_tag(user, album)
+  def album_cover_tag(user, album)
     cover = album.photos.visible.cover.first
     if album.is_public.to_i == 0 && !is_login_user?(user)
       tag = theme_image_tag("common/p_album.png", :class => :cover, :width => 150, :height => 150)
@@ -347,6 +364,7 @@ module ApplicationHelper
       "<div class='clear'></div>"
     end
   end
+  
   def item_non_public(is_public)
     if is_public.to_i == 1
       %Q[<span class="non_public"> \
@@ -392,6 +410,10 @@ module ApplicationHelper
  
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
+  end
+
+  def sns_come_from(type)
+    type == "weibo" ? "新浪微博" : (type == "qq" ? "腾讯微博" : "豆瓣")
   end
 
 end

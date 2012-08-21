@@ -30,7 +30,6 @@
 $(document).ready(function(){
 
     // 下拉菜单
-
     $('a.arrow_down').click(function (event) {
         // $(this).preventDefault();
         event.preventDefault();
@@ -152,9 +151,9 @@ $(document).ready(function(){
         $("#loading").html("由于网络故障， 请稍后重试");
     });
     $(".ajax").bind("ajax:error", function(evt, data, status, xhr){  
-      if (data.status == 401){
+        if (data.status == 401){
            window.location.replace("/login");
-         }
+        }
     });
 
 });

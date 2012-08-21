@@ -1,3 +1,6 @@
+	<% content_for :css do %>
+		<%= theme_stylesheet_link_tag :hp %>
+	<% end %>
 	<% if params[:controller] == "wine_details" &&  params[:action] == "show" %>
 	<div class="title_btn">
 		<% unless params[:controller] == "wine_details/comments" %>
@@ -32,8 +35,10 @@
 					<%= link_to  vote_comment_path(comment.id), :remote => true, :class => "ajax vote"  do %>
 		        有用(<span class="likes_count"><%=comment.votes_count %></span>)
 		      <% end %> 
-					<%=  reply_comment(comment) %>
-				</div>		
+					<%=  comment_detail_url(comment) %>
+				</div>
+
+				
 				<div id="reply_comment_<%= comment.id %>" class="replybox" style="display: none"></div>			
 			</div>
 			<div class="clear"></div>
@@ -42,7 +47,7 @@
 		</ul>
 
 		 <div class="pagination">
-             <%= paginate @comments %>
+            <%= paginate @comments %>
          </div>
 
 
@@ -52,7 +57,12 @@
 		<div class="clear"></div>
 		   
 		<div class="comment_post_star mt30">
-			<%= render "comments/share/form" %>
+			<% if @comment.commentable_type == "Photo" %>
+				<%= render "comments/share/photo_comment_form" %>
+			<% else %>
+				<%= render "comments/share/form" %>
+			<% end %>
+
 		</div>
 
 
