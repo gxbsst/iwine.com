@@ -1,0 +1,75 @@
+    <%= form_for @event, :html => {:id => :form} do |f| -%>
+      <table class="form" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <th width="90">活动标题</th>
+          <td>
+            <%= f.text_field :title, :class => [:text, :name] %>
+          </td>
+        </tr>
+        <tr>
+          <th valign="top">活动标签</th>
+          <td>
+            <div id="tag_container">
+              <%= f.hidden_field :tag_list  %> 
+              <div id="input_tag_view">
+                <%= f.text_field :tags, :class => [:text, :tag], :placeholder => '按回车确定' %>
+                </div>
+              <span class="red" id="warning" style="display:none">不能为空</span>
+              <div id="resource_container"></div>
+              <div id="select_tags_container"></div>
+              <div class="clear"></div>
+              <div id="hot_tags_container"></div>
+
+              <script type="text/template" id="auto_compleate_view">
+                  <a href="#" data-value= "<@= id @>"><@= origin_name @></a>
+              </script>
+              <script type="text/template" id="hot_tags_template">
+                <p class="mt10">热门活动标签：</p>
+                <ul class="tags mt10">
+                </ul>
+              </script>
+              <script type="text/template" id="selected_tags_template">
+                <ul class="tags mt10">
+                </ul>
+              </script>
+              <script type="text/template" id="tags_template">
+                 <a href="#" data-value= ""><@= name @></a>
+              </script>
+
+              
+            </div>
+
+          </td>
+        </tr>
+        <tr>
+          <th>活动时间</th>
+          <td>
+            <%= f.text_field :begin_at, :class => [:text, :date] %>
+            至 
+            <%= f.text_field :end_at, :class => [:text, :date] %>
+          </td>
+        </tr>
+        <tr>
+          <th>活动地点</th>
+          <td>
+            <%= f.select :region_id, { '上海' => 1, '成都' => 2, '北京' => 3, '深圳' => 4}  %>
+            <%=  f.text_field :address, :class => [:text, :name], :placeholder => '请填写详细地址'  %>
+          </td>
+        </tr>
+        <tr>
+          <th>人数限制</th>
+          <td>
+            <%= f.text_field :block_in, :class => [:text, :price] %>
+            人 （0表示不限制人数）
+          </td>
+        </tr>
+        <tr>
+          <th>活动介绍</th>
+          <td>
+            <%= f.text_area :description, :class => [:wine_intro]  %>
+          </td>
+        </tr>
+      </table>
+
+    <% end -%>
+ 
