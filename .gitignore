@@ -16,7 +16,6 @@ public/uploads/*
 .sass-cache
 config/deploy.rb
 Capfile
-Gemfile.lock
 .idea/workspace.xml
 db/schema.rb
 .idea/workspace.xml
