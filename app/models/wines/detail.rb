@@ -210,9 +210,10 @@ class Wines::Detail < ActiveRecord::Base
   def get_cover_url(version)
     cover = photos.cover.approved.first
     if cover.nil?
-      cover = wine.photos.cover.approved.first
+      wine_cover = wine.photos.cover.approved.first
+      return "common/wine_#{version}.png" if wine_cover.blank?
     end
-    cover.image_url(version)
+    wine_cover.image_url(version)
   end
   # 类方法
   class << self

@@ -65,13 +65,13 @@ class SearchesController < ApplicationController
       wine = {}
       details = item.details
       wine_detail = details.first
-      years = details.collect {|detail| [detail.year.year, detail.slug] }
-      wine[:name_zh] = years.first.first + item.name_zh 
-      wine[:origin_name] = years.first.first + item.origin_name 
+      years = details.collect {|detail| [detail.year.year, "/wines/#{detail.slug}"] }
+      wine[:name_zh] = years.first.first.to_s + item.name_zh 
+      wine[:origin_name] = years.first.first.to_s + item.origin_name 
       ## TODO: write a method to get wine_detail cover
-      item.image_url = wine_detail.get_cover_url(:thumb)
+      wine[:image_url] = wine_detail.get_cover_url(:thumb)
       wine[:all_years] = years
-      wine[:slug] = wine_detail.slug
+      wine[:url] = "/wines/#{wine_detail.slug}"
       mem << wine 
     end
     respond_to do |format|

@@ -9,11 +9,16 @@ class Tags extends Backbone.Collection
   url: '/api/event_tags/hot_tags'
   model: Tag
 
+class Wines extends Backbone.Collection
+  url: '/searchs/wine?word=' 
+
 # class SelectTags extends HotTags
 @app = window.app ? {}
 @app.Tag = Tag
 @app.HotTags= new Tags
 @app.SelectTags = new Tags
+@app.SearchWines = new Wine
+@app.SelectWines = new Wine
     
 jQuery ->
   _.templateSettings = {
@@ -109,7 +114,73 @@ jQuery ->
             @flashWarning '', "已经添加了"
     focus: ->
       $(@el).find('input').val('').focus()
-
+    hideWarning: ->
+      $('#warning').hide()
+    flashWarning: (model, error) =>
+      console.log error
+      $('#warning').html(error).fadeOut(100)
+      $('#warning').fadeIn(400)
+  class SearchWineView extends Backbone.View
+    template: _.template $("#search_wine_template").html() 
+    initialize:
+      _.bindAll(@, 'render')
+    render: ->
+      $(@el).html @template model.toJSON
+      @
+    events:
+      "click .select": 'select'
+    select: ->
+      @collection.trigger 'select', @model
+  class SelectWineView extends Backbone.View
+    template: _.template $("#select_wine_template").html()
+    initialize:
+      _.bindAll @, 'render', 'remove'
+      @model.bind 'remove', @remove
+    render: ->
+      $(@el).html @template model.toJSON
+      @
+    events:
+      'click .remove': 'removeFromSelectList'
+    removeFromSelected: ->
+      @collection.remove @model
+  class SearchWineListView extends Backbone.View
+    el: $('.search_result_space')
+    initialize:
+      _.bindAll @, 'render'
+      @collection.bind('reset', @render)
+    render: ->
+      for wine in @collection
+        view = new SearchWineView model:wine
+        $(@el).append view.render().el
+      @
+  class SelectWineListView extends Backbone.View
+    el: $('.wine_select')
+    initialize:
+      _.bindAll(@, 'render')
+      @collection.bind('reset', @render)
+    render: ->
+      for wine in @collection
+        view = new SelectWineView model:wine
+        $(@el).append view.render().el
+      @
+  class InputSearchView extends Backbone.View
+    el: $("#search_input_view")
+    events: 
+      'keypress input': 'searchWine'
+      'focusout input': 'hideWarning'
+    searchWine:(event) ->
+      if (event.keyCode is 13) # ENTER
+        event.preventDefault()
+        name = $(@el).find('input').val()
+        if name.trim() == ''
+          @flashWarning '', "不能为空"
+        else
+          #TODO 
+          wines = window.app.SearchWines
+          wines.url += name
+          wines.fetch()
+    focus: ->
+      $(@el).find('input').val('').focus()
     hideWarning: ->
       $('#warning').hide()
     flashWarning: (model, error) =>
@@ -119,13 +190,17 @@ jQuery ->
 
 
   @app = window.app ? {}
+  # Tags
   @app.HotTagsListView = new HotTagsListView collection: window.app.HotTags 
   @app.SelectTagsListView = new SelectTagsListView collection: window.app.SelectTags, hotTags: window.app.HotTags
   @app.InputTagView = new InputTagView collection: window.app.SelectTags
   @app.HotTags.fetch()
 
+  # Add Wines
+  @app.SearchWineListView = new SearchWineListView collection: window.app.SearchWines
+  @app.SelectWineListView = new SelectWineListView collection: window.app.SelectWines
+  @app.InputSearchView = new InputSearchView
 
-   
    # class EventAppView extends Backbone.View
      # initialize: ->
        # _.bindAll(@,'render')
