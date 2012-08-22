@@ -1,0 +1,143 @@
+class Wine extends Backbone.Model
+class Wines extends Backbone.Collection
+  url: '/searches/wine.json?word=' 
+  origin_url: '/searches/wine.json?word=' 
+  model: Wine
+
+@app = window.app ? {}
+@app.SearchWines = new Wines
+@app.SelectWines = new Wines
+@app.Wine = Wine
+## Add Wine
+jQuery ->
+  _.templateSettings = {
+    interpolate: /\<\@\=(.+?)\@\>/g,
+    evaluate: /\<\@(.+?)\@\>/g
+  }
+  class WineView extends Backbone.View
+    setValueOfWineDetailIds: (collection) ->
+      $("#wine_detail_ids").val(collection.pluck('wine_detail_id').join(","))
+  class SearchWineView extends WineView
+    template: _.template($("#search_wine_template").html())
+    initialize: ->
+      _.bindAll(@, 'render')
+    render: ->
+      $(@el).html @template @model.toJSON()
+      @
+    events:
+      "click .select": 'select'
+    select: (event) ->
+      event.preventDefault
+      year = $(event.target).html()
+      wine_detail_id = $(event.target).attr('data-value')
+      newModel = @model.clone()
+      newModel.set('year', year)
+      newModel.set('wine_detail_id', wine_detail_id)
+      @collection.trigger 'select', newModel
+
+  class SelectWineView extends WineView 
+    template: _.template($("#select_wine_template").html())
+    initialize: ->
+      _.bindAll @, 'render', 'remove'
+      @model.bind 'remove', @remove
+    render: ->
+      $(@el).html @template @model.toJSON()
+      @
+    events:
+      'click .remove': 'removeFromSelectList'
+    removeFromSelectList: ->
+      @collection.remove @model
+      @setValueOfWineDetailIds(@collection)
+
+  class SearchWineListView extends Backbone.View
+    template: _.template($("#search_wine_list_template").html())
+    initialize: ->
+      _.bindAll @, 'render'
+      @collection.bind('reset', @render)
+    render: ->
+      $(@el).html @template {}
+      if @collection.length == 0
+        @.$('.wines').html('无返回结果')
+      else
+        @setSearchContainerCss()
+        @collection.each (model) =>
+          view = new SearchWineView model:model, collection:@collection
+          @.$('.wines').append view.render().el
+      @
+    setSearchContainerCss: ->
+      # $(@el).height(@collection.length * 70)
+
+  class SelectWineListView extends Backbone.View
+    template: _.template($("#select_wine_list_template").html())
+    initialize: ->
+      _.bindAll(@, 'render', 'addWine')
+      @collection.bind('reset', @render)
+      @collection.bind('add', @render)
+      @options.wines.bind 'select',  @addWine
+    render: ->
+      $(@el).html @template {}
+      if @collection.length > 0
+        @.$('.wines').empty()
+        @collection.each (model) =>
+          view = new SelectWineView model:model, collection: @collection
+          @.$('.wines').append view.render().el
+        @showSubmitButton()
+      @
+    events: 
+      'click .save_button': 'submitForm'
+    submitForm: (event) ->
+      event.preventDefault
+      $('#new_event_wine').submit()
+    showSubmitButton: ->
+      $('.btn_submit').show()
+    addWine: (wine) ->
+     items =  @collection.where year:wine.get('year'), origin_name: wine.get('origin_name')
+     if items.length == 0
+       @collection.add(wine)
+       wineView = new WineView 
+       wineView.setValueOfWineDetailIds(@collection)
+     else
+       alert("这支酒已经添加了")
+  class InputSearchView extends Backbone.View
+    el: $("#search_input_view")
+    events: 
+      'keypress input': 'searchWine'
+      'focusout input': 'hideWarning'
+    searchWine:(event) ->
+      if (event.keyCode is 13) # ENTER
+        @showLoading()
+        event.preventDefault()
+        name = $(@el).find('input').val()
+        if name.trim() == ''
+          @flashWarning '', "不能为空"
+        else
+          wines = window.app.SearchWines
+          wines.url = wines.origin_url + name 
+          wines.fetch success: =>
+            @hideLoading()
+          @showSearchResult()
+          @showSelectResult()
+    showSearchResult: ->
+      SearchWineListView = new SearchWineListView collection: window.app.SearchWines
+      $("#result_container").empty()
+      $("#result_container").append(SearchWineListView.render().el)
+    showSelectResult: ->
+      SelectWineListView = new SelectWineListView collection: window.app.SelectWines, wines:window.app.SearchWines
+      $("#result_container").append(SelectWineListView.render().el)
+    focus: ->
+      $(@el).find('input').val('').focus()
+    hideWarning: ->
+      $('#warning').hide()
+    flashWarning: (model, error) =>
+      console.log error
+      $('#warning').html(error).fadeOut(100)
+      $('#warning').fadeIn(400)
+    showLoading: ->
+      $(@el).find('.loading').show()
+    hideLoading: ->
+      $(@el).find('.loading').hide()
+
+  @app = window.app ? {}
+  @app.InputSearchView = new InputSearchView
+
+

@@ -64,6 +64,10 @@ module Users::Helpers::EventHelperMethods
      invitee =  event.invite_one_user(id, invitee_id, params)
     end
 
+    # 判定某个用户是否是活动的拥有者
+    def is_owner_of_event? event
+     event.user == self ? true : false
+    end
     
   end # end InstanceMethods
 

@@ -32,3 +32,6 @@ lib/wines_photos
 public/assets
 /lib/region_tree.csv
 lib/tasks/data
+*.swo
+*.swn
+*.swm

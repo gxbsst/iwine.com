@@ -211,9 +211,12 @@ class Wines::Detail < ActiveRecord::Base
     cover = photos.cover.approved.first
     if cover.nil?
       wine_cover = wine.photos.cover.approved.first
-      return "common/wine_#{version}.png" if wine_cover.blank?
+      if wine_cover.blank?
+        return "/assets/waterfall/images/common/wine_#{version}.png" 
+      else
+        wine_cover.image_url(version)
+      end
     end
-    wine_cover.image_url(version)
   end
   # 类方法
   class << self

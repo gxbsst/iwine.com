@@ -1,7 +1,11 @@
 # encoding: utf-8
 class EventsController < ApplicationController
+
+  include Helper::EventsControllerHelper
+
   before_filter :authenticate_user!, :except => [:show]
-  before_filter :get_event, :only => [:show]
+  before_filter :get_user, :except => [:show]
+  before_filter :get_event, :only => [:show, :edit, :update, :destroy]
 
   def new
     @event = Event.new
@@ -13,7 +17,7 @@ class EventsController < ApplicationController
 
   def create
     event = params[:event]
-    @event = Event.new(
+    @event = @user.events.build(
       :title => event[:title],
       :description => event[:description],
       :begin_at => event[:begin_at],
@@ -31,46 +35,39 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @model_class_name = ModelClassName.find(params[:id])
   end
 
   def update
-    @model_class_name = ModelClassName.find(params[:id])
   
     respond_to do |wants|
-      if @model_class_name.update_attributes(params[:model_class_name])
-        flash[:notice] = 'ModelClassName was successfully updated.'
-        wants.html { redirect_to(@model_class_name) }
-        wants.xml  { head :ok }
+      if @event.update_attributes(params[:event])
+        flash[:notice] = 'Event was successfully updated.'
+        wants.html { redirect_to(edit_event_path(@event)) }
       else
         wants.html { render :action => "edit" }
-        wants.xml  { render :xml => @model_class_name.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   def show
-    @model_class_name = ModelClassName.find(params[:id])
-  
     respond_to do |wants|
       wants.html # show.html.erb
-      wants.xml  { render :xml => @model_class_name }
     end
   end
 
   def destroy
-    @model_class_name = ModelClassName.find(params[:id])
-    @model_class_name.destroy
-  
+    @event.destroy
     respond_to do |wants|
-      wants.html { redirect_to(model_class_names_url) }
-      wants.xml  { head :ok }
+      wants.html { redirect_to(events_path) }
     end
   end
-
   private
   
   def get_event
    @event = Event.find(params[:id]) 
+  end
+
+  def get_user
+   @user = current_user 
   end
 end

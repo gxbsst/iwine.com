@@ -14,7 +14,7 @@ describe SearchesController do
 
  it "should include  wine Baron de Milon" do
    #@response.body.should include("Baron de Milon") 
-   @parsed_body.should == "aa Baron de Milon"
+   @parsed_body.should == "Baron de Milon"
  end
  
 end
