@@ -47,6 +47,7 @@ module Api
       end
 
       def build_json(resource)
+        @user = resource
         user_info_json
         #return {:success => 1, 
                 #:resultCode => APP_DATA["api"]["return_json"]["normal_success"]["code"],
