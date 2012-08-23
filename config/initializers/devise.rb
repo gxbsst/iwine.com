@@ -214,11 +214,11 @@ Devise.setup do |config|
   if Rails.env == "development"
     config.omniauth :renren, 'ef5981ff6b024cc6ba9b7a3174371787', 'e2caaee5bdda4785ab3abd99407017be'
     config.omniauth :weibo, '600927978','eddb6b4e3241e32490bb5ba2cad25421' 
-    config.omniauth :qq_connect, '100294118', '244168f2df7b9468eeac0fc885b965b9'
+    config.omniauth :qq_connect, '100294118', '244168f2df7b9468eeac0fc885b965b9' #私有账号
   else
-    config.omniauth :qq_connect, '100289735','bb4a3221165e53f069db9254ff91285a' 
-    config.omniauth :weibo, '721657578','91d9d64624ae1efb1bd88c935c35b3c0' 
-    config.omniauth :renren, 'bc9efc6ab27048bd9e251adecb2c8709','9288c2bf2d4b42eea62df06157fb1328' 
+    config.omniauth :qq_connect, '100298233', '633ccc9eedd21fd4b35ffe24ccc7af9a'
+    config.omniauth :weibo, '3967942651','83788cd39468847f7f16f0bd9589263e'
+    config.omniauth :renren, '98420f24310c4b53bd450ff20966eb07', '9ec0d36f41384cb0b8553976537c9fa2' 
   end
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
