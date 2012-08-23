@@ -5,6 +5,9 @@ Patrick::Application.routes.draw do
     resources :event_wines
     resources :event_invitees
     resources :event_participants
+    member do
+      get :upload_poster
+    end
   end
 
   resources :after_first_signins do

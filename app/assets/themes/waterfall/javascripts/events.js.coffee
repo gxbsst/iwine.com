@@ -46,7 +46,8 @@ jQuery ->
       if (@collection.where name: tag.get('name')).length == 0
         @collection.add(tag)
       else
-        window.app.InputTagView.flashWarning "", "已经添加了"
+        alert('该标签已经添加了')
+        # window.app.InputTagView.flashWarning "", "已经添加了"
     
   class HotTagsListView extends Backbone.View
     template: _.template($("#hot_tags_template").html())
@@ -111,7 +112,8 @@ jQuery ->
               @hideWarning()
               @focus()
           else
-            @flashWarning '', "已经添加了"
+            alert('该标签已经添加了')
+            # @flashWarning '', "已经添加了"
     focus: ->
       $(@el).find('input').val('').focus()
     hideWarning: ->
@@ -120,42 +122,20 @@ jQuery ->
       console.log error
       $('#warning').html(error).fadeOut(100)
       $('#warning').fadeIn(400)
+  class EventAppView extends Backbone.View
+    el: $('.whitespace')
+    events: 
+      'click #button_add_wines': 'submit'
+    submit: ->
+      if @options.selectTags.length == 0 
+        alert("请输入活动标签")
+      else
+        @.$('#form').submit()
  
   @app = window.app ? {}
   # Tags
-  @app.HotTagsListView = new HotTagsListView collection: window.app.HotTags 
-  @app.SelectTagsListView = new SelectTagsListView collection: window.app.SelectTags, hotTags: window.app.HotTags
-  @app.InputTagView = new InputTagView collection: window.app.SelectTags
-  @app.HotTags.fetch()
+  @app.HotTagsListView =  HotTagsListView
+  @app.SelectTagsListView = SelectTagsListView
+  @app.InputTagView = InputTagView 
 
-  # Add Wines
-  # @app.SearchWineListView = new SearchWineListView collection: window.app.SearchWines
-  # @app.SelectWineListView = new SelectWineListView collection: window.app.SelectWines
-  # @app.InputSearchView = new InputSearchView
-
-   # class EventAppView extends Backbone.View
-     # initialize: ->
-       # _.bindAll(@,'render')
-       # @hotTags =  @options.hotTags
-       # @selectTags = @options.selectTags
-     # render: ->
-       # hotTagsListView = new HotTagsListView collection: @hotTags
-       # $("#hot_tags_container").append(hotTagsListView.render().el)
-       # selectTagsListView = new SelectTagsListView collection: @selectTags, hotTags: @hotTags
-       # $("#select_tags_container").append(selectTagsListView.render().el)
-       # @
-       
-   # hotTags = @app.HotTags
-   # selectTags = @app.SelectTags
-   # @app.EventAppView = new EventAppView hotTags: hotTags, selectTags: selectTags
-   # @app.EventAppView.render()
-  
-  # class EventView extends Backbone.View
-    # el: "#event_form"
-    # initialize: (options) ->
-      # @collection.bind 'reset', @render, @
-    # render: ->
-      # $(@el).empty()
-      # $(@el).append  @subview
- 
-
+  @app.EventAppView = new EventAppView selectTags: window.app.SelectTags

@@ -34,20 +34,48 @@
     <%= theme_image_tag "common/add_event_step1.gif", :size => "180x22" %>
   </div>
   <div id="stylized" class="myform mb30">
-<%= render 'form' %>
-
+    <%= render 'form' %>
  </div>
   <div class="add_event_step">
     <%= theme_image_tag "common/add_event_step2.gif", :size => "180x22", :alt => "添加活动用酒" %>
   </div>
-  <div class="mb30 align_c">
-    <a href="#" id="button_add_wines" class="btn_gray_b"><span>添加活动用酒</span></a>
+  <div class="wine_select mb30">
+    <p class="notice_b mb20">已选择的活动用酒：</p>
+    <% if @event.wines.present? %>
+      <% @event.wines.each do |wine| %>
+        <% wine_detail = wine.wine_detail %>
+    <dl>
+      <dt>
+        <%= link_to wine_path(wine_detail) do %>
+          <%= wine_label_tag(wine_detail, :alt => wine_detail.origin_zh_name, :thumb_name => "thumb_x", :size => "70x70" )%>
+        <% end %>
+      </dt>
+      <dd>
+        <h2><%= wine_detail.cname %></h2>
+        <h3><%= wine_detail.origin_name %></h3>
+      </dd>
+    </dl>
+  <% end %>
+    <div class="clear"></div>
   </div>
+  <div class="mb30 align_c">
+    <a href="javascript:void(0)"  id="button_add_wines"  class=" btn_gray_b">
+      <span>继续添加</span></a>
+  </div>
+<% else %>
+  <div class="mb30 align_c">
+    <a href="javascript:void(0)"  id="button_add_wines"  class=" btn_gray_b">
+      <span>添加活动用酒</span></a>
+  </div>
+<% end %>
+        
   <div class="add_event_step">
     <%= theme_image_tag "common/add_event_step2.gif", :size => "180x22", :alt => "上传活动海报" %>
   </div>
   <div class="mb30 align_c">
-    <a href="add_event_poster.html" class=" btn_gray_b"><span>上传活动海报</span></a>
+    <%= link_to upload_poster_event_path(@event), :class => :btn_gray_b do  %>
+      <span>上传活动海报</span>
+    <% end %>
   </div>
   <div class="btn_submit">
     <a href="event_detail.html" class="btn_bluesky_s mr10"><span>立即发布</span></a>
@@ -55,4 +83,5 @@
     <a href="event.html" class="btn_gray_b"><span>取消</span></a>
   </div>
 </div>
+
 

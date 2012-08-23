@@ -8,6 +8,7 @@ class EventWinesController < ApplicationController
   before_filter :check_owner
 
   def new
+    @old_event = Event.find(params[:event_id])  # 这里不用get_event 是为了避免下面的代码产生空对象
     @event_wine = @event.wines.build
     respond_to do |wants|
       wants.html # new.html.erb
@@ -18,6 +19,9 @@ class EventWinesController < ApplicationController
   def create
     wine_detail_ids = params[:event_wine][:wine_detail_ids]
     if wine_detail_ids.present?
+      if @event.wines.present?
+        @event.wines.delete_all
+      end
       wine_detail_ids.split(',').each do |wine_detail_id|
         @event.add_one_wine(wine_detail_id)
       end
@@ -26,7 +30,7 @@ class EventWinesController < ApplicationController
         wants.html { redirect_to(edit_event_path(@event)) }
       end
     else
-      rails "WINE DETAIL IDS CAN NOT BE NULL"
+      raise "WINE DETAIL IDS CAN NOT BE NULL"
     end
   end
 

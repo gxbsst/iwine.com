@@ -142,6 +142,11 @@ class Event < ActiveRecord::Base
    EventWine.check_wine_have_been_added?(id, wine_detail_id)
   end
 
+  # 活动标签 
+  def tags_array
+    tags.collect {|tag| {:id => tag.id, :name => tag.name}}
+  end
+
   private
   def set_geometry
     geometry = self.poster.large.geometry

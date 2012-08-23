@@ -218,6 +218,26 @@ class Wines::Detail < ActiveRecord::Base
       end
     end
   end
+
+  def custom_to_json
+    wine = self.wine
+    years = wine.details.collect {|detail| [detail.year.year, "/wines/#{detail.slug}", detail.id] }
+    wine.name_zh ||= wine.origin_name
+    #year = year.year.to_s
+
+    result = {
+      :wine_detail_id => id,
+      :name_zh => wine.name_zh,
+      :year => year.year,
+      :origin_name => wine.origin_name,
+      :image_url => get_cover_url(:thumb),
+      :all_years => years,
+      :url => "/wines/#{slug}"
+    }
+    
+    result
+  end
+
   # 类方法
   class << self
    def timeline_events

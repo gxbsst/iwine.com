@@ -10,7 +10,7 @@
           <th valign="top">活动标签</th>
           <td>
             <div id="tag_container">
-              <%= f.hidden_field :tag_list  %> 
+                <%= f.hidden_field :tag_list  %> 
               <div id="input_tag_view">
                 <%= f.text_field :tags, :class => [:text, :tag], :placeholder => '按回车确定' %>
                 </div>
@@ -21,7 +21,7 @@
               <div id="hot_tags_container"></div>
 
               <script type="text/template" id="auto_compleate_view">
-                  <a href="#" data-value= "<@= id @>"><@= origin_name @></a>
+                  <a href="javascript:void(0)" data-value= "<@= id @>"><@= origin_name @></a>
               </script>
               <script type="text/template" id="hot_tags_template">
                 <p class="mt10">热门活动标签：</p>
@@ -33,12 +33,22 @@
                 </ul>
               </script>
               <script type="text/template" id="tags_template">
-                 <a href="#" data-value= ""><@= name @></a>
+                 <a href="javascript:void(0)" data-value= ""><@= name @></a>
               </script>
-
-              
+              <script language="javascript" type="text/javascript">
+                $(document).ready(function(){
+                    sv = new app.SelectTagsListView ({collection: app.SelectTags, hotTags:app.HotTags})
+                    <% if @event.tags_array.present? %>
+                      <% @event.tags_array.each do |tag| %>
+                        app.SelectTags.add({id:<%= tag[:id] %>, name: "<%= tag[:name] %>"})
+                      <% end %>
+                    <% end %>
+                    hv = new app.HotTagsListView ({collection: app.HotTags}) 
+                    new app.InputTagView ({collection: app.SelectTags})
+                    app.HotTags.fetch()
+                    });
+              </script>
             </div>
-
           </td>
         </tr>
         <tr>
