@@ -101,8 +101,11 @@ input.photo_name, textarea.photo_des {width:184px;}
 textarea.photo_des {min-height: 70px;} 
 li.photo_des p {margin: 0 0 5px 0;} 
 
+<<<<<<< HEAD
+=======
 .photolist li {width:130px;float:left;margin-right:20px;}
 .photolist li.last {margin-right:0;}
 .photolist {width:590px;float:left;margin-bottom:20px;}
 .photolist li {width:130px;float:left;margin:0 8px;_margin: 0 7px;}
 .photolist li img {margin-bottom:5px;}
+>>>>>>> b8bf535afef9f3ca4d4d4f96f046c044fd6186a6

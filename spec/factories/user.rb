@@ -1,7 +1,7 @@
 # encoding: utf-8
 FactoryGirl.define do
 	factory :user do
-		sequence(:username) { |n| "foo_1#{n}" }
+		sequence(:username) { |n| "foo00000_1#{n}" }
 		password "foobar"
 		email { "#{username}@example.com" }
 		city "Shanghai"
