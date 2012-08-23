@@ -16,7 +16,6 @@ public/uploads/*
 .sass-cache
 config/deploy.rb
 Capfile
-Gemfile.lock
 .idea/workspace.xml
 db/schema.rb
 .idea/workspace.xml
@@ -26,7 +25,6 @@ db/wine_variety_i18n.csv
 schema.rb
 notify.log
 lib/wines_photos
-/Gemfile.lock
 /db/schema.rb
 /notify.log
 public/assets

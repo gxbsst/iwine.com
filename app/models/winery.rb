@@ -1,4 +1,4 @@
-
+#encoding: utf-8
 # Attributes:
 # * id [integer, primary, not null, limit=4] - primary key
 # * address [string] - TODO: document me
@@ -71,7 +71,12 @@ class Winery < ActiveRecord::Base
   friendly_id :origin_name, :use => [:slugged]
 
   def name
-    origin_name + '/' + name_zh    
+    "#{origin_name}/#{name_zh}"
+  end
+  
+  #发评论时分享用
+  def share_name
+    "【#{origin_name}】酒庄"
   end
 
   def save_region_tree(region)

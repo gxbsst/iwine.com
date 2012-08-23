@@ -24,8 +24,8 @@
 //= require waterfall/javascripts/waterfall
 //= require waterfall/javascripts/home
 //= require waterfall/javascripts/css_browser_selector
-//= require waterfall/javascripts/autocomplete_plus
-//= require waterfall/JavaScripts/region_world
+// require waterfall/javascripts/autocomplete_plus
+// require waterfall/JavaScripts/region_world
 
 
 $(document).ready(function(){
@@ -54,6 +54,29 @@ $(document).ready(function(){
         closeClick      : false,
         openEffect      : 'none',
         closeEffect     : 'none',
+        helpers : {
+            overlay : {
+                opacity : 0.8,
+                css : {
+                    'background-color' : '#FFF'
+                }
+            }
+        } // end helper
+
+    });
+    $("a.sns_fancybox").fancybox({
+        maxWidth        : 900,
+        maxHeight       : 850,
+        padding : 0,
+        fitToView       : false,
+        width           : '100%',
+        height          : '100%',
+        autoSize        : false,
+        closeClick      : false,
+        openEffect      : 'none',
+        closeEffect     : 'none',
+        type            : 'iframe',
+       
         helpers : {
             overlay : {
                 opacity : 0.8,

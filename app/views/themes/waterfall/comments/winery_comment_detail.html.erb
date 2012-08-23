@@ -1,0 +1,107 @@
+<% content_for :css do %>
+	<%= theme_stylesheet_link_tag :winery, :thumb %>
+	<% end %>
+<div class="whitespace mb30">
+	<%= render "wineries/winery_detail" %>
+</div>
+
+<div class="whitespace winerymain">
+	<div class="left">
+		<div class="section">
+			<div class="title">
+				<%= link_to winery_comments_path(@winery), :class => "btn_gray float_r" do %>
+					<span>返回所有评论</span>
+				<% end %>
+				<h2>评论</h2>
+			</div>
+			<div class="content">
+				<ul class="comment_list clearfix">
+					<li>
+						<div class="userpic">
+							<%= link_to_user @comment.user, user_path(@comment.user, :trailing_slash => true),  
+											{:with_avatar => true, :avatar_version => :middle},  
+											{:width => 50, :height => 50} %>     
+						</div>
+						<div class="main">
+							<div class="username">
+								<%= link_to @comment.user.username, user_path(@comment.user) %>
+								<span class="date"><%= @comment.updated_at.to_s(:normal) %></span>
+							</div>
+							<div class="content">
+								<%= @comment.body %>
+							</div>
+							<p>
+								<%= link_to  vote_comment_path(@comment), :remote => true, :class => "ajax vote"  do %>
+		                			有用(<span class="likes_count"><%=@comment.votes_count %></span>)
+		             			<% end %>
+							</p>
+						</div>
+					</li>
+				</ul>
+				<div class="clear"></div>
+				<div class="reply">
+					<div class="tabs">
+						<ul class="comment_tabs">
+							<li><%= link_to "站内回复", "javascript:void(0);" %></li>
+							<li id="ajax-tab"><%= link_to "站外回复", "javascript:void(0);" %></li>
+						</ul>
+					</div>
+					<div class="panes">
+						<div>
+							<ul class="reply_list clearfix">
+								<% @reply_comments.each do |reply| %>
+									<li>
+										<div class="userpic">
+											<%= link_to_user @comment.user, user_path(@comment.user, :trailing_slash => true),  
+												{:with_avatar => true, :avatar_version => :middle},  
+												{:width => 30, :height => 30} %> 
+										</div>
+										<div class="main">
+											<div class="username">
+												<%= link_to reply.user.username, user_path(reply.user) %>
+												<span class="date"><%= reply.updated_at.to_s(:normal) %></span>
+											</div>
+											<div class="content">
+												<%= reply.body %>
+											</div>
+										</div>
+									</li>
+								<% end %>
+							</ul>
+							<div class="pagination">
+								<%= paginate @reply_comments %>
+							</div>
+						</div>
+						<div id="ajax-pane">
+							正在加载评论。。。
+						</div>
+					</div>
+					<div class="post clearfix">
+						<%= render "comments/share/reply_form" %>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="right">
+		<%= render "wineries/hot_winery" %>
+        <%= render "wineries/follower" %>
+        <div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<script type="text/javascript">
+	$("ul.comment_tabs").tabs("div.panes > div");
+	$("#ajax-tab").one('click', function(){
+		$('#ajax-pane').load("/comments/<%= @comment.id%>/get_sns_reply");
+	});
+
+  	$(document).ready(function(){
+	  	// "有用" 成功时，更新有用的数量
+	  	$("a.vote").bind("ajax:success", function(event, data, textStatus, jqXHR){
+	    	$(this).find("span.likes_count").text(data);
+	  	});
+	});
+</script>

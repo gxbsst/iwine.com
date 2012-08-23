@@ -149,3 +149,10 @@ gem 'versionist'
 gem 'nokogiri'
 
 gem 'delayed_job_active_record'
+
+# Tagging
+gem 'acts-as-taggable-on', '~> 2.3.1'
+
+# address  latitude & longitude
+gem "geocoder"
+gem 'google_places'
