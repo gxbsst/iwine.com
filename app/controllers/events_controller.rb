@@ -32,11 +32,20 @@ class EventsController < ApplicationController
 
   def update
     respond_to do |wants|
-      if @event.update_attributes(build_old_event)
-        flash[:notice] = 'Event was successfully updated.'
-        wants.html { redirect_to(new_event_event_wine_path(@event)) }
+      if params[:event][:poster].present?
+        @event.update_attribute(:poster, params[:event][:poster])
+        wants.html { redirect_to( upload_poster_event_path(@event)) }
+      elsif params[:event][:crop_x].present?
+        crop_poster
+        notice_stickie t("notice.photo.upload_avatar_success")
+        wants.html { redirect_to(edit_event_path(@event)) }
       else
-        wants.html { render :action => "edit" }
+        if @event.update_attributes(build_old_event)
+          flash[:notice] = 'Event was successfully updated.'
+          wants.html { redirect_to(new_event_event_wine_path(@event)) }
+        else
+          wants.html { render :action => "edit" }
+        end
       end
     end
   end
@@ -95,6 +104,15 @@ class EventsController < ApplicationController
       :region_id => event[:region_id].to_i,
       :address => event[:address]
     } 
+  end
+
+  def crop_poster
+    event = params[:event]
+    @event.attributes = {:crop_x => event[:crop_x],
+                               :crop_y => event[:crop_y],
+                               :crop_h => event[:crop_h],
+                               :crop_w => event[:crop_w]}
+    @event.save # skipping validate
   end
 
 end

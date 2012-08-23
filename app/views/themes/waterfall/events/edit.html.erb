@@ -73,8 +73,19 @@
     <%= theme_image_tag "common/add_event_step2.gif", :size => "180x22", :alt => "上传活动海报" %>
   </div>
   <div class="mb30 align_c">
-    <%= link_to upload_poster_event_path(@event), :class => :btn_gray_b do  %>
-      <span>上传活动海报</span>
+    <% if @event.poster.present? %>
+      <div class="mb30 align_c">
+        <%= image_tag @event.poster_url(:large), :size => '150x225' %>
+      </div>
+      <div class="mb30 align_c">
+        <%= link_to upload_poster_event_path(@event), :class => :btn_gray_b do  %>
+          <span>更改活动海报</span>
+        <% end %>
+      </div>
+    <% else %> 
+      <%= link_to upload_poster_event_path(@event), :class => :btn_gray_b do  %>
+        <span>上传活动海报</span>
+      <% end %>
     <% end %>
   </div>
   <div class="btn_submit">

@@ -169,6 +169,7 @@ class Event < ActiveRecord::Base
       poster.recreate_versions!
       resize_poster(:large, :middle)
       resize_poster(:large, :thumb)
+      resize_poster(:large, :x_thumb)
     end
   end
 

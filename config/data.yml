@@ -166,17 +166,20 @@ image:
       height: 360
   poster:
     origin:
-      width: 280
-      height: 280
+      width: 300 
+      height: 450
     large:
-      width: 130
-      height: 130
-    middle:
-      width: 50
-      height: 50
+      width: 150  
+      height: 225 
+    middle: 
+      width: 130 
+      height: 190 
     thumb:
-      width: 30
-      height: 30
+      width: 100 
+      height: 150 
+    x_thumb:
+      width: 70 
+      height: 105 
 
    
         
