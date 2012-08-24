@@ -1,4 +1,8 @@
 zh-CN:
+  devise:
+    omniauth_callbacks:
+      user:
+        failure: "同步失败"
   notice:
     save_success: "保存成功。"
     update_success: "更新成功。"

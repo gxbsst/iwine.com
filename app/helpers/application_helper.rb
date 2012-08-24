@@ -343,12 +343,12 @@ module ApplicationHelper
   def album_cover_tag(user, album)
     cover = album.photos.visible.cover.first
     if album.is_public.to_i == 0 && !is_login_user?(user)
-      tag = theme_image_tag("common/p_album.png", :class => :cover, :width => 150, :height => 150)
+      tag = theme_image_tag("common/p_album.png", :class => :cover, :size => '150x150')
     else
       if cover
        tag =  image_tag(cover.image_url(:xx_middle), :class => 'cover', :size => '150x150')
       else
-        tag = theme_image_tag( "album.jpg", :class => :cover, :width => 150, :height => 150)
+        tag = theme_image_tag( "album.jpg", :class => :cover, :size => '150x150')
       end
     end
     if album.is_public.to_i == 0 && !is_login_user?(user) #非公开

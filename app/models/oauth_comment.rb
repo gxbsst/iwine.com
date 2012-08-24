@@ -4,21 +4,30 @@ class OauthComment < ActiveRecord::Base
   belongs_to :user
   scope :unshare, where("status = #{APP_DATA['oauth_comments']['status']['no_share']}")
 
+  #检测oauth_comment是不是尚未同步到第三方
+  def is_unshare?
+    status.to_i == APP_DATA['oauth_comments']['status']['no_share']
+  end
+
   def get_sns_reply
   	reply_list = search_comments
     return reply_list
   end
 
   def share_to_sns
-    if user.check_oauth?(sns_type)
-    	case sns_type
-    	when 'qq'
-    	  send_qq
-    	when 'weibo'
-    	  send_weibo
-    	when 'douban'
-    	  send_douban
-    	end
+    begin
+      if user.check_oauth?(sns_type) && is_unshare?
+      	case sns_type
+      	when 'qq'
+      	  send_qq
+      	when 'weibo'
+      	  send_weibo
+      	when 'douban'
+      	  send_douban
+      	end
+      end
+    rescue OAuth2::Error => e
+      failure_share e
     end
   end
 

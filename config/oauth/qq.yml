@@ -1,11 +1,11 @@
 development:
-  key:    801091917
-  secret: 400c5d0f2a08ea78e6e637c402eab604
-  url:    http://localhost:3000
-  callback: "http://localhost:3000/friends/qq/callback"
+  key: 801219317
+  secret: 659de23d41cd9d45f20ad28a43306da4
+  url: http://patrick.local
+  callback: "http://patrick.local/friends/qq/callback"
 
 production:
-  key:    801091917
-  secret: 400c5d0f2a08ea78e6e637c402eab604
-  url:    http://iwine.com
-  callback: "http://iwine.com/friends/qq/callback"
+  key: 801219317
+  secret: 659de23d41cd9d45f20ad28a43306da4
+  url: http://patrickdev.sidways.com
+  callback: "http://patrickdev.sidways.com/friends/qq/callback"
