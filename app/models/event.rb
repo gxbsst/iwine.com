@@ -1,10 +1,11 @@
+# encoding: utf-8
 class Event < ActiveRecord::Base
   belongs_to :user
   belongs_to :region
   belongs_to :audit_log
   has_many :photos, :as => :imageable
   has_many :wines, :class_name => "EventWine"
-  has_many :participants, :class_name => "EventParticipant"
+  has_many :participants, :class_name => "EventParticipant", :include => [:user]
   has_many :invitees, :as => :invitable, :class_name => "EventInvitee"
   has_many :comments,  :class_name => 'EventComment', :as => :commentable
   has_many :follows, :as => :followable, :class_name => "EventFollow"
@@ -16,6 +17,10 @@ class Event < ActiveRecord::Base
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
   validates :title, :tag_list, :address, :begin_at, :end_at,  :presence => true
+  validates :publish_status, :inclusion => { :in => [0,1,2,3] } 
+  scope :published, where(:publish_status => EVENT_PUBLISHED_CODE ).order("begin_at ASC")
+  scope :live, published.where( "begin_at > ?", Time.now ) # 未举行
+  scope :recommends, lambda {|limit| live.order('participants_count DESC').limit(limit) }  # 推荐
 
   acts_as_taggable
   acts_as_taggable_on :tags
@@ -147,6 +152,15 @@ class Event < ActiveRecord::Base
     tags.collect {|tag| {:id => tag.id, :name => tag.name}}
   end
 
+  def full_address
+    regions = %w(上海 北京 成都 广州)
+    "#{regions[region_id]}  #{address}"
+  end
+
+  def begin_end_at
+   begin_at.to_s(:yt) + " - " + end_at.to_s(:yt)
+  end
+
   private
   def set_geometry
     geometry = self.poster.large.geometry
@@ -177,5 +191,6 @@ class Event < ActiveRecord::Base
     APP_DATA["image"]["poster"]["#{version.to_s}"]["width"].to_s << 
     "x" <<  APP_DATA["image"]["poster"]["#{version.to_s}"]["height"].to_s
   end
+
 end
 

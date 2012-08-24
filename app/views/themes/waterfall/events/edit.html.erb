@@ -88,10 +88,23 @@
       <% end %>
     <% end %>
   </div>
-  <div class="btn_submit">
-    <a href="event_detail.html" class="btn_bluesky_s mr10"><span>立即发布</span></a>
-    <a href="#" class="btn_off_s mr10"><span>暂不发布 (保存草稿)</span></a>
-    <a href="event.html" class="btn_gray_b"><span>取消</span></a>
+  <div class="btn_submit" id="submits">
+    <%= link_to published_event_path(@event, 
+                                     :publish_status => APP_DATA['event']['publish_status']['published']), 
+      :class => 'btn_bluesky_s mr10 publish' do %>
+      <span>立即发布</span>
+    <% end %>
+    <%= link_to published_event_path(@event, 
+                                     :publish_status => APP_DATA['event']['publish_status']['draft']), 
+      :class => 'btn_off_s mr10 not_publish' do %>
+      <span>暂不发布 (保存草稿)</span>
+    <% end %>
+
+    <%= link_to published_event_path(@event, 
+                                     :publish_status => APP_DATA['event']['publish_status']['cancle']), 
+      :class => 'btn_gray_b' do %>
+      <span>取消</span>
+    <% end %>
   </div>
 </div>
 

@@ -82,6 +82,8 @@ class Comment < ActiveRecord::Base
       "wineries"
     when "User"
       "users"
+    when "Event"
+      'events'
     end
     return path
   end

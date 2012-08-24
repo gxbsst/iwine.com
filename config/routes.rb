@@ -5,8 +5,10 @@ Patrick::Application.routes.draw do
     resources :event_wines
     resources :event_invitees
     resources :event_participants
+    resources :comments, :as => "event_comments"
     member do
       get :upload_poster
+      get :published
     end
   end
 

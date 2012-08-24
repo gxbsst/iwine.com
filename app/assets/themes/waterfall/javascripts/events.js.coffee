@@ -126,6 +126,20 @@ jQuery ->
     el: $('.whitespace')
     events: 
       'click #button_add_wines': 'submit'
+      'click #submits .publish': 'update_status_as_publish'
+      'click #submits .not_publish': 'update_status_as_draft'
+      'click #submits .cancle': 'update_status_as_cancle'
+      'click .save_event_button': 'submit'
+    update_status_as_publish: (event) ->
+     @.$("#event_publish_status").val(2) # published 
+     @submit()
+    update_status_as_draft: (event) ->
+     @.$("#event_publish_status").val(1) # draft 
+     @submit()
+    update_status_as_cancle: (event) ->
+     @.$("#event_publish_status").val(0) # cancle
+     @submit()
+
     submit: ->
       if @options.selectTags.length == 0 
         alert("请输入活动标签")
