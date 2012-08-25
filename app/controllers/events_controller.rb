@@ -7,6 +7,8 @@ class EventsController < ApplicationController
   before_filter :get_user, :except => [:index]
   before_filter :get_event, :except => [:new, :create, :index]
   before_filter :check_owner, :except => [:show, :new, :create, :index]
+  before_filter :get_follow_item, :only => [:show]
+  before_filter :get_join_item, :only => [:show]
 
   def index
     @top_events = Event.recommends(2)
@@ -42,16 +44,16 @@ class EventsController < ApplicationController
   def update
     respond_to do |wants|
       if params[:event][:poster].present?
-        notice_stickie ("上传成功.")
+        notice_stickie "上传成功."
         @event.update_attribute(:poster, params[:event][:poster])
         wants.html { redirect_to( upload_poster_event_path(@event)) }
       elsif params[:event][:crop_x].present?
         crop_poster
-        notice_stickie ("更新成功.")
+        notice_stickie "更新成功."
         wants.html { redirect_to(edit_event_path(@event)) }
       else
         if @event.update_attributes(build_old_event)
-          notice_stickie ("更新成功.")
+          notice_stickie "更新成功."
           wants.html { redirect_to(edit_event_path(@event)) }
         else
           wants.html { render :action => "edit" }
@@ -61,6 +63,8 @@ class EventsController < ApplicationController
   end
 
   def show
+    @event = Event.includes([:participants => [:user], :follows => [:user]]).find(params[:id])
+
     order = "votes_count DESC, created_at DESC"
     @comments  =  @event.comments.all(:include => [:user],
                                       # :joins => :votes,
@@ -71,9 +75,11 @@ class EventsController < ApplicationController
     page = params[:params] || 1
     new_normal_comment
     @recommend_events = Event.recommends(4)
-    respond_to do |wants|
-      wants.html # show.html.erb
-    end
+
+    # 参与活动的人
+    @participants = @event.participants
+    # 感兴趣的人
+    @follows= @event.follows
   end
 
   def destroy
@@ -84,7 +90,7 @@ class EventsController < ApplicationController
   end
 
   def upload_poster
-    
+
   end
 
   def published
@@ -97,13 +103,13 @@ class EventsController < ApplicationController
   end
 
   private
-  
+
   def get_event
-   @event = Event.find(params[:id]) 
+   @event ||= Event.find(params[:id])
   end
 
   def get_user
-   @user = current_user 
+   @user ||= current_user 
   end
 
   def build_new_event
@@ -144,12 +150,31 @@ class EventsController < ApplicationController
     @event.save # skipping validate
   end
 
- def new_normal_comment
+  def new_normal_comment
     @commentable = @event
     @comment = @commentable.comments.build
-    @comment.do = "comment" 
-    return @comment   
+    @comment.do = "comment"
+    return @comment
   end
 
+  # 登录用户是否关注活动
+  def get_follow_item
+    if !user_signed_in? 
+      nil
+    else
+      @follow_item = @event.have_been_followed? @user.id
+      @follow_item ? @follow_item : nil
+    end
+  end
+
+  # 登录用户是否已经参加活动
+  def get_join_item
+    if !user_signed_in? 
+      nil
+    else
+      @participant = @event.have_been_joined? @user.id
+      @participant ? @participant : nil
+    end
+  end
 
 end

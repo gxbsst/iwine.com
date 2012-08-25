@@ -8,15 +8,17 @@ module Users::Helpers::EventHelperMethods
   module InstanceMethods
 
     #======= 参加活动 =======#
-    
-    # 参加活动 
+
+    # 参加活动
     # params:
     #  event: object
     #  participant_info: hash 
     # return:
     #  participant object
     def join_event(event, participant_info = {})
-      rails ::EventException::HaveJoinedEvent if event.have_been_joined? id
+      value = {:user_id => id }
+      participant_info.merge! value
+      raise ::EventException::HaveJoinedEvent if event.have_been_joined? id
       return false unless event.joinedable?
       participant = event.participants.build(participant_info)
       participant.save
@@ -27,9 +29,10 @@ module Users::Helpers::EventHelperMethods
     # participant: object
     # info: hash
     def update_join_event_info(participant, info)
+     param = {:join_status => APP_DATA['event_participant']['join_status']['joined']}
      event = participant.event
      return false if event.locked?
-     participant.update_attributes(info)
+     participant.update_attributes(info, info.merge!(param))
      participant
     end
 
@@ -41,7 +44,7 @@ module Users::Helpers::EventHelperMethods
     end
 
     #======= 关注（感兴趣）活动 =======#
-    
+
     # 关注（感兴趣) 活动
     def follow_event event
       raise ::EventException::HaveFollowedEvent if event.have_been_followed? id
@@ -58,7 +61,7 @@ module Users::Helpers::EventHelperMethods
     end
 
     #======= 邀请好友参加活动 =======#
-    
+
     # 邀请一个用户
     def invite_one(invitee_id, event, params = {})
      invitee =  event.invite_one_user(id, invitee_id, params)
@@ -68,7 +71,7 @@ module Users::Helpers::EventHelperMethods
     def is_owner_of_event? event
      event.user == self ? true : false
     end
-    
+
   end # end InstanceMethods
 
   def self.included(receiver)

@@ -41,19 +41,22 @@ class Event < ActiveRecord::Base
   counts :participants_count => {
     :with => "EventParticipant",
     :receiver => lambda {|participant| participant.event },
-    :increment => {:on => :create},
+    :increment => {
+    :on => :save,
+    :if => lambda {|participant| participant.joined? }
+  },
     :decrement => {
-    :on => :update,  
-    :if => lambda {|participant| participant.cancle? }}                              
+    :on => :update,
+    :if => lambda {|participant| participant.cancle? }}
   },
     :followers_count => {:with => "Follow", 
       :receiver => lambda {|follow| follow.followable },
       :increment => {
-    :on => :create, 
+    :on => :create,
     :if => lambda {|follow| follow.follow_counter_should_increment_for("Event")}},
        :decrement => {
     :on => :destroy, 
-    :if => lambda {|follow| follow.follow_counter_should_decrement_for("Event")}}                              
+    :if => lambda {|follow| follow.follow_counter_should_decrement_for("Event")}}
   }
 
   # 将活动锁定
@@ -64,9 +67,9 @@ class Event < ActiveRecord::Base
   # 活动是否可参加
   def joinedable?
     if locked? || draft? || cancle? || timeout?
-      false 
+      false
     else
-      true 
+      true
     end
   end
 
@@ -78,13 +81,14 @@ class Event < ActiveRecord::Base
   # 人数已经订满?
   def ausgebucht?
     return false  unless set_blocked?
-    block_in > get_participant_number ? false : true
+    block_in == get_participant_number ? true: false
   end
 
   # 获取参加活动的人数
   def get_participant_number
-    EventParticipant.where(:event_id => id, 
-                           :join_status =>  APP_DATA['event_participant']['join_status']['cancle']).count 
+    participants_count
+    #EventParticipant.where(:event_id => id, 
+                           #:join_status =>  APP_DATA['event_participant']['join_status']['cancle']).count 
   end
 
   # 是否已经被关注
@@ -95,6 +99,14 @@ class Event < ActiveRecord::Base
   # 是否已经参加
   def have_been_joined?(user_id)
     EventParticipant.get_my_participant_info(id, user_id)
+  end
+
+  # 是否已经取消参加
+  def have_been_cancle_joined?(user_id)
+    ep = have_been_joined?(user_id)
+    if ep
+      ep.join_status == 0 ? true : false
+    end
   end
 
   # 邀请用户参加活动
@@ -160,6 +172,14 @@ class Event < ActiveRecord::Base
   def begin_end_at
    begin_at.to_s(:yt) + " - " + end_at.to_s(:yt)
   end
+
+
+  # 是否已经感兴趣活动
+  # 这个方法重复定义, 但是为了和酒庄／酒相同，这里重复定义
+  def is_followed_by? user
+    have_been_followed? user.id
+  end
+
 
   private
   def set_geometry

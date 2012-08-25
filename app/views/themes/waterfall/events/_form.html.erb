@@ -13,7 +13,7 @@
             <div id="tag_container">
                 <%= f.hidden_field :tag_list  %> 
               <div id="input_tag_view">
-                <%= f.text_field :tags, :class => [:text, :tag], :placeholder => '按回车确定' %>
+                <%= f.text_field :tags, :class => [:text, :tag], :placeholder => '输入后回车确定' %>
                 </div>
               <span class="red" id="warning" style="display:none">不能为空</span>
               <div id="resource_container"></div>
@@ -24,18 +24,22 @@
               <script type="text/template" id="auto_compleate_view">
                   <a href="javascript:void(0)" data-value= "<@= id @>"><@= origin_name @></a>
               </script>
+
               <script type="text/template" id="hot_tags_template">
-                <p class="mt10">热门活动标签：</p>
+                <p class="mt10">热门标签：</p>
                 <ul class="tags mt10">
                 </ul>
               </script>
+
               <script type="text/template" id="selected_tags_template">
                 <ul class="tags mt10">
                 </ul>
               </script>
+
               <script type="text/template" id="tags_template">
                  <a href="javascript:void(0)" data-value= ""><@= name @></a>
               </script>
+
               <script language="javascript" type="text/javascript">
                 $(document).ready(function(){
                     sv = new app.SelectTagsListView ({collection: app.SelectTags, hotTags:app.HotTags})
@@ -49,6 +53,7 @@
                     app.HotTags.fetch()
                     });
               </script>
+
             </div>
           </td>
         </tr>
@@ -81,12 +86,9 @@
           </td>
         </tr>
       </table>
-      
       <p align="center">
         <%= link_to "javascript:void(0)", :class => [:btn_gray_b, :save_event_button] do  %>
           <span> 保存</span>
         <% end %>
       </p>
-
     <% end -%>
- 

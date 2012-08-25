@@ -1,3 +1,6 @@
+<script language="javascript" type="text/javascript">
+</script>
+
 <% content_for :title, @title%>
 <% content_for :js do %>
   <%#= theme_javascript_include_tag "events" %>
@@ -27,12 +30,66 @@
               <%= @event.participants_count %>人参加  |  <%= @event.followers_count %>人感兴趣
             </span>
             <div class="action">
-              <a href="#" class="btn_bluesky_s mr5">
-                <span>我要参加</span>
-              </a>
-              <a href="#" class="btn_bluesky_s">
-                <span>我感兴趣</span>
-              </a>
+
+              <div id="join_form"  style="display: none" ></div>
+              <div id="cancle_form" style="display: none"></div>
+              <% if @event.joinedable?  %>
+                <% if @event.have_been_joined? @user.id %>
+                  <% if @event.have_been_cancle_joined? @user.id # 已经取消%>
+                    <span class="icon_fol mr5">
+                      报名已取消
+                    </span>
+                    <span class="cancl_fol mr5">
+                      <%= link_to edit_event_participant_path(@event,@participant), 
+                        :class => [:btn_bluesky_s, :mr5, :ajax], :remote => true do %>
+                          <span>重新参加</span>
+                       <% end %>
+                    </span>
+                  <% else %>
+                    <span class="icon_fol mr5">
+                      已报名参加
+                    </span>
+                    <span class="cancl_fol mr5">
+                      <%= link_to "(取消)",
+                        cancle_event_participant_path(@event, @participant), 
+                        :class => :ajax, :remote => true %>
+                    </span>
+                  <% end %>
+                <% else %>
+                <%= link_to new_event_participant_path(@event), 
+                  :class => [:btn_bluesky_s, :mr5, :ajax], :remote => true do %>
+                    <span>我要参加</span>
+                 <% end %>
+               <% end %>
+              <% else %>
+                <% if @event.timeout? # 活动已经举行 %>
+                  <%= link_to 'javascript:void(0)',
+                    :class => [:btn_bluesky_s, :mr5, :ajax], :remote => true do %>
+                      <span>活动已经过期</span>
+                  <% end %>
+                <% elsif @event.ausgebucht? %>
+                  <%= link_to 'javascript:void(0)',
+                    :class => [:btn_bluesky_s, :mr5, :ajax], :remote => true do %>
+                      <span>人数已满</span>
+                  <% end %>
+                <% end %>
+              <% end %>
+
+              <div id="follow_form"  style="display: none" ></div>
+
+              <% if @follow_item.present? %>
+                <span class="icon_fol mr5">感兴趣中</span>
+                <span class="cancl_fol mr5"> 
+                  <%= link_to "(取消)", event_follow_path(@event, @follow_item), :method => :delete %>
+                </span>
+              <% else %>
+                <%= link_to  new_event_follow_path(@event), 
+                  :class => [:btn_bluesky_s, :ajax], 
+                  :remote => true do %>
+                    <span>我感兴趣</span>
+                  <% end %>
+                <% end %>
+                <!--end action-->
             </div>
             <!--end base_content-->
           </div>
@@ -86,27 +143,66 @@
             <h2>
               活动参与者
               <span class="font12 more">
-                <%= link_to "（#{@event.participants_count}人参与 | #{@event.followers_count}人感兴趣）",
-                event_event_participants_path(@event) %>
+                <%= link_to "（#{@event.participants_count}人参与）",
+                'javascript:void(0)' %>
               </span>
             </h2>
             <!--end title-->
           </div>
           <div class="content">
             <ul class="event_people">
-              <li>
-                <a href="myiwine.html">
-                  <img src="images/userimage/03.jpg" width="50" height="50" alt="username" />
-                </a>
-              </li>
+              <% @participants.each do |p| %>
+                <li>
+                  <%= link_to_user p.user, user_path(p.user, :trailing_slash => true),
+                    {:with_avatar => true, :avatar_version => :thumb},
+                    {:size => '50x50', :alt => p.user.username } %>
+                </li>
+                <% end %>
               <div class="clear"></div>
             </ul>
           </div>
           <!--end section-->
         </div>
+
+
+        <div class="section event_wine">
+          <div class="title">
+            <h2>
+            感兴趣的人
+              <span class="font12 more">
+                <%= link_to "（#{@event.followers_count}人感兴趣）",
+                'javascript:void(0)' %>
+              </span>
+            </h2>
+            <!--end title-->
+          </div>
+          <div class="content">
+            <ul class="event_people">
+              <% @follows.each do |p| %>
+                <li>
+                  <%= link_to_user p.user, user_path(p.user, :trailing_slash => true),
+                    {:with_avatar => true, :avatar_version => :thumb},
+                    {:size => '50x50', :alt => p.user.username } %>
+                </li>
+                <% end %>
+              <div class="clear"></div>
+            </ul>
+          </div>
+          <!--end section-->
+        </div>
+
         <div class="section last">
           <div class="title">
-            <a href="#01" class="btn_gray float_r font12"><span>我要留言</span></a>
+            <a href="javascript:void(0)" class="btn_gray float_r font12 comment_focus" >
+              <span>我要留言</span>
+            </a>
+            <script language="javascript" type="text/javascript">
+              $(document).ready(function(){
+                  $('.comment_focus').click(function(){
+                    $("#event_comment_body").focus();
+                    });
+                  });
+            </script>
             <h2>
               留言
               <span class="font12 more"><a href="winery_comment_list.html"></a></span>
