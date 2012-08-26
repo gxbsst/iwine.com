@@ -7,13 +7,18 @@ class EventParticipant < ActiveRecord::Base
   validates :email, :presence => true, :email_format => true
   validates :cancle_note, :presence => {:if => :do_cancle?}
 
-  scope :with_user,  where(['user_id = ?', 5237])
-
   after_create :set_event_lock_status
+  after_update :udpate_event_lock_status
 
   def set_event_lock_status
     if event.set_blocked? # 做限定才去检测
       event.locked! if event.get_participant_number == event.block_in 
+    end
+  end
+
+  def udpate_event_lock_status
+    if event.set_blocked? # 做限定才去检测
+      event.unlocked!
     end
   end
 

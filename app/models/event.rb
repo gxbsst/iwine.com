@@ -22,21 +22,26 @@ class Event < ActiveRecord::Base
   scope :published, where(:publish_status => EVENT_PUBLISHED_CODE ).order("begin_at ASC")
   scope :live, published.where( "begin_at > ?", Time.now ) # 未举行
   scope :recommends, lambda {|limit| live.order('participants_count DESC').limit(limit) }  # 推荐
-  scope :recent_week, where(['begin_at >= ? AND begin_at <= ?', Time.current, Time.current + 1.week])
-  scope :weekend, where(['begin_at >= ? AND begin_at <= ?', Time.current.end_of_week - 2.day, Time.current.end_of_week])
-  scope :date_with, lambda { |date| where(["begin_at >= ? AND begin_at <= ?", date, date + 1.day]) }
+  scope :recent_week, where(['begin_at >= ? AND begin_at <= ?', 
+                            Time.current, Time.current + 1.week])
+  scope :weekend, where(['begin_at >= ? AND begin_at <= ?',
+                        Time.current.end_of_week - 2.day, Time.current.end_of_week])
+  scope :date_with, lambda { |date| where(["begin_at >= ? AND begin_at <= ?",
+                                          date, date + 1.day]) }
   scope :city_with, lambda { |city| where(["region_id = ?", APP_DATA['event']['city'][city]]) }
 
   # 用户参加的活动
   scope :with_participant_for_user, lambda{|user_id|joins(:participants).
-    where(["event_participants.user_id = ?", user_id])}
+    where(["event_participants.user_id = ? AND event_participants.join_status =?",
+          user_id, APP_DATA['event_participant']['join_status']['joined']
+ ]).order('begin_at')}
 
   # 用户感兴趣的活动
   scope :with_follow_for_user, lambda{|user_id|joins(:follows).
-    where(["follows.user_id = ?", user_id])}
+    where(["follows.user_id = ?", user_id]).order('begin_at')}
 
   # 用户创建的活动
-  scope :with_create_for_user, lambda{|user_id| where(:user_id => user_id)}
+  scope :with_create_for_user, lambda{|user_id| where(:user_id => user_id).order('created_at DESC')}
 
   acts_as_taggable
   acts_as_taggable_on :tags
@@ -78,6 +83,11 @@ class Event < ActiveRecord::Base
   # 将活动锁定
   def locked!
     update_attribute(:publish_status,  APP_DATA['event']['publish_status']['locked'])
+  end
+
+  # 将活动锁定
+  def unlocked!
+    update_attribute(:publish_status,  APP_DATA['event']['publish_status']['published']) if locked?
   end
 
   # 活动是否可参加
@@ -201,22 +211,35 @@ class Event < ActiveRecord::Base
   end
 
  class << self
+   def get_date_time(params_date)
+     date = params_date
+     if date == "today" # 今天
+       date_time = Date.current
+     elsif date == "tomorrow" # 明天
+       date_time = Date.tomorrow
+     else
+       date_time = Time.parse(date) # 其他时间
+     end
+     date_time
+   end
 
    def search(params)
      events = Event.published
-     if params[:tag].present?
+     if params[:tag].present? # TAG
        events = events.tagged_with(params[:tag]).order("created_at DESC")
      elsif params[:city].present?
        events = events.city_with(params[:city])
-     elsif params[:date].present?
+     elsif params[:date].present? # DATE
        if params[:date] == 'recent_week' # 最近一周
          events = events.recent_week
        elsif params[:date] == 'weekend' # 周末
          events = events.weekend
        else
-         date = Time.parse(params[:date])
-         events = events.date_with(date)
+         date_time = get_date_time(params[:date])
+         events = events.date_with(date_time)
        end
+     elsif params[:city].present? # CITY
+       events = events.city_with(params[:city])
      end
      events
    end

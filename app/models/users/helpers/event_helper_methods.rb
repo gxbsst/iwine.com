@@ -74,20 +74,44 @@ module Users::Helpers::EventHelperMethods
      event.user == self ? true : false
     end
 
+    # 创建的活动总数
+    def create_events_count
+      Event.with_create_for_user(id).count
+    end
+
+    # 参加的活动总数
+    def join_events_count
+      Event.with_participant_for_user(id).count
+    end
+
+    # 感兴趣的活动总数
+    def follow_events_count
+      Event.with_follow_for_user(id).count
+    end
+
     # 创建的活动
-    def create_events
-     Event.with_user(id)
+    def create_events(limit = 3)
+      Event.with_create_for_user(id).limit(limit)
     end
 
     # 参加的活动
-    def join_events
-     #EventParticipant.with_user(id).
+    def join_events(limit = 3)
+      Event.with_participant_for_user(id).limit(limit)
     end
 
     # 感兴趣的活动
-    def follow_events
-      
+    def follow_events(limit = 3)
+      Event.with_follow_for_user(id).limit(limit)
     end
+
+    def get_participant_item(event)
+     event.have_been_joined?(id)
+    end
+
+    def get_follow_item(event)
+      event.have_been_followed? id
+    end
+
 
   end # end InstanceMethods
 

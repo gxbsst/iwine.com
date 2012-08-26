@@ -17,7 +17,7 @@ class EventsController < ApplicationController
     @top_events = Event.recommends(2)
     @recommend_events = Event.recommends(4)
     @events = Event.search(params)
-    @events = @events.page(params[:page] || 1).per(5)
+    @events = @events.page(params[:page] || 1).per(6)
   end
 
   def new

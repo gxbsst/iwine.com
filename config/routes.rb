@@ -9,7 +9,7 @@ Patrick::Application.routes.draw do
         match :cancle, :via => [:put, :get]
       end
     end
-    resources :comments, :as => 'event_comments'
+    resources :comments
     resources :follows, :controller => "follows" 
     member do
       get :upload_poster
@@ -150,6 +150,12 @@ Patrick::Application.routes.draw do
       match "cellars/:cellar_id", :via => [:get], :to => "cellars#show", :as => :cellars
       get :follow
       get :unfollow
+
+      # Events
+      get :events
+      get :create_events
+      get :join_events
+      get :follow_events
     end
     collection do
       get "register_success"

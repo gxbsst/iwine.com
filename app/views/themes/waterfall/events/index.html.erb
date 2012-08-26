@@ -43,25 +43,11 @@
       <div class="whitespace eventmain">
    	  <div class="left">
       	<div class="event_tag clearfix">
-        	<span>热门活动标签：</span>
+        	<span>热门标签：</span>
          <ul class="tags">
-           <%= content_tag 'li', :class => :select do  -%>
-             <%= link_to "最近一周", events_path(:date => 'recent_week') %>
-           <% end %>
-
-           <%= content_tag 'li', :class => :select do  -%>
-             <%= link_to "今天", events_path(:date => Date.current) %>
-           <% end %>
-
-           <%= content_tag 'li', :class => :select do  -%>
-             <%= link_to "明天", events_path(:date => Date.tomorrow) %>
-           <% end %>
-
-           <%= content_tag 'li', :class => :select do  -%>
-             <%= link_to "周末", events_path(:date => :weekend) %>
-           <% end %>
-
-           <%= tags_cloud() %>
+           <%= city_tags %>
+           <%= static_date_tags %>
+           <%= tags_cloud %>
          </ul>
          <div class="clear"></div>
         </div>
@@ -107,7 +93,7 @@
         <% if @create_events.present? # 创建的活动  %>
           <div class="sidebox">
             <div class="title">
-              <a href="" class="float_r">查看全部</a>
+              <%= link_to "查看全部", create_events_user_path(current_user), :class => :float_r %>
               <h3>我组织的活动</h3>
             </div>
             <div class="side_event">
@@ -142,7 +128,7 @@
         <% if @join_events.present? # 参加活动  %>
           <div class="sidebox">
             <div class="title">
-              <a href="" class="float_r">查看全部</a>
+              <%= link_to "查看全部", join_events_user_path(current_user), :class => :float_r %>
               <h3>我参加的活动</h3>
             </div>
             <div class="side_event">
@@ -177,7 +163,7 @@
         <% if @follow_events.present? # 关注的活动  %>
           <div class="sidebox">
             <div class="title">
-              <a href="" class="float_r">查看全部</a>
+              <%= link_to "查看全部", follow_events_user_path(current_user), :class => :float_r %>
               <h3>我感兴趣的活动</h3>
             </div>
             <div class="side_event">
