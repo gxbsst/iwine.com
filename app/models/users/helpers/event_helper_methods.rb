@@ -2,7 +2,9 @@
 module Users::Helpers::EventHelperMethods
 
   module ClassMethods
-
+    #has_many :create_events, :class => 'Event', :order => 'created_at DESC'
+    #has_many :join_events, :class => 'EventParticipant', :include 
+    #has_many :follow_events, :as => :followable, :class_name => "EventFollow"
   end
 
   module InstanceMethods
@@ -70,6 +72,21 @@ module Users::Helpers::EventHelperMethods
     # 判定某个用户是否是活动的拥有者
     def is_owner_of_event? event
      event.user == self ? true : false
+    end
+
+    # 创建的活动
+    def create_events
+     Event.with_user(id)
+    end
+
+    # 参加的活动
+    def join_events
+     #EventParticipant.with_user(id).
+    end
+
+    # 感兴趣的活动
+    def follow_events
+      
     end
 
   end # end InstanceMethods

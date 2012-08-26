@@ -9,7 +9,7 @@ Patrick::Application.routes.draw do
         match :cancle, :via => [:put, :get]
       end
     end
-    resources :comments
+    resources :comments, :as => 'event_comments'
     resources :follows, :controller => "follows" 
     member do
       get :upload_poster

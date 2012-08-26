@@ -7,6 +7,8 @@ class EventParticipant < ActiveRecord::Base
   validates :email, :presence => true, :email_format => true
   validates :cancle_note, :presence => {:if => :do_cancle?}
 
+  scope :with_user,  where(['user_id = ?', 5237])
+
   after_create :set_event_lock_status
 
   def set_event_lock_status

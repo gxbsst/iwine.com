@@ -5,6 +5,9 @@ class EventsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:show, :index]
   before_filter :get_user, :except => [:index]
+  before_filter :get_create_events, :only => [:index] 
+  before_filter :get_join_events, :only => [:index]
+  before_filter :get_follow_events, :only => [:index]
   before_filter :get_event, :except => [:new, :create, :index]
   before_filter :check_owner, :except => [:show, :new, :create, :index]
   before_filter :get_follow_item, :only => [:show]
@@ -13,10 +16,8 @@ class EventsController < ApplicationController
   def index
     @top_events = Event.recommends(2)
     @recommend_events = Event.recommends(4)
-    @events = Event.published.page(params[:page] || 1 ).per(5)
-    respond_to do |wants|
-      wants.html # index.html.erb
-    end
+    @events = Event.search(params)
+    @events = @events.page(params[:page] || 1).per(5)
   end
 
   def new
@@ -174,6 +175,36 @@ class EventsController < ApplicationController
     else
       @participant = @event.have_been_joined? @user.id
       @participant ? @participant : nil
+    end
+  end
+
+  # 获取当前用户参加的活动
+  def get_join_events(limit=1)
+    if !user_signed_in? 
+      nil
+    else
+      @join_events = Event.published.with_participant_for_user(current_user.id).limit(limit)
+      @join_events ? @join_events : nil
+    end
+  end
+
+  # 获取当前用户关注的活动
+  def get_follow_events(limit=1)
+    if !user_signed_in? 
+      nil
+    else
+      @follow_events = Event.published.with_follow_for_user(current_user.id).limit(limit)
+      @follow_events ? @follow_events : nil
+    end
+  end
+
+  # 获取当前用户创建的活动
+  def get_create_events(limit=1)
+    if !user_signed_in? 
+      nil
+    else
+      @create_events = Event.published.with_create_for_user(current_user.id).limit(1)
+      @create_events ? @create_events : nil
     end
   end
 

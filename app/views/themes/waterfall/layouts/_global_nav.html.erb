@@ -1,5 +1,5 @@
 <ul>
-	<% global_nav = {"home" => root_path, "wines" => wines_path, "wineries" => wineries_path} %>
+  <% global_nav = {"home" => root_path, "wines" => wines_path, "wineries" => wineries_path, "events" => events_path} %>
 	<% global_nav.each do |key, value| %>
 		<% if key == "wines" || key == "wineries" %> 
 			<%= content_tag :li, :class => "arrow" do %>

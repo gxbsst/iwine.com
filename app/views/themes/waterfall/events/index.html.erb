@@ -45,6 +45,22 @@
       	<div class="event_tag clearfix">
         	<span>热门活动标签：</span>
          <ul class="tags">
+           <%= content_tag 'li', :class => :select do  -%>
+             <%= link_to "最近一周", events_path(:date => 'recent_week') %>
+           <% end %>
+
+           <%= content_tag 'li', :class => :select do  -%>
+             <%= link_to "今天", events_path(:date => Date.current) %>
+           <% end %>
+
+           <%= content_tag 'li', :class => :select do  -%>
+             <%= link_to "明天", events_path(:date => Date.tomorrow) %>
+           <% end %>
+
+           <%= content_tag 'li', :class => :select do  -%>
+             <%= link_to "周末", events_path(:date => :weekend) %>
+           <% end %>
+
            <%= tags_cloud() %>
          </ul>
          <div class="clear"></div>
@@ -68,7 +84,10 @@
                       user_path(event.user, :trailing_slash => true) %>
                 </div>
                 <div class="p_count2">
-                  <span><%= event.participants_count %>人参加  |  <%= event.followers_count %>人感兴趣</span>
+                  <span>
+                    <%= event.participants_count %>人参加  |
+                    <%= event.followers_count %>人感兴趣
+                  </span>
                 </div>
               </dd>
             </dl>
@@ -84,70 +103,142 @@
             <span>我要创建活动</span>
           <% end %>
         </div>
-       	  <div class="sidebox">
-            <div class="title"><a href="" class="float_r">查看全部</a><h3>我参加/组织的活动</h3></div>
-            <div class="side_event">
-                <dl class="clearfix">
-                	<dt><a href="event_detail.html"><img src="images/test/event_70_01.jpg" alt="美酒乐调酒体验活动" width="70" height="105" /></a></dt>
-                    <dd>
-                        <h3><a href="event_detail.html">美酒乐调酒体验活动</a></h3>
-                        <div class="info">6月16日至7月29日<br />
-                          上海 浦东新区 成上路云台路<br />
-                          上南八村27号<br />
-                        </div>
-                        <div class="p_count2">35 人参加 | 68人感兴趣</div>
-                    </dd>
-                    <div class="clear"></div>
-                </dl>
-            </div>
-            </div>
-            <div class="sidebox">
+
+        <% if @create_events.present? # 创建的活动  %>
+          <div class="sidebox">
             <div class="title">
               <a href="" class="float_r">查看全部</a>
-              <h3>朋友参加/组织的活动</h3></div>
+              <h3>我组织的活动</h3>
+            </div>
             <div class="side_event">
+              <% @create_events.each do |event| %>
                 <dl class="clearfix">
-                	<dt><a href="event_detail.html"><img src="images/test/event_70_01.jpg" alt="美酒乐调酒体验活动" width="70" height="105" /></a></dt>
+                  <dt>
+                    <%= link_to event_path(event) do %>
+                      <%= image_tag event.poster_url(:x_thumb), 
+                        :size => '70x105', :alt => event.title %>
+                      <% end %>
+                    </dt>
                     <dd>
-                        <h3><a href="event_detail.html">美酒乐调酒体验活动</a></h3>
-                        <div class="info">6月16日至7月29日<br />
-                          上海 浦东新区 成上路云台路<br />
-                          上南八村27号<br />
-                        </div>
-                        <div class="p_count2">35 人参加 | 68人感兴趣</div>
+                      <h3><%= link_to event.title, event_path(event) %></h3>
+                      <div class="info">
+                        <%= event.begin_end_at %>
+                        <br />
+                        <%= event.full_address %>
+                      </div>
+                      <div class="p_count2">
+                        <%= event.participants_count %>人参加  |
+                        <%= event.followers_count %>人感兴趣
+                      </div>
                     </dd>
                     <div class="clear"></div>
-                </dl>
-            </div>
-            </div>
-            <div class="sidebox">
-              <div class="title">
-                <h3>推荐的活动</h3>
+                  </dl>
+                <% end %>
               </div>
-              <div class="side_event">
-                <% @recommend_events.each do |event| %>
-                  <dl class="clearfix">
-                    <dt>
-                      <%= link_to event_path(event) do %>
-                        <%= image_tag event.poster_url(:x_thumb), :size => '70x105', :alt => event.title %>
+              <!--end sidebox-->
+            </div>
+          <% end %>
+
+        <% if @join_events.present? # 参加活动  %>
+          <div class="sidebox">
+            <div class="title">
+              <a href="" class="float_r">查看全部</a>
+              <h3>我参加的活动</h3>
+            </div>
+            <div class="side_event">
+              <% @join_events.each do |event| %>
+                <dl class="clearfix">
+                  <dt>
+                    <%= link_to event_path(event) do %>
+                      <%= image_tag event.poster_url(:x_thumb), 
+                        :size => '70x105', :alt => event.title %>
                       <% end %>
-                      <dd>
-                        <h3> <%= link_to event.title, event_path(event)  %></h3>
-                        <div class="info">
-                          <%= event.begin_end_at %>
-                          <br />
-                          <%= event.full_address %>
-                          <br />
-                        </div>
-                        <div class="p_count2">
-                          <%= event.participants_count %>人参加  |  <%= event.followers_count %>人感兴趣
-                        </div>
-                      </dd>
-                      <div class="clear"></div>
-                    </dl>
-                  <% end %>
-                </div>
+                    </dt>
+                    <dd>
+                      <h3><%= link_to event.title, event_path(event) %></h3>
+                      <div class="info">
+                        <%= event.begin_end_at %>
+                        <br />
+                        <%= event.full_address %>
+                      </div>
+                      <div class="p_count2">
+                        <%= event.participants_count %>人参加  |
+                        <%= event.followers_count %>人感兴趣
+                      </div>
+                    </dd>
+                    <div class="clear"></div>
+                  </dl>
+                <% end %>
+              </div>
+              <!--end sidebox-->
+            </div>
+          <% end %>
+         
+        <% if @follow_events.present? # 关注的活动  %>
+          <div class="sidebox">
+            <div class="title">
+              <a href="" class="float_r">查看全部</a>
+              <h3>我感兴趣的活动</h3>
+            </div>
+            <div class="side_event">
+              <% @follow_events.each do |event| %>
+                <dl class="clearfix">
+                  <dt>
+                    <%= link_to event_path(event) do %>
+                      <%= image_tag event.poster_url(:x_thumb), 
+                        :size => '70x105', :alt => event.title %>
+                      <% end %>
+                    </dt>
+                    <dd>
+                      <h3><%= link_to event.title, event_path(event) %></h3>
+                      <div class="info">
+                        <%= event.begin_end_at %>
+                        <br />
+                        <%= event.full_address %>
+                      </div>
+                      <div class="p_count2">
+                        <%= event.participants_count %>人参加  |
+                        <%= event.followers_count %>人感兴趣
+                      </div>
+                    </dd>
+                    <div class="clear"></div>
+                  </dl>
+                <% end %>
+              </div>
+              <!--end sidebox-->
+            </div>
+          <% end %> 
+
+
+          <div class="sidebox">
+            <div class="title">
+              <h3>推荐的活动</h3>
+            </div>
+            <div class="side_event">
+              <% @recommend_events.each do |event| %>
+                <dl class="clearfix">
+                  <dt>
+                    <%= link_to event_path(event) do %>
+                      <%= image_tag event.poster_url(:x_thumb), 
+                        :size => '70x105', :alt => event.title %>
+                    <% end %>
+                    <dd>
+                      <h3> <%= link_to event.title, event_path(event)  %></h3>
+                      <div class="info">
+                        <%= event.begin_end_at %>
+                        <br />
+                        <%= event.full_address %>
+                        <br />
+                      </div>
+                      <div class="p_count2">
+                        <%= event.participants_count %>人参加  |  <%= event.followers_count %>人感兴趣
+                      </div>
+                    </dd>
+                    <div class="clear"></div>
+                  </dl>
+                <% end %>
               </div>
             </div>
-            <div class="clear"></div>
-      </div>
+          </div>
+          <div class="clear"></div>
+        </div>

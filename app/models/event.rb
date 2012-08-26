@@ -18,9 +18,25 @@ class Event < ActiveRecord::Base
 
   validates :title, :tag_list, :address, :begin_at, :end_at,  :presence => true
   validates :publish_status, :inclusion => { :in => [0,1,2,3] } 
+
   scope :published, where(:publish_status => EVENT_PUBLISHED_CODE ).order("begin_at ASC")
   scope :live, published.where( "begin_at > ?", Time.now ) # 未举行
   scope :recommends, lambda {|limit| live.order('participants_count DESC').limit(limit) }  # 推荐
+  scope :recent_week, where(['begin_at >= ? AND begin_at <= ?', Time.current, Time.current + 1.week])
+  scope :weekend, where(['begin_at >= ? AND begin_at <= ?', Time.current.end_of_week - 2.day, Time.current.end_of_week])
+  scope :date_with, lambda { |date| where(["begin_at >= ? AND begin_at <= ?", date, date + 1.day]) }
+  scope :city_with, lambda { |city| where(["region_id = ?", APP_DATA['event']['city'][city]]) }
+
+  # 用户参加的活动
+  scope :with_participant_for_user, lambda{|user_id|joins(:participants).
+    where(["event_participants.user_id = ?", user_id])}
+
+  # 用户感兴趣的活动
+  scope :with_follow_for_user, lambda{|user_id|joins(:follows).
+    where(["follows.user_id = ?", user_id])}
+
+  # 用户创建的活动
+  scope :with_create_for_user, lambda{|user_id| where(:user_id => user_id)}
 
   acts_as_taggable
   acts_as_taggable_on :tags
@@ -165,8 +181,7 @@ class Event < ActiveRecord::Base
   end
 
   def full_address
-    regions = %w(上海 北京 成都 广州)
-    "#{regions[region_id]}  #{address}"
+    "#{city}  #{address}"
   end
 
   def begin_end_at
@@ -179,6 +194,34 @@ class Event < ActiveRecord::Base
   def is_followed_by? user
     have_been_followed? user.id
   end
+
+  def city
+   cities = APP_DATA['event']['city']
+   return cities.inject({}){|m,(k,v)| m.merge({v => k})}[region_id]
+  end
+
+ class << self
+
+   def search(params)
+     events = Event.published
+     if params[:tag].present?
+       events = events.tagged_with(params[:tag]).order("created_at DESC")
+     elsif params[:city].present?
+       events = events.city_with(params[:city])
+     elsif params[:date].present?
+       if params[:date] == 'recent_week' # 最近一周
+         events = events.recent_week
+       elsif params[:date] == 'weekend' # 周末
+         events = events.weekend
+       else
+         date = Time.parse(params[:date])
+         events = events.date_with(date)
+       end
+     end
+     events
+   end
+
+ end
 
 
   private
