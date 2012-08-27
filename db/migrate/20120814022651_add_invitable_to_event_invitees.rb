@@ -10,6 +10,6 @@ class AddInvitableToEventInvitees < ActiveRecord::Migration
     remove_column :event_invitees, :invitabl_type
     remove_column :event_invitees, :inviter_id
     rename_column :event_invitees, :invitable_type, :event_id
-    rename_column :event_invitees, :invitee_id, :user_id,
+    rename_column :event_invitees, :invitee_id, :user_id
   end
 end
