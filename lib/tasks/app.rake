@@ -8,7 +8,7 @@ namespace :app do
   end
 
   # ##初始化基本数据
-  task :init_default_data => [:init_style_and_region, 
+  task :init_default_data => [:init_style_and_region_data, 
                               :init_varieties, 
                               :init_region_tree] do
 
