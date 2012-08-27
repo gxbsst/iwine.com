@@ -191,8 +191,8 @@ timeline:
      
        
 search_server:
-  host: 192.168.11.28
-  port: 8080
+  host: 180.168.220.98
+  port: 8081
   entry_url: /patrick/query/all
   word_url: /patrick/query/associate
   user_url: /patrick/query/user

@@ -1,5 +1,5 @@
 <% if user_signed_in? %>
-	<%= form_for [@commentable, @comment], :validate => true, :html => {:id => "list_comment_form"} do |f| -%>
+	<%= form_for [@commentable, @comment],  :html => {:id => "list_comment_form"} do |f| -%>
 		<%= f.hidden_field :do %>
 		<%= hidden_field_tag "return_url", request.fullpath %>
 		<a name="01" id="01"></a>
