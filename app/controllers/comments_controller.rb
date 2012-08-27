@@ -10,8 +10,6 @@ class CommentsController < ApplicationController
   # before_filter :check_cancle_follow, :only => :cancle_follow
   before_filter :check_can_comment, :only => :create
   after_filter  :send_reply_email, :only => :reply
-<<<<<<< Updated upstream
-=======
 
   def show
     page = params[:page] || 1
@@ -44,7 +42,6 @@ class CommentsController < ApplicationController
     end
   end
 
->>>>>>> Stashed changes
   def new   
     if params[:do].present? && params[:do] == "follow"
       new_follow_comment
