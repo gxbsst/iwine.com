@@ -45,6 +45,24 @@ class UsersController < ApplicationController
     # @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
   end
 
+  # 活动
+  def events
+    @create_events = @user.create_events(3)
+    @follow_events = @user.follow_events(3)
+    @join_events   = @user.join_events(3)
+  end
+
+  def create_events
+    @events = @user.create_events(1000).page(params[:page] || 1).per(5)
+  end
+
+  def join_events
+    @events = @user.join_events(1000).page(params[:page] || 1).per(5)
+  end
+  def follow_events
+    @events = @user.follow_events(1000).page(params[:page] || 1).per(5)
+  end
+
   # 用户第一次登录
   def start
     if current_user.sign_in_count == 1
@@ -76,7 +94,7 @@ class UsersController < ApplicationController
   end
 
   def follow
-    
+
     if params[:user_id].present?
       # 关注多个
       params[:user_id].split(',').each do |user_id|
@@ -85,7 +103,6 @@ class UsersController < ApplicationController
           # notice_stickie t("notice.friend.follow")
         end
       end
-      
     else
       # 关注一个
       if current_user.follow_user params[:id]

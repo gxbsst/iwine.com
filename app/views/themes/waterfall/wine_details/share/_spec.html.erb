@@ -5,10 +5,7 @@
 </div>
 <div class="info">
 	<% if @wine.winery %>
-	酒庄：<%= link_to @wine.winery.name,
-              :controller => "wineries",
-              :action => 'show',
-              :id => @wine.winery.id %>
+	酒庄：<%= link_to @wine.winery.name, winery_path(@wine.winery) %>
     <br />
 	<% end %>
 	官网：<%= link_to @wine.official_site, 'http://' + @wine.official_site, :target => '_blank' %><br />

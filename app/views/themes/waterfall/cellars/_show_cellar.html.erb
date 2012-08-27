@@ -2,10 +2,9 @@
       <div class="title_btn">
         <h1><%= is_login_user?(@user) ? "我的酒窖" : "他的酒窖" %> <span class="font12">(共<%= @cellar_items.size %>款)</span></h1>
       </div>
-
       <div class="sort_search mb20">
         <div class="float_r">
-               <%= link_to cellars_user_path(@user, @cellar, :format => "csv") ,:class => "btn_blue_b" do %>                   
+               <%= link_to cellars_user_path(@user, @cellar, :format => "xls") ,:class => "btn_blue_b" do %>                   
                 <span>导出数据</span>
               <% end %>
             </div>
@@ -15,8 +14,7 @@
                   <span>添加藏酒</span>
                 <% end %>
               <% end %>
-            </div>
-                       
+            </div>         
         <% # TODO: 添加搜索功能  %>
         <div class="sort pt5">
           <select name="order" id="search_order">
@@ -33,7 +31,6 @@
 
 
       <div class="wine_data">
-        
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <th class="img">酒标</th>

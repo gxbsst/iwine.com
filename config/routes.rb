@@ -1,6 +1,22 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
  
+  resources :events do
+    resources :event_wines
+    resources :event_invitees
+    resources :event_participants, :as => 'participants' do
+      member do
+        match :cancle, :via => [:put, :get]
+      end
+    end
+    resources :comments
+    resources :follows, :controller => "follows" 
+    member do
+      get :upload_poster
+      get :published
+    end
+  end
+
   resources :after_first_signins do
     collection do
       match :upload_avatar, :via => [:get, :post, :put]
@@ -49,6 +65,7 @@ Patrick::Application.routes.draw do
        match "reply", :via => [:get, :post]
        get :vote
        get :children
+       get :get_sns_reply
     end
   end
   resources :friends do
@@ -134,6 +151,12 @@ Patrick::Application.routes.draw do
       match "cellars/:cellar_id", :via => [:get], :to => "cellars#show", :as => :cellars
       get :follow
       get :unfollow
+
+      # Events
+      get :events
+      get :create_events
+      get :join_events
+      get :follow_events
     end
     collection do
       get "register_success"
@@ -211,6 +234,7 @@ Patrick::Application.routes.draw do
       get :winery, :via => [:get , :put]
       get :suggestion, :via => [:get , :put]
       get :results, :via => [:get , :put]
+      get :wine
       post :search_user
     end
   end

@@ -1,0 +1,25 @@
+<h3 class="title"> 取消参加 </h3>
+<%= form_for participant, :url => cancle_event_participant_path,
+  :validate => true, :html => {:id => "comment_form"} do |f| -%>
+  <table class="form" width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <th width="100" valign="top">取消原因:</th>
+      <td width="400" valign="top">
+        <%= f.text_area :cancle_note, :size => '10x5', :style => 'width: 300px' %>
+        <span class="red">*</span>
+        <br />
+        <span class="red" id="event_participant_cancle_note_error"></span>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td  algin="center" valign="top">
+        <%= link_to "javascript:void(0)", :class => "btn_gray save_articipant" do  %>
+          <span>取消</span>
+        <% end %>
+      </td> 
+    </tr>
+  </table>
+<% end -%>
+
+

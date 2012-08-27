@@ -63,6 +63,14 @@ module Wines
        return label
      end
 
+    def get_cover
+      cover = photos.cover.approved.first
+      if self.class.name == "Wines::Detail" && cover.nil?
+        cover = wine.photos.cover.approved.first
+      end
+      return cover
+    end
+
      private
 
      # 评星与总评分

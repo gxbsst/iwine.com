@@ -81,6 +81,9 @@ ul.photo_list li .intro, .album_left .photo .intro{margin:0 0 5px 0;}
 .album_left .post_main {width:490px;}
 .album_left .post_main textarea {width:470px;height:80px;}
 .album_left .pre_next {text-align:center;}
+.post_main .com_s {flaot:left;width:300px;padding-top:3px;}
+.post_main .com_s a {display:inline-block;margin-right:10px;position:relative;}
+.com_s .sns_on {position:absolute;left:8px;top:8px;}
 .album_left .count {display:inline-block;margin:0 10px;}
 .album_right h2 {margin:0 0 20px 0;}
 img.cover_s {background:url(../images/bg/bg_album_s.gif) no-repeat left top;padding:5px 8px 8px 5px;margin:0 0 5px 0;}

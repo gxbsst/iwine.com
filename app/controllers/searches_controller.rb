@@ -57,6 +57,40 @@ class SearchesController < ApplicationController
     end
   end
 
+  def wine 
+    server = HotSearch.new
+    @entries = server.all_entries(params[:word])
+    @wines= @entries['wines']
+    if @wines.present?
+      @results = @wines.inject([]) do |mem, item| 
+        wine = {}
+        details = item.details
+        wine_detail = details.first
+        years = details.collect {|detail| [detail.year.year, "/wines/#{detail.slug}", detail.id] }
+        item.name_zh ||= item.origin_name
+        year = years.first.first.to_s
+        wine[:wine_detail_id] = wine_detail.id
+        wine[:name_zh] = item.name_zh 
+        wine[:year] = year
+        wine[:origin_name] = item.origin_name 
+        ## TODO: write a method to get wine_detail cover
+        wine[:image_url] = wine_detail.get_cover_url(:thumb)
+        wine[:all_years] = years
+        wine[:url] = "/wines/#{wine_detail.slug}"
+        mem << wine 
+      end
+      respond_to do |format|
+        format.html  
+        format.json {render :json => @results}
+      end
+    else
+      respond_to do |format|
+        format.html  
+        format.json {render :json => ''}
+      end
+    end
+  end
+
   def results
     @title = "搜索"
     server = HotSearch.new

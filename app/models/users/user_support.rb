@@ -3,6 +3,7 @@ module Users
     include Users::Helpers::FriendHelperMethods
     include Users::Helpers::TimelineHelperMethods
     include Users::Helpers::ConfigHelperMethods
+    include Users::Helpers::EventHelperMethods
 
     module ClassMethods
 
