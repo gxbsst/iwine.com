@@ -228,11 +228,8 @@ module ApplicationHelper
             wine_comment_path(comment.commentable, comment)
           when "Winery"
             winery_comment_path(comment.commentable, comment)
-<<<<<<< HEAD
           when "Event"
             event_comment_path(comment.commentable, comment)
-=======
->>>>>>> develop
           end
     link_to url do
       raw "回复<span class='reply_comment_count'>(#{comment.children.all.size })</span><span class='reply_result'></span>"
@@ -351,11 +348,7 @@ module ApplicationHelper
       tag = theme_image_tag("common/p_album.png", :class => :cover, :size => '150x150')
     else
       if cover
-<<<<<<< HEAD
-        tag =  image_tag(cover.image_url(:xx_middle), :class => 'cover')
-=======
         tag =  image_tag(cover.image_url(:xx_middle), :class => 'cover', :size => '150x150')
->>>>>>> develop
       else
         tag = theme_image_tag( "album.jpg", :class => :cover, :size => '150x150')
       end
