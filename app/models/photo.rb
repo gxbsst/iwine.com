@@ -118,6 +118,15 @@ class Photo < ActiveRecord::Base
     self.user == user
   end
 
+  #发评论时分享用
+  def share_name
+    if imageable_type == "Album"
+      "【#{user.username}】的图片"
+    else
+      "#{imageable.share_name}的图片"
+    end
+  end
+
   #audit_status 改变就在audit_log 增加一条记录
   def set_audit_status_changed?
     if audit_status_changed?

@@ -65,6 +65,7 @@ Patrick::Application.routes.draw do
        match "reply", :via => [:get, :post]
        get :vote
        get :children
+       get :get_sns_reply
     end
   end
   resources :friends do

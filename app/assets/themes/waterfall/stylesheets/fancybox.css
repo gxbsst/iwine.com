@@ -304,6 +304,8 @@
   border-top: 1px solid #CCC;
   width:auto;
 }
+.share .sh {float:left;padding:0 10px 0 0;margin:0 10px 0 0; border-right:1px solid #ccc;}
+.com_s {padding-top:0;}
 .follow #comment_form .share {border-top:none;}
 .share label.follow {display:inline-block;margin-left:20px;}
 /* line 270, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */

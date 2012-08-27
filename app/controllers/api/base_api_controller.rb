@@ -4,19 +4,25 @@ module Api
 
     protected
 
-    def user_info_json
-      return {:success => true, 
-        :resultCode =>  APP_DATA["api"]["return_json"]["normal_success"]["code"],
+    def user_info_json( is_public = false)
+      return {:success => 1, 
+        :resultCode =>  APP_DATA["api"]["return_json"]["normal_success"]["code"].to_i,
         :errorDesc =>  APP_DATA["api"]["return_json"]["normal_success"]["message"],
-        :user => {
-        :id => @user.id,
-        :email => @user.email,
-        :username => @user.username,
-        :slug => @user.slug,
-        :avatar => @user.avatar.url,
-        :city => @user.city ? @user.city : "",
-        :bio => @user.profile.bio ? @user.profile.bio : "",
-        :pofile_id => @user.profile.id}} 
+        :user => 
+        {
+          :auth_token => @user.authentication_token,
+          :id => @user.id,
+          :email => is_public ? '' : @user.email,
+          :username => @user.username,
+          :slug => @user.slug,
+          :avatar => @user.avatar.url,
+          :city => @user.city ? @user.city : "",
+          :bio => @user.profile.bio ? @user.profile.bio : "",
+          :phone_number => @user.profile.phone_number ? @user.profile.phone_number : '',
+          :birthday => @user.profile.birthday ? @user.profile.birthday : '',
+          :pofile_id => @user.profile.id
+        }
+      } 
     end
     
   end

@@ -1,0 +1,73 @@
+<% content_for :css do  %>
+  <%= theme_stylesheet_link_tag "hp" %>
+<% end %>
+
+<div class="whitespace">
+  <div id="hp">
+    <%= render "users/sub_nav" %>
+    <div class="content">
+      <div class="album_left">
+        <div class="title_btn"> 
+          <div class="btn_action">
+            <%= link_to album_show_user_path(@user, @album), :class => "btn_gray" do %>
+              <span>返回该相册</span>
+            <% end %>
+          </div>
+          <h1><%= @album.name %> <span class="font12">(共<%= @album.photos_count %>张)</span></h1>
+        </div>
+        <div class="mb20">
+          <%= render :partial => "share/photo_page_number", :locals => {:parent => @album} %> 
+        </div>
+        <div class="photo">
+          <%= image_tag @photo.image_url(:large) %>
+        </div>
+        <div>
+          <p class="intro"><%= @photo.intro %></p>
+        </div>
+        <div class="info">
+          <%= render "photos/liked"%>
+          <div class="share float_r">
+            <%= render "share/sns_icons",
+                            :image_url => sns_image_url(@photo, :thumb_name => :large),
+                            :title => sns_title(@user.username),
+                            :summary => "的照片",
+                            :url => request.url %>
+                            |
+          </div>
+          <div><%= @photo.views_count %>浏览 | <%= @photo.comments_count %>评论</div>
+        </div>
+        <div class="comment">
+          <div class="mb20 clearfix">
+            <div class="title">
+              <%= link_to album_photo_show_user_path(@user, @album, @photo), :class => "btn_gray float_r" do %>
+                <span>返回</span>
+              <% end %>
+              <h3>查看回复</h3>
+            </div>
+          </div>
+          <%= render "comments/share/comment_detail" %>
+          <!--end comment-->
+        </div>
+      </div>
+      <div class="album_right pt60 pl30">
+        <h2>我的其他相册</h2>
+        <ul class="side_album_list">
+          <% @other_albums.each do |album| %>
+            <li> 
+              <%= link_to album_show_user_path(@user, album.id) do %>
+                <% if album.covers.present? %>
+                  <%= image_tag album.covers.first.image_url :thumb %>
+                <% else %>
+                  <%= theme_image_tag "album.jpg", :class => :cover, :width => 150, :height => 150 %> 
+                <% end %>              
+              <% end %>
+              <h3><%= link_to album.name, albums_user_path(@user, album.id) %></h3>
+              <p class="info"><%= album.updated_at.to_s(:normal)%></p>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>

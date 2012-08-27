@@ -41,7 +41,7 @@ describe Api::V1::SessionsController do
     end
 
     it "response should include erro" do
-      @response.body.should include("miss")
+      @response.body.should include("false")
     end
   end
 

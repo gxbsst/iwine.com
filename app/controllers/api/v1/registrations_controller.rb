@@ -26,7 +26,7 @@ module Api
 
       protected
       def build_json(resource)
-        return {:success => true, 
+        return {:success => 1, 
                 :user => {
                   :email => resource.email,
                   :username => resource.username,

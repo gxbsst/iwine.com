@@ -61,15 +61,3 @@
         window.commentFormView = new CommentFormView({"show_text_count": true, "el": "#list_comment_form"});
         });
 </script>
-<script type="text/javascript">
-  $("ul.comment_tabs").tabs("div.panes > div");
-  $("#ajax-tab").one('click', function(){
-      $('#ajax-pane').load("/comments/<%= @comment.id%>/get_sns_reply");
-      });
-$(document).ready(function(){
-    // "有用" 成功时，更新有用的数量
-    $("a.vote").bind("ajax:success", function(event, data, textStatus, jqXHR){
-      $(this).find("span.likes_count").text(data);
-      });
-    });
-  </script>

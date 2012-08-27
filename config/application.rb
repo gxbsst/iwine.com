@@ -66,9 +66,9 @@ module Patrick
     
     ThemesForRails.config.default_theme = "waterfall"
 
-    # if Rails.env.development?
-    #   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
-    # end
+    if Rails.env.development?
+      OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+    end
     
   end
 end

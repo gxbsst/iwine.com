@@ -33,29 +33,31 @@ module Api
       protected
       def ensure_params_exist
         return unless params[:user].blank?
-        render :json=>{:success=>false, 
-          :resultCode => APP_DATA["api"]["return_json"]["miss_parameter"]["code"], 
+        render :json=>{:success=> 1, 
+          :resultCode => APP_DATA["api"]["return_json"]["miss_parameter"]["code"].to_i, 
           :errorDesc => APP_DATA["api"]["return_json"]["miss_parameter"]["message"] }, 
           :status => 422
       end
 
       def invalid_login_attempt
-        render :json=> {:success=>false,
+        render :json=> {:success=> 0 ,
           :resultCode => APP_DATA["api"]["return_json"]["auth_failed"]["code"], 
           :errorDesc => APP_DATA["api"]["return_json"]["auth_failed"]["message"] }, 
           :status => 401
       end
 
       def build_json(resource)
-        return {:success => true, 
-                :resultCode => APP_DATA["api"]["return_json"]["normal_success"]["code"],
-                :errorDesc => APP_DATA["api"]["return_json"]["normal_success"]["message"],
-                :user => {:auth_token => resource.authentication_token,
-                          :email => resource.email,
-                          :username => resource.username,
-                          :id => resource.id,
-                          :slug => resource.slug,
-                          :profile_id => resource.profile.id }}
+        @user = resource
+        user_info_json
+        #return {:success => 1, 
+                #:resultCode => APP_DATA["api"]["return_json"]["normal_success"]["code"],
+                #:errorDesc => APP_DATA["api"]["return_json"]["normal_success"]["message"],
+                #:user => {:auth_token => resource.authentication_token,
+                          #:email => resource.email,
+                          #:username => resource.username,
+                          #:id => resource.id,
+                          #:slug => resource.slug,
+                          #:profile_id => resource.profile.id }}
       end
 
     end

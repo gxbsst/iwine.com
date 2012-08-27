@@ -1,8 +1,8 @@
 # encoding: utf-8
 class CommentsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show, :list]
-  before_filter :get_comment, :only => [:show, :edit, :update, :destroy, :reply, :vote, :children]
-  before_filter :get_commentable, :except => [:vote, :reply, :children]
+  before_filter :get_comment, :only => [:show, :edit, :update, :destroy, :reply, :vote, :children, :get_sns_reply]
+  before_filter :get_commentable, :except => [:vote, :reply, :children, :show, :get_sns_reply]
   before_filter :get_user
   before_filter :get_follow_item, :only => [:index]
 
@@ -90,11 +90,14 @@ class CommentsController < ApplicationController
   def create
     @comment = build_comment
     if @comment.save
+      init_oauth_comments
+      @comment.delay.share_comment_to_weibo
       # TODO
       # 1. 广播
       # 2. 分享到SNS
       notice_stickie t("notice.comment.#{@comment.do == 'follow' ? 'follow' : 'comment'}_success")
       redirect_to params[:return_url] ?  params[:return_url] : @commentable_comments_path
+
     end
   end
   
@@ -131,10 +134,17 @@ class CommentsController < ApplicationController
       params[:comment][:body],
       :parent_id => @comment.id,
       :do => "comment")
-      @reply_comment.save
-      @reply_comment.move_to_child_of(@comment)
-      render :json =>  @comment.children.all.size.to_json
-      @success_create = true #for after_filter(send_reply_email)
+      if @reply_comment.save
+        @reply_comment.move_to_child_of(@comment)
+        respond_to do |format|
+          format.html{ 
+            redirect_to request.referer
+          }
+          format.json{ render :json => @comment.children.all.size.to_json}
+        end
+        # render :json =>  @comment.children.all.size.to_json
+        @success_create = true #for after_filter(send_reply_email)
+      end
     end
   end
 
@@ -247,6 +257,40 @@ class CommentsController < ApplicationController
         nil
       end
     end
+  end
+  
+  #初始化oauth_comment
+  def init_oauth_comments
+    sns_arr = params[:sns_type] 
+    if sns_arr.present?
+      sns_arr.each do |sns_type|
+        oauth = @comment.user.oauths.oauth_binding.where('sns_name = ?', sns_type).first
+        next unless oauth #再次检测是否绑定此网站
+        if @comment.commentable_type == "Photo" 
+          photo = @comment.commentable
+        else
+          photo = @comment.commentable.get_cover
+        end
+        content = build_content(sns_type)
+        oauth_comment = @comment.oauth_comments.build(:sns_type => sns_type,
+                                                      :body => content,  
+                                                      :sns_user_id => oauth.sns_user_id, 
+                                                      :user_id => @comment.user_id)
+        oauth_comment.image_url  =  photo.image_url if photo
+        oauth_comment.save
+      end
+    end
+  end
+  
+  #得到要分享的内容
+  def build_content(sns_type)
+    url = root_url[0..-2]#将"http://localhost:3000/" 改为 "http://localhost:3000"
+    if @comment.commentable_type == "Photo"
+      url << photo_comment_path(@comment.commentable, @comment)
+    else
+      url << "#{@commentable_comments_path}/#{@comment.id}"
+    end
+    content = @comment.share_content(url, sns_type)
   end
 
   #show render选项
