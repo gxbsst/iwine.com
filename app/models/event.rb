@@ -18,6 +18,7 @@ class Event < ActiveRecord::Base
 
   validates :title, :tag_list, :address, :begin_at, :end_at,  :presence => true
   validates :publish_status, :inclusion => { :in => [0,1,2,3] } 
+  validate :begin_at_be_before_end_at
 
   scope :published, where(:publish_status => EVENT_PUBLISHED_CODE ).order("begin_at ASC")
   scope :live, published.where( "begin_at > ?", Time.now ) # 未举行
@@ -80,6 +81,9 @@ class Event < ActiveRecord::Base
     :if => lambda {|follow| follow.follow_counter_should_decrement_for("Event")}}
   }
 
+  def begin_at_be_before_end_at
+    errors.add(:end_at, "结束时间必须大于开始时间") if self.begin_at > self.end_at
+  end 
   # 将活动锁定
   def locked!
     update_attribute(:publish_status,  APP_DATA['event']['publish_status']['locked'])

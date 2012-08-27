@@ -95,9 +95,10 @@ jQuery ->
     el: $("#input_tag_view")
     events: 
       'keypress input': 'addTag'
+      'click .add_event_tag': 'addTag'
       'focusout input': 'hideWarning'
     addTag:(event) ->
-      if (event.keyCode is 13) # ENTER
+      if (event.keyCode is 13 || $(event.target).text() == '添加' ) # ENTER
         event.preventDefault()
         name = $(@el).find('input').val()
         if name.trim() == ''
@@ -139,10 +140,20 @@ jQuery ->
     update_status_as_cancle: (event) ->
      @.$("#event_publish_status").val(0) # cancle
      @submit()
-
+    checkBeginEndAt: ->
+      begin_at = new Date($('#event_begin_at').val())
+      end_at = new Date($('#event_end_at').val())
+      if begin_at > end_at
+        true 
+      else
+        false
+    flashError: (element, error) ->
+      $(element).html(error)
     submit: ->
       if @options.selectTags.length == 0 
-        alert("请输入活动标签")
+        @flashError('#tags_error', '请输入或选取活动标签')
+      else if @checkBeginEndAt()
+        @flashError('#begin_end_end_at_error', '结束时间不能小于开始时间')
       else
         @.$('#form').submit()
  

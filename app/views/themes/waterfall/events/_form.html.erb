@@ -14,7 +14,11 @@
                 <%= f.hidden_field :tag_list  %> 
               <div id="input_tag_view">
                 <%= f.text_field :tags, :class => [:text, :tag], :placeholder => '输入后回车确定' %>
-                </div>
+                <%= link_to 'javascript:void(0)', :class => [:btn_gray_b, :add_event_tag]  do %>
+                  <span>添加</span>
+                <% end %>
+                <span id="tags_error" clas="red"></span>
+              </div>
               <span class="red" id="warning" style="display:none">不能为空</span>
               <div id="resource_container"></div>
               <div id="select_tags_container"></div>
@@ -63,6 +67,7 @@
             <%= f.text_field :begin_at, :class => [:text, :date] %>
             至 
             <%= f.text_field :end_at, :class => [:text, :date] %>
+            <span class="red" id="begin_end_end_at_error"> </span>
           </td>
         </tr>
         <tr>

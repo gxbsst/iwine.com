@@ -107,22 +107,23 @@ jQuery ->
     el: $("#search_input_view")
     events: 
       'keypress input': 'searchWine'
+      'click .search_wine_button': 'searchWine'
       'focusout input': 'hideWarning'
     searchWine:(event) ->
-      if (event.keyCode is 13) # ENTER
-        @showLoading()
-        window.app.SearchWineListView.$('.wines').html('搜索中...')
+      if (event.keyCode is 13 || $(event.target).text() == '搜索') # ENTER
         event.preventDefault()
         name = $(@el).find('input').val()
         if name.trim() == ''
-          @flashWarning '', "不能为空"
+          @flashWarning '', "请输入酒名"
         else
+          @showLoading()
           wines = window.app.SearchWines
           wines.url = wines.origin_url + name 
           wines.fetch success: =>
             @hideLoading()
-          @showSearchResult()
-          @showSelectResult()
+            @showSearchResult()
+            @showSelectResult()
+            @showSelectWineTips()
     showSearchResult: ->
       $("#result_container .search_result").empty()
       $("#result_container .search_result").append(window.app.SearchWineListView.render().el)
@@ -139,8 +140,13 @@ jQuery ->
       $('#warning').fadeIn(400)
     showLoading: ->
       $(@el).find('.loading').show()
+      $('.search_result .loading_l').show()
     hideLoading: ->
       $(@el).find('.loading').hide()
+      $('.search_result .loading_l').hide()
+    showSelectWineTips: ->
+      $('#select_tips').html('(如果要选取某支酒，请单击酒的年份)')
+
 
   @app = window.app ? {}
   @app.InputSearchView = new InputSearchView
