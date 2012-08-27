@@ -88,7 +88,11 @@ class Event < ActiveRecord::Base
   def locked!
     update_attribute(:publish_status,  APP_DATA['event']['publish_status']['locked'])
   end
-
+  
+  #用于将海报分享到第三方网站
+  def share_name
+    "【#{user.username}】发起的《#{title}》活动"
+  end
   # 将活动锁定
   def unlocked!
     update_attribute(:publish_status,  APP_DATA['event']['publish_status']['published']) if locked?

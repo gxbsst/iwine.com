@@ -266,19 +266,29 @@ class CommentsController < ApplicationController
       sns_arr.each do |sns_type|
         oauth = @comment.user.oauths.oauth_binding.where('sns_name = ?', sns_type).first
         next unless oauth #再次检测是否绑定此网站
-        if @comment.commentable_type == "Photo" 
-          photo = @comment.commentable
-        else
-          photo = @comment.commentable.get_cover
-        end
         content = build_content(sns_type)
         oauth_comment = @comment.oauth_comments.build(:sns_type => sns_type,
                                                       :body => content,  
                                                       :sns_user_id => oauth.sns_user_id, 
                                                       :user_id => @comment.user_id)
-        oauth_comment.image_url  =  photo.image_url if photo
+        oauth_comment.image_url  = get_share_photo
         oauth_comment.save
       end
+    end
+  end
+
+  #得到要分享的图片
+  def get_share_photo
+    image_url = case  @comment.commentable_type
+    when "Photo"
+      photo = @comment.commentable
+      photo.image_url if photo
+    when "Event"
+      poster = @comment.commentable.poster
+      poster.url if poster.present?
+    else
+      photo = @comment.commentable.get_cover
+      photo.image_url if photo
     end
   end
   
