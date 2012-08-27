@@ -17,8 +17,8 @@ class Wines extends Backbone.Collection
 @app.Tag = Tag
 @app.HotTags= new Tags
 @app.SelectTags = new Tags
-@app.SearchWines = new Wine
-@app.SelectWines = new Wine
+@app.SearchWines = new Wines
+@app.SelectWines = new Wines
     
 jQuery ->
   _.templateSettings = {
@@ -46,7 +46,8 @@ jQuery ->
       if (@collection.where name: tag.get('name')).length == 0
         @collection.add(tag)
       else
-        window.app.InputTagView.flashWarning "", "已经添加了"
+        alert('该标签已经添加了')
+        # window.app.InputTagView.flashWarning "", "已经添加了"
     
   class HotTagsListView extends Backbone.View
     template: _.template($("#hot_tags_template").html())
@@ -111,7 +112,8 @@ jQuery ->
               @hideWarning()
               @focus()
           else
-            @flashWarning '', "已经添加了"
+            alert('该标签已经添加了')
+            # @flashWarning '', "已经添加了"
     focus: ->
       $(@el).find('input').val('').focus()
     hideWarning: ->
@@ -120,110 +122,34 @@ jQuery ->
       console.log error
       $('#warning').html(error).fadeOut(100)
       $('#warning').fadeIn(400)
-  class SearchWineView extends Backbone.View
-    template: _.template $("#search_wine_template").html() 
-    initialize:
-      _.bindAll(@, 'render')
-    render: ->
-      $(@el).html @template model.toJSON
-      @
-    events:
-      "click .select": 'select'
-    select: ->
-      @collection.trigger 'select', @model
-  class SelectWineView extends Backbone.View
-    template: _.template $("#select_wine_template").html()
-    initialize:
-      _.bindAll @, 'render', 'remove'
-      @model.bind 'remove', @remove
-    render: ->
-      $(@el).html @template model.toJSON
-      @
-    events:
-      'click .remove': 'removeFromSelectList'
-    removeFromSelected: ->
-      @collection.remove @model
-  class SearchWineListView extends Backbone.View
-    el: $('.search_result_space')
-    initialize:
-      _.bindAll @, 'render'
-      @collection.bind('reset', @render)
-    render: ->
-      for wine in @collection
-        view = new SearchWineView model:wine
-        $(@el).append view.render().el
-      @
-  class SelectWineListView extends Backbone.View
-    el: $('.wine_select')
-    initialize:
-      _.bindAll(@, 'render')
-      @collection.bind('reset', @render)
-    render: ->
-      for wine in @collection
-        view = new SelectWineView model:wine
-        $(@el).append view.render().el
-      @
-  class InputSearchView extends Backbone.View
-    el: $("#search_input_view")
+  class EventAppView extends Backbone.View
+    el: $('.whitespace')
     events: 
-      'keypress input': 'searchWine'
-      'focusout input': 'hideWarning'
-    searchWine:(event) ->
-      if (event.keyCode is 13) # ENTER
-        event.preventDefault()
-        name = $(@el).find('input').val()
-        if name.trim() == ''
-          @flashWarning '', "不能为空"
-        else
-          #TODO 
-          wines = window.app.SearchWines
-          wines.url += name
-          wines.fetch()
-    focus: ->
-      $(@el).find('input').val('').focus()
-    hideWarning: ->
-      $('#warning').hide()
-    flashWarning: (model, error) =>
-      console.log error
-      $('#warning').html(error).fadeOut(100)
-      $('#warning').fadeIn(400)
+      'click #button_add_wines': 'submit'
+      'click #submits .publish': 'update_status_as_publish'
+      'click #submits .not_publish': 'update_status_as_draft'
+      'click #submits .cancle': 'update_status_as_cancle'
+      'click .save_event_button': 'submit'
+    update_status_as_publish: (event) ->
+     @.$("#event_publish_status").val(2) # published 
+     @submit()
+    update_status_as_draft: (event) ->
+     @.$("#event_publish_status").val(1) # draft 
+     @submit()
+    update_status_as_cancle: (event) ->
+     @.$("#event_publish_status").val(0) # cancle
+     @submit()
 
-
+    submit: ->
+      if @options.selectTags.length == 0 
+        alert("请输入活动标签")
+      else
+        @.$('#form').submit()
+ 
   @app = window.app ? {}
   # Tags
-  @app.HotTagsListView = new HotTagsListView collection: window.app.HotTags 
-  @app.SelectTagsListView = new SelectTagsListView collection: window.app.SelectTags, hotTags: window.app.HotTags
-  @app.InputTagView = new InputTagView collection: window.app.SelectTags
-  @app.HotTags.fetch()
+  @app.HotTagsListView =  HotTagsListView
+  @app.SelectTagsListView = SelectTagsListView
+  @app.InputTagView = InputTagView 
 
-  # Add Wines
-  @app.SearchWineListView = new SearchWineListView collection: window.app.SearchWines
-  @app.SelectWineListView = new SelectWineListView collection: window.app.SelectWines
-  @app.InputSearchView = new InputSearchView
-
-   # class EventAppView extends Backbone.View
-     # initialize: ->
-       # _.bindAll(@,'render')
-       # @hotTags =  @options.hotTags
-       # @selectTags = @options.selectTags
-     # render: ->
-       # hotTagsListView = new HotTagsListView collection: @hotTags
-       # $("#hot_tags_container").append(hotTagsListView.render().el)
-       # selectTagsListView = new SelectTagsListView collection: @selectTags, hotTags: @hotTags
-       # $("#select_tags_container").append(selectTagsListView.render().el)
-       # @
-       
-   # hotTags = @app.HotTags
-   # selectTags = @app.SelectTags
-   # @app.EventAppView = new EventAppView hotTags: hotTags, selectTags: selectTags
-   # @app.EventAppView.render()
-  
-  # class EventView extends Backbone.View
-    # el: "#event_form"
-    # initialize: (options) ->
-      # @collection.bind 'reset', @render, @
-    # render: ->
-      # $(@el).empty()
-      # $(@el).append  @subview
- 
-
+  @app.EventAppView = new EventAppView selectTags: window.app.SelectTags

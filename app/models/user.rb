@@ -80,6 +80,7 @@ class User < ActiveRecord::Base
     end
   end 
   has_many :follows, :include =>[:user]
+  has_many :events, :order => 'created_at DESC'
 
   # validates :username, :presence => false, :allow_blank => true, :numericality => true
   validates :agree_term, :acceptance => true, :on => :create

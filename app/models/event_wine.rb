@@ -1,4 +1,5 @@
 class EventWine < ActiveRecord::Base
+  attr_accessor :wine_detail_ids
   belongs_to :event
   belongs_to :wine_detail, :class_name =>  "Wines::Detail"
   # attr_accessible :title, :body
@@ -9,4 +10,5 @@ class EventWine < ActiveRecord::Base
       find_by_event_id_and_wine_detail_id(event_id, wine_detail_id).present? 
     end
   end
+
 end

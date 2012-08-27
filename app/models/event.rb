@@ -1,10 +1,11 @@
+# encoding: utf-8
 class Event < ActiveRecord::Base
   belongs_to :user
   belongs_to :region
   belongs_to :audit_log
   has_many :photos, :as => :imageable
   has_many :wines, :class_name => "EventWine"
-  has_many :participants, :class_name => "EventParticipant"
+  has_many :participants, :class_name => "EventParticipant", :include => [:user], :conditions => "join_status = 1"
   has_many :invitees, :as => :invitable, :class_name => "EventInvitee"
   has_many :comments,  :class_name => 'EventComment', :as => :commentable
   has_many :follows, :as => :followable, :class_name => "EventFollow"
@@ -16,6 +17,31 @@ class Event < ActiveRecord::Base
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
   validates :title, :tag_list, :address, :begin_at, :end_at,  :presence => true
+  validates :publish_status, :inclusion => { :in => [0,1,2,3] } 
+
+  scope :published, where(:publish_status => EVENT_PUBLISHED_CODE ).order("begin_at ASC")
+  scope :live, published.where( "begin_at > ?", Time.now ) # 未举行
+  scope :recommends, lambda {|limit| live.order('participants_count DESC').limit(limit) }  # 推荐
+  scope :recent_week, where(['begin_at >= ? AND begin_at <= ?', 
+                            Time.current, Time.current + 1.week])
+  scope :weekend, where(['begin_at >= ? AND begin_at <= ?',
+                        Time.current.end_of_week - 2.day, Time.current.end_of_week])
+  scope :date_with, lambda { |date| where(["begin_at >= ? AND begin_at <= ?",
+                                          date, date + 1.day]) }
+  scope :city_with, lambda { |city| where(["region_id = ?", APP_DATA['event']['city'][city]]) }
+
+  # 用户参加的活动
+  scope :with_participant_for_user, lambda{|user_id|joins(:participants).
+    where(["event_participants.user_id = ? AND event_participants.join_status =?",
+          user_id, APP_DATA['event_participant']['join_status']['joined']
+ ]).order('begin_at')}
+
+  # 用户感兴趣的活动
+  scope :with_follow_for_user, lambda{|user_id|joins(:follows).
+    where(["follows.user_id = ?", user_id]).order('begin_at')}
+
+  # 用户创建的活动
+  scope :with_create_for_user, lambda{|user_id| where(:user_id => user_id).order('created_at DESC')}
 
   acts_as_taggable
   acts_as_taggable_on :tags
@@ -36,19 +62,22 @@ class Event < ActiveRecord::Base
   counts :participants_count => {
     :with => "EventParticipant",
     :receiver => lambda {|participant| participant.event },
-    :increment => {:on => :create},
+    :increment => {
+    :on => :save,
+    :if => lambda {|participant| participant.joined? }
+  },
     :decrement => {
-    :on => :update,  
-    :if => lambda {|participant| participant.cancle? }}                              
+    :on => :update,
+    :if => lambda {|participant| participant.cancle? }}
   },
     :followers_count => {:with => "Follow", 
       :receiver => lambda {|follow| follow.followable },
       :increment => {
-    :on => :create, 
+    :on => :create,
     :if => lambda {|follow| follow.follow_counter_should_increment_for("Event")}},
        :decrement => {
     :on => :destroy, 
-    :if => lambda {|follow| follow.follow_counter_should_decrement_for("Event")}}                              
+    :if => lambda {|follow| follow.follow_counter_should_decrement_for("Event")}}
   }
 
   # 将活动锁定
@@ -56,12 +85,17 @@ class Event < ActiveRecord::Base
     update_attribute(:publish_status,  APP_DATA['event']['publish_status']['locked'])
   end
 
+  # 将活动锁定
+  def unlocked!
+    update_attribute(:publish_status,  APP_DATA['event']['publish_status']['published']) if locked?
+  end
+
   # 活动是否可参加
   def joinedable?
     if locked? || draft? || cancle? || timeout?
-      false 
+      false
     else
-      true 
+      true
     end
   end
 
@@ -73,13 +107,14 @@ class Event < ActiveRecord::Base
   # 人数已经订满?
   def ausgebucht?
     return false  unless set_blocked?
-    block_in > get_participant_number ? false : true
+    block_in == get_participant_number ? true: false
   end
 
   # 获取参加活动的人数
   def get_participant_number
-    EventParticipant.where(:event_id => id, 
-                           :join_status =>  APP_DATA['event_participant']['join_status']['cancle']).count 
+    participants_count
+    #EventParticipant.where(:event_id => id, 
+                           #:join_status =>  APP_DATA['event_participant']['join_status']['cancle']).count 
   end
 
   # 是否已经被关注
@@ -90,6 +125,14 @@ class Event < ActiveRecord::Base
   # 是否已经参加
   def have_been_joined?(user_id)
     EventParticipant.get_my_participant_info(id, user_id)
+  end
+
+  # 是否已经取消参加
+  def have_been_cancle_joined?(user_id)
+    ep = have_been_joined?(user_id)
+    if ep
+      ep.join_status == 0 ? true : false
+    end
   end
 
   # 邀请用户参加活动
@@ -142,6 +185,68 @@ class Event < ActiveRecord::Base
    EventWine.check_wine_have_been_added?(id, wine_detail_id)
   end
 
+  # 活动标签 
+  def tags_array
+    tags.collect {|tag| {:id => tag.id, :name => tag.name}}
+  end
+
+  def full_address
+    "#{city}  #{address}"
+  end
+
+  def begin_end_at
+   begin_at.to_s(:yt) + " - " + end_at.to_s(:yt)
+  end
+
+
+  # 是否已经感兴趣活动
+  # 这个方法重复定义, 但是为了和酒庄／酒相同，这里重复定义
+  def is_followed_by? user
+    have_been_followed? user.id
+  end
+
+  def city
+   cities = APP_DATA['event']['city']
+   return cities.inject({}){|m,(k,v)| m.merge({v => k})}[region_id]
+  end
+
+ class << self
+   def get_date_time(params_date)
+     date = params_date
+     if date == "today" # 今天
+       date_time = Date.current
+     elsif date == "tomorrow" # 明天
+       date_time = Date.tomorrow
+     else
+       date_time = Time.parse(date) # 其他时间
+     end
+     date_time
+   end
+
+   def search(params)
+     events = Event.published
+     if params[:tag].present? # TAG
+       events = events.tagged_with(params[:tag]).order("created_at DESC")
+     elsif params[:city].present?
+       events = events.city_with(params[:city])
+     elsif params[:date].present? # DATE
+       if params[:date] == 'recent_week' # 最近一周
+         events = events.recent_week
+       elsif params[:date] == 'weekend' # 周末
+         events = events.weekend
+       else
+         date_time = get_date_time(params[:date])
+         events = events.date_with(date_time)
+       end
+     elsif params[:city].present? # CITY
+       events = events.city_with(params[:city])
+     end
+     events
+   end
+
+ end
+
+
   private
   def set_geometry
     geometry = self.poster.large.geometry
@@ -164,6 +269,7 @@ class Event < ActiveRecord::Base
       poster.recreate_versions!
       resize_poster(:large, :middle)
       resize_poster(:large, :thumb)
+      resize_poster(:large, :x_thumb)
     end
   end
 
@@ -171,5 +277,6 @@ class Event < ActiveRecord::Base
     APP_DATA["image"]["poster"]["#{version.to_s}"]["width"].to_s << 
     "x" <<  APP_DATA["image"]["poster"]["#{version.to_s}"]["height"].to_s
   end
+
 end
 

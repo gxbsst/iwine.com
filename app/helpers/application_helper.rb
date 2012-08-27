@@ -118,7 +118,7 @@ module ApplicationHelper
 
     link_to(image_tag("v2/icon/#{icon_name}.png", { :title => icon_name, :align => "center" }),
             url_or_object,
-            options)
+              options)
   end
 
   def link_to_sns_icon(available, sns_name, url_or_object, options={})
@@ -133,7 +133,7 @@ module ApplicationHelper
 
     link_to(image_tag("v2/icon/#{icon_name}.png", { :title => icon_name, :align => "absmiddle" }),
             url_or_object,
-            options)
+              options)
   end
 
   def link_to_button(button_name, url_or_object, options={})
@@ -141,7 +141,7 @@ module ApplicationHelper
 
     link_to(image_tag("v2/button/#{button_name}.png", { :title => button_name, :align => "center" }),
             url_or_object,
-            options)
+              options)
   end
 
   def link_to_sync_button(sns_name, url_or_object, options={})
@@ -149,7 +149,7 @@ module ApplicationHelper
     button_name = 'btn_syn_' + sns_name
     link_to(theme_image_tag("common/#{button_name}.jpg", { :title => button_name }),
             url_or_object,
-            options)
+              options)
   end
 
   ## Link to User with avatar
@@ -208,7 +208,7 @@ module ApplicationHelper
     next_id = ids_arr[current_index + 1]
     return next_id ? next_id : false
   end
-  
+
   def photo_number(ids_arr, current_id)
     ids_arr, current_index = page_ids(ids_arr, current_id)
     return "#{current_index.to_i + 1} / #{ids_arr.count}"
@@ -222,13 +222,13 @@ module ApplicationHelper
 
   def comment_detail_url(comment)
     url = case comment.commentable_type
-    when "Photo"
-      photo_comment_path(comment.commentable, comment)
-    when "Wines::Detail", "Wine"
-      wine_comment_path(comment.commentable, comment)
-    when "Winery"
-      winery_comment_path(comment.commentable, comment)
-    end
+          when "Photo"
+            photo_comment_path(comment.commentable, comment)
+          when "Wines::Detail", "Wine"
+            wine_comment_path(comment.commentable, comment)
+          when "Winery"
+            winery_comment_path(comment.commentable, comment)
+          end
     link_to url do
       raw "回复<span class='reply_comment_count'>(#{comment.children.all.size })</span><span class='reply_result'></span>"
     end
@@ -236,19 +236,19 @@ module ApplicationHelper
 
   def reply_comment(comment)
     link_to  reply_comment_path(comment.id),
-		  :remote => true,
+      :remote => true,
       :class => "ajax reply_comment_button",
       :id => "reply_#{comment.id}" do
-		  raw "回复<span class='reply_comment_count'>(#{comment.children.all.size })</span><span class='reply_result'></span>"
-		end
+      raw "回复<span class='reply_comment_count'>(#{comment.children.all.size })</span><span class='reply_result'></span>"
+      end
   end
-  
+
   def wine_default_image(version)
     return theme_image_tag("avatar_default_bg_#{version.to_s}.png") if version.present?
     theme_image_tag("avatar_default_bg.png")
   end
 
-  
+
   # 主要为了在User Controller 判断是否为当前用户
   def is_login_user?(user)
     if user_signed_in?
@@ -314,7 +314,7 @@ module ApplicationHelper
     count = variety_percentages.length
     show_list = ''
     variety_percentages.each_with_index do |v, index|
-     show_list << "#{v.origin_name} (#{v.show_percentage})#{' 、' if index + 1 != count}"
+      show_list << "#{v.origin_name} (#{v.show_percentage})#{' 、' if index + 1 != count}"
     end
     return show_list
   end
@@ -346,7 +346,7 @@ module ApplicationHelper
       tag = theme_image_tag("common/p_album.png", :class => :cover, :size => '150x150')
     else
       if cover
-       tag =  image_tag(cover.image_url(:xx_middle), :class => 'cover', :size => '150x150')
+        tag =  image_tag(cover.image_url(:xx_middle), :class => 'cover', :size => '150x150')
       else
         tag = theme_image_tag( "album.jpg", :class => :cover, :size => '150x150')
       end
@@ -364,15 +364,15 @@ module ApplicationHelper
       "<div class='clear'></div>"
     end
   end
-  
+
   def item_non_public(is_public)
     if is_public.to_i == 1
       %Q[<span class="non_public"> \
-        #{image_tag("/assets/waterfall/images/icon/non_public.png", 
-          :width => "16",
-          :height => "16",
-          :alt => "仅自己可见", 
-          :title => "仅自己可见")}
+      #{image_tag("/assets/waterfall/images/icon/non_public.png", 
+      :width => "16",
+      :height => "16",
+      :alt => "仅自己可见", 
+      :title => "仅自己可见")}
         </span>]
     end
 
@@ -381,7 +381,7 @@ module ApplicationHelper
   def reply_email(comment)
     case comment.commentable_type
     when "Wines::Detail"
-       link_to "返回", wine_comments_url(comment.commentable)
+      link_to "返回", wine_comments_url(comment.commentable)
     when "Winery"
       link_to "返回", winery_comments_url(comment.commentable)
     when "Photo"
@@ -398,16 +398,16 @@ module ApplicationHelper
       end
     end
   end
-  
+
   #使用第三方账号登陆iWine
   def resource_name
     :user
   end
- 
+
   def resource
     @resource ||= User.new
   end
- 
+
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end

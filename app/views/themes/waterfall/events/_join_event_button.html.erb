@@ -1,0 +1,95 @@
+<%
+  #if 活动是可以参加
+  #  if 用户是登录的
+  #    if 用户已经参加
+  #      if 用户取消参加
+  #        重新参加
+  #      else
+  #        取消参加
+  #      end
+  #    else
+  #      可以参加
+  #    end
+  #  else
+  #    可以参加
+  #  end
+  #else 活动不是可以参加的
+  #  if 用户是登录的
+  #    if 用户已经参加
+  #      取消参加
+  #    else
+  #      if 活动过期
+  #      elsif 活动人数已经满了
+  #      end
+  #    end
+  #  else
+  #    if 活动过期
+  #    elsif 活动人数已经满了
+  #    end
+  #  end
+  #end
+ %>
+<div id="join_form"  style="display: none" ></div>
+<div id="cancle_form" style="display: none"></div>
+<% if @event.joinedable? #活动可以参加 %>
+  <% if user_signed_in? #已经登录 %>
+  <% if @event.have_been_joined? @user.id %>
+    <% if @event.have_been_cancle_joined? @user.id # 已经取消%>
+      <span class="cancl_fol mr5">
+        <%= link_to edit_event_participant_path(@event,@participant), 
+          :class => [:btn_bluesky_s, :mr5, :ajax], :remote => true do %>
+            <span>我要参加</span>
+         <% end %>
+      </span>
+    <% else %>
+      <span class="icon_fol mr5">
+        已报名参加
+      </span>
+      <span class="cancl_fol mr5">
+        <%= link_to "(取消)",
+          cancle_event_participant_path(@event, @participant), 
+          :class => :ajax, :remote => true %>
+      </span>
+    <% end %>
+  <% else %>
+  <%= link_to new_event_participant_path(@event), 
+    :class => [:btn_bluesky_s, :mr5, :ajax], :remote => true do %>
+      <span>我要参加</span>
+   <% end %>
+ <% end # have_been_joined %>
+<% else %>
+  <%= link_to new_event_participant_path(@event), 
+    :class => [:btn_bluesky_s, :mr5, :ajax], :remote => true do %>
+      <span>我要参加</span>
+   <% end %>
+<% end # user_signed_in %> 
+<% else # 活动不可参加 %>
+ <% if user_signed_in? %>
+   <% if @event.have_been_joined? @user.id %>
+     <span class="icon_fol mr5">已报名参加</span>
+     <span class="cancl_fol mr5">
+       <%= link_to "(取消)",cancle_event_participant_path(@event, @participant), :class => :ajax, :remote => true %>
+     </span>
+   <% else %>
+     <% if @event.timeout? # 活动已经举行 %>
+       <%= link_to 'javascript:void(0)', :class => [:btn_bluesky_s, :mr5, :ajax], :remote => true do %>
+         <span>活动已经过期</span>
+       <% end %>
+     <% elsif @event.ausgebucht? %>
+       <%= link_to 'javascript:void(0)',:class => [:btn_bluesky_s, :mr5, :ajax], :remote => true do %>
+         <span>人数已满</span>
+       <% end %>
+     <% end %>
+   <% end # user_signed_in %>
+ <% else %>
+   <% if @event.timeout? # 活动已经举行 %>
+     <%= link_to 'javascript:void(0)', :class => [:btn_bluesky_s, :mr5, :ajax], :remote => true do %>
+       <span>活动已经过期</span>
+     <% end %>
+   <% elsif @event.ausgebucht? %>
+     <%= link_to 'javascript:void(0)',:class => [:btn_bluesky_s, :mr5, :ajax], :remote => true do %>
+       <span>人数已满</span>
+     <% end %>
+   <% end %>
+ <% end %>
+<% end #joinedable %>

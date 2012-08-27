@@ -1,4 +1,5 @@
     <%= form_for @event, :html => {:id => :form} do |f| -%>
+      <%= f.hidden_field :publish_status %> 
       <table class="form" width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <th width="90">活动标题</th>
@@ -10,9 +11,9 @@
           <th valign="top">活动标签</th>
           <td>
             <div id="tag_container">
-              <%= f.hidden_field :tag_list  %> 
+                <%= f.hidden_field :tag_list  %> 
               <div id="input_tag_view">
-                <%= f.text_field :tags, :class => [:text, :tag], :placeholder => '按回车确定' %>
+                <%= f.text_field :tags, :class => [:text, :tag], :placeholder => '输入后回车确定' %>
                 </div>
               <span class="red" id="warning" style="display:none">不能为空</span>
               <div id="resource_container"></div>
@@ -21,24 +22,39 @@
               <div id="hot_tags_container"></div>
 
               <script type="text/template" id="auto_compleate_view">
-                  <a href="#" data-value= "<@= id @>"><@= origin_name @></a>
+                  <a href="javascript:void(0)" data-value= "<@= id @>"><@= origin_name @></a>
               </script>
+
               <script type="text/template" id="hot_tags_template">
-                <p class="mt10">热门活动标签：</p>
+                <p class="mt10">热门标签：</p>
                 <ul class="tags mt10">
                 </ul>
               </script>
+
               <script type="text/template" id="selected_tags_template">
                 <ul class="tags mt10">
                 </ul>
               </script>
+
               <script type="text/template" id="tags_template">
-                 <a href="#" data-value= ""><@= name @></a>
+                 <a href="javascript:void(0)" data-value= ""><@= name @></a>
               </script>
 
-              
-            </div>
+              <script language="javascript" type="text/javascript">
+                $(document).ready(function(){
+                    sv = new app.SelectTagsListView ({collection: app.SelectTags, hotTags:app.HotTags})
+                    <% if @event.tags_array.present? %>
+                      <% @event.tags_array.each do |tag| %>
+                        app.SelectTags.add({id:<%= tag[:id] %>, name: "<%= tag[:name] %>"})
+                      <% end %>
+                    <% end %>
+                    hv = new app.HotTagsListView ({collection: app.HotTags}) 
+                    new app.InputTagView ({collection: app.SelectTags})
+                    app.HotTags.fetch()
+                    });
+              </script>
 
+            </div>
           </td>
         </tr>
         <tr>
@@ -52,7 +68,7 @@
         <tr>
           <th>活动地点</th>
           <td>
-            <%= f.select :region_id, { '上海' => 1, '成都' => 2, '北京' => 3, '深圳' => 4}  %>
+            <%= f.select :region_id, APP_DATA['event']['city']  %>
             <%=  f.text_field :address, :class => [:text, :name], :placeholder => '请填写详细地址'  %>
           </td>
         </tr>
@@ -70,6 +86,9 @@
           </td>
         </tr>
       </table>
-
+      <p align="center">
+        <%= link_to "javascript:void(0)", :class => [:btn_gray_b, :save_event_button] do  %>
+          <span> 保存</span>
+        <% end %>
+      </p>
     <% end -%>
- 

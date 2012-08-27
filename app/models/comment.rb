@@ -16,6 +16,7 @@ class Comment < ActiveRecord::Base
   scope :recent, lambda { |limit| order("created_at DESC").limit(limit) }
   scope :reply_comments, lambda{|parent_id| where("parent_id = ? and deleted_at is null", parent_id)}
   scope :with_point_is, lambda {|point| where(["point = ?", point])}
+
   # Helper class method to lookup all comments assigned
   # to all commentable types for a given user.
   scope :find_comments_by_user, lambda { |user|
@@ -29,6 +30,13 @@ class Comment < ActiveRecord::Base
   }
 
   scope :real_comments, lambda {where(" do = 'comment' AND parent_id IS NULL")}
+
+  scope :for_event, lambda {|event_id| where(:commentable_type => 'Event', :commentable_id => event_id)}
+  scope :with_votes,
+    joins('LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id').
+    select("comments.*, count(votes.id) as votes_count").
+    where('parent_id IS NULL').
+    group('comments.id')
 
   # NOTE: install the acts_as_votable plugin if you
   # want user to vote on the quality of comments.
@@ -81,6 +89,8 @@ class Comment < ActiveRecord::Base
       "wineries"
     when "User"
       "users"
+    when "Event"
+      'events'
     end
     return path
   end
