@@ -28,6 +28,21 @@ class FollowsController < ApplicationController
       redirect_to params[:return_url] ?  params[:return_url] : @followable_path
     end
   end
+  
+  ## get 方法请求ajax相应
+  #没关注则执行关注操作，已经关注过则执行取消关注操作
+  def follow
+    if @followable.is_followed_by?(@user)
+      @follow = get_user_follow_item
+      @follow.destroy
+    else
+      @follow = build_follow
+      @follow.save
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
 
   private
 

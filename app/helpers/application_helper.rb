@@ -415,5 +415,12 @@ module ApplicationHelper
   def sns_come_from(type)
     type == "weibo" ? "新浪微博" : (type == "qq" ? "腾讯微博" : "豆瓣")
   end
-
+  #展示关注文本
+  def follow_content(parent)
+    if current_user && parent.follows.where("user_id = #{current_user.id}").present?
+      "取消关注"
+    else
+      "关注"
+    end
+  end
 end

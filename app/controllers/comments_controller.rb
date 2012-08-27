@@ -89,12 +89,17 @@ class CommentsController < ApplicationController
     @comment = build_comment
     if @comment.save
       init_oauth_comments
-      @comment.delay.share_comment_to_weibo
       # TODO
       # 1. 广播
       # 2. 分享到SNS
-      notice_stickie t("notice.comment.#{@comment.do == 'follow' ? 'follow' : 'comment'}_success")
-      redirect_to params[:return_url] ?  params[:return_url] : @commentable_comments_path
+      respond_to do |format|
+        format.html {
+          notice_stickie t("notice.comment.#{@comment.do == 'follow' ? 'follow' : 'comment'}_success")
+          redirect_to params[:return_url] ?  params[:return_url] : @commentable_comments_path
+        }
+        format.js {render :action => "ajax_create"}
+      end
+
 
     end
   end
@@ -277,6 +282,8 @@ class CommentsController < ApplicationController
         oauth_comment.image_url  =  photo.image_url if photo
         oauth_comment.save
       end
+      #发送weibo
+      @comment.delay.share_comment_to_weibo
     end
   end
   

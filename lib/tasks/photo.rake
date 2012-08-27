@@ -1,5 +1,10 @@
 #encoding: utf-8
 namespace :photo do
+  
+  # ## 上传酒和酒庄的图片
+  task :upload_all_photo => [:upload_wine_photo, :upload_winery_photo] do
+
+  end
   desc "上传酒的图片,发布酒后执行此操作。"
   task :upload_wine_photo => :environment do
     require "csv"
