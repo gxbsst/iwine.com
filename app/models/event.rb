@@ -5,7 +5,7 @@ class Event < ActiveRecord::Base
   belongs_to :audit_log
   has_many :photos, :as => :imageable
   has_many :wines, :class_name => "EventWine"
-  has_many :participants, :class_name => "EventParticipant", :include => [:user]
+  has_many :participants, :class_name => "EventParticipant", :include => [:user], :conditions => "join_status = 1"
   has_many :invitees, :as => :invitable, :class_name => "EventInvitee"
   has_many :comments,  :class_name => 'EventComment', :as => :commentable
   has_many :follows, :as => :followable, :class_name => "EventFollow"

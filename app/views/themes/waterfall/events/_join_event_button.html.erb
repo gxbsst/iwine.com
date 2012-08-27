@@ -35,13 +35,10 @@
   <% if user_signed_in? #已经登录 %>
   <% if @event.have_been_joined? @user.id %>
     <% if @event.have_been_cancle_joined? @user.id # 已经取消%>
-      <span class="icon_fol mr5">
-        报名已取消
-      </span>
       <span class="cancl_fol mr5">
         <%= link_to edit_event_participant_path(@event,@participant), 
           :class => [:btn_bluesky_s, :mr5, :ajax], :remote => true do %>
-            <span>重新参加</span>
+            <span>我要参加</span>
          <% end %>
       </span>
     <% else %>

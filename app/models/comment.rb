@@ -15,6 +15,13 @@ class Comment < ActiveRecord::Base
   validates_presence_of :user
   scope :recent, lambda { |limit| order("created_at DESC").limit(limit) }
   scope :with_point_is, lambda {|point| where(["point = ?", point])}
+  scope :for_event, lambda {|event_id| where(:commentable_type => 'Event', :commentable_id => event_id)}
+  scope :with_votes,
+    joins('LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id').
+    select("comments.*, count(votes.id) as votes_count").
+    where('parent_id IS NULL').
+    group('comments.id')
+
 
   # NOTE: install the acts_as_votable plugin if you
   # want user to vote on the quality of comments.

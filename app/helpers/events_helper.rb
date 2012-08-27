@@ -58,4 +58,8 @@ module EventsHelper
     end
     html.html_safe
   end
+
+  def event_event_comments_path(commentable, comment)
+    event_comments_path(commentable, comment)
+  end
 end

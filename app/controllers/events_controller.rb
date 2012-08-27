@@ -67,12 +67,7 @@ class EventsController < ApplicationController
     @event = Event.includes([:participants => [:user], :follows => [:user]]).find(params[:id])
 
     order = "votes_count DESC, created_at DESC"
-    @comments  =  @event.comments.all(:include => [:user],
-                                      # :joins => :votes,
-                                      :joins => "LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id",
-                                      :select => "comments.*, count(votes.id) as votes_count",
-                                      :conditions => ["parent_id IS NULL"], :group => "comments.id",
-                                      :order => order )
+    @comments  = Comment.for_event(@event.id).with_votes.order.all
     page = params[:params] || 1
     new_normal_comment
     @recommend_events = Event.recommends(4)

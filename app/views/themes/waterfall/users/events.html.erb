@@ -8,6 +8,22 @@
     <div class="clear"></div>
     <div class="content">
       <div class="left">
+          <ul class="event_menu">
+          <style type="text/css" media="screen">
+            ul.event_menu {
+              height: 40px;
+            }
+             ul.event_menu li {
+              font-size: 14px;
+              line-height: 160%;
+              display: inline;
+              margin: 10px 10px 0 0;
+            }
+          </style>
+            <li><%= link_to "创建的活动", create_events_user_path(@user) %></li>
+            <li><%= link_to "参加的活动", join_events_user_path(@user) %></li>
+            <li><%= link_to "感兴趣的活动", follow_events_user_path(@user) %></li>
+          </ul>
         <div class="title_btn">
           <h1>
             创建的活动 
@@ -139,17 +155,9 @@
       </div>
       <div class="right">
         <div class="sidebox">
-          <ul class="event_menu">
-          <style type="text/css" media="screen">
-             ul.event_menu li {
-              font-size: 14px;
-              line-height: 160%;
-            }
-          </style>
-            <li><%= link_to "创建的活动", create_events_user_path(@user) %></li>
-            <li><%= link_to "参加的活动", join_events_user_path(@user) %></li>
-            <li><%= link_to "感兴趣的活动", follow_events_user_path(@user) %></li>
-          </ul>
+          <%= link_to new_event_path, :class => :btn_createvent do %>
+            <span>我要创建活动</span>
+          <% end %>
         </div>
       </div>
       <div class="clear"></div>

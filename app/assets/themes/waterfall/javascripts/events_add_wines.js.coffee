@@ -49,6 +49,8 @@ jQuery ->
     removeFromSelectList: ->
       @collection.remove @model
       @setValueOfWineDetailIds(@collection)
+      $('.wine_select').effect("highlight", {}, 3000)
+
 
   class SearchWineListView extends Backbone.View
     template: _.template($("#search_wine_list_template").html())
@@ -95,8 +97,10 @@ jQuery ->
      items =  @collection.where year:wine.get('year'), origin_name: wine.get('origin_name')
      if items.length == 0
        @collection.add(wine)
-       wineView = new WineView 
+       wineView = new WineView
        wineView.setValueOfWineDetailIds(@collection)
+       $('.wine_select').effect("highlight", {}, 3000)
+
      else
        alert("这支酒已经添加了")
   class InputSearchView extends Backbone.View
