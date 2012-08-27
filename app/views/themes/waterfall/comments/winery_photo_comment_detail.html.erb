@@ -1,0 +1,75 @@
+<% content_for :css do %>
+  <%= theme_stylesheet_link_tag :winery, :thumb %>
+<% end %>
+<div class="whitespace mb30">
+  <%= render "wineries/winery_detail" %>
+</div>
+<div class="whitespace winerymain">
+  <div class="left">
+    <div class="section">
+      <div class="title">
+        <%= link_to winery_photos_path(@winery), :class => "btn_gray float_r" do %>
+          <span>返回</span>
+        <% end %>
+        <%= link_to photo_upload_winery_path(@winery), :class => "btn_gray float_r mr5" do %>
+          <span>上传照片</span>
+        <% end %>
+        <h2>所有照片</h2>
+      </div>
+      <div class="content">
+        <div class="album_left">
+          <div class="mb20">
+            <%= render :partial => "share/photo_page_number", :locals => {:parent => @winery} %>      
+          </div>
+          <div class="photo">
+            <%= image_tag @photo.image_url(:large), :alt => @photo.intro %>
+          </div>
+          <div class="info">
+            <%= render "photos/liked" %>
+            <div class="share float_r">
+              <%= render "share/sns_icons_second",
+                :image_url => sns_image_url(@photo, :thumb_name => :large),
+                :title => sns_title(@winery.name),
+                :summary => "的图片",
+                :url => request.url %>
+              </div>
+              <div><%= @photo.views_count %>浏览 | <%= @photo.comments_count %>评论</div>
+            </div>
+            <div class="comment">
+              <div class="mb20 clearfix">
+                <div class="title">
+                  <h3>评论</h3>
+                </div>
+              </div>
+              <%= render "comments/share/comment_detail" %>
+              <!--end comment-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right">
+      <%= render "wineries/hot_winery" %>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <%= content_for :js do %>
+    <%= theme_javascript_include_tag "comment.form.validator" %>
+  <% end %>
+  <script type="text/javascript">
+    $(function(){
+        window.commentFormView = new CommentFormView({"show_text_count": true, "el": "#list_comment_form"});
+        });
+</script>
+<script type="text/javascript">
+  $("ul.comment_tabs").tabs("div.panes > div");
+  $("#ajax-tab").one('click', function(){
+      $('#ajax-pane').load("/comments/<%= @comment.id%>/get_sns_reply");
+      });
+$(document).ready(function(){
+    // "有用" 成功时，更新有用的数量
+    $("a.vote").bind("ajax:success", function(event, data, textStatus, jqXHR){
+      $(this).find("span.likes_count").text(data);
+      });
+    });
+  </script>

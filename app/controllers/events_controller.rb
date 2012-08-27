@@ -67,8 +67,16 @@ class EventsController < ApplicationController
     @event = Event.includes([:participants => [:user], :follows => [:user]]).find(params[:id])
 
     order = "votes_count DESC, created_at DESC"
-    @comments  = Comment.for_event(@event.id).with_votes.order.all
     page = params[:params] || 1
+    @comments  = Comment.for_event(@event.id).with_votes.order(order).all
+    if !(@comments.nil?)
+      unless @comments.kind_of?(Array)
+        @comments = @comments.page(page).per(8)
+      else
+        @comments = Kaminari.paginate_array(@comments).page(page).per(10)
+      end
+    end
+
     new_normal_comment
     @recommend_events = Event.recommends(4)
 

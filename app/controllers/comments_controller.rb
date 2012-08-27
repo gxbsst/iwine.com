@@ -10,6 +10,41 @@ class CommentsController < ApplicationController
   # before_filter :check_cancle_follow, :only => :cancle_follow
   before_filter :check_can_comment, :only => :create
   after_filter  :send_reply_email, :only => :reply
+<<<<<<< Updated upstream
+=======
+
+  def show
+    page = params[:page] || 1
+    @reply_comments = Comment.reply_comments(@comment.id).page(page).per(8)
+    case @comment.commentable_type
+    when "Wines::Detail"
+      render_wine_comment_detail
+    when "Winery"
+      render_winery_comment_detail
+    when "Photo"
+      photo_imageable_type = @comment.commentable.imageable_type
+      @photo = @comment.commentable
+      case photo_imageable_type
+      when "Album"
+        render_album_photo_comment_detail
+      when "Wine", "Wines::Detail"
+        render_wine_photo_comment_detail
+      when "Winery"
+        render_winery_photo_comment_detail
+      end
+    when 'Event'
+      render_event_comment_detail
+    end
+  end
+
+  def get_sns_reply
+    @reply_list = @comment.get_sns_comments
+    respond_to do |format|
+      format.js
+    end
+  end
+
+>>>>>>> Stashed changes
   def new   
     if params[:do].present? && params[:do] == "follow"
       new_follow_comment
@@ -217,4 +252,48 @@ class CommentsController < ApplicationController
     end
   end
 
+  #show render选项
+  def render_wine_comment_detail
+    @wine_detail = @comment.commentable
+    @wine = @wine_detail.wine      
+    render "wine_comment_detail"
+  end
+
+  def render_winery_comment_detail
+    @winery = @comment.commentable
+    @hot_wineries = Winery.hot_wineries(5)
+    @users    = @winery.followers #关注酒庄的人
+    render "winery_comment_detail"
+  end
+  
+  def render_album_photo_comment_detail
+    @album = @comment.commentable.imageable
+    @user = @album.user
+    @other_albums = @user.albums.where("id != #{@album.id}")
+    render "album_photo_comment_detail" 
+  end
+  
+  #需要区分wine还是detail
+  def render_wine_photo_comment_detail
+    if @comment.commentable.imageable_type == "Wines::Detail"
+      @wine_detail = @comment.commentable.imageable
+      @wine = @wine_detail.wine
+    else
+      @wine = @comment.commentable.imageable
+      @wine_detail = @wine.get_latest_detail
+    end
+    render "wine_photo_comment_detail"
+  end
+
+  def render_winery_photo_comment_detail
+    @winery = @comment.commentable.imageable
+    @hot_wineries = Winery.hot_wineries(5)
+    render "winery_photo_comment_detail"
+  end
+
+  def render_event_comment_detail
+    @event = @comment.commentable
+    @recommend_events = Event.recommends(4)
+    render "event_comment_detail"
+  end
 end

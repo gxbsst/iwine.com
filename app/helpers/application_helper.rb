@@ -219,6 +219,22 @@ module ApplicationHelper
     return [ids_arr, current_index]
   end
 
+  def comment_detail_url(comment)
+    url = case comment.commentable_type
+          when "Photo"
+            photo_comment_path(comment.commentable, comment)
+          when "Wines::Detail", "Wine"
+            wine_comment_path(comment.commentable, comment)
+          when "Winery"
+            winery_comment_path(comment.commentable, comment)
+          when "Event"
+            event_comment_path(comment.commentable, comment)
+          end
+    link_to url do
+      raw "回复<span class='reply_comment_count'>(#{comment.children.all.size })</span><span class='reply_result'></span>"
+    end
+  end
+
   def reply_comment(comment)
     link_to  reply_comment_path(comment.id),
 		  :remote => true,
@@ -323,13 +339,13 @@ module ApplicationHelper
     bio.present? ? bio : (myself ? APP_DATA["user_profile"]["myself_no_bio"] : APP_DATA["user_profile"]["no_bio"])
   end
 
- def album_cover_tag(user, album)
+  def album_cover_tag(user, album)
     cover = album.photos.visible.cover.first
     if album.is_public.to_i == 0 && !is_login_user?(user)
       tag = theme_image_tag("common/p_album.png", :class => :cover, :width => 150, :height => 150)
     else
       if cover
-       tag =  image_tag(cover.image_url(:xx_middle), :class => 'cover')
+        tag =  image_tag(cover.image_url(:xx_middle), :class => 'cover')
       else
         tag = theme_image_tag( "album.jpg", :class => :cover, :width => 150, :height => 150)
       end

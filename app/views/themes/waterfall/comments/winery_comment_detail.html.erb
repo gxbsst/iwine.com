@@ -1,0 +1,45 @@
+<% content_for :css do %>
+  <%= theme_stylesheet_link_tag :winery, :thumb %>
+<% end %>
+<div class="whitespace mb30">
+  <%= render "wineries/winery_detail" %>
+</div>
+
+<div class="whitespace winerymain">
+  <div class="left">
+    <div class="section">
+      <div class="title">
+        <%= link_to winery_comments_path(@winery), :class => "btn_gray float_r" do %>
+          <span>返回所有评论</span>
+        <% end %>
+        <h2>评论</h2>
+      </div>
+      <div class="content">
+        <%= render "comments/share/comment_detail" %>
+      <!--end comment-->
+      </div>
+      <!--end section-->
+    </div>
+    <!--end left-->
+  </div>
+  <div class="right">
+    <%= render "wineries/hot_winery" %>
+    <%= render "wineries/follower" %>
+    <div class="clear"></div>
+  </div>
+  <div class="clear"></div>
+</div>
+
+<script type="text/javascript">
+  $("ul.comment_tabs").tabs("div.panes > div");
+  $("#ajax-tab").one('click', function(){
+      $('#ajax-pane').load("/comments/<%= @comment.id%>/get_sns_reply");
+      });
+
+$(document).ready(function(){
+    // "有用" 成功时，更新有用的数量
+    $("a.vote").bind("ajax:success", function(event, data, textStatus, jqXHR){
+      $(this).find("span.likes_count").text(data);
+      });
+    });
+  </script>
