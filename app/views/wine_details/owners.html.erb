@@ -1,73 +1,39 @@
-<div id="comment_form"  style="display: none" >
+<% content_for :title, @title%>
+<% content_for :css do %>
+	<%= stylesheet_link_tag :wine, :thumb %>
+	<% end %>
+	<div id="wp_left">
+		
+		<div class="wp_space_line top">
+			<%= link_to wine_path(@wine_detail), :class => [:btn_gray, :float_r] do %>
+			<span>返回</span>
+			<% end %>
 
-</div>
-<div id="add_to_cellar_form"  style="display: none" >
-
-</div>
-
-<div class="wine_profile">
- 
-  <div class="left">
-    <div class="box title">
-          <h2>
-               <%= raw @wine_detail.cname %>
-               <br />
-               <span> <%= raw @wine_detail.ename %></span>
-     </h2>
-     <!-- title end -->
-    </div>
-    <div class="clear"></div>
-
-    <div class="box comments">
+			<h1 class="wine_name_ch"><%= raw @wine_detail.cname %>的拥有者</h1>
+			<div class="clear"></div>
+		</div>
       <%= render "wine_details/share/owners" %>
-    </div>
-    <div class="clear"></div>
-
-  <div class="pagination">
-<%= paginate @owners %>
-  </div>
-    <!-- left end -->
-  </div>
-
-  <div  class="right">
-    <div class="box resource">
-      <%= render "wine_details/share/resource" %>
-    </div>
-    <div class="clear"></div>
-
-    <div class="box spec">
-      <%= render "wine_details/share/spec" %>
-    </div>
-    <div class="clear"></div>
-
-    <div class="box score">
-      <%= render "wine_details/share/score" %>
-    </div>
-    <div class="clear"></div>
-
-    <div class="box special_comments">
-      <%= render "wine_details/share/special_comments" %>
-    </div>
-    <div class="clear"></div>
-
-    <div class="box price">
-      <%= render "wine_details/share/price" %>
-    </div>
-    <div class="clear"></div>
-
-    <div class="box vintage">
-      <%= render "wine_details/share/vintage" %>
-    </div>
-    <div class="clear"></div>
-
-    <%= link_to_button "feedback", "/" %>
-    <!-- right end -->
-    </div>
 
 
-  <!-- wine_profile end -->
- </div>
+			<div class="clear"></div>
+			<div class="pagination">
+				<%= paginate @owners %>
+			</div>
 
-<div class="clear"></div>
+	</div>
 
+	<div id="wp_right">
+		<%= render "wine_details/share/resource" %>
+		<%= render "wine_details/share/spec"%>
+		<%= render "wine_details/share/score"%>
+		<%= render "wine_details/share/special_comments"%>
+		<%= render "wine_details/share/price"%>
+		<%= render "wine_details/share/vintage"%>
+		<div class="">
+			<%= link_to feedback_path(:for => "error_feedbacks" ), :class => "btn_gray" do %>
+      			<span>信息纠错与补充</span>
+    		<% end %>
+		</div>
+	</div>
+	<div class="clear"></div>   
 

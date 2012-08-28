@@ -12,7 +12,7 @@ gem 'cancan'
 gem 'passenger'
 gem 'kaminari'
 #gem 'uploadify'
-gem 'flash_cookie_session'
+# gem 'flash_cookie_session'
 gem 'best_in_place'
 # gem 'contacts_cn'  # 连接email
 # gem 'hpricot'
@@ -37,14 +37,13 @@ gem 'jcrop-rails'
 gem 'backbone-on-rails'
 gem "jquery-tools", "~> 0.0.3"
 
-gem 'simple_form'
 gem 'client_side_validations'
 
 gem 'activeadmin'
 
 gem 'hanzi_to_pinyin' , :git => 'git://github.com/wxianfeng/hanzi_to_pinyin.git'
 
-gem "breadcrumbs_on_rails"
+# gem "breadcrumbs_on_rails"
 
 ## Exception Handler
 gem 'exception_notification', :require => 'exception_notifier'
@@ -64,16 +63,6 @@ gem 'acts_as_votable', :path => "lib/gems"
 
 ## Timeline
 gem "timeline_fu", :path => "lib/gems"
-
-## redis_search
-#gem 'redis','>= 2.1.1'
-gem 'chinese_pinyin', '0.4.1'
-gem 'rmmseg-cpp-huacnlee', '0.2.9'
-#gem 'redis-namespace','~> 1.1.0'
-#gem 'redis-search', '0.8.0'
-
-#  查找图片的宽度／高度
-# gem 'dimensions-rails'
 
 # Friendly URL
 
@@ -134,8 +123,7 @@ gem 'user_resource_init', :path => 'lib/patrick/user_resource_init'
 
 # 计数
 gem 'counter', :path => 'lib/patrick/counter'
-# 模板
-gem 'themes_for_rails', :path => "lib/gems"
+
 
 # step form
 gem 'wicked'

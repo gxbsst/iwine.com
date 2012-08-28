@@ -1,15 +1,33 @@
 @charset "UTF-8";
 .addwine {padding:30px 134px;}
-.addwine h1 {margin: 0 0 20px 0;}
-.step_fir, .step_sec, .step_thr {background:url(../images/common/step_cellar_addwine.jpg) no-repeat;height:40px;}
+.addwine h1, .box_ew {margin: 0 0 20px 0;}
+.step_fir, .step_sec, .step_thr {background:url(common/step_cellar_addwine.jpg) no-repeat;height:40px;}
 .addwine .step {margin: 0 0 40px 0;}
 .addwine .step .step_fir {background-position:0 -130px;}
 .addwine .step .step_sec {background-position:0 -170px;}
 .addwine .step .step_thr {background-position:0 -210px;}
-.box  {background:url(../images/bg/bg_box_m.gif) repeat-y ;margin: 0 0 20px 0;}
-.box_t {width:680px;height:10px;background:url(../images/bg/bg_box_t.gif) no-repeat left top;}
-.box_b {width:680px;height:25px;background:url(../images/bg/bg_box_b.gif) no-repeat left top;}
+.box  {background:url(bg/bg_box_m.gif) repeat-y ;margin: 0 0 20px 0;}
+.box_t {width:680px;height:10px;background:url(bg/bg_box_t.gif) no-repeat left top;}
+.box_b {width:680px;height:25px;background:url(bg/bg_box_b.gif) no-repeat left top;}
 .box_main {padding:15px 30px 0 30px;}
 .addwine .box .wine_img {float:left;widht:70px;margin: 0 20px 0 0;}
 .addwine .box .wine_info {float:left;width:530px;}
 .addwine .box .year span a {margin:0 5px 0 0;text-decoration:underline;display:inline-block;}
+.addwine .myform .left {width:680px;}
+.addwine .myform .left .required, .addwine .myform .left .optional {width:680px;}
+.addwine .myform .left .areas {width:560px;float:left;}
+.addwine .myform .left .areas select {display:block;margin-bottom:5px;}
+
+.add_event_step {background-color:#cce3f1;padding:10px 25px;margin:0 0 30px 0;}
+.search_result_space {height:350px; overflow:auto;margin:0 0 30px 0;}
+.box_ew  {margin: 0 0 20px 0;}
+.box_ew .box_main {padding:0;margin:0;}
+.box_ew .wine_img {float:left;widht:70px;margin: 0 20px 0 0;}
+.box_ew .wine_info {float:left;width:560px;}
+.box_ew .year span a {margin:0 5px 0 0;text-decoration:none;display:inline-block;color:#6699cc;}
+.box_ew .year span a:hover {background-color:#6699cc;color:#fff;}
+.wine_select {background-color:#f3f3f3;padding:20px;}
+.wine_select dl {width:310px;height:75px;float:left;margin:0 10px 20px 0;position:relative;}
+.wine_select dt {width:70px;float:left;margin-right:15px;}
+.wine_select dd {width:220px;float:left;}
+.wine_select dl span {position:absolute;left:59px;top:-9px;}

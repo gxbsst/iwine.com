@@ -3,7 +3,7 @@
 			margin: 30px auto 10px auto;
 			width: 440px; 
 			height: 440px;
-			background: url('../image/test/bg_previe.gif') top left no-repeat;
+			background: url('test/bg_previe.gif') top left no-repeat;
 		}
 
 		#preview_outer {
@@ -18,26 +18,19 @@
 			height: 100%;
 			position: relative;
 		}
-		
+		#preview_inner .cover {text-align:center;}
 		#preview_inner div {
 			float: left;
 			width: 440px;
 			height: 440px;
 			position: relative;
 		}
-		
 		#preview_inner div a {
 			position: absolute;
 			bottom: 0;
 			left: 0;	
 			display: block;
 			width: 100%;
-			text-indent: 20px;
-			padding: 20px 0;
-			color: #fff;
-			background: url('../image/test/bg_trans.png');
-			text-decoration: none;
-			font-size: 18px;
 		}
 
 		#thumbs {
@@ -52,14 +45,14 @@
 			width: 50px;
 			height: 50px;
 			cursor: pointer;
-			background: url('../image/test/bg_thum.gif') top left no-repeat;
+			background: url('test/bg_thum.gif') top left no-repeat;
 			display: inline-block;
 		}
 
 		#arrow {
 			position: absolute;
 			top: -13px;
-			background: url('../image/test/bg_arrow.gif') top center no-repeat;
+			background: url('test/bg_arrow.gif') top center no-repeat;
 			width: 104px;
 			height: 39px;
 			display: none;

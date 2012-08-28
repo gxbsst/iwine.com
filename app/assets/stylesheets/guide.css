@@ -1,0 +1,52 @@
+@charset "UTF-8";
+/*-------------first recommend--------------*/
+#guide .wel {background:url(common/recommend_top.jpg) no-repeat left top;height:138px;padding:40px 0 0 70px;position:relative;}
+#guide .paper {background:url(bg/paper_mid.jpg) repeat-y left top;}
+#guide .paper .mid {padding:30px 0 30px 0;}
+#guide .paper .top {background:url(bg/paper_top.jpg) no-repeat left top;height:30px;}
+#guide .paper .bot {background:url(bg/paper_bot.jpg) no-repeat left bottom;height:40px;}
+#guide h1.zh {font-size:14px;}
+#guide h1.en {font-size:12px;}
+#guide .wine {margin-bottom:20px;}
+#guide ul {padding: 0 70px;zoom:1;}
+#guide .wine ul.line {border-bottom:1px dotted #ccc;padding-bottom:40px;margin-bottom:40px;}
+#guide .wine li {float:left;width:250px;padding: 0 25px 40px 0;}
+#guide .wine li.last {padding-right:0;}
+#guide .wine img {width:130px;float:left;margin-right:20px;}
+#guide .wine .meta {width:100px;float:left;}
+#guide .user li {float:left;width:140px;padding:0 25px 40px 0;}
+#guide .user li.last {padding-right:0;}
+#guide span.location, #guide span.gray {display:block;}
+#guide .user img {width:50px;float:left;margin-right:15px;}
+#guide .user .meta {width:75px;float:left;}
+#guide .step {position:absolute;left:844px;top:-3px;}
+#guide .step1 {padding: 0 100px;}
+
+/*----------user setting------------*/
+.setting, .friends {padding:30px 74px;}
+.setting .right {width:280px;}
+.avatar {padding-left:40px;background:url(bg/line_dotted.jpg) no-repeat left top;min-height:250px;height:auto !important;height:250px;overflow:visible;}
+.avatar p.sample {margin-bottom:10px; position:relative;}
+.avatar p span {display:inline-block;margin-left:5px;}
+.set_module h2 {font-size:14px;margin: 30px 0;}
+.set_optional {margin-bottom:10px;}
+.set_optional h3 {font-size:14px;margin: 0 0 5px 0;}
+.set_optional label {color:#666;}
+
+.myform .left {width:400px;float:left;margin-right:20px;}
+.myform .right {float:left;}
+.step2 .required, .step2 .optional  {float:left;display:block;margin-bottom:10px;width:800px;} 
+.step2 .required, .step2 .optional {width:500px;}
+.myform .main div {float:left;display:block;margin-bottom:10px;width:680px;}
+.myform .error {padding:5px 10px;width:150px;text-align:left;display:inline-block;}
+.step2 {width:500px;margin:0 auto;}
+.step2 h1 {font-size:14px;font-weight:bold;margin-bottom:8px;}
+.step2 .required label span {color:#F00;}
+.step2 label{display:block; font-weight:bold;text-align:right;width:100px;float:left;margin: 0 20px 10px 0;}
+.step2 label.nv {display:inline-block;float:none;width:auto;margin:0 0 0 10px;font-weight:normal;text-align:left;}
+.step2 .small{color:#666666;display:block;font-size:11px;font-weight:normal;text-align:right;width:140px;}
+.step2 input{margin-right:5px;}
+.step2 .content {float:left;width:380px;}
+.step2 .content2 {float:left;width:560px;}
+.step2 button{clear:both;margin-left:150px;width:125px;height:31px;background:#666666 url(../css/img/button.png) no-repeat;text-align:center;line-height:31px;color:#FFFFFF;font-size:11px; font-weight:bold;}
+.step2 label.w50 {width:50px;text-align:left;margin:0;}

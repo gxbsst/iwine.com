@@ -1,0 +1,20 @@
+<%= form_for @comment, :validate => true, 
+                       :url =>  reply_comment_path(@comment), 
+                       :method => :post, 
+                       :html => {:id => "reply_comment_form"}  do |f| -%>
+    <%= text_area_tag "comment[body]" %>
+    <p>
+      <%= link_to "javascript:void(0)", :class => "btn_gray submit_a" do %>
+          <span>回复</span>
+      <% end %>
+      <span class="red text_error"></span>
+    </p>
+<% end %>
+<%= content_for :js do %>
+    <%= javascript_include_tag "comment.form.validator" %>
+<% end %>
+<script type="text/javascript">
+  $(function(){
+    window.commentFormView = new CommentFormView({"show_text_count": true, "el": "#reply_comment_form"});
+  });
+</script>

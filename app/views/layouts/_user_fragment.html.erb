@@ -1,0 +1,68 @@
+
+<%  if user_signed_in? %> 
+<div id="top_right">
+  <ul>
+    <li class="userbox">
+      <span class="user-select">
+        <%= link_to_user current_user,
+          home_index_path,
+          {:class => "userpic", :with_avatar => true, :avatar_version => :thumb, :width => 20, :height => 20 }  %>
+        <%= link_to_image "common/userbox_arrow.jpg", "#", {:class => :arrow_down}, :width => 20, :height => 30 %>
+        <ul class="drop_down_menu" >
+          <li><%= link_to "私信", conversations_path %></li>
+          <li><%= link_to "找朋友", :controller => "/friends", :action => "find" %></li>
+          <li><%= link_to "设置", basic_settings_path() %></li>
+          <li><%= link_to "我的iWine", user_path(current_user) %></li>
+          <li><%= link_to "退出",  logout_path %></li>
+        </ul>
+      </span>
+    </li>
+    <%= link_to "添加", "#add_data", :class => [:btn_add, :fancybox]%>
+  </ul>
+</div>
+
+
+  <div style="display:none">
+
+
+    <div id="add_data" style="display: block;">
+      <h3>请选择要添加的内容类型</h3>
+      <ul>
+        <li>
+           <%= link_to "添加新酒款", add_wines_path(:step => 1), :class => "add_new_wine" %>
+        </li>
+        <li>
+          <%= link_to "添加藏酒", add_cellar_items_path(current_user.cellar, :step => 1), :class => "add_cellar_wine" %>
+        </li>
+        <div class="clear"></div>
+      </ul>
+    </div>
+  </div>
+<% else %>
+  <ul>
+    <li class="sns">
+      <span>其他账号登陆：</span>
+      <%= link_to user_omniauth_authorize_path(:weibo) do %>
+        <%= image_tag "icon/icon_sina.gif", :alt => "新浪微博账号登陆", :width => "24", :height => "24" %>
+      <% end %>
+      <%= link_to user_omniauth_authorize_path(:qq_connect) do %>
+        <%= image_tag "icon/icon_qq.gif", :alt => "QQ账号登陆", :width => "24", :height => "24" %>
+      <% end %>
+      <%= link_to user_omniauth_authorize_path(:renren) do %>
+        <%= image_tag "icon/icon_renren.gif", :alt => "人人网账号登陆", :width => "24", :height => "24" %>
+      <% end %>
+    </li>
+    <li>
+      <%= link_to new_user_registration_path, :class => 'btn_green' do  %>
+       <span>注册</span>
+     <% end %>
+    </li>
+    <li>
+     <%= link_to new_user_session_path, :class => 'btn_green' do  %>
+      <span>登录</span>
+     <% end %>
+    </li>
+  </ul>
+<% end %>
+
+

@@ -82,7 +82,9 @@ class Event < ActiveRecord::Base
   }
 
   def begin_at_be_before_end_at
-    errors.add(:end_at, "结束时间必须大于开始时间") if self.begin_at > self.end_at
+    if begin_at.present?
+      errors.add(:end_at, "结束时间必须大于开始时间") if self.begin_at > self.end_at
+    end
   end 
   # 将活动锁定
   def locked!

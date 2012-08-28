@@ -1,16 +1,47 @@
-<h2>Change your password</h2>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.hidden_field :reset_password_token %>
+<div id="login">
+	<!--
+	<% if !devise_error_messages!.blank? %>
+		<div class="error"><%= devise_error_messages! %></div>
+	<% end %>
+-->
+	<div class="password">
+		<div class="boxstyle2">
+			<div class="top"></div>
+			<div class="mid">
+				<h2>重置密码</h2>
+				<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
+				
+				<%= f.hidden_field :reset_password_token %>
+				<table width="90%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td>新密码</td>
+						<td>
+							<div class="un">
+								<%= f.password_field :password, :class => "text", :placeholder => "请输入新密码" %>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>确认密码</td>
+						<td>
+							<div class="un">
+								<%= f.password_field :password, :class => "text", :placeholder => "请再次输入密码" %>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>
+							<%= link_to "javascript:void(0)", :onclick => "$(this).parents('form').submit()" do %>
+								<%= image_tag "common/btn_submit.jpg", :width => 96, :height => 41, :alt => "登录" %>
+							<% end %>
+						</td>
+					</tr>
+				</table>
+				<% end %>
 
-  <div><%= f.label :password, "New password" %><br />
-  <%= f.password_field :password %></div>
-
-  <div><%= f.label :password_confirmation, "Confirm new password" %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.submit "Change my password" %></div>
-<% end %>
-
-<%= render "links" %>
+			</div>
+			<div class="bot"></div>
+		</div>
+	</div>

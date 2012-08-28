@@ -6,6 +6,7 @@ jQuery ->
   $('#wines_register_variety_name_value').autocomplete
     source: $('#wines_register_variety_name_value').data('autocomplete-source')
     minLength: 0
+    appendTo: '#auto_variety_name'
   .focus ->
     $(@).autocomplete("search", "is_recommend")
 
@@ -15,9 +16,8 @@ jQuery ->
   $('#variety_name').autocomplete
     source: $('#variety_name').data('autocomplete-source')
   $("#message_recipients").autocomplete
-    source: $("#message_recipients").data("autocomplete-source")
-
-
+      source: $("#message_recipients").data("autocomplete-source")
+      appendTo: '.text_input'
 
 
 

@@ -28,8 +28,8 @@
 
 #stickies .notice_stickie
 {
-    border: solid 1px #399c07;
-    background-color: #d7ffaf;
+    background-color: #E6EFC2;
+	color:#264409;
 }
 
 #stickies .debug_stickie
