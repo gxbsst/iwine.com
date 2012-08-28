@@ -8,10 +8,9 @@ class WineriesController < ApplicationController
   def index
     @title = "酒庄"
     @timelines = Winery.timeline_events
-    
     page = params[:page] || 1
 
-    if @timelines.present?
+    if !(@timelines.nil?)
       unless @timelines.kind_of?(Array)
         @timelines = @timelines.page(page).per(30)
       else
