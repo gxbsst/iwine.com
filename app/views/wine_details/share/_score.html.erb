@@ -1,6 +1,17 @@
-<% 5.times do |i| %>
-  <%= image_tag 'base/star_red.jpg', :width=>15, :height=>14 %>
+<!-- <span class="font_16 red"> <%= @wine_detail.score %> </span>分, <%= @wine_detail.comments_count %>人评价 -->
+
+<% if @wine_detail.rate_comments_count < 5 %>
+<div class="score_star">
+	<span class="star star_b_s00"></span>
+	<span class="iw_score">少于5个人评分(<%= @wine_detail.rate_comments_count %>人评分)</span>
+	<div class="clear"></div>
+</div>
+
+<% else %>
+<div class="score_star">
+	<span class="star star_b_s<%= @wine_detail.stars %>0"></span>
+	<span class="iw_score"><span class="redscore"><%= @wine_detail.score %> </span> 分(<%= @wine_detail.rate_comments_count %>人评分)</span>
+	<div class="clear"></div>
+</div>
+
 <% end %>
-
-<span class="font_16 red"> 8.5 </span>分, 32人评价
-

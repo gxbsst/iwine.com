@@ -9,7 +9,7 @@ class AvatarCropper
       bgColor:  'black'
       bgOpacity:   .5
       minSize: [130, 130]
-      maxSize: [130, 130]
+      maxSize: [280, 280]
       onSelect: @update
       onChange: @update
 

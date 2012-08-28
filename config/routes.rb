@@ -34,7 +34,6 @@ Patrick::Application.routes.draw do
       get :update_info
     end
   end
-  themes_for_rails
 
   # unless Rails.application.config.consider_all_requests_local
   #    match '*not_found', to: 'errors#error_404'

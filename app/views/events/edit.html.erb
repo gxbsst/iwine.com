@@ -1,0 +1,112 @@
+<% content_for :title, @title%>
+<% content_for :js do %>
+<%= javascript_include_tag "events" %>
+<%= javascript_include_tag "jquery-ui-timepicker-addon" %>
+<script language="javascript" type="text/javascript">
+  $(document).ready(function(){
+      $('input.date').datetimepicker({
+        numberOfMonths: 2,
+        minDate: 0
+       // maxDate: 30
+      });
+  });
+</script>
+<% end %>
+<% content_for :css do %>
+	<%= stylesheet_link_tag "event" %>
+	<%= stylesheet_link_tag "add" %>
+	<%= stylesheet_link_tag "jquery-ui" %>
+ <style type="text/css" media="screen">
+    .ui-progressbar { height:2em; text-align: left; overflow: hidden; }
+    .ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }
+    .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+    .ui-timepicker-div dl { text-align: left; }
+    .ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+    .ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+    .ui-timepicker-div td { font-size: 90%; }
+    .ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+ </style>
+<% end %>
+
+<div class="whitespace addwine">
+  <h1 class="main_title">创建同城活动</h1>
+  <div class="add_event_step">
+    <%= image_tag "common/add_event_step1.gif", :size => "180x22" %>
+  </div>
+  <div id="stylized" class="myform mb30">
+    <%= render 'form' %>
+ </div>
+  <div class="add_event_step">
+    <%= image_tag "common/add_event_step2.gif", :size => "180x22", :alt => "添加活动用酒" %>
+  </div>
+  <div class="wine_select mb30">
+    <p class="notice_b mb20">已选择的活动用酒：</p>
+    <% if @event.wines.present? %>
+      <% @event.wines.each do |wine| %>
+        <% wine_detail = wine.wine_detail %>
+    <dl>
+      <dt>
+        <%= link_to wine_path(wine_detail) do %>
+          <%= wine_label_tag(wine_detail, :alt => wine_detail.origin_zh_name, :thumb_name => "thumb_x", :size => "70x70" )%>
+        <% end %>
+      </dt>
+      <dd>
+        <h2><%= wine_detail.cname %></h2>
+        <h3><%= wine_detail.origin_name %></h3>
+      </dd>
+    </dl>
+  <% end %>
+    <div class="clear"></div>
+  </div>
+  <div class="mb30 align_c">
+    <%= link_to new_event_event_wine_path(@event), :class => :btn_gray_b do  %>
+      <span>更新活动用酒</span></a>
+    <% end %>
+  </div>
+<% else %>
+  <div class="mb30 align_c">
+    <a href="javascript:void(0)"  id="button_add_wines"  class=" btn_gray_b">
+      <span>更新活动用酒</span></a>
+  </div>
+<% end %>
+        
+  <div class="add_event_step">
+    <%= image_tag "common/add_event_step2.gif", :size => "180x22", :alt => "上传活动海报" %>
+  </div>
+  <div class="mb30 align_c">
+    <% if @event.poster.present? %>
+      <div class="mb30 align_c">
+        <%= image_tag @event.poster_url(:large), :size => '150x225' %>
+      </div>
+      <div class="mb30 align_c">
+        <%= link_to upload_poster_event_path(@event), :class => :btn_gray_b do  %>
+          <span>更改活动海报</span>
+        <% end %>
+      </div>
+    <% else %> 
+      <%= link_to upload_poster_event_path(@event), :class => :btn_gray_b do  %>
+        <span>上传活动海报</span>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="btn_submit" id="submits">
+    <%= link_to published_event_path(@event, 
+                                     :publish_status => APP_DATA['event']['publish_status']['published']), 
+      :class => 'btn_bluesky_s mr10 publish' do %>
+      <span>立即发布</span>
+    <% end %>
+    <%= link_to published_event_path(@event, 
+                                     :publish_status => APP_DATA['event']['publish_status']['draft']), 
+      :class => 'btn_off_s mr10 not_publish' do %>
+      <span>暂不发布 (保存草稿)</span>
+    <% end %>
+
+    <%= link_to published_event_path(@event, 
+                                     :publish_status => APP_DATA['event']['publish_status']['cancle']), 
+      :class => 'btn_gray_b' do %>
+      <span>取消</span>
+    <% end %>
+  </div>
+</div>
+
+

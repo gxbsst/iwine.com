@@ -1,22 +1,16 @@
-<!-- <table border="0" cellspacing="" cellpadding="3">
-  <tr>
-    <th>评论家</th>
-    <th>得分           </th>
-    <th>适饮年限</th>
-  </tr>
-  <tr>
-    <td>Jancis Robinson</td>
-    <td>18/20</td>
-    <td>2014-2024</td>
-  </tr>
-  <tr>
-    <td>Jancis Robinson</td>
-    <td>18/20</td>
-    <td>2014-2024</td>
-  </tr>
-  <tr>
-    <td>Jancis Robinson</td>
-    <td>18/20</td>
-    <td>2014-2024</td>
-  </tr>
-</table> -->
+<div class="pro_score">
+  <table width="250" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <th class="critic">评论家</th>
+      <th class="score">得分</th>
+      <th class="year">适饮年限</th>
+    </tr>
+    <% @wine_detail.special_comments.each do |s| %>
+        <tr>
+          <td class="critic"><%= s.name %></td>
+          <td><%= s.score %></td>
+          <td><%= drinkable(s)%></td>
+        </tr>
+    <% end %>
+  </table>
+</div>

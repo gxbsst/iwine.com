@@ -1,62 +1,39 @@
 <div id="loading" class="loading absolute" style="display: none">
   loading...
 </div>
-<div class="add">
-  <ul>
-	<%  if user_signed_in? %>
+<div class="share float_r pt5">
+	<%= render "share/sns_icons",
+        :image_url => sns_image_url(@wine_detail, :thumb_name => :large),
+        :title => sns_title(@wine_detail.origin_zh_name),
+        :summary => wine_summary(@wine_detail.description),
+        :url => request.url %>
+</div>
+<div>
 	
-    <li>
-      <%  if @wine_detail.is_followed? current_user %>
-      <%= link_to "取消关注", cancle_follow_wine_comment_path(@wine_detail, 45),
-                        :class => "follow_wine ajax" %>
-      <%#= link_to "编辑", { :controller => "wines/comments", :action => "follow",
-                        :wine_detail_id => params[:wine_detail_id]},
-                        :remote => true,
-                        :class => "follow_wine ajax" %>
-        <% else %>
-      <%= link_to "", follow_wine_comments_path(@wine_detail.id),
-                        :remote => true,
-                        :class => "follow_wine compass_buttons-follow_wine ajax" %>
-      <% end %>
-    </li>
-    <li><%= link_to "", comment_wine_comments_path(@wine_detail.id, :do => "comment"),
-                          :remote => true,
-                          :class => "comment compass_buttons-comment ajax"%></li>
-   <!--<li><%#= link_to "", follow_wine_comments_path(@wine_detail.id),
-                          :class => "testint_note compass_buttons-testing_note ajax"%></li>
--->
-    <li><%= link_to "", {:controller => "wines", :action => :add_to_cellar,
-                        :wine_detail_id => params[:wine_detail_id]},
-                          :remote => true,
-                          :class => "add_to_cellar compass_buttons-add_to_cellar ajax"%></li>
-<% else %>
-<li><%= link_to "", follow_wine_comments_path(@wine_detail.id),
-                  :remote => true,
-                  :class => "follow_wine compass_buttons-follow_wine ajax" %></li>
+	<% if @follow_item.present? %>
+			<span class="icon_fol mr5">
+					已关注
+				<span class="cancl_fol">
+					 <%= link_to "(取消)", wine_follow_path(@wine_detail, @follow_item), :method => :delete %>
+				</span>
+		  </span>
 
-<li><%= link_to "", comment_wine_comments_path(@wine_detail.id, :do => "comment"),
-                    :remote => true,
-                    :class => "comment compass_buttons-comment ajax"%></li>
-<!--<li><%#= link_to "", comment_wine_comments_path(@wine_detail.id, :do => "comment"),
-                      :class => "testint_note compass_buttons-testing_note ajax"%></li>
--->
-<li><%= link_to "", add_to_cellar_wine_comments_path(@wine_detail.id),
-                      :remote => true,
-                      :class => "add_to_cellar compass_buttons-add_to_cellar ajax"%></li>
+	<% else %>
+		<%= link_to new_wine_follow_path(@wine_detail), 
+					                            :class => [:btn_gray, :mr5, :ajax], 
+					                            :remote => true do %>
+			<span>关注</span>
+		<% end %>
+	<% end %>
 
-<% end %>
-  </ul>
-  <!-- add end -->
+	
+	<%= link_to new_wine_comment_path(@wine_detail, :do => "comment"),  
+	                                  :class => [:btn_gray, :mr5, :ajax], 
+	                                  :remote => true do %>
+		<span>评论</span>
+	<% end %>
+	<%= link_to  add_to_cellar_wine_path(@wine_detail), :class => [:btn_gray] do %>
+		<span>加入酒窖</span>
+	<% end %>
 </div>
-<div class="share">
- <p>分享到: </p>
-  <ul>
-    <li><%= link_to "", { :action => :follow_wine }, :class => "sina compass_icons-sina"%></li>
-    <li><%= link_to "", { :action => :comment}, :class => "tencent compass_icons-tencent"%></li>
-    <li><%= link_to "", { :action => :follow_wine }, :class => "douban compass_icons-douban"%></li>
-    <li><%= link_to "", { :action => :follow_wine }, :class => "kaixin compass_icons-kaixin"%></li>
-    <li><%= link_to "", { :action => :follow_wine }, :class => "renren compass_icons-renren"%></li>
-  </ul>
-
-  <!-- share end -->
-</div>
+<div class="clear"></div>

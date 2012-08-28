@@ -43,7 +43,7 @@ module ApplicationHelper
     if cover
       image_tag cover.image_url(options[:thumb_name]), options
     else
-      theme_image_tag "common/wine_#{options[:thumb_name]}.png", options
+      image_tag "common/wine_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -52,7 +52,7 @@ module ApplicationHelper
     if label
       image_tag label.image_url(options[:thumb_name]), options
     else
-      theme_image_tag "common/wine_#{options[:thumb_name]}.png", options
+      image_tag "common/wine_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -61,7 +61,7 @@ module ApplicationHelper
     if cover
       image_tag cover.image_url(options[:thumb_name]), options
     else
-      theme_image_tag "common/winery_#{options[:thumb_name]}.png", options
+      image_tag "common/winery_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -70,7 +70,7 @@ module ApplicationHelper
     if label
       image_tag label.image_url(options[:thumb_name]), options
     else
-      theme_image_tag "common/winery_#{options[:thumb_name]}.png", options
+      image_tag "common/winery_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -84,7 +84,7 @@ module ApplicationHelper
     else
       options[:width] = 200
       options[:height] = 200
-      theme_image_tag "common/wine_#{options[:thumb_name]}.png", options
+      image_tag "common/wine_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -147,7 +147,7 @@ module ApplicationHelper
   def link_to_sync_button(sns_name, url_or_object, options={})
 
     button_name = 'btn_syn_' + sns_name
-    link_to(theme_image_tag("common/#{button_name}.jpg", { :title => button_name }),
+    link_to(image_tag("common/#{button_name}.jpg", { :title => button_name }),
             url_or_object,
               options)
   end
@@ -194,7 +194,7 @@ module ApplicationHelper
   end
 
   def link_to_image(path, url, link_opts = { }, image_opts = { })
-    link_to theme_image_tag(path, image_opts), url, link_opts
+    link_to image_tag(path, image_opts), url, link_opts
   end
 
   def previous_page(ids_arr, current_id)
@@ -246,8 +246,8 @@ module ApplicationHelper
   end
 
   def wine_default_image(version)
-    return theme_image_tag("avatar_default_bg_#{version.to_s}.png") if version.present?
-    theme_image_tag("avatar_default_bg.png")
+    return image_tag("avatar_default_bg_#{version.to_s}.png") if version.present?
+    image_tag("avatar_default_bg.png")
   end
 
 
@@ -345,12 +345,12 @@ module ApplicationHelper
   def album_cover_tag(user, album)
     cover = album.photos.visible.cover.first
     if album.is_public.to_i == 0 && !is_login_user?(user)
-      tag = theme_image_tag("common/p_album.png", :class => :cover, :size => '150x150')
+      tag = image_tag("common/p_album.png", :class => :cover, :size => '150x150')
     else
       if cover
         tag =  image_tag(cover.image_url(:xx_middle), :class => 'cover', :size => '150x150')
       else
-        tag = theme_image_tag( "album.jpg", :class => :cover, :size => '150x150')
+        tag = image_tag( "album.jpg", :class => :cover, :size => '150x150')
       end
     end
     if album.is_public.to_i == 0 && !is_login_user?(user) #非公开
