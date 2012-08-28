@@ -46,6 +46,11 @@
                     <span>我感兴趣</span>
                   <% end %>
                 <% end %>
+                <%= render 'share/sns_icons',
+                  :image_url => sns_image_url(@event, :thumb_name => :large),
+                  :title => sns_title(@event.title),
+                  :summary => @event.title ,
+                  :url => request.url %>
                 <!--end action-->
             </div>
             <!--end base_content-->

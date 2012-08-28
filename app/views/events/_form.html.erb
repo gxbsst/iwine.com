@@ -1,4 +1,12 @@
-    <%= form_for @event, :html => {:id => :form} do |f| -%>
+<style type="text/css" media="screen">
+  label .message {
+    display: inline;
+  }
+  div.field_with_errors {
+    display: inline;
+  }
+</style>
+<%= form_for @event, :html => {:id => :form} do |f| -%>
       <%= f.hidden_field :publish_status %> 
       <table class="form" width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
@@ -17,7 +25,7 @@
                 <%= link_to 'javascript:void(0)', :class => [:btn_gray_b, :add_event_tag]  do %>
                   <span>添加</span>
                 <% end %>
-                <span id="tags_error" clas="red"></span>
+                <span id="tags_error" class="red"></span>
               </div>
               <span class="red" id="warning" style="display:none">不能为空</span>
               <div id="resource_container"></div>
@@ -97,3 +105,5 @@
         <% end %>
       </p>
     <% end -%>
+
+

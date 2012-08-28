@@ -39,39 +39,40 @@
   <div class="add_event_step">
     <%= image_tag "common/add_event_step2.gif", :size => "180x22", :alt => "添加活动用酒" %>
   </div>
-  <div class="wine_select mb30">
-    <p class="notice_b mb20">已选择的活动用酒：</p>
-    <% if @event.wines.present? %>
+  
+  <% unless @event.wines.blank? %>
+    <div class="wine_select mb30">
+      <p class="notice_b mb20">已选择的活动用酒：</p>
       <% @event.wines.each do |wine| %>
         <% wine_detail = wine.wine_detail %>
-    <dl>
-      <dt>
-        <%= link_to wine_path(wine_detail) do %>
-          <%= wine_label_tag(wine_detail, :alt => wine_detail.origin_zh_name, :thumb_name => "thumb_x", :size => "70x70" )%>
+        <dl>
+          <dt>
+            <%= link_to wine_path(wine_detail) do %>
+              <%= wine_label_tag(wine_detail, :alt => wine_detail.origin_zh_name, :thumb_name => "thumb_x", :size => "70x70" )%>
+            <% end %>
+          </dt>
+          <dd>
+            <h2><%= wine_detail.cname %></h2>
+            <h3><%= wine_detail.origin_name %></h3>
+          </dd>
+        </dl>
+      <% end %>
+      <div class="clear"></div>
+      <div class="mb30 align_c">
+        <%= link_to new_event_event_wine_path(@event), :class => :btn_gray_b do  %>
+          <span>更新活动用酒</span>
         <% end %>
-      </dt>
-      <dd>
-        <h2><%= wine_detail.cname %></h2>
-        <h3><%= wine_detail.origin_name %></h3>
-      </dd>
-    </dl>
+      </div>
+      <!--end wine_select-->
+    </div>
+  <% else %>
+    <div class="mb30 align_c">
+      <a href="javascript:void(0)"  id="button_add_wines"  class=" btn_gray_b">
+        <span>添加活动用酒</span></a>
+    </div>
   <% end %>
-    <div class="clear"></div>
-  </div>
-  <div class="mb30 align_c">
-    <%= link_to new_event_event_wine_path(@event), :class => :btn_gray_b do  %>
-      <span>更新活动用酒</span></a>
-    <% end %>
-  </div>
-<% else %>
-  <div class="mb30 align_c">
-    <a href="javascript:void(0)"  id="button_add_wines"  class=" btn_gray_b">
-      <span>更新活动用酒</span></a>
-  </div>
-<% end %>
-        
   <div class="add_event_step">
-    <%= image_tag "common/add_event_step2.gif", :size => "180x22", :alt => "上传活动海报" %>
+    <%= image_tag "common/add_event_step3.gif", :size => "180x22", :alt => "上传活动海报" %>
   </div>
   <div class="mb30 align_c">
     <% if @event.poster.present? %>

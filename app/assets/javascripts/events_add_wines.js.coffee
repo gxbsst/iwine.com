@@ -88,11 +88,15 @@ jQuery ->
       'click .save_button': 'submitForm'
     submitForm: (event) ->
       event.preventDefault
-      $('#new_event_wine').submit()
+      if @collection.length == 0
+        alert('请选择酒款...')
+      else
+        $('#new_event_wine').submit()
     showSubmitButton: ->
       $('.btn_submit').show()
-      @.$('.save_button').live ('click'), ->
-        $('#new_event_wine').submit()
+      @.$('.save_button').live ('click'), (event) =>
+        @submitForm(event)
+        # $('#new_event_wine').submit()
     addWine: (wine) ->
      items =  @collection.where year:wine.get('year'), origin_name: wine.get('origin_name')
      if items.length == 0
