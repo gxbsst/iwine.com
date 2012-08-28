@@ -12,7 +12,7 @@
      </div>
      <div class="required">
        <label><span>*</span>产区</label>
-       <% if @read_only %><%=  @register.region_path_zh(@wine.region_tree_id) %> <% else %><%= render "region_tree" %><% end %>
+       <% if @read_only %><%=  @register.region_path_zh %> <% else %><%= render "region_tree" %><% end %>
 
          <div id="query_outer">
            <input type="text" name="query" id="query" value="" />
@@ -44,7 +44,7 @@
      </div>
      <div class="required">
        <label><span>*</span>容量</label>
-       <%= f.select :capacity, APP_DATA['wines']['capacity'].collect{|i| [i, i]} %>
+       <%= f.select :capacity, APP_DATA['wines']['capacity'].collect{|key, value| [key, value]} %>
      </div>
      <div class="optional">
        <%= f.label :photo_name %>
