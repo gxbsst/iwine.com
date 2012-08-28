@@ -6,6 +6,7 @@ namespace :photo do
   end
   desc "上传酒的图片,发布酒后执行此操作。"
   task :upload_wine_photo => :environment do
+    puts "=============== upload_wine_photo begin"
     require "csv"
     require "fileutils"
     file_directories = Rails.root.join("lib", "tasks", "data", "wine", "*.csv")
@@ -29,6 +30,7 @@ namespace :photo do
 
   desc "上传酒庄的图片，清洗完酒庄数据开始执行此操作。"
   task :upload_winery_photo => :environment do
+    puts "=============== upload_winery_photo begin"
     require "csv"
     require "fileutils"
     file_directories = Rails.root.join("lib", "tasks", "data", "winery", "*.csv")
@@ -79,7 +81,7 @@ namespace :photo do
   end
 
   def save_default_photos(wine, photo_directory)
-    file_arr = Dir.glob("#{photo_directory}/default*") #获取所有默认图片
+    file_arr = Dir.glob("#{photo_directory}/*default*") #获取所有默认图片
     return  if file_arr.blank? || wine.photos.present? #有照片则不再上传
     file_arr.each do |file|
       photo = wine.photos.create!(
@@ -92,7 +94,7 @@ namespace :photo do
   end
 
   def save_detail_photos(wine, photo_directory, year)
-    file_arr = Dir.glob("#{photo_directory}/#{year}*") #获取所有此年代得图片
+    file_arr = Dir.glob("#{photo_directory}/*#{year}*") #获取所有此年代得图片
     return if file_arr.blank?
     detail = get_detail(wine, year)
     return if !detail || detail.photos.present? #有照片则不再上传
