@@ -75,6 +75,7 @@ $(function(){
         this.setSelectedId($(this.el).val());
         
         // 如果没有任何结果, 隐藏心啊嗯
+        //console.log($(this.el).val() == "");
         if ($(this.el).val() == "")
         {
           $("span.tree").hide();

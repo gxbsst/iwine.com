@@ -1,77 +1,130 @@
-<%= render "sub_nav", :validate => true, :action => params[:action]  %>
+<% content_for :title, @title%>
 
-<%= javascript_include_tag 'region_china' %>
+<%#= javascript_include_tag 'region_china' %>
+<% content_for :css do  %>
+<%= stylesheet_link_tag "setting" %>
+<% end %>
 
-<div class="settings basic">
-  <div class="left">
-    <%= form_for @profile, :url => basic_settings_path, :validate => true,  :html => { :class => 'form-horizontal', :multipart => true } do |f| -%>
-    <table border="0" cellspacing="10" cellpadding="5">
-      <tr>
-        <td width="100px" class="label"><%= f.label :email %></td>
-        <td><%= @profile.email %> <%= link_to "修改密码", {:action => "update_password"}, :class => "red" %></td>
-      </tr>
-      <tr>
-        <td  class="label"><span class="red">*</span><%= f.label :username%></td>
-        <td class="text_input" ><%= f.text_field :username %></td>
-      </tr>
-      <tr>
-        <td  class="label"><%= f.label :gender %></td>
-        <td><%= f.radio_button :gender, 1, :checked => true %> 男 <%= f.radio_button :gender, 0 %> 女</td>
-      </tr>
+<div class="whitespace setting">
+  <h1 class="main_title">账号设置</h1>
+  <div id="stylized" class="myform">
+    <%= form_for @user, 
+    :url => basic_settings_path, 
+    :validate => true,  
+    :html => { :class => 'form-horizontal', :multipart => true } do |f| -%>
 
-      <tr>
-        <td class="label"><%= f.label :birthday %></td>
-        <td>
-          <%= f.date_select :birthday, :start_year => 1910, :end_year => Time.now.year, :default => { :year => 1980, :month => 9, :day => 6 }  %>
-        </td>
-      </tr>
-      <!-- PROFILE -->
-      <tr>
-        <td class="label"><span class="red">*</span><%= f.label :living_city %></td>
-        <td>
-          <%= render "region", :profile => @profile, :p => f %>
-        </td>
-      </tr>
+    <div class="left">
+      <div class="required">
+        <label><span>*</span>邮箱</label>
+        <%= @user.email %>
+        <%= link_to "修改密码", update_password_settings_path %>
+      </div>
+      <div class="required">
+        <label class="vm"><span>*</span>昵称</label>
+        <%= f.text_field :username , :class => "text name"%>
+      </div>
+        <%= f.fields_for :profile do |p| %>
+      <div class="required">
+        <label>性别</label>
+        <label class="w50"><%= p.radio_button :gender, 1  %>男</label>
+        <label class="w50"><%= p.radio_button :gender, 0 %>女</label>
+      </div>
+     
+      <div class="required">
+        <label>生日</label>
+        <%= p.date_select :birthday, 
+                          :start_year => Time.now.year - 18, 
+                          :end_year => 1910, 
+                          :prompt => {:year => '请选择年', :month => '请选择月', :day => '请选择日'} %>
+      </div>
+        <% end %>
+      <div class="optional">
+        <label class="vm">所在地</label>
+        <div class="content">
+          <%= f.text_field :city, :class => "text" %>
+        </div>
+      </div>
+      
+       <%= f.fields_for :profile do |p| %>
+      <div class="optional">
+        <label class="vm">博客地址</label>
+        <%= p.text_field :website, :class => "text name mr5" %>
+      </div>
+      <% if @user.domain.present? %> 
+        <div class="optional">
+          <label>个性域名</label>
+          <%= @user.domain_url %><span class=" icon_fol">您已经设置了个性域名</span>
+        </div>
+      <% else %>
+        <div class="optional">
+          <label class="vm">个性域名</label>
+          您还没有设置个性域名 
+          <%= link_to domain_settings_path, :class => :btn_gray do %> 
+            <span>现在设置</span>
+          <% end %>
+        </div>
+      <% end %>
 
-      <tr>
-        <td class="label"><%= f.label :website %></td>
-        <td class="text_input"><%= f.text_field :website %> </td>
-      </tr>
+      <div class="optional">
+        <label>介绍</label>
+        <%= p.text_area :bio, :size => "48x5" %>
+      </div>
+      <div class="optional">
+        <label>通知设置</label>
+        <%= link_to privacy_settings_path, :class => "btn_gray" do %>
+        <span>更改通知设置</span>
+        <% end %>
+      </div>
+      <div class="optional">
+        <label style="padding-top:13px;">同步设置</label>
+        <%= render "friends/icons" %>
+        <%= link_to setting_sns_friends_path, :class => "btn_gray ml10" do %>
+        <span>更改同步设置</span>
+        <% end %>
+      </div>
+      <% end %>
+      <div class="mt10">
+        <label>&nbsp;</label>
+        <div class="content">
+          <%= link_to "javascript:void(0);", :class => "btn_gray mr5 save" do %>
+          <span>保存</span>
+          <% end %>     
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
 
-      <tr>
-       <td class="label" valign="top" ><%= f.label :bio %></td>
-        <td><%= f.text_area :bio, :size => "40x10" %></td>
-      </tr>
-      <tr>
-        <td class="label">通知设置</td>
-        <td> <%= link_to_button "privacy_setting", :action => "privacy" %> </td>
-      </tr>
-      <tr>
-        <td class="label"> 同步设置 </td>
-        <td valign="top" >
-          <%= render "friends/icons" %> <%= link_to_button "sync_settings", "/" %>
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td class="submit">  <%= image_submit_tag "v2/button/save.png" %> </td>
-      </tr>
-    </table>
+    <div class="right">
+     <div class="avatar">
+       <%= image_tag current_user.avatar_url(:large) + "?timestamp=#{Time.now}" %>
+       <p class="mt10">
+         <%= link_to avatar_settings_path, :class => "btn_gray" do %>
+         <span>修改头像</span>
+         <% end %>
+       </p>
 
-
-<% end -%>
+     </div>
+   </div>
+   <div class="clear"></div>
+   <% end %>
+ </div>
 </div>
 
-<div class="right">
-  <!-- AVATAR -->
-  <%= image_tag current_user.avatar_url(:large), :align => "left" %>
- <%= image_tag current_user.avatar_url(:middle), :align => "left", :width => "50px", :height => "50px" %>
- <%= image_tag current_user.avatar_url(:thumb), :align => "left", :width => "30px", :height => "30px" %>
- <div class="clear"></div>
- <br />
-  <%= link_to_button "edit_avatar", :action => "avatar" %>
-</div>
-<!-- end .basic -->
-</div>
+<script type="text/javascript" charset="utf-8">
+$('a.save').click(function(){
+  $('.myform form').submit();
+  return false;
+});
+</script>
 
-
+<style type="text/css">
+ #stylized .field_with_errors label.message {
+    display: inline;
+    float: none;
+    padding: 0;
+    margin: 0;
+  }
+  #stylized .field_with_errors .message {
+    padding: 0;
+  }
+</style>

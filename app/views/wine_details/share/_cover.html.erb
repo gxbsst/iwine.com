@@ -1,19 +1,29 @@
 <div id="preview_wrap">
 	<div id="preview_outer">
 		<div id="preview_inner">
-			<% @wine_detail.covers.each do |photo,index| %>
-		    <div><%= image_tag @wine_detail.photo.image_url(:large) %></div>
+		  <% if @covers.present? %>
+			<% @covers.each do |photo,index| %>
+		    <div class="cover">
+              <%= link_to wine_photo_path(@wine_detail, photo) do %>
+		         <%= image_tag photo.image_url(:large) %>
+              <% end %>
+		    </div>
+		  <% end %>
+		  <% else %>
+		    <%= wine_default_image(:large) %>
 		  <% end %>
 		</div>
 	</div>
 </div>
+<% if @covers.to_a.size > 1 %>
 <div id="thumbs">
 	<!--<div id="arrow"></div>-->
-	<% @wine_detail.covers.each do |photo,index| %>
-    <span><%= image_tag @wine_detail.photo.image_url(:thumb) %></span>
+	<% @covers.each do |photo,index| %>
+    <span><%= image_tag photo.image_url(:thumb_x), :size => "50x50" %></span>
   <% end %>
 </div>
-
+<% end %>
+<% if @covers.to_a.size > 1 %>
 <script type="text/javascript">
 		$(document).ready(function() {
 			// Save  the jQuery objects for later use.
@@ -43,3 +53,4 @@
 			$("#preview_inner").css('width', preview_els.length * image_width);
 		});
 </script>
+<% end %>

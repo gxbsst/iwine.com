@@ -1,0 +1,41 @@
+<% content_for :js do %>
+  <%= javascript_include_tag "event_poster" %>
+<% end %>
+<% content_for :css do %>
+  <%= stylesheet_link_tag "event" %>
+  <%= stylesheet_link_tag "add" %>
+  <%= stylesheet_link_tag  "jcrop" %>
+<% end %>
+<div class="whitespace addwine">
+  <%= form_for @event, 
+    :url => event_path(@event), 
+    :html => { :multipart => 'true', :id => :form, :method => :put } do |f| %>
+      <h1 class="main_title">上传活动海报</h1>
+      <p>从电脑上传（支持JPG、GIF、PNG图片格式，且小于5M）</p>
+      <p class="mt20">
+        <%= f.file_field :poster, :align => "center", :class => "text name mr5" %>
+        <a href="javascript:void(0)"   onclick = "$(this).parents('form').submit()" class="btn_gray"><span>提交</span></a>
+      </p>
+    <% end -%>
+    <p class="mt20 mb30">
+      <% if @event.poster.present? %>
+        <%= image_tag @event.poster_url(:origin) + "?timestamp=#{Time.now}", id: "event_cropbox" %>
+      <% else %>
+        <%= image_tag "common/userpic_upload.jpg", :size => "280x280" %>
+      <% end %>
+    </p>
+    <%= form_for @event, :url => event_path(@event), :method => :put do |f| %>
+      <% %w[x y w h].each do |attribute| %>
+        <%= f.hidden_field "crop_#{attribute}" %>
+      <% end %>
+      <div class="btn_submit">
+        <%= link_to "javascript:void(0)", :class => "btn_bluesky_s mr10", :onclick => "$(this).parents('form').submit()" do %>
+          <span>保存</span>
+        <% end %>
+        <%= link_to edit_event_path(@event), :class => "btn_gray_b" do %>
+          <span>取消</span>
+        <% end %>
+      </div>
+    <% end -%>
+    <div id="stylized" class="myform mb30"></div>
+</div>

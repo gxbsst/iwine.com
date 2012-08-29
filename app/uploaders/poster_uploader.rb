@@ -21,13 +21,13 @@ class PosterUploader < CarrierWave::Uploader::Base
 
     version :origin do
     resize_to_limit(APP_DATA["image"]["poster"]["origin"]["width"], 
-                    APP_DATA["image"]["user"]["origin"]["height"])
+                    APP_DATA["image"]["poster"]["origin"]["height"])
   end
 
   version :large do
     process :crop
     resize_to_limit(APP_DATA["image"]["poster"]["large"]["width"],
-                    APP_DATA["image"]["poster"]["large"]["height"])
+                     '')
 
     process :get_geometry
     def geometry
@@ -44,6 +44,11 @@ class PosterUploader < CarrierWave::Uploader::Base
   version :thumb, :from_version => :large do
     resize_to_limit(APP_DATA["image"]["poster"]["thumb"]["width"],  
                     APP_DATA["image"]["poster"]["thumb"]["height"])
+  end
+
+  version :x_thumb, :from_version => :large do
+    resize_to_limit(APP_DATA["image"]["poster"]["x_thumb"]["width"],  
+                    APP_DATA["image"]["poster"]["x_thumb"]["height"])
   end
 
   def filename

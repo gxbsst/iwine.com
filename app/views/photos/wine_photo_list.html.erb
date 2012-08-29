@@ -1,0 +1,46 @@
+<% content_for :title, @title%>
+<% content_for :css do %>
+<%= stylesheet_link_tag :wine, :thumb %>
+<% end %>
+<div id="wp_left">
+  
+  <div class="wp_space_line top">
+    <%= link_to wine_path(@wine_detail), :class => [:btn_gray, :float_r] do %>
+      <span>返回</span>
+    <% end %>
+    <%= link_to photo_upload_wine_path(@wine_detail), :class => "btn_gray float_r mr5" do %>
+      <span>上传照片</span>
+    <% end %>
+    <h1 class="wine_name_ch"><%= raw @wine_detail.cname %>的图片</h1>
+    <div class="clear"></div>
+  </div>
+  <div class="wp_space_line ptb30">
+    <ul class="wine_pic_list">
+      <% @photos.each do |photo|%>
+      <li>
+        <%= link_to image_tag(photo.image_url(:thumb)), wine_photo_path(@wine_detail, photo.id) %>
+        <a class="icon_comment"><%= photo.comments.count %></a>
+      </li>
+      <% end %>
+    </ul>
+    <div class="clear"></div>
+    <div class="pagination">
+      <%= paginate @photos %>
+    </div>
+  </div>
+</div>
+
+<div id="wp_right">
+  <%= render "wine_details/share/resource" %>
+  <%= render "wine_details/share/spec"%>
+  <%= render "wine_details/share/score"%>
+  <%= render "wine_details/share/special_comments"%>
+  <%= render "wine_details/share/price"%>
+  <%= render "wine_details/share/vintage"%>
+  <div class="">
+    <%= link_to feedback_path(:for => "error_feedbacks" ), :class => "btn_gray" do %>
+      <span>信息纠错与补充</span>
+    <% end %>
+  </div>
+</div>
+<div class="clear"></div>   

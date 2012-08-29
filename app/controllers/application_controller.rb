@@ -1,21 +1,5 @@
 # encoding: UTF-8
 class ApplicationController < ActionController::Base
-  include ThemesForRails::ActionController
-  theme "waterfall"
-  # layout "waterfall"
-  # layout  proc { |controller|
-  #   #span_950 = ["static", "wines"]
-  #   # span_860 = ["settings"]
-  #   if params[:controller] == "static" && params[:action] == "index"
-  #    "waterfall"
-  #   elsif params[:controller] == "settings"
-  #     "span_860"
-  #   else
-  #     "span_950"
-  #   end
-  # }
-  # theme "waterfall"
-  # default :theme => "waterfall"
 
   #protect_from_forgery
   #before_filter :authenticate_user!
@@ -98,7 +82,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_404(exception)
-     @not_found_path = exception.message
+     #@not_found_path = exception.message
      respond_to do |format|
        format.html { render template: 'errors/error_404', layout: 'layouts/application', status: 404 }
        format.all  { render nothing: true, status: 404 }

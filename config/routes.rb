@@ -4,7 +4,17 @@ Patrick::Application.routes.draw do
   resources :events do
     resources :event_wines
     resources :event_invitees
-    resources :event_participants
+    resources :event_participants, :as => 'participants' do
+      member do
+        match :cancle, :via => [:put, :get]
+      end
+    end
+    resources :comments
+    resources :follows, :controller => "follows" 
+    member do
+      get :upload_poster
+      get :published
+    end
   end
 
   resources :after_first_signins do
@@ -24,7 +34,6 @@ Patrick::Application.routes.draw do
       get :update_info
     end
   end
-  themes_for_rails
 
   # unless Rails.application.config.consider_all_requests_local
   #    match '*not_found', to: 'errors#error_404'
@@ -145,6 +154,12 @@ Patrick::Application.routes.draw do
       match "cellars/:cellar_id", :via => [:get], :to => "cellars#show", :as => :cellars
       get :follow
       get :unfollow
+
+      # Events
+      get :events
+      get :create_events
+      get :join_events
+      get :follow_events
     end
     collection do
       get "register_success"

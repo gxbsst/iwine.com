@@ -212,10 +212,33 @@ class Wines::Detail < ActiveRecord::Base
     cover = photos.cover.approved.first
     if cover.nil?
       wine_cover = wine.photos.cover.approved.first
-      return "common/wine_#{version}.png" if wine_cover.blank?
+      if wine_cover.blank?
+        return "/assets/waterfall/images/common/wine_#{version}.png" 
+      else
+        wine_cover.image_url(version)
+      end
     end
-    wine_cover.image_url(version)
   end
+
+  def custom_to_json
+    wine = self.wine
+    years = wine.details.collect {|detail| [detail.year.year, "/wines/#{detail.slug}", detail.id] }
+    wine.name_zh ||= wine.origin_name
+    #year = year.year.to_s
+
+    result = {
+      :wine_detail_id => id,
+      :name_zh => wine.name_zh,
+      :year => year.year,
+      :origin_name => wine.origin_name,
+      :image_url => get_cover_url(:thumb),
+      :all_years => years,
+      :url => "/wines/#{slug}"
+    }
+    
+    result
+  end
+
   # 类方法
   class << self
    def timeline_events

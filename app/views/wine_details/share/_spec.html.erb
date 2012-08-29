@@ -1,55 +1,20 @@
-<p> <%= image_tag "v2/test/label.png", :title => "title", :class => "class" %> </p>
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td class="l">酒庄:</td>
-    <td class="c">
-      <%= link_to @wine.winery.name,
-                  :controller => "wineries",
-                  :action => 'show',
-                  :id => @wine.winery.id %>
-      </td>
-  </tr>
-  <tr>
-    <td class="l">官方网站:</td>
-    <td class="c">
-      <%= link_to @wine.official_site, 'http://' + @wine.official_site, :target => '_blank' %>
-      </td>
-  </tr>
-  <tr>
-    <td class="l">产区:</td>
-    <td class="c">
-       <%= render 'share/region_tree', :region_tree => @wine_detail.wine.get_region_path %>
-    </td>
-  </tr>
-  <tr>
-    <td class="l">类型: </td>
-    <td class="c">
-      <%= image_tag "base/" + @wine.style.name_en + '.gif' %>
-      <%= link_to @wine.style.name_zh,
-                  :controller => :searh,
-                  :action => :wine,
-                  :style => @wine.style.name_en %>
-    </td>
-  </tr>
-  <tr>
-    <td class="l">容量: </td>
-    <td class="c">
-      <%= @wine_detail.capacity %>
-    </td>
-  </tr>
-  <tr>
-    <td class="l">酒精度:</td>
-    <td class="c">
-      <%= @wine_detail.alcoholicity %>
-      Vol
-    </td>
-  </tr>
-  <tr>
-    <td class="l">葡萄品种: </td>
-    <td class="c">
-       <% @wine_detail.variety_percentages.each do |i| %>
-       <%= i.name_zh %> (<%= i.percentage %>)、
-      <% end %>
-    </td>
-  </tr>
-</table>
+<div class="wine_id_pic">
+  <%= link_to wine_path(@wine_detail) do %>
+	<%= wine_label_tag @wine_detail, :thumb_name => :thumb, :width => 100, :height => 100 %>
+	<% end %>
+</div>
+<div class="info">
+	<% if @wine.winery %>
+	酒庄：<%= link_to @wine.winery.name, winery_path(@wine.winery) %>
+    <br />
+	<% end %>
+	官网：<%= link_to @wine.official_site, 'http://' + @wine.official_site, :target => '_blank' %><br />
+	产区：<%= @wine.region_path_zh(:connector => ">") %><br />
+    <%= @wine.region_path_en(:connector => ">") %><br/>
+	类型：<%= @wine.style.name_zh if @wine.style%><br />
+	容量：<%= @wine_detail.show_capacity %><br />
+	酒精度：<%= @wine_detail.show_alcoholicity %><br />
+	葡萄品种： <%= variety_percentage_lists(@wine_detail.variety_percentages) %>
+</div>
+
+

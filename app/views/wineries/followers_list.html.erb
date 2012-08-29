@@ -1,0 +1,50 @@
+<% content_for :title, @title %>
+<% content_for :css do  %>
+    <%= stylesheet_link_tag "winery" %>
+<% end %>
+
+<div id="wrapper950">
+  <div class="whitespace mb30">
+    <%= render "winery_detail" %>
+  </div>
+
+  <div class="whitespace winerymain">
+    <div class="left">
+      <div class="section">
+        <div class="title">
+          <%= link_to winery_path(@winery), :class => "btn_gray float_r" do %>
+            <span>返回</span>
+          <% end %>
+          <h2>所有关注者<span class="font12 more">(共<%= @winery.followers_count %>人...)</span></h2>
+        </div>
+        
+        <div class="content">
+          <ul class="userlist">
+            <% @users.each_with_index do |user, index| %>
+                <% if index != 0 && index/3.0 == index/3.0.to_i %><div class="clear"></div><% end %>
+                <li>
+                  <div class="userpic">
+                    <%= link_to user_path(user) do %>
+                        <%= image_tag user.avatar_url(:middle), :alt => user.username, :size => "50x50" %>
+                    <% end %>
+                  </div>
+                  <div class="userinfo">
+                    <div class="username"><%= link_to user.username, user %></div>
+                    <div class="userlocation"><%= user.city %></div>
+                  </div>
+                </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pagination"><%= paginate @users %></div>
+    </div>
+    
+    <div class="right">
+      <%= render "hot_winery" %>
+    </div>
+    
+    <div class="clear"></div>
+  </div>
+</div>

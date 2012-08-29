@@ -6,7 +6,7 @@ class SessionsController < Devise::SessionsController
   		#处理用户第三方绑定登陆
   	  if !user_signed_in?
         @error = true
-  	  	render :template => "themes/waterfall/oauth_logins/new.html.erb"
+  	  	render :template => "oauth_logins/new.html.erb"
   	  else
   	  	oauth_attributes = session['devise.user_attributes']
   	  	super

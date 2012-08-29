@@ -1,7 +1,5 @@
 #encoding: UTF-8
 namespace :app do
-
-  desc "test"
   
   # ## 执行此命令会按顺序执行以下所有命令, 注意先后顺序[默认数据，酒庄数据，酒的数据]
   task :init_whole_data => [:init_default_data, 
@@ -10,7 +8,7 @@ namespace :app do
   end
 
   # ##初始化基本数据
-  task :init_default_data => [:init_style_and_region, 
+  task :init_default_data => [:init_style_and_region_data, 
                               :init_varieties, 
                               :init_region_tree] do
 

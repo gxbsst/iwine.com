@@ -144,7 +144,7 @@ describe Event do
 
     describe "#tags" do
       it "should have 2 tags" do
-        @event.should have(2).tags
+        @event.should have(5).tags
       end
 
       it "should can find tags with 故事" do
@@ -153,9 +153,9 @@ describe Event do
 
       it "get hot tags" do
           @tags = Event.tag_counts_on(:tags)
-          @tags.all.should include("产品")
-          @tags.all.should include("故事")
-          @tags.all.should include("品酒")
+          @tags.all.inspect.should include("产品")
+          @tags.all.inspect.should include("故事")
+          @tags.all.inspect.should include("品酒")
       end
 
     end
@@ -163,6 +163,12 @@ describe Event do
     describe "block_in" do
       it "should be 10" do
         @event.block_in.should be(10) 
+      end
+    end
+
+    describe "validate event owner" do
+      it "the user shoul be owner of the event" do
+        @event.user.is_owner_of_event?(@event).should be_true
       end
     end
 

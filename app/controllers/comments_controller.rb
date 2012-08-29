@@ -29,7 +29,9 @@ class CommentsController < ApplicationController
         render_wine_photo_comment_detail
       when "Winery"
         render_winery_photo_comment_detail
-      end        
+      end
+    when 'Event'
+      render_event_comment_detail
     end
   end
 
@@ -269,21 +271,31 @@ class CommentsController < ApplicationController
       sns_arr.each do |sns_type|
         oauth = @comment.user.oauths.oauth_binding.where('sns_name = ?', sns_type).first
         next unless oauth #再次检测是否绑定此网站
-        if @comment.commentable_type == "Photo" 
-          photo = @comment.commentable
-        else
-          photo = @comment.commentable.get_cover
-        end
         content = build_content(sns_type)
         oauth_comment = @comment.oauth_comments.build(:sns_type => sns_type,
                                                       :body => content,  
                                                       :sns_user_id => oauth.sns_user_id, 
                                                       :user_id => @comment.user_id)
-        oauth_comment.image_url  =  photo.image_url if photo
+        oauth_comment.image_url  = get_share_photo
         oauth_comment.save
       end
       #发送weibo
       @comment.delay.share_comment_to_weibo
+    end
+  end
+
+  #得到要分享的图片
+  def get_share_photo
+    image_url = case  @comment.commentable_type
+    when "Photo"
+      photo = @comment.commentable
+      photo.image_url if photo
+    when "Event"
+      poster = @comment.commentable.poster
+      poster.url if poster.present?
+    else
+      photo = @comment.commentable.get_cover
+      photo.image_url if photo
     end
   end
   
@@ -335,5 +347,11 @@ class CommentsController < ApplicationController
     @winery = @comment.commentable.imageable
     @hot_wineries = Winery.hot_wineries(5)
     render "winery_photo_comment_detail"
+  end
+
+  def render_event_comment_detail
+    @event = @comment.commentable
+    @recommend_events = Event.recommends(4)
+    render "event_comment_detail"
   end
 end
