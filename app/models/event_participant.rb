@@ -1,6 +1,7 @@
 class EventParticipant < ActiveRecord::Base
   belongs_to :user
   belongs_to :event
+  has_one :event_owner, :through => :event, :source => :user
   attr_accessible :cancle_note, :email, :join_status, :note, :telephone, :username, :user_id
 
   validates :telephone, :username, :user_id, :presence => true
@@ -9,6 +10,7 @@ class EventParticipant < ActiveRecord::Base
 
   after_create :set_event_lock_status
   after_update :udpate_event_lock_status
+  after_create :send_notification_to_owner
 
   def set_event_lock_status
     if event.set_blocked? # 做限定才去检测
@@ -39,6 +41,10 @@ class EventParticipant < ActiveRecord::Base
 
   def do_cancle?
    join_status == cancle?
+  end
+
+  def send_notification_to_owner
+    self.send_message(user, 'subejct test', 'body test')
   end
 
   # class methods

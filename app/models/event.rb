@@ -46,7 +46,9 @@ class Event < ActiveRecord::Base
 
   acts_as_taggable
   acts_as_taggable_on :tags
-
+ 
+  # messageable
+  acts_as_messageable
   # process address longitude & latitude
   geocoded_by :address
 
