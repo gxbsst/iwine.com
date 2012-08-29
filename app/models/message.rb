@@ -59,12 +59,12 @@ class Message < Notification
       self.recipients.each do |r|
       #Should send an email?
         #email包含“1”同意发送邮件
-        if Mailboxer.uses_emails && r.profile.config.notice.email.include?('1')
-          email_to = r.send(Mailboxer.email_method,self)
-          unless email_to.blank?
-            MessageMailer.send_email(self,r).deliver
-          end
-        end
+        # if Mailboxer.uses_emails && r.profile.config.notice.email.include?('1')
+        #   email_to = r.send(Mailboxer.email_method,self)
+        #   unless email_to.blank?
+        #     MessageMailer.send_email(self,r).deliver
+        #   end
+        # end
       end
       if reply
         self.conversation.update_attribute(:updated_at, Time.now)

@@ -173,7 +173,7 @@ class Comment < ActiveRecord::Base
 
   #截取部分评论内容
   def share_content(url, sns_type)
-    content = %Q(对#{commentable.share_name}发表了评论："#{body.to_s.strip.mb_chars[0, 20]}...#{url}"#{"（分享自 @iWine爱红酒）" unless sns_type == "douban"})
+    content = %Q(对#{commentable.share_name}发表了评论："#{body.to_s.strip.mb_chars[0, 70]}...#{url}"#{"（分享自 @iWine爱红酒）" unless sns_type == "douban"})
   end
 
   def get_sns_comments

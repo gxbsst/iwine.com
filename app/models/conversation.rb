@@ -129,7 +129,7 @@ class Conversation < ActiveRecord::Base
   def get_reply_user(current_user)
     receivers_id_arr = receipts.inject([]){|receiver_ids, r| receiver_ids << r.receiver_id}.uniq
     receivers_id_arr.delete current_user.id
-    receivers_id_arr.present? ? User.find(receivers_id_arr[0]).username : current_user.username
+    receivers_id_arr.present? ? User.find(receivers_id_arr[0]) : current_user
   end
   #
 

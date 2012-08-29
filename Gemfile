@@ -54,7 +54,7 @@ gem "stickies", :git => "git://github.com/techbang/stickies.git"
 gem 'store_configurable', '~> 3.2.0'
 
 ## Message
-gem 'mailboxer'
+gem 'mailboxer', '0.6.5' #如果更新到 0.8.0需要更改数据库字段
 
 ## Comment
 gem 'acts_as_commentable_with_threading', :path => "lib/gems"

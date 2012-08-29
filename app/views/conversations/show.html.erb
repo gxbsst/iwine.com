@@ -17,7 +17,7 @@
 		<%= link_to "返回私信列表", conversations_path %> 》当前共<%=  @conversation.count_messages %>条私信
 	</div>
 	<div class="send_private_msg clearfix">
-		<div class="title">回复：<%= @conversation.get_reply_user(current_user) %></div>
+		<div class="title">回复：<%= @conversation.get_reply_user(current_user).username %></div>
 		<div class="userimg">
 		
 			<%= link_to_user current_user, user_path(current_user), 
