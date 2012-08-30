@@ -201,6 +201,7 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .icon_cancle {background:url(../images/icon/icon_all.gif) no-repeat 0 -56px;padding:0 0 0 18px; }
 .icon_member {background:url(../images/icon/users.png) no-repeat 0 0;padding: 0 0 0 18px;}
 .icon_join {background:url(../images/icon/join.png) no-repeat 0 -1px;padding: 0 0 0 18px;}
+.icon_text_edit {background:url(../images/icon/join_edit.png) no-repeat 0 -1px;padding:0 0 0 18px;}
  
 /*--------------star style---------------*/
 .star_s0, .star_s1, .star_s2, .star_s3, .star_s4, .star_s5, .star_s_h, .star_s1_h, .star_s2_h, .star_s3_h, .star_s4_h, .star_s5_h {background:url(../images/icon/allstar.gif) no-repeat;display:inline-block;width:65px;height:12px;_height:7px;}
