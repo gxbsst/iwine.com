@@ -133,3 +133,10 @@ li.photo_des p {margin: 0 0 5px 0;}
 #cellar .wine_list .wine_info h2 {font-size:14px;}
 td.img div {position:relative;}
 .non_public {position:absolute;top:40px;left:40px;}
+
+.side_event dl {margin:0 0 20px 0;}
+.side_event dt {width:70px;float:left;float:left;margin-right:15px;}
+.side_event dd {width:135px;float:left;}
+.side_event dd h3 {font-size:12px;margin-bottom:10px;}
+.side_event dd .info {margin:0 0 5px 0;}
+.p_count2 {color:#999;}
