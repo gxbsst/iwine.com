@@ -1,3 +1,4 @@
+# encoding: utf-8
 class EventParticipant < ActiveRecord::Base
   belongs_to :user
   belongs_to :event
@@ -44,7 +45,10 @@ class EventParticipant < ActiveRecord::Base
   end
 
   def send_notification_to_owner
-    self.send_message(user, 'subejct test', 'body test')
+    #TODO:
+    #给活动创建者发送死信或者Email
+    #event.send_message(user, '我参加这个私信您', '我参加了你这个活动')
+    #event.send_email(owner, 'subject', 'body'
   end
 
   # class methods
