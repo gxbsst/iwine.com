@@ -30,7 +30,6 @@ class Event < ActiveRecord::Base
   scope :date_with, lambda { |date| where(["begin_at >= ? AND begin_at <= ?",
                                           date, date + 1.day]) }
   scope :city_with, lambda { |city| where(["region_id = ?", APP_DATA['event']['city'][city]]) }
-
   # 用户参加的活动
   scope :with_participant_for_user, lambda{|user_id|joins(:participants).
     where(["event_participants.user_id = ? AND event_participants.join_status =?",
@@ -46,11 +45,17 @@ class Event < ActiveRecord::Base
 
   acts_as_taggable
   acts_as_taggable_on :tags
- 
+
   # messageable
   acts_as_messageable
+
   # process address longitude & latitude
-  geocoded_by :address
+  geocoded_by :full_address
+  after_create :get_coordinates
+
+  def get_coordinates
+    Delayed::Job.enqueue GoogleMapsCoordinateService.new(self)
+  end
 
   # Upload Poster 
   mount_uploader :poster, PosterUploader

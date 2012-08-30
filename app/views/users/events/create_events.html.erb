@@ -8,25 +8,26 @@
     <div class="clear"></div>
     <div class="content">
       <div class="left">
-        <ul class="event_menu">
+             <ul class="event_menu">
           <style type="text/css" media="screen">
             ul.event_menu {
               height: 40px;
             }
-            ul.event_menu li {
+             ul.event_menu li {
               font-size: 14px;
               line-height: 160%;
               display: inline;
               margin: 10px 10px 0 0;
             }
           </style>
-            <li><%= link_to "创建的活动", create_events_user_path(@user) %></li>
-            <li><%= link_to "参加的活动", join_events_user_path(@user) %></li>
-            <li><%= link_to "感兴趣的活动", follow_events_user_path(@user) %></li>
+            <li><%= link_to "创建的活动", create_events_user_events_path(@user) %></li>
+            <li><%= link_to "参加的活动", join_events_user_events_path(@user) %></li>
+            <li><%= link_to "感兴趣的活动", follow_events_user_events_path(@user) %></li>
           </ul>
+
         <div class="title_btn">
           <h1>
-            参加的活动
+            创建的活动
           </h1>
         </div>
         <div class="event_list">
@@ -56,8 +57,7 @@
                     </div>
                     <% if user_signed_in?  %>
                       <% if @user == current_user %>
-                        <%= link_to "(取消)", event_follow_path(event, @user.get_follow_item(event)),
-                          :method => :delete %>
+                        <%= link_to "(编辑)", edit_event_path(event) %>
                       <% end %>
                     <% end %>
                   </dd>
@@ -79,10 +79,9 @@
           <%= link_to new_event_path, :class => :btn_createvent do %>
             <span>我要创建活动</span>
           <% end %>
-               </div>
+                </div>
       </div>
       <div class="clear"></div>
     </div>
   </div>
 </div>
-
