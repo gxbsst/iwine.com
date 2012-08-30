@@ -45,24 +45,6 @@ class UsersController < ApplicationController
     # @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
   end
 
-  # 活动
-  def events
-    @create_events = @user.create_events(3)
-    @follow_events = @user.follow_events(3)
-    @join_events   = @user.join_events(3)
-  end
-
-  def create_events
-    @events = @user.create_events(1000).page(params[:page] || 1).per(5)
-  end
-
-  def join_events
-    @events = @user.join_events(1000).page(params[:page] || 1).per(5)
-  end
-  def follow_events
-    @events = @user.follow_events(1000).page(params[:page] || 1).per(5)
-  end
-
   # 用户第一次登录
   def start
     if current_user.sign_in_count == 1
@@ -121,7 +103,7 @@ class UsersController < ApplicationController
 
   private
   def get_user
-    @user = User.find(params[:id])
+    @user ||= User.find(params[:id])
   end
 
   def get_recommend_users

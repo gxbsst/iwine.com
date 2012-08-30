@@ -96,8 +96,6 @@ jQuery ->
     updateHotTagsSelectStatus: (event) ->
       @collection.off('add')
       @collection.reset()
-      # @options.hotTags.each (tag) ->
-        # tag.set select: ''
       value = @.$('input').val()
       if value.trim() != ''
         value.split(',').forEach (tagName) =>
@@ -105,6 +103,7 @@ jQuery ->
             tag = new window.app.Tag name: tagName, select: 'select'
             @collection.add tag
       @options.hotTags.trigger('update_status')
+      $("#event_tag_list").val(@collection.pluck('name').join(","))
     initialize: ->
       @collection.bind('add', @renderInputValue , @)
       @collection.bind('remove', @renderInputValue , @)
