@@ -48,7 +48,7 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 <form novalidate="novalidate" method="post" id="new_wine_comment" data-validate="true" class="new_wine_comment" action="/wines/254/comments" accept-charset="UTF-8"><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="XIKuWYLJfskIi11fzIhaYh3NcsDoLu479/qy/xf8sHc=" name="authenticity_token"></div><input type="hidden" value="comment" name="wine_comment[do]" id="wine_comment_do">
                 <div style="display:">
                 <div id="wine_profile_star_bar" class="star_rate">
-                  <table cellspacing="5" cellpadding="5" border="0">
+                  <table width="100%" border="0" cellpadding="5" cellspacing="5">
                     <tbody><tr>
                       <td>评价:</td>
                       <td>
@@ -79,17 +79,13 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 <textarea rows="10" name="wine_comment[body]" id="wine_comment_body" data-validate="true" cols="25"></textarea>
               </div>
               </div>
-              <div class="share relative">
+              <div class="share relative clearfix">
                 <a href="#" class="btn_gray float_r"><span>保存</span></a>
-                分享到 <input type="hidden" value="0" name="wine_comment[is_share]"><input type="checkbox" value="1" name="wine_comment[is_share]" id="wine_comment_is_share" checked="checked"> 广播
-                <label class="follow"> <input name="" type="checkbox" value="" checked="checked" /> 同时关注这支酒</label>
+                <div class="sh">分享到 <input type="hidden" value="0" name="wine_comment[is_share]"><input type="checkbox" value="1" name="wine_comment[is_share]" id="wine_comment_is_share" checked="checked"> 广播</div>
+                <div class="com_s float_l">同时发布到：<a href="#"><span class="sns_on"><img src="images/icon/r_g.png" width="14" height="14" /></span><img src="images/icon/sina_s_on.png" alt="新浪" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/tencen_s_on.png" alt="腾讯" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/douban_s_off.png" alt="豆瓣" width="17" height="17" align="absmiddle" /></a></div>
               </div>
             </form>
-        <script id="star_item" type="text/template">
-          &lt;img alt="Star_gray" height="14" src="/assets/base/star_gray.jpg" width="15" /&gt;
-         </script></div></div></div>
+        </div></div></div>
          <div class="fancybox-item fancybox-close" title="Close"></div></div>
-         
-         
 </body>
 </html>

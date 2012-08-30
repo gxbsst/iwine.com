@@ -1,4 +1,8 @@
 zh-CN:
+  devise:
+    omniauth_callbacks:
+      user:
+        failure: "同步失败"
   notice:
     save_success: "保存成功。"
     update_success: "更新成功。"
@@ -43,6 +47,7 @@ zh-CN:
       check_is_public: "此相册仅用户自己可见！"
     oauth:
       update_oauth: "同步第三方成功。"
+      ouath_failure: "同步第三方失败。"
 
   helpers:
     submit:

@@ -49,6 +49,7 @@ zh-CN:
         wines: "我上传的酒"
         wish: "想喝"
         do: "喝过"
+        events: "活动"
 
     global_nav:
       style: "类型"

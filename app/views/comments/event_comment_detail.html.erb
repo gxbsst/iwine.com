@@ -1,0 +1,89 @@
+<script language="javascript" type="text/javascript">
+</script>
+
+<% content_for :title, @title%>
+<% content_for :js do %>
+  <%#= javascript_include_tag "events" %>
+<% end %>
+<% content_for :css do %>
+	<%= stylesheet_link_tag "event" %>
+<% end %>
+   <div class="whitespace eventmain">
+   	  <div class="left">
+        <div class="base">
+          <div class="poster">
+            <%= image_tag @event.poster_url(:large), :size => '150x225' %>
+          </div>
+          <div class="base_content">
+            <span class="type">
+              <%= event_item_tags(@event) %>
+            </span>
+            <h1><%= @event.title %></h1>
+            <div class="info">
+              时间: <%= @event.begin_end_at %>
+              <br />
+              地点: <%= @event.full_address %>
+              <br />
+              组织者：<%= link_to  @event.user.username, user_path(@event.user, :trailing_slash => true) %>
+            </div>
+            <span class="p_count">
+              <%= @event.participants_count %>人参加  |  <%= @event.followers_count %>人感兴趣
+            </span>
+            <!--end base_content-->
+          </div>
+          <div class="clear"></div>
+          <!--end base-->
+        </div>
+
+        <div class="section last">
+          <div class="wp_space_line top">
+            <%= link_to event_path(@event), :class => "btn_gray float_r" do %>
+              <span>返回所有评论</span>
+            <% end %>
+            <div class="clear"></div>
+          </div>
+          <%= render "comments/share/comment_detail" %>
+        </div>
+        <!--end left-->
+      </div>
+      <div class="right">
+        <div class="sidebox">
+          <%= link_to new_event_path, :class => :btn_createvent do %>
+            <span>我要创建活动</span>
+          <% end %>
+        </div>
+        <div class="sidebox">
+          <div class="title">
+            <h3>推荐的活动</h3></div>
+          <div class="side_event">
+            <% @recommend_events.each do |event| %>
+              <dl class="clearfix">
+                <dt>
+                  <%= link_to event_path(event) do %>
+                    <%= image_tag event.poster_url(:x_thumb), :size => '70x105', :alt => event.title %>
+                  <% end %>
+                </dt>
+                <dd>
+                  <h3> <%= link_to event.title, event_path(event)  %></h3>
+                  <div class="info">
+                    <%= event.begin_end_at %>
+                    <br />
+                    <%= event.full_address %>
+                    <br />
+                  </div>
+                  <div class="p_count2">
+                    <%= event.participants_count %>人参加  |  <%= event.followers_count %>人感兴趣
+                  </div>
+                </dd>
+                <div class="clear"></div>
+              </dl>
+            <% end %>
+            <!--end side_event-->
+          </div>
+          <!--end sidebox-->
+        </div>
+        <!--end right-->
+            </div>
+            <div class="clear"></div>
+        </div>
+

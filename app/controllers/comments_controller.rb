@@ -1,8 +1,8 @@
 # encoding: utf-8
 class CommentsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show, :list]
-  before_filter :get_comment, :only => [:show, :edit, :update, :destroy, :reply, :vote, :children]
-  before_filter :get_commentable, :except => [:vote, :reply, :children]
+  before_filter :get_comment, :only => [:show, :edit, :update, :destroy, :reply, :vote, :children, :get_sns_reply]
+  before_filter :get_commentable, :except => [:vote, :reply, :children, :show, :get_sns_reply]
   before_filter :get_user
   before_filter :get_follow_item, :only => [:index]
 
@@ -10,6 +10,38 @@ class CommentsController < ApplicationController
   # before_filter :check_cancle_follow, :only => :cancle_follow
   before_filter :check_can_comment, :only => :create
   after_filter  :send_reply_email, :only => :reply
+
+  def show
+    page = params[:page] || 1
+    @reply_comments = Comment.reply_comments(@comment.id).page(page).per(8)
+    case @comment.commentable_type
+    when "Wines::Detail"
+      render_wine_comment_detail
+    when "Winery"
+      render_winery_comment_detail
+    when "Photo"
+      photo_imageable_type = @comment.commentable.imageable_type
+      @photo = @comment.commentable
+      case photo_imageable_type
+      when "Album"
+        render_album_photo_comment_detail
+      when "Wine", "Wines::Detail"
+        render_wine_photo_comment_detail
+      when "Winery"
+        render_winery_photo_comment_detail
+      end
+    when 'Event'
+      render_event_comment_detail
+    end
+  end
+
+  def get_sns_reply
+    @reply_list = @comment.get_sns_comments
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def new   
     if params[:do].present? && params[:do] == "follow"
       new_follow_comment
@@ -58,11 +90,14 @@ class CommentsController < ApplicationController
   def create
     @comment = build_comment
     if @comment.save
+      init_oauth_comments
+      @comment.delay.share_comment_to_weibo
       # TODO
       # 1. 广播
       # 2. 分享到SNS
       notice_stickie t("notice.comment.#{@comment.do == 'follow' ? 'follow' : 'comment'}_success")
       redirect_to params[:return_url] ?  params[:return_url] : @commentable_comments_path
+
     end
   end
   
@@ -99,10 +134,17 @@ class CommentsController < ApplicationController
       params[:comment][:body],
       :parent_id => @comment.id,
       :do => "comment")
-      @reply_comment.save
-      @reply_comment.move_to_child_of(@comment)
-      render :json =>  @comment.children.all.size.to_json
-      @success_create = true #for after_filter(send_reply_email)
+      if @reply_comment.save
+        @reply_comment.move_to_child_of(@comment)
+        respond_to do |format|
+          format.html{ 
+            redirect_to request.referer
+          }
+          format.json{ render :json => @comment.children.all.size.to_json}
+        end
+        # render :json =>  @comment.children.all.size.to_json
+        @success_create = true #for after_filter(send_reply_email)
+      end
     end
   end
 
@@ -216,5 +258,93 @@ class CommentsController < ApplicationController
       end
     end
   end
+  
+  #初始化oauth_comment
+  def init_oauth_comments
+    sns_arr = params[:sns_type] 
+    if sns_arr.present?
+      sns_arr.each do |sns_type|
+        oauth = @comment.user.oauths.oauth_binding.where('sns_name = ?', sns_type).first
+        next unless oauth #再次检测是否绑定此网站
+        content = build_content(sns_type)
+        oauth_comment = @comment.oauth_comments.build(:sns_type => sns_type,
+                                                      :body => content,  
+                                                      :sns_user_id => oauth.sns_user_id, 
+                                                      :user_id => @comment.user_id)
+        oauth_comment.image_url  = get_share_photo
+        oauth_comment.save
+      end
+    end
+  end
 
+  #得到要分享的图片
+  def get_share_photo
+    image_url = case  @comment.commentable_type
+    when "Photo"
+      photo = @comment.commentable
+      photo.image_url if photo
+    when "Event"
+      poster = @comment.commentable.poster
+      poster.url if poster.present?
+    else
+      photo = @comment.commentable.get_cover
+      photo.image_url if photo
+    end
+  end
+  
+  #得到要分享的内容
+  def build_content(sns_type)
+    url = root_url[0..-2]#将"http://localhost:3000/" 改为 "http://localhost:3000"
+    if @comment.commentable_type == "Photo"
+      url << photo_comment_path(@comment.commentable, @comment)
+    else
+      url << "#{@commentable_comments_path}/#{@comment.id}"
+    end
+    content = @comment.share_content(url, sns_type)
+  end
+
+  #show render选项
+  def render_wine_comment_detail
+    @wine_detail = @comment.commentable
+    @wine = @wine_detail.wine      
+    render "wine_comment_detail"
+  end
+
+  def render_winery_comment_detail
+    @winery = @comment.commentable
+    @hot_wineries = Winery.hot_wineries(5)
+    @users    = @winery.followers #关注酒庄的人
+    render "winery_comment_detail"
+  end
+  
+  def render_album_photo_comment_detail
+    @album = @comment.commentable.imageable
+    @user = @album.user
+    @other_albums = @user.albums.where("id != #{@album.id}")
+    render "album_photo_comment_detail" 
+  end
+  
+  #需要区分wine还是detail
+  def render_wine_photo_comment_detail
+    if @comment.commentable.imageable_type == "Wines::Detail"
+      @wine_detail = @comment.commentable.imageable
+      @wine = @wine_detail.wine
+    else
+      @wine = @comment.commentable.imageable
+      @wine_detail = @wine.get_latest_detail
+    end
+    render "wine_photo_comment_detail"
+  end
+
+  def render_winery_photo_comment_detail
+    @winery = @comment.commentable.imageable
+    @hot_wineries = Winery.hot_wineries(5)
+    render "winery_photo_comment_detail"
+  end
+
+  def render_event_comment_detail
+    @event = @comment.commentable
+    @recommend_events = Event.recommends(4)
+    render "event_comment_detail"
+  end
 end

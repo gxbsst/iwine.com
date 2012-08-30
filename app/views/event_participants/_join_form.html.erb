@@ -1,0 +1,95 @@
+<h3 class="title"> 我要参加 </h3>
+<% if participant.new_record? %>
+  <%= form_for [participant],  :validate => true, :html => {:id => "comment_form"} do |f| -%>
+    <table class="form" width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th width="100">姓名:</th>
+        <td width="400">
+          <%= f.text_field :username, :class => [:text, :name] %>
+          <span class="red">*</span>
+          <span class="red" id="event_participant_username_error"></span>
+        </td>
+      </tr>
+
+      <tr>
+        <th >联系电话:</th>
+        <td>
+          <%= f.text_field :telephone, :class => [:text, :name] %>
+          <span class="red">*</span>
+          <span class="red" id="event_participant_telephone_error"></span>
+        </td>
+      </tr>
+
+      <tr>
+        <th>邮箱:</th>
+        <td>
+          <%= f.text_field :email, :class => [:text, :name] %>
+          <span class="red">*</span>
+          <span class="red" id ="event_participant_email_error"></span>
+        </td>
+      </tr>
+
+      <tr>
+        <th >留言:</th>
+        <td>
+          <%= f.text_area :note, :size => '10x5', :style => 'width: 300px' %>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td  algin="center" valign="top">
+          <%= link_to "javascript:void(0)", :class => "btn_gray save_articipant" do  %>
+            <span>保存</span>
+          <% end %>
+        </td> 
+      </tr>
+    </table>
+  <% end -%>
+
+<% else %>
+  <%= form_for participant, :url => event_participant_path(event, participant),  :validate => true, :html => {:id => "comment_form"} do |f| -%>
+    <table class="form" width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th width="100">姓名:</th>
+        <td width="400">
+          <%= f.text_field :username, :class => [:text, :name] %>
+          <span class="red">*</span>
+          <span class="red" id="event_participant_username_error"></span>
+        </td>
+      </tr>
+
+      <tr>
+        <th >联系电话:</th>
+        <td>
+          <%= f.text_field :telephone, :class => [:text, :name] %>
+          <span class="red">*</span>
+          <span class="red" id="event_participant_telephone_error"></span>
+        </td>
+      </tr>
+
+      <tr>
+        <th>邮箱:</th>
+        <td>
+          <%= f.text_field :email, :class => [:text, :name] %>
+          <span class="red">*</span>
+          <span class="red" id ="event_participant_email_error"></span>
+        </td>
+      </tr>
+
+      <tr>
+        <th >留言:</th>
+        <td>
+          <%= f.text_area :note, :size => '10x5', :style => 'width: 300px' %>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td  algin="center" valign="top">
+          <%= link_to "javascript:void(0)", :class => "btn_gray save_articipant" do  %>
+            <span>保存</span>
+          <% end %>
+        </td> 
+      </tr>
+    </table>
+  <% end -%>
+<% end %>

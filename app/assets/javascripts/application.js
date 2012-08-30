@@ -3,14 +3,13 @@
 // be included in the compiled file accessible from http://example.com/assets/application.js
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
-//
+// !!! Placeholder will not work with fancybox For IE 6
 
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
 //= require underscore
 //= require backbone
-// require backbone-localstorage
 //= require fancybox
 //= require jcrop
 //= require wines
@@ -20,37 +19,64 @@
 //= require best_in_place
 //= require stickies
 //= require settings
-// require kissy
 //= require jquery-tools/tabs/tabs
 //= require jquery-tools/tabs/tabs.slideshow
 //= require waterfall
 //= require home
+//= require css_browser_selector
+//= require autocomplete_plus
+//= require jquery.html5-placeholder-shim
 
 
 $(document).ready(function(){
 
     // 下拉菜单
-
-    $('a.arrow_down').click(function (event) {
-        // $(this).preventDefault();
-        event.preventDefault();
-        $('ul.drop_down_menu').slideToggle('medium');
+    $(".user-select").bind('mouseenter mouseleave', function(e){
+       $(".drop_down_menu", this).toggle();
     });
+    $('.globel_navi li.arrow').bind('mouseenter mouseleave', function(e) {
+        $('.CategoryDropdown', this).toggle();
+    });
+
 
     // 酒详细页面
     $("a.wine_profile").fancybox();
 
     // 添加朋友、酒等
-    $("a.add_green").fancybox({
-        maxWidth        : 500,
-        maxHeight       : 150,
+    $("a.btn_add.fancybox").fancybox({
+        maxWidth        : 520,
+        maxHeight       : 299,
+        padding : 0,
         fitToView       : false,
-        width           : '70%',
-        height          : '70%',
+        width           : '100%',
+        height          : '100%',
         autoSize        : false,
         closeClick      : false,
         openEffect      : 'none',
         closeEffect     : 'none',
+        helpers : {
+            overlay : {
+                opacity : 0.8,
+                css : {
+                    'background-color' : '#FFF'
+                }
+            }
+        } // end helper
+
+    });
+    $("a.sns_fancybox").fancybox({
+        maxWidth        : 900,
+        maxHeight       : 850,
+        padding : 0,
+        fitToView       : false,
+        width           : '100%',
+        height          : '100%',
+        autoSize        : false,
+        closeClick      : false,
+        openEffect      : 'none',
+        closeEffect     : 'none',
+        type            : 'iframe',
+       
         helpers : {
             overlay : {
                 opacity : 0.8,
@@ -86,7 +112,8 @@ $(document).ready(function(){
     // 发送信息
     $("a.send_message").fancybox({
         maxWidth        : 500,
-        maxHeight       : 260,
+        maxHeight       : 360,
+        padding         : 0,
         fitToView       : false,
         width           : '70%',
         height          : '100%',
@@ -104,29 +131,6 @@ $(document).ready(function(){
         } // end helper
 
     });
-
-    // 评论
-    $(".wine_profile .follow_wine1").fancybox({
-        maxWidth        : 500,
-        maxHeight       : 260,
-        fitToView       : false,
-        width           : '70%',
-        height          : '100%',
-        autoSize        : false,
-        closeClick      : false,
-        openEffect      : 'none',
-        closeEffect     : 'none',
-        helpers : {
-            overlay : {
-                opacity : 0.8,
-                css : {
-                    'background-color' : '#FFF'
-                }
-            }
-        } // end helper
-
-    });
-
 
     // Mine 鼠标滑动显示编辑、删除按钮
     $(".mine.wine_follows .left  .box .item ").hover(function(){
@@ -148,16 +152,25 @@ $(document).ready(function(){
     $(".ajax").bind("ajax:success", function(evt, data, status, xhr){
         $("#loading").toggle();
     });
-    $(".ajax").bind("ajax:failure", function(evt, data, status, xhr){      
+    $(".ajax").bind("ajax:failure", function(evt, data, status, xhr){
         $("#loading").html("由于网络故障， 请稍后重试");
     });
-    $(".ajax").bind("ajax:error", function(evt, data, status, xhr){  
+    $(".ajax").bind("ajax:error", function(evt, data, status, xhr){
       if (data.status == 401){
            window.location.replace("/login");
          }
     });
-
+    
+    // a变成submit
+    $("a.submit").click(function(){
+			$(this).parents("form").submit();
+	});
+   
 });
+
+
+
+    
 
 
 

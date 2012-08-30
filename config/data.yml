@@ -1,15 +1,4 @@
 site: "iWine.com"
-rate:
-  CNY: 1.00
-  HKD: 0.95
-  JPY: 0.07
-  SGD: 4.95
-  USD: 6.37
-  GBP: 9.82
-  AUD: 6.49
-  NZD: 5.21
-  EUR: 7.78
-  CAD: 6.35
 wines:
   capacity:
     750mL: '750'
@@ -82,6 +71,11 @@ user_oauths:
   setting_type:
     login: 1 #用户通过第三方登陆
     binding: 2 # 用户登录后得绑定操作
+oauth_comments:
+  status:
+   no_share: 0 #没有同步
+   success: 1 #同步成功
+   failure: 2 #同步失败
 
 # 图片缩略图
 image:
@@ -164,6 +158,24 @@ image:
     large:
       width: 360
       height: 360
+  poster:
+    origin:
+      width: 300 
+      height: 450
+    large:
+      width: 150  
+      height: 225 
+    middle: 
+      width: 130 
+      height: 190 
+    thumb:
+      width: 100 
+      height: 150 
+    x_thumb:
+      width: 70 
+      height: 105 
+
+   
         
 timeline:
    event:
@@ -179,8 +191,8 @@ timeline:
      
        
 search_server:
-  host: 192.168.11.28
-  port: 8080
+  host: 180.168.220.98
+  port: 8081
   entry_url: /patrick/query/all
   word_url: /patrick/query/associate
   user_url: /patrick/query/user
@@ -226,3 +238,33 @@ email:
 memcache:
   servers: 
     first: "192.168.11.31"
+
+api:
+  return_json:
+   normal_success:
+     code: 200 
+     message: 'Successful'
+   normal_failed:
+     code: 422 
+     message: 'Failed'
+   miss_parameter: 
+     coode: 422
+     message: "Missing some parameter"
+   auth_failed:
+     code: 401
+     message: 'Error with your login or password'
+   register_failed:
+     code: 422
+     message: ""
+
+event:
+ publish_status:
+  cancle: 0
+  draft: 1
+  published: 2
+  locked: 3
+ city: { '上海': 1,  '成都': 2, '北京': 3, '深圳': 4, '广州': 5}
+event_participant:
+ join_status:
+  joined: 1
+  cancle: 0

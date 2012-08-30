@@ -234,7 +234,7 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 /* Commented Backslash Hack hides rule from IE5-Mac \*/
 .tabs a span {float:none;}
 /* End IE5-Mac hack */
-.tabs a:hover {background-color:#9fc987;color:#fff;}
+.tabs a:hover, .tabs a.current {background-color:#9fc987;color:#fff;}
 .tabs .current a {background-color:#9fc987;color:#fff;}
 
 
@@ -258,6 +258,11 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .comment_post_star .evaluate {float:right;width:90px;}
 .comment_post_star .star_rate {margin:5px 0 10px 0;}
 .comment_post_star .star_rate li {float:left;display:block;}
+.sort {margin-bottom:20px;}
+.sort span {display:block;float:left;padding:2px 10px;background-color:#f3f3f3; border-radius: 10px 10px 10px 10px;margin-right:5px;}
+.sort span.current {background-color:#ffcc33;color:#333;}
+.sort span a {color:#666;}
+.sort span a:hover {color:#333;text-decoration:none;}
 
 /*comment reply*/
 .reply {margin-left:70px;}
@@ -267,6 +272,9 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .reply .reply_list li {width:520px;float:left;margin:0 0 30px 0;padding:0 0 0 0;}
 .reply .reply_list .main {width:475px;float:left;}
 .reply .reply_list .userpic {width:30px;float:left;margin-right:15px;}
+.com_s {flaot:left;width:300px;padding-top:3px;}
+.com_s a {display:inline-block;margin-right:10px;position:relative;}
+.com_s .sns_on {position:absolute;left:8px;top:8px;}
 
 /*-------User list--------*/
 .userlist {zoom:1;}

@@ -81,25 +81,30 @@ class FriendsController < ApplicationController
   end
 
   def callback
-    sns_class_name = params[:type].capitalize
-    oauth_module = eval( "OauthChina::#{sns_class_name}" )
-    client = oauth_module.load(Rails.cache.read(build_oauth_token_key(params[:type], params[:oauth_token])))
-    client.authorize(:oauth_verifier => params[:oauth_verifier])
-    results = client.dump
+    begin
+      sns_class_name = params[:type].capitalize
+      oauth_module = eval( "OauthChina::#{sns_class_name}" )
+      client = oauth_module.load(Rails.cache.read(build_oauth_token_key(params[:type], params[:oauth_token])))
+      client.authorize(:oauth_verifier => params[:oauth_verifier])
+      results = client.dump
 
-    if results[:access_token] && results[:access_token_secret]
-      flash[:notice] = "done"
-    else
-      flash[:notice] = "fail"
+      if results[:access_token] && results[:access_token_secret]
+        flash[:notice] = "done"
+      else
+        flash[:notice] = "fail"
+      end
+      # 创建UserOauth记录
+      user_oauth = current_user.oauth_token client.name.to_s
+      user_oauth.access_token = results[:access_token]
+      user_oauth.sns_user_id = client.user_id # sns.rb Sina#user_id
+      user_oauth.refresh_token = results[:access_token_secret]
+      user_oauth.save
+      redirect_to sync_friends_path(:sns_name => params[:type], :success => true) #success 参数 判断用户同步成功 
+    rescue Exception => e
+      Rails.logger.error(e)
+      notice_stickie t("notice.oauth.ouath_failure")
+      redirect_to setting_sns_friends_path(:sns_name => params[:type], :failure => true)# failure 参数判定用户同步失败
     end
-    # 创建UserOauth记录
-    user_oauth = current_user.oauth_token client.name.to_s
-    user_oauth.access_token = results[:access_token]
-    user_oauth.sns_user_id = client.user_id # sns.rb Sina#user_id
-    user_oauth.refresh_token = results[:access_token_secret]
-    user_oauth.save
-
-    redirect_to '/friends/sync?sns_name=' + params[:type]
   end
 
   def sns

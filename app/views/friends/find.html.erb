@@ -1,51 +1,35 @@
-<div class="friends">
-  <div id="main_t" class="clearfix">
-    <h1>添加好友</h1>
-    <div class="clear"></div>
+<% content_for :title, @title%>
+<% content_for :css do  %>
+    <%= stylesheet_link_tag "setting" %>
+<% end %>
+  <div class="whitespace friends">
+    <h1 class="main_title">添加好友</h1>
+    <%= render :partial => "friends/search" %>
+    <%= render :partial => "friends/all_sns" %>
+
+    <div class="gray_box invite">
+      <h3>通过邮件邀请朋友加入</h3>
+      <%= form_tag :action => "email_invite" do %>
+        <p>
+          <%= text_area_tag "email_address", nil, :placeholder => '输入邮件地址' %>
+          <%= text_area_tag "description", "iWine（爱红酒）是个很有用的葡萄酒网站，快来看看吧～" %>
+          <%= text_field_tag "name", current_user.username, :placeholder => "输入你的姓名" %>
+        </p>
+        <p>
+          <%= link_to "javascript:void(0);", :class => "btn_gray save" do %>
+            <span>发送邀请</span>
+          <% end %>
+        </p>
+        <div class="notice">一次填写多个Email地址请用回车换行分隔，最多支持20个邮箱</div>
+
+      <% end -%>
+    </div>
+
   </div>
 
-  <div class="box box_1">
-    <h3>通过社交平台寻找好友</h3>
-    <% if SNS_SERVERS.present? %>
-    <ul>
-      <% SNS_SERVERS.each do |sns_name| %>
-      <li>
-        <% if @availabe_sns[sns_name].present? %>
-          <%= link_to_sns_icon true, sns_name, '/friends/sync?sns_name=' + sns_name %>
-        <% else %>
-          <%= link_to_sns_icon false, sns_name, '/friends/sync?sns_name=' + sns_name %>
-        <% end %>
-      </li>
-      <% end %>
-    </ul>
-    <% end %>
-    <div class="buttons">
-      <%= link_to setting_sns_friends_path, :class => "btn_gray" do %>
-        <span>更改同步设置</span>
-      <% end %>
-    </div>
-    <!-- .box end -->
-  </div>
-  <div class="clear"> </div>
-  <div class="box box_3">
-    <h3>通过邮件邀请好友加入</h3>
-    <%= form_tag :action => "email_invite" do %>
-
-
-    <div class="email_address">
-      <%= text_area_tag "email_address", nil, :placeholder => '输入邮件地址' %>
-    </div>
-
-    <div class="description">
-      <%= text_area_tag "description", nil,  :placeholder => '输入邀请留言' %>
-    </div>
-    <div class="name">
-      <%= text_field_tag "name", nil, :placeholder => "输入你的姓名" %>
-    </div>
-    <p class="submit"> <%= image_submit_tag "v2/button/send_invite.png" %> </p>
-
-<% end -%>
-
-</div>
-<!-- friends end -->
-</div>
+<script type="text/javascript" charset="utf-8">
+    $('a.save').click(function(){
+        $('.invite form').submit();
+        return false;
+    });
+</script>

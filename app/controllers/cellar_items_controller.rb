@@ -4,7 +4,7 @@
     before_filter :get_current_user
     before_filter :get_cellar
     before_filter :get_item, :except => [:new, :create, :add]
-    
+
     def edit
       @wine_detail = Wines::Detail.includes( :covers, :photos, { :wine => [:style, :winery]} ).find(  @cellar_item.wine_detail_id )
       @wine = @wine_detail.wine

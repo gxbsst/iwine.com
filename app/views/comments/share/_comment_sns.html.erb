@@ -1,0 +1,60 @@
+
+同时发布到：
+<span class="sns_switch share_weibo">
+	<% if current_user && current_user.check_oauth?('weibo') %>
+		<input type="hidden" name="sns_type[]" value="weibo"/>
+		<%= link_to "javascript:void(0);" do %>
+			<span class="sns_on"><%= image_tag("icon/r_g.png", :width => 14, :height => 14) %></span>
+			<%= image_tag "icon/weibo_s_on.png", :alt => "新浪微博", :width => "17", :height => "17", :align => "absmiddle", :class => "image_on" %>
+		<% end %>
+	<% else %>
+		<input type="hidden" name="sns_type[]" value="weibo" disabled="disabled" />
+			
+		<%= link_to user_omniauth_authorize_path(:weibo, :display => "popup"), :class => "sns_fancybox iframe" do %>
+			<span class="sns_on" style="display:none"><%= image_tag("icon/r_g.png", :width => 14, :height => 14) %></span>
+			<%= image_tag "icon/weibo_s_off.png", :alt => "新浪微博", :width => "17", :height => "17", :class => "share_weibo_image", :align => "absmiddle" %>
+		<% end %>
+	<% end %>
+</span>
+<span class="sns_switch share_qq">
+	<% if current_user && current_user.check_oauth?('qq') %>
+		<input type="hidden"  name="sns_type[]" value="qq"/>
+		<%= link_to "javascript:void(0);" do %>
+			<span class="sns_on"><%= image_tag("icon/r_g.png", :width => 14, :height => 14) %></span>
+			<%= image_tag "icon/tencen_s_on.png", :alt => "腾讯微博", :width => "17", :height => "17", :align => "absmiddle", :class => "image_on" %>
+		<% end %>
+	<% else %>
+		<input type="hidden" name="sns_type[]" value="qq" disabled="disabled"/>
+		<%= link_to new_sns_friends_path(:sns_name => "qq"), :class => "sns_fancybox iframe" do %>
+			<span class="sns_on" style="display:none"><%= image_tag("icon/r_g.png", :width => 14, :height => 14) %></span>
+			<%= image_tag "icon/tencen_s_off.png", :alt => "腾讯微博", :width => "17", :height => "17", :align => "absmiddle", :class => "share_qq_image" %>
+		<% end %>
+	<% end %> 
+</span>
+<span class="sns_switch share_douban">
+	<% if current_user && current_user.check_oauth?('douban') %>
+		<input type="hidden" name="sns_type[]" value="douban"/>
+		<%= link_to "javascript:void(0);" do %>
+			<span class="sns_on"><%= image_tag("icon/r_g.png", :width => 14, :height => 14) %></span>
+			<%= image_tag("icon/douban_s_on.png", :alt => "豆瓣", :width => "17", :height => "17", :align => "absmiddle", :class => "image_on") %>
+		<% end %>
+	<% else %>
+		<input type="hidden" name="sns_type[]" value="douban"  disabled="disabled"/>
+		<%= link_to new_sns_friends_path(:sns_name => "douban"), :class => "sns_fancybox iframe" do %>
+			<span class="sns_on" style="display:none"><%= image_tag("icon/r_g.png", :width => 14, :height => 14) %></span>
+			<%= image_tag "icon/douban_s_off.png", :alt => "豆瓣", :width => "17", :height => "17", :align => "absmiddle", :class => "share_douban_image" %>
+		<% end %>
+	<% end %>
+</span>
+<script type="text/javascript">
+	$("span.sns_switch").click(function(){
+		if ($("img.image_on", this).length > 0){
+			$("span.sns_on", this).toggle();
+			if ($("input", this).attr('disabled') == 'disabled'){
+				$("input", this).removeAttr('disabled');
+			}else{
+				$("input", this).attr('disabled', 'disabled');
+			}
+		}
+	});
+</script>

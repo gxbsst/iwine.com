@@ -1,20 +1,7 @@
-
-<ul class="clearfix">
-    <li>
-      <%= link_to "#{@wine_detail.followers_count}<br /> 关注".html_safe, followers_wine_path(@wine_detail.id) %>
-    </li>
-    <li>
-      <%= link_to "#{@wine_detail.owners_count}<br /> 拥有".html_safe, owners_wine_path(@wine_detail.id)  %>
-    </li>
-	
-    <li>
-      <%= link_to "#{@wine_detail.comments_count}<br /> 评论".html_safe, wine_comments_path(@wine_detail.id) %>
-    </li>
-    <!-- <li>
-      <a href="#">2 <br /> 品酒辞 </a>
-     </li> -->
-    <li>
-      <%= link_to "#{@wine_detail.photos_count}<br /> 相册".html_safe, wine_photos_path(@wine_detail.id) %>
-    </li>
-
-</ul>
+<div class="wp_count clearfix">
+	<%= link_to "#{@wine_detail.followers_count}<br /> 关注".html_safe, followers_wine_path(@wine_detail) %>
+	<%= link_to "#{@wine_detail.owners_count}<br /> 拥有".html_safe, owners_wine_path(@wine_detail)  %>
+	<%= link_to "#{@wine_detail.comments_count}<br /> 评论".html_safe, wine_comments_path(@wine_detail) %>
+	<%= link_to "#{@wine_detail.all_photo_counts}<br /> 照片".html_safe, wine_photos_path(@wine_detail) %>
+	<div class="clear"></div>
+</div>

@@ -58,15 +58,15 @@ module Patrick
     # DEPRECATION WARNING: ActiveSupport::Memoizable is deprecated...
     ActiveSupport::Deprecation.silenced = true
 
+    # Usage: ceated_at.to_s(:cn)
     Time::DATE_FORMATS[:normal] = "%Y-%m-%d"
+    Time::DATE_FORMATS[:yt] = "%m.%d %I:%M"
     Time::DATE_FORMATS[:cn] = "%Y年%m月%d日  %I:%M"
     Time::DATE_FORMATS[:year] = "%Y"
     
-    ThemesForRails.config.default_theme = "waterfall"
-
-    # if Rails.env.development?
-    #   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
-    # end
+    if Rails.env.development?
+      OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+    end
     
   end
 end

@@ -1,76 +1,51 @@
-<%= render "sub_nav", :action => params[:action]  %>
-
-<div class="settings avatar">
-  <div class="left">
-    <%= render_stickies %>
-
-    <table border="0" cellspacing="20" cellpadding="5">
-      <tr>
-        <td valign="middle">
-          从电脑上传（支持JPG、GIF、PNG图片格式，且小于5M）<br />
-          <%= form_for current_user, :url => url_for(:action => :avatar), :html => { :multipart => 'true' } do |f| %>
-          <%= f.file_field :avatar, :align => "center" %>
-          <br />
-          <br />
-          <%= image_submit_tag "v2/save_avatar.png", :align => "center" %>
+<% content_for :title, @title%>
+<% content_for :css do  %>
+<%= stylesheet_link_tag "setting", "jcrop" %>
+<%#= stylesheet_link_tag :jcrop %>
 <% end %>
-</td>
-</tr>
+  <div class="whitespace setting">
+    <h1 class="main_title">头像修改</h1>
+    <div id="stylized" class="myform">
 
-<tr>
-  <td>
-    <% if current_user.avatar.blank? %>
-      <%= image_tag "v2/avatar_default_bg.png" %>
+      <div class="left">
+        <%= form_for current_user, 
+        :url => avatar_settings_path, 
+        :html => { :multipart => 'true', :id => :form, :method => :put } do |f| %>
 
-    <% else %>
-      <%= image_tag current_user.avatar_url(:origin), id: "cropbox" %>
+        <p>从电脑上传（支持JPG、GIF、PNG图片格式，且小于5M）</p>
+        <p class="mt20">
+         <%= f.file_field :avatar, :align => "center", :class => "text name mr5" %>
+       </p>
+       <%= link_to "javascript:void(0)", :class => "btn_gray mr5", :onclick => "$(this).parents('form').submit()" do %>
+       <span>提交头像</span>
+       <% end %>
+       <% end %>
+       <p class="mt20">
+         <% if current_user.avatar.blank? %>
+         <%= image_tag "v2/avatar_default_bg.png" %>
+         <% else %>
+         <%= image_tag current_user.avatar_url(:origin) + "?timestamp=#{Time.now}", id: "cropbox" %>
+         <% end %>
+       </p>
+       <p class="mt20">
+         <%= form_for current_user, :url => avatar_settings_path, :method => :post  do |f| %>
+         <% %w[x y w h].each do |attribute| %>
+         <%= f.hidden_field "crop_#{attribute}" %>
+         <% end %>
 
-    <% end %>
-
-    <%= form_for current_user, :url => avatar_settings_path, :method => :post  do |f| %>
-      <% %w[x y w h].each do |attribute| %>
-        <%= f.hidden_field "crop_#{attribute}" %>
-      <% end %>
-      <br />
-
-      <%= image_submit_tag "v2/save_avatar_2.png", :align => "center" %>
-      <%= link_to "取消", { :action => "basic" }, :class => "red" %>
-
-    <% end %>
-  </td>
-</tr>
-<tr>
-  <td></td>
-</tr>
-</table>
-
-
-</div>
-
-<div class="right">
-  <p> 您上传的头像会自动生成以下三种尺寸，请确保中小尺寸的头像是否清晰。</p>
-  <div class="clear">
+         <%= link_to "javascript:void(0)", :class => "btn_gray mr5", :onclick => "$(this).parents('form').submit()" do %>
+         <span>保存头像</span>
+         <% end %>
+         <%= link_to basic_settings_path, :class => "btn_gray" do %>
+         <span>取消</span>
+         <% end %>
+         <% end %>
+       </p>
+      </div>
+      <div class="right">
+        <%= render "update_avatar" %>
+      </div>
+    <div class="clear"></div>
+    
   </div>
-  <table border="0" cellspacing="5" cellpadding="5">
-    <tr>
-      <td>
-        <%= image_tag  "v2/user_large_example.png", :align => "left", :class => "preview_large" %>  大图 <i> 130x130px</i>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <%= image_tag  "v2/user_middle_example.png", :align => "left", :class => "preview_middle" %> 中图 <i> 50x50px</i>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <%= image_tag "v2/user_thumb_example.png", :align => "left", :class => "previethumb" %>   小图 <i> 30x30px</i>
-      </td>
-    </tr>
-  </table>
-
 </div>
-<div class="clear"></div>
-<!-- settings end -->
-</div>
-

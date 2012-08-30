@@ -1,5 +1,5 @@
 @charset "UTF-8";
-#wp_left {width:670px;float:left;background-color:#fff;box-shadow: 0 1px 3px rgba(34,25,25,0.4);margin: 0 30px 0 0;}
+#wp_left {width:670px;float:left;background-color:#fff;box-shadow: 0 1px 2px 1px #E0E0E0;border:1px solid #ccc;margin: 0 28px 0 0;}
 #wp_right {width:250px;float:left;}
 .wp_space_line {padding-left:30px;padding-right:30px;border-bottom:1px solid #ccc;}
 h1.wine_name_ch {font-size:20px;color:#000;margin:30px 0 3px 0;}
@@ -7,13 +7,24 @@ h1.wine_name_en {font-size:14px;color:#666;font-weight:normal;margin: 0 0 20px 0
 .wine_pic_main {margin:30px 0 20px 0;text-align:center;}
 .wine_pic_thumb ul li {float:left;}
 .wp_space_line h2 {font-size:16px;margin:0 0 20px 0;}
+.wp_follower, .wp_owner, .wp_event {zoom:1;}
+.wp_follower li {width:50px;float:left;margin: 0 2px 0 3px;}
+.wp_owner li, .wp_event li {width:280px;float:left;margin:0 20px 20px 0;_margin: 0 15px 20px 0;}
+.wp_owner .userpic, .wp_event .thumb {width:50px;float:left;margin-right:20px;}
+.wp_owner .info, .wp_event .info {width:210px;float:left;color:#999;}
+.wp_owner .info a.icon_cellar {margin-top:3px;}
+.wp_event .title a {color:#333;font-size:14px;font-weight:bold;}
+.wp_event .title a:hover {color:#993333;font-size:14px;text-decoration:none;}
+.wine_img {zoom:1px;}
 .wine_img li {float:left;width:100px;margin-right:1px;}
+#wp_left .comment_list {margin-bottom:0;zoom:1;}
+#wp_left .top {padding-bottom:20px;}
+#wp_left .top a {_margin-top:30px;}
 .wine_comment_list {margin: 0 0 20px 0;}
 .wine_comment_list li {margin: 0 0 20px 0;}
 .wine_comment_list .userpic, .comment_post .userpic {float:left;margin:0 20px 0 0;}
 .wine_comment_list .username {margin:0 0 3px 0;}
 .wine_comment_list .date {margin:0 0 5px 0;}
-.wine_comment_list .star {}
 .wine_comment_list .username span {display:inline-block;margin-left:10px;}
 .wine_comment_list .main {float:left;width:540px;}
 .wine_comment_list .reply {padding:3px 5px;margin:0 0 10px 15px;border-left:1px solid #ccc;color:#999;}
@@ -21,3 +32,55 @@ h1.wine_name_en {font-size:14px;color:#666;font-weight:normal;margin: 0 0 20px 0
 .wine_comment_post .post_main {float:left;}
 .wine_comment_post .reply_text {margin:0 0 10px 0;color:#999;}
 .wine_comment_post .reply_text span {margin-right:10px;}
+.wp_count {background-color:#fff;padding:10px 5px;text-align:center;zoom:1;margin-bottom:20px;}
+.wp_count a {display:inline-block;width:40px;float:left;margin: 0 4px;text-align:center;color:#333;}
+.wp_count a:hover {color:#993333;text-decoration:none;}
+.wine_id_pic, #wp_right .info, #wp_price, .pro_score {margin-bottom:20px;}
+#wp_right .score_star, #wp_right .wp_price {border-top:1px solid #333;padding: 20px 0;zoom:1;}
+#wp_right .score_star .star {width:80px;float:left;margin: 3px 10px 0 0;}
+#wp_right .score_star .iw_score {width:160px;float:left;color:#999;}
+.pro_score table th {background-color:#cc3333;color:#fff;font-weight:normal;padding:2px 0;}
+.pro_score table th.critic {border-right:2px solid #f3f3f3;}
+.pro_score table th.score {border-right:2px solid #f3f3f3;width:50px;}
+.pro_score table th.year {width:70px;}
+.pro_score table td.critic {text-align:left;}
+.pro_score table td {border-bottom:1px solid #ccc;padding:2px;font-size:11px;text-align:center;}
+.wine_pic li {width:130px;float:left;margin-right:20px;}
+.wine_pic li.last {margin-right:0;}
+.wine_pic_list {width:590px;float:left;margin-bottom:20px;}
+.wine_pic_list li {width:130px;float:left;margin:0 8px;_margin: 0 7px;}
+.wine_pic_list li img {margin-bottom:5px;}
+
+
+/*-------------album style----------------*/
+ul.album_list {padding:0 0 0 10px}
+ul.album_list li {float:left;width:163px; margin:0 25px 40px 25px;}
+ul.album_list li img.cover {background:url(bg/bg_album.gif) no-repeat left top;padding:5px 8px 8px 5px;margin:0 0 10px 0;}
+ul.album_list li h2, ul.photo_list li .name, .album_left .photo .name, .side_album_list h3 {font-size:13px;margin:0 0 5px 0;}
+ul.album_list li h2 a, .side_album_list h3 a, .like a {color:#333;}
+ul.album_list li h2 a:hover, .side_album_list h3 a:hover, .like a:hover {color:#cc3333;text-decoration:none;}
+ul.album_list li .info, ul.photo_list li .info, .side_album_list .info  {color:#999;}
+ul.photo_list li {display:inline-block; vertical-align:top; width:190px;margin:0 33px 40px 0;}
+ul.photo_list li.last {margin-right:0;}
+ul.photo_list li img {margin:0 0 10px 0;}
+ul.photo_list li .intro, .album_left .photo .intro{margin:0 0 5px 0;}
+.content .album_left {width:590px;float:left;margin:0 28px 0 0;}
+.content .album_right {width:210px;float:left;}
+.album_left .pre_next {text-align:center;}
+.album_left .count {display:inline-block;margin:0 10px;}
+.album_left .info {margin-bottom:30px;color:#666;}
+.album_left .photo {text-align:center;margin-bottom:20px;background-color:#f3f3f3;}
+.album_left .comment_list .main {width:520px;}
+.album_left .comment .title {border-bottom:1px solid #cccccc;padding-bottom:15px;}
+.album_left .post_main {width:470px;}
+.album_left .post_main textarea {width:490px;height:80px;background-color:#fff;}
+.post_main .com_s {flaot:left;width:300px;padding-top:3px;}
+.post_main .com_s a {display:inline-block;margin-right:10px;position:relative;}
+.com_s .sns_on {position:absolute;left:8px;top:8px;}
+.album_right h2 {margin:0 0 20px 0;}
+img.cover_s {background:url(bg/bg_album_s.gif) no-repeat left top;padding:5px 8px 8px 5px;margin:0 0 5px 0;}
+.side_album_list li {margin:0 0 30px 0;}
+.add_album {margin:0 0 0 20px;}
+input.photo_name, textarea.photo_des {width:184px;}
+textarea.photo_des {min-height: 70px;} 
+li.photo_des p {margin: 0 0 5px 0;}

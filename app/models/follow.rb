@@ -19,5 +19,11 @@ class Follow < ActiveRecord::Base
    end
  end
 
+ # Class Methods
+ class << self
+   def get_my_follow_item(followable_type,followable_id, user_id)
+    find_by_followable_type_and_followable_id_and_user_id(followable_type, followable_id, user_id) 
+   end
+ end
 
 end
