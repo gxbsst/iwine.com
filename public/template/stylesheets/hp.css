@@ -140,3 +140,12 @@ td.img div {position:relative;}
 .side_event dd h3 {font-size:12px;margin-bottom:10px;}
 .side_event dd .info {margin:0 0 5px 0;}
 .p_count2 {color:#999;}
+
+/*----------------event---------------*/
+.event_member_list {margin:0 0 30px 0;}
+.event_member_list table {border-top:1px solid #ddd;}
+.event_member_list td, .event_member_list th {padding:10px 0;border-bottom:1px dotted #ccc;}
+.event_member_list td.img {width:80px;}
+.event_member_list td.name {width:80px;}
+.event_member_list td.email {width:180px;}
+.event_member_list td.tel {width:120px;}
