@@ -89,6 +89,7 @@ class CommentsController < ApplicationController
   # 评论
   def create
     @comment = build_comment
+    @item_id = params[:item_id] #用于首页
     if @comment.save
       init_oauth_comments
       # TODO

@@ -32,6 +32,7 @@ class FollowsController < ApplicationController
   ## get 方法请求ajax相应
   #没关注则执行关注操作，已经关注过则执行取消关注操作
   def follow
+    @item_id = params[:item_id]
     if @followable.is_followed_by?(@user)
       @follow = get_user_follow_item
       @follow.destroy

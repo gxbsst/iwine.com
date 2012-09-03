@@ -48,7 +48,7 @@
                 <% end %>
                 <%= render 'share/sns_icons',
                   :image_url => sns_image_url(@event, :thumb_name => :large),
-                  :title => sns_title(@event.title),
+                  :title => sns_title(@event),
                   :summary => @event.title ,
                   :url => request.url %>
                 <!--end action-->

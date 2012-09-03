@@ -5,7 +5,7 @@
 	<%= render "share/sns_icons",
         :image_url => sns_image_url(@wine_detail, :thumb_name => :large),
         :title => sns_title(@wine_detail.origin_zh_name),
-        :summary => wine_summary(@wine_detail.description),
+        :summary => sns_summary(@wine_detail),
         :url => request.url %>
 </div>
 <div>

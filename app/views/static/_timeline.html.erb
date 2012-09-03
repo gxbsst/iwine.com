@@ -1,11 +1,12 @@
 <% @timelines.each do |l| %>
-    <!-- 关注的酒被评论 -->
-    <% if l.event_type == "new_comment" %>
-        <div class="iw item" id="wine_<%= l.secondary_actor.id%>">
-            <%= render :partial => "follow_and_comment_button", :locals => {:parent => l.secondary_actor} %>
-            <div class="iw_img">
-                <%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), wine_path(l.secondary_actor) %>
-            </div>
+    <% item_id = get_rand_id(l.secondary_actor.id) %>
+    <div class="iw item" id="<%= item_id %>">
+        <%= render :partial => "share/follow_and_comment_button", :locals => {:parent => l.secondary_actor, :item_id => item_id} %>
+        <div class="iw_img">
+            <%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), wine_path(l.secondary_actor) %>
+        </div>
+        <!-- 关注的酒被评论 -->
+        <% if l.event_type == "new_comment" %>
             <div class="iw_info">
                 <h1>
                     <%= raw wine_name_zh_link(l.secondary_actor.cname, l.secondary_actor) %>
@@ -18,35 +19,17 @@
             <div class="iw_main">
                 <ul>
                     <% l.secondary_actor.comments.recent(6).each do |comment|%>
-                        <%= render :partial => "short_comment", :locals => {:comment => comment} %>
+                        <%= render :partial => "share/short_comment", :locals => {:comment => comment} %>
                     <% end %>
                 </ul>
             </div>
-            <div class="iw_more">
+            <div class="iw_more iw_more_comment">
                 <%= link_to  wine_comments_path(l.secondary_actor) do %>
                     共<%= l.secondary_actor.all_comments_count %>条评论
                 <% end %>
             </div>
-            <% if current_user %>
-                <div class="iw_comment clearfix">
-                    <div class="left">
-                        <%= link_to_user current_user, user_path(current_user, :trailing_slash => true), 
-                                                       {:with_avatar => true, :avatar_version => :thumb},
-                                                        {:width => 30, :height => 30, :alt => current_user.username} %>
-                    </div>
-                    <div class="right">
-                        <%= render :partial => "comments/share/ajax_form", :locals => {:commentable => l.secondary_actor} %>
-                    </div>
-                </div>
-            <% end %>
-        </div>
-    <!-- 酒被关注 -->
-    <% elsif l.event_type == "new_follow" %>
-        <div class="iw item">
-            <%= render :partial => "follow_and_comment_button", :locals => {:parent => l.secondary_actor} %>
-            <div class="iw_img">
-                <%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), wine_path(l.secondary_actor) %>
-            </div>
+        <!-- 酒被关注 -->
+        <% elsif l.event_type == "new_follow" %>
             <div class="iw_info">
                 <h1>
                     <%= raw wine_name_zh_link(l.secondary_actor.cname, l.secondary_actor) %>
@@ -75,19 +58,13 @@
                     <% end %>
                 </ul>
             </div>
-            <div class="iw_more">
+            <div class="iw_more iw_more_follow">
                 <%= link_to followers_wine_path(l.secondary_actor) do %>
                     共<%= l.secondary_actor.followers_count  %>人关注
                 <% end %>
             </div>
-        </div>
-    <!-- 关注的酒被加入酒窖 -->
-    <% elsif l.event_type == "add_to_cellar" %>
-        <div class="iw item">
-            <%= render :partial => "follow_and_comment_button", :locals => {:parent => l.secondary_actor} %>
-            <div class="iw_img">
-                <%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), wine_path(l.secondary_actor) %>
-            </div>
+        <!-- 关注的酒被加入酒窖 -->
+        <% elsif l.event_type == "add_to_cellar" %>
             <div class="iw_info">
                 <h1><%= raw wine_name_zh_link(l.secondary_actor.cname, l.secondary_actor) %></h1>
                 <h2><%= raw link_to l.secondary_actor.origin_name, wine_path(l.secondary_actor) %></h2>             
@@ -114,15 +91,34 @@
             <div class="iw_more">
                 <%= link_to "去看看他的酒窖", cellars_user_path(l.actor, l.actor.cellar)%>
             </div>
-        </div>
-    <% end %>
+        <% end %>
+        <% if current_user %>
+            <div class="iw_comment clearfix" style="display:none;">
+                <div class="left">
+                    <%= link_to_user current_user, user_path(current_user, :trailing_slash => true), 
+                                                   {:with_avatar => true, :avatar_version => :thumb},
+                                                    {:width => 30, :height => 30, :alt => current_user.username} %>
+                </div>
+                <div class="right">
+                    <%= render :partial => "comments/share/ajax_form", 
+                               :locals => {:commentable => l.secondary_actor,
+                                           :item_id => item_id} %>
+                </div>
+            </div>
+        <% end %>
+    </div>
 <% end %>
-<script type="text/javascript">
-    $('.iw').bind('mouseenter mouseleave', function(e){
-        $(".action", this).toggle();
-    });
-    $(".submit_a").live('click', function(){
-        $(this).parents('form').submit();
-        return false;
-    })
+<%= javascript_include_tag 'waterfall_comment_follow' %>
+<script type="text/javascript" >
+    function setShare(title, url, summary, image_url) {
+        jiathis_config.title = title;
+        jiathis_config.url = url;
+        jiathis_config.summary = summary;
+        jiathis_config.pic = image_url;
+    }
+    var jiathis_config={
+        data_track_clickback:true,
+        hideMore:false
+    }
 </script>
+<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1623461" charset="utf-8"></script>
