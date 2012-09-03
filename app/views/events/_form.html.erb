@@ -21,15 +21,12 @@
             <div id="tag_container">
                 <%= f.hidden_field :tag_list  %> 
               <div id="input_tag_view">
-                <%= f.text_field :tags, :class => [:text, :tag], :placeholder => '输入后回车确定' %>
-                <%= link_to 'javascript:void(0)', :class => [:btn_gray_b, :add_event_tag]  do %>
-                  <span>添加</span>
-                <% end %>
+                <%= f.text_field :tags, :class => [:text, :tag] %>
+                 多个标签用“,”隔开 
                 <span id="tags_error" class="red"></span>
               </div>
               <span class="red" id="warning" style="display:none">不能为空</span>
               <div id="resource_container"></div>
-              <div id="select_tags_container"></div>
               <div class="clear"></div>
               <div id="hot_tags_container"></div>
 
@@ -43,26 +40,20 @@
                 </ul>
               </script>
 
-              <script type="text/template" id="selected_tags_template">
-                <ul class="tags mt10">
-                </ul>
-              </script>
-
               <script type="text/template" id="tags_template">
-                 <a href="javascript:void(0)" data-value= ""><@= name @></a>
+                <a href="javascript:void(0)" data-value= ""><@= name @></a>
               </script>
 
               <script language="javascript" type="text/javascript">
                 $(document).ready(function(){
-                    sv = new app.SelectTagsListView ({collection: app.SelectTags, hotTags:app.HotTags})
+                    hv = new app.HotTagsListView ({collection: app.HotTags, selectTags: app.SelectTags}) 
+                    new app.InputTagView ({collection: app.SelectTags, hotTags: app.HotTags})
+                    app.HotTags.fetch()
                     <% if @event.tags_array.present? %>
                       <% @event.tags_array.each do |tag| %>
-                        app.SelectTags.add({id:<%= tag[:id] %>, name: "<%= tag[:name] %>"})
+                        app.SelectTags.add({id:<%= tag[:id] %>, name: "<%= tag[:name] %>"});
                       <% end %>
                     <% end %>
-                    hv = new app.HotTagsListView ({collection: app.HotTags}) 
-                    new app.InputTagView ({collection: app.SelectTags})
-                    app.HotTags.fetch()
                     });
               </script>
 
