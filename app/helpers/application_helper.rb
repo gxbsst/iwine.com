@@ -458,4 +458,16 @@ module ApplicationHelper
     1.upto(5){|i| rand_id << chars[rand(chars.size-1)]}
     return "#{id}#{rand_id}"
   end
+
+  #首页展示不同文字
+  def time_line_text(type, winery = false)
+    case type
+    when "new_comment"
+      "有了新评论"
+    when "new_follow"
+      "这支酒#{'庄' if winery}被关注"
+    when "add_to_cellar"
+      "有人把它加入了酒窖"
+    end
+  end
 end
