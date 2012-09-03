@@ -117,6 +117,8 @@ group :test do
   gem "guard-spork"
   gem "autotest-rails"
   gem "ZenTest"
+  gem 'simplecov', :require => false
+  gem 'metrical', :require => false
 end
 
 gem 'user_resource_init', :path => 'lib/patrick/user_resource_init'

@@ -108,7 +108,6 @@ describe Event do
         @event.address.should include("上海") 
       end
 
-      
       it "latitude longitude" do
        Geocoder.coordinates(@event.address).first.should eql(31.230393)
        Geocoder.coordinates(@event.address).last.should  eql(121.473704)

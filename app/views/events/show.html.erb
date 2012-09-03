@@ -30,6 +30,13 @@
               <%= @event.participants_count %>人参加  |  <%= @event.followers_count %>人感兴趣
             </span>
             <div class="action">
+              <div class="share">
+                <%= render 'share/sns_icons',
+                  :image_url => sns_image_url(@event, :thumb_name => :large),
+                  :title => sns_title(@event.title),
+                  :summary => @event.title ,
+                  :url => request.url %>
+              </div>
               <%= render 'join_event_button' %>
 
               <div id="follow_form"  style="display: none" ></div>
@@ -49,7 +56,7 @@
                 <%= render 'share/sns_icons',
                   :image_url => sns_image_url(@event, :thumb_name => :large),
                   :title => sns_title(@event),
-                  :summary => @event.title ,
+                  :summary => sns_summary(@event.title),
                   :url => request.url %>
                 <!--end action-->
             </div>

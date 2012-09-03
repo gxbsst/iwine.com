@@ -310,6 +310,8 @@ module ApplicationHelper
       object.info_items.first.description if object.info_items.first
     when 'Wines::Detail'
       object.description
+    when 'Event'
+      object.title
     end
     truncate(desc.to_s.gsub(" ", '').gsub(/\r|\n/, ''), :length => 70)
   end

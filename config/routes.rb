@@ -154,18 +154,23 @@ Patrick::Application.routes.draw do
       match "cellars/:cellar_id", :via => [:get], :to => "cellars#show", :as => :cellars
       get :follow
       get :unfollow
-
-      # Events
-      get :events
-      get :create_events
-      get :join_events
-      get :follow_events
     end
     collection do
       get "register_success"
     end
+
+    resource :events, :controller => 'users/events' do
+      # Events
+      collection do
+        get :index
+        get :create_events
+        get :join_events
+        get :follow_events
+      end
+    end
+
   end
-  
+
   # 酒窖
   resources :cellars do
      resources :cellar_items, :path => :items, :as => "items" do

@@ -1,4 +1,6 @@
 class Tag extends Backbone.Model
+  updateSelectStatus: ->
+    @.set select: 'select'
   validate: (attributes) ->
     # NOTE: attributes argument is ONLY the ones that changed.
     mergedAttributes = _.extend(_.clone(@attributes), attributes)
@@ -8,6 +10,11 @@ class Tag extends Backbone.Model
 class Tags extends Backbone.Collection
   url: '/api/event_tags/hot_tags'
   model: Tag
+  updateSelectStatusByName: (name) ->
+    tags = @.where name: name
+    if tags.length > 0
+      tags.forEach (tag) ->
+        tag.updateSelectStatus()
 
 class Wines extends Backbone.Collection
   url: '/searchs/wine?word=' 
@@ -19,110 +26,93 @@ class Wines extends Backbone.Collection
 @app.SelectTags = new Tags
 @app.SearchWines = new Wines
 @app.SelectWines = new Wines
-    
+
 jQuery ->
   _.templateSettings = {
     interpolate: /\<\@\=(.+?)\@\>/g,
     evaluate: /\<\@(.+?)\@\>/g
   }
-
-  class SelectTagsListView extends Backbone.View
-    template: _.template($("#selected_tags_template").html())
-    initialize: ->
-      _.bindAll(@, 'render', 'addTag')
-      @collection.bind 'reset', @render
-      @collection.bind 'add', @render
-      @options.hotTags.bind 'select', @addTag
-    render: =>
-      $("#event_tag_list").val(@collection.pluck('name').join(","))
-      $(@el).html @template {}
-      @collection.each (model) =>
-        selectTagsView = new SelectTagsView model: model, selectTags: @collection
-        @.$('ul').append(selectTagsView.render().el)
-      $("#select_tags_container").append(@el)
-      @
-    addTag: (tag) ->
-      # 如果已经选择，则不再添加
-      if (@collection.where name: tag.get('name')).length == 0
-        @collection.add(tag)
-      else
-        alert('该标签已经添加了')
-        # window.app.InputTagView.flashWarning "", "已经添加了"
-    
   class HotTagsListView extends Backbone.View
     template: _.template($("#hot_tags_template").html())
     initialize: ->
-      _.bindAll(@, 'render')
-      @collection.bind 'add', @render
+      _.bindAll(@, 'render', 'addTag')
       @collection.bind 'reset', @render
+      @options.selectTags.bind 'remove', @render
+      @options.selectTags.bind 'add', @render
+      @collection.bind 'select', @addTag
+      @collection.on 'update_status', @render
+    addTag: (tag) ->
+      @options.selectTags.on 'add', @render
+      selectTagItem = @options.selectTags.where name:tag.get('name')
+      if selectTagItem.length > 0
+        tag.set select: ''
+        @options.selectTags.remove(selectTagItem)
+      else
+        tag.set select: 'select'
+        @options.selectTags.add(tag)
     render: ->
       $(@el).html @template {}
+      selectTags = @options.selectTags
+      if selectTags.length > 0 # 更新collection的select状态
+        @updateCollectionSelectStatus(@collection, selectTags)
       @collection.each (model) =>
-        hotTagsView = new HotTagsView  model:model, collection: @collection
+        hotTagsView = new HotTagsView  model:model, collection: @collection, selectTags: @options.selectTags
         @.$('ul').append(hotTagsView.render().el)
       $("#hot_tags_container").append(@el) 
       @
+    updateCollectionSelectStatus: (hotTags, selectTags) -> # 更新collection为select
+      hotTags.forEach (tag) ->
+        tag.set select: ''
+      selectTags.each (selectTag) ->
+        items = hotTags.where name: selectTag.get('name')
+        if items.length > 0
+          items.forEach (item) ->
+           item.updateSelectStatus()
+
   class TagsView extends Backbone.View
     tagName: 'li'
     template: _.template($("#tags_template").html())
     initialize: ->
       _.bindAll(@, 'render')
     render: ->
+      if @model.get('select') == 'select'
+        $(@el).addClass('select')
       $(@el).html @template @model.toJSON()
       @
 
   class HotTagsView extends TagsView
     events: {
-      'click  a' : 'select'
+      'click  a' : 'select' # 单击某个标签
     }
     initialize: ->
       _.bindAll(@, 'render')
     select: ->
       @collection.trigger('select', @model)
 
-  class SelectTagsView extends TagsView
-    events: 
-      'click a' : 'removeFromSelected'
-    initialize: ->
-      _.bindAll(@, 'render', 'remove')
-      @model.bind 'remove', @remove
-
-    removeFromSelected: ->
-      @options.selectTags.remove(@model)
-      $("#event_tag_list").val(@options.selectTags.pluck('name').join(","))
-
   class InputTagView extends Backbone.View
     el: $("#input_tag_view")
-    events: 
-      'keypress input': 'addTag'
-      'click .add_event_tag': 'addTag'
-      'focusout input': 'hideWarning'
-    addTag:(event) ->
-      if (event.keyCode is 13 || $(event.target).text() == '添加' ) # ENTER
-        event.preventDefault()
-        name = $(@el).find('input').val()
-        if name.trim() == ''
-          @flashWarning '', "不能为空"
-        else
-          newTag = new window.app.Tag({name:name})
-          # newAttributes = {name: $(@el).find('input').val()}
-          errorCallback = {error:@flashWarning}
-          # 如果已经选择，则不再添加
-          if (@collection.where name:name).length == 0 
-            if @collection.add(newTag, errorCallback)
-              @hideWarning()
-              @focus()
-          else
-            alert('该标签已经添加了')
-            # @flashWarning '', "已经添加了"
-    focus: ->
-      $(@el).find('input').val('').focus()
-    hideWarning: ->
-      $('#warning').hide()
-    flashWarning: (model, error) =>
-      console.log error
-      $('#warning').html(error).fadeOut(100)
-      $('#warning').fadeIn(400)
+    events:
+      "keyup input": 'updateHotTagsSelectStatus'
+    updateHotTagsSelectStatus: (event) ->
+      @collection.off('add')
+      @collection.reset()
+      value = @.$('input').val()
+      if value.trim() != ''
+        value.split(',').forEach (tagName) =>
+          if tagName.trim() != ''
+            tag = new window.app.Tag name: tagName, select: 'select'
+            @collection.add tag
+      @options.hotTags.trigger('update_status')
+      $("#event_tag_list").val(@collection.pluck('name').join(","))
+    initialize: ->
+      @collection.bind('add', @renderInputValue , @)
+      @collection.bind('remove', @renderInputValue , @)
+      @options.hotTags.bind('select', @renderInputValue, @)
+    renderInputValue: ->
+      $("#event_tags").val(@collection.pluck('name').join(","))
+      $("#event_tag_list").val(@collection.pluck('name').join(","))
+
+
   class EventAppView extends Backbone.View
     el: $('.whitespace')
     events: 
@@ -160,7 +150,6 @@ jQuery ->
   @app = window.app ? {}
   # Tags
   @app.HotTagsListView =  HotTagsListView
-  @app.SelectTagsListView = SelectTagsListView
   @app.InputTagView = InputTagView 
 
   @app.EventAppView = new EventAppView selectTags: window.app.SelectTags

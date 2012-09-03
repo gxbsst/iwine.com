@@ -20,15 +20,15 @@
               margin: 10px 10px 0 0;
             }
           </style>
-            <li><%= link_to "创建的活动", create_events_user_path(@user) %></li>
-            <li><%= link_to "参加的活动", join_events_user_path(@user) %></li>
-            <li><%= link_to "感兴趣的活动", follow_events_user_path(@user) %></li>
+            <li><%= link_to "创建的活动", create_events_user_events_path(@user) %></li>
+            <li><%= link_to "参加的活动", join_events_user_events_path(@user) %></li>
+            <li><%= link_to "感兴趣的活动", follow_events_user_events_path(@user) %></li>
           </ul>
         <div class="title_btn">
           <h1>
             创建的活动 
             <span class="font12 more">
-              <%= link_to "(共#{ @user.create_events_count }个...)", create_events_user_path(@user) %>
+              <%= link_to "(共#{ @user.create_events_count }个...)", create_events_user_events_path(@user) %>
             </span>
           </h1>
         </div>
@@ -71,7 +71,7 @@
           <h1>
             参加的活动
             <span class="font12 more">
-              <%= link_to "(共#{ @user.join_events_count }个...)", join_events_user_path(@user) %>
+              <%= link_to "(共#{ @user.join_events_count }个...)", join_events_user_events_path(@user) %>
             </span>
           </h1>
         </div>
@@ -113,7 +113,7 @@
             <h1>
               关注的活动
               <span class="font12 more">
-                <%= link_to "(共#{ @user.follow_events_count }个...)", follow_events_user_path(@user) %>
+                <%= link_to "(共#{ @user.follow_events_count }个...)", follow_events_user_events_path(@user) %>
               </span>
             </h1>
           </div>
