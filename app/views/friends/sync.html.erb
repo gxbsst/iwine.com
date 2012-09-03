@@ -37,17 +37,17 @@
       parent.$('.share_weibo input').removeAttr('disabled');
       parent.$('.share_weibo a').attr({href: 'javascript:void(0);', class: ''});
       parent.$('.share_weibo .sns_on').toggle();
-      parent.$('.share_weibo_image').attr({src: '/assets/waterfall/images/icon/weibo_s_on.png', class: 'image_on'});
+      parent.$('.share_weibo_image').attr({src: '/assets/icon/weibo_s_on.png', class: 'image_on'});
     }else if (patt_qq.test(href)){
       parent.$('.share_qq input').removeAttr('disabled');
       parent.$('.share_qq a').attr({href: 'javascript:void(0);', class: ''});
       parent.$('.share_qq .sns_on').toggle();
-      parent.$('.share_qq_image').attr({src: '/assets/waterfall/images/icon/tencen_s_on.png', class: 'image_on'});
+      parent.$('.share_qq_image').attr({src: '/assets/icon/tencen_s_on.png', class: 'image_on'});
     }else if (patt_douban.test(href)){
       parent.$('.share_douban input').removeAttr('disabled');
       parent.$('.share_douban a').attr({href: 'javascript:void(0);', class: ''});
       parent.$('.share_douban .sns_on').toggle();
-      parent.$('.share_douban_image').attr({src: '/assets/waterfall/images/icon/douban_s_on.png', class: 'image_on'});
+      parent.$('.share_douban_image').attr({src: '/assets/icon/douban_s_on.png', class: 'image_on'});
     }
     parent.$.fancybox.close();
   <% end %>

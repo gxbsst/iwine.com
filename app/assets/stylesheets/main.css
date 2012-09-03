@@ -362,7 +362,7 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .message_notice {background:url(bg/message_notice.png) no-repeat left top;display:inline-block;width:91px;height:52px;text-align:center;color:#875f0e;position:absolute;left:-44px;top:38px;padding:20px 5px 0 5px;}
 #header #top_right .message_notice a {float:none;color:#875f0e;}
 #header #top_right .message_notice a:hover {color:#875f0e;text-decoration:none;}
-.globel_navi .city li {display:inline-block;margin:0 -3px 6px 0;}
+.globel_navi .city li a {display:block;float:left;margin:5px 13px;padding:0;}
 
 /*main space*/
 #wrapper950 {width:950px;margin: 30px auto;}

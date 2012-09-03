@@ -1,5 +1,5 @@
 @charset "UTF-8";
-.winery_header {background:url(bg/bg_gray_line.gif) repeat-y;background-position: 15px 0;zoom:1;}
+.winery_header {background:url(bg/bg_gray_line.gif) repeat-y    ;background-position: 15px 0;zoom:1;}
 .winery_header .cover {width:360px;float:left;}
 .winery_header .info {width:305px;float:left;padding:20px;}
 .winery_header .logo {margin:0 0 10px 0;}

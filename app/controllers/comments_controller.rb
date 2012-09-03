@@ -276,13 +276,19 @@ class CommentsController < ApplicationController
         oauth_comment = @comment.oauth_comments.build(:sns_type => sns_type,
                                                       :body => content,  
                                                       :sns_user_id => oauth.sns_user_id, 
-                                                      :user_id => @comment.user_id)
+                                                      :user_id => @comment.user_id,
+                                                      :ip_address => inet_aton(request.remote_ip))
         oauth_comment.image_url  = get_share_photo
         oauth_comment.save
       end
       #发送weibo
       @comment.delay.share_comment_to_weibo
     end
+  end
+
+  #将ip地址转化为整数
+  def inet_aton(ip)
+    ip.split(/\./).map{|c| c.to_i}.pack("C*").unpack("N").first
   end
 
   #得到要分享的图片
