@@ -424,7 +424,7 @@ a.btn_green:hover span {background-position:right -92px;}
 .off a.btn_gray {color:#ccc;}
 .off a.btn_gray:hover {background-position:left top;text-decoration:none;color:#CCC;}
 .off a.btn_gray:hover span {background-position:right top;}
-a.btn_bluesky_b, a.btn_bluesky_b span, a.btn_bluesky_b:hover, a.btn_bluesky_b:hover span, a.btn_createvent, a.btn_createvent span, a.btn_createvent:hover, a.btn_createvent:hover span, a.btn_bluesky_b, a.btn_bluesky_b span, a.btn_bluesky_b:hover, a.btn_bluesky_b:hover span, a.btn_bluesky_s, a.btn_bluesky_s span, a.btn_bluesky_s:hover, a.btn_bluesky_s:hover span, a.btn_off_s, a.btn_off_s span, a.btn_off_s:hover, a.btn_off_s:hover span, .full, .full em {background:url(../images/bg/bg_btn_style2.gif) no-repeat;}
+a.btn_bluesky_b, a.btn_bluesky_b span, a.btn_bluesky_b:hover, a.btn_bluesky_b:hover span, a.btn_createvent, a.btn_createvent span, a.btn_createvent:hover, a.btn_createvent:hover span, a.btn_bluesky_b, a.btn_bluesky_b span, a.btn_bluesky_b:hover, a.btn_bluesky_b:hover span, a.btn_bluesky_s, a.btn_bluesky_s span, a.btn_bluesky_s:hover, a.btn_bluesky_s:hover span, a.btn_off_s, a.btn_off_s span, a.btn_off_s:hover, a.btn_off_s:hover span, .full, .full em, a.btn_bluesky_ss, a.btn_bluesky_ss span, a.btn_bluesky_ss:hover, a.btn_bluesky_ss:hover span, .full_ss, .full_ss em  {background:url(../images/bg/bg_btn_style2.gif) no-repeat;}
 a.btn_createvent {background-position:left top;height:50px;display:inline-block;padding-left:11px;}
 a.btn_createvent span {background-position:right top;height:50px;line-height:50px;display:inline-block;color:#fff;font-size:16px;text-align:center;padding: 0 77px 0 66px;}
 a.btn_createvent:hover {background-position:left -50px;}
@@ -437,6 +437,10 @@ a.btn_bluesky_s {background-position:left -100px;height:40px;display:inline-bloc
 a.btn_bluesky_s span {background-position:right -100px;height:40px;line-height:40px;display:inline-block;color:#fff;font-size:14px;text-align:center;padding: 0 25px 0 10px;}
 a.btn_bluesky_s:hover {background-position:left -140px;}
 a.btn_bluesky_s:hover span {background-position:right -140px;}
+a.btn_bluesky_ss {background-position:left -300px;height:30px;display:inline-block;padding-left:15px;}
+a.btn_bluesky_ss span {background-position:right -300px;height:30px;line-height:30px;display:inline-block;color:#fff;font-size:14px;text-align:center;padding: 0 15px 0 0px;}
+a.btn_bluesky_ss:hover {background-position:left -330px;}
+a.btn_bluesky_ss:hover span {background-position:right -330px;}
 a.btn_off_s {background-position:left -180px;height:40px;display:inline-block;padding-left:15px;}
 a.btn_off_s span {background-position:right -180px;height:40px;line-height:40px;display:inline-block;color:#627d6e;font-size:14px;text-align:center;padding: 0 25px 0 10px;}
 a.btn_off_s:hover {background-position:left -220px;}
@@ -444,6 +448,8 @@ a.btn_off_s:hover span {background-position:right -220px;}
 a.btn_bluesky_s:hover, a.btn_off_s span:hover {text-decoration:none;}
 .full {background-position:left -260px;height:40px;line-height:40px;display:inline-block;color:#888;text-align:center;padding: 0 0 0 15px;font-size:14px;}
 .full em {background-position:right -260px;height:40px;line-height:40px;display:inline-block;padding: 0 25px 0 10px;font-style:normal;}
+.full_ss {background-position:left -360px;height:30px;line-height:30px;display:inline-block;color:#888;text-align:center;padding: 0 0 0 15px;font-size:14px;}
+.full_ss em {background-position:right -360px;height:30px;line-height:30px;display:inline-block;padding: 0 15px 0 0px;font-style:normal;}
 
 
 /*------------box style---------------*/
