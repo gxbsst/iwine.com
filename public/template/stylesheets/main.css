@@ -203,6 +203,10 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .icon_join {background:url(../images/icon/join.png) no-repeat 0 -1px;padding: 0 0 0 18px;}
 .icon_text_edit {background:url(../images/icon/join_edit.png) no-repeat 0 -1px;padding:0 0 0 18px;}
 .icon_public {background:url(../images/icon/public.png) no-repeat 0 1px;padding:2px 0 0 18px;height:20px;}
+.icon_sina2 {background:url(../images/icon/sina_s_on.png) no-repeat 0 0;display:block;width:17px;height:17px;}
+.icon_tt2 {background:url(../images/icon/tencen_s_on.png) no-repeat 0 0;display:block;width:17px;height:17px;}
+.icon_douban {background:url(../images/icon/douban_s_on.png) no-repeat 0 0;display:block;width:17px;height:17px;}
+.icon_renren {background:url(../images/icon/renren_s_on.png) no-repeat 0 0;display:block;width:17px;height:17px;}
  
 /*--------------star style---------------*/
 .star_s0, .star_s1, .star_s2, .star_s3, .star_s4, .star_s5, .star_s_h, .star_s1_h, .star_s2_h, .star_s3_h, .star_s4_h, .star_s5_h {background:url(../images/icon/allstar.gif) no-repeat;display:inline-block;width:65px;height:12px;_height:7px;}
