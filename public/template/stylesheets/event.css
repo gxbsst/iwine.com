@@ -26,7 +26,7 @@
 .base .info {margin:0 0 10px 0;}
 .base .p_count {margin:0 0 15px 0;}
 .base .action {margin:0 0 10px 0;}
-.lh40 {line-height:40px;}
+.lh {line-height:30px;}
 .base .share {float:right;}
 .event_end, .event_cancle, .event_unpublic {display:inline-block;padding:2px 5px;border-radius: 5px 5px 5px 5px;}
 .event_end {background-color:#6CF;color:#fff;}
