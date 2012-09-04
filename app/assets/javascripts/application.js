@@ -37,8 +37,9 @@ $(document).ready(function(){
     $('.globel_navi li.arrow').bind('mouseenter mouseleave', function(e) {
         $('.CategoryDropdown', this).toggle();
     });
-
-
+    $(".share_sns").bind('mouseenter mouseleave', function(e){
+       $(".dropbox",this).toggle();
+    });
     // 酒详细页面
     $("a.wine_profile").fancybox();
 

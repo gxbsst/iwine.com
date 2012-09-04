@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>iWine</title>
+<link href="stylesheets/main.css" rel="stylesheet" type="text/css" />
+<link href="stylesheets/event.css" rel="stylesheet" type="text/css" />
+<link href="stylesheets/hp.css" rel="stylesheet" type="text/css" />
+<script src="javascripts/input.js" type="text/javascript"></script>
+<script type="text/javascript">
+function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua.indexOf(t)>-1},g='gecko',w='webkit',s='safari',o='opera',m='mobile',h=document.documentElement,b=[(!(/opera|webtv/i.test(ua))&&/msie\s(\d)/.test(ua))?('ie ie'+RegExp.$1):is('firefox/2')?g+' ff2':is('firefox/3.5')?g+' ff3 ff3_5':is('firefox/3.6')?g+' ff3 ff3_6':is('firefox/3')?g+' ff3':is('gecko/')?g:is('opera')?o+(/version\/(\d+)/.test(ua)?' '+o+RegExp.$1:(/opera(\s|\/)(\d+)/.test(ua)?' '+o+RegExp.$2:'')):is('konqueror')?'konqueror':is('blackberry')?m+' blackberry':is('android')?m+' android':is('chrome')?w+' chrome':is('iron')?w+' iron':is('applewebkit/')?w+' '+s+(/version\/(\d+)/.test(ua)?' '+s+RegExp.$1:''):is('mozilla/')?g:'',is('j2me')?m+' j2me':is('iphone')?m+' iphone':is('ipod')?m+' ipod':is('ipad')?m+' ipad':is('mac')?'mac':is('darwin')?'mac':is('webtv')?'webtv':is('win')?'win'+(is('windows nt 6.0')?' vista':''):is('freebsd')?'freebsd':(is('x11')||is('linux'))?'linux':'','js']; c = b.join(' '); h.className += ' '+c; return c;}; css_browser_selector(navigator.userAgent);
+</script>
+</head>
+
+<body>
+	<div id="header">
+    <div class="main950">
+        	<div id="logo"><img src="images/common/logo.gif" alt="iWine" width="299" height="43" /></div>
+            <form action="search.html">
+                <div id="top_search">
+                    <input class="search_btn" name="" type="image" src="images/icon/search.gif"/>
+                    <input class="search" type="text" value="搜索酒款、酒庄" onclick="clearDefaultText(this,'搜索酒款、酒庄')"  />
+                </div>
+            </form>
+            <div id="top_right">
+            	<ul>
+                	<li class="userbox">
+                    	<a class="userpic" href="#"><img src="images/userimage/06.jpg" width="20" height="20" /></a><a href="#"><img src="images/common/userbox_arrow.jpg" width="22" height="30" /></a>
+                    </li>
+                    <li class="top_add"><a href="#" class="btn_add">添加</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="globel_navi">
+    	<ul>
+        	<li class=""><a href="index.html">首页</a></li>
+            <li class="arrow"><a href="wine.html">酒款</a></li>
+            <li class="arrow"><a href="winery.html">酒庄</a></li>
+            <li class="last arrow current"><a href="event.html">活动</a></li>
+          <div class="clear"></div>
+      </ul>
+    </div>
+    <div id="wrapper950">
+      <div class="whitespace">
+      <div id="hp">
+      	<div class="hp_header">
+            <div class="hp_userimg"><a href="myhp.html"><img src="images/userimage/p130.jpg" width="130" height="130" alt="usrename" /></a></div>
+            <div class="hp_info">
+                <div class="hp_right"><a href="cellar.html" class="btn_red_sb"><span>某个名字很长很长的人的酒窖</span></a></div>
+                <div class="username">不良夏生</div>
+                <div class="mystatu"><p>准备小宇宙爆发...<span><a href="#">修改</a></span></p>
+                <p>博客：<a href="#">http://test.blogbus.com</a></p></div>
+                <div class="item"><span class="icon_fol mr5">已关注</span><span class="icon_fol_e mr5">互相关注</span><span class="cancl_fol mr5"> <a href="#">(取消)</a></span><a href="#" class="btn_gray mr5"><span>加关注</span></a><a class="icon_mail" href="#">发私信</a></div>
+                <ul class="hp_navi">
+                    <li><a href="cellar.html">12<br/>藏酒</a></li>
+                    <li><a href="myhp_wine_list.html">12<br/>
+                    关注的酒</a></li>
+                    <li><a href="myhp_winery_list.html">12<br/>
+                    关注的酒庄</a></li>
+                    <li><a href="myhp_comment_list.html">12<br/>评论</a></li>
+                    <li><a href="#">12<br/>品酒辞</a></li>
+                    <li><a href="myhp_following_list.html">12<br/>关注的人</a></li>
+                    <li><a href="myhp_follower_list.html">12<br/>粉丝</a></li>
+                    <li><a href="album.html">12<br/>相册</a></li>
+                  <li class="current"><a href="myevent.html">12<br/>活动</a></li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+          <div class="content">
+          	<div class="left">
+           	  <div class="tabs">
+                  <ul>
+                    <li class="current"><a href="event_create.html">创建的活动</a></li>
+                    <li><a href="event_join.html">参加的活动</a></li>
+                    <li><a href="event_follow.html">感兴趣的活动</a></li>
+                  </ul>
+              </div>
+              <div class="title_btn">
+                  <h1>创建的活动</h1>
+                </div>
+                <div class="event_list">
+        	   <dl class="clearfix">
+            	<dt><a href="event_detail.html"><img src="images/test/event_100_01.jpg" alt="鸡尾酒初级品鉴会" width="100" height="150" /></a></dt>
+                <dd>
+               	  <span class="type"><a href="#">品酒会</a></span>
+                    <h2><a href="event_detail.html">鸡尾酒初级品鉴会</a></h2>
+                    <div class="info">时间:  6.17 14:00 - 6.17 20:30<br />
+                      地点:  上海 浦东新区 成上路云台路上南八村27号<br />
+                    组织者：Sheren</div>
+                  <div class="p_count2"><span>54人参加  |  98人感兴趣</span></div>
+                  <div class=""><a class="icon_edit2" href="#">编辑活动</a> | <a class="icon_cancle" href="#">取消活动</a> | <a class="icon_member" href="event_create_member.html">查看参与者</a></div>
+                </dd>
+                <div class="clear"></div>
+            </dl>
+            <dl class="clearfix">
+            	<dt><a href="event_detail.html"><img src="images/test/event_100_01.jpg" alt="鸡尾酒初级品鉴会" width="100" height="150" /></a></dt>
+                <dd>
+               	  <span class="type"><a href="#">品酒会</a></span>
+                    <h2><a href="event_detail.html">鸡尾酒初级品鉴会</a></h2>
+                    <div class="info">时间:  6.17 14:00 - 6.17 20:30<br />
+                      地点:  上海 浦东新区 成上路云台路上南八村27号<br />
+                    组织者：Sheren</div>
+                  <div class="p_count2"><span>54人参加  |  98人感兴趣</span></div>
+                  <div class=""><a class="icon_edit2" href="#">编辑活动</a> | <a class="icon_cancle" href="#">取消活动</a> | <a class="icon_member" href="#">查看参与者</a></div>
+                </dd>
+                <div class="clear"></div>
+            </dl>
+            <dl class="clearfix">
+            	<dt><a href="event_detail.html"><img src="images/test/event_100_01.jpg" alt="鸡尾酒初级品鉴会" width="100" height="150" /></a></dt>
+                <dd>
+               	  <span class="type"><a href="#">品酒会</a></span>
+                    <h2><a href="event_detail.html">鸡尾酒初级品鉴会</a></h2>
+                    <div class="info">时间:  6.17 14:00 - 6.17 20:30<br />
+                      地点:  上海 浦东新区 成上路云台路上南八村27号<br />
+                    组织者：Sheren</div>
+                  <div class="p_count2"><span>54人参加  |  98人感兴趣</span></div>
+                  <div><span class="event_unpublic mr5">未发布</span><a class="icon_public" href="#">发布</a> | <a class="icon_edit2" href="#">编辑活动</a></div>
+                </dd>
+                <div class="clear"></div>
+            </dl>
+            <dl class="clearfix">
+            	<dt><a href="event_detail.html"><img src="images/test/event_100_01.jpg" alt="鸡尾酒初级品鉴会" width="100" height="150" /></a></dt>
+                <dd>
+               	  <span class="type"><a href="#">品酒会</a></span>
+                    <h2><a href="event_detail.html">鸡尾酒初级品鉴会</a></h2>
+                    <div class="info">时间:  6.17 14:00 - 6.17 20:30<br />
+                      地点:  上海 浦东新区 成上路云台路上南八村27号<br />
+                    组织者：Sheren</div>
+                  <div class="p_count2"><span>54人参加  |  98人感兴趣</span></div>
+                  <div><span class="event_end">活动已结束</span></div>
+                </dd>
+                <div class="clear"></div>
+            </dl>
+            <dl class="clearfix">
+            	<dt><a href="event_detail.html"><img src="images/test/event_100_01.jpg" alt="鸡尾酒初级品鉴会" width="100" height="150" /></a></dt>
+                <dd>
+               	  <span class="type"><a href="#">品酒会</a></span>
+                    <h2><a href="event_detail.html">鸡尾酒初级品鉴会</a></h2>
+                    <div class="info">时间:  6.17 14:00 - 6.17 20:30<br />
+                      地点:  上海 浦东新区 成上路云台路上南八村27号<br />
+                    组织者：Sheren</div>
+                  <div class="p_count2"><span>54人参加  |  98人感兴趣</span></div>
+                  <div><span class="event_cancle">活动已取消</span></div>
+                </dd>
+                <div class="clear"></div>
+            </dl>
+        </div>
+            </div>
+            <div class="right">
+            <div class="sidebox"><a href="add_event.html" class=" btn_bluesky_s"><span>我要创建活动</span></a></div>
+            <div class="title_btn">
+                  <h1>推荐的活动</h1>
+                </div>
+              <div class="side_event">
+                <dl class="clearfix">
+                	<dt><a href="event_detail.html"><img src="images/test/event_70_01.jpg" alt="美酒乐调酒体验活动" width="70" height="105" /></a></dt>
+                    <dd>
+                        <h3><a href="event_detail.html">美酒乐调酒体验活动</a></h3>
+                        <div class="info">6月16日至7月29日<br />
+                          上海 浦东新区 成上路云台路<br />
+                          上南八村27号<br />
+                        </div>
+                        <div class="p_count2">35 人参加 | 68人感兴趣</div>
+                    </dd>
+                    <div class="clear"></div>
+                </dl>
+                <dl class="clearfix">
+                	<dt><a href="event_detail.html"><img src="images/test/event_70_01.jpg" alt="美酒乐调酒体验活动" width="70" height="105" /></a></dt>
+                    <dd>
+                        <h3><a href="event_detail.html">美酒乐调酒体验活动</a></h3>
+                        <div class="info">6月16日至7月29日<br />
+                          上海 浦东新区 成上路云台路<br />
+                          上南八村27号<br />
+                        </div>
+                        <div class="p_count2">35 人参加 | 68人感兴趣</div>
+                    </dd>
+                    <div class="clear"></div>
+                </dl>
+                <dl class="clearfix">
+                	<dt><a href="event_detail.html"><img src="images/test/event_70_01.jpg" alt="美酒乐调酒体验活动" width="70" height="105" /></a></dt>
+                    <dd>
+                        <h3><a href="event_detail.html">美酒乐调酒体验活动</a></h3>
+                        <div class="info">6月16日至7月29日<br />
+                          上海 浦东新区 成上路云台路<br />
+                          上南八村27号<br />
+                        </div>
+                        <div class="p_count2">35 人参加 | 68人感兴趣</div>
+                    </dd>
+                    <div class="clear"></div>
+                </dl>
+            </div>
+            </div>
+            <div class="clear"></div>
+          </div>
+        <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+    <div id="footer">
+        <div class="link"><a href="aboutus.html">关于我们</a> | <a href="contactus.html">联系我们</a> | <a href="help.html">帮助中心</a> | <a href="privacy.html">隐私条款</a> | <a href="agreement.html">用户协议</a> | <a href="disclaimer.html">免责声明</a> | <a href="sitemap.html">网站地图</a> | <a href="feedback.html">意见反馈</a></div>
+        <div class="copyright">Copyright © 2011 iWine, Inc. All rights reserved. <a href="#">沪ICP备12345678号</a></div>
+    </div>
+</body>
+</html>

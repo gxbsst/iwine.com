@@ -74,7 +74,7 @@
        <li>
          <p class="pic">
            <%= link_to winery_photos_path(@winery) do  %>
-               <%= image_tag("/assets/waterfall/images/icon/winery_photo.gif", :width => 34, :height => 26) %>
+               <%= image_tag("/assets/icon/winery_photo.gif", :width => 34, :height => 26) %>
            <% end %>
          </p>
          <p><%= link_to "照片", winery_photos_path(@winery) %></p>
@@ -82,7 +82,7 @@
        <li>
          <p class="pic">
            <%= link_to "/wineries/#{@winery.slug}#02" do  %>
-               <%= image_tag("/assets/waterfall/images/icon/winery_intro.gif", :width => 26, :height => 30) %>
+               <%= image_tag("/assets/icon/winery_intro.gif", :width => 26, :height => 30) %>
            <% end %>
          </p>
          <p><%= link_to "介绍", "/wineries/#{@winery.slug}#02" %></p>
@@ -90,7 +90,7 @@
        <li class="last">
          <p class="pic">
            <%= link_to "#05" do  %>
-             <%= image_tag("/assets/waterfall/images/icon/winery_hot.gif", :width => 32, :height => 32)%>
+             <%= image_tag("/assets/icon/winery_hot.gif", :width => 32, :height => 32)%>
            <% end %>
           </p>
          <p><%= link_to "热门酒庄", "#05" %></p>
@@ -98,7 +98,7 @@
        <li>
          <p class="pic">
            <%= link_to wines_list_winery_path(@winery) do  %>
-               <%= image_tag("/assets/waterfall/images/icon/winery_wine.gif", :width => 24, :height => 37) %>
+               <%= image_tag("/assets/icon/winery_wine.gif", :width => 24, :height => 37) %>
            <% end  %>
          </p>
          <p><%= link_to "所有酒款", wines_list_winery_path(@winery) %></p>
@@ -106,7 +106,7 @@
        <li>
          <p class="pic">
            <%= link_to winery_comments_path(@winery) do  %>
-               <%= image_tag("/assets/waterfall/images/icon/winery_comment.gif", :width => 34, :height => 31) %>
+               <%= image_tag("/assets/icon/winery_comment.gif", :width => 34, :height => 31) %>
            <% end %>
          </p>
          <p><%= link_to "评论", winery_comments_path(@winery) %></p>
@@ -114,7 +114,7 @@
        <li class="last">
          <p class="pic">
            <%= link_to followers_list_winery_path(@winery) do %>
-               <%= image_tag("/assets/waterfall/images/icon/winery_follower.gif", :width => 31, :height => 36) %>
+               <%= image_tag("/assets/icon/winery_follower.gif", :width => 31, :height => 36) %>
            <% end %>
          </p>
          <p><%= link_to "关注者", followers_list_winery_path(@winery) %></p>
@@ -124,8 +124,8 @@
      <div class="share">
        <%= render "share/sns_icons",
                   :image_url => sns_image_url(@winery, :thumb_name => :middle_x),
-                  :title => sns_title(@winery.name),
-                  :summary => winery_summary(@winery),
+                  :title => sns_title(@winery),
+                  :summary => sns_summary(@winery),
                   :url => request.url %>
        <div class="clear"></div>
      </div> 

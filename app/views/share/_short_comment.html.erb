@@ -1,0 +1,12 @@
+<li>
+    <div class="left">
+        <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true), {:with_avatar => true, :avatar_version => :thumb}, {:width => 30, :height => 30} %>
+    </div>
+    <div class="right">
+        <p class="username">
+            <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true) %>
+        </p>
+        <p class="content"><%= comment.body %></p>
+    </div>
+    <div class="clear"></div>
+</li>

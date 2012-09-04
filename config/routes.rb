@@ -104,7 +104,11 @@ Patrick::Application.routes.draw do
       end
     end    
     resources :photos
-    resources :follows, :controller => "follows" 
+    resources :follows, :controller => "follows" do
+      collection do
+        get :follow
+      end
+    end
   end
   
   # PHOTO
@@ -217,7 +221,11 @@ Patrick::Application.routes.draw do
         post :create, :as => "winery" # 这里主要是为了使评论表单的URL为一致
       end
     end
-    resources :follows, :controller => "follows" 
+    resources :follows, :controller => "follows" do
+      collection do
+        get :follow
+      end
+    end
   end
   # SETTINGS
   resources :settings do

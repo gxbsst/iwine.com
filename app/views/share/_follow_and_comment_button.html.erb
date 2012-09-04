@@ -1,0 +1,49 @@
+<div class="action clearfix" style="display:none;">
+	<% if current_user %>
+	    <a class="btn_iw hc" href="javascript:void(0);"><span><em>评论</em></span></a>
+	    <% path = case parent.class.name 
+	        when "Winery"
+	       	    follow_winery_follows_path(parent, :item_id => item_id) 
+	       	when "Wines::Detail"
+	       		follow_wine_follows_path(parent, :item_id => item_id) 
+	       	end
+	    %>
+	    <%= link_to path, :class => "btn_iw hf", :remote => true do %>
+	        <span><em><%= follow_content(parent) %></em></span>
+	    <% end %>
+	    <span class="share_sns">
+	    	<a class="btn_iw hs" href="javascript:void(0);"><span><em>分享</em></span></a>
+	    	<div class="dropbox" style="display:none;">
+			    <div class="com_s sns clearfix" id="sns<%= item_id %>">
+					<div id="ckepop">
+					  	<a class="jiathis_button_tsina"></a>
+					  	<a class="jiathis_button_tqq"></a>
+					  	<a class="jiathis_button_renren"></a>
+					  	<a class="jiathis_button_douban"></a>
+					</div>
+					<div class="clear"></div> 	
+			    </div>
+			</div>
+	    </span>
+	<% else %>
+		<%= link_to login_path, :class => "btn_iw hc" do %>
+			<span><em>评论</em></span>
+		<% end %>
+		<%= link_to login_path, :class => "btn_iw hf" do %>
+	        <span><em>关注</em></span>
+	    <% end %>
+	    <%= link_to login_path, :class => "btn_iw hs" do %>
+	    	<span><em>分享</em></span>
+	    <% end %>
+	<% end %>
+</div>
+<script type="text/javascript">
+    $("#sns<%= item_id %>").mouseover(function(){
+        setShare(
+        	"<%= sns_title(parent) %>", 
+    		"<%= sns_url(parent) %>", 
+    		"<%= sns_summary(parent) %>", 
+    		"<%= sns_image_url(parent, :thumb_name => :large) %>"
+        );
+    });	
+</script>
