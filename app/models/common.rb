@@ -9,6 +9,15 @@ module Common
   # def find_follow user
   #   comments.where("user_id = ? and do = ? and deleted_at is null", user.id, 'follow').first
   # end
+  #获取 current comments_count
+
+  def current_comments_count
+    self.class.where("id = ?", id).select('id, comments_count').first.comments_count
+  end
+
+  def current_followers_count
+    self.class.where("id = ?", id).select('id, followers_count').first.followers_count
+  end
 
   def region_path_zh(options = {})
     region_trees = get_region_path

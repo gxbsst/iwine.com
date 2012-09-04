@@ -280,16 +280,40 @@ module ApplicationHelper
 
   #for sns_share
 
-  def sns_title(name)
-    "【#{name}】"
+  def sns_url(object)
+    sns_url = case object.class.name
+    when 'Winery'
+      winery_url(object)
+    when 'Wines::Detail'
+      wine_url(object)
+    end
+    sns_url
   end
 
-  def winery_summary(winery)
-    truncate(winery.info_items.first.description.gsub(" ", '').gsub(/\r|\n/, ''), :length => 70)  if winery.info_items.first
+  def sns_title(object)
+    title = case object.class.name
+    when 'Winery'
+      object.name
+    when 'Wines::Detail'
+      object.origin_zh_name
+    when 'User'
+      object.username
+    when 'Event'
+      object.title
+    end
+    "【#{title}】"
   end
 
-  def wine_summary(description)
-    truncate(description.to_s.gsub(" ", '').gsub(/\r|\n/, ''), :length => 70)
+  def sns_summary(object)
+    desc = case object.class.name
+    when 'Winery'
+      object.info_items.first.description if object.info_items.first
+    when 'Wines::Detail'
+      object.description
+    when 'Event'
+      object.title
+    end
+    truncate(desc.to_s.gsub(" ", '').gsub(/\r|\n/, ''), :length => 70)
   end
 
   def sns_image_url(object, options = {})
@@ -418,4 +442,32 @@ module ApplicationHelper
     type == "weibo" ? "新浪微博" : (type == "qq" ? "腾讯微博" : "豆瓣")
   end
 
+  #展示关注文本
+  def follow_content(parent)
+    if current_user && parent.follows.where("user_id = #{current_user.id}").present?
+      "取消关注"
+    else
+      "关注"
+    end
+  end
+
+  #获取随机数
+  def get_rand_id(id)
+    chars = ("0".."9").to_a
+    rand_id = ''
+    1.upto(5){|i| rand_id << chars[rand(chars.size-1)]}
+    return "#{id}#{rand_id}"
+  end
+
+  #首页展示不同文字
+  def time_line_text(type, winery = false)
+    case type
+    when "new_comment"
+      "有了新评论"
+    when "new_follow"
+      "这支酒#{'庄' if winery}被关注"
+    when "add_to_cellar"
+      "有人把它加入了酒窖"
+    end
+  end
 end

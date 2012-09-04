@@ -29,7 +29,7 @@
           <div class="share float_r">
             <%= render "share/sns_icons",
                      :image_url => sns_image_url(@photo, :thumb_name => :large),
-                     :title => sns_title(@user.username),
+                     :title => sns_title(@user),
                      :summary => "的照片",
                      :url => request.url %>
             |

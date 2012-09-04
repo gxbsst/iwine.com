@@ -1,0 +1,8 @@
+<%= form_for [commentable, commentable.comments.build], :remote => true, :html => {:id => "list_comment_form"} do |f| -%>
+	<%= f.hidden_field :do %>
+	<input type="hidden" name="item_id" value="<%= item_id %>"/>
+	<%= f.text_field :body, :class => "comment_body" %>
+	<%= link_to "javascript:void(0);", :class => "btn_gray submit_a" do %>
+		<span>添加评论</span>
+	<% end %>
+<% end %>

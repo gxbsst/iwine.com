@@ -89,14 +89,20 @@ class CommentsController < ApplicationController
   # 评论
   def create
     @comment = build_comment
+    @item_id = params[:item_id] #用于首页
     if @comment.save
       init_oauth_comments
-      @comment.delay.share_comment_to_weibo
       # TODO
       # 1. 广播
       # 2. 分享到SNS
-      notice_stickie t("notice.comment.#{@comment.do == 'follow' ? 'follow' : 'comment'}_success")
-      redirect_to params[:return_url] ?  params[:return_url] : @commentable_comments_path
+      respond_to do |format|
+        format.html {
+          notice_stickie t("notice.comment.#{@comment.do == 'follow' ? 'follow' : 'comment'}_success")
+          redirect_to params[:return_url] ?  params[:return_url] : @commentable_comments_path
+        }
+        format.js {render :action => "ajax_create"}
+      end
+
 
     end
   end
@@ -270,11 +276,19 @@ class CommentsController < ApplicationController
         oauth_comment = @comment.oauth_comments.build(:sns_type => sns_type,
                                                       :body => content,  
                                                       :sns_user_id => oauth.sns_user_id, 
-                                                      :user_id => @comment.user_id)
+                                                      :user_id => @comment.user_id,
+                                                      :ip_address => inet_aton(request.remote_ip))
         oauth_comment.image_url  = get_share_photo
         oauth_comment.save
       end
+      #发送weibo
+      @comment.delay.share_comment_to_weibo
     end
+  end
+
+  #将ip地址转化为整数
+  def inet_aton(ip)
+    ip.split(/\./).map{|c| c.to_i}.pack("C*").unpack("N").first
   end
 
   #得到要分享的图片

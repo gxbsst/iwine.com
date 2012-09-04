@@ -41,30 +41,42 @@
   <div class="clear"></div>
   </div>
       <div class="whitespace eventmain">
-   	  <div class="left">
-      	<div class="event_tag clearfix">
-        	<span>城市：</span>
+     <div class="left">
+       <div class="event_tag">
+         <div class="title">
+           <div class="search">
+             <input class="text mr5" style="width:200px;" placeholder="搜索活动" name="" type="text" />
+             <a href="javascript:void(0)" class="btn_gray"><span>搜索</span></a>
+           </div>
+           <h2>活动 <span class="font12 more"><a href="winery_comment_list.html"></a></span></h2>
+           <div class="clear"></div>
+         </div>
+       </div>
+
+       <div class="tags_sort">
+         <span>城市:</span>
          <ul class="tags">
            <%= city_tags %>
          </ul>
          <div class="clear"></div>
-        </div>
+       </div>
 
-      	<div class="event_tag clearfix">
-        	<span>活动时间：</span>
+       <div class="tags_sort">
+         <span>活动时间:</span>
          <ul class="tags">
            <%= static_date_tags %>
          </ul>
          <div class="clear"></div>
-        </div>
+       </div>
 
-      	<div class="event_tag clearfix">
-        	<span>热门标签：</span>
+       <div class="tags_sort">
+         <span>热门标签:</span>
          <ul class="tags">
            <%= tags_cloud %>
          </ul>
          <div class="clear"></div>
-        </div>
+       </div>
+
         <div class="event_list">
           <% @events.each do |event| %>
             <dl class="clearfix">

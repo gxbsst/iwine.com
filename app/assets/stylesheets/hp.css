@@ -110,14 +110,14 @@ li.photo_des p {margin: 0 0 5px 0;}
 /*------------cellar style--------------*/
 .sort_search { vertical-align:middle;}
 .sort {float:left;margin:0 5px 0 0;}
-.sort_search .search {float:left;width:}
+.sort_search .search {float:left;}
 #cellar .search input {width:250px;}
 .wine_data table {border-top:1px solid #ccc;margin: 0 0 30px 0;}
 .wine_data th, .wine_data td {padding:15px;border-bottom:1px solid #ccc;}
 .wine_data th {background-color:#f3f3f3;font-size:13px;}
 .wine_data td.img, .wine_data td.year , .wine_data td.count, .wine_data td.price, .wine_data td.place{text-align:center;}
 .wine_data td.img {width:50px;}
-.wine_data td.year {width:40px;t}
+.wine_data td.year {width:40px;}
 .wine_data th.des, .wine_data th.info {text-align:left;}
 .wine_data td.des {width:150px;}
 .wine_data td.info {width:150px;}

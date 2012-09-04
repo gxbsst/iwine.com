@@ -149,7 +149,10 @@ jQuery ->
       $(@el).find('.loading').hide()
       $('.search_result .loading_l').hide()
     showSelectWineTips: ->
-      $('#select_tips').html('(如果要选取某支酒，请单击酒的年份)')
+      title = '<div class="float_r"><span class="notice_b">这些都不是您要找的酒？</span><a href="/wines/new" class="btn_gray"><span>添加酒款</span></a></div>'
+      tips = '<p class="notice_b">我们为您搜寻到以下酒款<span class="red">（请单击年份以选择酒款）</span></p>'
+      $('.top_text').append(title)
+      $('.top_text').append(tips)
 
 
   @app = window.app ? {}

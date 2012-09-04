@@ -37,7 +37,7 @@
        <!--已经取消-->
        <% if @event.have_been_cancle_joined? @user.id %>
          <span class="cancl_fol mr5">
-           <%= link_to edit_event_participant_path(@event,@participant), :class => [:btn_bluesky_s, :mr5, :ajax], :remote => true do %>
+           <%= link_to edit_event_participant_path(@event,@participant), :class => [:btn_bluesky_sss, :mr5, :ajax], :remote => true do %>
              <span>我要参加</span>
            <% end %>
          </span>
@@ -51,13 +51,13 @@
          </span>
        <% end %>
      <% else %>
-       <%= link_to new_event_participant_path(@event), :class => [:btn_bluesky_s, :mr5, :ajax], :remote => true do %>
+       <%= link_to new_event_participant_path(@event), :class => [:btn_bluesky_ss, :mr5, :ajax], :remote => true do %>
          <span>我要参加</span>
        <% end %>
        <!--have_been_joined-->
      <% end %>
    <% else %>
-     <%= link_to new_event_participant_path(@event), :class => [:btn_bluesky_s, :mr5, :ajax], :remote => true do %>
+     <%= link_to new_event_participant_path(@event), :class => [:btn_bluesky_ss, :mr5, :ajax], :remote => true do %>
        <span>我要参加</span>
      <% end %>
      <!--user_signed_in-->
@@ -66,9 +66,10 @@
  <% else %>
    <% if user_signed_in? %>
      <% if @event.have_been_joined? @user.id %>
-       <span class="icon_fol mr5">已报名参加</span>
+       <span class="icon_fol mr5">已报名</span>
        <span class="cancl_fol mr5">
          <%= link_to "(取消)",cancle_event_participant_path(@event, @participant), :class => :ajax, :remote => true %>
+         <%= link_to '(修改)', edit_event_participant_path(@event,@participant), :class => [:ajax], :remote => true %>
        </span>
      <% else %>
        <!--活动已经举行-->
@@ -84,7 +85,7 @@
    <% else %>
      <!--活动已经举行-->
      <% if @event.timeout? %>
-       <%= link_to 'javascript:void(0)', :class => [:btn_bluesky_s, :mr5, :ajax], :remote => true do %>
+       <%= link_to 'javascript:void(0)', :class => [:btn_bluesky_ss, :mr5, :ajax], :remote => true do %>
          <span>活动已经过期</span>
        <% end %>
      <% elsif @event.ausgebucht? %>

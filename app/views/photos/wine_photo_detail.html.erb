@@ -28,7 +28,7 @@
 				
 				<%= render 'share/sns_icons',
                     :image_url => sns_image_url(@photo, :thumb_name => :large),
-                    :title => sns_title(@wine_detail.origin_zh_name),
+                    :title => sns_title(@wine_detail),
                     :summary => "的图片",
                     :url => request.url %>
 				

@@ -117,6 +117,45 @@ class EventsController < ApplicationController
    end
   end
 
+  def participants
+    @event = Event.includes([:participants => [:user], :follows => [:user]]).find(params[:id])
+
+    if user_signed_in? # 登录用户对自己的活动有所有权
+      unless current_user.is_owner_of_event? @event
+        @event = Event.includes([:participants => [:user], :follows => [:user]]).
+          published.
+          find(params[:id])
+      end
+    else
+      @event = Event.includes([:participants => [:user], :follows => [:user]]).
+        published.find(params[:id])
+    end
+    @recommend_events = Event.recommends(4)
+
+    # 参与活动的人
+    @participants = @event.participants
+
+  end
+
+  def followers
+    @event = Event.includes([:participants => [:user], :follows => [:user]]).find(params[:id])
+
+    if user_signed_in? # 登录用户对自己的活动有所有权
+      unless current_user.is_owner_of_event? @event
+        @event = Event.includes([:participants => [:user], :follows => [:user]]).
+          published.
+          find(params[:id])
+      end
+    else
+      @event = Event.includes([:participants => [:user], :follows => [:user]]).
+        published.find(params[:id])
+    end
+    @recommend_events = Event.recommends(4)
+
+    @follows= @event.follows
+
+  end
+
   private
 
   def get_event

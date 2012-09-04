@@ -1,0 +1,7 @@
+<%
+	content = @follow.destroyed? ? "关注" : "取消关注"
+	selector = "##{@item_id} .action .hf em"
+	selector_follow_num = "##{@item_id} .iw_more_follow a"
+%>
+$("<%= selector %>").html("<%= content %>");
+$("<%= selector_follow_num %>").html("共<%= @follow.followable.current_followers_count %>人关注");

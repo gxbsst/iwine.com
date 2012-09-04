@@ -87,6 +87,11 @@ class Event < ActiveRecord::Base
        :decrement => {
     :on => :destroy, 
     :if => lambda {|follow| follow.follow_counter_should_decrement_for("Event")}}
+  },
+    :comments_count => {:with => "Comment", 
+      :receiver => lambda {|comment| comment.commentable },
+      :increment => {:on => :create, :if => lambda {|comment| comment.counter_should_increment_for("Event") }},
+      :decrement => {:on => :save,   :if => lambda {|comment| comment.counter_should_decrement_for("Event") }}
   }
 
   # 活动开始时间应该大于结束时间
