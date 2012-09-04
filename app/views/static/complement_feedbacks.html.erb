@@ -1,0 +1,50 @@
+<% content_for :title, @title%>
+<% content_for :css do %>
+<%= stylesheet_link_tag :setting %>
+<% end %> 
+<div class="whitespace friends correcting">
+  <h1 class="main_title">纠错与补充</h1>
+  <div class="tabs">
+    <ul>
+      <li>
+        <%= link_to "纠错", feedback_path(:for => "error_feedbacks")  %>
+      </li>
+      <li class="current">
+        <%= link_to "补充", feedback_path(:for => "complement_feedbacks") %>
+      </li>
+    </ul>
+  </div>
+  <%= form_for @feedback, :url => feedbacks_path do |f| -%>
+  <table class="float_l" width="590" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <th valign="top">主题</th>
+      <td>
+        <%= f.text_area :subject, :size => "45x5", :placeholder => "请输入主题" %>
+      </td>
+    </tr>
+    <tr>
+      <th valign="top">补充内容</th>
+      <td>
+        <%= f.text_area :description, :size => "45x5", :placeholder => "请输入补充内容" %>
+      </td>
+    </tr>
+    <tr>
+      <th>联系方式</th>
+      <td>
+        <%= f.text_field :email, :class => "text content", :placeholder => "请输入邮件地址以便我们联系您" %>
+      </td>
+    </tr>
+    <tr>
+      <th>&nbsp;</th>
+      <td>
+        <%= link_to "javascript:void(0)", :class => "btn_gray", :onclick => "$(this).parents('form').submit()"  do %>
+          <span>提交</span>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+  <% end -%>
+  <div class="information">感谢您帮助我们完善iWine的信息！<br/>我们会尽快确认您提交的内容。</div>
+  <div class="clear"></div>
+
+</div>

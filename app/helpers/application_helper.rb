@@ -43,7 +43,7 @@ module ApplicationHelper
     if cover
       image_tag cover.image_url(options[:thumb_name]), options
     else
-      theme_image_tag "common/wine_#{options[:thumb_name]}.png", options
+      image_tag "common/wine_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -52,7 +52,7 @@ module ApplicationHelper
     if label
       image_tag label.image_url(options[:thumb_name]), options
     else
-      theme_image_tag "common/wine_#{options[:thumb_name]}.png", options
+      image_tag "common/wine_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -61,7 +61,7 @@ module ApplicationHelper
     if cover
       image_tag cover.image_url(options[:thumb_name]), options
     else
-      theme_image_tag "common/winery_#{options[:thumb_name]}.png", options
+      image_tag "common/winery_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -70,7 +70,7 @@ module ApplicationHelper
     if label
       image_tag label.image_url(options[:thumb_name]), options
     else
-      theme_image_tag "common/winery_#{options[:thumb_name]}.png", options
+      image_tag "common/winery_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -84,7 +84,7 @@ module ApplicationHelper
     else
       options[:width] = 200
       options[:height] = 200
-      theme_image_tag "common/wine_#{options[:thumb_name]}.png", options
+      image_tag "common/wine_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -147,7 +147,7 @@ module ApplicationHelper
   def link_to_sync_button(sns_name, url_or_object, options={})
 
     button_name = 'btn_syn_' + sns_name
-    link_to(theme_image_tag("common/#{button_name}.jpg", { :title => button_name }),
+    link_to(image_tag("common/#{button_name}.jpg", { :title => button_name }),
             url_or_object,
               options)
   end
@@ -194,7 +194,7 @@ module ApplicationHelper
   end
 
   def link_to_image(path, url, link_opts = { }, image_opts = { })
-    link_to theme_image_tag(path, image_opts), url, link_opts
+    link_to image_tag(path, image_opts), url, link_opts
   end
 
   def previous_page(ids_arr, current_id)
@@ -246,8 +246,8 @@ module ApplicationHelper
   end
 
   def wine_default_image(version)
-    return theme_image_tag("avatar_default_bg_#{version.to_s}.png") if version.present?
-    theme_image_tag("avatar_default_bg.png")
+    return image_tag("avatar_default_bg_#{version.to_s}.png") if version.present?
+    image_tag("avatar_default_bg.png")
   end
 
 
@@ -280,16 +280,40 @@ module ApplicationHelper
 
   #for sns_share
 
-  def sns_title(name)
-    "【#{name}】"
+  def sns_url(object)
+    sns_url = case object.class.name
+    when 'Winery'
+      winery_url(object)
+    when 'Wines::Detail'
+      wine_url(object)
+    end
+    sns_url
   end
 
-  def winery_summary(winery)
-    truncate(winery.info_items.first.description.gsub(" ", '').gsub(/\r|\n/, ''), :length => 70)  if winery.info_items.first
+  def sns_title(object)
+    title = case object.class.name
+    when 'Winery'
+      object.name
+    when 'Wines::Detail'
+      object.origin_zh_name
+    when 'User'
+      object.username
+    when 'Event'
+      object.title
+    end
+    "【#{title}】"
   end
 
-  def wine_summary(description)
-    truncate(description.to_s.gsub(" ", '').gsub(/\r|\n/, ''), :length => 70)
+  def sns_summary(object)
+    desc = case object.class.name
+    when 'Winery'
+      object.info_items.first.description if object.info_items.first
+    when 'Wines::Detail'
+      object.description
+    when 'Event'
+      object.title
+    end
+    truncate(desc.to_s.gsub(" ", '').gsub(/\r|\n/, ''), :length => 70)
   end
 
   def sns_image_url(object, options = {})
@@ -345,12 +369,12 @@ module ApplicationHelper
   def album_cover_tag(user, album)
     cover = album.photos.visible.cover.first
     if album.is_public.to_i == 0 && !is_login_user?(user)
-      tag = theme_image_tag("common/p_album.png", :class => :cover, :size => '150x150')
+      tag = image_tag("common/p_album.png", :class => :cover, :size => '150x150')
     else
       if cover
         tag =  image_tag(cover.image_url(:xx_middle), :class => 'cover', :size => '150x150')
       else
-        tag = theme_image_tag( "album.jpg", :class => :cover, :size => '150x150')
+        tag = image_tag( "album.jpg", :class => :cover, :size => '150x150')
       end
     end
     if album.is_public.to_i == 0 && !is_login_user?(user) #非公开
@@ -418,4 +442,32 @@ module ApplicationHelper
     type == "weibo" ? "新浪微博" : (type == "qq" ? "腾讯微博" : "豆瓣")
   end
 
+  #展示关注文本
+  def follow_content(parent)
+    if current_user && parent.follows.where("user_id = #{current_user.id}").present?
+      "取消关注"
+    else
+      "关注"
+    end
+  end
+
+  #获取随机数
+  def get_rand_id(id)
+    chars = ("0".."9").to_a
+    rand_id = ''
+    1.upto(5){|i| rand_id << chars[rand(chars.size-1)]}
+    return "#{id}#{rand_id}"
+  end
+
+  #首页展示不同文字
+  def time_line_text(type, winery = false)
+    case type
+    when "new_comment"
+      "有了新评论"
+    when "new_follow"
+      "这支酒#{'庄' if winery}被关注"
+    when "add_to_cellar"
+      "有人把它加入了酒窖"
+    end
+  end
 end

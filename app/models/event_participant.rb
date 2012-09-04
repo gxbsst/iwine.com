@@ -1,6 +1,8 @@
+# encoding: utf-8
 class EventParticipant < ActiveRecord::Base
   belongs_to :user
   belongs_to :event
+  has_one :event_owner, :through => :event, :source => :user
   attr_accessible :cancle_note, :email, :join_status, :note, :telephone, :username, :user_id
 
   validates :telephone, :username, :user_id, :presence => true
@@ -9,6 +11,7 @@ class EventParticipant < ActiveRecord::Base
 
   after_create :set_event_lock_status
   after_update :udpate_event_lock_status
+  after_create :send_notification_to_owner
 
   def set_event_lock_status
     if event.set_blocked? # 做限定才去检测
@@ -39,6 +42,13 @@ class EventParticipant < ActiveRecord::Base
 
   def do_cancle?
    join_status == cancle?
+  end
+
+  def send_notification_to_owner
+    #TODO:
+    #给活动创建者发送死信或者Email
+    #event.send_message(user, '我参加这个私信您', '我参加了你这个活动')
+    #event.send_email(owner, 'subject', 'body'
   end
 
   # class methods

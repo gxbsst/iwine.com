@@ -4,7 +4,7 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <p>您好：<%= @message.conversation.get_reply_user(@message.sender) %></p>
+    <p>您好：<%= @message.conversation.get_reply_user(@message.sender).username %></p>
     <p><%= @message.sender.username %> 回复了你的消息。</p>
     <p><%= @message.body %></p>
     <br/>

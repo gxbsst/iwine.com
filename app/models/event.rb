@@ -19,18 +19,18 @@ class Event < ActiveRecord::Base
   validates :title, :tag_list, :address, :begin_at, :end_at,  :presence => true
   validates :publish_status, :inclusion => { :in => [0,1,2,3] } 
   validate :begin_at_be_before_end_at
+  validate :begin_at_be_after_now
 
   scope :published, where(:publish_status => EVENT_PUBLISHED_CODE ).order("begin_at ASC")
   scope :live, published.where( "begin_at > ?", Time.now ) # 未举行
   scope :recommends, lambda {|limit| live.order('participants_count DESC').limit(limit) }  # 推荐
   scope :recent_week, where(['begin_at >= ? AND begin_at <= ?', 
                             Time.current, Time.current + 1.week])
-  scope :weekend, where(['begin_at >= ? AND begin_at <= ?',
+  scope :weekend, published.where(['begin_at >= ? AND begin_at <= ?',
                         Time.current.end_of_week - 2.day, Time.current.end_of_week])
-  scope :date_with, lambda { |date| where(["begin_at >= ? AND begin_at <= ?",
+  scope :date_with, lambda { |date| published.live.where(["begin_at >= ? AND begin_at <= ?",
                                           date, date + 1.day]) }
   scope :city_with, lambda { |city| where(["region_id = ?", APP_DATA['event']['city'][city]]) }
-
   # 用户参加的活动
   scope :with_participant_for_user, lambda{|user_id|joins(:participants).
     where(["event_participants.user_id = ? AND event_participants.join_status =?",
@@ -47,8 +47,16 @@ class Event < ActiveRecord::Base
   acts_as_taggable
   acts_as_taggable_on :tags
 
+  # messageable
+  acts_as_messageable
+
   # process address longitude & latitude
-  geocoded_by :address
+  geocoded_by :full_address
+  after_create :get_coordinates
+
+  def get_coordinates
+    Delayed::Job.enqueue GoogleMapsCoordinateService.new(self)
+  end
 
   # Upload Poster 
   mount_uploader :poster, PosterUploader
@@ -79,16 +87,32 @@ class Event < ActiveRecord::Base
        :decrement => {
     :on => :destroy, 
     :if => lambda {|follow| follow.follow_counter_should_decrement_for("Event")}}
+  },
+    :comments_count => {:with => "Comment", 
+      :receiver => lambda {|comment| comment.commentable },
+      :increment => {:on => :create, :if => lambda {|comment| comment.counter_should_increment_for("Event") }},
+      :decrement => {:on => :save,   :if => lambda {|comment| comment.counter_should_decrement_for("Event") }}
   }
 
+  # 活动开始时间应该大于结束时间
   def begin_at_be_before_end_at
-    errors.add(:end_at, "结束时间必须大于开始时间") if self.begin_at > self.end_at
-  end 
+    if begin_at.present?
+      errors.add(:end_at, "结束时间必须大于开始时间") if self.begin_at > self.end_at
+    end
+  end
+
+  # 活动开始时间应该大于结束时间
+  def begin_at_be_after_now
+    if begin_at.present?
+      errors.add(:end_at, "请输入有效的开始时间") if self.begin_at < Time.now
+    end
+  end
+
   # 将活动锁定
   def locked!
     update_attribute(:publish_status,  APP_DATA['event']['publish_status']['locked'])
   end
-  
+
   #用于将海报分享到第三方网站
   def share_name
     "【#{user.username}】发起的《#{title}》活动"
@@ -162,22 +186,27 @@ class Event < ActiveRecord::Base
 
   # 活动是否已经过期
   def timeout?
-    Time.now > begin_at
+    Time.now > begin_at if published?
   end
 
   # 活动状态是否意见被锁定
   def locked?
-    publish_status == APP_DATA['event']['publish_status']['locked'] 
+    publish_status == APP_DATA['event']['publish_status']['locked']
+  end
+
+  # 活动状态是否为抄稿
+  def published?
+    publish_status == APP_DATA['event']['publish_status']['published']
   end
 
   # 活动状态是否为抄稿
   def draft?
-    publish_status == APP_DATA['event']['publish_status']['draft'] 
+    publish_status == APP_DATA['event']['publish_status']['draft']
   end
 
   # 活动状态是否为取消
   def cancle?
-    publish_status == APP_DATA['event']['publish_status']['cancle'] 
+    publish_status == APP_DATA['event']['publish_status']['cancle']
   end
 
   # 添加某只酒到活动

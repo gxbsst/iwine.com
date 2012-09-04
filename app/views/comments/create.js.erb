@@ -1,2 +1,2 @@
-$("#comment_form").html("<%= escape_javascript(render('comment_form', :comment => @comment, :wine_detail => @wine_detail)) %>");
-<%= render "/wines/share/star_rate.js" %>
+$("#comment_form").html("<%= escape_javascript(render('comment_form', :comment => @comment, :commentable => @commentable)) %>");
+<%= render "comments/star_rate.js" %>

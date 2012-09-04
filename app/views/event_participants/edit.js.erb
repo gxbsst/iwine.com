@@ -1,0 +1,94 @@
+$("#join_form").html("<%= escape_javascript(render('join_form', :participant => @participant, :event=> @event)) %>");
+$.fancybox({
+        padding: 0,
+         maxWidth       : 550,
+        maxHeight       : 350,
+        minHeight: 350,
+        fitToView       : false,
+        width           : '100%',
+        height          : '100%',
+        autoSize        : false,
+        closeClick      : false,
+        openEffect      : 'none',
+        closeEffect     : 'none',
+        'href'                  : '#join_form',
+         helpers        :         {
+        overlay                      : {
+            opacity                 : 0.8,
+            css                     : {
+                'background-color'  : '#FFF'
+            }
+        }
+    } // end helper
+});
+
+ $(document).ready(function(){
+	window.ParticipantFormView = Backbone.View.extend({
+		el: $(".edit_event_participant"),
+  inputs: [ 
+			{input: "#event_participant_username", error: '请输入您的名字'},
+			{input: "#event_participant_email", error: '请输入您的email'},
+			{input: "#event_participant_telephone", error: '请输入您的联系电话'}
+			],
+		events: {
+			"click .save_articipant": "submit",
+   "focusout input.text":"hideWaring"
+		},
+		submit: function(event){
+			errors = this.validateForm();
+   if(errors.length == 0) {
+   $(this.el).submit();
+   }
+		},
+		validateForm: function(){
+			var errors = []
+			elements = this.inputs;
+			self = this;
+    var reg_email = /email/;
+			_.each(elements, function(element){
+				if(self.check_prence(element['input'])){
+					self.flashWaring(element['input'],element['error']);
+					errors.push(element);
+				} 
+    else{
+    if(reg_email.test(element['input'])){
+       
+      if (!self.validateEmail($(element['input']).val())){
+
+      self.flashWaring(element['input'],'请输入正确的邮箱格式');
+      }
+    }
+    }
+			});
+   return errors;
+		},
+		flashWaring: function(element, text){
+  var error_element =  element + '_error'
+  $(error_element).show().text(text);
+		},
+  hideWaring: function(){
+   els = this.inputs;
+   els.forEach(function(el){
+   $(el['input'] + '_error').hide();
+   });
+  },
+		check_prence: function(input){
+			var value;
+			value = $(input).val();
+			if (value.trim() == '') {
+				return true;
+			}
+   },
+   validateEmail: function(email) {
+   var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+   //var re = /\S+@\S+\.\S+/
+    return re.test(email);
+   }
+	});
+
+ p = new ParticipantFormView();
+
+ });
+
+
+

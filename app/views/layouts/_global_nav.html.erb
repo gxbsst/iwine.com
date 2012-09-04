@@ -1,0 +1,95 @@
+<ul>
+  <% global_nav = {"home" => root_path, "wines" => wines_path, "wineries" => wineries_path, "events" => events_path} %>
+  <% global_nav.each do |key, value| %>
+    <% if key == "wines" || key == "wineries" || key == 'events' %>
+      <%= content_tag :li, :class => "arrow" do %>
+        <%= link_to t("nav.#{key}"), value, :class => "arrow_link" %>
+        <% if key == "wines" # 酒 %>
+          <ul class="CategoryDropdown" style="display: none; z-index:1000000">
+            <% APP_DATA["search"]["wine"].each do |type,values| %>
+              <li>
+                <p class="title"><%= t("nav.global_nav.#{type}") %></p>
+                <div class="item">
+                  <% values.each do |item|  %>
+                    <span>
+                      <%= link_to item, results_searches_path(:tab => :wine, :word => item) %>
+                    </span>
+                  <% end %>
+                </div>
+              </li>
+            <% end %> 
+            <li>
+              <p class="title">热门酒款</p>
+              <% get_hot_wine(1).each do |wine| %>
+                <div class="item hot">
+                  <dl class="clearfix">
+                    <dt>
+                      <%= link_to wine_path(wine) do %>
+                        <%= wine_label_tag wine, :thumb_name => :thumb,  :size => "30x30" %>
+                      <% end %>
+                    </dt>
+                    <dd>
+                      <span><%= link_to wine.cname, wine_path(wine) %></span>
+                      <p><%= link_to wine.origin_name, wine_path(wine) %></p>
+                    </dd>
+                    <div class="clear"></div>
+                  </dl>
+                </div>
+              <% end %>
+            </li>
+          </ul>
+        <% elsif key == "wineries" # 酒庄 %>
+          <ul class="CategoryDropdown" style="display: none; z-index:1000000">
+            <% APP_DATA["search"]["winery"].each do |type,values| %>
+              <li>
+                <p class="title"><%= t("nav.global_nav.#{type}") %></p>
+                <div class="item">
+                  <% values.each do |item|  %>
+                    <span>
+                      <%= link_to item, winery_searches_path(:word => item) %>
+                    </span>
+                  <% end %>
+                </div>
+              </li>
+            <% end %> 
+            <li>
+              <p class="title">热门酒庄</p>
+              <% get_hot_wineries(2).each do |winery| %>
+                <div class="item hot">
+                  <dl class="clearfix">
+                    <dt>
+                      <%= link_to winery_path(winery) do %>
+                        <%= winery_cover_tag winery, :thumb_name => :thumb,  :size => "30x30" %>
+                      <% end %>
+                    </dt>
+                    <dd>
+                      <span><%= link_to winery.name_zh, winery_path(winery) %></span>
+                      <p><%= link_to winery.origin_name, winery_path(winery) %></p>
+                    </dd>
+                    <div class="clear"></div>
+                  </dl>
+                </div>
+              <% end %>
+            </li>
+          </ul>
+        <% elsif key == "events" # 活动 %>
+          <ul class="CategoryDropdown city" style="display: none; z-index:1000000">
+            <% APP_DATA["event"]["city"].each do |city, id| %>
+              <li>
+                <%= link_to city, events_path(:city=> city) %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+        <%#= html.html_safe %>
+      <% end %>
+    <% else %>
+      <%= content_tag :li  do %>
+        <%= link_to t("nav.#{key}"), value %>
+      <% end %>
+    <% end %>
+
+  <% end %>
+  <div class="clear"></div>
+</ul>
+

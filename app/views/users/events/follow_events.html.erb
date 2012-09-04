@@ -1,0 +1,80 @@
+<% content_for :css do %>
+  <%= stylesheet_link_tag "event" %>
+<% end %>
+<% content_for :title, @title%>
+<div class="whitespace">
+  <div id="hp">
+    <%= render "users/sub_nav", :action => params[:action] %>
+    <div class="clear"></div>
+    <div class="content">
+      <div class="left">
+        <div class="tabs">
+          <%= render "users/events/sub_nav" %>
+        </div>
+        <div class="title_btn">
+          <h1>感兴趣的活动</h1>
+        </div>
+        <div class="event_list">
+          <div id="join_form"  style="display: none" ></div>
+          <% if @events.present? %>
+            <% @events.each do |event| %>
+              <dl class="clearfix">
+                <dt>
+                  <%= link_to event_path(event) do %>
+                    <%= image_tag event.poster_url(:thumb), :size => '100x150', :alt => event.title %>
+                  <% end %>
+                </dt>
+                <dd>
+                  <span class="type">
+                    <%= event_item_tags(event) %>
+                  </span>
+                  <h2> <%= link_to event.title, event_path(event)  %></h2>
+                  <div class="info">时间:  <%= event.begin_end_at %><br />
+                    地点:  <%= event.full_address %><br />
+                    组织者：<%= link_to  event.user.username, 
+                      user_path(event.user, :trailing_slash => true) %>
+                    </div>
+                    <div class="p_count2">
+                      <span>
+                        <%= event.participants_count %>人参加  |
+                        <%= event.followers_count %>人感兴趣
+                      </span>
+                    </div>
+                    <% if user_signed_in?  %>
+                      <% if @user == current_user %>
+                        <%= link_to "不感兴趣了", event_follow_path(event, @user.get_follow_item(event)),
+                          :method => :delete, :class => :icon_cancle %> |
+
+                          <% if event.have_been_joined? current_user.id %>
+                            <%= link_to "(已参加)修改报名信息",
+                              edit_event_participant_path(event,
+                                                          current_user.get_participant_item(event)),
+                                                          :class => [:icon_text_edit,:ajax], :remote => true %>
+                          <% else %>
+                            <%= link_to '报名', new_event_participant_path(event),
+                              :class => [:icon_join, :ajax], :remote => true  %>
+                          <% end %>
+                      <% end %>
+                    <% end %>
+                  </dd>
+                </dl>
+              <% end %>
+            <% else %> 
+              <p>暂无创建的活动.</p>
+            <% end %>
+            <!--end event_list-->
+          </div>
+          <div class="pagination">
+            <%= paginate @events, :outer_window => 2 %>
+          </div>
+
+          <!--end left-->
+      </div>
+      <div class="right">
+        <%= render 'sidebar' %>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>
+

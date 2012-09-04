@@ -1,8 +1,13 @@
 class OauthComment < ActiveRecord::Base
-  attr_accessible :comment_id, :sns_type, :sns_comment_id, :body, :error_info, :sns_user_id, :user_id, :image_url, :status
+  attr_accessible :comment_id, :sns_type, :sns_comment_id, :body, :error_info, :sns_user_id, :user_id, :image_url, :status, :ip_address
   belongs_to :comment
   belongs_to :user
   scope :unshare, where("status = #{APP_DATA['oauth_comments']['status']['no_share']}")
+
+  #将int转化为ip地址
+  def inet_ntoa
+    [ip_address].pack("N").unpack("C*").join "."
+  end
 
   #检测oauth_comment是不是尚未同步到第三方
   def is_unshare?
@@ -148,10 +153,10 @@ class OauthComment < ActiveRecord::Base
       # :pic_url =>  "http://patrickdev.sidways.com#{image_url}", 
       response = qq_client.post("http://open.t.qq.com/api/t/add_pic_url", 
       	             {:content => body, 
-                      :pic_url => "http://www.baidu.com/img/baidu_sylogo1.gif",
-      	              :clientip => "180.168.220.98"}).body
+                      :pic_url => "http://patrickdev.sidways.com#{image_url}",
+      	              :clientip => inet_ntoa}).body
     else
-   	  response = qq_client.add_status(body, :clientip => "180.168.220.98").body
+   	  response = qq_client.add_status(body, :clientip => inet_ntoa).body
    	end
    	#处理结果信息
    	result_data = JSON.parse response

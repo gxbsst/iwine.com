@@ -64,8 +64,6 @@ module Patrick
     Time::DATE_FORMATS[:cn] = "%Y年%m月%d日  %I:%M"
     Time::DATE_FORMATS[:year] = "%Y"
     
-    ThemesForRails.config.default_theme = "waterfall"
-
     if Rails.env.development?
       OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
     end

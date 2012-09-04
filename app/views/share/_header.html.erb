@@ -14,32 +14,5 @@
 
     <!-- header-content end -->
   </div>
-</div>
+
 </header>
-<script type="text/javascript" >
-  var getHotSerach = function(){
-    $.ajax({
-      url: '/searches/hot_words?word='+this.value,
-      success: function( data ){
-        var i , html =  '<ul>';
-
-        for( i = 0 ; i < data.wines.length ; i++ ){
-          html += '<li>' + data.wines[i] + '</li>';
-        }
-
-        html += '</ul>';
-
-        for( i = 0 ; i< data.wineries.length ; i++ ){
-          html += '<li>' + data.wineries[i] + '</li>';
-        }
-
-        $('#hot-search-list').html( html );
-      }
-    });
-  }
-
-  $('#search').bind( 'keyup' , function(){
-    clearTimeout( timer );
-    timer = setTimeout( getHotSerach , 1000 );
-  });
-</script>

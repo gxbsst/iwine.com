@@ -14,6 +14,8 @@ Patrick::Application.routes.draw do
     member do
       get :upload_poster
       get :published
+      get :participants
+      get :followers
     end
   end
 
@@ -34,7 +36,6 @@ Patrick::Application.routes.draw do
       get :update_info
     end
   end
-  themes_for_rails
 
   # unless Rails.application.config.consider_all_requests_local
   #    match '*not_found', to: 'errors#error_404'
@@ -105,7 +106,11 @@ Patrick::Application.routes.draw do
       end
     end    
     resources :photos
-    resources :follows, :controller => "follows" 
+    resources :follows, :controller => "follows" do
+      collection do
+        get :follow
+      end
+    end
   end
   
   # PHOTO
@@ -151,18 +156,26 @@ Patrick::Application.routes.draw do
       match "cellars/:cellar_id", :via => [:get], :to => "cellars#show", :as => :cellars
       get :follow
       get :unfollow
-
-      # Events
-      get :events
-      get :create_events
-      get :join_events
-      get :follow_events
     end
     collection do
       get "register_success"
     end
+
+    resources :events, :controller => 'users/events' do
+      # Events
+      member do
+        get :participants
+      end
+      collection do
+        get :index
+        get :create_events
+        get :join_events
+        get :follow_events
+      end
+    end
+
   end
-  
+
   # 酒窖
   resources :cellars do
      resources :cellar_items, :path => :items, :as => "items" do
@@ -213,7 +226,11 @@ Patrick::Application.routes.draw do
         post :create, :as => "winery" # 这里主要是为了使评论表单的URL为一致
       end
     end
-    resources :follows, :controller => "follows" 
+    resources :follows, :controller => "follows" do
+      collection do
+        get :follow
+      end
+    end
   end
   # SETTINGS
   resources :settings do

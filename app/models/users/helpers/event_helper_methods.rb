@@ -89,6 +89,11 @@ module Users::Helpers::EventHelperMethods
       Event.with_follow_for_user(id).count
     end
 
+    # 活动总和
+    def events_count
+      create_events_count + join_events_count + follow_events_count
+    end
+
     # 创建的活动
     def create_events(limit = 3)
       Event.with_create_for_user(id).limit(limit)

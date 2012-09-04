@@ -40,7 +40,7 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
         	<li class="current"><a href="index.html">首页</a></li>
             <li class="arrow">
             	<a href="wine.html">酒款</a>
-            	<ul class="CategoryDropdown">
+            	<ul class="CategoryDropdown" style="z-index:1;">
                 	<li>
                         <p class="title">热门葡萄品种</p>
                         <div class="item">
@@ -110,8 +110,14 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
         	<div class="action clearfix">
             	<a class="btn_iw hc"><span><em>评论</em></span></a>
                 <a class="btn_iw hf"><span><em>关注</em></span></a>
+                <span>
                 <a class="btn_iw hs"><span><em>分享</em></span></a>
+                <div class="dropbox">
+            	<div class="com_s clearfix"><a href="#"><span class="icon_sina2"></span></a><a href="#"><span class="icon_tt2"></span></a><a href="#"><span class="icon_douban"></span></a><a href="#"><span class="icon_renren"></span></a></div>
+              </div>
+                </span>
             </div>
+            
         	<div class="iw_img"><a href="wine_profile.html"><img src="images/test/col_img200.jpg" width="200" height="294" /></a></div>
             <div class="iw_info">
                 <h1><a href="wine_profile.html">2001拉菲珍宝</a></h1>

@@ -33,3 +33,5 @@ lib/tasks/data
 *.swo
 *.swn
 *.swm
+coverage
+rails_best_practices_output.html
