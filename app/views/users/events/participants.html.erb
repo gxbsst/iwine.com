@@ -1,0 +1,50 @@
+<% content_for :css do %>
+  <%= stylesheet_link_tag "event" %>
+<% end %>
+<% content_for :title, @title%>
+<div class="whitespace">
+  <div id="hp">
+    <%= render "users/sub_nav", :action => params[:action] %>
+    <div class="clear"></div>
+    <div class="content">
+      <div class="left">
+        <div class="title_btn">
+          <%= link_to create_events_user_events_path(@user), :class => [:btn_gray, :float_r] do %>
+            <span>返回</span>
+          <% end %>
+          <h1><%= @event.title %>参与者</h1>
+        </div>
+        <div class="event_member_list">
+          <% unless @participants.blank?  %>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <% @participants.each do |participant| %>
+                <tr>
+                  <td class="img">
+                    <%= link_to_user participant.user,
+                      user_path(participant.user, :trailing_slash => true),
+                      {:with_avatar => true, :avatar_version => :middle},
+                      {:width => 50, :height => 50} %>
+                    </td>
+                    <td class="name"><%= participant.username %></td>
+                    <td class="email"><%= participant.email %></td>
+                    <td class="tel"><%= participant.telephone %></td>
+                    <td class="date"><%= participant.created_at.to_s(:normal) %></td>
+                  </tr>
+                <% end %>
+              </table>
+          <% else %>
+            <p>暂时没有参加的人.</p>
+          <% end %>
+        </div>
+        <div class="pagination">
+          <%= paginate @participants, :outer_window => 2 %>
+        </div>
+        <!--end left-->
+      </div>
+      <div class="right">
+        <%= render 'sidebar' %>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>

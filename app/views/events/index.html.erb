@@ -214,31 +214,7 @@
             <div class="title">
               <h3>推荐的活动</h3>
             </div>
-            <div class="side_event">
-              <% @recommend_events.each do |event| %>
-                <dl class="clearfix">
-                  <dt>
-                    <%= link_to event_path(event) do %>
-                      <%= image_tag event.poster_url(:x_thumb), 
-                        :size => '70x105', :alt => event.title %>
-                    <% end %>
-                    <dd>
-                      <h3> <%= link_to event.title, event_path(event)  %></h3>
-                      <div class="info">
-                        <%= event.begin_end_at %>
-                        <br />
-                        <%= event.full_address %>
-                        <br />
-                      </div>
-                      <div class="p_count2">
-                        <%= event.participants_count %>人参加  |  <%= event.followers_count %>人感兴趣
-                      </div>
-                    </dd>
-                    <div class="clear"></div>
-                  </dl>
-                <% end %>
-              </div>
-            </div>
+            <%= render 'recommends' %>
           </div>
           <div class="clear"></div>
         </div>

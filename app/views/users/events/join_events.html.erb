@@ -8,22 +8,9 @@
     <div class="clear"></div>
     <div class="content">
       <div class="left">
-     <ul class="event_menu">
-          <style type="text/css" media="screen">
-            ul.event_menu {
-              height: 40px;
-            }
-             ul.event_menu li {
-              font-size: 14px;
-              line-height: 160%;
-              display: inline;
-              margin: 10px 10px 0 0;
-            }
-          </style>
-            <li><%= link_to "创建的活动", create_events_user_path(@user) %></li>
-            <li><%= link_to "参加的活动", join_events_user_path(@user) %></li>
-            <li><%= link_to "感兴趣的活动", follow_events_user_path(@user) %></li>
-          </ul>
+        <div class="tabs">
+          <%= render "users/events/sub_nav" %>
+        </div>
 
         <div class="title_btn">
           <h1>
@@ -32,6 +19,7 @@
         </div>
         <div class="event_list">
         <div id="cancle_form" style="display: none"></div>
+        <div id="join_form"  style="display: none" ></div>
 
           <% if @events.present? %>
             <% @events.each do |event| %>
@@ -59,10 +47,14 @@
                     </div>
                     <% if user_signed_in?  %>
                       <% if @user == current_user %>
-                      <%= link_to "(取消)",
+                      <%= link_to "不去了",
                         cancle_event_participant_path(event,
                                                       current_user.get_participant_item(event)),
-                                                      :class => :ajax, :remote => true %>
+                                                      :class => [:icon_cancle,:ajax], :remote => true %> |
+                      <%= link_to "修改报名信息",
+                        edit_event_participant_path(event,
+                                                      current_user.get_participant_item(event)),
+                                                      :class => [:icon_text_edit,:ajax], :remote => true %>
                       <% end %>
                     <% end %>
                   </dd>
@@ -80,11 +72,7 @@
           <!--end left-->
       </div>
       <div class="right">
-        <div class="sidebox">
-          <%= link_to new_event_path, :class => :btn_createvent do %>
-            <span>我要创建活动</span>
-          <% end %>
-               </div>
+        <%= render 'sidebar' %>
       </div>
       <div class="clear"></div>
     </div>

@@ -8,28 +8,14 @@
     <div class="clear"></div>
     <div class="content">
       <div class="left">
-        <ul class="event_menu">
-          <style type="text/css" media="screen">
-            ul.event_menu {
-              height: 40px;
-            }
-            ul.event_menu li {
-              font-size: 14px;
-              line-height: 160%;
-              display: inline;
-              margin: 10px 10px 0 0;
-            }
-          </style>
-            <li><%= link_to "创建的活动", create_events_user_events_path(@user) %></li>
-            <li><%= link_to "参加的活动", join_events_user_events_path(@user) %></li>
-            <li><%= link_to "感兴趣的活动", follow_events_user_events_path(@user) %></li>
-          </ul>
+        <div class="tabs">
+          <%= render "users/events/sub_nav" %>
+        </div>
         <div class="title_btn">
-          <h1>
-            参加的活动
-          </h1>
+          <h1>感兴趣的活动</h1>
         </div>
         <div class="event_list">
+          <div id="join_form"  style="display: none" ></div>
           <% if @events.present? %>
             <% @events.each do |event| %>
               <dl class="clearfix">
@@ -56,8 +42,18 @@
                     </div>
                     <% if user_signed_in?  %>
                       <% if @user == current_user %>
-                        <%= link_to "(取消)", event_follow_path(event, @user.get_follow_item(event)),
-                          :method => :delete %>
+                        <%= link_to "不感兴趣了", event_follow_path(event, @user.get_follow_item(event)),
+                          :method => :delete, :class => :icon_cancle %> |
+
+                          <% if event.have_been_joined? current_user.id %>
+                            <%= link_to "(已参加)修改报名信息",
+                              edit_event_participant_path(event,
+                                                          current_user.get_participant_item(event)),
+                                                          :class => [:icon_text_edit,:ajax], :remote => true %>
+                          <% else %>
+                            <%= link_to '报名', new_event_participant_path(event),
+                              :class => [:icon_join, :ajax], :remote => true  %>
+                          <% end %>
                       <% end %>
                     <% end %>
                   </dd>
@@ -75,11 +71,7 @@
           <!--end left-->
       </div>
       <div class="right">
-        <div class="sidebox">
-          <%= link_to new_event_path, :class => :btn_createvent do %>
-            <span>我要创建活动</span>
-          <% end %>
-               </div>
+        <%= render 'sidebar' %>
       </div>
       <div class="clear"></div>
     </div>
