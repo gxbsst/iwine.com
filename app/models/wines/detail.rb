@@ -242,7 +242,7 @@ class Wines::Detail < ActiveRecord::Base
   # 类方法
   class << self
    def timeline_events
-     TimelineEvent.wine_details
+     TimelineEvent.wine_details 
    end
   end
 end

@@ -14,6 +14,8 @@ Patrick::Application.routes.draw do
     member do
       get :upload_poster
       get :published
+      get :participants
+      get :followers
     end
   end
 
@@ -159,8 +161,11 @@ Patrick::Application.routes.draw do
       get "register_success"
     end
 
-    resource :events, :controller => 'users/events' do
+    resources :events, :controller => 'users/events' do
       # Events
+      member do
+        get :participants
+      end
       collection do
         get :index
         get :create_events

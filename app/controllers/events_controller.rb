@@ -66,6 +66,17 @@ class EventsController < ApplicationController
   def show
     @event = Event.includes([:participants => [:user], :follows => [:user]]).find(params[:id])
 
+    if user_signed_in? # 登录用户对自己的活动有所有权
+      unless current_user.is_owner_of_event? @event
+        @event = Event.includes([:participants => [:user], :follows => [:user]]).
+          published.
+          find(params[:id])
+      end
+    else
+      @event = Event.includes([:participants => [:user], :follows => [:user]]).
+        published.find(params[:id])
+    end
+
     order = "votes_count DESC, created_at DESC"
     page = params[:params] || 1
     @comments  = Comment.for_event(@event.id).with_votes.order(order).all
@@ -100,10 +111,49 @@ class EventsController < ApplicationController
   def published
    @event.publish_status = params[:publish_status]
    if @event.save
-     redirect_to events_path
+     redirect_to event_path(@event)
    else
-     render_404('')
+     render 'edit'
    end
+  end
+
+  def participants
+    @event = Event.includes([:participants => [:user], :follows => [:user]]).find(params[:id])
+
+    if user_signed_in? # 登录用户对自己的活动有所有权
+      unless current_user.is_owner_of_event? @event
+        @event = Event.includes([:participants => [:user], :follows => [:user]]).
+          published.
+          find(params[:id])
+      end
+    else
+      @event = Event.includes([:participants => [:user], :follows => [:user]]).
+        published.find(params[:id])
+    end
+    @recommend_events = Event.recommends(4)
+
+    # 参与活动的人
+    @participants = @event.participants
+
+  end
+
+  def followers
+    @event = Event.includes([:participants => [:user], :follows => [:user]]).find(params[:id])
+
+    if user_signed_in? # 登录用户对自己的活动有所有权
+      unless current_user.is_owner_of_event? @event
+        @event = Event.includes([:participants => [:user], :follows => [:user]]).
+          published.
+          find(params[:id])
+      end
+    else
+      @event = Event.includes([:participants => [:user], :follows => [:user]]).
+        published.find(params[:id])
+    end
+    @recommend_events = Event.recommends(4)
+
+    @follows= @event.follows
+
   end
 
   private

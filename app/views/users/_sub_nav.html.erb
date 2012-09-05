@@ -11,7 +11,7 @@
      "followings"     => [followings_user_path(@user), @user.followings_count],
      "followers"    => [followers_user_path(@user), @user.followers_count],
      "albums"       => [albums_user_path(@user, :trailing_slash => true), @user.albums_count],
-     "events"       => [events_user_path(@user, :trailing_slash => true)]
+     "events"       => [user_events_path(@user, :trailing_slash => true), @user.events_count]
  } %>
 
   <div class="hp_header">

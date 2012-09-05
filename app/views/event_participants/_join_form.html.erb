@@ -1,95 +1,91 @@
-<h3 class="title"> 我要参加 </h3>
+<h3 class="title"> 请填写报名信息 </h3>
 <% if participant.new_record? %>
   <%= form_for [participant],  :validate => true, :html => {:id => "comment_form"} do |f| -%>
-    <table class="form" width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <th width="100">姓名:</th>
-        <td width="400">
-          <%= f.text_field :username, :class => [:text, :name] %>
-          <span class="red">*</span>
-          <span class="red" id="event_participant_username_error"></span>
-        </td>
-      </tr>
-
-      <tr>
-        <th >联系电话:</th>
-        <td>
-          <%= f.text_field :telephone, :class => [:text, :name] %>
-          <span class="red">*</span>
-          <span class="red" id="event_participant_telephone_error"></span>
-        </td>
-      </tr>
-
-      <tr>
-        <th>邮箱:</th>
-        <td>
-          <%= f.text_field :email, :class => [:text, :name] %>
-          <span class="red">*</span>
-          <span class="red" id ="event_participant_email_error"></span>
-        </td>
-      </tr>
-
-      <tr>
-        <th >留言:</th>
-        <td>
-          <%= f.text_area :note, :size => '10x5', :style => 'width: 300px' %>
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td  algin="center" valign="top">
-          <%= link_to "javascript:void(0)", :class => "btn_gray save_articipant" do  %>
-            <span>保存</span>
+    <div class="mt10">
+      <div class="text_area">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="80" align="right"><span class="red">*</span>姓名：</td>
+            <td>
+              <%= f.text_field :username, :class => [:text] %>
+              <span class="red" id="event_participant_username_error"></span>
+            </td>
+          </tr>
+          <tr>
+            <td align="right"><span class="red">*</span>联系电话：</td>
+            <td>
+              <%= f.text_field :telephone, :class => [:text], :style => "width:200px;" %>
+              <span class="red" id="event_participant_telephone_error"></span>
+            </td>
+          </tr>
+          <tr>
+            <td align="right"><span class="red">*</span>邮箱：</td>
+            <td>
+              <%= f.text_field :email, :class => [:text], :style => 'width: 200px;' %>
+              <span class="red" id ="event_participant_email_error"></span>
+            </td>
+          </tr>
+          <tr>
+            <td align="right">留言：</td>
+            <td>
+              <%= f.text_area :note, :size => '10x5', :style => 'width: 300px' %>
+            </td>
+          </tr>
+        </table>
+        <div class="align_c mt20 mb20">
+          <%= link_to "javascript:void(0)", :class => "btn_gray_b mr5 save_articipant" do  %>
+            <span>提交</span>
           <% end %>
-        </td> 
-      </tr>
-    </table>
+          <a class="btn_gray_b" href="javascript:void(0)" onclick = "$.fancybox.close()" >
+            <span>取消</span>
+          </a>
+        </div>
+      </div>
+    </div>
   <% end -%>
 
 <% else %>
-  <%= form_for participant, :url => event_participant_path(event, participant),  :validate => true, :html => {:id => "comment_form"} do |f| -%>
-    <table class="form" width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <th width="100">姓名:</th>
-        <td width="400">
-          <%= f.text_field :username, :class => [:text, :name] %>
-          <span class="red">*</span>
-          <span class="red" id="event_participant_username_error"></span>
-        </td>
-      </tr>
-
-      <tr>
-        <th >联系电话:</th>
-        <td>
-          <%= f.text_field :telephone, :class => [:text, :name] %>
-          <span class="red">*</span>
-          <span class="red" id="event_participant_telephone_error"></span>
-        </td>
-      </tr>
-
-      <tr>
-        <th>邮箱:</th>
-        <td>
-          <%= f.text_field :email, :class => [:text, :name] %>
-          <span class="red">*</span>
-          <span class="red" id ="event_participant_email_error"></span>
-        </td>
-      </tr>
-
-      <tr>
-        <th >留言:</th>
-        <td>
-          <%= f.text_area :note, :size => '10x5', :style => 'width: 300px' %>
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td  algin="center" valign="top">
-          <%= link_to "javascript:void(0)", :class => "btn_gray save_articipant" do  %>
-            <span>保存</span>
+  <%= form_for [participant],  :validate => true, :html => {:id => "comment_form"} do |f| -%>
+    <div class="mt10">
+      <div class="text_area">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="80" align="right"><span class="red">*</span>姓名：</td>
+            <td>
+              <%= f.text_field :username, :class => [:text] %>
+              <span class="red" id="event_participant_username_error"></span>
+            </td>
+          </tr>
+          <tr>
+            <td align="right"><span class="red">*</span>联系电话：</td>
+            <td>
+              <%= f.text_field :telephone, :class => [:text], :style => "width:200px;" %>
+              <span class="red" id="event_participant_telephone_error"></span>
+            </td>
+          </tr>
+          <tr>
+            <td align="right"><span class="red">*</span>邮箱：</td>
+            <td>
+              <%= f.text_field :email, :class => [:text], :style => 'width: 200px;' %>
+              <span class="red" id ="event_participant_email_error"></span>
+            </td>
+          </tr>
+          <tr>
+            <td align="right">留言：</td>
+            <td>
+              <%= f.text_area :note, :size => '10x5', :style => 'width: 300px' %>
+            </td>
+          </tr>
+        </table>
+        <div class="align_c mt20 mb20">
+          <%= link_to "javascript:void(0)", :class => "btn_gray_b mr5 save_articipant" do  %>
+            <span>提交</span>
           <% end %>
-        </td> 
-      </tr>
-    </table>
+          <a class="btn_gray_b" href="javascript:void(0)" onclick = "$.fancybox.close()" >
+            <span>取消</span>
+          </a>
+        </div>
+      </div>
+    </div>
   <% end -%>
 <% end %>

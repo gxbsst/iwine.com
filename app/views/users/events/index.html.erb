@@ -8,25 +8,12 @@
     <div class="clear"></div>
     <div class="content">
       <div class="left">
-          <ul class="event_menu">
-          <style type="text/css" media="screen">
-            ul.event_menu {
-              height: 40px;
-            }
-             ul.event_menu li {
-              font-size: 14px;
-              line-height: 160%;
-              display: inline;
-              margin: 10px 10px 0 0;
-            }
-          </style>
-            <li><%= link_to "创建的活动", create_events_user_events_path(@user) %></li>
-            <li><%= link_to "参加的活动", join_events_user_events_path(@user) %></li>
-            <li><%= link_to "感兴趣的活动", follow_events_user_events_path(@user) %></li>
-          </ul>
+        <div class="tabs">
+          <%= render "users/events/sub_nav" %>
+        </div>
         <div class="title_btn">
           <h1>
-            创建的活动 
+            创建
             <span class="font12 more">
               <%= link_to "(共#{ @user.create_events_count }个...)", create_events_user_events_path(@user) %>
             </span>
@@ -65,11 +52,9 @@
             <% end %>
             <!--end event_list-->
           </div>
-
-
         <div class="title_btn">
           <h1>
-            参加的活动
+            参加
             <span class="font12 more">
               <%= link_to "(共#{ @user.join_events_count }个...)", join_events_user_events_path(@user) %>
             </span>
@@ -111,7 +96,7 @@
 
           <div class="title_btn">
             <h1>
-              关注的活动
+              感兴趣
               <span class="font12 more">
                 <%= link_to "(共#{ @user.follow_events_count }个...)", follow_events_user_events_path(@user) %>
               </span>
@@ -154,11 +139,7 @@
           <!--end left-->
       </div>
       <div class="right">
-        <div class="sidebox">
-          <%= link_to new_event_path, :class => :btn_createvent do %>
-            <span>我要创建活动</span>
-          <% end %>
-        </div>
+        <%= render "sidebar" %>
       </div>
       <div class="clear"></div>
     </div>

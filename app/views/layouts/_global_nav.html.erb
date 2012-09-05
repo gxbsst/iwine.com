@@ -73,17 +73,12 @@
             </li>
           </ul>
         <% elsif key == "events" # 活动 %>
-          <ul class="CategoryDropdown" style="display: none; z-index:1000000">
+          <ul class="CategoryDropdown city" style="display: none; z-index:1000000">
+            <% APP_DATA["event"]["city"].each do |city, id| %>
               <li>
-                <div class="item">
-                  <% APP_DATA["event"]["city"].each do |city, id| %>
-                    <span>
-                      <%= link_to city, events_path(:city=> city) %>
-                    </span>
-                    <br />
-                  <% end %>
-                </div>
+                <%= link_to city, events_path(:city=> city) %>
               </li>
+            <% end %>
           </ul>
         <% end %>
         <%#= html.html_safe %>
