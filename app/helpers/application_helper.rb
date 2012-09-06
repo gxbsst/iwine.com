@@ -453,10 +453,7 @@ module ApplicationHelper
 
   #获取随机数
   def get_rand_id(timeline)
-    chars = ("0".."9").to_a
-    rand_id = ''
-    1.upto(5){|i| rand_id << chars[rand(chars.size-1)]}
-    return "#{timeline.secondary_actor_type.gsub('::Detail', '')}#{timeline.secondary_actor.id}#{rand_id}"
+    "#{timeline.secondary_actor_type.gsub('::Detail', '')}#{timeline.secondary_actor.id}"
   end
 
   #首页展示不同文字

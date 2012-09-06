@@ -1,68 +1,65 @@
 <% @timelines.each do |l| %>
-<% item_id = get_rand_id(l) %>
-<% if l.secondary_actor_type == "Wines::Detail" %> 
-    <div class="iw item" id="<%= item_id %>">
-    <%= render :partial => "share/follow_and_comment_button", :locals => {:parent => l.secondary_actor, :item_id => item_id} %>
-        <div class="iw_img">
-            <%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), wine_path(l.secondary_actor) %>
-        </div>
-        <div class="iw_info">
-            <h1>
-                <%= raw wine_name_zh_link(l.secondary_actor.cname, l.secondary_actor) %>
-            </h1>
-            <h2>
-                <%= raw link_to l.secondary_actor.origin_name, wine_path(l.secondary_actor) %>
-            </h2>
-            <p class="iw_action"><%= time_line_text(l.event_type) %></p>
-        </div>
-        <%= render :partial => "share/time_line_wine", :locals => {:l => l} %>
-        <% if current_user %>
-            <div class="iw_comment clearfix" style="display:none;">
-                <div class="left">
-                    <%= link_to_user current_user, user_path(current_user, :trailing_slash => true), 
-                                                   {:with_avatar => true, :avatar_version => :thumb},
-                                                    {:width => 30, :height => 30, :alt => current_user.username} %>
-                </div>
-                <div class="right">
-                    <%= render :partial => "comments/share/ajax_form", 
-                               :locals => {:commentable => l.secondary_actor,
-                                           :item_id => item_id} %>
-                </div>
-            </div>
-        <% end %>
-    </div>
-  <% end %>
-  
-  <% if l.secondary_actor_type == "Winery" %>
-     <div class="iw item" id="<%= item_id %>">
+    <% item_id = get_rand_id(l) %>
+    <% if l.secondary_actor_type == "Wines::Detail" %> 
+        <div class="iw item" id="<%= item_id %>">
         <%= render :partial => "share/follow_and_comment_button", :locals => {:parent => l.secondary_actor, :item_id => item_id} %>
-        <div class="iw_img">
-            <%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), winery_path(l.secondary_actor) %>
-        </div>
-        <div class="iw_info">
-            <h1><%= raw link_to l.secondary_actor.name_zh, winery_path(l.secondary_actor) %></h1>
-            <h2><%= raw link_to l.secondary_actor.origin_name, winery_path(l.secondary_actor) %></h2>
-            <p class="iw_action"><%= time_line_text(l.event_type, true) %></p>
-        </div>
-        <%= render :partial => "share/time_line_wine", :locals => {:l => l} %>
-        <% if current_user %>
-            <div class="iw_comment clearfix" style="display:none;">
-                <div class="left">
-                    <%= link_to_user current_user, user_path(current_user, :trailing_slash => true), 
-                                                   {:with_avatar => true, :avatar_version => :thumb},
-                                                    {:width => 30, :height => 30, :alt => current_user.username} %>
-                </div>
-                <div class="right">
-                    <%= render :partial => "comments/share/ajax_form", 
-                               :locals => {:commentable => l.secondary_actor,
-                                           :item_id => item_id} %>
-                </div>
+            <div class="iw_img">
+                <%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), wine_path(l.secondary_actor) %>
             </div>
-        <% end %>
-    </div>
-
-  <% end %>
-
+            <div class="iw_info">
+                <h1>
+                    <%= raw wine_name_zh_link(l.secondary_actor.cname, l.secondary_actor) %>
+                </h1>
+                <h2>
+                    <%= raw link_to l.secondary_actor.origin_name, wine_path(l.secondary_actor) %>
+                </h2>
+                <p class="iw_action"><%= time_line_text(l.event_type) %></p>
+            </div>
+            <%= render :partial => "share/time_line_wine", :locals => {:l => l} %>
+            <% if current_user %>
+                <div class="iw_comment clearfix" style="display:none;">
+                    <div class="left">
+                        <%= link_to_user current_user, user_path(current_user, :trailing_slash => true), 
+                                                       {:with_avatar => true, :avatar_version => :thumb},
+                                                        {:width => 30, :height => 30, :alt => current_user.username} %>
+                    </div>
+                    <div class="right">
+                        <%= render :partial => "comments/share/ajax_form", 
+                                   :locals => {:commentable => l.secondary_actor,
+                                               :item_id => item_id} %>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    <% end %>
+    <% if l.secondary_actor_type == "Winery" %>
+        <div class="iw item" id="<%= item_id %>">
+            <%= render :partial => "share/follow_and_comment_button", :locals => {:parent => l.secondary_actor, :item_id => item_id} %>
+            <div class="iw_img">
+                <%= link_to wine_waterfall_image_tag(l.secondary_actor, :thumb_name => :middle), winery_path(l.secondary_actor) %>
+            </div>
+            <div class="iw_info">
+                <h1><%= raw link_to l.secondary_actor.name_zh, winery_path(l.secondary_actor) %></h1>
+                <h2><%= raw link_to l.secondary_actor.origin_name, winery_path(l.secondary_actor) %></h2>
+                <p class="iw_action"><%= time_line_text(l.event_type, true) %></p>
+            </div>
+            <%= render :partial => "share/time_line_wine", :locals => {:l => l} %>
+            <% if current_user %>
+                <div class="iw_comment clearfix" style="display:none;">
+                    <div class="left">
+                        <%= link_to_user current_user, user_path(current_user, :trailing_slash => true), 
+                                                       {:with_avatar => true, :avatar_version => :thumb},
+                                                        {:width => 30, :height => 30, :alt => current_user.username} %>
+                    </div>
+                    <div class="right">
+                        <%= render :partial => "comments/share/ajax_form", 
+                                   :locals => {:commentable => l.secondary_actor,
+                                               :item_id => item_id} %>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    <% end %>
 <% end %>
 <%= javascript_include_tag 'waterfall_comment_follow' %>
 <script type="text/javascript" >
