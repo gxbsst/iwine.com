@@ -89,7 +89,7 @@ jQuery ->
     submitForm: (event) ->
       event.preventDefault
       if @collection.length == 0
-        alert('请选择酒款...')
+        alert('请选择酒...')
       else
         $('#new_event_wine').submit()
     showSubmitButton: ->
@@ -149,8 +149,8 @@ jQuery ->
       $(@el).find('.loading').hide()
       $('.search_result .loading_l').hide()
     showSelectWineTips: ->
-      title = '<div class="float_r"><span class="notice_b">这些都不是您要找的酒？</span><a href="/wines/new" class="btn_gray"><span>添加酒款</span></a></div>'
-      tips = '<p class="notice_b">我们为您搜寻到以下酒款<span class="red">（请单击年份以选择酒款）</span></p>'
+      title = '<div class="float_r"><span class="notice_b">这些都不是您要找的酒？</span><a href="/wines/new" class="btn_gray"><span>添加酒</span></a></div>'
+      tips = '<p class="notice_b">我们为您搜寻到以下酒<span class="red">（请单击年份以选择酒）</span></p>'
       $('.top_text').append(title)
       $('.top_text').append(tips)
 

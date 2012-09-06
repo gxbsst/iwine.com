@@ -268,12 +268,12 @@ module ApplicationHelper
     end
   end
 
-  #  下拉菜单: 获取热门酒款
+  #  下拉菜单: 获取热门酒
   def get_hot_wine(limit)
     Wines::Detail.hot_wines(1)
   end
 
-  #  下拉菜单: 获取热门酒款
+  #  下拉菜单: 获取热门酒
   def get_hot_wineries(limit)
     Winery.hot_wineries(1)
   end
@@ -452,11 +452,11 @@ module ApplicationHelper
   end
 
   #获取随机数
-  def get_rand_id(id)
+  def get_rand_id(timeline)
     chars = ("0".."9").to_a
     rand_id = ''
     1.upto(5){|i| rand_id << chars[rand(chars.size-1)]}
-    return "#{id}#{rand_id}"
+    return "#{timeline.secondary_actor_type.gsub('::Detail', '')}#{timeline.secondary_actor.id}#{rand_id}"
   end
 
   #首页展示不同文字

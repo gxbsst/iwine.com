@@ -7,7 +7,7 @@
 <div class="whitespace">
   <div class="addwine">
     <%= render "wine_details/addwine_step", :step => "step_sec" %>
-    <div class="notice_b mb20">请填写<%= @register.origin_name.blank? ? "该酒款的" : @register.origin_name %>基本信息的基本信息</div>
+    <div class="notice_b mb20">请填写<%= @register.origin_name.blank? ? "该酒的" : @register.origin_name %>基本信息的基本信息</div>
     <div id="stylized" class="myform">
 
       <%= render "new_form", :objet => @register %>

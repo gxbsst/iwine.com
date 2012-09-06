@@ -1,5 +1,5 @@
 <% @timelines.each do |l| %>
-<% item_id = get_rand_id(l.secondary_actor.id) %>
+<% item_id = get_rand_id(l) %>
 <% if l.secondary_actor_type == "Wines::Detail" %> 
     <div class="iw item" id="<%= item_id %>">
     <%= render :partial => "share/follow_and_comment_button", :locals => {:parent => l.secondary_actor, :item_id => item_id} %>
