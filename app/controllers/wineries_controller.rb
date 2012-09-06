@@ -5,6 +5,7 @@ class WineriesController < ApplicationController
   before_filter :get_winery, :except => [:show, :index]
   before_filter :get_follow_item, :except => [:index]
   before_filter :check_and_create_albums, :only => [:photo_upload]
+  
   def index
     @title = "酒庄"
     @timelines = Winery.timeline_events
