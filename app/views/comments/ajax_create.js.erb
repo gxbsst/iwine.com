@@ -7,7 +7,7 @@
 	end
 	selector_comment_num = "##{@item_id} .iw_more_comment a"
 	selector_list = "##{@item_id} ul"
-	selector_form = "##{@item_id} form input##{tag}_comment_body"
+	selector_form = "##{@item_id} form textarea##{tag}_comment_body"
 %>
 $("<%= selector_list %>").append("<%= escape_javascript(render(:partial =>'share/short_comment', :locals => {:comment => @comment})) %>");
 $("<%= selector_form %>").val('');
