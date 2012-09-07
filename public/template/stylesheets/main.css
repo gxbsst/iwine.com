@@ -199,7 +199,8 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .delet {background:url(../images/icon/delet.png) no-repeat left top;height:19px;width:19px;}
 .icon_edit2 {background:url(../images/icon/icon_all.gif) no-repeat 0 -74px;padding:0 0 0 18px;}
 .icon_cancle {background:url(../images/icon/icon_all.gif) no-repeat 0 -56px;padding:0 0 0 18px; }
-.icon_member {background:url(../images/icon/users.png) no-repeat 0 0;padding: 0 0 0 18px;}
+.icon_member {background:url(../images/icon/user.png) no-repeat 0 0;padding: 0 0 0 18px;}
+.icon_members {background:url(../images/icon/users.png) no-repeat 0 0;padding: 0 0 0 18px;}
 .icon_join {background:url(../images/icon/join.png) no-repeat 0 -1px;padding: 0 0 0 18px;}
 .icon_text_edit {background:url(../images/icon/join_edit.png) no-repeat 0 -1px;padding:0 0 0 18px;}
 .icon_public {background:url(../images/icon/public.png) no-repeat 0 1px;padding:2px 0 0 18px;height:20px;}
