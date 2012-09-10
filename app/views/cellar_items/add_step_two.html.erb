@@ -16,7 +16,7 @@
             <div class="float_r">
               <span class="notice_b">这些都不是您要找的酒？</span>
               <%= link_to add_wines_path(:step => 1), :class => "btn_gray" do %>
-                  <span>添加酒款</span>
+                  <span>添加酒</span>
               <% end %>
             </div>
             <%= render "search_item", :object => @search %>
@@ -48,7 +48,7 @@
             <% end %>
           </ul>
       <% else %>
-        <p class="notice_b mb20">对不起，没有找到关于“<%= @search.keywords %>”的信息，您是否愿意帮助我们添加酒款？</p>
+        <p class="notice_b mb20">对不起，没有找到关于“<%= @search.keywords %>”的信息，您是否愿意帮助我们添加酒？</p>
         <p>
           <%= link_to new_wine_path, :class => "btn_gray mr5" do %>
             <span>我来添加</span>
