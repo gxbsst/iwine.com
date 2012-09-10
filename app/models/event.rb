@@ -72,7 +72,7 @@ class Event < ActiveRecord::Base
     :with => "EventParticipant",
     :receiver => lambda {|participant| participant.event },
     :increment => {
-    :on => :save,
+    :on => :create,
     :if => lambda {|participant| participant.joined? }
   },
     :decrement => {
@@ -124,7 +124,7 @@ class Event < ActiveRecord::Base
 
   # 活动是否可参加
   def joinedable?
-    if locked? || draft? || cancle? || timeout?
+    if locked? || draft? || cancle? || timeout? || ausgebucht?
       false
     else
       true
