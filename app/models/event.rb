@@ -92,7 +92,12 @@ class Event < ActiveRecord::Base
       :receiver => lambda {|comment| comment.commentable },
       :increment => {:on => :create, :if => lambda {|comment| comment.counter_should_increment_for("Event") }},
       :decrement => {:on => :save,   :if => lambda {|comment| comment.counter_should_decrement_for("Event") }}
+  }, :photos_count   => {:with => "AuditLog",
+        :receiver => lambda {|audit_log| audit_log.logable.imageable }, 
+        :increment => {:on => :create, :if => lambda {|audit_log| audit_log.photos_counter_should_increment? && audit_log.logable.imageable_type == "Event"}},
+        :decrement => {:on => :save,   :if => lambda {|audit_log| audit_log.photos_counter_should_decrement? && audit_log.logable.imageable_type == "Event"}}                              
   }
+                   
 
   # 活动开始时间应该大于结束时间
   def begin_at_be_before_end_at
@@ -211,15 +216,15 @@ class Event < ActiveRecord::Base
 
   # 添加某只酒到活动
   def add_one_wine(wine_detail_id)
-   return if wine_have_been_added? wine_detail_id
-   wine = wines.build(:wine_detail_id => wine_detail_id) 
-   wine.save
-   wine
+    return if wine_have_been_added? wine_detail_id
+    wine = wines.build(:wine_detail_id => wine_detail_id) 
+    wine.save
+    wine
   end
 
   # 检查某支酒是否已经被添加
   def wine_have_been_added? wine_detail_id
-   EventWine.check_wine_have_been_added?(id, wine_detail_id)
+    EventWine.check_wine_have_been_added?(id, wine_detail_id)
   end
 
   # 活动标签 

@@ -29,6 +29,8 @@ class CommentsController < ApplicationController
         render_wine_photo_comment_detail
       when "Winery"
         render_winery_photo_comment_detail
+      when 'Event'
+        render_event_photo_comment_detail
       end
     when 'Event'
       render_event_comment_detail
@@ -348,6 +350,10 @@ class CommentsController < ApplicationController
       @wine_detail = @wine.get_latest_detail
     end
     render "wine_photo_comment_detail"
+  end
+
+  def render_event_photo_comment_detail
+    render "event_photo_comment_detail"
   end
 
   def render_winery_photo_comment_detail

@@ -6,6 +6,8 @@
 						parent.all_photo_ids
 					when "Album"
 						parent.image_ids 
+					when "Event"
+						parent.photo_ids
 					end %>
 
 	<% if previous_photo = previous_page(photo_ids, @photo.id) %>
@@ -16,6 +18,8 @@
 	            		wine_photo_path(parent, previous_photo)
 	            	when "Album"
 	            		album_photo_show_user_path(@user, parent, previous_photo) 
+	            	when "Event"
+	            		event_photo_path(parent, previous_photo)
 	            	end %>
 	    <%= link_to previous_path, :class => 'mr5 btn_gray' do %>
 	    	<span>前一张</span>
@@ -33,6 +37,8 @@
 		            		wine_photo_path(parent, next_photo)
 		            	when "Album"
 		            		album_photo_show_user_path(@user, parent, next_photo) 
+		            	when "Event"
+		            		event_photo_path(parent, next_photo)
 		            	end 
 		            	%>	
 		<%= link_to next_path, :class => "btn_gray" do %>

@@ -16,6 +16,8 @@ class PhotosController < ApplicationController
       render_wine_photo_list
     when "wineries"
       render_winery_photo_list
+    when "events"
+      render_event_photo_list
     end
   end
 
@@ -38,6 +40,8 @@ class PhotosController < ApplicationController
       render_wine_photo_detail
     when "wineries"
       render_winery_photo_detail
+    when "events"
+      render_event_photo_detail
     end
   end
   
@@ -137,7 +141,14 @@ class PhotosController < ApplicationController
     @multiple = true #此页面有两个分享
     @title = ["图片", @winery.name].join('-')
     render "winery_photo_detail"
+  end
 
+  def render_event_photo_detail
+    @multiple = true # 此页面有两个分享
+    @event = Event.find(params[:event_id])
+    @recommend_events = Event.recommends(4)
+    @participant = @event.have_been_joined? @user.id if @user
+    render "event_photo_detail"
   end
 
   def render_wine_photo_list
@@ -153,6 +164,13 @@ class PhotosController < ApplicationController
     render "winery_photo_list"
   end
 
+  def render_event_photo_list
+    @event = Event.find(params[:event_id])
+    @recommend_events = Event.recommends(4)
+    @participant = @event.have_been_joined? @user.id if @user
+    render "event_photo_list"
+  end
+
   def find_winery_and_hot_winery
     @winery = Winery.find params[:winery_id]
     @hot_wineries = Winery.hot_wineries(5) 
@@ -163,6 +181,8 @@ class PhotosController < ApplicationController
       @resource, @id = ["Wines::Detail", params[:wine_id]]
     elsif params[:winery_id].present?
       @resource, @id = ["Winery", params[:winery_id]]
+    elsif params[:event_id].present?
+      @resource, @id = ["Event", params[:event_id]]
     else
       @resource, @id = ["Album",  params[:album_id]]
     end

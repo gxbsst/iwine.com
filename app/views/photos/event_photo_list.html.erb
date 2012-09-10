@@ -1,0 +1,46 @@
+<% content_for :title, @title%>
+<% content_for :css do %>
+	<%= stylesheet_link_tag "event" %>
+<% end %>
+<div class="whitespace eventmain">
+	<div class="left">
+		<%= render "events/event_detail" %>
+		<div class="section">
+			<div class="title">
+				<%= link_to event_path(@event), :class => "btn_gray float_r" do %>
+					<span>返回</span>
+				<% end %>
+				<%= link_to photo_upload_event_path(@event), :class => "btn_gray float_r mr5" do %>
+					<span>上传照片</span>
+				<% end %>
+				<h2>活动照片</h2>
+			</div>
+			<div class="content">
+				<ul class="photolist">
+					<% @photos.each_with_index do |photo, index| %>
+						<%= raw show_clear_div(index) %> 
+						<li>
+							<%= link_to event_photo_path(@event, photo) do %>
+								<%= image_tag photo.image_url(:thumb), :alt => @event.title %>
+							<% end %>
+							<%= link_to photo.comments_count, event_photo_path(@event, photo), :class => 'icon_comment' %>
+						</li>
+					<% end %>
+				</ul>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="pagination">
+ 			<%= paginate @photos, :outer_window => 2 %>
+		</div>
+	</div>
+	<div class="right">
+		<div class="sidebox">
+            <%= link_to new_event_path, :class => :btn_createvent do %>
+                <span>我要创建活动</span>
+            <% end %>
+        </div>
+        <%= render "events/recommend_events" %>
+	</div>
+	<div class="clear"></div>
+</div>

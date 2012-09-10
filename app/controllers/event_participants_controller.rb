@@ -52,6 +52,7 @@ class EventParticipantsController < ApplicationController
   end
 
   def destroy
+    
   end
 
   protected
