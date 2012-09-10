@@ -8,7 +8,7 @@ FactoryGirl.define do
     address "上海市内茶陵北路20号"
     begin_at (Time.parse '2014-12-10') + 10.days
     end_at (Time.parse '2014-12-10') + 20.days
-    block_in 10
+    block_in 1
     publish_status 2 
     followers_count 0
     participants_count 0
