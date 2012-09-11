@@ -123,7 +123,7 @@
             <h2>
               留言
               <span class="font12 more">
-                <%= link_to "(共#{@event.comments_count}条)", 'javascript:void(0)' %>
+                <%= link_to "(共#{@event.comments_count}条)", event_comments_path(@event) %>
               </span>
             </h2>
           </div>
