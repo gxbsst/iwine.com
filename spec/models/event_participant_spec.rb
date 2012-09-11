@@ -62,6 +62,12 @@ describe EventParticipant do
       end
     end
 
+    describe "#people_num" do
+      it "should be 1" do
+        @participant.people_num.should be(1)
+      end
+    end
+
   end
 
   context "join a event with validate" do

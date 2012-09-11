@@ -20,6 +20,7 @@ class Event < ActiveRecord::Base
   validates :publish_status, :inclusion => { :in => [0,1,2,3] } 
   validate :begin_at_be_before_end_at
   validate :begin_at_be_after_now
+  validates :block_in, :numericality => {:allow_blank => true}, :exclusion => {:in => [0]}
 
   scope :published, where(:publish_status => EVENT_PUBLISHED_CODE ).order("begin_at ASC")
   scope :live, published.where( "begin_at > ?", Time.now ) # 未举行
@@ -68,18 +69,7 @@ class Event < ActiveRecord::Base
   after_update :crop_poster
 
   # 统计
-  counts :participants_count => {
-    :with => "EventParticipant",
-    :receiver => lambda {|participant| participant.event },
-    :increment => {
-    :on => :create,
-    :if => lambda {|participant| participant.joined? }
-  },
-    :decrement => {
-    :on => :update,
-    :if => lambda {|participant| participant.cancle? }}
-  },
-    :followers_count => {:with => "Follow", 
+  counts :followers_count => {:with => "Follow", 
       :receiver => lambda {|follow| follow.followable },
       :increment => {
     :on => :create,
@@ -133,13 +123,18 @@ class Event < ActiveRecord::Base
 
   # 活动是否设定人数
   def set_blocked?
+    #block_in.blank? ? false : true
     block_in > 0 ? true : false
   end
 
-  # 人数已经订满?
+  def block_in
+    value = read_attribute(:block_in)
+    value.blank? ? 0 : value
+  end
+
   def ausgebucht?
     return false  unless set_blocked?
-    block_in == get_participant_number ? true: false
+    (block_in <= get_participant_number)? true: false
   end
 
   # 获取参加活动的人数
@@ -147,6 +142,11 @@ class Event < ActiveRecord::Base
     participants_count
     #EventParticipant.where(:event_id => id, 
                            #:join_status =>  APP_DATA['event_participant']['join_status']['cancle']).count 
+  end
+
+  # 获取可参加活动活动的名额
+  def get_joinable_num
+    block_in - participants_count
   end
 
   # 是否已经被关注

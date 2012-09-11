@@ -32,7 +32,7 @@
                   <span class="type">
                     <%= event_item_tags(event) %>
                   </span>
-                  <h2> <%= link_to event.title, event_path(event)  %></h2>
+                  <h2><%= link_to truncate_u(event.title, 20), event_path(event)  %></h2>
                   <div class="info">时间:  <%= event.begin_end_at %><br />
                     地点:  <%= event.full_address %><br />
                     组织者：<%= link_to  event.user.username, 
@@ -73,7 +73,7 @@
                   <span class="type">
                     <%= event_item_tags(event) %>
                   </span>
-                  <h2> <%= link_to event.title, event_path(event)  %></h2>
+                  <h2><%= link_to truncate_u(event.title, 20), event_path(event)  %></h2>
                   <div class="info">时间:  <%= event.begin_end_at %><br />
                     地点:  <%= event.full_address %><br />
                     组织者：<%= link_to  event.user.username, 
@@ -115,7 +115,7 @@
                     <span class="type">
                       <%= event_item_tags(event) %>
                     </span>
-                    <h2> <%= link_to event.title, event_path(event)  %></h2>
+                    <h2><%= link_to truncate_u(event.title, 20), event_path(event)  %></h2>
                     <div class="info">时间:  <%= event.begin_end_at %><br />
                       地点:  <%= event.full_address %><br />
                       组织者：<%= link_to  event.user.username, 

@@ -19,11 +19,15 @@ class EventParticipantsController < ApplicationController
   end
 
   def update
-    participant = @user.update_join_event_info(@participant,params[:event_participant])
-    if participant
-      notice_stickie "更新成功."
-    else
-      notice_stickie "更新失败."
+    begin 
+      participant = @user.update_join_event_info(@participant,params[:event_participant])
+      if participant
+        notice_stickie "更新成功."
+      else
+        notice_stickie "更新失败."
+      end
+    rescue EventException::ErrorPeopleNum  => e
+      notice_stickie "还有#{e.message}个剩余名额，请重新填写人数"
     end
     redirect_to event_path(@event)
   end
@@ -31,7 +35,9 @@ class EventParticipantsController < ApplicationController
   def create
     begin 
     @participant = @user.join_event(@event, params[:event_participant])
-    rescue 
+    rescue EventException::ErrorPeopleNum => e
+      notice_stickie "还有#{e.message}个剩余名额，请重新填写人数"
+    rescue EventException::HaveJoinedEvent
       notice_stickie "请不要重复提交您的信息"
     end
     redirect_to event_path(@event)
@@ -39,7 +45,6 @@ class EventParticipantsController < ApplicationController
 
   def cancle
     if request.get?
-
     else
       begin
         @user.cancle_join_event(@event, params[:event_participant])
