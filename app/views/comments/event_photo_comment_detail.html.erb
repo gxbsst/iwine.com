@@ -23,7 +23,7 @@
 						<%= image_tag( @photo.image_url(:large), :alt => @photo.intro) %>
 					</div>
 					<div class="info">
-						<%= render :partial => 'liked' %>
+						<%= render :partial => 'photos/liked' %>
 		              	<div class="share float_r">
 		                	<%= render "share/sns_icons_second",
 		                   		:image_url => sns_image_url(@photo, :thumb_name => :large),
@@ -33,13 +33,16 @@
 		              	</div>
 		              	<div><%= @photo.views_count %>浏览 | <%= @photo.comments_count %>评论</div>
 					</div>
-					<div class="comment">
-						<div class="mb20 clearfix">
-							<div class="title">
-								<h3>评论</h3>
-							</div>
+					<div class="section last">
+						<div class="title">
+							<%= link_to "comments_list", :class => "btn_gray float_r font12" do %>
+								<span>返回</span>
+							<% end %>
+							<h2>查看回复</h2>
 						</div>
-						<%= render "comments/comment_list" %>
+						<div class="content">
+							<%= render "comments/share/comment_detail" %>
+						</div>
 					</div>
 				</div>
 			</div>
