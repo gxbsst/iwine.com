@@ -145,9 +145,7 @@ class PhotosController < ApplicationController
 
   def render_event_photo_detail
     @multiple = true # 此页面有两个分享
-    @event = Event.find(params[:event_id])
-    @recommend_events = Event.recommends(4)
-    @participant = @event.have_been_joined? @user.id if @user
+    init_event_object
     render "event_photo_detail"
   end
 
@@ -165,15 +163,19 @@ class PhotosController < ApplicationController
   end
 
   def render_event_photo_list
-    @event = Event.find(params[:event_id])
-    @recommend_events = Event.recommends(4)
-    @participant = @event.have_been_joined? @user.id if @user
+    init_event_object
     render "event_photo_list"
   end
 
   def find_winery_and_hot_winery
     @winery = Winery.find params[:winery_id]
     @hot_wineries = Winery.hot_wineries(5) 
+  end
+
+  def init_event_object
+    @event = Event.find(params[:event_id])
+    @recommend_events = Event.recommends(4)
+    @participant = @event.have_been_joined? @user.id if @user
   end
 
   def get_photo_imageable

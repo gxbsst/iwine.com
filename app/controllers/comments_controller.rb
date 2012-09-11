@@ -234,8 +234,7 @@ class CommentsController < ApplicationController
 
   def render_event_comments
     @event = @commentable
-    @recommend_events = Event.recommends(4)
-    @participant = @event.have_been_joined? @user.id if @user
+    init_event_object
     render "event_comments_list"
   end
 
@@ -365,8 +364,7 @@ class CommentsController < ApplicationController
   def render_event_photo_comment_detail
     @multiple = true
     @event = @comment.commentable.imageable
-    @recommend_events = Event.recommends(4)
-    @participant = @event.have_been_joined? @user.id if @user
+    init_event_object
     render "event_photo_comment_detail"
   end
 
@@ -378,8 +376,12 @@ class CommentsController < ApplicationController
 
   def render_event_comment_detail
     @event = @comment.commentable
+    init_event_object
+    render "event_comment_detail"
+  end
+
+  def init_event_object
     @recommend_events = Event.recommends(4)
     @participant = @event.have_been_joined? @user.id if @user
-    render "event_comment_detail"
   end
 end

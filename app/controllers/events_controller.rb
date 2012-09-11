@@ -9,7 +9,7 @@ class EventsController < ApplicationController
   before_filter :get_join_events, :only => [:index]
   before_filter :get_follow_events, :only => [:index]
   before_filter :get_event, :except => [:new, :create, :index]
-  before_filter :check_owner, :except => [:show, :new, :create, :index, :followers, :participants]
+  before_filter :check_owner, :except => [:show, :new, :create, :index, :followers, :participants, :photo_upload]
   before_filter :get_follow_item, :only => [:show, :followers, :participants]
   before_filter :get_join_item, :only => [:show, :photo_upload, :followers, :participants]
   before_filter :check_and_create_albums, :only => [:photo_upload]
