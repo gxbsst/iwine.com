@@ -3,15 +3,15 @@ class EventsController < ApplicationController
 
   include Helper::EventsControllerHelper
 
-  before_filter :authenticate_user!, :except => [:show, :index]
+  before_filter :authenticate_user!, :except => [:show, :index, :followers, :participants]
   before_filter :get_user, :except => [:index]
   before_filter :get_create_events, :only => [:index] 
   before_filter :get_join_events, :only => [:index]
   before_filter :get_follow_events, :only => [:index]
   before_filter :get_event, :except => [:new, :create, :index]
-  before_filter :check_owner, :except => [:show, :new, :create, :index]
-  before_filter :get_follow_item, :only => [:show]
-  before_filter :get_join_item, :only => [:show, :photo_upload]
+  before_filter :check_owner, :except => [:show, :new, :create, :index, :followers, :participants]
+  before_filter :get_follow_item, :only => [:show, :followers, :participants]
+  before_filter :get_join_item, :only => [:show, :photo_upload, :followers, :participants]
   before_filter :check_and_create_albums, :only => [:photo_upload]
   def index
     @top_events = Event.recommends(2)
