@@ -9,9 +9,10 @@ class EventsController < ApplicationController
   before_filter :get_join_events, :only => [:index]
   before_filter :get_follow_events, :only => [:index]
   before_filter :get_event, :except => [:new, :create, :index]
-  before_filter :check_owner, :except => [:show, :new, :create, :index, :followers, :participants]
+  before_filter :check_owner, :except => [:show, :new, :create, :index, :followers, :participants, :photo_upload]
   before_filter :get_follow_item, :only => [:show, :followers, :participants]
-  before_filter :get_join_item, :only => [:show, :followers, :participants]
+  before_filter :get_join_item, :only => [:show, :photo_upload, :followers, :participants]
+  before_filter :check_and_create_albums, :only => [:photo_upload]
 
   def index
     @top_events = Event.recommends(2)
@@ -87,7 +88,7 @@ class EventsController < ApplicationController
         @comments = Kaminari.paginate_array(@comments).page(page).per(10)
       end
     end
-
+    @photos =  @event.photos.approved.limit(4)
     new_normal_comment
     @recommend_events = Event.recommends(4)
 
@@ -104,8 +105,8 @@ class EventsController < ApplicationController
     end
   end
 
-  def upload_poster
-
+  def photo_upload
+    @photo = @event.photos.new
   end
 
   def published

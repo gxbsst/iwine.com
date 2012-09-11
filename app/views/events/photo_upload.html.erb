@@ -1,0 +1,23 @@
+<% content_for :css do %>
+	<%= stylesheet_link_tag "event" %>
+<% end %>
+<div class="whitespace eventmain">
+	<div class="left">
+		<%= render "events/event_detail" %>
+		<div class="left">
+			<div class="section">
+				<div class="title">
+					<%= link_to event_path(@event), :class => "btn_gray float_r" do %>
+						<span>返回</span>
+					<% end %>
+					<h2>上传照片</h2>
+				</div>
+				<div class="content">
+					<%= render "share/upload_photo" %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="right"></div>
+	<div class="clear"></div>
+</div>

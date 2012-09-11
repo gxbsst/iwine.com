@@ -319,11 +319,15 @@ module ApplicationHelper
   def sns_image_url(object, options = {})
     if object.class.name == "Photo"
       cover = object
+    elsif object.class.name == "Event"
+      photo = object.poster_url(options[:thumb_name]) if object.poster.present?
     else
       cover = get_cover(object)
     end
     if cover
       "#{root_url}#{cover.image_url(options[:thumb_name])}"
+    elsif photo
+      "#{root_url}#{photo}"
     end
   end
 

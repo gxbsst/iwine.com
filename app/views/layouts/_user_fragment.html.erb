@@ -9,10 +9,10 @@
           {:class => "userpic", :with_avatar => true, :avatar_version => :thumb, :width => 20, :height => 20 }  %>
         <%= link_to_image "common/userbox_arrow.jpg", "#", {:class => :arrow_down}, :width => 20, :height => 30 %>
         <ul class="drop_down_menu" >
+          <li><%= link_to "我的iWine", user_path(current_user) %></li>
           <li><%= link_to "私信", conversations_path %></li>
           <li><%= link_to "找朋友", :controller => "/friends", :action => "find" %></li>
           <li><%= link_to "设置", basic_settings_path() %></li>
-          <li><%= link_to "我的iWine", user_path(current_user) %></li>
           <li><%= link_to "退出",  logout_path %></li>
         </ul>
       </span>

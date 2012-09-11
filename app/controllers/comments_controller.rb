@@ -29,6 +29,8 @@ class CommentsController < ApplicationController
         render_wine_photo_comment_detail
       when "Winery"
         render_winery_photo_comment_detail
+      when 'Event'
+        render_event_photo_comment_detail
       end
     when 'Event'
       render_event_comment_detail
@@ -82,6 +84,8 @@ class CommentsController < ApplicationController
         render_wine_comments
       when "wineries"
         render_winery_comments
+      when "events"
+        render_event_comments
     end
 
   end
@@ -219,12 +223,19 @@ class CommentsController < ApplicationController
     @wine = @wine_detail.wine
     render "wine_comments_list"
   end
+
   def render_winery_comments
     @winery = @commentable
     # @hot_wines = Wines::Detail.hot_wines(5)
     @hot_wineries = Winery.hot_wineries(5) 
     @users = @winery.followers(:limit => 16) #关注酒庄的人
     render "winery_comments_list"
+  end
+
+  def render_event_comments
+    @event = @commentable
+    init_event_object
+    render "event_comments_list"
   end
 
   #用户评论设置
@@ -350,6 +361,13 @@ class CommentsController < ApplicationController
     render "wine_photo_comment_detail"
   end
 
+  def render_event_photo_comment_detail
+    @multiple = true
+    @event = @comment.commentable.imageable
+    init_event_object
+    render "event_photo_comment_detail"
+  end
+
   def render_winery_photo_comment_detail
     @winery = @comment.commentable.imageable
     @hot_wineries = Winery.hot_wineries(5)
@@ -358,7 +376,12 @@ class CommentsController < ApplicationController
 
   def render_event_comment_detail
     @event = @comment.commentable
-    @recommend_events = Event.recommends(4)
+    init_event_object
     render "event_comment_detail"
+  end
+
+  def init_event_object
+    @recommend_events = Event.recommends(4)
+    @participant = @event.have_been_joined? @user.id if @user
   end
 end
