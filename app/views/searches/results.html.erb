@@ -6,7 +6,7 @@
       <a href='<%= url_for( "/searches/results?tab=#{tab}&word=" )%>' onclick="this.href+=$('#search_input').val()" id="search_link" class="btn_gray float_r">
         <span>搜索</span>
       </a>
-      <input class="text"  name="" id="search_input" type="text" placeholder="请输入酒款或酒庄的名称" value="<%= params[:word] %>"/>
+      <input class="text"  name="" id="search_input" type="text" placeholder="请输入酒或酒庄的名称" value="<%= params[:word] %>"/>
     </div>
     <div class="clear"></div>
     <div class="tabs">
@@ -15,7 +15,7 @@
           <a href="<%= url_for( '/searches/results?tab=all&word=' + params[:word] )%>">全部</a>
         </li>
         <li class="<%= @wine_tab%>">
-          <a href="<%= url_for( '/searches/results?tab=wine&word=' + params[:word] )%>">酒款</a>
+          <a href="<%= url_for( '/searches/results?tab=wine&word=' + params[:word] )%>">酒</a>
         </li>
         <li class="<%= @winery_tab%>">
           <a href="<%= url_for( '/searches/winery?word=' + params[:word] )%>">酒庄</a>

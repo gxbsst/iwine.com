@@ -21,7 +21,15 @@
 .event_list .info {margin:0 0 10px 0;}
 .base {margin:0 0 40px 0;}
 .base .poster {width:150px;float:left;margin:0 25px 0 0;text-align:center;}
-.base .base_content {width:415px;float:left;}
+.base .base_content {width:415px;float:left;position:relative;}
+#manage {position:absolute;left:390px;top:0;}
+#manage div {position:absolute; visibility:hidden;left:-102px;background-color:#f8f8f8;border:1px solid #ddd;border-bottom:none;width:120px;}
+#manage div a {display:block;position:relative;padding: 5px 5px 5px 33px;border-bottom:1px solid #ddd;}
+#manage div a:hover {background-color:#eee;text-decoration:none;}
+#manage div a.icon_edit2 {background-position:-51px 8px;}
+#manage div a.icon_cancle {background-position:-51px -31px;}
+#manage div a.icon_member {background-position:10px 7px;}
+#manage div a.icon_members {background-position:10px 7px;}
 .base h1 {font-size:20px;margin:0 0 15px 0;}
 .base .info {margin:0 0 10px 0;}
 .base .p_count {margin:0 0 15px 0;}

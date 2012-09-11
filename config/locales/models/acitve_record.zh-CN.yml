@@ -2,7 +2,7 @@ zh-CN:
 
   activerecord:
     models:
-      register: '酒款'
+      register: '酒'
       special_comment: "专家评论"
 
   helpers:

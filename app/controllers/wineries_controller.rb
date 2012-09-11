@@ -5,6 +5,7 @@ class WineriesController < ApplicationController
   before_filter :get_winery, :except => [:show, :index]
   before_filter :get_follow_item, :except => [:index]
   before_filter :check_and_create_albums, :only => [:photo_upload]
+  
   def index
     @title = "酒庄"
     @timelines = Winery.timeline_events
@@ -28,7 +29,7 @@ class WineriesController < ApplicationController
   end
 
   def wines_list
-    @title = ["所有酒款", @winery.name].join("-")
+    @title = ["所有酒", @winery.name].join("-")
     @wines = @winery.wines.includes([:details => :photos]).page(params[:page] || 1).per(10)
   end
 
@@ -47,7 +48,7 @@ class WineriesController < ApplicationController
     @winery = Winery.find(params[:id])
   end
 
-  #热门酒款
+  #热门酒
   def get_hot_wines
     @hot_wines = Wines::Detail.hot_wines(5)
   end

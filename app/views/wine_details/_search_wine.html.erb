@@ -1,6 +1,6 @@
 <%= form_for @search ||= Search.new, :url => "/searches/search_wines",:html => {:class => "search_wine"}, :method => :post do |f| %>
-    <p class="notice_b mb20">请输入酒款名称以查询该酒款是否已经存在</p>
-    <%= f.text_field :keywords, :class => "text common_search mr5", :placeholder => "请输入酒款名称" %>
+    <p class="notice_b mb20">请输入酒名称以查询该酒是否已经存在</p>
+    <%= f.text_field :keywords, :class => "text common_search mr5", :placeholder => "请输入酒名称" %>
     <a href="#" class="search btn_gray" onclick="this.blur();" title="搜索"><span>搜索</span></a>
 
     <script type="text/javascript" charset="utf-8">

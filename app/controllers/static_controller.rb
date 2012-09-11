@@ -1,12 +1,14 @@
 # encoding: UTF-8
 class StaticController < ApplicationController
-
+   
   def home
     @title =  t("nav.home")
   end
   def index
     @title =  "首页"
     @timelines = Wines::Detail.timeline_events
+    @timelines << Winery.timeline_events
+    @timelines = @timelines.flatten.sort {|a,b| b.created_at <=> a.created_at}
     page = params[:page] || 1
 
     if !(@timelines.nil?)

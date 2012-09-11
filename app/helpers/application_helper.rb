@@ -280,12 +280,12 @@ module ApplicationHelper
     end
   end
 
-  #  下拉菜单: 获取热门酒款
+  #  下拉菜单: 获取热门酒
   def get_hot_wine(limit)
     Wines::Detail.hot_wines(1)
   end
 
-  #  下拉菜单: 获取热门酒款
+  #  下拉菜单: 获取热门酒
   def get_hot_wineries(limit)
     Winery.hot_wineries(1)
   end
@@ -331,11 +331,15 @@ module ApplicationHelper
   def sns_image_url(object, options = {})
     if object.class.name == "Photo"
       cover = object
+    elsif object.class.name == "Event"
+      photo = object.poster_url(options[:thumb_name]) if object.poster.present?
     else
       cover = get_cover(object)
     end
     if cover
       "#{root_url}#{cover.image_url(options[:thumb_name])}"
+    elsif photo
+      "#{root_url}#{photo}"
     end
   end
 
@@ -464,11 +468,8 @@ module ApplicationHelper
   end
 
   #获取随机数
-  def get_rand_id(id)
-    chars = ("0".."9").to_a
-    rand_id = ''
-    1.upto(5){|i| rand_id << chars[rand(chars.size-1)]}
-    return "#{id}#{rand_id}"
+  def get_rand_id(timeline)
+    "#{timeline.secondary_actor_type.gsub('::Detail', '')}#{timeline.secondary_actor.id}"
   end
 
   #首页展示不同文字

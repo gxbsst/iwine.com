@@ -1,0 +1,28 @@
+<% content_for :css do %>
+     <%= stylesheet_link_tag "event" %>
+<% end %>
+<div class="whitespace eventmain">
+     <div class="left">
+          <%= render "events/event_detail" %>
+          <div class="section last">
+               <div class="title">
+                    <%= link_to event_path(@event), :class => "btn_gray float_r font12" do %>
+                         <span>返回</span>
+                    <% end %>
+                    <h2>留言</h2>
+               </div>
+               <div class="content">
+                    <%= render "comment_list" %>
+               </div>
+          </div>
+     </div>
+     <div class="right">
+          <div class="sidebox">
+            <%= link_to new_event_path, :class => :btn_createvent do %>
+                <span>我要创建活动</span>
+            <% end %>
+        </div>
+        <%= render "events/recommends" %>
+     </div>
+     <div class="clear"></div>
+</div>

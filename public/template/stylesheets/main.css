@@ -2,7 +2,7 @@
 body {font-size:12px; font-family:Arial, Helvetica, sans-serif; color:#333;background:url(../images/bg/body_bg.jpg) repeat;}
 body {line-height:18px;word-break:break-all;}
 * {margin:0;padding:0;}
-input,button,select,textarea{outline:none}
+input,button,select,textarea{outline:none;resize:none;}
 h1, h2, h3, h4, h5, h6, ul, li, p, dl, dd, dt {margin:0;padding:0;}
 h1 a, h2 a, h3 a, h4 a {color:#333;}
 h1.zh a {font-size:14px;color:#333;}
@@ -199,7 +199,8 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .delet {background:url(../images/icon/delet.png) no-repeat left top;height:19px;width:19px;}
 .icon_edit2 {background:url(../images/icon/icon_all.gif) no-repeat 0 -74px;padding:0 0 0 18px;}
 .icon_cancle {background:url(../images/icon/icon_all.gif) no-repeat 0 -56px;padding:0 0 0 18px; }
-.icon_member {background:url(../images/icon/users.png) no-repeat 0 0;padding: 0 0 0 18px;}
+.icon_member {background:url(../images/icon/user.png) no-repeat 0 0;padding: 0 0 0 18px;}
+.icon_members {background:url(../images/icon/users.png) no-repeat 0 0;padding: 0 0 0 18px;}
 .icon_join {background:url(../images/icon/join.png) no-repeat 0 -1px;padding: 0 0 0 18px;}
 .icon_text_edit {background:url(../images/icon/join_edit.png) no-repeat 0 -1px;padding:0 0 0 18px;}
 .icon_public {background:url(../images/icon/public.png) no-repeat 0 1px;padding:2px 0 0 18px;height:20px;}

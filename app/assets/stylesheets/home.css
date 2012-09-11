@@ -21,7 +21,7 @@ p.iw_action {margin: 5px 0 10px 0;}
 .iw_more a {color:#666;}
 .iw_main ul.photo li {float:left;width:50px;margin:0 5px;line-height:normal;}
 .iw_comment {padding:10px 14px;border-top:1px solid #ccc;background-color:#f7f7f7;}
-.iw_comment .right input {display:block;width:142px;margin-bottom:5px;}
+.iw_comment .right textarea {display:block;width:146px;height:20px;margin-bottom:5px;background-color:#fff; overflow-x:auto; overflow-y:auto;}
 .iw_comment .right a {float:right;}
 
 a.btn_iw {background:url(common/iw_btn_left.png) no-repeat left 0;background-position:display:inline-block;padding-left:10px;color:#999;text-decoration:none;}

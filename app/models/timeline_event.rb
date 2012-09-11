@@ -21,7 +21,7 @@ class TimelineEvent < ActiveRecord::Base
                 WHERE (secondary_actor_type = ? ) 
                 ORDER BY created_at DESC  ) 
               as t 
-              GROUP BY `secondary_actor_id` ,`event_type` ORDER BY created_at DESC",
+              GROUP BY `secondary_actor_id` ORDER BY created_at DESC",
               "Wines::Detail"]
       timeline_items = find_by_sql sql
       # preload_associations(timeline_items, :secondary_actor => [:covers, :wine]) ## FOR Rails 2.1
@@ -36,7 +36,7 @@ class TimelineEvent < ActiveRecord::Base
                 WHERE (secondary_actor_type = ? ) 
                 ORDER BY created_at DESC  ) 
               as t 
-              GROUP BY `secondary_actor_id` ,`event_type` ORDER BY created_at DESC",
+              GROUP BY `secondary_actor_id` ORDER BY created_at DESC",
               "Winery"]
       timeline_items = find_by_sql sql
       ActiveRecord::Associations::Preloader.new(timeline_items, :secondary_actor => [:covers]).run

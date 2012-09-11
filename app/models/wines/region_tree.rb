@@ -4,7 +4,7 @@ class Wines::RegionTree < ActiveRecord::Base
   belongs_to :parent, :class_name => "RegionTree", :foreign_key => "parent_id"
   
   scope :region, lambda {|parent_id| where(["parent_id = ?", parent_id])}
-  scope :select_region, lambda {where(["parent_id is null"])} #上传酒款选择区域
+  scope :select_region, lambda {where(["parent_id is null"])} #上传酒选择区域
 
   #清晰数据时查询region_tree的id
   #规则1：最低级别如果出现重复的名字设置为空
