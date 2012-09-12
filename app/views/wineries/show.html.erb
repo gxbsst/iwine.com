@@ -3,6 +3,7 @@
     <%= stylesheet_link_tag "winery" %>
 <% end %>
 
+<%= javascript_include_tag "jquery_shorten" %>
   <div class="whitespace mb30">
     <%= render "winery_detail" %>
   </div>
@@ -54,3 +55,11 @@
 
     <div class="clear"></div>
   </div>
+
+  <script type="text/javascript">
+    $(".more_info").shorten({
+        "showChars" : 205,
+        "moreText"  : "阅读全部",
+        "lessText"  : "隐藏"
+    });
+  </script>
