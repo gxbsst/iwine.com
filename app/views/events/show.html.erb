@@ -135,11 +135,16 @@
     <!--end left-->
     </div>
     <div class="right">
-        <div class="sidebox">
-          <%= render 'recommends' %>
-          <!--end sidebox-->
-        </div>
-        <!--end right-->
+      <div class="sidebox">
+        <%= link_to new_event_path, :class => :btn_createvent do %>
+          <span>我要创建活动</span>
+        <% end %>
+      </div>
+      <div class="sidebox">
+        <%= render 'recommends' %>
+        <!--end sidebox-->
+      </div>
+      <!--end right-->
       </div>
       <div class="clear"></div>
     </div>

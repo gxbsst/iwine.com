@@ -13,7 +13,7 @@
       <dd>
         <h3><%= link_to truncate_u(event.title, 20), event_path(event)  %></h3>
         <div class="info">
-          <%= event.begin_end_at %>
+          <%= event.begin_end_at_with_cn %>
           <br />
           <%= event.full_address %>
           <br />

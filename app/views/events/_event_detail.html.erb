@@ -1,44 +1,122 @@
+
 <div class="base">
     <div class="poster">
         <%= image_tag @event.poster_url(:large), :size => '150x225' %>
     </div>
     <div class="base_content">
-        <span class="type"><%= event_item_tags(@event) %></span>
-        <h1><%= @event.title %></h1>
-        <div class="info">
-            时间: <%= @event.begin_end_at %> <br />
-            地点: <%= @event.full_address %><br />
-            组织者：<%= link_to  @event.user.username, user_path(@event.user, :trailing_slash => true) %>
-        </div>
-        <span class="p_count">
-            <%= @event.participants_count %>人参加  |  <%= @event.followers_count %>人感兴趣
-        </span>
-        <div class="action">
-            <div class="share">
-                <%= render 'share/sns_icons',
-                  :image_url => sns_image_url(@event, :thumb_name => :large),
-                  :title => sns_title(@event),
-                  :summary => @event.title ,
-                  :url => request.url %>
+      <% if user_signed_in? #已经登录 %>
+        <% if current_user.is_owner_of_event? @event %>
+          <div id="manage">
+            <p>
+              <a href="#" onmouseover="mopen('mbox')" onmouseout="mclosetime()">
+                <%= image_tag "icon/manage.png", :size => '22x22', :alt => '管理' %>
+              </a>
+            </p>
+            <div id="mbox" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+              <%= link_to '编辑活动', edit_event_path(@event), :class => :icon_edit2 %>
+              <%= link_to '取消活动', 
+                published_event_path(@event, :publish_status => APP_DATA['event']['publish_status']['cancle'] ),
+                :class => :icon_edit2 %>
+              <%= link_to '查看参与者',
+                participants_user_event_path(@user,@event), :class => :icon_member %>
+              <%= link_to "邀请好友参加", new_event_participant_path(@event), :class => :icon_members %>
             </div>
-            <%= render 'events/join_event_button' %>
-            <div id="follow_form"  style="display: none" ></div>
-            <% if @follow_item.present? %>
-                <span class="icon_fol mr5">感兴趣中</span>
-                <span class="cancl_fol mr5"> 
-                    <%= link_to "(取消)", event_follow_path(@event, @follow_item), :method => :delete %>
-                </span>
-            <% else %>
-                <%= link_to  new_event_follow_path(@event), 
-                  :class => [:btn_bluesky_ss, :ajax], 
-                  :remote => true do %>
-                    <span>我感兴趣</span>
-                <% end %>
-            <% end %>
-        <!--end action-->
-        </div>
+            <!--end manage-->
+          </div>
+        <% end %>
+      <% end %>
+      <span class="type"><%= event_item_tags(@event) %></span>
+      <h1><%= @event.title %></h1>
+      <div class="info">
+        时间: <%= @event.begin_end_at %> <br />
+        地点: <%= @event.full_address %><br />
+        组织者：<%= link_to  @event.user.username, user_path(@event.user, :trailing_slash => true) %>
+      </div>
+      <span class="p_count">
+        <%= @event.participants_count %>人参加  |  <%= @event.followers_count %>人感兴趣
+      </span>
+
+      <% if @event.joinedable? %>
+        <% if @event.set_blocked?  %>
+          <div class="mb10">活动剩余名额：<%= @event.get_joinable_num %></div>
+        <% else %>
+          <div class="mb10">活动剩余名额：不限</div>
+        <% end %>
+      <% end %>
+
+      <div class="action">
+          <div class="share">
+              <%= render 'share/sns_icons',
+                :image_url => sns_image_url(@event, :thumb_name => :large),
+                :title => sns_title(@event),
+                :summary => @event.title ,
+                :url => request.url %>
+          </div>
+          <%= render 'events/join_event_button' %>
+          <div id="follow_form"  style="display: none" ></div>
+          <% if @follow_item.present? %>
+              <span class="icon_fol mr5">感兴趣中</span>
+              <span class="cancl_fol mr5"> 
+                  <%= link_to "(取消)", event_follow_path(@event, @follow_item), :method => :delete %>
+              </span>
+          <% else %>
+              <%= link_to  new_event_follow_path(@event), 
+                :class => [:btn_bluesky_ss, :ajax], 
+                :remote => true do %>
+                  <span>我感兴趣</span>
+              <% end %>
+          <% end %>
+      <!--end action-->
+      </div>
     <!--end base_content-->
     </div>
     <div class="clear"></div>
 <!--end base-->
 </div>
+
+<script type="text/javascript">
+  <!--
+  var timeout         = 100;
+  var closetimer		= 0;
+  var ddmenuitem      = 0;
+
+  // open hidden layer
+  function mopen(id)
+  {	
+    // cancel close timer
+    mcancelclosetime();
+
+    // close old layer
+    if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+
+    // get new layer and show it
+    ddmenuitem = document.getElementById(id);
+    ddmenuitem.style.visibility = 'visible';
+
+  }
+  // close showed layer
+  function mclose()
+  {
+    if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+  }
+
+  // go close timer
+  function mclosetime()
+  {
+    closetimer = window.setTimeout(mclose, timeout);
+  }
+
+  // cancel close timer
+  function mcancelclosetime()
+  {
+    if(closetimer)
+    {
+      window.clearTimeout(closetimer);
+      closetimer = null;
+    }
+  }
+
+  // close layer when click-out
+  document.onclick = mclose; 
+  // -->
+</script>
