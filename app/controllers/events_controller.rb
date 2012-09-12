@@ -109,6 +109,10 @@ class EventsController < ApplicationController
     @photo = @event.photos.new
   end
 
+  def upload_poster
+    
+  end
+  
   def published
    @event.publish_status = params[:publish_status]
    if @event.save
