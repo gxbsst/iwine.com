@@ -19,9 +19,13 @@
             <h2>活动参与者</h2>
           </div>
           <div class="sort">
-            <span class="current">参加(<%= @event.participants_count %>)</span>
-            <span><a href="#" class="">感兴趣(<%= @event.followers_count %>)</a></span>
+            <span>
+              <%= link_to "参加(#{@event.participants_count})", participants_event_path(@event) %>
+            </span>
+            <span class="current">
+              感兴趣(<%= @event.followers_count %>)</span>
             <div class="clear"></div>
+
           </div>
 
           <div class="content">

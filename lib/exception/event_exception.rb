@@ -11,5 +11,7 @@ module EventException
 
   class HaveNoJoinedEvent < RuntimeError
   end
-    
+
+  class ErrorPeopleNum < Exception
+  end
 end

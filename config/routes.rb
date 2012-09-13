@@ -13,6 +13,7 @@ Patrick::Application.routes.draw do
     resources :comments
     resources :follows, :controller => "follows" 
     member do
+      get :upload_poster
       get :photo_upload
       get :published
       get :participants

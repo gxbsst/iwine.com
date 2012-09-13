@@ -37,7 +37,7 @@
        <!--已经取消-->
        <% if @event.have_been_cancle_joined? @user.id %>
          <span class="cancl_fol mr5">
-           <%= link_to edit_event_participant_path(@event,@participant), :class => [:btn_bluesky_sss, :mr5, :ajax], :remote => true do %>
+           <%= link_to edit_event_participant_path(@event,@participant), :class => [:btn_bluesky_ss, :mr5, :ajax], :remote => true do %>
              <span>我要参加</span>
            <% end %>
          </span>
