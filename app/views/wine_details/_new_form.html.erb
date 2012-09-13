@@ -22,7 +22,7 @@
      </div>
      <div class="required">
        <label><span>*</span>容量</label>
-       <%= f.select :capacity, APP_DATA['wines']['capacity'].collect{|i| [i, i]} %>
+       <%= f.select :capacity, APP_DATA['wines']['capacity'].each{|key, value| [key, value]} %>
      </div>
      <div class="optional">
        <%= f.label :photo_name %>
