@@ -6,13 +6,13 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_locale
 
-  unless Rails.application.config.consider_all_requests_local
-    rescue_from Exception, with: :render_500
-    rescue_from ActionController::RoutingError, with: :render_404
-    rescue_from ActionController::UnknownController, with: :render_404
-    rescue_from ActionController::UnknownAction, with: :render_404
-    rescue_from ActiveRecord::RecordNotFound, with: :render_404
-  end
+  #unless Rails.application.config.consider_all_requests_local
+    #rescue_from Exception, with: :render_500
+    #rescue_from ActionController::RoutingError, with: :render_404
+    #rescue_from ActionController::UnknownController, with: :render_404
+    #rescue_from ActionController::UnknownAction, with: :render_404
+    #rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  #end
 
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale

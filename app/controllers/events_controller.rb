@@ -3,15 +3,16 @@ class EventsController < ApplicationController
 
   include Helper::EventsControllerHelper
 
-  before_filter :authenticate_user!, :except => [:show, :index]
+  before_filter :authenticate_user!, :except => [:show, :index, :followers, :participants]
   before_filter :get_user, :except => [:index]
   before_filter :get_create_events, :only => [:index] 
   before_filter :get_join_events, :only => [:index]
   before_filter :get_follow_events, :only => [:index]
   before_filter :get_event, :except => [:new, :create, :index]
-  before_filter :check_owner, :except => [:show, :new, :create, :index]
-  before_filter :get_follow_item, :only => [:show]
-  before_filter :get_join_item, :only => [:show]
+  before_filter :check_owner, :except => [:show, :new, :create, :index, :followers, :participants, :photo_upload]
+  before_filter :get_follow_item, :only => [:show, :followers, :participants]
+  before_filter :get_join_item, :only => [:show, :photo_upload, :followers, :participants]
+  before_filter :check_and_create_albums, :only => [:photo_upload]
 
   def index
     @top_events = Event.recommends(2)
@@ -87,7 +88,7 @@ class EventsController < ApplicationController
         @comments = Kaminari.paginate_array(@comments).page(page).per(10)
       end
     end
-
+    @photos =  @event.photos.approved.limit(4)
     new_normal_comment
     @recommend_events = Event.recommends(4)
 
@@ -104,10 +105,14 @@ class EventsController < ApplicationController
     end
   end
 
-  def upload_poster
-
+  def photo_upload
+    @photo = @event.photos.new
   end
 
+  def upload_poster
+    
+  end
+  
   def published
    @event.publish_status = params[:publish_status]
    if @event.save
@@ -120,16 +125,16 @@ class EventsController < ApplicationController
   def participants
     @event = Event.includes([:participants => [:user], :follows => [:user]]).find(params[:id])
 
-    if user_signed_in? # 登录用户对自己的活动有所有权
-      unless current_user.is_owner_of_event? @event
-        @event = Event.includes([:participants => [:user], :follows => [:user]]).
-          published.
-          find(params[:id])
-      end
-    else
-      @event = Event.includes([:participants => [:user], :follows => [:user]]).
-        published.find(params[:id])
-    end
+    #if user_signed_in? # 登录用户对自己的活动有所有权
+      #unless current_user.is_owner_of_event? @event
+        #@event = Event.includes([:participants => [:user], :follows => [:user]]).
+          #published.
+          #find(params[:id])
+      #end
+    #else
+      #@event = Event.includes([:participants => [:user], :follows => [:user]]).
+        #published.find(params[:id])
+    #end
     @recommend_events = Event.recommends(4)
 
     # 参与活动的人
@@ -140,16 +145,16 @@ class EventsController < ApplicationController
   def followers
     @event = Event.includes([:participants => [:user], :follows => [:user]]).find(params[:id])
 
-    if user_signed_in? # 登录用户对自己的活动有所有权
-      unless current_user.is_owner_of_event? @event
-        @event = Event.includes([:participants => [:user], :follows => [:user]]).
-          published.
-          find(params[:id])
-      end
-    else
-      @event = Event.includes([:participants => [:user], :follows => [:user]]).
-        published.find(params[:id])
-    end
+    #if user_signed_in? # 登录用户对自己的活动有所有权
+      #unless current_user.is_owner_of_event? @event
+        #@event = Event.includes([:participants => [:user], :follows => [:user]]).
+          #published.
+          #find(params[:id])
+      #end
+    #else
+      #@event = Event.includes([:participants => [:user], :follows => [:user]]).
+        #published.find(params[:id])
+    #end
     @recommend_events = Event.recommends(4)
 
     @follows= @event.follows

@@ -25,6 +25,14 @@
               <span class="red" id ="event_participant_email_error"></span>
             </td>
           </tr>
+
+          <tr>
+            <td align="right">报名人数：</td>
+            <td>
+              <%= f.select :people_num, [1, 2, 3] %>
+            </td>
+          </tr>
+
           <tr>
             <td align="right">留言：</td>
             <td>
@@ -45,7 +53,7 @@
   <% end -%>
 
 <% else %>
-  <%= form_for [participant],  :validate => true, :html => {:id => "comment_form"} do |f| -%>
+  <%= form_for [participant], :url => event_participant_path(event, participant), :validate => true, :html => {:id => "comment_form"} do |f| -%>
     <div class="mt10">
       <div class="text_area">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -70,6 +78,14 @@
               <span class="red" id ="event_participant_email_error"></span>
             </td>
           </tr>
+
+          <tr>
+            <td align="right">报名人数：</td>
+            <td>
+              <%= f.select :people_num, [1, 2, 3] %>
+            </td>
+          </tr>
+
           <tr>
             <td align="right">留言：</td>
             <td>

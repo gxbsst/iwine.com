@@ -1,6 +1,7 @@
 <%= form_for @photo, :html => { :multipart => true, :id => "fileupload"  } do |f| %>
 	<% if @wine_detail %> <%= hidden_field_tag "wine_id", @wine_detail.id %> <% end %>
 	<% if @winery %><%= hidden_field_tag "winery_id", @winery.id %><% end %>
+	<% if @event %><%= hidden_field_tag "event_id", @event.id %><% end %>
 	<!-- The fileinput-button span is used to style the file input field as button -->
 	<p class="mb10">
 	<span class="btn btn-success fileinput-button">

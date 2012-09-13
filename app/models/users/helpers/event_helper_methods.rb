@@ -21,6 +21,7 @@ module Users::Helpers::EventHelperMethods
       value = {:user_id => id }
       participant_info.merge! value
       raise ::EventException::HaveJoinedEvent if event.have_been_joined? id
+      raise ::EventException::ErrorPeopleNum, event.get_joinable_num if people_num_error(event, participant_info['people_num'])
       return false unless event.joinedable?
       participant = event.participants.build(participant_info)
       participant.save
@@ -33,6 +34,8 @@ module Users::Helpers::EventHelperMethods
     def update_join_event_info(participant, info)
      param = {:join_status => APP_DATA['event_participant']['join_status']['joined']}
      event = participant.event
+     people_num_change = info['people_num'].to_i - participant.people_num
+     raise ::EventException::ErrorPeopleNum, event.get_joinable_num  if people_num_error(event, people_num_change)
      return false if event.locked?
      participant.update_attributes(info, info.merge!(param))
      participant
@@ -117,6 +120,15 @@ module Users::Helpers::EventHelperMethods
       event.have_been_followed? id
     end
 
+    # 判断活动人数加上当前报名人数是否合法
+    def people_num_error(event, people_num)
+      #block_in = (event.block_in.blank? ? 0 : event.block_in)
+      if event.set_blocked?
+        event.block_in < (event.participants_count + people_num.to_i)
+      else
+       false
+      end
+    end
 
   end # end InstanceMethods
 

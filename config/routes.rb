@@ -2,6 +2,7 @@
 Patrick::Application.routes.draw do
  
   resources :events do
+    resources :photos
     resources :event_wines
     resources :event_invitees
     resources :event_participants, :as => 'participants' do
@@ -13,6 +14,7 @@ Patrick::Application.routes.draw do
     resources :follows, :controller => "follows" 
     member do
       get :upload_poster
+      get :photo_upload
       get :published
       get :participants
       get :followers
@@ -272,7 +274,7 @@ Patrick::Application.routes.draw do
   # STATIC
   statics = %w(about_us contact_us help private agreement terms_and_conditions site_map home feedback)
   statics.each do |i|
-     match "/#{i}", :to => "static##{i}"
+    match "/#{i}", :to => "static##{i}"
   end
 
   # Feedback
