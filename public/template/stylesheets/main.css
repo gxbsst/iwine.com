@@ -248,6 +248,17 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .tabs a:hover, .tabs a.current {background-color:#9fc987;color:#fff;}
 .tabs .current a {background-color:#9fc987;color:#fff;}
 
+.tabs2 {margin: 0 0 20px 0;}
+.tabs2 .bg_l {background:url(../images/bg/bg_message_tab_l.jpg) no-repeat left top;height:39px;padding-left:21px;}
+.tabs2 .bg_r {background:url(../images/bg/bg_message_tab_r.jpg) no-repeat right top;height:39px;padding-right:21px;}
+.tabs2 .bg_m {background:url(../images/bg/bg_message_tab_m.jpg) repeat-x left top;height:39px;line-height:36px;padding:0 0 0 9px;}
+.tabs2 li {float:left;position:relative;}
+.tabs2 a {font-size:14px; padding:0 30px 0 0;margin:0 27px 0 0;background:url(../images/bg/bg_tab_line.gif) no-repeat right top;position:relative;color:#999;}
+.tabs2 a.current {color:#333;}
+.tabs2 a:hover {color:#333;text-decoration:none;}
+.tabs2 .new, .tabs2 .notice2 .new {position:absolute;left:30px;top:-15px;background:url(../images/bg/bg_new.png) no-repeat left top;width:20px;height:20px;line-height:18px;text-align:center;color:#fff;font-size:10px;}
+.tabs2 .arrow, .tabs2 .arrow {background:url(../images/bg/icon_message_current.jpg) no-repeat;height:9px;width:11px;position:absolute;left:10px;top:36px;}
+
 
 /*common style*/
 .comment_list li {margin: 0 0 10px 0;padding: 0 0 10px 0;width:590px;float:left;}
