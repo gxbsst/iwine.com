@@ -59,11 +59,12 @@ ul.private_list li {padding:15px 5px;border-bottom:1px solid #ccc;}
 .message .title input.checkall {margin:5px;float:right;}
 .notice_list dl {padding: 15px 5px;border-bottom:1px solid #ccc;}
 .notice_list dt {width:200px;float:left;}
-.notice_list dd {float:left;width:430px;}
+.notice_list dd {float:left;width:430px;position:relative;}
 .notice_list dd .checkbox {float:right;}
 .notice_list dd .title {float:left;width:300px;}
 .notice_list dd .title a {color:#333;}
 .notice_list dd .title a:hover {color:#993333;text-decoration:none;}
+.notice_list dd .action {position:absolute;left:405px;top:20px;text-align:right;}
 .notice_list .unread {background-color:#f7f7f7;}
 .notice_list .unread .title {font-weight:bold;color:#000;}
 .notice_list .face {width:30px;float:left;margin:0 20px 0 0;}
@@ -73,6 +74,7 @@ ul.private_list li {padding:15px 5px;border-bottom:1px solid #ccc;}
 .notice_detail .m_title {display:block;padding:5px 10px;background-color:#f3f3f3;margin:10px 0 20px 0;}
 .notice_detail h1 {font-size:14px;}
 .notice_detail .main {padding: 0 10px;}
+
 
 /*-------------sys--------------*/
 .sys ul {zoom:1;}
