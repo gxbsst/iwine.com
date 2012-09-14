@@ -77,29 +77,6 @@ $(document).ready(function(){
         } // end helper
 
     });
-    $("a.sns_fancybox").fancybox({
-        maxWidth        : 900,
-        maxHeight       : 850,
-        padding : 0,
-        fitToView       : false,
-        width           : '100%',
-        height          : '100%',
-        autoSize        : false,
-        closeClick      : false,
-        openEffect      : 'none',
-        closeEffect     : 'none',
-        type            : 'iframe',
-       
-        helpers : {
-            overlay : {
-                opacity : 0.8,
-                css : {
-                    'background-color' : '#FFF'
-                }
-            }
-        } // end helper
-
-    });
     // 回复信息
     $("a.reply_conversation").fancybox({
         maxWidth        : 500,
@@ -178,6 +155,21 @@ $(document).ready(function(){
     $("a.submit").click(function(){
 			$(this).parents("form").submit();
 	});
+    //补充自定义方法
+    jQuery.fn.toggleAttr = function toggleAttr(attr, value1, value2){
+        if($(this).attr(attr) == value1){
+            $(this).attr(attr, value2);
+        }else if ($(this).attr(attr) == value2){
+            $(this).attr(attr, value1);
+        }
+    }
+    jQuery.fn.toggleDisabled = function toggleDisabled(){
+        if ($(this).attr('disabled') == undefined){
+            $(this).attr('disabled', true);
+        }else if($(this).attr('disabled') == 'disabled'){
+            $(this).attr('disabled', false);
+        }
+    }
    
 });
 
