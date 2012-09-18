@@ -1,0 +1,7 @@
+$('.userlist2').html('<%= escape_javascript render('user') %>');
+// $('.pagination').html('<%= escape_javascript(paginate(@users, :remote => true).to_s) %>');
+
+if(window.app.FriendView)
+{
+  window.app.FriendView.render();
+}

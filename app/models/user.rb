@@ -115,6 +115,7 @@ class User < ActiveRecord::Base
   extend FriendlyId
   friendly_id :pretty_url, :use => [:slugged]
 
+  alias_method :friends, :followers
   counts :comments_count => {
           :with => "Comment",
           :receiver => lambda {|comment| comment.user },

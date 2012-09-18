@@ -56,13 +56,13 @@ class PhotosController < ApplicationController
   end
 
   def create
-      @user = current_user
-      # 多图片上传
-      params[:photo][:image].each do |image|
-        @photo = create_photo(image)
-        if @photo.save
-          @photo.approve_photo
-          respond_to do |format|
+    @user = current_user
+    # 多图片上传
+    params[:photo][:image].each do |image|
+      @photo = create_photo(image)
+      if @photo.save
+        @photo.approve_photo
+        respond_to do |format|
           format.html { #(html response is for browsers using iframe sollution)
             render :json => [@photo.to_jq_upload].to_json,
             :content_type => 'text/html',

@@ -7,7 +7,7 @@ class ConversationsController < ApplicationController
   def index
     @title = "我的私信"
     @conversations = @mailbox.conversations.order("created_at DESC").page(params[:page]).per(9)
-    
+
     # mask all items as read
     @unreads = Conversation.unread(current_user)
     unless @unreads.blank?

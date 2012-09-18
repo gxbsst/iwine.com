@@ -6,7 +6,7 @@ gem 'rails', '3.2.5'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-gem 'jquery-rails'
+gem 'jquery-rails', :git => 'git://github.com/indirect/jquery-rails'
 gem 'devise', "~> 2.0.4"
 gem 'cancan'
 gem 'passenger'

@@ -1,0 +1,55 @@
+<% content_for :js do %>
+  <%= javascript_include_tag :event_invite_friends %>
+<% end %>
+<% content_for :css do %>
+  <%= stylesheet_link_tag "event" %>
+<% end %>
+<div class="whitespace eventmain">
+  <div class="left">
+    <%= render "events/event_detail" %>
+    <div class="section">
+      <div class="title">
+        <div class="search float_r">
+          <input class="text mr5" style="width:200px;" placeholder="搜索好友" name="" type="text" />
+          <a href="event_search.html" class="btn_gray"><span>搜索好友</span></a>
+        </div>
+        <h2>邀请好友参加活动</h2>
+        <!--end search-->
+      </div>
+      <!--end section-->
+    </div>
+    <div class="content">
+      <% if @users.blank? %>
+        <p>您暂时没有好友, 现在就去<%= link_to "找好友", find_friends_path %></p>
+      <% else %>
+        <%= form_for @event_invitee do |f| -%>
+          <input id="select_all" type="checkbox" name="all_select" value="" /> 全选<br />
+          <ul class="userlist2 clearfix">
+            <%= render 'user' %>
+            <div class="clear"></div>
+          </ul>
+          <div class="pagination">
+            <%#= paginate @users, :remote => true %>
+          </div>
+          <div class="align_c mt30">
+            <a id="submit_form" class="btn_bluesky_ss" href="javascript:void(0)"><span>发出邀请</span></a>
+          </div>
+        <% end %>
+      <% end -%>
+      <!--end content-->
+    </div>
+    <!--# end left-->
+    </div>
+    <div class="right">
+      <div class="sidebox">
+        <%= link_to new_event_path, :class => :btn_createvent do %>
+          <span>我要创建活动</span>
+        <% end %>
+      </div>
+      <div class="sidebox">
+        <%= render 'events/recommends' %>
+        <!--end sidebox-->
+      </div>
+      <!--end right-->
+    </div>
+    <div class="clear"></div>

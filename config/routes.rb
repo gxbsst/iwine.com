@@ -4,7 +4,7 @@ Patrick::Application.routes.draw do
   resources :events do
     resources :photos
     resources :event_wines
-    resources :event_invitees
+    resources :event_invitees, :as => 'invitees'
     resources :event_participants, :as => 'participants' do
       member do
         match :cancle, :via => [:put, :get]
