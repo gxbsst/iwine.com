@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
- 
+  resources :system_messages 
   resources :events do
     resources :photos
     resources :event_wines

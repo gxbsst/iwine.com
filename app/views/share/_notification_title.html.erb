@@ -1,0 +1,23 @@
+<h1 class="main_title">站内信</h1>
+<div class="tabs2">
+    <div class="bg_l">
+        <div class="bg_r">
+            <div class="bg_m">
+                <ul class="clearfix">
+                    <li class="p-message">
+                        <span class="arrow"></span>
+                        <%= link_to conversations_path, :class => "current" do %>
+                            <%# TODO: 修改数目 %>
+                            <span class="new">2</span>私信
+                        <% end %>
+                    </li>
+                    <li class="notice2">
+                        <%= link_to system_messages_path do %>
+                            <span class="new">1</span>通知
+                        <% end %>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
