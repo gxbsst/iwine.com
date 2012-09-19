@@ -15,14 +15,16 @@ class EventInviteesController < ApplicationController
     @event_invitee =  EventInvitee.new
     @users = @user.friends
     #@users = @user.friends.page(params[:page] || 1).per(22) #per(48)
+    @invtited_friends = @event.invitees.pluck(:invitee_id)
   end
 
   def create
-    if params[:users].blank?
+    if params[:user_list].blank?
      render_404('') # 传错误的参数
     else
-      params[:users].each do |user_id|
-        @user.invite_one(user_id, @event)
+      new_array = params[:user_list].split(',') & @user.friends.pluck(:id) # 过滤错误的用户id
+      new_array.each do |user_id|
+        @event.invite_one_user(@user.id, user_id, :invite_log => '邀请你参加活动')
       end
       notice_stickie "您的邀请已经发送..."
      redirect_to event_path(@event)

@@ -23,7 +23,12 @@
         <p>您暂时没有好友, 现在就去<%= link_to "找好友", find_friends_path %></p>
       <% else %>
         <%= form_for @event_invitee do |f| -%>
-          <input id="select_all" type="checkbox" name="all_select" value="" /> 全选<br />
+          <div class="select_action" style="margin-right:px;">
+            <label class="selectall">
+              <input name="all_select" id="select_all" type="checkbox" value="" /> 全选
+            </label>
+          </div>
+          <%= hidden_field_tag 'user_list' %>
           <ul class="userlist2 clearfix">
             <%= render 'user' %>
             <div class="clear"></div>
@@ -53,3 +58,13 @@
       <!--end right-->
     </div>
     <div class="clear"></div>
+
+<script language="javascript" type="text/javascript">
+  $(document).ready(function(){
+      <% if !@invtited_friends.blank? %>
+        <% @invtited_friends.each do |user_id| %>
+          window.app.FriendView.collection.add({'id': <%= user_id %>});
+        <% end %>
+      <% end %>
+      });
+</script>

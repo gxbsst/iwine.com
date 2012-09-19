@@ -23,7 +23,10 @@ jQuery ->
 
     initialize: ->
       _.bindAll(@, 'render')
-
+      @collection.bind('add', @render)
+      @collection.bind('remove', @render)
+      @collection.bind('add', @initUserList)
+      @collection.bind('remove', @initUserList)
     render: ->
       all_checkbox = @.$('.select input')
       all_checkbox.each ->
@@ -31,6 +34,8 @@ jQuery ->
       @collection.each (user) =>
        $("#user_" + user.id).prop('checked', true)
       @
+    initUserList: =>
+      $('#user_list').val(@collection.pluck('id').join(','))
     selectAll:(event) ->
       @options.alluser.fetch success: =>
         checkbox = $(event.target)
@@ -42,7 +47,7 @@ jQuery ->
           @options.alluser.each (model) =>
             model = new window.app.Friend id:model.id
             @collection.remove model
-        @render()
+        # @render()
 
     toggleSelect:(event) ->
       $("input#select_all").prop('checked', false)
