@@ -26,6 +26,11 @@ class EventInviteesController < ApplicationController
       new_array.each do |user_id|
         @event.invite_one_user(@user.id, user_id, :invite_log => '邀请你参加活动')
       end
+      recipients = User.find(new_array)
+
+      subject = "活动邀请"
+      msg_body = "您的朋友邀请您参加其创建的活动"
+      @event.delay.send_system_message(recipients, msg_body, subject, sanitize_text=true, attachment=nil)
       notice_stickie "您的邀请已经发送..."
      redirect_to event_path(@event)
     end
