@@ -1,0 +1,32 @@
+<% content_for :title, @title%>
+<%= content_for :css do %>
+    <%= stylesheet_link_tag :setting %>
+<% end %>
+<div class="whitespace message">
+	<%= render :partial => "share/notification_title", :locals => {:system_message => true} %>
+	<div class="title clearfix">
+		<%= link_to system_messages_path, :class => "float_r btn_gray" do%>
+			<span>返回通知列表</span>
+		<% end %>
+		<h2>我的通知</h2>
+		<div class="clear"></div>
+	</div>
+	<div class="notice_detail">
+		<div class="header clearfix">
+			<div class="name">
+				iWine 系统管理员<p class="date"><%= @receipt.created_at.to_s(:cn_normal) %></p>
+			</div>
+			<div class="content">
+				<div class="m_title">
+					<%= link_to "删除",
+							 move_to_trash_system_messages_path(:receipt_id => [@receipt.id]), 
+							 :class => "float_r" %> 
+					<h1><%= @receipt.notification.subject %></h1>
+				</div>
+				<div class="main">
+					<p><%= @receipt.notification.body %></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
