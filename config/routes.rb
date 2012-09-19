@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
-  resources :system_messages 
+  resources :system_messages do
+    collection do
+      post :mark_as_read
+      match :move_to_trash, :via => [:get, :post]
+    end
+  end
   resources :events do
     resources :photos
     resources :event_wines

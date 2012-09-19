@@ -6,6 +6,7 @@
     before_filter :get_mailbox, :get_box
     before_filter :build_message, :only => :create
     before_filter :check_can_send?, :only => :create
+    before_filter :get_unread_count, :only => :unread
     # before_filter :get_box
 
     def index
@@ -130,7 +131,6 @@
     end
 
     def unread
-      @count = Conversation.unread(current_user).count
     end
 
     private
