@@ -64,7 +64,7 @@ module Patrick
     Time::DATE_FORMATS[:cn] = "%Y年%m月%d日  %I:%M"
     Time::DATE_FORMATS[:cn_short] = "%m月%d日"
     Time::DATE_FORMATS[:year] = "%Y"
-
+    Time::DATE_FORMATS[:cn_normal] = "%Y-%m-%d %I:%M" 
     if Rails.env.development?
       OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
     end

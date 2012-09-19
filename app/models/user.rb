@@ -62,7 +62,6 @@ class User < ActiveRecord::Base
            :include => :followable,
            :class_name => "Follow",
            :conditions => {:followable_type => "Winery"}
-
   #TODO: 现在只是调用酒的部分， 如果调用酒庄， 请把include wine去掉， 因为酒庄没有wine
   has_many :feeds,
     :class_name => "Users::Timeline",

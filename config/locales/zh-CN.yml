@@ -35,6 +35,8 @@ zh-CN:
       reply_no_ability: "只有关注该用户后才能给TA发送私信。"
       trash: "删除成功。"
       untrash: "信息复原成功。"
+    system_message:
+      no_access: "不能访问已删除的通知。"
     password:
       reset_password_failure: "更新失败: 请确认当前密码或者新密码是否错误！"
       reset_password_success: "已成功重置密码，可以再次登录iWine啦！"

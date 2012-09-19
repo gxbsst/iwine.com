@@ -123,4 +123,15 @@ class ApplicationController < ActionController::Base
   def follow_one_user(user_id)
     current_user.follow_user(user_id)
   end
+  
+  #获取未读状态的私信和通知
+  def get_unread_count
+    @unread_receipts_count = current_user.receipts.
+                            not_trash.
+                            unread.
+                            joins(:notification).
+                            where('notifications.type' => SystemMessage.to_s).
+                            size
+    @unread_messages_count = Conversation.unread(current_user).count
+  end
 end
