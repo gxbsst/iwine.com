@@ -174,7 +174,7 @@ class Event < ActiveRecord::Base
 
   # 邀请用户参加活动
   def invite_one_user(inviter_id, invitee_id, params = {})
-    return if (have_been_invited?(invitee_id) || !joinedable?)
+    return if (have_been_invited?(invitee_id))
 
     invitee = invitees.build(:inviter_id => inviter_id,
                              :invitee_id => invitee_id,
