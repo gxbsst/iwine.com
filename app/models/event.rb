@@ -59,7 +59,7 @@ class Event < ActiveRecord::Base
     Delayed::Job.enqueue GoogleMapsCoordinateService.new(self)
   end
 
-  # Upload Poster 
+  # Upload Poster
   mount_uploader :poster, PosterUploader
 
   # 设置封面的尺寸 
@@ -68,8 +68,10 @@ class Event < ActiveRecord::Base
   # Crop poster
   after_update :crop_poster
 
+  after_save :send_cancle_event_notification, :if => Proc.new {|event| event.cancle? && event.participants_count > 0 }
+
   # 统计
-  counts :followers_count => {:with => "Follow", 
+  counts :followers_count => {:with => "Follow",
       :receiver => lambda {|follow| follow.followable },
       :increment => {
     :on => :create,
@@ -78,16 +80,15 @@ class Event < ActiveRecord::Base
     :on => :destroy, 
     :if => lambda {|follow| follow.follow_counter_should_decrement_for("Event")}}
   },
-    :comments_count => {:with => "Comment", 
+    :comments_count => {:with => "Comment",
       :receiver => lambda {|comment| comment.commentable },
       :increment => {:on => :create, :if => lambda {|comment| comment.counter_should_increment_for("Event") }},
       :decrement => {:on => :save,   :if => lambda {|comment| comment.counter_should_decrement_for("Event") }}
   }, :photos_count   => {:with => "AuditLog",
         :receiver => lambda {|audit_log| audit_log.logable.imageable }, 
         :increment => {:on => :create, :if => lambda {|audit_log| audit_log.photos_counter_should_increment? && audit_log.logable.imageable_type == "Event"}},
-        :decrement => {:on => :save,   :if => lambda {|audit_log| audit_log.photos_counter_should_decrement? && audit_log.logable.imageable_type == "Event"}}                              
+        :decrement => {:on => :save,   :if => lambda {|audit_log| audit_log.photos_counter_should_decrement? && audit_log.logable.imageable_type == "Event"}}
   }
-                   
 
   # 活动开始时间应该大于结束时间
   def begin_at_be_before_end_at
@@ -112,7 +113,8 @@ class Event < ActiveRecord::Base
   def share_name
     "【#{user.username}】发起的《#{title}》活动"
   end
-  # 将活动锁定
+
+  # 将活动解除锁定
   def unlocked!
     update_attribute(:publish_status,  APP_DATA['event']['publish_status']['published']) if locked?
   end
@@ -201,7 +203,15 @@ class Event < ActiveRecord::Base
 
   # 活动状态是否为抄稿
   def published?
-    publish_status == APP_DATA['event']['publish_status']['published']
+      publish_status == APP_DATA['event']['publish_status']['published']
+  end
+
+  def publish!
+    if cancle?
+      raise ::EventException::EeventHaveCancled, '活动已经取消'
+    else
+      update_attribute(:publish_status,  APP_DATA['event']['publish_status']['published'])
+    end
   end
 
   # 活动状态是否为抄稿
@@ -209,9 +219,21 @@ class Event < ActiveRecord::Base
     publish_status == APP_DATA['event']['publish_status']['draft']
   end
 
+  def draft!
+    if cancle?
+      raise ::EventException::EeventHaveCancled, '活动已经取消'
+    else
+      update_attribute(:publish_status,  APP_DATA['event']['publish_status']['draft'])
+    end
+  end
+
   # 活动状态是否为取消
   def cancle?
     publish_status == APP_DATA['event']['publish_status']['cancle']
+  end
+
+  def cancle!
+    update_attribute(:publish_status,  APP_DATA['event']['publish_status']['cancle'])
   end
 
   # 添加某只酒到活动
@@ -291,45 +313,56 @@ class Event < ActiveRecord::Base
 
  end
 
-  def send_system_message(recipients, msg_body, subject, sanitize_text=true, attachment=nil)
-    convo = Conversation.new({:subject => subject})
-    system_message = SystemMessage.new({:sender => self, :conversation => convo,  :body => msg_body, :subject => subject, :attachment => attachment})
-    system_message.recipients = recipients.is_a?(Array) ? recipients : [recipients]
-    system_message.recipients = system_message.recipients.uniq
-    return system_message.deliver false,sanitize_text
-  end
+ def send_system_message(recipients, msg_body, subject, sanitize_text=true, attachment=nil)
+   convo = Conversation.new({:subject => subject})
+   system_message = SystemMessage.new({:sender => self, :conversation => convo,  :body => msg_body, :subject => subject, :attachment => attachment})
+   system_message.recipients = recipients.is_a?(Array) ? recipients : [recipients]
+   system_message.recipients = system_message.recipients.uniq
+   return system_message.deliver false,sanitize_text
+ end
 
+ private
 
-  private
-  def set_geometry
-    geometry = self.poster.large.geometry
-    if (! geometry.nil?)
-      self.poster_width = geometry[:width]
-      self.poster_height = geometry[:height]
-    end
-  end
+ def set_geometry
+   geometry = self.poster.large.geometry
+   if (! geometry.nil?)
+     self.poster_width = geometry[:width]
+     self.poster_height = geometry[:height]
+   end
+ end
 
-  def resize_poster(from_version, to_version)
-    source_path = Rails.root.to_s << "/public" << poster.url(from_version)
-    target_path = Rails.root.to_s << "/public" << poster.url(to_version)
-    image = MiniMagick::Image.open(source_path)
-    image.resize(get_poster_resize_params(to_version))
-    image.write(target_path)
-  end
+ def resize_poster(from_version, to_version)
+   source_path = Rails.root.to_s << "/public" << poster.url(from_version)
+   target_path = Rails.root.to_s << "/public" << poster.url(to_version)
+   image = MiniMagick::Image.open(source_path)
+   image.resize(get_poster_resize_params(to_version))
+   image.write(target_path)
+ end
 
-  def crop_poster
-    if crop_x.present?
-      poster.recreate_versions!
-      resize_poster(:large, :middle)
-      resize_poster(:large, :thumb)
-      resize_poster(:large, :x_thumb)
-    end
-  end
+ def crop_poster
+   if crop_x.present?
+     poster.recreate_versions!
+     resize_poster(:large, :middle)
+     resize_poster(:large, :thumb)
+     resize_poster(:large, :x_thumb)
+   end
+ end
 
-  def get_poster_resize_params(version)
-    APP_DATA["image"]["poster"]["#{version.to_s}"]["width"].to_s << 
+ def get_poster_resize_params(version)
+   APP_DATA["image"]["poster"]["#{version.to_s}"]["width"].to_s << 
     "x" <<  APP_DATA["image"]["poster"]["#{version.to_s}"]["height"].to_s
-  end
+ end
+
+ # 当活动被取消时， 发通知给活动参与者
+ def send_cancle_event_notification
+   receivers = self.participants(&:user)
+
+   # TODO: IAN 确定最终模板
+   subject = '活动取消'
+   body = '您参加的活动被取消了'
+
+   delay.send_system_message(receivers, body, subject)
+ end
 
 end
 

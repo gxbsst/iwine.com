@@ -110,16 +110,37 @@ class EventsController < ApplicationController
   end
 
   def upload_poster
-    
+
   end
-  
+
+  def cancle
+    begin
+      @event.cancle!
+      redirect_to event_path(@event)
+    rescue
+      render_404('')
+    end
+  end
+
+  def draft 
+    begin
+      @event.draft!
+      redirect_to event_path(@event)
+    rescue EventException::EeventHaveCancled => e
+      render_404('')
+    end
+  end
+
   def published
-   @event.publish_status = params[:publish_status]
-   if @event.save
-     redirect_to event_path(@event)
-   else
-     render 'edit'
-   end
+    begin
+      if @event.publish!
+        redirect_to(event_path(@event)) 
+      else
+        render 'edit'
+      end
+    rescue EventException::EeventHaveCancled => e
+      render_404('')
+    end
   end
 
   def participants
