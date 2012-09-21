@@ -32,7 +32,7 @@ module Users::Helpers::EventHelperMethods
     # participant: object
     # info: hash
     def update_join_event_info(participant, info)
-     param = {:join_status => APP_DATA['event_participant']['join_status']['joined']}
+     param = {:join_status => ::EventParticipant::JOINED_STATUS}
      event = participant.event
      people_num_change = info['people_num'].to_i - participant.people_num
      raise ::EventException::ErrorPeopleNum, event.get_joinable_num  if people_num_error(event, people_num_change)

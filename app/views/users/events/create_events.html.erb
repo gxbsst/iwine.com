@@ -48,7 +48,7 @@
                           <%= link_to "编辑活动", edit_event_path(event), :class => :icon_edit2 %> |
                           <%= link_to "取消活动",
                           published_event_path(event,
-                                               :publish_status => APP_DATA['event']['publish_status']['draft'] ),
+                                               :publish_status => ::Event::DRAFTED_STATUS ),
                                                :class => :icon_cancle %> |
                           <%= link_to "查看参与者", participants_user_event_path(@user, event), :class =>  :icon_member %>
                         </div>
@@ -56,7 +56,7 @@
                         <div>
                           <span class="event_unpublic mr5">未发布</span>
                           <%= link_to '发布', published_event_path(event,
-                                                           :publish_status => APP_DATA['event']['publish_status']['published']),
+                                                           :publish_status => ::Event::PUBLISHED_STATUS),
                                                            :class => :icon_public %> |
                           <%= link_to "编辑活动", edit_event_path(event), :class => :icon_edit2 %>
                         </div>

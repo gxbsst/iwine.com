@@ -15,7 +15,7 @@
             <div id="mbox" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
               <%= link_to '编辑活动', edit_event_path(@event), :class => :icon_edit2 %>
               <%= link_to '取消活动', 
-                published_event_path(@event, :publish_status => APP_DATA['event']['publish_status']['cancle'] ),
+                published_event_path(@event, :publish_status => ::Event::CANCLED_STATUS ),
                 :class => :icon_edit2 %>
               <%= link_to '查看参与者',
                 participants_user_event_path(@user,@event), :class => :icon_member %>

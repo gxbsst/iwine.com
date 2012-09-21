@@ -92,18 +92,18 @@
   </div>
   <div class="btn_submit" id="submits">
     <%= link_to published_event_path(@event, 
-                                     :publish_status => APP_DATA['event']['publish_status']['published']), 
+                                     :publish_status => ::Event::PUBLISHED_STATUS), 
       :class => 'btn_bluesky_s mr10 publish' do %>
       <span>立即发布</span>
     <% end %>
     <%= link_to published_event_path(@event, 
-                                     :publish_status => APP_DATA['event']['publish_status']['draft']), 
+                                     :publish_status => ::Event::DRAFTED_STATUS), 
       :class => 'btn_off_s mr10 not_publish' do %>
       <span>暂不发布 (保存草稿)</span>
     <% end %>
 
     <%= link_to published_event_path(@event, 
-                                     :publish_status => APP_DATA['event']['publish_status']['cancle']), 
+                                     :publish_status => ::Event::CANCLED_STATUS), 
       :class => 'btn_gray_b' do %>
       <span>取消</span>
     <% end %>

@@ -72,7 +72,7 @@
         <tr>
           <th><span class="red">*</span>活动地点</th>
           <td>
-            <%= f.select :region_id, APP_DATA['event']['city']  %>
+            <%= f.select :region_id, ::Event::CITY  %>
             <%=  f.text_field :address, :class => [:text, :name], :placeholder => '请填写详细地址'  %>
           </td>
         </tr>
