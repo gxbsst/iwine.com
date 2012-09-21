@@ -51,15 +51,19 @@
 	});
 
 	$('#mark_as_read').click(function(){
-		form = $('.notice_list form')
-		form.attr('action', '/system_messages/mark_as_read');
-		form.submit();
+		if($('.notice_list input:checked').length > 0 ){
+			form = $('.notice_list form')
+			form.attr('action', '/system_messages/mark_as_read');
+			form.submit();
+		}
 	});
 
 	$('#move_to_trash').click(function(){
-		form = $('.notice_list form')
-		form.attr('action', '/system_messages/move_to_trash');
-		form.submit();
+		if ($('.notice_list input:checked').length > 0 ){
+			form = $('.notice_list form')
+			form.attr('action', '/system_messages/move_to_trash');
+			form.submit();
+		}
 	});
 	$("#check-all").change(function(){
 	   	if ($(this).attr("checked") == "checked") {

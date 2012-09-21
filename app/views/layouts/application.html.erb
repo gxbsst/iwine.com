@@ -45,6 +45,11 @@
       <% end %>
         <%= render_stickies(:close => "") %>
         <%= yield %>
+        <div id="gototop" class="indicator">
+          <a href="#header">
+             <%= image_tag "common/totop.png", :size => "86x39", :alt => "回到页首" %>
+          </a>
+        </div>
       </div>
       <%= render "layouts/footer" %>
       <script type="text/javascript" >
