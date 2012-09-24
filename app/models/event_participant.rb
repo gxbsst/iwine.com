@@ -1,6 +1,8 @@
 # encoding: utf-8
 class EventParticipant < ActiveRecord::Base
 
+  include ::Notificationer::EventNotificationer::Participant
+
   JOINED_STATUS = 1
   CANCLE_STATUS = 0
 
@@ -15,6 +17,9 @@ class EventParticipant < ActiveRecord::Base
     :username,
     :user_id,
     :people_num
+
+  delegate :username, :to => :user
+  delegate :title, :to => :event, :prefix => true
 
   validates :people_num, :inclusion => { :in => 1..3 }
   validates :telephone, :username, :user_id, :presence => true
@@ -72,20 +77,9 @@ class EventParticipant < ActiveRecord::Base
     end
   end
 
-  def send_join_notification
-    #TODO:
-    #给活动创建者发送死信或者Email
-    #event.send_message(user, '我参加这个私信您', '我参加了你这个活动')
-    #event.send_email(owner, 'subject', 'body'
-    body = "参加了这个活动"
-    subject = '有人参加了你的活动'
-    (@event || event).send_system_message(event_owner, body, subject)
-  end
-
-  def send_cancle_notification
-    body = "取消参加了这个活动"
-    subject = '有人取消参加了你的活动'
-    (@event || event).send_system_message(event_owner, body, subject)
+  # 获取发送通知所需的变量: user, event
+  def all_stuff
+    self.class.includes(:user, :event).where(id)
   end
 
   # class methods

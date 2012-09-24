@@ -14,6 +14,10 @@ Dir[Rails.root + 'lib/exception/*.rb'].each do |file|
   require file
 end
 
+Dir[Rails.root + 'lib/notificationers/*.rb'].each do |file|
+  require file
+end
+
 require Rails.root + 'lib/patrick/hot_search.rb'
 
 # 动态加入方法

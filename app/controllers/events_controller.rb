@@ -110,9 +110,8 @@ class EventsController < ApplicationController
   end
 
   def upload_poster
-    
   end
-  
+
   def published
    @event.publish_status = params[:publish_status]
    if @event.save
@@ -120,6 +119,14 @@ class EventsController < ApplicationController
    else
      render 'edit'
    end
+  end
+
+  def cancle
+
+  end
+
+  def draft
+
   end
 
   def participants
