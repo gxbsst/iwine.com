@@ -75,6 +75,9 @@ class Event < ActiveRecord::Base
   # Crop poster
   after_update :crop_poster
 
+  # 发送取消活动通知
+  after_save :send_canle_event_notification, :if => Proc.new {|event| !event.cancle? || event.participants_count > 0}
+
   # CUSTOM VALIDATE
   # 活动开始时间应该大于结束时间
   def begin_at_be_before_end_at
@@ -215,14 +218,44 @@ class Event < ActiveRecord::Base
     publish_status == PUBLISHED_STATUS
   end
 
+  def published!
+    if cancle?
+      raise ::EventException::EventHaveCancled.new('该活动已经被取消')
+    else
+      if self.valid?
+        update_attribute(:publish_status, PUBLISHED_STATUS)
+      else
+        raise "不合格张数据"
+      end
+    end
+  end
+
   # 活动状态是否为抄稿
   def draft?
     publish_status == DRAFTED_STATUS
   end
 
+  def draft!
+    if cancle?
+      raise ::EventException::EventHaveCancled.new('该活动已经被取消')
+    elsif published?
+      raise ::EventException::EventHavePublished.new('活动已经发布了,不能变草稿')
+    else
+      update_attribute(:publish_status, DRAFTED_STATUS)
+    end
+  end
+
   # 活动状态是否为取消
   def cancle?
     publish_status == CANCLED_STATUS
+  end
+
+  def cancle!
+    if cancle?
+      raise ::EventException::EventHaveCancled.new('该活动已经被取消')
+    else
+      update_attribute(:publish_status, CANCLED_STATUS)
+    end
   end
 
   # 添加某只酒到活动
@@ -264,6 +297,16 @@ class Event < ActiveRecord::Base
   def city
    cities = CITY
    return cities.inject({}){|m,(k,v)| m.merge({v => k})}[region_id]
+  end
+
+  # 活动是否可编辑
+  def editable?
+     (timeout? || cancle?) ? false : true
+  end
+
+  # 活动是否可取消
+  def cancleable?
+     (timeout? || cancle?) ? false : true
   end
 
  class << self

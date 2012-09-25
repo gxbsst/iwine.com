@@ -18,7 +18,7 @@ class EventParticipant < ActiveRecord::Base
     :user_id,
     :people_num
 
-  delegate :username, :to => :user
+  delegate :username, :to => :user, :prefix => true
   delegate :title, :to => :event, :prefix => true
 
   validates :people_num, :inclusion => { :in => 1..3 }
@@ -81,6 +81,14 @@ class EventParticipant < ActiveRecord::Base
   def all_stuff
     self.class.includes(:user, :event).where(id)
   end
+
+  #def user
+    #if read_attribute(:user).nil?
+      #User.new
+    #else
+      #read_attribute(:user)
+    #end
+  #end
 
   # class methods
   class << self

@@ -1,0 +1,7 @@
+您报名参加的<%= @event.title %>活动明天就要举办了，请准时参加。
+<%= @event.title %>
+<%= @event.begin_at.to_s(:cn) %>
+<%= @event.full_address %>
+<%= link_to "点击查看详情", event_path(@event) %>.
+
+--爱红酒（iWine.com ）
