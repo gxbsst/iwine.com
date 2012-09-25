@@ -10,5 +10,13 @@ class EventMailer < ActionMailer::Base
     mail(:to => email, :subject => subject)
   end
 
+
+  def event_cancled(email, event, participant)
+    subject = "您报名参加的#{self.title}活动取消"
+    @event = event
+    @participant = participant
+    mail(:to => email, :subject => subject)
+  end
+
 end
 
