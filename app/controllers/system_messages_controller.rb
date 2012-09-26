@@ -1,8 +1,10 @@
+#encoding: utf-8
 class SystemMessagesController < ApplicationController
 	before_filter :authenticate_user!
 	before_filter :mark_read, :only => :show # 必须在 get_unread_receipt_count 前面
 	before_filter :check_is_trashed, :only => :show
   before_filter :get_unread_count, :only => [:show, :index]
+  before_filter :receipt_is_checked, :only => [:mark_as_read, :move_to_trash]
 	def index
 		params[:page] ||= 1
 		#获取此人未trash的所有通知
@@ -31,11 +33,17 @@ class SystemMessagesController < ApplicationController
 		receipts.each do |receipt|
 			receipt.mark_as_read
 		end
-
 		redirect_to system_messages_path
 	end
 
 	private
+
+	def receipt_is_checked
+		if params[:receipt_id].blank?
+			error_stickie t('notice.system_message.no_checked')
+			redirect_to system_messages_path
+		end
+	end
 
 	def find_receipts
 		current_user.receipts.find(params[:receipt_id])

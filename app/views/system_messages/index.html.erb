@@ -24,7 +24,7 @@
 	                    	<div class="content">
 	                        	<div class="checkbox"><input name="receipt_id[]" type="checkbox" value="<%= receipt.id %>" /></div>
 	                            <div class="title">
-	                            	<%= link_to truncate(receipt.notification.body, :length => 15), system_message_path(receipt) %>
+	                            	<%= link_to receipt.notification.subject, system_message_path(receipt) %>
 	                            </div>
 	                            <div class="date"><%= receipt.created_at.to_s(:cn_normal) %></div>
 	                        </div>

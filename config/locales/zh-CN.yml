@@ -37,6 +37,7 @@ zh-CN:
       untrash: "信息复原成功。"
     system_message:
       no_access: "不能访问已删除的通知。"
+      no_checked: "您未选中任何邮件。"
     password:
       reset_password_failure: "更新失败: 请确认当前密码或者新密码是否错误！"
       reset_password_success: "已成功重置密码，可以再次登录iWine啦！"
