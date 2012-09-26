@@ -274,6 +274,7 @@ Patrick::Application.routes.draw do
       resources :uploads
       resources :profiles
       resources :oauths
+      resources :confirmations
     end
    end
   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
