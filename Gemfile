@@ -146,3 +146,9 @@ gem 'acts-as-taggable-on', '~> 2.3.1'
 # address  latitude & longitude
 gem "geocoder"
 gem 'google_places'
+
+# crontab
+#gem 'rcov', '0.9.11'
+gem 'whenever', :require => false
+#, :git => 'git://github.com/javan/whenever'
+

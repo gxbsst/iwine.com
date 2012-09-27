@@ -15,7 +15,12 @@ module EventException
   class ErrorPeopleNum < Exception
   end
 
-  class  EeventHaveCancled < Exception
+  class EventHaveCancled < Exception
+
+  end
+
+  class EventHavePublished < Exception
+
   end
 
 end

@@ -1,0 +1,8 @@
+<p>您报名参加的<%= @event.title %>活动信息有更新</p>
+<p>名字: <%= @event.title %></p>
+<p>时间: <%= @event.begin_at.to_s(:cn) %></p>
+<p>地点: <%= @event.full_address %></p>
+<p><%= link_to "点击查看详情", event_path(@event, :host => 'http://www.iwine.com') %>.</p>
+
+<p>--爱红酒（iWine.com ）</p>
+

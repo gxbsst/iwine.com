@@ -49,7 +49,7 @@ module EventsHelper
 
   def city_tags
     html = ''
-    APP_DATA['event']['city'].each do |key, value|
+    Event::CITY.each do |key, value|
       if params[:city] == key
         html << (content_tag :li, link_to_date_tag(key, :city => key), :class => :select)
       else

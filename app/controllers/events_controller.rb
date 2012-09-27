@@ -40,10 +40,12 @@ class EventsController < ApplicationController
   end
 
   def edit
+   render_404('')  unless @event.editable?
    @event = Event.includes(:wines => [:wine_detail]).find(params[:id]) 
   end
 
   def update
+   render_404('')  unless @event.editable?
     respond_to do |wants|
       if params[:event][:poster].present?
         notice_stickie "上传成功."
@@ -110,37 +112,41 @@ class EventsController < ApplicationController
   end
 
   def upload_poster
+  end
 
+  def published
+   begin
+     @event.published!
+     notice_stickie "活动发布成功."
+     redirect_to event_path(@event)
+   rescue ::EventException::EventHaveCancled
+     notice_stickie e.message
+     redirect_to event_path(@event)
+   rescue
+     render 'edit'
+   end
   end
 
   def cancle
     begin
-      @event.cancle!
-      redirect_to event_path(@event)
-    rescue
-      render_404('')
+     @event.cancle!
+     notice_stickie "活动取消成功."
+    rescue ::EventException::EventHaveCancled
+     notice_stickie e.message
     end
+     redirect_to event_path(@event)
   end
 
-  def draft 
+  def draft
     begin
-      @event.draft!
-      redirect_to event_path(@event)
-    rescue EventException::EeventHaveCancled => e
-      render_404('')
+     @event.draft!
+     notice_stickie "活动存为草稿成功."
+    rescue ::EventException::EventHaveCancled => e
+     notice_stickie e.message
+    rescue ::EventException::EventHavePublished => e
+     notice_stickie e.message
     end
-  end
-
-  def published
-    begin
-      if @event.publish!
-        redirect_to(event_path(@event)) 
-      else
-        render 'edit'
-      end
-    rescue EventException::EeventHaveCancled => e
-      render_404('')
-    end
+     redirect_to event_path(@event)
   end
 
   def participants

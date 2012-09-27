@@ -44,27 +44,28 @@
                     <% if user_signed_in?  %>
                       <% if @user == current_user %>
                         <% if event.published? && !event.timeout? # 活动已经发布 %>
-                          <div>
-                            <%= link_to "编辑活动", edit_event_path(event), :class => :icon_edit2 %> |
-                            <%= link_to "取消活动", cancle_event_path(event), :class => :icon_cancle %> |
-                            <%= link_to "查看参与者", participants_user_event_path(@user, event), :class =>  :icon_member %>
-                          </div>
-                        <% elsif event.draft? # 活动是草稿 %>
-                          <div>
-                            <span class="event_unpublic mr5">未发布</span>
-                            <%= link_to '发布', published_event_path(event),:class => :icon_public %> |
-                            <%= link_to "编辑活动", edit_event_path(event), :class => :icon_edit2 %>
-                          </div>
-                        <% elsif event.timeout? # 活动已经结束 %>
-                          <div>
-                            <span class="event_end">活动已结束</span>
-                            <%= link_to "查看参与者", participants_user_event_path(@user, event), :class =>  :icon_member %>
-                          </div>
-                        <% elsif event.cancle? # 活动已经取消 %>
-                          <div>
-                            <span class="event_cancle">活动已取消</span>
-                          </div>
-                        <% end %>
+                        <div>
+                          <%= link_to "编辑活动", edit_event_path(event), :class => :icon_edit2 %> |
+                          <%= link_to "取消活动", cancle_event_path(event), :class => :icon_cancle %> |
+                          <%= link_to "查看参与者", participants_user_event_path(@user, event), :class =>  :icon_member %>
+                        </div>
+                      <% elsif event.draft? # 活动是草稿 %>
+                        <div>
+                          <span class="event_unpublic mr5">未发布</span>
+                          <%= link_to '发布', published_event_path(event), :class => :icon_public %> |
+                          <%= link_to "编辑活动", edit_event_path(event), :class => :icon_edit2 %>
+                        </div>
+                      <% elsif event.timeout? # 活动已经结束 %>
+                        <div>
+                          <span class="event_end">活动已结束</span>
+                          <%= link_to "查看参与者", participants_user_event_path(@user, event), :class =>  :icon_member %>
+                        </div>
+                      <% elsif event.cancle? # 活动已经取消 %>
+                        <div>
+                          <span class="event_cancle">活动已取消</span>
+                        </div>
+                      <% end %>
+
                       <% end %>
                     <% end %>
                   </dd>
@@ -88,4 +89,3 @@
     </div>
   </div>
 </div>
-                        

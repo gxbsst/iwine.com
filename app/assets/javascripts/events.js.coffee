@@ -42,17 +42,17 @@ jQuery ->
       @collection.bind 'select', @addTag
       @collection.on 'update_status', @render
     addTag: (tag) ->
-      if @options.selectTags.length > 4
-        alert("最多只能创建5个标签")
+      @options.selectTags.on 'add', @render
+      selectTagItem = @options.selectTags.where name:tag.get('name')
+      if selectTagItem.length > 0
+        tag.set select: ''
+        @options.selectTags.remove(selectTagItem)
       else
-        @options.selectTags.on 'add', @render
-        selectTagItem = @options.selectTags.where name:tag.get('name')
-        if selectTagItem.length > 0
-          tag.set select: ''
-          @options.selectTags.remove(selectTagItem)
-        else
+        if @options.selectTags.length < 5
           tag.set select: 'select'
           @options.selectTags.add(tag)
+        else
+          alert("最多可添加5个标签")
     render: ->
       $(@el).html @template {}
       selectTags = @options.selectTags
@@ -90,10 +90,7 @@ jQuery ->
     initialize: ->
       _.bindAll(@, 'render')
     select: ->
-      if @options.selectTags.length > 5
-        alert ("标签数量不能大于5个") 
-      else
-        @collection.trigger('select', @model)
+      @collection.trigger('select', @model)
 
   class InputTagView extends Backbone.View
     el: $("#input_tag_view")

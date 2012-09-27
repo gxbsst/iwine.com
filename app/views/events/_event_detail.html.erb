@@ -13,13 +13,16 @@
               </a>
             </p>
             <div id="mbox" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
-              <%= link_to '编辑活动', edit_event_path(@event), :class => :icon_edit2 %>
-              <%= link_to '取消活动', 
-                published_event_path(@event, :publish_status => APP_DATA['event']['publish_status']['cancle'] ),
-                :class => :icon_edit2 %>
-              <%= link_to '查看参与者',
-                participants_user_event_path(@user,@event), :class => :icon_member %>
-              <%= link_to "邀请好友参加", new_event_invitee_path(@event), :class => :icon_members %>
+              <% if @event.editable? %>
+                <%= link_to '编辑活动', edit_event_path(@event), :class => :icon_edit2 %>
+              <% end %>
+              <% if @event.cancleable? %>
+                <%= link_to '取消活动', cancle_event_path(@event), :class => :icon_edit2 %>
+              <% end %>
+              <%= link_to '查看参与者', participants_user_event_path(@user,@event), :class => :icon_member %>
+              <% if @event.joinedable? %>
+                <%= link_to "邀请好友参加", new_event_invitee_path(@event), :class => :icon_members %>
+              <% end %>
             </div>
             <!--end manage-->
           </div>

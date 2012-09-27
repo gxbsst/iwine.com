@@ -34,7 +34,8 @@ class EventParticipantsController < ApplicationController
 
   def create
     begin 
-    @participant = @user.join_event(@event, params[:event_participant])
+    participant = @user.join_event(@event, params[:event_participant])
+    notice_stickie "参加活动失败， 请联系管理员" if participant.errors.count > 0 
     rescue EventException::ErrorPeopleNum => e
       notice_stickie "还有#{e.message}个剩余名额，请重新填写人数"
     rescue EventException::HaveJoinedEvent

@@ -21,8 +21,8 @@ Patrick::Application.routes.draw do
       get :upload_poster
       get :photo_upload
       get :published
-      get :draft
       get :cancle
+      get :draft
       get :participants
       get :followers
     end

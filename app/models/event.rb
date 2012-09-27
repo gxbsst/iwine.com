@@ -1,11 +1,21 @@
 # encoding: utf-8
 class Event < ActiveRecord::Base
+
+  include ::Notificationer::EventNotificationer
+
+  CANCLED_STATUS = 0
+  DRAFTED_STATUS = 1 
+  PUBLISHED_STATUS = 2
+  LOCKED_STATUS = 3
+  CITY = { '上海' => 1,  '成都' => 2, '北京' => 3, '深圳' => 4, '广州' => 5, '其他' => '6'}
+
   belongs_to :user
   belongs_to :region
   belongs_to :audit_log
+
   has_many :photos, :as => :imageable
   has_many :wines, :class_name => "EventWine"
-  has_many :participants, :class_name => "EventParticipant", :include => [:user], :conditions => "join_status = 1"
+  has_many :participants, :class_name => "EventParticipant", :include => [:user], :conditions => "join_status = #{::EventParticipant::JOINED_STATUS}"
   has_many :invitees, :as => :invitable, :class_name => "EventInvitee"
   has_many :comments,  :class_name => 'EventComment', :as => :commentable
   has_many :follows, :as => :followable, :class_name => "EventFollow"
@@ -22,26 +32,23 @@ class Event < ActiveRecord::Base
   validate :begin_at_be_after_now
   validates :block_in, :numericality => {:allow_blank => true}, :exclusion => {:in => [0]}
 
-  scope :published, where(:publish_status => EVENT_PUBLISHED_CODE ).order("begin_at ASC")
+  scope :published, where(:publish_status => PUBLISHED_STATUS ).order("begin_at ASC")
   scope :live, published.where( "begin_at > ?", Time.now ) # 未举行
   scope :recommends, lambda {|limit| live.order('participants_count DESC').limit(limit) }  # 推荐
-  scope :recent_week, where(['begin_at >= ? AND begin_at <= ?', 
-                            Time.current, Time.current + 1.week])
+  scope :recent_week, where(['begin_at >= ? AND begin_at <= ?', Time.current, Time.current + 1.week])
   scope :weekend, published.where(['begin_at >= ? AND begin_at <= ?',
                         Time.current.end_of_week - 2.day, Time.current.end_of_week])
   scope :date_with, lambda { |date| published.live.where(["begin_at >= ? AND begin_at <= ?",
                                           date, date + 1.day]) }
-  scope :city_with, lambda { |city| where(["region_id = ?", APP_DATA['event']['city'][city]]) }
+  scope :city_with, lambda { |city| where(["region_id = ?", CITY[city]]) }
   # 用户参加的活动
   scope :with_participant_for_user, lambda{|user_id|joins(:participants).
     where(["event_participants.user_id = ? AND event_participants.join_status =?",
-          user_id, APP_DATA['event_participant']['join_status']['joined']
- ]).order('begin_at')}
-
+          user_id, ::EventParticipant::JOINED_STATUS]).
+          order('begin_at')}
   # 用户感兴趣的活动
   scope :with_follow_for_user, lambda{|user_id|joins(:follows).
     where(["follows.user_id = ?", user_id]).order('begin_at')}
-
   # 用户创建的活动
   scope :with_create_for_user, lambda{|user_id| where(:user_id => user_id).order('created_at DESC')}
 
@@ -68,28 +75,11 @@ class Event < ActiveRecord::Base
   # Crop poster
   after_update :crop_poster
 
-  after_save :send_cancle_event_notification, :if => Proc.new {|event| event.cancle? && event.participants_count > 0 }
+  # 发送取消活动通知
+  after_save :send_cancle_event_notification, :if => Proc.new {|event| event.cancle? && event.participants_count > 0}
+  after_update :send_update_event_notification, :if => Proc.new {|event| !event.cancle? && event.participants_count > 0}
 
-  # 统计
-  counts :followers_count => {:with => "Follow",
-      :receiver => lambda {|follow| follow.followable },
-      :increment => {
-    :on => :create,
-    :if => lambda {|follow| follow.follow_counter_should_increment_for("Event")}},
-       :decrement => {
-    :on => :destroy, 
-    :if => lambda {|follow| follow.follow_counter_should_decrement_for("Event")}}
-  },
-    :comments_count => {:with => "Comment",
-      :receiver => lambda {|comment| comment.commentable },
-      :increment => {:on => :create, :if => lambda {|comment| comment.counter_should_increment_for("Event") }},
-      :decrement => {:on => :save,   :if => lambda {|comment| comment.counter_should_decrement_for("Event") }}
-  }, :photos_count   => {:with => "AuditLog",
-        :receiver => lambda {|audit_log| audit_log.logable.imageable }, 
-        :increment => {:on => :create, :if => lambda {|audit_log| audit_log.photos_counter_should_increment? && audit_log.logable.imageable_type == "Event"}},
-        :decrement => {:on => :save,   :if => lambda {|audit_log| audit_log.photos_counter_should_decrement? && audit_log.logable.imageable_type == "Event"}}
-  }
-
+  # CUSTOM VALIDATE
   # 活动开始时间应该大于结束时间
   def begin_at_be_before_end_at
     if begin_at.present?
@@ -104,9 +94,35 @@ class Event < ActiveRecord::Base
     end
   end
 
+  # 统计
+  counts :followers_count => {:with => "Follow", 
+            :receiver => lambda {|follow| follow.followable },
+            :increment => {
+              :on => :create,
+              :if => lambda {|follow| follow.follow_counter_should_increment_for("Event")}},
+            :decrement => {
+              :on => :destroy,
+              :if => lambda {|follow| follow.follow_counter_should_decrement_for("Event")}}
+         },
+         :comments_count => {:with => "Comment", 
+            :receiver => lambda {|comment| comment.commentable },
+            :increment => {:on => :create, :if => lambda {|c| c.counter_should_increment_for("Event") }},
+            :decrement => {:on => :save,   :if => lambda {|c| c.counter_should_decrement_for("Event") }}
+         },
+         :photos_count   => {:with => "AuditLog",
+            :receiver => lambda {|audit_log| audit_log.logable.imageable }, 
+            :increment => {
+              :on => :create,
+              :if => lambda {|audit_log| audit_log.image_should_increment('Event')}},
+            :decrement => {
+              :on => :save,
+              :if => lambda {|audit_log| audit_log.image_should_decrement('Event')}}
+         }
+
+
   # 将活动锁定
   def locked!
-    update_attribute(:publish_status,  APP_DATA['event']['publish_status']['locked'])
+    update_attribute(:publish_status,  ::Event::LOCKED_STATUS)
   end
 
   #用于将海报分享到第三方网站
@@ -116,7 +132,7 @@ class Event < ActiveRecord::Base
 
   # 将活动解除锁定
   def unlocked!
-    update_attribute(:publish_status,  APP_DATA['event']['publish_status']['published']) if locked?
+    update_attribute(:publish_status,  ::Event::PUBLISHED_STATUS) if locked?
   end
 
   # 活动是否可参加
@@ -147,8 +163,6 @@ class Event < ActiveRecord::Base
   # 获取参加活动的人数
   def get_participant_number
     participants_count
-    #EventParticipant.where(:event_id => id, 
-                           #:join_status =>  APP_DATA['event_participant']['join_status']['cancle']).count 
   end
 
   # 获取可参加活动活动的名额
@@ -198,25 +212,39 @@ class Event < ActiveRecord::Base
 
   # 活动状态是否意见被锁定
   def locked?
-    publish_status == APP_DATA['event']['publish_status']['locked']
+    publish_status == LOCKED_STATUS
   end
 
   # 活动状态是否为抄稿
   def published?
-      publish_status == APP_DATA['event']['publish_status']['published']
+    publish_status == PUBLISHED_STATUS
   end
 
-  def publish!
+  def published!
     if cancle?
-      raise ::EventException::EeventHaveCancled, '活动已经取消'
+      raise ::EventException::EventHaveCancled.new('该活动已经被取消')
     else
-      update_attribute(:publish_status,  APP_DATA['event']['publish_status']['published'])
+      if self.valid?
+        update_attribute(:publish_status, PUBLISHED_STATUS)
+      else
+        raise "不合格的数据"
+      end
     end
   end
 
   # 活动状态是否为抄稿
   def draft?
-    publish_status == APP_DATA['event']['publish_status']['draft']
+    publish_status == DRAFTED_STATUS
+  end
+
+  def draft!
+    if cancle?
+      raise ::EventException::EventHaveCancled.new('该活动已经被取消')
+    elsif published?
+      raise ::EventException::EventHavePublished.new('活动已经发布了,不能变草稿')
+    else
+      update_attribute(:publish_status, DRAFTED_STATUS)
+    end
   end
 
   def draft!
@@ -229,7 +257,15 @@ class Event < ActiveRecord::Base
 
   # 活动状态是否为取消
   def cancle?
-    publish_status == APP_DATA['event']['publish_status']['cancle']
+    publish_status == CANCLED_STATUS
+  end
+
+  def cancle!
+    if cancle?
+      raise ::EventException::EventHaveCancled.new('该活动已经被取消')
+    else
+      update_attribute(:publish_status, CANCLED_STATUS)
+    end
   end
 
   def cancle!
@@ -273,8 +309,18 @@ class Event < ActiveRecord::Base
   end
 
   def city
-   cities = APP_DATA['event']['city']
+   cities = CITY
    return cities.inject({}){|m,(k,v)| m.merge({v => k})}[region_id]
+  end
+
+  # 活动是否可编辑
+  def editable?
+     (timeout? || cancle?) ? false : true
+  end
+
+  # 活动是否可取消
+  def cancleable?
+     (timeout? || cancle?) ? false : true
   end
 
  class << self
@@ -311,14 +357,6 @@ class Event < ActiveRecord::Base
      events
    end
 
- end
-
- def send_system_message(recipients, msg_body, subject, sanitize_text=true, attachment=nil)
-   convo = Conversation.new({:subject => subject})
-   system_message = SystemMessage.new({:sender => self, :conversation => convo,  :body => msg_body, :subject => subject, :attachment => attachment})
-   system_message.recipients = recipients.is_a?(Array) ? recipients : [recipients]
-   system_message.recipients = system_message.recipients.uniq
-   return system_message.deliver false,sanitize_text
  end
 
  private

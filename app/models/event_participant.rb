@@ -1,5 +1,11 @@
 # encoding: utf-8
 class EventParticipant < ActiveRecord::Base
+
+  include ::Notificationer::EventNotificationer::Participant
+
+  JOINED_STATUS = 1
+  CANCLE_STATUS = 0
+
   belongs_to :user
   belongs_to :event
   has_one :event_owner, :through => :event, :source => :user
@@ -12,6 +18,9 @@ class EventParticipant < ActiveRecord::Base
     :user_id,
     :people_num
 
+  delegate :username, :to => :user, :prefix => true
+  delegate :title, :to => :event, :prefix => true
+
   validates :people_num, :inclusion => { :in => 1..3 }
   validates :telephone, :username, :user_id, :presence => true
   validates :email, :presence => true, :email_format => true
@@ -19,8 +28,10 @@ class EventParticipant < ActiveRecord::Base
 
   after_create :set_event_lock_status
   after_update :udpate_event_lock_status
-  after_create :send_notification_to_owner
+  after_create :send_join_notification
   after_validation :update_event_participants_count
+  after_update :send_cancle_notification, :if => Proc.new{|ep| ep.join_status == CANCLE_STATUS }
+  after_update :send_info_changed_notification, :if => Proc.new{ |ep| ep.join_status != CANCLE_STATUS }
 
   def set_event_lock_status
     if event.set_blocked? # 做限定才去检测
@@ -36,17 +47,16 @@ class EventParticipant < ActiveRecord::Base
 
   def cancle(params)
     raise "Must Set Key: cancle_note" unless params.has_key? :cancle_note
-    update_attributes(:join_status => APP_DATA['event_participant']['join_status']['cancle'],
-                      :cancle_note => params[:cancle_note])
+    update_attributes(:join_status => CANCLE_STATUS, :cancle_note => params[:cancle_note])
     return self
   end
 
   def joined?
-   join_status == APP_DATA['event_participant']['join_status']['joined']
+   join_status == JOINED_STATUS
   end
 
   def cancle?
-   join_status == APP_DATA['event_participant']['join_status']['cancle']
+   join_status == CANCLE_STATUS
   end
 
   def do_cancle?
@@ -68,12 +78,18 @@ class EventParticipant < ActiveRecord::Base
     end
   end
 
-  def send_notification_to_owner
-    #TODO:
-    #给活动创建者发送死信或者Email
-    #event.send_message(user, '我参加这个私信您', '我参加了你这个活动')
-    #event.send_email(owner, 'subject', 'body'
+  # 获取发送通知所需的变量: user, event
+  def all_stuff
+    self.class.includes(:user, :event).where(id)
   end
+
+  #def user
+    #if read_attribute(:user).nil?
+      #User.new
+    #else
+      #read_attribute(:user)
+    #end
+  #end
 
   # class methods
   class << self

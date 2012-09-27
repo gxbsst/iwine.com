@@ -50,8 +50,4 @@ USER_CONFIG_RECIEVE_ACCOUNT_INFO_EMAIL = "5"
 USER_CONFIG_MESSAGE_FROM_ALL = "1"
 USER_CONFIG_MESSAGE_FROM_MY_FOLLOWING = "3"
 
-# EVENT PUBLISHED CODE
-EVENT_PUBLISHED_CODE = APP_DATA['event']['publish_status']['published']
-EVENT_DRAFT_CODE = APP_DATA['event']['publish_status']['draft']
-EVENT_CANCLE_CODE = APP_DATA['event']['publish_status']['cancle']
 
