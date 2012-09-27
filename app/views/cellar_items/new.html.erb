@@ -8,8 +8,7 @@
         <div class="step_thr"></div>
       </div>
       <div id="stylized" class="myform">
-        <%= form_for @cellar_item, :validate => true, :url => cellar_items_path(@cellar) do |f| %>
-            <input type="hidden" name="wine_detail_id" value="<%= @wine_detail.id%>"/>
+        <%= form_for @cellar_item, :validate => true, :method => :post, :url => cellar_items_path(@cellar) do |f| %>
             <%= render "form", :f => f, :button_name => "加入酒窖" %>
         <% end %>
         <div class="clear"></div>
