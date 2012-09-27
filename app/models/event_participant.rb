@@ -31,6 +31,7 @@ class EventParticipant < ActiveRecord::Base
   after_create :send_join_notification
   after_validation :update_event_participants_count
   after_update :send_cancle_notification, :if => Proc.new{|ep| ep.join_status == CANCLE_STATUS }
+  after_update :send_info_changed_notification, :if => Proc.new{ |ep| ep.join_status != CANCLE_STATUS }
 
   def set_event_lock_status
     if event.set_blocked? # 做限定才去检测

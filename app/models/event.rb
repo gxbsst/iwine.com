@@ -76,7 +76,9 @@ class Event < ActiveRecord::Base
   after_update :crop_poster
 
   # 发送取消活动通知
-  after_save :send_canle_event_notification, :if => Proc.new {|event| !event.cancle? || event.participants_count > 0}
+  after_save :send_cancle_event_notification, :if => Proc.new {|event| event.cancle? && event.participants_count > 0}
+
+  after_update :send_update_event_notification, :if => Proc.new {|event| !event.cancle? && event.participants_count > 0}
 
   # CUSTOM VALIDATE
   # 活动开始时间应该大于结束时间
