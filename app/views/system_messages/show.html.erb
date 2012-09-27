@@ -24,7 +24,7 @@
 					<h1><%= @receipt.notification.subject %></h1>
 				</div>
 				<div class="main">
-					<p><%= @receipt.notification.body %></p>
+					<p><%= raw @receipt.notification.body %></p>
 				</div>
 			</div>
 		</div>
