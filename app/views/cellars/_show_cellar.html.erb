@@ -70,7 +70,7 @@
                 <td class="place"><%= item.location %></td>
                 <% if is_login_user? @user %>
                     <td>
-                      <%= link_to "修改", edit_cellar_item_path(@cellar, item), :class => "icon_edit" %>
+                      <%= link_to "修改", edit_cellar_item_path(@cellar, item, :wine_id => item.wine_detail.wine_id), :class => "icon_edit" %>
                     </td>
                     <td>
                       <%= link_to "删除", cellar_item_path(@cellar, item), :method => :delete, :confirm => "确定删除吗？", :class => "icon_delet" %>

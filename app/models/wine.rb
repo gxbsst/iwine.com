@@ -58,5 +58,26 @@ class Wine < ActiveRecord::Base
     details.collect {|wine| [wine.year.year, wine.slug]}
   end
 
-
+  
+  def copy_detail(detail, is_nv, year)
+    #查找detail
+    if is_nv
+      wine_detail = details.where("is_nv = ?", 1).first
+    else
+      wine_detail = details.where("year like ?", "#{year}%").first
+    end
+    if wine_detail
+      return wine_detail
+    else
+      #创建detail
+      wine_detail = Wines::Detail.new(:wine_id => id)
+      if is_nv
+        wine_detail.is_nv = true 
+      else
+        wine_detail.year = Time.mktime(year) 
+      end
+      wine_detail.save
+      return wine_detail
+    end
+  end
 end
