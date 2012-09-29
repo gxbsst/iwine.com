@@ -1,9 +1,8 @@
-set_default(:mysql_host, "localhost")
-set_default(:environment, "production")
-set_default(:mysql_user) { application }
-set_default(:mysql_password) { Capistrano::CLI.password_prompt "mysql Password: " }
+#set_default(:mysql_host, "localhost")
+#set_default(:environment, "production")
+#set_default(:mysql_user) { application }
+#set_default(:mysql_password) { Capistrano::CLI.password_prompt "mysql Password: " }
 set_default(:mysql_database) { "#{application}_production" }
-
 
 namespace :db do
     namespace :mysql do
