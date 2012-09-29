@@ -2,7 +2,7 @@ common: &common
   host: localhost
   adapter: mysql2
   username: root
-  password: 'sidways_iwine_mysql!@##'
+  password: 'sidways_iwine_mysql!@#'
 
 development:
   <<: *common
