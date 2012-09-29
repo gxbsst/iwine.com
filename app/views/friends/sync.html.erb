@@ -22,7 +22,12 @@
     <% else %>
         <p class="mb30"><span class="font14">你还没有设置<%= params[:sns_name] %>账号</span></p>
         <div class="align_c">
-          <%= link_to_sync_button params[:sns_name].to_s, new_sns_friends_path(:sns_name => params[:sns_name]) %>
+          <% if params[:sns_name] == "weibo" %>
+              <%= link_to image_tag("common/btn_syn_weibo.jpg", :title => "微博" ),
+                  user_omniauth_authorize_path(:weibo) %>
+          <% else %>
+            <%= link_to_sync_button params[:sns_name].to_s, new_sns_friends_path(:sns_name => params[:sns_name]) %>
+          <% end %>
         </div>
     <% end %>
   </div>
