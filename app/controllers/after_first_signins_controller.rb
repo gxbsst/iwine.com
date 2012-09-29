@@ -104,8 +104,10 @@ class AfterFirstSigninsController < ApplicationController
     end
   end
 
+
+  
   #完成所有步骤后进入个人首页
-  def redirect_to_finish_wizard
-    redirect_to home_index_path
+  def finish_wizard_path
+    home_index_path
   end
 end
