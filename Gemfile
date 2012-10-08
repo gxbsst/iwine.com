@@ -152,3 +152,9 @@ gem 'google_places'
 gem 'whenever', :require => false
 #, :git => 'git://github.com/javan/whenever'
 
+# monitor
+gem 'newrelic_rpm'
+gem 'garelic'
+
+# delay job
+gem 'daemons'
