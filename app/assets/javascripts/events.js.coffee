@@ -107,7 +107,7 @@ jQuery ->
             tag = new window.app.Tag name: tagName, select: 'select'
             console.info(@collection.length)
             if @collection.length > 4
-              alert("....")
+              alert("最多可添加5个标签")
             else
               @collection.add tag
       @options.hotTags.trigger('update_status')
