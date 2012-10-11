@@ -9,10 +9,11 @@ namespace :unicorn do
   task :setup, roles: :app do
     #run "mkdir -p #{shared_path}/config"
     template "unicorn.rb.erb", unicorn_config
-    template "unicorn_init.erb", "/tmp/unicorn_init"
-    run "chmod +x /tmp/unicorn_init"
-    run "#{sudo} mv /tmp/unicorn_init /etc/init.d/unicorn_#{application}"
-    run "#{sudo} update-rc.d -f unicorn_#{application} defaults"
+    #template "unicorn_init.erb", "/tmp/unicorn_init"
+    #run "chmod +x /tmp/unicorn_init"
+    #run "#{sudo} mv /tmp/unicorn_init /etc/init.d/unicorn_#{application}"
+    #run "#{sudo} update-rc.d -f unicorn_#{application} defaults"
+    #sudo "ln -nfs #{current_path}/config/unicorn_init.sh /etc/init.d/unicorn_#{application}"
   end
   after "deploy:setup", "unicorn:setup"
 

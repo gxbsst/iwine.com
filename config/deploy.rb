@@ -1,6 +1,6 @@
 # encoding: utf-8
 require "bundler/capistrano"
-#load "config/recipes/base"
+load "config/recipes/base"
 #load "config/recipes/nginx"
 load "config/recipes/unicorn"
 #load "config/recipes/postgresql"
@@ -69,6 +69,7 @@ namespace :deploy do
     run "ln -nfs #{shared_path}/config/oauth/douban.yml #{release_path}/config/oauth/douban.yml"
     run "ln -nfs #{shared_path}/config/oauth/qq.yml #{release_path}/config/oauth/qq.yml"
     run "ln -nfs #{shared_path}/config/oauth/sina.yml #{release_path}/config/oauth/sina.yml"
+    run "ln -nfs #{shared_path}/config/unicorn.rb #{release_path}/config/unicorn.rb"
   end
   after "deploy:finalize_update", "deploy:symlink_config"
 
