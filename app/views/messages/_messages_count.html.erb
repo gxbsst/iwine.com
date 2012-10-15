@@ -1,0 +1,8 @@
+<div class="attention">
+	<div class="top"></div>
+	<div class="mid">
+	<% if message_count.to_i > 0 %><%= link_to "有#{message_count}条私信", conversations_path %><% end %>
+	<% if receipt_count.to_i > 0 %><%= link_to "有#{receipt_count}条通知", system_messages_path %><% end %>
+	</div>
+	<div class="bot"></div>
+</div>

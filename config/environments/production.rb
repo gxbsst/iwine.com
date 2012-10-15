@@ -15,7 +15,7 @@ Patrick::Application.configure do
   config.assets.compress = true
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-  config.assets.compile = false
+  config.assets.compile = true
 
   # Generate digests for assets URLs
   config.assets.digest = true
@@ -37,14 +37,34 @@ Patrick::Application.configure do
   # config.logger = SyslogLogger.new
 
   # Use a different cache store in production
-  config.cache_store = :mem_cache_store, "192.168.11.31"
+  config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
-
+    %w(*.js 
+        comment.form.validator.js 
+        event.css 
+        add.css 
+        home.css 
+        jquery-ui.css 
+        about.css 
+        admin.css 
+        fancybox.css 
+        hp.css 
+        setting.css 
+        wine.css 
+        active_admin.css.scss 
+        guide.css 
+        stickies.css 
+        wine_register.css.scss 
+         jcrop.css.scss 
+        search.css 
+        thumb.css 
+        winery.css 
+ ).each {|i| config.assets.precompile << i}
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 

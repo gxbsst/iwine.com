@@ -1,21 +1,5 @@
 # encoding: UTF-8
 class ApplicationController < ActionController::Base
-  include ThemesForRails::ActionController
-  theme "waterfall"
-  # layout "waterfall"
-  # layout  proc { |controller|
-  #   #span_950 = ["static", "wines"]
-  #   # span_860 = ["settings"]
-  #   if params[:controller] == "static" && params[:action] == "index"
-  #    "waterfall"
-  #   elsif params[:controller] == "settings"
-  #     "span_860"
-  #   else
-  #     "span_950"
-  #   end
-  # }
-  # theme "waterfall"
-  # default :theme => "waterfall"
 
   #protect_from_forgery
   #before_filter :authenticate_user!
@@ -98,12 +82,12 @@ class ApplicationController < ActionController::Base
   end
 
   def render_404(exception)
-     @not_found_path = exception.message
-     respond_to do |format|
-       format.html { render template: 'errors/error_404', layout: 'layouts/application', status: 404 }
-       format.all  { render nothing: true, status: 404 }
-     end
-   end
+    #@not_found_path = exception.message
+    respond_to do |format|
+      format.html { render template: 'errors/error_404', layout: 'layouts/application', status: 404 }
+      format.all  { render nothing: true, status: 404 }
+    end
+  end
 
    def render_500(exception)
      @error = exception
@@ -138,5 +122,16 @@ class ApplicationController < ActionController::Base
   # 关注某个人
   def follow_one_user(user_id)
     current_user.follow_user(user_id)
+  end
+  
+  #获取未读状态的私信和通知
+  def get_unread_count
+    @unread_receipts_count = current_user.receipts.
+                            not_trash.
+                            unread.
+                            joins(:notification).
+                            where('notifications.type' => SystemMessage.to_s).
+                            size
+    @unread_messages_count = Conversation.unread(current_user).count
   end
 end

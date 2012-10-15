@@ -1,0 +1,77 @@
+	<% if params[:controller] == "wine_details" &&  params[:action] == "show" %>
+	<div class="title_btn">
+		<%= link_to new_wine_comment_path(@wine_detail, :do => "comment"), :class => [:btn_gray, :float_r, :ajax], :remote => true do %>
+		<span>添加评论</span>
+	<% end %>
+		<% unless params[:controller] == "wine_details/comments" %>
+		<h2>
+		  评论
+		  <span class="font12 more">
+		    <%= link_to "(共#{@wine_detail.comments_count}条...)", wine_comments_path(@wine_detail)%>
+		  </span>
+		</h2>
+		<% end %>
+		<div class="clear"></div>
+	</div>
+	<% end %>
+	
+	<ul class="comment_list clearfix">
+
+		<% @comments.each do |comment| %>	
+		<li>
+			<div class="userpic">
+				 <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true), {:with_avatar => true, :avatar_version => :middle}, {:width => 50, :height => 50} %>
+			</div>
+			<div class="main">
+				<div class="username">
+					<%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true ) %>
+					<span class="date"> <%= comment.created_at.to_s(:normal) %></span><!--<span class="control"><a href="#">回复</a> | <a href="#">删除</a></span>-->
+					<%=  star_rate_tag(comment.point.to_i) %>
+				</div>
+				<div class="content"><%= comment.body %></div>
+				<div class="userful">
+					<%= link_to  vote_comment_path(comment.id), :remote => true, :class => "ajax vote"  do %>
+		                有用(<span class="likes_count"><%=comment.votes_count %></span>)
+		             <% end %>
+					|  <%= comment_detail_url(comment) %>
+				</div>
+				
+				<div id="reply_comment_<%= comment.id %>" class="replybox" style="display: none">
+			  </div>
+				
+			</div>
+			<div class="clear"></div>
+		</li>
+		<% end %>
+		</ul>
+		<div class="clear"></div>
+	
+	
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+	  // "有用" 成功时，更新有用的数量
+	  $("a.vote").bind("ajax:success", function(event, data, textStatus, jqXHR){
+	    $(this).find("span.likes_count").text(data);
+	  });
+	  // 回复按钮
+	  $("a.reply_comment_button").click(function(){
+		  // $(".reply_comment_outer").html("");
+		  // Close All Reply Form
+		  $(".comment_list li").find(".replybox").hide();
+	  });
+
+	  $("a.reply_comment_button").bind("ajax:success", function(event, data, textStatus, jqXHR){
+		  $comment_outer = $(this).parent().parent().children(".replybox");
+		  if($comment_outer.is(":hidden")){
+		  	$comment_outer.show();
+		  }
+		  else
+		  {
+		  	$comment_outer.hide();
+		  }
+	  });
+
+  });
+</script>

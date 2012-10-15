@@ -1,5 +1,5 @@
 @charset "UTF-8";
-.winery_header {background:url(../images/bg/bg_gray_line.gif) repeat-y ;background-position: 15px 0;zoom:1;}
+.winery_header {background:url(../images/bg/bg_gray_line.gif) repeat-y    ;background-position: 15px 0;zoom:1;}
 .winery_header .cover {width:360px;float:left;}
 .winery_header .info {width:305px;float:left;padding:20px;}
 .winery_header .logo {margin:0 0 10px 0;}
@@ -70,8 +70,11 @@ ul.photo_list li .intro, .album_left .photo .intro{margin:0 0 5px 0;}
 .album_left .info {margin:15px 0 40px 0;color:#666;}
 .album_left .photo img {margin:0 0 10px 0;}
 .album_left .comment_list .main {width:520px;}
-.album_left .post_main {width:490px;}
-.album_left .post_main textarea {width:470px;height:80px;background-color:#fff;}
+.album_left .comment_post .post_main {width:490px;}
+.album_left .comment_post .post_main textarea {width:470px;height:80px;background-color:#fff;}
+.post_main .com_s {flaot:left;width:300px;padding-top:3px;}
+.post_main .com_s a {display:inline-block;margin-right:10px;position:relative;}
+.com_s .sns_on {position:absolute;left:8px;top:8px;}
 .album_left .pre_next {text-align:center;}
 .album_left .count {display:inline-block;margin:0 10px;}
 .album_right h2 {margin:0 0 20px 0;}

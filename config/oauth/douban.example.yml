@@ -1,0 +1,11 @@
+development:
+  key:    07eb65662d86fb1517c230328894f13f
+  secret: fe3a1de3529308f9
+  url:    http://patrick.local
+  callback: "http://patrick.local/friends/douban/callback"
+
+production:
+  key:    07eb65662d86fb1517c230328894f13f
+  secret: fe3a1de3529308f9
+  url:    http://patrickdev.sidways.com
+  callback: "http://patrickdev.sidways.com/friends/douban/callback"

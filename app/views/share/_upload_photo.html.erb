@@ -1,0 +1,69 @@
+<%= form_for @photo, :html => { :multipart => true, :id => "fileupload"  } do |f| %>
+	<% if @wine_detail %> <%= hidden_field_tag "wine_id", @wine_detail.id %> <% end %>
+	<% if @winery %><%= hidden_field_tag "winery_id", @winery.id %><% end %>
+	<% if @event %><%= hidden_field_tag "event_id", @event.id %><% end %>
+	<!-- The fileinput-button span is used to style the file input field as button -->
+	<p class="mb10">
+	<span class="btn btn-success fileinput-button">
+  		<i class="icon-plus icon-white"></i>
+  		<%= f.file_field :image, :multiple => true ,:class => "text mr5", :size => 50%>
+  		<a href="javascript:void(0)" class="btn_blue_b mr5">
+    		<span>选择图片</span>
+ 		</a>
+	</span>
+	</p>
+	<div class="clear"></div><br/>
+	<p class="mb10"><input name="save_to_album" type="checkbox", value="1"/>同时上传到我的相册</p>
+	<p class="mb20">选择相册 
+		<%= select_tag("album_id", 
+		           options_from_collection_for_select(@albums, "id", "name", @album_id), :disabled => "desabled" ) %>
+		<%= link_to "新建相册", new_album_path(), :class => "add_album fancybox.ajax icon_add_album" %>
+	</p>
+	<p class="mb20">每次最多上传10张图片；每张图片最大为5MB。我们仅支持以下格式图片：JPEG、PNG、GIF。</p>
+	 <!-- The table listing the files available for upload/download -->
+	<table class="table table-striped" width="100%" cellpadding="5" cellspacing="5">
+	<tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+	</table>
+	<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+	<div class="row fileupload-buttonbar" style="display: none">
+	<div class="span7">
+      	<a href="javascript:void(0)" class="btn_gray mr5">
+          	<button type="submit" class="btn btn-primary start" style="margin:0;padding:0;background:none;border: 0">
+            	<!-- <i class="icon-upload icon-white"></i> -->
+            	<span>开始上传 </span>
+          	</button>
+      	</a>
+        <a href="javascript:void(0)" class="btn_gray">
+         	 <button type="reset" class="btn btn-warning cancel" style="margin:0;padding:0;background:none;border: 0">
+            	<!-- <i class="icon-ban-circle icon-white"></i> -->
+            	<span>取消上传</span>
+          	</button>
+      	</a>
+	</div>
+	<div class="span5">
+  		<!-- The global progress bar -->
+  		<div class="progress progress-success progress-striped active fade" style="background: #CCC;">
+    		<div class="bar" style="width:0%; background: #CCC;"></div>
+  		</div>
+	</div>
+	</div>
+	<!-- The loading indicator is shown during image processing -->
+	<div class="fileupload-loading">....</div>
+<% end %>					
+<script>
+    $('.add_album').fancybox({padding:0, margin: 0, width: 450, height: 'auto', autoSize: false, modal: true});
+</script>
+<%= render "photos/fileupload/queue" %>
+<%= render "photos/fileupload/index" %>
+<%= render "share/js_include_local" %>
+<script type="text/javascript">
+	$("input[name=save_to_album]").change(function(){
+       if ($(this).attr("checked") == "checked") {
+       	 	$("#album_id").removeAttr('disabled');
+
+       }else{
+           console.log("unchecked");
+           $("#album_id").attr("disabled", "disabled");
+       }
+    });
+</script>

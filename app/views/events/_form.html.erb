@@ -1,0 +1,100 @@
+<style type="text/css" media="screen">
+  label .message {
+    display: inline;
+  }
+  div.field_with_errors {
+    display: inline;
+  }
+</style>
+<%= form_for @event, :html => {:id => :form} do |f| -%>
+      <%= f.hidden_field :publish_status %> 
+      <table class="form" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <th width="90"><span class="red">*</span>活动标题</th>
+          <td>
+            <%= f.text_field :title, :class => [:text, :name] %>
+          </td>
+        </tr>
+        <tr>
+          <th valign="top"><span class="red">*</span>活动标签</th>
+          <td>
+            <div id="tag_container">
+                <%= f.hidden_field :tag_list  %> 
+              <div id="input_tag_view">
+                <%= f.text_field :tags, :class => [:text, :tag] %>
+                 标签间请用分号(;)隔开，最多可添加5个标签。
+                <span id="tags_error" class="red"></span>
+              </div>
+              <span class="red" id="warning" style="display:none">不能为空</span>
+              <div id="resource_container"></div>
+              <div class="clear"></div>
+              <div id="hot_tags_container"></div>
+
+              <script type="text/template" id="auto_compleate_view">
+                  <a href="javascript:void(0)" data-value= "<@= id @>"><@= origin_name @></a>
+              </script>
+
+              <script type="text/template" id="hot_tags_template">
+                <p class="mt10">热门标签：</p>
+                <ul class="tags mt10">
+                </ul>
+              </script>
+
+              <script type="text/template" id="tags_template">
+                <a href="javascript:void(0)" data-value= ""><@= name @></a>
+              </script>
+
+              <script language="javascript" type="text/javascript">
+                $(document).ready(function(){
+                    hv = new app.HotTagsListView ({collection: app.HotTags, selectTags: app.SelectTags}) 
+                    new app.InputTagView ({collection: app.SelectTags, hotTags: app.HotTags})
+                    app.HotTags.fetch()
+                    <% if @event.tags_array.present? %>
+                      <% @event.tags_array.each do |tag| %>
+                        app.SelectTags.add({id:<%= tag[:id] %>, name: "<%= tag[:name] %>"});
+                      <% end %>
+                    <% end %>
+                    });
+              </script>
+
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th><span class="red">*</span>活动时间</th>
+          <td>
+            <%= f.text_field :begin_at, :class => [:text, :date] %>
+            至 
+            <%= f.text_field :end_at, :class => [:text, :date] %>
+            <span class="red" id="begin_end_end_at_error"> </span>
+          </td>
+        </tr>
+        <tr>
+          <th><span class="red">*</span>活动地点</th>
+          <td>
+            <%= f.select :region_id, ::Event::CITY  %>
+            <%=  f.text_field :address, :class => [:text, :name], :placeholder => '请填写详细地址'  %>
+          </td>
+        </tr>
+        <tr>
+          <th>人数限制</th>
+          <td>
+            <%= f.text_field :block_in, :class => [:text, :price] %>
+            人 （留空表示不限制人数）
+          </td>
+        </tr>
+        <tr>
+          <th>活动介绍</th>
+          <td>
+            <%= f.text_area :description, :class => [:wine_intro]  %>
+          </td>
+        </tr>
+      </table>
+      <p align="center">
+        <%= link_to "javascript:void(0)", :class => [:btn_gray_b, :save_event_button] do  %>
+          <span> 保存</span>
+        <% end %>
+      </p>
+    <% end -%>
+
+

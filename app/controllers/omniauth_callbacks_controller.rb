@@ -10,7 +10,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       else
         Users::Oauth.update_token(request.env["omniauth.auth"])
         notice_stickie t('notice.oauth.update_oauth')
-        redirect_to setting_sns_friends_path
+        redirect_to sync_friends_path(:sns_name => 'weibo', :success => true) #设置success控制sync页面得javascript
       end
     else #登陆操作
       oauth_user = Users::Oauth.from_omniauth(request.env["omniauth.auth"])

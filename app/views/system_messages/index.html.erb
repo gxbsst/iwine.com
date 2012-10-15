@@ -1,0 +1,71 @@
+<% content_for :title, @title%>
+<%= content_for :css do %>
+    <%= stylesheet_link_tag :setting %>
+<% end %>
+<div class="whitespace message">
+	<%= render :partial => "share/notification_title", :locals => {:system_message => true} %>
+	<div class="title clearfix">
+		<input class="checkall" name="" type="checkbox" id="check-all"/>
+        <a class="btn_gray float_r mr5" href="javascript:void(0);" id="mark_as_read"><span>标记为已读</span></a>
+        <a class="btn_gray float_r mr5" href="javascript:void(0);" id="move_to_trash"><span>删除</span></a>
+        <h2>我的通知</h2>
+        <div class="clear"></div>
+	</div> 
+
+	<div class="message_list">
+		<div class="notice_list">
+			<%= form_tag "/system_messages/move_to_trash", :method => :post, :class => "system_messages_list" do %>
+				<% @receipts.each do |receipt| %>
+					<dl class="clearfix <%=' unread' if receipt.is_unread? %>">
+	                	<dt>                    
+	                        <p class="name">iWine 系统管理员</p>
+	                    </dt>
+	                    <dd>
+	                    	<div class="content">
+	                        	<div class="checkbox"><input name="receipt_id[]" type="checkbox" value="<%= receipt.id %>" /></div>
+	                            <div class="title">
+	                            	<%= link_to receipt.notification.subject, system_message_path(receipt) %>
+	                            </div>
+	                            <div class="date"><%= receipt.created_at.to_s(:cn_normal) %></div>
+	                        </div>
+	                        <div class="action" style="display:none;">
+	                        	<%= link_to "删除",  move_to_trash_system_messages_path(:receipt_id => [receipt.id]) %>
+	                        </div>
+	                    </dd>
+	                    <div class="clear"></div>
+	                </dl>
+				<% end %>
+			<% end %>
+		</div>
+    	<div class="pagination">
+    		<%= paginate @receipts, :outer_window => 2 %>
+    	</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$('dl').mouseenter(function(){
+		$('.action', this).show();
+	});
+	$('dl').mouseleave(function(){
+		$('.action', this).hide();
+	});
+
+	$('#mark_as_read').click(function(){
+		form = $('.notice_list form')
+		form.attr('action', '/system_messages/mark_as_read');
+		form.submit();
+	});
+
+	$('#move_to_trash').click(function(){
+		form = $('.notice_list form')
+		form.attr('action', '/system_messages/move_to_trash');
+		form.submit();
+	});
+	$("#check-all").change(function(){
+	   	if ($(this).attr("checked") == "checked") {
+	   		$(".checkbox input").attr("checked", true);
+	   	}else{
+	   		$(".checkbox input").attr("checked", false);
+	   	}
+	});
+</script>

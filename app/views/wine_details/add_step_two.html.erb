@@ -1,0 +1,69 @@
+<% content_for :css do %>
+    <%= stylesheet_link_tag :hp, :add %>
+<% end %>
+  <div class="whitespace addwine">
+    <%= render "wine_details/addwine_step", :step => "step_fir" %>
+    <% unless @wines.blank? %>
+        <div class="search mb20">
+          <%= render :partial => "wine_details/search_wine", :object => @search %>
+        </div>
+
+        <div>
+          <div class="float_r">
+            <span class="notice_b">这些都不是您要找的酒？</span>
+            <%=  link_to new_wine_path, :class => "btn_gray" do %>
+                <span>添加酒</span>
+            <% end %>
+          </div>
+          <p class="notice_b mb20">我们为您搜寻到以下酒</p>
+          <div class="clear"></div>
+        </div>
+
+        <% @wines.each do |wine| %>
+            <% releast_detail = wine.details.releast_detail.first %>
+            <div class="box">
+              <div class="box_t"></div>
+              <div class="box_main">
+                <div class="wine_img"><%= wine_label_tag( releast_detail, :thumb_name => "thumb_x", :width => "70", :height => "70" )%></div>
+                <div class="wine_info">
+                  <h2><%= releast_detail.wine.name_zh %></h2>
+                  <h3><%= releast_detail.wine.origin_name %></h3>
+                  <p><strong>已有年份：</strong></p>
+                  <p class="year">
+                    
+                    <% wine.details.order("year desc").each do |wine_detail| %>
+                        <span><%= link_to wine_detail.show_year, wine_path(wine_detail) %></span>
+                    <% end %>
+                  </p>
+                  <p class="mt10">
+                    <%= link_to new_wine_path(:wine_id => wine.id), :class => "btn_gray" do %>
+                        <span>添加新年份</span>
+                    <% end %>
+                  </p>
+                </div>
+                <div class="clear"></div>
+              </div>
+              <div class="box_b"></div>
+            </div>
+        <% end %>
+        <div class="pagination">
+          <%= paginate @wines %>
+        </div>
+    <% else %>
+        <div class="notice mb20">没有找到相关酒，您愿意帮助我们添加么？</div>
+        <div class="align_c">
+          <%= link_to new_wine_path, :class => "btn_gray_b mr5" do %>
+              <span>我来添加</span>
+          <% end %>
+          <%=  link_to add_wines_path(:step => 1), :class => "btn_gray_b" do %>
+             <span>重新搜索</span>
+          <% end %>
+        </div>
+    <% end %>
+    
+  </div>
+
+
+
+
+

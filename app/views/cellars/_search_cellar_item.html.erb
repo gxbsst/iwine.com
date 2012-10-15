@@ -1,0 +1,13 @@
+<%= form_for @cellar, :url => {:action => :show}, :method => :get, :html =>{:id => "search_cellar_item"} do |f| %>
+    <input name="wine_name" value="<%= params[:wine_name] %>" class="text mr5 common_search" type="text" placeholder="搜索酒"/>
+    <input name="search_order" value="<%=params[:search_order] %>" type="hidden"/>
+    <%= link_to "javascript:void(0);", :class => "btn_gray search_cellar_item" do %>
+        <span>搜索</span>
+    <% end %>
+<% end %>
+<script type="text/javascript" charset="utf-8">
+    $('a.search_cellar_item').click(function(){
+        $("form#search_cellar_item").submit();
+        return false;
+    });
+</script>

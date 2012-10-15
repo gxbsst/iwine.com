@@ -1,0 +1,9 @@
+<% if @unread_receipts_count > 0 || @unread_messages_count > 0 %>
+	$(".userbox").find(".attention").remove();
+	$(".userbox").append("<%= escape_javascript(render('messages_count', \
+		:message_count => @unread_messages_count, :receipt_count => @unread_receipts_count)) %>");
+<% end %>
+
+
+
+ 

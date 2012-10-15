@@ -1,8 +1,0 @@
-<% if @count > 0 %>
-	$(".userbox").find(".message_notice").remove();
-	$(".userbox").append("<%= escape_javascript(render('messages_count', :count => @count)) %>");
-<% end %>
-
-
-
- 

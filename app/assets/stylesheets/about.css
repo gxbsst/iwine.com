@@ -1,0 +1,22 @@
+@charset "UTF-8";
+.about {padding:50px 74px;}
+.about p {margin-bottom:20px;}
+.about h1 {padding-bottom:15px;border-bottom:1px solid #333;font-size:20px;}
+.about h2 {margin-bottom:20px;}
+.about ol li ul{margin: 0 0 20px 0;}
+.about ol li ul li {margin:0 0 15px 20px;}
+.about .level1 {margin-left:20px;}
+.about .level1 li {margin:0 0 5px 0;}
+.about ul.level3 {margin-top:10px;}
+.about ul.level3 li {margin:0 0 0 20px;}
+.about ul.list li {list-style-type: disc;margin-left:35px;}
+.namecard {background:url(bg/bg_contactus.jpg) no-repeat left top;width:450px;height:194px;margin:50px auto;padding:80px 0 0 70px}
+.namecard li {font-size:13px;margin-bottom:10px;padding-left:30px;background:url(icon/black_icon.gif) no-repeat;}
+.namecard li.email {background-position:0 3px;}
+.namecard li.add {background-position:0 -27px;}
+.namecard li.zipcode {background-position:0 -57px;}
+.namecard li.tel {background-position: 0 -86px;}
+.feedback td, .feedback th {padding:5px 10px;}
+.feedback th {width:60px;text-align:left;}
+.feedback textarea {width:300px;height:100px;}
+.feedback input.content {width:300px;}

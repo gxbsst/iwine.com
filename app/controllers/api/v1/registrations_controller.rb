@@ -15,22 +15,24 @@ module Api
         user = User.new(params[:user])
         if user.save
           #render :json => user.as_json(:auth_token=>user.authentication_token,
-
-          render :json => build_json(user), :status => 201
+          #user = User.find_by_email(user.email) # 主要为了获取用户的激活码
+          render :json => build_json(user), :resultCode => 201
           return
         else
           warden.custom_failure!
-          render :json=> user.errors, :status => 422
+          render :json => user.errors, :resultCode => 422
         end
       end
 
       protected
       def build_json(resource)
-        return {:success => true, 
-                :user => {
-                  :email => resource.email,
-                  :username => resource.username,
-                  :id => resource.id}}
+        return {:success => 1, 
+          :user => {
+          :email => resource.email,
+          :username => resource.username,
+          :confirmation_token => resource.confirmation_token,
+          :id => resource.id}
+        }
       end
 
     end

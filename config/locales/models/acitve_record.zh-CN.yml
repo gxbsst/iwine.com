@@ -2,9 +2,95 @@ zh-CN:
 
   activerecord:
     models:
-      register: '酒款'
+      register: '酒'
       special_comment: "专家评论"
-
+      user: '用户'
+      wine: '酒款'
+      wines/detail: '酒'
+      wines/register: '未审酒'
+      winery: '酒庄'
+      photo: '图片'
+    attributes:
+      user:
+        id: 'ID'
+        email: '邮箱'
+        username: '用户名'
+        slug: '自定义ID'
+        city: '所在城市'
+        sign_in_count: '登录次数'
+        created_at: '注册时间'
+        wines_count: '上传的酒'
+        photos_count: '图片'
+        wine_followings_count: '关注的酒'
+        winery_followings_count: '关注的酒庄'
+        comments_count: '评论'
+        followings_count: '关注的人'
+        followers_count: '粉丝'
+        albums_count: '相册'
+      wine:
+        name_zh: '中文名'
+        name_en: '英文名'
+        official_site: '官方网址'
+        created_at: '创建时间'
+        updated_at: '最近更新时间'
+        origin_name: '原名'
+        other_cn_name: '其它中文名'
+        photos_count: '图片'
+        winery: '酒庄'
+        style: '类别'
+        region_tree: '产区'
+      winery:
+        name_en: '英文名'
+        name_zh: '中文名'
+        origin_name: '原名'
+        owner: '拥有者'
+        logo: 'LOGO'
+        address: '地址'
+        official_site: '官网地址'
+        email: '邮箱'
+        cellphone: '联系电话'
+        fax: '传真'
+        wines_count: '拥有的酒'
+        photos_count: '图片'
+        comments_count: '评论'
+        followers_count: '关注的人'
+      photo:
+        imageable_type: '属于'
+        intro: '简介'
+        photo_type: '类型'
+        comments_count: '评论'
+        votes_count: '赞'
+        audit_status: '状态'
+        width: '宽'
+        height: '高'
+        size: '尺寸'
+      wines/detail:
+        drinkable_begin: '适饮起始时间'
+        drinkable_end: '适饮结束时间'
+        price: '价钱'
+        alcoholicity: '酒精含量'
+        capacity: '容量'
+        year: '年代'
+        description: '描述'
+        photos_count: '图片'
+        comments_count: '评论'
+        is_nv: 'IS_NV'
+        owners_count: '拥有者'
+      wines/register:
+        name_en: '英文名'
+        name_zh: '中文名'
+        origin_name: '原名'
+        official_site: '官网地址'
+        vintage: '年代'
+        drinkable_begin: '适饮起始时间'
+        drinkable_end: '适饮结束时间'
+        alcoholicity: '酒精含量'
+        variety_percentage: '品种百分比'
+        variety_name: '品种名字'
+        capacity: '容量'
+        status: '状态'
+        other_cn_name: '其它中文名'
+        is_nv: 'IS_NV'
   helpers:
     label:
       wines_special_comment:
@@ -56,8 +142,6 @@ zh-CN:
       album:
         name: '名称'
         intro: '描述'
-        
-        
 
 
 

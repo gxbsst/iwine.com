@@ -1,6 +1,5 @@
 #encoding: utf-8
 class RegistrationsController < Devise::RegistrationsController
-   include ThemesForRails::ActionController
   def create
   	if params[:oauth]
   	  @binding_user = User.new(params[:user])
@@ -11,7 +10,7 @@ class RegistrationsController < Devise::RegistrationsController
   	    sign_in(:user, @binding_user) #登陆用户
   	  	redirect_to after_first_signins_path
   	  else
-  	  	render :template => "themes/waterfall/oauth_logins/new.html.erb"
+  	  	render :template => "oauth_logins/new.html.erb"
   	  end
   	else
   	  super

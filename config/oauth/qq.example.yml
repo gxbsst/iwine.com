@@ -1,0 +1,11 @@
+development:
+  key: 801219317
+  secret: 659de23d41cd9d45f20ad28a43306da4
+  url: http://patrick.local
+  callback: "http://patrick.local/friends/qq/callback"
+
+production:
+  key: 801219317
+  secret: 659de23d41cd9d45f20ad28a43306da4
+  url: http://patrickdev.sidways.com
+  callback: "http://patrickdev.sidways.com/friends/qq/callback"

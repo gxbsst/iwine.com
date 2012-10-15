@@ -6,6 +6,7 @@
     before_filter :get_mailbox, :get_box
     before_filter :build_message, :only => :create
     before_filter :check_can_send?, :only => :create
+    before_filter :get_unread_count, :only => :unread
     # before_filter :get_box
 
     def index
@@ -48,7 +49,6 @@
     # POST /messages
     # POST /messages.xml
     def create
-
       if @message.conversation_id # 回复
         @conversation = Conversation.find(@message.conversation_id)
         unless @conversation.is_participant?(current_user)
@@ -56,6 +56,7 @@
           return redirect_to root_path
         end
         receipt = current_user.reply_to_conversation(@conversation, @message.body, nil, true, true, @message.attachment)
+        send_message_email(receipt)
         unless receipt.errors.empty?
            notice_stickie t("notice.message.reply_self")
         end
@@ -73,8 +74,8 @@
           receipt = current_user.reply_to_conversation(conversation, @message.body, nil, true, true, @message.attachment)
         else
           receipt = current_user.send_message(@recipient_list, @message.body, "subject_#{current_user.id}", true)
-        end        
-
+        end  
+        send_message_email(receipt)
         redirect_to conversations_path
       end
       # flash[:notice] = "Message sent."
@@ -130,10 +131,17 @@
     end
 
     def unread
-      @count = Conversation.unread(current_user).count
     end
 
     private
+
+    def send_message_email(receipt)
+      #得到 receiver
+      receiver = receipt.conversation.get_reply_user(current_user)
+      if receiver.profile.config.notice.email.include?('1')
+        MessageMailer.send_email(receipt.message, receiver).deliver
+      end
+    end
 
     def get_mailbox
       @mailbox = current_user.mailbox

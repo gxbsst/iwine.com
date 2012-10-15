@@ -1,0 +1,26 @@
+<!-- JiaThis Button BEGIN -->
+<div id="multiple_second">
+<div id="ckepop"><span class="jiathis_txt">分享到：</span>
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_douban"></a>
+</div>
+</div>
+<script type="text/javascript" >
+    $("#multiple_second").mouseover(function(){
+        setShare("<%= title %>", "<%= url %>", "<%= summary %>", "<%= image_url %>");
+    });
+    function setShare(title, url, summary, image_url) {
+        jiathis_config.title = title;
+        jiathis_config.url = url;
+        jiathis_config.summary = summary;
+        jiathis_config.pic = image_url;
+    }
+    var jiathis_config={
+        data_track_clickback:true,
+        hideMore:false
+    }
+</script>
+<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1623461" charset="utf-8"></script>
+<!-- JiaThis Button END -->

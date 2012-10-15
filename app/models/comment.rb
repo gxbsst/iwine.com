@@ -11,10 +11,32 @@ class Comment < ActiveRecord::Base
   scope :with_wine_follows, where(:commentable_type => "Wines::Detail", :do => "follow")
 
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
-  validates_presence_of :body, :if => :is_comment?
+  validates_presence_of :body
   validates_presence_of :user
   scope :recent, lambda { |limit| order("created_at DESC").limit(limit) }
+  scope :reply_comments, lambda{|parent_id| where("parent_id = ? and deleted_at is null", parent_id)}
   scope :with_point_is, lambda {|point| where(["point = ?", point])}
+
+  # Helper class method to lookup all comments assigned
+  # to all commentable types for a given user.
+  scope :find_comments_by_user, lambda { |user|
+    where(:user_id => user.id).order('created_at DESC')
+  }
+
+  # Helper class method to look up all comments for
+  # commentable class name and commentable id.
+  scope :find_comments_for_commentable, lambda { |commentable_str, commentable_id|
+    where(:commentable_type => commentable_str.to_s, :commentable_id => commentable_id).order('created_at DESC')
+  }
+
+  scope :real_comments, lambda {where(" do = 'comment' AND parent_id IS NULL")}
+
+  scope :for_event, lambda {|event_id| where(:commentable_type => 'Event', :commentable_id => event_id)}
+  scope :with_votes,
+    joins('LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id').
+    select("comments.*, count(votes.id) as votes_count").
+    where('parent_id IS NULL').
+    group('comments.id')
 
   # NOTE: install the acts_as_votable plugin if you
   # want user to vote on the quality of comments.
@@ -47,28 +69,12 @@ class Comment < ActiveRecord::Base
     c
   end
 
-  # 如果是关注，允许body为空
-  def is_comment?
-    self.do == 'comment'
-  end
   #helper method to check if a comment has children
   def has_children?
     self.children.size > 0
   end
 
-  # Helper class method to lookup all comments assigned
-  # to all commentable types for a given user.
-  scope :find_comments_by_user, lambda { |user|
-    where(:user_id => user.id).order('created_at DESC')
-  }
 
-  # Helper class method to look up all comments for
-  # commentable class name and commentable id.
-  scope :find_comments_for_commentable, lambda { |commentable_str, commentable_id|
-    where(:commentable_type => commentable_str.to_s, :commentable_id => commentable_id).order('created_at DESC')
-  }
-
-  scope :real_comments, lambda {where(" do = 'comment' AND parent_id IS NULL")}
   # Helper class method to look up a commentable object
   # given the commentable class name and id
   def self.find_commentable(commentable_str, commentable_id)
@@ -83,6 +89,8 @@ class Comment < ActiveRecord::Base
       "wineries"
     when "User"
       "users"
+    when "Event"
+      'events'
     end
     return path
   end
@@ -155,101 +163,35 @@ class Comment < ActiveRecord::Base
   end
   
   #分享评论到第三方网站
-  def share_comment_to_weibo(weibo_type)
-    if parent_id.nil? && weibo_type.present?
-      share_comment(weibo_type)
+  def share_comment_to_weibo
+    sleep 10
+    oauth_comments.unshare.each do |oauth_comment|
+      oauth_comment.share_to_sns
     end
   end
 
-  
-  def send_weibo(content)
-    oauth_weibo = user.oauths.oauth_binding.where('sns_name = ?', 'weibo').first
-    access_token = user.init_client('weibo', oauth_weibo.access_token)
-    response = access_token.post("/2/statuses/update.json", :params => {:status => content}).body
-    new_oauth_comment(JSON.parse(response)['id'], 'weibo')
-  end
-
-  def send_qq(content)
-    qq_client = user.oauth_client('qq')
-    #TODO 修改ip
-    response = qq_client.add_status(content, :clientip => "180.168.220.98").body
-    new_oauth_comment(JSON.parse(response)['data']['id'], 'qq')
-  end
-
-  def send_douban(content)
-    douban_client = user.oauth_client('douban')
-    response = douban_client.add_douban_status(content).body
-    new_oauth_comment(JSON.parse(response)['id']['$t'], 'douban')
-  end
-  
-  #检查并发送信息到对应网站
-  def check_oauth(content, weibo_type)
-    sns_name = user.oauths.oauth_binding.map{|oauth| oauth.sns_name}#找到用户已绑定得网站
-    weibo_type.each do |w|
-      if w == "qq" && sns_name.include?("qq")
-        send_qq(content)
-      elsif w == "weibo" && sns_name.include?("weibo")
-        send_weibo(content)
-      elsif w ==  "douban" && sns_name.include?("douban")
-        send_douban(content)
-      end
-    end
-  end
-
-  def share_comment(weibo_type)
-    #处理要发送的内容
-    short_content = cut_content(body)
-    #检查并发送微博
-    check_oauth(short_content, weibo_type)
-  end
 
   #截取部分评论内容
-  def cut_content(content)
-    #TODO 修改发送内容
-    "测试分享内容到微博#{Time.now}"
+  def share_content(url, sns_type)
+    content = %Q(对#{commentable.share_name}发表了评论："#{body.to_s.strip.mb_chars[0, 70]}...#{url}"#{"（分享自 @iWine爱红酒）" unless sns_type == "douban"})
   end
 
-  def new_oauth_comment(sns_id, type)
-    oauth_comments.create(:sns_type => type, :sns_id => sns_id)
-  end
-
-  def get_sns_comments(oauth_comment)
-    case oauth_comment.sns_type
-    when 'douban'
-      douban_comments(oauth_comment.sns_id)
-    when 'qq'
-      qq_comments(oauth_comment.sns_id)
-    when 'weibo'
-      weibo_comments(oauth_comment.sns_id)
+  def get_sns_comments
+    begin
+      reply_list = []
+      oauth_comments.each do |oauth_comment|
+        reply_list << oauth_comment.get_sns_reply
+      end 
+      reply_list = reply_list.compact.flatten
+      if reply_list.present?
+        reply_list_final = reply_list.sort_by{|item| item[:created_at]}
+        return reply_list_final
+      else
+        return nil
+      end
+    rescue NoMethodError => e
+      Rails.logger.error e
     end
-  end
-
-  def weibo_comments(uid)
-    oauth_weibo = user.oauths.oauth_binding.where('sns_name = ?', 'weibo').first
-    access_token = user.init_client('weibo', oauth_weibo.access_token)
-    response = access_token.get("/2/comments/show.json", :params => {:id => uid}).body
-    data = JSON.parse response
-    comment_arr = []
-    data['comments'].each{|comment| comment_arr << comment['text']}
-    return comment_arr
-  end
-  
-  def qq_comments(uid)
-    qq_client = user.oauth_client('qq')
-    response = qq_client.get("http://open.t.qq.com/api/t/re_list?flag=1&rootid=#{uid}").body
-    data = JSON.parse response
-    comment_arr = []
-    data['data']['info'].each{|comment| comment_arr << comment['text']} if data['msg'] == 'ok'
-    return comment_arr
-  end
-
-  def douban_comments(uid)
-    douban_client = user.oauth_client('douban')
-    response = douban_client.get("#{uid}/comments", "alt" => "json").body
-    data = JSON.parse response
-    comment_arr = []
-    data['entry'].each{|comment| comment_arr << comment['content']['$t']}
-    return comment_arr
   end
   
 end

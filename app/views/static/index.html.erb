@@ -1,36 +1,23 @@
-<% content_for :title, @title %>
-<script type="text/javascript" src="http://docs.kissyui.com/kissy/build/kissy.js"></script>
-<style>
-  .ks-waterfall{
-  position: absolute;
-  width: 228px;
-  overflow: hidden;
+<% content_for :title, @title%>
+<% content_for :css  do %>
+	<%= stylesheet_link_tag :home %>
+<% end %>
 
-  }
-</style>
-
-<div id="waterfall_outer"  style="position: relative;" >
-  <% (1..14).each do |i| %>
-    <div class="ks-waterfall">
-    <a class="wine_profile  fancybox.iframe" href="/wines/preview">
-    <%= image_tag "v2/test/w#{i}.png", :title => "title", :class => "class" %>
-    </a>
-    </div>
-  <% end %>
-  <% (1..14).each do |i| %>
-    <div class="ks-waterfall">
-    <%= image_tag "v2/test/w#{i}.png", :title => "title", :class => "class" %>
-    </div>
-  <% end %>
+<div id="container" style="position: relative; ">
+	<%= render "timeline" %>
+	<div style="display: none">
+		<%= paginate @timelines %>
+	</div>
+	<div class="clear"></div>
 </div>
 
-
-<script>
-KISSY.use("waterfall", function (S, Waterfall) {
-    new Waterfall({
-        container: "#waterfall_outer",    //节点容器
-        minColCount: 4,             //最小列数
-        colWidth: 235               //每列的宽度
-    });
-});
-</script>
+<div class="loading" id="waterfall_loading" style="display: none">
+  	<%= image_tag "common/loading.gif", :size => "16x16", :alt => "loading", :align => :absmiddle %>
+  	<span>更多的内容正在载入中，请稍等...</span>
+</div>
+<% unless @timelines.last_page? %>
+	<p align="center" class="end_waterfall_text_info"></p>
+<% else %>
+	<p align="center" class="end_waterfall_text_info">^_^ 已经到底了...</p>
+<% end %>
+<%= render "layouts/waterfall_js" %>

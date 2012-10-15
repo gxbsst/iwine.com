@@ -1,0 +1,93 @@
+<input type="hidden" name="wine_id" value="<%= @wine.id%>"/>
+<div class="left">
+    <div class="optional">
+      <label class="vm">酒名</label>
+      <div class="content"><%= "#{@wine.origin_name} #{@wine.name_zh}" %></div>
+    </div>
+    <div class="required">
+      <label class="vm"><span>*</span>年份</label>
+      <div class="content">
+        <%= f.date_select :year, :discard_day => true, 
+            :discard_month => true, :start_year => Time.now.year, 
+            :end_year => 1950, :prompt => {:year => "选择年份"} %>年
+
+        <label class="nv">
+          <%= check_box_tag("users_wine_cellar_item[is_nv]", 1, @cellar_item.is_nv, :id => "check_nv") %>NV/无年份葡萄酒
+        </label>
+      </div>
+    </div>
+    <div class="optional">
+      <label>产区</label>
+      <div class="content"><%= @wine.region_path_zh %></div>
+    </div>
+    <div class="optional">
+      <label>酒庄</label>
+      <div class="content"><%= @wine.winery.name if @wine.winery%></div>
+    </div>
+    <div class="optional">
+      <label class="vm">酒商</label>
+      <div class="content"><%= f.text_field :buy_from, :class => 'text winemaker', :placeholder => '请输入酒商' %></div>
+    </div>
+    <div class="required">
+      <label class="vm"><span>*</span>库存</label>
+      <%= f.text_field :number, :class => 'text count' %>支
+    </div>
+    <div class="required">
+      <label class="vm">所在位置</label>
+      <%= f.text_field :location, :class => 'text' %>
+    </div>
+    <div class="required">
+      <label class="vm"p>购入价格</label>
+      <%= f.text_field :price, :class => 'text price' %>元/支
+    </div>
+    <div class="optional">
+      <label>购入时间</label>
+      <%= f.date_select :buy_date, :start_year =>  1990, :end_year => Time.now.year  %>
+    </div>
+    <div class="optional">
+      <label>适饮年限</label>
+      <%= f.date_select :drinkable_begin, :discard_day => true, :discard_month => true, :start_year =>  1990, :end_year => Time.now.year + 150  %>至
+      <%= f.date_select :drinkable_end, :discard_day => true, :discard_month => true, :start_year =>   1990, :end_year => Time.now.year + 150 %>年
+    </div>
+    <div class="optional">
+      <label>仅自己可见</label>
+      <%= f.check_box :private_type %>
+    </div>
+    <div class="optional">
+      <label>&nbsp;</label>
+      <div class="content">
+        <%= link_to "javascript:void(0)", :class => "btn_gray mr5 save", :onclick => "$(this).parents('form').submit()" do  %>
+          <span><%=  button_name %></span>
+        <% end %>
+        <%= link_to cellar_path(@cellar), :class => "btn_gray" do %>
+            <span>取消</span>
+        <% end %>
+      </div>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="right">
+  <div class="wine_img">
+    <%= wine_label_tag( @wine, :thumb_name => "thumb", :title => @wine.name_zh, :alt => @wine.name_zh, :height => 200, :width => 200 )%>
+  </div>
+  <div class="clear"></div>
+</div>
+<script type="text/javascript">
+  if ($("#check_nv").attr("checked") == "checked") {
+    disableCheckbox();
+  };
+  $("#check_nv").change(function(){
+    if ($(this).attr("checked") == "checked") {
+     disableCheckbox();
+    }else{
+      $("#users_wine_cellar_item_year_1i").removeAttr('disabled');
+      $("#users_wine_cellar_item_year_2i").removeAttr('disabled');
+      $("#users_wine_cellar_item_year_3i").removeAttr('disabled');
+    }
+  });
+  function disableCheckbox(){
+    $("#users_wine_cellar_item_year_1i").attr("disabled", "disabled");
+    $("#users_wine_cellar_item_year_2i").attr("disabled", "disabled");
+    $("#users_wine_cellar_item_year_3i").attr("disabled", "disabled");
+  }
+</script>

@@ -58,13 +58,12 @@ class Wines::Detail < ActiveRecord::Base
   scope :releast_detail, lambda {order("year desc").limit(1)}
   accepts_nested_attributes_for :photos, :reject_if => proc { |attributes| attributes['image'].blank? }
   accepts_nested_attributes_for :label, :reject_if => proc { |attributes| attributes['filename'].blank? }
-
   # Friendly Url
   extend FriendlyId
   friendly_id :pretty_url, :use => [:slugged]
 
   def pretty_url
-    "#{wine.origin_name} #{show_year.downcase}"
+    "#{wine.origin_name} #{show_year.to_s.downcase}"
   end
 
   # scope :with_recent_comment, joins(:comments) & ::CommenGt.recent(6)
@@ -77,10 +76,6 @@ class Wines::Detail < ActiveRecord::Base
     "#{show_year} #{wine.name_zh.to_s}"
   end
 
-  def ename
-    "#{show_year} #{wine.origin_name.to_s}"
-  end
-
   def origin_name
     "#{show_year} #{wine.origin_name.to_s}"
   end
@@ -91,6 +86,11 @@ class Wines::Detail < ActiveRecord::Base
 
   def name
     cname + origin_name
+  end
+
+  #发评论时分享用
+  def share_name
+    "【#{origin_name}】"
   end
 
   def origin_zh_name
@@ -161,7 +161,7 @@ class Wines::Detail < ActiveRecord::Base
                                 # :joins => :votes,
                                 :joins => "LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id",
                                 :select => "comments.*, count(votes.id) as votes_count",
-                                :conditions => ["commentable_id=? AND parent_id IS NULL", id ], :group => "comments.id",
+                                :conditions => ["commentable_id= ? AND parent_id IS NULL and commentable_type = ?", id, self.class.name], :group => "comments.id",
                                 :order => "votes_count DESC, created_at DESC", :limit => options[:limit] )
   end
 
@@ -207,10 +207,41 @@ class Wines::Detail < ActiveRecord::Base
       where("followable_type = ? AND followable_id = ?", self.class.name, id)
   end
 
+  def get_cover_url(version)
+    cover = photos.cover.approved.first
+    if cover.nil?
+      wine_cover = wine.photos.cover.approved.first
+      if wine_cover.blank?
+        return "/assets/waterfall/images/common/wine_#{version}.png" 
+      else
+        wine_cover.image_url(version)
+      end
+    end
+  end
+
+  def custom_to_json
+    wine = self.wine
+    years = wine.details.collect {|detail| [detail.year.year, "/wines/#{detail.slug}", detail.id] }
+    wine.name_zh ||= wine.origin_name
+    #year = year.year.to_s
+
+    result = {
+      :wine_detail_id => id,
+      :name_zh => wine.name_zh,
+      :year => year.year,
+      :origin_name => wine.origin_name,
+      :image_url => get_cover_url(:thumb),
+      :all_years => years,
+      :url => "/wines/#{slug}"
+    }
+    
+    result
+  end
+
   # 类方法
   class << self
    def timeline_events
-     TimelineEvent.wine_details
+     TimelineEvent.wine_details 
    end
   end
 end

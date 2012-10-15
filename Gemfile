@@ -6,13 +6,13 @@ gem 'rails', '3.2.5'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-gem 'jquery-rails'
+gem 'jquery-rails', :git => 'git://github.com/indirect/jquery-rails'
 gem 'devise', "~> 2.0.4"
 gem 'cancan'
 gem 'passenger'
 gem 'kaminari'
 #gem 'uploadify'
-gem 'flash_cookie_session'
+# gem 'flash_cookie_session'
 gem 'best_in_place'
 # gem 'contacts_cn'  # 连接email
 # gem 'hpricot'
@@ -37,14 +37,13 @@ gem 'jcrop-rails'
 gem 'backbone-on-rails'
 gem "jquery-tools", "~> 0.0.3"
 
-gem 'simple_form'
 gem 'client_side_validations'
 
 gem 'activeadmin'
 
 gem 'hanzi_to_pinyin' , :git => 'git://github.com/wxianfeng/hanzi_to_pinyin.git'
 
-gem "breadcrumbs_on_rails"
+# gem "breadcrumbs_on_rails"
 
 ## Exception Handler
 gem 'exception_notification', :require => 'exception_notifier'
@@ -55,7 +54,7 @@ gem "stickies", :git => "git://github.com/techbang/stickies.git"
 gem 'store_configurable', '~> 3.2.0'
 
 ## Message
-gem 'mailboxer'
+gem 'mailboxer', '0.6.5' #如果更新到 0.8.0需要更改数据库字段
 
 ## Comment
 gem 'acts_as_commentable_with_threading', :path => "lib/gems"
@@ -64,16 +63,6 @@ gem 'acts_as_votable', :path => "lib/gems"
 
 ## Timeline
 gem "timeline_fu", :path => "lib/gems"
-
-## redis_search
-#gem 'redis','>= 2.1.1'
-gem 'chinese_pinyin', '0.4.1'
-gem 'rmmseg-cpp-huacnlee', '0.2.9'
-#gem 'redis-namespace','~> 1.1.0'
-#gem 'redis-search', '0.8.0'
-
-#  查找图片的宽度／高度
-# gem 'dimensions-rails'
 
 # Friendly URL
 
@@ -108,7 +97,7 @@ end
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use unicorn as the web server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
 gem 'capistrano'
@@ -128,14 +117,15 @@ group :test do
   gem "guard-spork"
   gem "autotest-rails"
   gem "ZenTest"
+  gem 'simplecov', :require => false
+  gem 'metrical', :require => false
 end
 
 gem 'user_resource_init', :path => 'lib/patrick/user_resource_init'
 
 # 计数
 gem 'counter', :path => 'lib/patrick/counter'
-# 模板
-gem 'themes_for_rails', :path => "lib/gems"
+
 
 # step form
 gem 'wicked'
@@ -145,4 +135,26 @@ gem 'omniauth-weibo-oauth2'
 gem 'omniauth-renren', :path => 'lib/gems/ballantyne-omniauth-renren'
 # API VERSION
 gem 'versionist'
+# XML Parser
+gem 'nokogiri'
+
 gem 'delayed_job_active_record'
+
+# Tagging
+gem 'acts-as-taggable-on', '~> 2.3.1'
+
+# address  latitude & longitude
+gem "geocoder"
+gem 'google_places'
+
+# crontab
+#gem 'rcov', '0.9.11'
+gem 'whenever', :require => false
+#, :git => 'git://github.com/javan/whenever'
+
+# monitor
+gem 'newrelic_rpm'
+gem 'garelic'
+
+# delay job
+gem 'daemons'

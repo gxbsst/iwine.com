@@ -7,7 +7,7 @@ class Users::WineCellarItem < ActiveRecord::Base
     belongs_to :user
     belongs_to :wine_detail, :class_name => 'Wines::Detail', :foreign_key => 'wine_detail_id'
     
-    attr_accessor :year, :capacity
+    attr_accessor :capacity
     # attr_accessible :year, :capacity, :user_wine_cellar_id, :wine_detail_id, :price, :inventory
     attr_protected :user_id
     
@@ -15,8 +15,8 @@ class Users::WineCellarItem < ActiveRecord::Base
     # validates_presence_of :buy_from
 
     validates :price, :numericality => {:allow_blank => true}
-
-    
+    validates :year, :presence => true, :unless => "is_nv"
+    validates :wine_detail_id, :uniqueness => {:scope => :user_id, :message => "不能重复收藏同一只酒。"}
     # paginate config
     paginates_per 6
     

@@ -20,7 +20,7 @@ class Wines::Register < ActiveRecord::Base
   serialize :variety_percentage, Array
 
   validates :name_en, :presence => true
-  validates :vintage, :presence => true, :if => "is_nv.to_i != 1"
+  validates :vintage, :presence => true, :unless => "is_nv"
   def self.has_translation(*attributes)
     attributes.each do |attribute|
       define_method "#{attribute}" do

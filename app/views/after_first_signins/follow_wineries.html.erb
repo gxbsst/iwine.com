@@ -1,0 +1,59 @@
+<% content_for :title, @title %>
+<% content_for :css do %>
+	<%= stylesheet_link_tag "guide" %>
+<% end %>
+
+<div id="guide">
+	<div class="wel">
+		<span class="step">
+			<%= image_tag "common/guide_step5_icon.png", :width => "109", :height => "109", :alt => "第五步" %>
+		</span>
+		<%= image_tag "common/guide_step5_t.gif", :width => "811", :height => "100" %>
+	</div>
+
+	<div class="paper wine">
+		<div class="top"></div>
+		<div class='mid'>
+			<%= form_tag(wizard_path, :method => :put, :class => "follow_winery_form") do %>
+				<ul>
+					<% @hot_wineries.each_with_index do |winery, index| %>
+						<li <%= "class='last'" if (index + 1) % 3 == 0 %>>
+							<%= link_to winery_path(winery) do %>
+								<%= winery_label_tag(winery, :thumb_name => :thumb,  :size => "130x130" ) %>
+							<% end %>
+							<div class="meta">
+								<h1 class='zh'><%= link_to winery.name_zh, winery_path(winery) %></h1>
+								<h1 class="en"><%= link_to winery.origin_name, winery_path(winery) %> </h1>
+								<%= check_box_tag "winery_ids[]", winery.id, true %>
+							</div>
+						</li>
+						<% if (index + 1) % 3 == 0 %><div class="clear"></div><% end %>
+					<% end %>
+					<div class="clear"></div>
+				</ul>
+			<% end %>
+			<div class="align_c">
+				<label><input name="all_checked" type="checkbox" value="" checked="checked"/>全选</label>	
+			</div>
+		</div>
+		<div class="bot"></div>
+	</div>
+	<div class="align_c mt20">
+		<%= link_to "#", :class => "submit_form" do %>
+			<%= image_tag "common/btn_next.jpg", :alt => "下一步", :width => 176, :height => 51 %>
+		<% end %>
+	</div>
+</div>
+<script type="text/javascript">
+	$("input[name=all_checked]").change(function(){
+	   if ($(this).attr("checked") == "checked") {
+	   		$("ul input").attr("checked", true);
+	   }else{
+	   		$("ul input").attr("checked", false);
+	   }
+	});
+	$(".submit_form").click(function(){
+		$("form.follow_winery_form").submit();
+		return false;
+	});
+</script>

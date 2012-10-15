@@ -76,7 +76,7 @@ class UsersController < ApplicationController
   end
 
   def follow
-    
+
     if params[:user_id].present?
       # 关注多个
       params[:user_id].split(',').each do |user_id|
@@ -85,7 +85,6 @@ class UsersController < ApplicationController
           # notice_stickie t("notice.friend.follow")
         end
       end
-      
     else
       # 关注一个
       if current_user.follow_user params[:id]
@@ -104,7 +103,7 @@ class UsersController < ApplicationController
 
   private
   def get_user
-    @user = User.find(params[:id])
+    @user ||= User.find(params[:id])
   end
 
   def get_recommend_users

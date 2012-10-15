@@ -1,34 +1,150 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title><%= content_for?(:title) ? content_for(:title) : 'Patrick' %></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>
+      <%= yield_for(:title, "iWine.com") %>
+    </title>
     <%= stylesheet_link_tag    "application" %>
-    <%= raw stylesheet_if_exists "#{params[:controller]}", "#{params[:controller]}/#{params[:action]}" %>
     <%= javascript_include_tag "application" %>
+    
     <%= csrf_meta_tags %>
-    <%= yield :head %>
+    <%= yield :css %>
+    <%= yield :js %>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-484022-16']);
+      _gaq.push(['_trackPageview']);
+
+      <%= Garelic::Timing %>
+
+      (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+
+     </script>
   </head>
   <body>
-
-    <div id="wrapper">
-      <div id="header">
-        <div id="topspace">
-		<%= render "share/user_fragment" %>
-		
-          <div id="logo"><%= image_tag 'base/logo.gif', :width => 287, :height => 44, :alt=>'Patrick' %></div>
-          <div class="clear"></div>
+    <div id="header">
+      <div class="main950">
+        <div id="logo">
+          <%= link_to root_path() do %>
+            <%= image_tag "common/logo.gif", :width => 299, :height => 43 %>
+          <% end %>
         </div>
-        <div id="globel_navi_search">
-          <div id="globel_search"><input class="globel_search" name="" type="text" placeholder="酒名、酒庄、年份" /><a href="#" class="btn_g_search">搜索</a></div>
-         	<%= render 'share/main_nav', :controller => params[:controller], :action => params[:action] %>
-          <div class="clear"></div>
+        <div id="top_search">
+          <%= image_submit_tag "icon/search.gif", :class => :search_btn , :id=>:search_btn %>
+          <input class="search" id="hot_search" name="" type="text" placeholder="搜索酒、酒庄" />
         </div>
+        <div class="search_scroll" id="search_scroll" style="display: none;z-index: 999;"></div>
+        <div id="top_right">
+          <%= render "layouts/user_fragment" %>
+        </div>
+        <div class="clear"></div>
       </div>
-      <div id="mainholder">
-        <%= yield :wine_title %>
-		    <%= render 'share/layout_fragment', :controller_name => params[:controller], :action_name => params[:action] %>
-      </div>
-		<%= render 'share/footer' %>
     </div>
+    <div class="globel_navi">
+      <%= render "layouts/global_nav" %>
+    </div>
+      <% if params[:controller] == "home" || 
+        (params[:controller] == "wine_details" && params[:action] == "index") || 
+        (params[:controller] == "wineries" && params[:action] == "index") ||
+        (params[:controller] == "static" && params[:action] == "index")
+        %>
+      <div id="home">
+      <% else %>
+      <div id="wrapper950">
+      <% end %>
+        <%= render_stickies(:close => "") %>
+        <%= yield %>
+        <div id="gototop" class="indicator">
+          <a href="#header">
+             <%= image_tag "common/totop.png", :size => "86x39", :alt => "回到页首" %>
+          </a>
+        </div>
+      </div>
+      <%= render "layouts/footer" %>
+      <script type="text/javascript" >
+      
+    //SEARCH
+  var search_scroll = $('#search_scroll');
+        var has_scroll = false;
+        var getHotSerach = function(){
+          $.ajax({
+            url: '/searches/suggestion?word='+$('#hot_search').val(),
+            success: function( data ){
+              if(( typeof data == 'string' ) && data ){
+                search_scroll.css( 'display' , 'block' );
+                search_scroll.html( data );
+              }else{
+                has_scroll = false;
+                search_scroll.css( 'display' , 'none' );
+              }
+            }
+          });
+        };
+
+        var timer;
+        $('#hot_search').bind({
+          keyup: function(e){
+            if( e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 37 || e.keyCode == 39 ){
+                return;
+            }
+            if( e.keyCode == 27 ){
+              search_scroll.css( 'display' , 'none' );
+              has_scroll = false;
+              return;
+            }
+            if( e.keyCode == 13 && has_scroll == false ){
+              location.href = '/searches/results?word='+this.value;
+              return;
+            }
+
+            clearTimeout( timer );
+            timer = setTimeout( getHotSerach , 400 );
+          },
+
+          blur: function(){
+            var hide = function(){
+              has_scroll = false;
+              search_scroll.css( 'display' , 'none' );
+            };
+            setTimeout( hide , 200 );
+          }
+        });
+
+        $('#search_btn').bind( 'click' , function(){
+          var url = '<%= url_for( '/searches/results?tab=all&word=' )%>';
+          url+=$('#hot_search').val();
+          location.href = url;
+        });
+
+        // SEARCH END
+
+        // Get Number Of Message 
+        <% if user_signed_in? %>
+          function getMessageCount()
+          {
+            $.ajax({
+              type:'GET',
+              url:'/messages/unread',
+              dataType:'script',
+              success:function(xhr)
+              {
+
+              }
+            });  
+            setTimeout('getMessageCount()',6000);   
+          }
+          getMessageCount();
+        <% end %>
+
+        // Support Placeholder For All Browers
+        // $('input[placeholder], textarea[placeholder]').placeholder();
+      </script>
   </body>
 </html>

@@ -89,6 +89,27 @@ ActiveAdmin.register Photo do
       end
     end
   end
+  
+  index do
+    column :id
+    column "图片" do |photo|
+      image_tag photo.image_url(:thumb)
+    end
+    column :width
+    column :height
+    column "相册" do |photo|
+      photo.album.name if photo.album
+    end
+    column :intro
+    column :photo_type do |photo|
+      photo_type(photo.photo_type)
+    end
+    column :audit_status do |photo|
+      photo_status(photo.audit_status)
+    end
+    default_actions
+  end
+
 end
 
 def get_imageable

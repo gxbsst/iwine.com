@@ -8,10 +8,11 @@ describe Api::RegionsController do
 
  it "item size should > 1" do
     parsed_body = JSON.parse(@response.body)
-    parsed_body.size.should < 0
+    parsed_body.size.should < 1
  end
 
  it "should include a lot regions" do
+
    @response.body.should include("Rosstal") 
  end
 end

@@ -1,0 +1,51 @@
+<div class="pre_next">
+	<% photo_ids = case parent.class.name
+					when "Winery"
+						parent.photo_ids
+					when "Wines::Detail"
+						parent.all_photo_ids
+					when "Album"
+						parent.image_ids 
+					when "Event"
+						parent.photo_ids
+					end %>
+
+	<% if previous_photo = previous_page(photo_ids, @photo.id) %>
+		<% previous_path = case parent.class.name
+	                when "Winery"
+	            		winery_photo_path(parent, previous_photo) 
+	            	when "Wines::Detail"
+	            		wine_photo_path(parent, previous_photo)
+	            	when "Album"
+	            		album_photo_show_user_path(@user, parent, previous_photo) 
+	            	when "Event"
+	            		event_photo_path(parent, previous_photo)
+	            	end %>
+	    <%= link_to previous_path, :class => 'mr5 btn_gray' do %>
+	    	<span>前一张</span>
+	    <% end %>
+	<% else %>
+		 <span class="off"><a class="btn_gray mr5"><span>前一张</span></a></span>
+	<% end %>
+	<span class="content"><%= photo_number(photo_ids, @photo.id) %></span>
+
+	<% if next_photo = next_page(photo_ids, @photo.id) %>
+		<% next_path = case parent.class.name
+						when "Winery"
+						  	winery_photo_path(parent, next_photo) 
+		            	when "Wines::Detail"
+		            		wine_photo_path(parent, next_photo)
+		            	when "Album"
+		            		album_photo_show_user_path(@user, parent, next_photo) 
+		            	when "Event"
+		            		event_photo_path(parent, next_photo)
+		            	end 
+		            	%>	
+		<%= link_to next_path, :class => "btn_gray" do %>
+			<span>后一张</span>
+		<% end %>
+	<% else %>
+		<span class="off"><a class="btn_gray"><span>后一张</span></a></span>
+	<% end %>
+
+</div>

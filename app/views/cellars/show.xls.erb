@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" />年份</Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" />名称(中)</Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" />名称(英)</Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" />类型</Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" />容量</Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" />数量</Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" />购买时间</Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" />购入价格</Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" />所在地</Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" />适饮年限</Data></Cell>
+      </Row>
+    <% @cellar_items.each do |item| %>
+      <Row>
+        <% wine_detail = item.wine_detail %>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" /><%= wine_detail.show_year %></Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" /><%= wine_detail.wine.name_zh %></Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" /><%= wine_detail.wine.name_en %></Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" /><%= wine_detail.wine.style.name_en %></Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" /><%= wine_detail.show_capacity %></Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" /><%= item.number %></Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" /><%= item.buy_date.strftime("%Y年%m月%d日") unless item.buy_date.blank? %></Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" /><%= number_to_currency(item.price,  :unit => "CNY") %></Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" /><%= item.location %></Data></Cell>
+        <Cell><Data ss:Type="String"><Font ss:FontName="宋体" /><%= item.drinkable_begin.strftime("%Y年") %>~<%= item.drinkable_end.strftime("%Y年") %></Data></Cell>
+       </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

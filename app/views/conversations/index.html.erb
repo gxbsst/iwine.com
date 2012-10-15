@@ -1,0 +1,30 @@
+<% content_for :title, @title%>
+<%= content_for :css do %>
+    <%= stylesheet_link_tag :setting %>
+<% end %>
+<div class="whitespace message">
+    <%= render :partial => "share/notification_title", :locals => {:message => true} %>
+    <div class="reply_form" id="send_message_form" style="display: none">
+    </div>
+  
+    <div class="title clearfix">
+        <div class="message_search">
+    	    <%= render :partial => 'search_form' %>   
+        </div>
+        <h2 class="main_title">我的私信</h2>
+        <div class="clear"></div>
+    </div>
+  
+    <div class="message_list">
+   
+        <ul class="private_list">
+            <% @conversations.each do |conversation| %>
+                <%= render conversation %>	
+            <% end %>
+        </ul>
+    </div>
+    <div class="pagination">
+        <%= paginate @conversations, :outer_window => 2 %> 
+    </div>
+</div>
+

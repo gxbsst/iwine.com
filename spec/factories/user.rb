@@ -1,7 +1,7 @@
 # encoding: utf-8
 FactoryGirl.define do
 	factory :user do
-		sequence(:username) { |n| "foo_1#{n}" }
+		sequence(:username) { |n| "foo00000_1#{n}" }
 		password "foobar"
 		email { "#{username}@example.com" }
 		city "Shanghai"
@@ -30,6 +30,12 @@ FactoryGirl.define do
   trait :with_profile do
     after :create do |user|
        FactoryGirl.create_list :profile, 1, :user => user
+    end
+  end
+
+  trait :with_oauth do
+    after :create do |user|
+       FactoryGirl.create_list :user_oauths, 1, :user=> user
     end
   end
   

@@ -6,13 +6,25 @@ $("#reply_comment_<%= @comment.id %>")
 $("#reply_comment_<%= @comment.id %> form")
 .bind("ajax:success", function(evt, data, status, xhr){
   self = this;
-  $(this).parent().parent().slideUp("slow", function(){
-});
-  $(this).parent().parent().parent()
-  .children("p.vote")
-  .find("span.reply_comment_count").text("(" + data + ")") ;
+  $(this).find("textarea").val("");
+  // $(this).parent().parent().slideUp("slow", function(){});
+  // $(this).parent().children('.reply_list').slideUp("slow");
+  $(this).parent().children('.reply_list').slideDown("slow", function () {
+  	$(this).load("<%= children_comment_path(@comment.id) %>").slideDown("slow");
+  });
+
 
   $(this).parent().parent().parent()
-  .children("p.vote")
-  .find("span.reply_result").text("回复成功.");
+  .children(".userful")
+  .find("span.reply_comment_count").text("(" + data + ")") ;
+
+  // $(this).parent().parent().parent()
+  // .children(".userful")
+  // .find("span.reply_result").text("回复成功.");
 });
+
+
+ <%= render :partial => "comments/share/validator.js" %>
+     $(function(){
+       window.commentFormView = new CommentFormView({el: "#reply_comment_<%= @comment.id %> form"});
+ });

@@ -27,7 +27,14 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
             	<ul>
                 	<li class="userbox">
                     	<a class="userpic" href="#"><img src="images/userimage/06.jpg" width="20" height="20" /></a><a href="#"><img src="images/common/userbox_arrow.jpg" width="22" height="30" /></a>
-                        <div class="message_notice"><a href="#" >有1条私信</a></div>
+                        <div class="attention">
+                        	<div class="top"></div>
+                        	<div class="mid">
+                        		<a href="#">有1条私信</a>
+                        		<a href="#">有2条通知</a>
+                        	</div>
+                        	<div class="bot"></div>
+                        </div>
                     </li>
                     <li class="top_add"><a href="#" class="btn_add">添加</a></li>
                 </ul>
@@ -40,7 +47,7 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
         	<li class="current"><a href="index.html">首页</a></li>
             <li class="arrow">
             	<a href="wine.html">酒款</a>
-            	<ul class="CategoryDropdown">
+            	<ul class="CategoryDropdown" style="z-index:1;">
                 	<li>
                         <p class="title">热门葡萄品种</p>
                         <div class="item">
@@ -107,6 +114,17 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
     </div>
     <div id="home">
     	<div class="iw">
+        	<div class="action clearfix">
+            	<a class="btn_iw hc"><span><em>评论</em></span></a>
+                <a class="btn_iw hf"><span><em>关注</em></span></a>
+                <span>
+                <a class="btn_iw hs"><span><em>分享</em></span></a>
+                <div class="dropbox">
+            	<div class="com_s clearfix"><a href="#"><span class="icon_sina2"></span></a><a href="#"><span class="icon_tt2"></span></a><a href="#"><span class="icon_douban"></span></a><a href="#"><span class="icon_renren"></span></a></div>
+              </div>
+                </span>
+            </div>
+            
         	<div class="iw_img"><a href="wine_profile.html"><img src="images/test/col_img200.jpg" width="200" height="294" /></a></div>
             <div class="iw_info">
                 <h1><a href="wine_profile.html">2001拉菲珍宝</a></h1>
@@ -157,10 +175,13 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                     </li>
                 </ul>
             </div>
-            <div class="iw_more"><a href="#">共7条评论</a></div>
+            <div class="iw_comment clearfix">
+            	<div class="left"><a href="#"><img src="images/test/user_30_2.jpg" width="30" height="30" alt="username" /></a></div>
+                <div class="right"><textarea class="text" name="" cols="" rows="" placeholder=""></textarea><a class="btn_gray" href="#"><span>添加评论</span></a></div>
+            </div>
       </div>
       <div class="iw">
-        	<div class="iw_img"><a href="wine_profile.html"><img src="images/test/col_img200_2.jpg" width="200" height="150" /></a></div>
+   	<div class="iw_img"><a href="wine_profile.html"><img src="images/test/col_img200_2.jpg" width="200" height="150" /></a></div>
             <div class="iw_info">
                 <h1><a href="wine_profile.html">2001拉菲珍宝</a></h1>
                 <h2><a href="wine_profile.html">Carruades de Lafite</a></h2>
@@ -181,7 +202,7 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
             <div class="iw_more"><a href="#">去看看这个活动</a></div>
       </div>
       <div class="iw">
-        	<div class="iw_img"><a href="wine_profile.html"><img src="images/test/wine150.jpg" width="100" height="372" /></a></div>
+   	<div class="iw_img"><a href="wine_profile.html"><img src="images/test/wine150.jpg" width="100" height="372" /></a></div>
             <div class="iw_info">
                 <h1><a href="wine_profile.html">2001拉菲珍宝</a></h1>
                 <h2><a href="wine_profile.html">Carruades de Lafite</a></h2>
@@ -198,9 +219,13 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 </ul>
             </div>
             <div class="iw_more"><a href="#">去看看他的酒窖</a></div>
+            <div class="iw_comment clearfix">
+            	<div class="left"><a href="#"><img src="images/test/user_30_2.jpg" width="30" height="30" alt="username" /></a></div>
+                <div class="right"><textarea class="text" name="" cols="" rows="" placeholder=""></textarea><a class="btn_gray" href="#"><span>添加评论</span></a></div>
+            </div>
       </div>
       <div class="iw">
-        	<div class="iw_img"><a href="wine_profile.html"><img src="images/test/col_img200_4.jpg" width="200" height="300" /></a></div>
+   	<div class="iw_img"><a href="wine_profile.html"><img src="images/test/col_img200_4.jpg" width="200" height="300" /></a></div>
             <div class="iw_info">
                 <h1><a href="wine_profile.html">2001拉菲珍宝</a></h1>
                 <h2><a href="wine_profile.html">Carruades de Lafite</a></h2>
@@ -226,7 +251,7 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
       </div>
       
       <div class="iw">
-        	<div class="iw_img"><a href="wine_profile.html"><img src="images/test/col_img200_4.jpg" width="200" height="300" /></a></div>
+   	<div class="iw_img"><a href="wine_profile.html"><img src="images/test/col_img200_4.jpg" width="200" height="300" /></a></div>
             <div class="iw_info">
                 <h1><a href="wine_profile.html">2001拉菲珍宝</a></h1>
                 <h2><a href="wine_profile.html">Carruades de Lafite</a></h2>
@@ -245,7 +270,7 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
             <div class="iw_more"><a href="#">查看更多照片</a></div>
       </div>
       <div class="iw">
-        	<div class="iw_img"><a href="wine_profile.html"><img src="images/test/col_img200_5.jpg" width="200" height="345" /></a></div>
+   	<div class="iw_img"><a href="wine_profile.html"><img src="images/test/col_img200_5.jpg" width="200" height="345" /></a></div>
             <div class="iw_info">
                 <h1><a href="wine_profile.html">2001拉菲珍宝</a></h1>
                 <h2><a href="wine_profile.html">Carruades de Lafite</a></h2>
@@ -265,7 +290,7 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
             <div class="iw_more"><a href="#">查看完整品酒辞</a></div>
       </div>
       <div class="iw">
-      	<div class="iw_user">
+   	  <div class="iw_user">
         	<div class="left"><a href="#"><img src="images/test/user_30.jpg" width="30" height="30" alt="username" /></a></div>
             <div class="right">
                 <p class="username"><a href="#">我就是秀秀</a></p>
@@ -284,7 +309,7 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
             <div class="iw_more"><a href="#">查看完整品酒辞</a></div>
       </div>
       <div class="iw">
-      	<div class="iw_user">
+   	  <div class="iw_user">
         	<div class="left"><a href="#"><img src="images/test/user_30.jpg" width="30" height="30" alt="username" /></a></div>
             <div class="right">
                 <p class="username"><a href="#">我就是秀秀</a></p>
@@ -311,7 +336,7 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
             </div>
       </div>
       <div class="iw">
-      	<div class="iw_user">
+   	  <div class="iw_user">
         	<div class="left"><a href="#"><img src="images/test/user_30.jpg" width="30" height="30" alt="username" /></a></div>
             <div class="right">
                 <p class="username"><a href="#">我就是秀秀</a></p>

@@ -1,0 +1,29 @@
+<h1 class="main_title">站内信</h1>
+<div class="tabs2">
+    <div class="bg_l">
+        <div class="bg_r">
+            <div class="bg_m">
+                <ul class="clearfix">
+                    <li class="p-message">
+                        <% if defined?(message) %><span class="arrow"></span><% end %>
+                        <%= link_to conversations_path, :class => "#{'current' if defined?(message)}" do %>
+                            <% if @unread_messages_count.to_i > 0 %>
+                                <span class="new"><%= @unread_messages_count %></span>
+                            <% end %>
+                            私信
+                        <% end %>
+                    </li>
+                    <li class="notice2">
+                        <% if defined?(system_message) %><span class="arrow"></span><% end %>
+                        <%= link_to system_messages_path, :class => "#{'current' if defined?(system_message)}" do %>
+                            <% if @unread_receipts_count.to_i > 0 %>
+                                <span class="new"><%= @unread_receipts_count %></span>
+                            <% end %>
+                            通知
+                        <% end %>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

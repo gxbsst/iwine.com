@@ -1,6 +1,33 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
- 
+  resources :system_messages do
+    collection do
+      post :mark_as_read
+      match :move_to_trash, :via => [:get, :post]
+    end
+  end
+  resources :events do
+    resources :photos
+    resources :event_wines
+    resources :event_invitees, :as => 'invitees'
+    resources :event_participants, :as => 'participants' do
+      member do
+        match :cancle, :via => [:put, :get]
+      end
+    end
+    resources :comments
+    resources :follows, :controller => "follows" 
+    member do
+      get :upload_poster
+      get :photo_upload
+      get :published
+      get :cancle
+      get :draft
+      get :participants
+      get :followers
+    end
+  end
+
   resources :after_first_signins do
     collection do
       match :upload_avatar, :via => [:get, :post, :put]
@@ -18,7 +45,6 @@ Patrick::Application.routes.draw do
       get :update_info
     end
   end
-  themes_for_rails
 
   # unless Rails.application.config.consider_all_requests_local
   #    match '*not_found', to: 'errors#error_404'
@@ -49,6 +75,7 @@ Patrick::Application.routes.draw do
        match "reply", :via => [:get, :post]
        get :vote
        get :children
+       get :get_sns_reply
     end
   end
   resources :friends do
@@ -88,7 +115,11 @@ Patrick::Application.routes.draw do
       end
     end    
     resources :photos
-    resources :follows, :controller => "follows" 
+    resources :follows, :controller => "follows" do
+      collection do
+        get :follow
+      end
+    end
   end
   
   # PHOTO
@@ -138,8 +169,22 @@ Patrick::Application.routes.draw do
     collection do
       get "register_success"
     end
+
+    resources :events, :controller => 'users/events' do
+      # Events
+      member do
+        get :participants
+      end
+      collection do
+        get :index
+        get :create_events
+        get :join_events
+        get :follow_events
+      end
+    end
+
   end
-  
+
   # 酒窖
   resources :cellars do
      resources :cellar_items, :path => :items, :as => "items" do
@@ -190,7 +235,11 @@ Patrick::Application.routes.draw do
         post :create, :as => "winery" # 这里主要是为了使评论表单的URL为一致
       end
     end
-    resources :follows, :controller => "follows" 
+    resources :follows, :controller => "follows" do
+      collection do
+        get :follow
+      end
+    end
   end
   # SETTINGS
   resources :settings do
@@ -211,6 +260,7 @@ Patrick::Application.routes.draw do
       get :winery, :via => [:get , :put]
       get :suggestion, :via => [:get , :put]
       get :results, :via => [:get , :put]
+      get :wine
       post :search_user
     end
   end
@@ -221,6 +271,10 @@ Patrick::Application.routes.draw do
     api_version(:module => "v1", :header => "Accept", :value => "application/vnd.iwine.com; version=1") do
       resources :registrations
       resources :sessions
+      resources :uploads
+      resources :profiles
+      resources :oauths
+      resources :confirmations
     end
    end
   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
@@ -228,7 +282,7 @@ Patrick::Application.routes.draw do
   # STATIC
   statics = %w(about_us contact_us help private agreement terms_and_conditions site_map home feedback)
   statics.each do |i|
-     match "/#{i}", :to => "static##{i}"
+    match "/#{i}", :to => "static##{i}"
   end
 
   # Feedback

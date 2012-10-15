@@ -1,6 +1,6 @@
 <div class="admin_wine_register">
-  <%= theme_stylesheet_link_tag "admin" %>
-  <%= theme_javascript_include_tag 'wine_registers_variety', 'region_world' %>
+  <%= stylesheet_link_tag "admin" %>
+  <%= javascript_include_tag 'wine_registers_variety', 'region_world' %>
   <%= form_for [:admin, @wine] do |w| %>
      <table cellpadding="5" cellspacing="10">
         <tr>

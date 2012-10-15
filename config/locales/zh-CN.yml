@@ -1,4 +1,8 @@
 zh-CN:
+  devise:
+    omniauth_callbacks:
+      user:
+        failure: "同步失败"
   notice:
     save_success: "保存成功。"
     update_success: "更新成功。"
@@ -9,7 +13,7 @@ zh-CN:
     login_success: "成功登陆iWine。"
     require_no_user: "需要退出登陆才能执行此操作。"
     cellar_item:
-      create_success: "成功添加酒款到您的酒窖。"
+      create_success: "成功添加酒到您的酒窖。"
     comment:
       comment_success: "评论成功。"
       follow_success: "关注成功。"
@@ -31,6 +35,9 @@ zh-CN:
       reply_no_ability: "只有关注该用户后才能给TA发送私信。"
       trash: "删除成功。"
       untrash: "信息复原成功。"
+    system_message:
+      no_access: "不能访问已删除的通知。"
+      no_checked: "您未选中任何邮件。"
     password:
       reset_password_failure: "更新失败: 请确认当前密码或者新密码是否错误！"
       reset_password_success: "已成功重置密码，可以再次登录iWine啦！"
@@ -43,6 +50,7 @@ zh-CN:
       check_is_public: "此相册仅用户自己可见！"
     oauth:
       update_oauth: "同步第三方成功。"
+      ouath_failure: "同步第三方失败。"
 
   helpers:
     submit:

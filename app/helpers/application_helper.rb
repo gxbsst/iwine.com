@@ -1,6 +1,18 @@
 # -*- coding: utf-8 -*-
 module ApplicationHelper
 
+  def truncate_u(text, length = 30, truncate_string = "...")
+    l=0
+    char_array=text.unpack("U*")
+    char_array.each_with_index do |c,i|
+      l = l+ (c<127 ? 0.5 : 1)
+      if l>=length
+        return char_array[0..i].pack("U*")+(i<char_array.length-1 ? truncate_string : "")
+      end
+    end
+    return text
+  end 
+
   def photo_photo_comments_path(commentable,comment)
     return "/photos/#{commentable.id}/comments"
   end
@@ -43,7 +55,7 @@ module ApplicationHelper
     if cover
       image_tag cover.image_url(options[:thumb_name]), options
     else
-      theme_image_tag "common/wine_#{options[:thumb_name]}.png", options
+      image_tag "common/wine_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -52,7 +64,7 @@ module ApplicationHelper
     if label
       image_tag label.image_url(options[:thumb_name]), options
     else
-      theme_image_tag "common/wine_#{options[:thumb_name]}.png", options
+      image_tag "common/wine_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -61,7 +73,7 @@ module ApplicationHelper
     if cover
       image_tag cover.image_url(options[:thumb_name]), options
     else
-      theme_image_tag "common/winery_#{options[:thumb_name]}.png", options
+      image_tag "common/winery_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -70,7 +82,7 @@ module ApplicationHelper
     if label
       image_tag label.image_url(options[:thumb_name]), options
     else
-      theme_image_tag "common/winery_#{options[:thumb_name]}.png", options
+      image_tag "common/winery_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -84,7 +96,7 @@ module ApplicationHelper
     else
       options[:width] = 200
       options[:height] = 200
-      theme_image_tag "common/wine_#{options[:thumb_name]}.png", options
+      image_tag "common/wine_#{options[:thumb_name]}.png", options
     end
   end
 
@@ -118,7 +130,7 @@ module ApplicationHelper
 
     link_to(image_tag("v2/icon/#{icon_name}.png", { :title => icon_name, :align => "center" }),
             url_or_object,
-            options)
+              options)
   end
 
   def link_to_sns_icon(available, sns_name, url_or_object, options={})
@@ -133,7 +145,7 @@ module ApplicationHelper
 
     link_to(image_tag("v2/icon/#{icon_name}.png", { :title => icon_name, :align => "absmiddle" }),
             url_or_object,
-            options)
+              options)
   end
 
   def link_to_button(button_name, url_or_object, options={})
@@ -141,15 +153,15 @@ module ApplicationHelper
 
     link_to(image_tag("v2/button/#{button_name}.png", { :title => button_name, :align => "center" }),
             url_or_object,
-            options)
+              options)
   end
 
   def link_to_sync_button(sns_name, url_or_object, options={})
 
     button_name = 'btn_syn_' + sns_name
-    link_to(theme_image_tag("common/#{button_name}.jpg", { :title => button_name }),
+    link_to(image_tag("common/#{button_name}.jpg", { :title => button_name }),
             url_or_object,
-            options)
+              options)
   end
 
   ## Link to User with avatar
@@ -194,7 +206,7 @@ module ApplicationHelper
   end
 
   def link_to_image(path, url, link_opts = { }, image_opts = { })
-    link_to theme_image_tag(path, image_opts), url, link_opts
+    link_to image_tag(path, image_opts), url, link_opts
   end
 
   def previous_page(ids_arr, current_id)
@@ -208,32 +220,49 @@ module ApplicationHelper
     next_id = ids_arr[current_index + 1]
     return next_id ? next_id : false
   end
-  
+
   def photo_number(ids_arr, current_id)
     ids_arr, current_index = page_ids(ids_arr, current_id)
     return "#{current_index.to_i + 1} / #{ids_arr.count}"
   end
+
   def page_ids(ids_arr, current_id)
     ids_arr = ids_arr.sort
     current_index  = ids_arr.sort.index(current_id)
     return [ids_arr, current_index]
   end
 
-  def reply_comment(comment)
-    link_to  reply_comment_path(comment.id),
-		  :remote => true,
-      :class => "ajax reply_comment_button",
-      :id => "reply_#{comment.id}" do
-		  raw "回复<span class='reply_comment_count'>(#{comment.children.all.size })</span><span class='reply_result'></span>"
-		end
-  end
-  
-  def wine_default_image(version)
-    return theme_image_tag("avatar_default_bg_#{version.to_s}.png") if version.present?
-    theme_image_tag("avatar_default_bg.png")
+  def comment_detail_url(comment)
+    url = case comment.commentable_type
+          when "Photo"
+            photo_comment_path(comment.commentable, comment)
+          when "Wines::Detail", "Wine"
+            wine_comment_path(comment.commentable, comment)
+          when "Winery"
+            winery_comment_path(comment.commentable, comment)
+          when "Event"
+            event_comment_path(comment.commentable, comment)
+          end
+    link_to url do
+      raw "回复<span class='reply_comment_count'>(#{comment.children.all.size })</span><span class='reply_result'></span>"
+    end
   end
 
-  
+  def reply_comment(comment)
+    link_to  reply_comment_path(comment.id),
+      :remote => true,
+      :class => "ajax reply_comment_button",
+      :id => "reply_#{comment.id}" do
+      raw "回复<span class='reply_comment_count'>(#{comment.children.all.size })</span><span class='reply_result'></span>"
+      end
+  end
+
+  def wine_default_image(version)
+    return image_tag("avatar_default_bg_#{version.to_s}.png") if version.present?
+    image_tag("avatar_default_bg.png")
+  end
+
+
   # 主要为了在User Controller 判断是否为当前用户
   def is_login_user?(user)
     if user_signed_in?
@@ -250,37 +279,67 @@ module ApplicationHelper
       link_to "私信", new_message_path(:receiver => user.username), :remote => true, :class => "icon_mail ajax"
     end
   end
-  #  下拉菜单: 获取热门酒款
+
+  #  下拉菜单: 获取热门酒
   def get_hot_wine(limit)
     Wines::Detail.hot_wines(1)
   end
-    #  下拉菜单: 获取热门酒款
+
+  #  下拉菜单: 获取热门酒
   def get_hot_wineries(limit)
     Winery.hot_wineries(1)
   end
 
   #for sns_share
 
-  def sns_title(name)
-    "【#{name}】"
+  def sns_url(object)
+    sns_url = case object.class.name
+    when 'Winery'
+      winery_url(object)
+    when 'Wines::Detail'
+      wine_url(object)
+    end
+    sns_url
   end
 
-  def winery_summary(winery)
-    truncate(winery.info_items.first.description.gsub(" ", '').gsub(/\r|\n/, ''), :length => 70)  if winery.info_items.first
+  def sns_title(object)
+    title = case object.class.name
+    when 'Winery'
+      object.name
+    when 'Wines::Detail'
+      object.origin_zh_name
+    when 'User'
+      object.username
+    when 'Event'
+      object.title
+    end
+    "【#{title}】"
   end
 
-  def wine_summary(description)
-    truncate(description.to_s.gsub(" ", '').gsub(/\r|\n/, ''), :length => 70)
+  def sns_summary(object)
+    desc = case object.class.name
+    when 'Winery'
+      object.info_items.first.description if object.info_items.first
+    when 'Wines::Detail'
+      object.description
+    when 'Event'
+      object.title
+    end
+    truncate(desc.to_s.gsub(" ", '').gsub(/\r|\n/, ''), :length => 70)
   end
 
   def sns_image_url(object, options = {})
     if object.class.name == "Photo"
       cover = object
+    elsif object.class.name == "Event"
+      photo = object.poster_url(options[:thumb_name]) if object.poster.present?
     else
       cover = get_cover(object)
     end
     if cover
       "#{root_url}#{cover.image_url(options[:thumb_name])}"
+    elsif photo
+      "#{root_url}#{photo}"
     end
   end
 
@@ -297,7 +356,7 @@ module ApplicationHelper
     count = variety_percentages.length
     show_list = ''
     variety_percentages.each_with_index do |v, index|
-     show_list << "#{v.origin_name} (#{v.show_percentage})#{' 、' if index + 1 != count}"
+      show_list << "#{v.origin_name} (#{v.show_percentage})#{' 、' if index + 1 != count}"
     end
     return show_list
   end
@@ -323,15 +382,15 @@ module ApplicationHelper
     bio.present? ? bio : (myself ? APP_DATA["user_profile"]["myself_no_bio"] : APP_DATA["user_profile"]["no_bio"])
   end
 
- def album_cover_tag(user, album)
+  def album_cover_tag(user, album)
     cover = album.photos.visible.cover.first
     if album.is_public.to_i == 0 && !is_login_user?(user)
-      tag = theme_image_tag("common/p_album.png", :class => :cover, :width => 150, :height => 150)
+      tag = image_tag("common/p_album.png", :class => :cover, :size => '150x150')
     else
       if cover
-       tag =  image_tag(cover.image_url(:xx_middle), :class => 'cover')
+        tag =  image_tag(cover.image_url(:xx_middle), :class => 'cover', :size => '150x150')
       else
-        tag = theme_image_tag( "album.jpg", :class => :cover, :width => 150, :height => 150)
+        tag = image_tag( "album.jpg", :class => :cover, :size => '150x150')
       end
     end
     if album.is_public.to_i == 0 && !is_login_user?(user) #非公开
@@ -347,14 +406,15 @@ module ApplicationHelper
       "<div class='clear'></div>"
     end
   end
+
   def item_non_public(is_public)
     if is_public.to_i == 1
       %Q[<span class="non_public"> \
-        #{image_tag("/assets/waterfall/images/icon/non_public.png", 
-          :width => "16",
-          :height => "16",
-          :alt => "仅自己可见", 
-          :title => "仅自己可见")}
+      #{image_tag("/assets/waterfall/images/icon/non_public.png", 
+      :width => "16",
+      :height => "16",
+      :alt => "仅自己可见", 
+      :title => "仅自己可见")}
         </span>]
     end
 
@@ -363,7 +423,7 @@ module ApplicationHelper
   def reply_email(comment)
     case comment.commentable_type
     when "Wines::Detail"
-       link_to "返回", wine_comments_url(comment.commentable)
+      link_to "返回", wine_comments_url(comment.commentable)
     when "Winery"
       link_to "返回", winery_comments_url(comment.commentable)
     when "Photo"
@@ -380,18 +440,47 @@ module ApplicationHelper
       end
     end
   end
-  
+
   #使用第三方账号登陆iWine
   def resource_name
     :user
   end
- 
+
   def resource
     @resource ||= User.new
   end
- 
+
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end
 
+  def sns_come_from(type)
+    type == "weibo" ? "新浪微博" : (type == "qq" ? "腾讯微博" : "豆瓣")
+  end
+
+  #展示关注文本
+  def follow_content(parent)
+    if current_user && parent.follows.where("user_id = #{current_user.id}").present?
+      "取消关注"
+    else
+      "关注"
+    end
+  end
+
+  #获取随机数
+  def get_rand_id(timeline)
+    "#{timeline.secondary_actor_type.gsub('::Detail', '')}#{timeline.secondary_actor.id}"
+  end
+
+  #首页展示不同文字
+  def time_line_text(type, winery = false)
+    case type
+    when "new_comment"
+      "有了新评论"
+    when "new_follow"
+      "这支酒#{'庄' if winery}被关注"
+    when "add_to_cellar"
+      "有人把它加入了酒窖"
+    end
+  end
 end

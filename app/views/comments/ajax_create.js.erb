@@ -1,0 +1,15 @@
+<%
+	tag = case @comment.commentable_type
+	when 'Winery'
+		"winery"
+	when 'Wines::Detail'
+		"wine"
+	end
+	selector_comment_num = "##{@item_id} .iw_more_comment a"
+	selector_list = "##{@item_id} ul"
+	selector_form = "##{@item_id} form textarea##{tag}_comment_body"
+%>
+$("<%= selector_list %>").append("<%= escape_javascript(render(:partial =>'share/short_comment', :locals => {:comment => @comment})) %>");
+$("<%= selector_form %>").val('');
+$("<%= selector_comment_num %>").html("共<%= @comment.commentable.current_comments_count %>条评论");
+ $('#container').masonry('reload');

@@ -1,0 +1,17 @@
+common: &common
+  host: localhost
+  adapter: mysql2
+  username: root
+  password: 'sidways_iwine_mysql!@#'
+
+development:
+  <<: *common
+  database: patrick_development
+
+test:
+  <<: *common
+  database: patrick_test
+
+production:
+  <<: *common
+  database: patrick_production

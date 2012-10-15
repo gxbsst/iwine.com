@@ -1,0 +1,6 @@
+<div class="section">
+    <div class="title"><h2><a name="#02" id="02"></a><%= info_item.title %></h2></div>
+    <div class="content">
+      <%= simple_format info_item.description.gsub(/\v/, "\n").gsub(/\n+/, "\n"), :class => "more_info" %>
+    </div>
+ </div>

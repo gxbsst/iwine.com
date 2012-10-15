@@ -1,0 +1,151 @@
+<script language="javascript" type="text/javascript">
+</script>
+
+<% content_for :title, @title%>
+<% content_for :js do %>
+  <%#= javascript_include_tag "events" %>
+<% end %>
+<% content_for :css do %>
+	<%= stylesheet_link_tag "event" %>
+<% end %>
+<div class="whitespace eventmain">
+   	<div class="left">
+        <%= render "event_detail" %>
+        <div class="section">
+          <div class="title">
+            <h2>活动介绍</h2>
+          </div>
+          <div class="content">
+           <%= simple_format( @event.description ) %>
+          </div>
+          <!--end section-->
+        </div>
+
+        <div class="section event_wine">
+          <div class="title">
+            <h2>活动用酒</h2>
+          </div>
+          <div class="content">
+            <ul class="wine_list">
+              <% @event.wines.each do |wine|  %>  
+                <% wine_detail = wine.wine_detail %>
+                <li class="clearfix">
+                  <%= link_to wine_path(wine_detail) do %>
+                    <%= wine_label_tag(wine_detail, 
+                                       :alt => wine_detail.origin_zh_name, 
+                                       :thumb_name => "thumb_x", :size => "70x70" )%>
+                  <% end %>
+                  <div class="info">
+                    <h3 class="zh">
+                      <%= wine_name_zh_link(wine_detail.wine.name_zh, wine_detail) %>
+                    </h3>
+                    <h3 class="en">
+                      <%= link_to wine_detail.origin_name, wine_path(wine_detail) %>
+                    </h3>
+                  </div>
+                </li>
+              <% end %>
+              <div class="clear"></div>
+            </ul>
+            <!--end content-->
+          </div>
+          <!--end section-->
+        </div>
+
+        <div class="section event_wine">
+          <div class="title">
+            <h2>
+              活动参与者
+              <span class="font12 more">
+                <%= link_to "（#{@event.participants_count}人参与|#{@event.followers_count} 人感兴趣）", participants_event_path(@event) %>
+              </span>
+            </h2>
+            <!--end title-->
+          </div>
+          <div class="content">
+            <ul class="event_people">
+              <% @participants.each do |p| %>
+                <li>
+                  <%= link_to_user p.user, user_path(p.user, :trailing_slash => true),
+                    {:with_avatar => true, :avatar_version => :thumb},
+                    {:size => '50x50', :alt => p.user.username } %>
+                </li>
+                <% end %>
+
+              <% @follows.each do |p| %>
+                <li>
+                  <%= link_to_user p.user, user_path(p.user, :trailing_slash => true),
+                    {:with_avatar => true, :avatar_version => :thumb},
+                    {:size => '50x50', :alt => p.user.username } %>
+                </li>
+                <% end %>
+              <div class="clear"></div>
+            </ul>
+          </div>
+          <!--end section-->
+        </div>
+
+        <div class="section">
+            <div class="title">
+                <h2>活动照片<span class="font12 more">
+                    <%= link_to event_photos_path(@event) do %>
+                        （共<%= @event.photos_count %>张...）
+                    <% end %>
+                </span></h2>
+            </div>
+            <div class="content">
+                <ul class="event_pic">
+                    <% @photos.each_with_index do |photo, index| %>
+                        <li class="<%= 'last' if index == 3 %>">
+                            <%= link_to event_photo_path(@event, photo) do %>
+                                <%= image_tag photo.image_url(:thumb), :alt => "活动图片" %>
+                            <% end %>
+                        </li>
+                    <% end %>
+                </ul>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <div class="section last">
+          <div class="title">
+            <a href="javascript:void(0)" class="btn_gray float_r font12 comment_focus" >
+              <span>我要留言</span>
+            </a>
+            <script language="javascript" type="text/javascript">
+              $(document).ready(function(){
+                  $('.comment_focus').click(function(){
+                    $('.comment_post_star').effect("highlight", {}, 3000);
+                    $("#event_comment_body").focus();
+                    });
+                  });
+            </script>
+            <h2>
+              留言
+              <span class="font12 more">
+                <%= link_to "(共#{@event.comments_count}条)", event_comments_path(@event) %>
+              </span>
+            </h2>
+          </div>
+          <div class="content">
+            <%= render "comments/comment_list" %>
+          </div>
+          <!--end section-->
+        </div>
+    <!--end left-->
+    </div>
+    <div class="right">
+      <div class="sidebox">
+        <%= link_to new_event_path, :class => :btn_createvent do %>
+          <span>我要创建活动</span>
+        <% end %>
+      </div>
+      <div class="sidebox">
+        <%= render 'recommends' %>
+        <!--end sidebox-->
+      </div>
+      <!--end right-->
+      </div>
+      <div class="clear"></div>
+    </div>
+
