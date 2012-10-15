@@ -77,6 +77,8 @@ class ApplicationController < ActionController::Base
       else
         return request.env['omniauth.origin'] || devise_return_location
       end
+    else
+      admin_root_path
     end
 
   end

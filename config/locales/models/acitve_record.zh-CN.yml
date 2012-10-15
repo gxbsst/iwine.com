@@ -10,6 +10,7 @@ zh-CN:
       wines/register: '未审酒'
       winery: '酒庄'
       photo: '图片'
+      comment: '评论'
     attributes:
       user:
         id: 'ID'
@@ -91,6 +92,16 @@ zh-CN:
         status: '状态'
         other_cn_name: '其它中文名'
         is_nv: 'IS_NV'
+      comment:
+        id: ID
+        is_share: 分享
+        deleted_at: '删除时间'
+        created_at: '创建时间'
+        user_id: '创建人'
+        body: '内容'
+        commentable_type: '评论类型'
+        commentable_id: '被评论ID'
+
   helpers:
     label:
       wines_special_comment:

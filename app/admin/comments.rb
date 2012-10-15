@@ -1,6 +1,8 @@
 #encoding: utf-8
 
 ActiveAdmin.register Comment, :as => "CustomerComment" do
+  filter :user, :as => :check_boxes
+  filter :is_share, :as => :check_boxes
   controller do
   	def destroy
   	  @comment = Comment.find(params[:id])
@@ -35,11 +37,11 @@ ActiveAdmin.register Comment, :as => "CustomerComment" do
 
   index do
   	column :id
-  	column :commentable_id
   	column :commentable_type
   	column :body
-  	column :user_id
-  	column :created_at
+  	column '评论人' do |comment|
+      comment.user.username
+    end
   	column :deleted_at
   	column :is_share
   	# default_actions
