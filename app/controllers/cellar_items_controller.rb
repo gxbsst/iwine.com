@@ -29,9 +29,16 @@ class CellarItemsController < ApplicationController
   end
 
   def new
+
     @cellar_item = Users::WineCellarItem.new(:number => 1, 
-                                             :location => current_user.city,
-                                             :private_type => false)
+                                            :location => current_user.city,
+                                            :private_type => false)
+    # 当确定加入某年代红酒直接生成年代
+    if params[:wine_detail_id]
+      wine_detail = Wines::Detail.find(params[:wine_detail_id])
+      @cellar_item.year = wine_detail.year if wine_detail.year.present?
+      @cellar_item.is_nv = wine_detail.is_nv if wine_detail.is_nv.present?
+    end
   end
 
   def create
@@ -58,6 +65,17 @@ class CellarItemsController < ApplicationController
       render  "add_step_one"
     elsif params[:step].to_i == 2
       @search = Search.find(params[:search_id])
+      server = HotSearch.new
+      @entries = server.all_entries(@search.keywords)
+      @all_wines = @entries['wines']
+      page = params[:page] || 1
+      if @all_wines.present?
+        unless @all_wines.kind_of?(Array)
+          @wines = @all_wines.page(page).per(10)
+        else
+          @wines = Kaminari.paginate_array(@all_wines).page(page).per(10)
+        end
+      end
       render "add_step_two"
     end
   end
@@ -80,9 +98,10 @@ class CellarItemsController < ApplicationController
                                        params[:users_wine_cellar_item][:is_nv], 
                                        params[:users_wine_cellar_item]['year(1i)'])
     end
-
+    
     def check_uniqueness_detail
-      if @existing_item = @cellar.items.where(:wine_detail_id => @wine_detail.id).first
+      @existing_item = @cellar.items.where(:wine_detail_id => @wine_detail.id).first
+      if (request.post? && @existing_item) || (request.put? && @existing_item && @existing_item != @cellar_item)
         notice_stickie %{不能重复收藏同一只酒，您可以点击<a href="#{edit_cellar_item_path(@cellar, @existing_item, :wine_id => @wine.id)}">修改数目</a>}
         @cellar_item ||= @existing_item
         request.post? ? render(:new) : render(:edit)
