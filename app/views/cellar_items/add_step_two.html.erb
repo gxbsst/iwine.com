@@ -11,7 +11,7 @@
         <div class="step_sec"></div>
       </div>
       
-      <% unless @search.wines.blank? %>
+      <% unless @wines.blank? %>
           <div class="mb20">
             <div class="float_r">
               <span class="notice_b">这些都不是您要找的酒？</span>
@@ -23,11 +23,11 @@
             <div class="clear"></div>
           </div>
           <ul class="wine_list">
-            <% @search.wines.each do |wine_detail| %>
-                <% releast_detail = wine_detail.wine.details.releast_detail.first %>
+            <% @wines.each do |wine| %>
+                <% releast_detail = wine.details.releast_detail.first %>
                 <li>
                   <div class="add_to_cellar">
-                    <%= link_to new_cellar_item_path(current_user.cellar, :wine_id => wine_detail.wine_id), :class => "btn_blue" do %>
+                    <%= link_to new_cellar_item_path(current_user.cellar, :wine_id => wine.id), :class => "btn_blue" do %>
                         <span>加入酒窖</span>
                     <% end %>
                   </div>
@@ -38,16 +38,19 @@
                   </div>
                   <div class="wine_info">
                     <h2>
-                      <%= wine_name_zh_link(releast_detail.wine.name_zh, releast_detail) %>
+                      <%= wine_name_zh_link(wine.name_zh, releast_detail) %>
                     </h2>
-                    <h3><%= link_to releast_detail.wine.origin_name, wine_path(releast_detail) %></h3>
-                    <p><%= releast_detail.wine.region_path_zh %></p>
-                    <p><%= releast_detail.wine.style.name_zh %></p>
+                    <h3><%= link_to wine.origin_name, wine_path(releast_detail) %></h3>
+                    <p><%= wine.region_path_zh %></p>
+                    <p><%= wine.style.name_zh %></p>
                   </div>
                   <div class="clear"></div>
                 </li>
             <% end %>
           </ul>
+          <div class="pagination">
+            <%= paginate @wines %>
+          </div>
       <% else %>
         <p class="notice_b mb20">对不起，没有找到关于“<%= @search.keywords %>”的信息，您是否愿意帮助我们添加酒？</p>
         <p>
