@@ -146,7 +146,9 @@ class WineDetailsController < ApplicationController
 
   # 添加到酒窖
   def add_to_cellar
-     redirect_to new_cellar_item_path(current_user.cellar.id, :wine_detail_id => params[:id] )
+     redirect_to new_cellar_item_path(current_user.cellar.id, 
+                                      :wine_id => params[:wine_id], 
+                                      :wine_detail_id => params[:wine_detail_id])
   end
 
   #上传酒成功

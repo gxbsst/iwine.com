@@ -468,8 +468,11 @@ module ApplicationHelper
   end
 
   #获取随机数
-  def get_rand_id(timeline)
-    "#{timeline.secondary_actor_type.gsub('::Detail', '')}#{timeline.secondary_actor.id}"
+  def get_rand_id(actor_type, actor_id)
+    chars = ("0".."9").to_a
+    newpass = ""
+    1.upto(6){|i| newpass << chars[rand(chars.size-1)]}
+    "#{actor_type.gsub('::Detail', '')}#{actor_id}#{newpass}"
   end
 
   #首页展示不同文字

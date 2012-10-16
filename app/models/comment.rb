@@ -29,7 +29,7 @@ class Comment < ActiveRecord::Base
     where(:commentable_type => commentable_str.to_s, :commentable_id => commentable_id).order('created_at DESC')
   }
 
-  scope :real_comments, lambda {where(" do = 'comment' AND parent_id IS NULL")}
+  scope :real_comments, lambda {where("parent_id IS NULL").order("created_at DESC")}
 
   scope :for_event, lambda {|event_id| where(:commentable_type => 'Event', :commentable_id => event_id)}
   scope :with_votes,

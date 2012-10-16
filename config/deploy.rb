@@ -40,7 +40,8 @@ namespace :deploy do
   #end
 
   task :restart, roles: :app do
-    run "touch #{current_path}/tmp/restart.txt"
+    #  run "touch #{current_path}/tmp/restart.txt" # passenger
+    run "/home/iwine/unicorn_restart.sh" # unicorn
   end
 
   task :setup_config, roles: :app do

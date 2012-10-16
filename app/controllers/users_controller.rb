@@ -30,7 +30,7 @@ class UsersController < ApplicationController
   def comments
     @title = ["评论", @user.username].join("-")
     @hot_wines = Wines::Detail.hot_wines(5)
-    @comments = @user.comments.real_comments.order("created_at DESC").page(params[:page] || 1).per(10)
+    @comments = @user.comments.real_comments.page(params[:page] || 1).per(10)
   end
 
   def followings

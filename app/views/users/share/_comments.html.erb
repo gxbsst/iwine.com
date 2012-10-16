@@ -1,71 +1,94 @@
 <!-- 酒评论带评分 -->
 <ul class="comment_list">
- <% @comments.each do |comment| %> 
- <% if comment.commentable_type == "Wines::Detail" %>
-<li>
-    <div class="pic">
-     <%= link_to wine_path(comment.commentable) do %>
-        <%= wine_label_tag comment.commentable, :thumb_name => :thumb, :width => 70, :height => 70 %>
-      <% end %>
-    </div>
-      <div class="main">
-        <div class="winename">
-          评论了酒: 
-          <%= wine_name_zh_link(comment.commentable.cname, comment.commentable) %>
-          <span class="date"><%= comment.created_at.to_s(:normal)%></span>
-          <span class=" star_s<%= comment.point %>"></span>
+  <% @comments.each do |comment| %>
+    <% if comment.commentable_type == "Wines::Detail" %>
+      <li>
+        <div class="pic">
+          <%= link_to wine_path(comment.commentable) do %>
+            <%= wine_label_tag comment.commentable, :thumb_name => :thumb, :width => 70, :height => 70 %>
+          <% end %>
+        </div>
+        <div class="main">
+          <div class="winename">
+            评论了酒:
+            <%= wine_name_zh_link(comment.commentable.cname, comment.commentable) %>
+            <span class="date"><%= comment.created_at.to_s(:normal)%></span>
+            <span class=" star_s<%= comment.point %>"></span>
 
+          </div>
+          <div class="content"><%= comment.body %></div>
         </div>
-        <div class="content"><%= comment.body %></div>
-    </div>
-</li>
-<!-- 酒庄评论 -->
-<% elsif  comment.commentable_type == "Winery"%>
-<li>
-    <div class="pic">
-     <%= link_to winery_path(comment.commentable) do %>
-        <%=  winery_label_tag(comment.commentable, :thumb_name => :thumb_x, :size => "70x70") %>
-      <% end %>
-    </div>
-      <div class="main">
-        <div class="winename">
-          评论了酒庄: 
-          <%= link_to comment.commentable.name_zh, winery_path(comment.commentable) %>
-          <span class="date"><%= comment.created_at.to_s(:normal)%>
-          <span class=" star_s<%= comment.point %>"></span>
+      </li>
+      <!-- 酒庄评论 -->
+    <% elsif  comment.commentable_type == "Winery"%>
+      <li>
+        <div class="pic">
+          <%= link_to winery_path(comment.commentable) do %>
+            <%=  winery_label_tag(comment.commentable, :thumb_name => :thumb_x, :size => "70x70") %>
+          <% end %>
         </div>
-        <div class="content"><%= comment.body %></div>
-    </div>
-</li>
-<!-- 图片评论 -->
-<% elsif  comment.commentable_type == "Photo"%>
-<li>
-    <div class="pic">
-    <% 
-    commentable_path = case comment.commentable.imageable_type
-    when "Wines::Detail"
-      wine_photo_path(comment.commentable.imageable, comment.commentable)
-    when "Winery"
-      winery_photo_path(comment.commentable.imageable, comment.commentable)
-    when "Album"
-      album_photo_show_user_path(comment.commentable.user_id, comment.commentable.imageable, comment.commentable)
-    when "Wine"
-      wine_photo_path(comment.commentable.imageable.get_latest_detail, comment.commentable)
-    end
-    %>
-     <%= link_to commentable_path do %>
-        <%= image_tag comment.commentable.image_url, :thumb_name => :thumb, :width => 70, :height => 70 %>
-      <% end %>
-    </div>
-      <div class="main">
-        <div class="winename">
-          评论了图片
-          <span class="date"><%= comment.created_at.to_s(:normal)%>
+        <div class="main">
+          <div class="winename">
+            评论了酒庄:
+            <%= link_to comment.commentable.name_zh, winery_path(comment.commentable) %>
+            <span class="date">
+              <%= comment.created_at.to_s(:normal)%>
+              <span class=" star_s<%= comment.point %>"></span>
+            </span>
+          </div>
+          <div class="content"><%= comment.body %></div>
         </div>
-        <div class="content"><%= comment.body %></div>
-    </div>
-</li>
-<% end %>
-<% end %>
+      </li>
+      <!-- 图片评论 -->
+    <% elsif  comment.commentable_type == "Photo"%>
+      <li>
+        <div class="pic">
+          <%
+             commentable_path = case comment.commentable.imageable_type
+                                  when "Wines::Detail"
+                                    wine_photo_path(comment.commentable.imageable, comment.commentable)
+                                  when "Winery"
+                                    winery_photo_path(comment.commentable.imageable, comment.commentable)
+                                  when "Album"
+                                    album_photo_show_user_path(comment.commentable.user_id, comment.commentable.imageable, comment.commentable)
+                                  when "Wine"
+                                    wine_photo_path(comment.commentable.imageable.get_latest_detail, comment.commentable)
+                                end
+          %>
+          <%= link_to commentable_path do %>
+            <%= image_tag comment.commentable.image_url, :thumb_name => :thumb, :width => 70, :height => 70 %>
+          <% end %>
+        </div>
+        <div class="main">
+          <div class="winename">
+            评论了图片
+          <span class="date">
+            <%= comment.created_at.to_s(:normal)%>
+          </span>
+          </div>
+          <div class="content"><%= comment.body %></div>
+        </div>
+      </li>
+    <% elsif comment.commentable_type == 'Event' %>
+      <li>
+        <div class="pic">
+          <%= link_to event_path(comment.commentable) do %>
+            <%= image_tag comment.commentable.poster_url(:x_thumb), :size => '70x105', :alt => comment.commentable.title %>
+          <% end %>
+        </div>
+        <div class="main">
+          <div class="winename">
+            评论了活动:
+            <%= link_to comment.commentable.title, event_path(comment.commentable) %>
+            <span class="date">
+              <%= comment.created_at.to_s(:normal)%>
+              <span class=" star_s<%= comment.point %>"></span>
+            </span>
+          </div>
+          <div class="content"><%= comment.body %></div>
+        </div>
+      </li>
+    <% end %>
+  <% end %>
 </ul>
 
