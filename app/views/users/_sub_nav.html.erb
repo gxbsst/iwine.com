@@ -59,26 +59,26 @@
         <% if user_signed_in? %>
             <% if (current_user.is_following @user) && (@user.is_following current_user) # 如果用户互相关注%>
               <span class="icon_fol_e mr5">互相关注<span class="cancl_fol">
-                <%= link_to "(取消)", unfollow_user_path(@user) %>
+                <%= link_to "(取消)", unfollow_user_path(@user), :method =>:put %>
               </span></span>
             <% elsif current_user.is_following @user %>
               <span class="icon_fol mr5">已关注<span class="cancl_fol">
-                <%= link_to "(取消)", unfollow_user_path(@user) %>
+                <%= link_to "(取消)", unfollow_user_path(@user), :method =>:put %>
               </span></span>
             <% else %>
-            <%= link_to follow_user_path(@user), :class => "btn_gray" do  %>
+            <%= link_to follow_user_path(@user), :class => "btn_gray", :method => :put do  %>
               <span>加关注</span>
               <% end %>
             <% end %>
-        <% else %>  
-              <%= link_to follow_user_path(@user), :class => "btn_gray" do  %>
+        <% else %>
+              <%= link_to follow_user_path(@user), :class => "btn_gray", :method => :put do  %>
               <span>加关注</span>
               <% end %>
-             
+
         <% end %>
          <%= conversation_url(@user) %>
        </div>
-      <% end %>      
+      <% end %>
       <ul class="hp_navi">
         <% sub_menu.each do |action_name, url| %>
           <%= content_tag :li, :class => ( if (params[:action] == action_name) || (params[:controller] == action_name); :current; end) do %>

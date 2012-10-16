@@ -8,7 +8,7 @@
 		<% if @users.present? %>
 			<p class="mb30">
 				<span class="font14">共找到<%= @users.count %> 个好友</span>
-				<%= link_to follow_user_path(current_user, :user_id => @user_ids), :class => "btn_gray mr5" do %>
+				<%= link_to follow_user_path(current_user, :user_id => @user_ids), :class => "btn_gray mr5", :method => :put do %>
 					<span>全部加为好友</span>
 				<% end %>
 				<%= link_to find_friends_path, :class => "btn_gray" do %>
@@ -29,15 +29,15 @@
 								<% if current_user.is_following(user.id)  && user.is_following(current_user.id) %>
 									<span class="icon_fol_e">互相关注</span>
          <span class="cancl_fol">
-           <%= link_to "(取消)", unfollow_user_path(user) %>
+           <%= link_to "(取消)", unfollow_user_path(user), :method => :put %>
          </span>
 								<% elsif current_user.is_following user.id %>
 									<span class="icon_fol">已关注</span>
          <span class="cancl_fol">
-           <%= link_to "(取消)", unfollow_user_path(user) %>
+           <%= link_to "(取消)", unfollow_user_path(user), :method => :put %>
          </span>
 								<% else %>
-									<%= link_to follow_user_path(user), :class => "btn_gray" do %>
+									<%= link_to follow_user_path(user), :class => "btn_gray", :method => :put do %>
 										<span>加关注</span>
 									<% end %>
 								<% end %>

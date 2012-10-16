@@ -163,8 +163,8 @@ Patrick::Application.routes.draw do
       match "albums/:album_id/photo/:photo_id", :via => [:get], :to => "albums#photo", :as => :album_photo_show
       # Cellars
       match "cellars/:cellar_id", :via => [:get], :to => "cellars#show", :as => :cellars
-      get :follow
-      get :unfollow
+      put :follow
+      put :unfollow
     end
     collection do
       get "register_success"
