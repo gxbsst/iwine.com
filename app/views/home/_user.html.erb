@@ -1,0 +1,25 @@
+<% if l.ownerable_type == "User" %>
+  <div class="iw_user">
+    <div class="left">
+      <%= link_to_user l.ownerable, 
+                       user_path(l.ownerable, :trailing_slash => true), 
+                       {:with_avatar => true, :avatar_version => :thumb},
+                       {:size => "30x30"} %>
+      </div>
+      <div class="right">
+          <p class="username">
+              <%= link_to_user l.ownerable, user_path(l.ownerable, :trailing_slash => true) %>
+          </p>
+          <p class="content">
+            <% if l.event_type == "new_comment" %>
+              发表了评论
+            <% elsif l.event_type == "add_to_cellar" %>
+              把它酒加入了酒窖
+            <% elsif l.event_type == "new_follow" %>
+              关注了它
+            <% end %>
+          </p>
+      </div>
+      <div class="clear"></div>
+  </div>
+<% end %>
