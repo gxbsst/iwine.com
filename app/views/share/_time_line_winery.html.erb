@@ -1,22 +1,22 @@
 <!-- 酒庄被评论 -->
-<% if l.event_type == "new_comment" %>
+<% if event_type == "new_comment" %>
     <div class="iw_main">
         <ul>
-            <% l.secondary_actor.comments.recent(6).each do |comment|%>
+            <% secondary_actor.comments.recent(6).each do |comment|%>
                 <%= render :partial => "share/short_comment", :locals => {:comment => comment} %>
             <% end %>
         </ul>
     </div>
     <div class="iw_more iw_more_comment">
-        <%= link_to  winery_comments_path(l.secondary_actor) do %>
-            共<%= l.secondary_actor.comments_count %>条评论
+        <%= link_to  winery_comments_path(secondary_actor) do %>
+            共<%= secondary_actor.comments_count %>条评论
         <% end %>
     </div>
 <!-- 酒庄被关注 -->
-<% elsif l.event_type == 'new_follow' %>
+<% elsif event_type == 'new_follow' %>
     <div class="iw_main">
         <ul>
-            <% l.secondary_actor.follows.recent(6).each do |follow|%>
+            <% secondary_actor.follows.recent(6).each do |follow|%>
                 <li>
                     <div class="left">
                         <%= link_to_user follow.user, user_path(follow.user, :trailing_slash => true), 
@@ -31,8 +31,8 @@
         </ul>
     </div>
     <div class="iw_more iw_more_follow"> 
-        <%= link_to  followers_list_winery_path(l.secondary_actor) do %>
-            共<%= l.secondary_actor.followers_count %>个关注
+        <%= link_to  followers_list_winery_path(secondary_actor) do %>
+            共<%= secondary_actor.followers_count %>个关注
         <% end %>
     </div>
 <% end %>
