@@ -23,13 +23,16 @@ set :use_sudo, false
 set :scm, "git"
 set :repository, "ssh://git@www.sidways.com:20248/patrick_ruby"
 
-if ENV['RAILS_ENV'] =='production'
-  set :branch, "master"
-  set :deploy_to, "/srv/rails/production.iwine.com"
-else
-  set :branch, "develop"
-  set :deploy_to, "/srv/rails/develop.iwine.com"
-end
+#if ENV['RAILS_ENV'] =='production'
+#  set :branch, "master"
+#  set :deploy_to, "/srv/rails/production.iwine.com"
+#else
+#  set :branch, "develop"
+#  set :deploy_to, "/srv/rails/develop.iwine.com"
+#end
+
+set :branch, "develop"
+set :deploy_to, "/srv/rails/iwine.com"
 
 
 

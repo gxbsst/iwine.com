@@ -176,13 +176,13 @@ def create_photo
   @photo.album_id = params[:album_id]
   @photo.image = params[:photo][:image]
   @photo.user_id = @user.id
-  return @photo    
+  @photo
 end
 
 def new_normal_comment
  @comment = @photo.comments.build
- @comment.do = "comment" 
- return @comment   
+ @comment.do = "comment"
+ @comment
 end
 
 def check_is_public
