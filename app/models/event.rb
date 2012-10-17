@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   include ::Notificationer::EventNotificationer
 
   CANCLED_STATUS = 0
-  DRAFTED_STATUS = 1 
+  DRAFTED_STATUS = 1
   PUBLISHED_STATUS = 2
   LOCKED_STATUS = 3
   CITY = { '上海' => 1,  '成都' => 2, '北京' => 3, '深圳' => 4, '广州' => 5, '其他' => '6'}
@@ -27,7 +27,7 @@ class Event < ActiveRecord::Base
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
   validates :title, :tag_list, :address, :begin_at, :end_at,  :presence => true
-  validates :publish_status, :inclusion => { :in => [0,1,2,3] } 
+  validates :publish_status, :inclusion => { :in => [0,1,2,3] }
   validate :begin_at_be_before_end_at
   validate :begin_at_be_after_now
   validates :block_in, :numericality => {:allow_blank => true}, :exclusion => {:in => [0]}
@@ -69,7 +69,7 @@ class Event < ActiveRecord::Base
   # Upload Poster
   mount_uploader :poster, PosterUploader
 
-  # 设置封面的尺寸 
+  # 设置封面的尺寸
   before_save :set_geometry
 
   # Crop poster
@@ -95,7 +95,7 @@ class Event < ActiveRecord::Base
   end
 
   # 统计
-  counts :followers_count => {:with => "Follow", 
+  counts :followers_count => {:with => "Follow",
             :receiver => lambda {|follow| follow.followable },
             :increment => {
               :on => :create,
@@ -104,19 +104,19 @@ class Event < ActiveRecord::Base
               :on => :destroy,
               :if => lambda {|follow| follow.follow_counter_should_decrement_for("Event")}}
          },
-         :comments_count => {:with => "Comment", 
+         :comments_count => {:with => "Comment",
             :receiver => lambda {|comment| comment.commentable },
             :increment => {:on => :create, :if => lambda {|c| c.counter_should_increment_for("Event") }},
             :decrement => {:on => :save,   :if => lambda {|c| c.counter_should_decrement_for("Event") }}
          },
          :photos_count   => {:with => "AuditLog",
-            :receiver => lambda {|audit_log| audit_log.logable.imageable }, 
+            :receiver => lambda {|audit_log| audit_log.logable.imageable },
             :increment => {
               :on => :create,
-              :if => lambda {|audit_log| audit_log.image_should_increment('Event')}},
+              :if => lambda {|audit_log| audit_log.image_should_increment?('Event')}},
             :decrement => {
               :on => :save,
-              :if => lambda {|audit_log| audit_log.image_should_decrement('Event')}}
+              :if => lambda {|audit_log| audit_log.image_should_decrement?('Event')}}
          }
 
 
@@ -172,7 +172,7 @@ class Event < ActiveRecord::Base
 
   # 是否已经被关注
   def have_been_followed?(user_id)
-    Follow.get_my_follow_item(self.class.to_s, id, user_id) 
+    Follow.get_my_follow_item(self.class.to_s, id, user_id)
   end
 
   # 是否已经参加
@@ -247,14 +247,6 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def draft!
-    if cancle?
-      raise ::EventException::EeventHaveCancled, '活动已经取消'
-    else
-      update_attribute(:publish_status,  APP_DATA['event']['publish_status']['draft'])
-    end
-  end
-
   # 活动状态是否为取消
   def cancle?
     publish_status == CANCLED_STATUS
@@ -268,14 +260,10 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def cancle!
-    update_attribute(:publish_status,  APP_DATA['event']['publish_status']['cancle'])
-  end
-
   # 添加某只酒到活动
   def add_one_wine(wine_detail_id)
     return if wine_have_been_added? wine_detail_id
-    wine = wines.build(:wine_detail_id => wine_detail_id) 
+    wine = wines.build(:wine_detail_id => wine_detail_id)
     wine.save
     wine
   end
@@ -285,7 +273,7 @@ class Event < ActiveRecord::Base
     EventWine.check_wine_have_been_added?(id, wine_detail_id)
   end
 
-  # 活动标签 
+  # 活动标签
   def tags_array
     tags.collect {|tag| {:id => tag.id, :name => tag.name}}
   end
@@ -304,13 +292,13 @@ class Event < ActiveRecord::Base
 
   # 是否已经感兴趣活动
   # 这个方法重复定义, 但是为了和酒庄／酒相同，这里重复定义
-  def is_followed_by? user
+  def is_followed_by? (user)
     have_been_followed? user.id
   end
 
   def city
    cities = CITY
-   return cities.inject({}){|m,(k,v)| m.merge({v => k})}[region_id]
+   cities.inject({}){|m,(k,v)| m.merge({v => k})}[region_id]
   end
 
   # 活动是否可编辑
@@ -363,7 +351,7 @@ class Event < ActiveRecord::Base
 
  def set_geometry
    geometry = self.poster.large.geometry
-   if (! geometry.nil?)
+   if(!geometry.nil?)
      self.poster_width = geometry[:width]
      self.poster_height = geometry[:height]
    end
@@ -387,7 +375,7 @@ class Event < ActiveRecord::Base
  end
 
  def get_poster_resize_params(version)
-   APP_DATA["image"]["poster"]["#{version.to_s}"]["width"].to_s << 
+   APP_DATA["image"]["poster"]["#{version.to_s}"]["width"].to_s <<
     "x" <<  APP_DATA["image"]["poster"]["#{version.to_s}"]["height"].to_s
  end
 

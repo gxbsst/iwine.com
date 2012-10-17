@@ -108,10 +108,10 @@ class AuditLog < ActiveRecord::Base
    end
 
    def image_should_increment?(imageable_type)
-     photos_counter_should_increment && logable.imageable_type  == imageable_type
+     photos_counter_should_increment? && logable.imageable_type  == imageable_type
    end
 
    def image_should_decrement?(imageable_type)
-     photos_counter_should_decrement && logable.imageable_type  == imageable_type
+     photos_counter_should_decrement? && logable.imageable_type  == imageable_type
    end
 end
