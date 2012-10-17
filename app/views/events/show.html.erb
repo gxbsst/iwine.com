@@ -67,7 +67,7 @@
               <% @participants.each do |p| %>
                 <li>
                   <%= link_to_user p.user, user_path(p.user, :trailing_slash => true),
-                    {:with_avatar => true, :avatar_version => :thumb},
+                    {:with_avatar => true, :avatar_version => :middle},
                     {:size => '50x50', :alt => p.user.username } %>
                 </li>
                 <% end %>
@@ -75,7 +75,7 @@
               <% @follows.each do |p| %>
                 <li>
                   <%= link_to_user p.user, user_path(p.user, :trailing_slash => true),
-                    {:with_avatar => true, :avatar_version => :thumb},
+                    {:with_avatar => true, :avatar_version => :middle},
                     {:size => '50x50', :alt => p.user.username } %>
                 </li>
                 <% end %>
