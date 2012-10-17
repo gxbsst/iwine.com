@@ -9,13 +9,21 @@ namespace :unicorn do
   task :setup, roles: :app do
     #run "mkdir -p #{shared_path}/config"
     template "unicorn.rb.erb", unicorn_config
+    #run "ln -nfs #{shared_path}/config/unicorn.rb #{release_path}/config/unicorn.rb"
     #template "unicorn_init.erb", "/tmp/unicorn_init"
     #run "chmod +x /tmp/unicorn_init"
     #run "#{sudo} mv /tmp/unicorn_init /etc/init.d/unicorn_#{application}"
     #run "#{sudo} update-rc.d -f unicorn_#{application} defaults"
     #sudo "ln -nfs #{current_path}/config/unicorn_init.sh /etc/init.d/unicorn_#{application}"
   end
-  after "deploy:setup", "unicorn:setup"
+  after "deploy:setup_config", "unicorn:setup"
+
+  desc "symlink unicorn  configuration"
+  task :symlink_file, roles: :app do
+    run "ln -nfs #{shared_path}/config/unicorn.rb #{release_path}/config/unicorn.rb"
+  end
+
+  after "deploy:symlink_config", "unicorn:symlink_file"
 
   %w[start stop restart].each do |command|
     desc "#{command} unicorn"

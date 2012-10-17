@@ -17,13 +17,21 @@ set :default_environment, {
 
 set :application, "iWine"
 set :user, "iwine"
-set :deploy_to, "/srv/rails/iwine.com"
 set :deploy_via, :remote_cache
 set :use_sudo, false
 
 set :scm, "git"
 set :repository, "ssh://git@www.sidways.com:20248/patrick_ruby"
-set :branch, "develop"
+
+if ENV['RAILS_ENV'] =='production'
+  set :branch, "master"
+  set :deploy_to, "/srv/rails/production.iwine.com"
+else
+  set :branch, "develop"
+  set :deploy_to, "/srv/rails/develop.iwine.com"
+end
+
+
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
@@ -57,6 +65,7 @@ namespace :deploy do
     put File.read("config/oauth/douban.example.yml"), "#{shared_path}/config/oauth/douban.yml"
     put File.read("config/oauth/qq.example.yml"), "#{shared_path}/config/oauth/qq.yml"
     put File.read("config/oauth/sina.example.yml"), "#{shared_path}/config/oauth/sina.yml"
+
     # photos
     run "mkdir -p #{shared_path}/uploads"
     puts "Now edit the config files in #{shared_path}."
@@ -70,7 +79,7 @@ namespace :deploy do
     run "ln -nfs #{shared_path}/config/oauth/douban.yml #{release_path}/config/oauth/douban.yml"
     run "ln -nfs #{shared_path}/config/oauth/qq.yml #{release_path}/config/oauth/qq.yml"
     run "ln -nfs #{shared_path}/config/oauth/sina.yml #{release_path}/config/oauth/sina.yml"
-    run "ln -nfs #{shared_path}/config/unicorn.rb #{release_path}/config/unicorn.rb"
+    #run "ln -nfs #{shared_path}/config/unicorn.rb #{release_path}/config/unicorn.rb"
   end
   after "deploy:finalize_update", "deploy:symlink_config"
 

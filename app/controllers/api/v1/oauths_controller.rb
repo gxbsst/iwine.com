@@ -5,8 +5,9 @@ module Api
       #before_filter :get_user
 
       def create
+
         @user = create_new_user
-        sign_in @user, :bypass => true  
+        sign_in @user, :bypass => true
         @user.reset_authentication_token!
         # user_id, sns_name, sns_user_id
         params[:oauth_user][:user_id] = @user.id
@@ -14,12 +15,12 @@ module Api
           render :json =>  user_info_json
         else
           render :json => {:success => false,
-            :resultCode =>  APP_DATA["api"]["return_json"]["normal_failed"]["code"],
-            :errorDesc =>  APP_DATA["api"]["return_json"]["normal_failed"]["message"],
-            :message => @user_oauth.errors }, :status => 422
+                           :resultCode =>  APP_DATA["api"]["return_json"]["normal_failed"]["code"],
+                           :errorDesc =>  APP_DATA["api"]["return_json"]["normal_failed"]["message"],
+                           :message => @user_oauth.errors }, :status => 422
         end
       end
-      
+
       protected
      
       def create_user_oauth(params)
@@ -47,7 +48,7 @@ module Api
         @user = User.find_by_email(email)
         unless @user.present?
           password = generate_pass
-          @user = User.new(:username => oauth_user[:nickname], 
+          @user = User.new(:username => oauth_user[:sns_user_id],
                            :email => email,
                            :password => password,
                            :password_confirmation => password

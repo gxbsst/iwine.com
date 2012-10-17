@@ -40,7 +40,7 @@ $(document).ready(function(){
         if (($(window).height() - offset.y) < iw_comment.offset().top + iw_comment.height()){
             $('html, body').animate({scrollTop: iw_comment.offset().top - $(window).height()/2.0}, 500);
         }
-        $('form input.comment_body', iw_comment).focus();
+        $('form textarea.comment_body', iw_comment).focus();
     });
 
     $(".submit_a").live('click', function(){
