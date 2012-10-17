@@ -192,12 +192,11 @@ class Event < ActiveRecord::Base
   def invite_one_user(inviter_id, invitee_id, params = {})
     return if (have_been_invited?(invitee_id))
 
-    invitee = invitees.build(:inviter_id => inviter_id,
-                             :invitee_id => invitee_id,
+    invitee = invitees.build(:inviter_id => inviter_id,                             :invitee_id => invitee_id,
                              :invite_log => params[:invite_log])
     invitee.save
     #TODO: Send Message OR Email
-    return invitee
+    invitee
   end
 
   # 用户是否已经被邀请
@@ -224,10 +223,15 @@ class Event < ActiveRecord::Base
     if cancle?
       raise ::EventException::EventHaveCancled.new('该活动已经被取消')
     else
-      if self.valid?
-        update_attribute(:publish_status, PUBLISHED_STATUS)
+      if poster.blank?
+        errors.add(:poster,'海报不能为空')
+        raise "海报不能为空"
       else
-        raise "不合格的数据"
+        if self.valid?
+          update_attribute(:publish_status, PUBLISHED_STATUS)
+        else
+          raise "不合格的数据"
+        end
       end
     end
   end
