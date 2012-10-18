@@ -80,5 +80,21 @@ ActiveAdmin.register Winery do
     end
   end
 
+  index do
+    column("ID", :id){|winery| link_to winery.id, admin_winery_path(winery)}
+    column :name_zh
+    column :name_en
+    column "地区", :region_tree_id, :region_tree
+    column "LOGO" do |winery|
+      image_tag(winery.logo_url(:thumb)) unless winery.logo_url.include?("default")
+    end
+    column "介绍" do |winery|
+      items = winery.info_items
+      if items.present?
+        "#{items.first.title}  #{items.first.description}"
+      end
+    end
+  end
+
   form :partial => "form"
 end

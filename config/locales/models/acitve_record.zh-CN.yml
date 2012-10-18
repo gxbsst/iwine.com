@@ -65,6 +65,7 @@ zh-CN:
         width: '宽'
         height: '高'
         size: '尺寸'
+        created_at: '创建时间'
       wines/detail:
         drinkable_begin: '适饮起始时间'
         drinkable_end: '适饮结束时间'
