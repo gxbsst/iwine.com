@@ -31,7 +31,7 @@
       <span class="type"><%= event_item_tags(@event) %></span>
       <h1><%= @event.title %></h1>
       <div class="info">
-        时间: <%= @event.begin_end_at %> <br />
+        时间: <%= @event.begin_end_at_cn %> <br />
         地点: <%= @event.full_address %><br />
         组织者：<%= link_to  @event.user.username, user_path(@event.user, :trailing_slash => true) %>
       </div>
