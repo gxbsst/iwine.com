@@ -20,7 +20,15 @@
         </p>
         <%= render :partial => "friends/friend" %>
     <% else %>
-        <p class="mb30"><span class="font14">你还没有设置<%= params[:sns_name] %>账号</span></p>
+        <p class="mb30">
+          <span class="font14">
+            <% if @refresh_access_token %>
+              你的授权已过期，请重新授权。
+            <% else %>
+              你还没有设置<%= params[:sns_name] %>账号
+            <% end %>
+          </span>
+        </p>
         <div class="align_c">
           <% if params[:sns_name] == "weibo" %>
               <%= link_to image_tag("common/btn_syn_weibo.jpg", :title => "微博" ),

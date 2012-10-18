@@ -51,6 +51,7 @@ zh-CN:
     oauth:
       update_oauth: "同步第三方成功。"
       ouath_failure: "同步第三方失败。"
+      refresh_access_token: "授权过期，请刷新授权。"
 
   helpers:
     submit:
