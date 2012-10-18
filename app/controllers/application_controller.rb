@@ -90,6 +90,9 @@ class ApplicationController < ActionController::Base
   end
 
    def render_500(exception)
+     ExceptionNotifier::Notifier
+     .exception_notification(request.env, exception)
+     .deliver
      @error = exception
      respond_to do |format|
        format.html { render template: 'errors/error_500', layout: 'layouts/application', status: 500 }
