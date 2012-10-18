@@ -383,16 +383,16 @@ class Event < ActiveRecord::Base
     "x" <<  APP_DATA["image"]["poster"]["#{version.to_s}"]["height"].to_s
  end
 
- # 当活动被取消时， 发通知给活动参与者
- def send_cancle_event_notification
-   receivers = self.participants(&:user)
-
-   # TODO: IAN 确定最终模板
-   subject = '活动取消'
-   body = '您参加的活动被取消了'
-
-   delay.send_system_message(receivers, body, subject)
- end
+ ## 当活动被取消时， 发通知给活动参与者
+ #def send_cancle_event_notification
+ #  receivers = self.participants(&:user)
+ #
+ #  # TODO: IAN 确定最终模板
+ #  subject = '活动取消'
+ #  body = '您参加的活动被取消了'
+ #
+ #  delay.send_system_message(receivers, body, subject)
+ #end
 
 end
 

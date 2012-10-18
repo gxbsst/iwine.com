@@ -82,7 +82,7 @@ Patrick::Application.configure do
   config.middleware.use ExceptionNotifier,
     :email_prefix => "[Exception] ",
     :sender_address => %{"Exception Notifier" <support@sidways.com>},
-    :exception_recipients => ["shanhua.chen@sidways.com", "weston.wei@sidways.com"]
+    :exception_recipients => ["shanhua.chen@sidways.com", "weston.wei@sidways.com", "xiaofei.li@sidways.com"]
 
   config.action_mailer.default_url_options = { :host => 'iwine.com' }
     
