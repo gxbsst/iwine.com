@@ -1,13 +1,18 @@
 ActiveAdmin.register User do
-  # index do
-  #   column :email
-  #   column :username
-  #   column :remember_created_at
-  #   column :sign_in_count
-  #   column :current_sign_in_at
-  #   column :last_sign_in_at
-  #   column :role
-  # end
+  
+  actions :index, :show
+
+  scope :all, :default => true
+  scope :active_user
+  
   filter :email
   filter :username
+  filter :id
+
+  index do
+    column(:id) {|user| link_to user.id, admin_user_path(user)}
+    column :username
+    column :email
+  end
+
 end
