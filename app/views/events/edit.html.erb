@@ -33,8 +33,8 @@
   <div class="add_event_step">
     <%= image_tag "common/add_event_step1.gif", :size => "180x22" %>
   </div>
-  <% unless @event.errors.get(:poster).blank? %>
-    <div class="error mt20"><%= @event.errors.get(:poster).join('') %></div>
+  <% unless @event.errors[:poster].blank? %>
+    <div class="error mt20"><%= @event.errors[:poster].join('') %></div>
   <% end %>
   <div id="stylized" class="myform mb30">
     <%= render 'form' %>
