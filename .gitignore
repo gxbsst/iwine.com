@@ -12,9 +12,13 @@ tmtags
 .gitkeep
 .idea/*
 config/database.yml
+config/oauth/douban.yml
+config/oauth/qq.yml
+config/oauth/sina.yml
+config/oauth/development_all.yml
+config/oauth/production_all.yml
 public/uploads/*
 .sass-cache
-config/deploy.rb
 Capfile
 .idea/workspace.xml
 db/schema.rb

@@ -6,6 +6,12 @@
 		<% end %>
 	</p>
 
+  <p class="mt10">
+    <%= link_to new_wine_path(:wine_id => @wine.id), :class => "btn_gray" do %>
+      <span>添加新年份</span>
+    <% end %>
+  </p>
+
 	<!-- <p class="mt10"> 
 		<a href="#">
 			<%= image_tag "icon/open.gif", :width => 13, :height => 13, :alt => "查看所有年份" %>

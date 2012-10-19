@@ -11,6 +11,22 @@
     <%= csrf_meta_tags %>
     <%= yield :css %>
     <%= yield :js %>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-484022-16']);
+      _gaq.push(['_trackPageview']);
+
+      <%= Garelic::Timing %>
+
+      (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+
+     </script>
   </head>
   <body>
     <div id="header">
@@ -22,7 +38,7 @@
         </div>
         <div id="top_search">
           <%= image_submit_tag "icon/search.gif", :class => :search_btn , :id=>:search_btn %>
-          <input class="search" id="hot_search" name="" type="text" placeholder="搜索酒款、酒庄" />
+          <input class="search" id="hot_search" name="" type="text" placeholder="搜索酒、酒庄" />
         </div>
         <div class="search_scroll" id="search_scroll" style="display: none;z-index: 999;"></div>
         <div id="top_right">
@@ -45,6 +61,11 @@
       <% end %>
         <%= render_stickies(:close => "") %>
         <%= yield %>
+        <div id="gototop" class="indicator">
+          <a href="#header">
+             <%= image_tag "common/totop.png", :size => "86x39", :alt => "回到页首" %>
+          </a>
+        </div>
       </div>
       <%= render "layouts/footer" %>
       <script type="text/javascript" >
@@ -117,9 +138,9 @@
 
               }
             });  
-            setTimeout('getMessageCount()',6000);   
+            setTimeout('getMessageCount()',12000);   
           }
-          // getMessageCount();
+          getMessageCount();
         <% end %>
 
         // Support Placeholder For All Browers

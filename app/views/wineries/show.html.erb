@@ -3,6 +3,7 @@
     <%= stylesheet_link_tag "winery" %>
 <% end %>
 
+<%= javascript_include_tag "jquery_shorten" %>
   <div class="whitespace mb30">
     <%= render "winery_detail" %>
   </div>
@@ -22,7 +23,7 @@
       </div>
       <%= render :partial => "info_item", :collection => @winery.info_items %>
       <div class="section">
-        <div class="title"><h2>所有酒款<span class="font12 more"><%= link_to "(共#{@winery.wines_count}款...)", wines_list_winery_path(@winery)  %></span></h2></div>
+        <div class="title"><h2>所有酒<span class="font12 more"><%= link_to "(共#{@winery.wines_count}款...)", wines_list_winery_path(@winery)  %></span></h2></div>
         <div class="content">
           <ul class="wine_list">
             <%= render :partial => "wine", :collection => @wines %>
@@ -54,3 +55,11 @@
 
     <div class="clear"></div>
   </div>
+
+  <script type="text/javascript">
+    $(".more_info").shorten({
+        "showChars" : 205,
+        "moreText"  : "阅读全部",
+        "lessText"  : "隐藏"
+    });
+  </script>

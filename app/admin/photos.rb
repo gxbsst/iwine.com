@@ -1,7 +1,13 @@
-#encoding: utf-8
+# encoding: UTF-8
 
 ActiveAdmin.register Photo do
 
+  scope :all, :default => true
+  scope :approved
+
+  filter :created_at
+  filter :audit_status#, :as => :string
+  filter :photo_type
   controller do
     def update
       @photo = Photo.find(params[:id])
@@ -82,13 +88,33 @@ ActiveAdmin.register Photo do
         p.intro
       end
       row '类型' do
-        photo_type(p.photo_type)
+        show_photo_type(p.photo_type)
       end
       row '状态' do
         photo_status(p.audit_status)
       end
     end
   end
+  
+  index do
+    column :id
+    # column(:album_id, :album, :sortable => :album_id)
+    column "图片" do |photo|
+      image_tag photo.image_url(:thumb)
+    end
+    column :width
+    column :height
+    column :intro
+    column :photo_type do |photo|
+      show_photo_type(photo.photo_type)
+    end
+    column :audit_status do |photo|
+      photo_status(photo.audit_status)
+    end
+    column :created_at
+    default_actions
+  end
+
 end
 
 def get_imageable
@@ -128,7 +154,7 @@ def update_photos(photos)
   end
 end
 
-def photo_type(value)
+def show_photo_type(value)
   type = [ "正常", "标志", "封面"]
   type[value.to_i]
 end

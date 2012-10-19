@@ -16,6 +16,8 @@ class PhotosController < ApplicationController
       render_wine_photo_list
     when "wineries"
       render_winery_photo_list
+    when "events"
+      render_event_photo_list
     end
   end
 
@@ -38,6 +40,8 @@ class PhotosController < ApplicationController
       render_wine_photo_detail
     when "wineries"
       render_winery_photo_detail
+    when "events"
+      render_event_photo_detail
     end
   end
   
@@ -52,13 +56,13 @@ class PhotosController < ApplicationController
   end
 
   def create
-      @user = current_user
-      # 多图片上传
-      params[:photo][:image].each do |image|
-        @photo = create_photo(image)
-        if @photo.save
-          @photo.approve_photo
-          respond_to do |format|
+    @user = current_user
+    # 多图片上传
+    params[:photo][:image].each do |image|
+      @photo = create_photo(image)
+      if @photo.save
+        @photo.approve_photo
+        respond_to do |format|
           format.html { #(html response is for browsers using iframe sollution)
             render :json => [@photo.to_jq_upload].to_json,
             :content_type => 'text/html',
@@ -137,7 +141,12 @@ class PhotosController < ApplicationController
     @multiple = true #此页面有两个分享
     @title = ["图片", @winery.name].join('-')
     render "winery_photo_detail"
+  end
 
+  def render_event_photo_detail
+    @multiple = true # 此页面有两个分享
+    init_event_object
+    render "event_photo_detail"
   end
 
   def render_wine_photo_list
@@ -153,9 +162,20 @@ class PhotosController < ApplicationController
     render "winery_photo_list"
   end
 
+  def render_event_photo_list
+    init_event_object
+    render "event_photo_list"
+  end
+
   def find_winery_and_hot_winery
     @winery = Winery.find params[:winery_id]
     @hot_wineries = Winery.hot_wineries(5) 
+  end
+
+  def init_event_object
+    @event = Event.find(params[:event_id])
+    @recommend_events = Event.recommends(4)
+    @participant = @event.have_been_joined? @user.id if @user
   end
 
   def get_photo_imageable
@@ -163,6 +183,8 @@ class PhotosController < ApplicationController
       @resource, @id = ["Wines::Detail", params[:wine_id]]
     elsif params[:winery_id].present?
       @resource, @id = ["Winery", params[:winery_id]]
+    elsif params[:event_id].present?
+      @resource, @id = ["Event", params[:event_id]]
     else
       @resource, @id = ["Album",  params[:album_id]]
     end

@@ -19,10 +19,10 @@
             <%= event.tag_list.join(',') %>
           </span>
           <h1>
-            <%= link_to event.title, event_path(event)  %>
+            <%= link_to truncate_u(event.title, 29), event_path(event)  %>
           </h1>
           <div class="info">
-            时间：<%= event.begin_end_at %>
+            时间：<%= event.begin_end_at_cn %>
             <br />
             地点：<%= event.full_address  %>
             <br />
@@ -44,10 +44,12 @@
      <div class="left">
        <div class="event_tag">
          <div class="title">
+           <!--
            <div class="search">
              <input class="text mr5" style="width:200px;" placeholder="搜索活动" name="" type="text" />
              <a href="javascript:void(0)" class="btn_gray"><span>搜索</span></a>
            </div>
+           -->
            <h2>活动 <span class="font12 more"><a href="winery_comment_list.html"></a></span></h2>
            <div class="clear"></div>
          </div>
@@ -78,31 +80,35 @@
        </div>
 
         <div class="event_list">
-          <% @events.each do |event| %>
-            <dl class="clearfix">
-              <dt>
-                <%= link_to event_path(event) do %>
-                  <%= image_tag event.poster_url(:thumb), :size => '100x150', :alt => event.title %>
-                <% end %>
-              </dt>
-              <dd>
+          <% if @events.blank? %>
+           <p>未发现将要进行的活动...</p>
+          <% else %>
+            <% @events.each do |event| %>
+              <dl class="clearfix">
+                <dt>
+                  <%= link_to event_path(event) do %>
+                    <%= image_tag event.poster_url(:thumb), :size => '100x150', :alt => event.title %>
+                  <% end %>
+                </dt>
+                <dd>
                 <span class="type">
                   <%= event_item_tags(event) %>
                 </span>
-                <h2> <%= link_to event.title, event_path(event)  %></h2>
-                <div class="info">时间:  <%= event.begin_end_at %><br />
-                  地点:  <%= event.full_address %><br />
-                  组织者：<%= link_to  event.user.username, 
-                      user_path(event.user, :trailing_slash => true) %>
-                </div>
-                <div class="p_count2">
+                  <h2><%= link_to truncate_u(event.title, 29), event_path(event)  %></h2>
+                  <div class="info">时间:  <%= event.begin_end_at_cn %><br />
+                    地点:  <%= event.full_address %><br />
+                    组织者：<%= link_to  event.user.username,
+                                     user_path(event.user, :trailing_slash => true) %>
+                  </div>
+                  <div class="p_count2">
                   <span>
                     <%= event.participants_count %>人参加  |
                     <%= event.followers_count %>人感兴趣
                   </span>
-                </div>
-              </dd>
-            </dl>
+                  </div>
+                </dd>
+              </dl>
+            <% end %>
           <% end %>
         </div>
         <div class="pagination">
@@ -134,7 +140,7 @@
                     <dd>
                       <h3><%= link_to event.title, event_path(event) %></h3>
                       <div class="info">
-                        <%= event.begin_end_at %>
+                        <%= event.begin_end_at_cn %>
                         <br />
                         <%= event.full_address %>
                       </div>
@@ -169,7 +175,7 @@
                     <dd>
                       <h3><%= link_to event.title, event_path(event) %></h3>
                       <div class="info">
-                        <%= event.begin_end_at %>
+                        <%= event.begin_end_at_cn %>
                         <br />
                         <%= event.full_address %>
                       </div>
@@ -204,7 +210,7 @@
                     <dd>
                       <h3><%= link_to event.title, event_path(event) %></h3>
                       <div class="info">
-                        <%= event.begin_end_at %>
+                        <%= event.begin_end_at_cn %>
                         <br />
                         <%= event.full_address %>
                       </div>
@@ -221,9 +227,10 @@
             </div>
           <% end %> 
 
-
           <div class="sidebox">
             <%= render 'recommends' %>
           </div>
-          <div class="clear"></div>
+          <!--end right-->
         </div>
+        <div class="clear"></div>
+      </div>

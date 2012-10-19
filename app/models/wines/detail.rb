@@ -58,13 +58,12 @@ class Wines::Detail < ActiveRecord::Base
   scope :releast_detail, lambda {order("year desc").limit(1)}
   accepts_nested_attributes_for :photos, :reject_if => proc { |attributes| attributes['image'].blank? }
   accepts_nested_attributes_for :label, :reject_if => proc { |attributes| attributes['filename'].blank? }
-
   # Friendly Url
   extend FriendlyId
   friendly_id :pretty_url, :use => [:slugged]
 
   def pretty_url
-    "#{wine.origin_name} #{show_year.downcase}"
+    "#{wine.origin_name} #{show_year.to_s.downcase}"
   end
 
   # scope :with_recent_comment, joins(:comments) & ::CommenGt.recent(6)
@@ -242,7 +241,7 @@ class Wines::Detail < ActiveRecord::Base
   # 类方法
   class << self
    def timeline_events
-     TimelineEvent.wine_details
+     TimelineEvent.wine_details 
    end
   end
 end

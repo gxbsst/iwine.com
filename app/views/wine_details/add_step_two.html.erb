@@ -12,10 +12,10 @@
           <div class="float_r">
             <span class="notice_b">这些都不是您要找的酒？</span>
             <%=  link_to new_wine_path, :class => "btn_gray" do %>
-                <span>添加酒款</span>
+                <span>添加酒</span>
             <% end %>
           </div>
-          <p class="notice_b mb20">我们为您搜寻到以下酒款</p>
+          <p class="notice_b mb20">我们为您搜寻到以下酒</p>
           <div class="clear"></div>
         </div>
 
@@ -50,7 +50,7 @@
           <%= paginate @wines %>
         </div>
     <% else %>
-        <div class="notice mb20">没有找到相关酒款，您愿意帮助我们添加么？</div>
+        <div class="notice mb20">没有找到相关酒，您愿意帮助我们添加么？</div>
         <div class="align_c">
           <%= link_to new_wine_path, :class => "btn_gray_b mr5" do %>
               <span>我来添加</span>

@@ -24,25 +24,45 @@ namespace :app do
   task :init_style_and_region_data => :environment do
     puts "================ init_style_and_region_data task begin"
     require 'csv'
-    styles = [
-      ['Red Wine', '红葡萄酒'],
-      ['White Wine', '白葡萄酒'],
-      ['Rose Wine', '粉红葡萄酒'],
-      ['Sparking Wine', '起泡酒'],
-      ['Port Wine', '波特酒'],
-      ['Sherry Wine', '雪利酒'],
-      ['Fortified Wine', '加强酒'],
+    parent_styles = [
+      ['Table Wine', '佐餐葡萄酒'],
+      ['Sparkling', '起泡酒'],
+      ['Fortified', '加强酒'],
       ['Sweet Wine', '甜酒'],
       ['Others', '其它']
+    ]
+    styles = [
+      ['Red', '红葡萄酒', 'Table Wine'],
+      ['White', '白葡萄酒', 'Table Wine'],
+      ['Rose', '粉红葡萄酒', 'Table Wine'],
+      ['Red Sparkling', '起泡红葡萄酒', 'Sparkling'],
+      ['White Sparkling', '起泡白葡萄酒', 'Sparkling'],
+      ['Rose Sparkling', '起泡粉红葡萄酒', 'Sparkling'],
+      ['Port', '波特酒', 'Fortified'],
+      ['Sherry', '雪利酒', 'Fortified'],
+      ['Other Fortified', '其它加强酒', 'Fortified']
+
     ]
 
     #
     # ## 导入酒类表
-    styles.each do |s|
-      w = Wines::Style.where("name_en = ? and name_zh =? ", s[0], s[1]).first_or_create(:name_en => s[0], :name_zh => s[1])
+    #导入主类别葡萄酒
+    parent_styles.each do |s|
+      w = Wines::Style.
+        where("name_en = ? and name_zh =? ", s[0], s[1]).
+        first_or_create(:name_en => s[0], :name_zh => s[1])
       puts "wine_style #{w.id}"
     end
 
+    #导入子类葡萄酒
+    styles.each do |s|
+      w = Wines::Style.
+        where("name_en = ? and name_zh = ?", s[0], s[1]).
+        first_or_initialize(:name_en => s[0], :name_zh => s[1])
+      parent = Wines::Style.find_by_name_en(s[2])
+      w.parent = parent if parent
+      w.save
+    end
     #
     # ## 导入中国地区表
     regions = CSV.read("#{Rails.root}/lib/tasks/data/region.csv")

@@ -44,7 +44,6 @@ class AuditLog < ActiveRecord::Base
       #  [1,2] 通过审核 => 驳回
       #  [2,1]  驳回 ＝》通过审核
       #  [2,0] 不存在的状态
-     
       case audit_status_value
       when [APP_DATA["audit_log"]["status"]["approved"].to_i] # 第一次审核
         @audit_migrate_status = 1
@@ -56,9 +55,8 @@ class AuditLog < ActiveRecord::Base
         @audit_migrate_status = 3  # [2,1] 通过审核 => 驳回
       when [APP_DATA["audit_log"]["status"]["approved"], APP_DATA["audit_log"]["status"]["rejected"]]   
         @audit_migrate_status = 4 # [1,2]  驳回 ＝》通过审核
-      end 
-     
-   end 
+      end
+  end
 
    # COUNTER
    ## 通过audit_migrate_status 判断图片数量是否增加
@@ -107,5 +105,13 @@ class AuditLog < ActiveRecord::Base
      if self.owner_type == OWNER_TYPE_WINE_REGISTER && self.counter_should_decrement? 
         true
      end
+   end
+
+   def image_should_increment?(imageable_type)
+     photos_counter_should_increment? && logable.imageable_type  == imageable_type
+   end
+
+   def image_should_decrement?(imageable_type)
+     photos_counter_should_decrement? && logable.imageable_type  == imageable_type
    end
 end

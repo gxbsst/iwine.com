@@ -10,57 +10,7 @@
 <% end %>
    <div class="whitespace eventmain">
    	  <div class="left">
-        <div class="base">
-          <div class="poster">
-            <%= image_tag @event.poster_url(:large), :size => '150x225' %>
-          </div>
-          <div class="base_content">
-            <span class="type">
-              <%= event_item_tags(@event) %>
-            </span>
-            <h1><%= @event.title %></h1>
-            <div class="info">
-              时间: <%= @event.begin_end_at %>
-              <br />
-              地点: <%= @event.full_address %>
-              <br />
-              组织者：<%= link_to  @event.user.username, user_path(@event.user, :trailing_slash => true) %>
-            </div>
-            <span class="p_count">
-              <%= @event.participants_count %>人参加  |  <%= @event.followers_count %>人感兴趣
-            </span>
-            <div class="action">
-              <div class="share">
-                <%= render 'share/sns_icons',
-                  :image_url => sns_image_url(@event, :thumb_name => :large),
-                  :title => sns_title(@event.title),
-                  :summary => @event.title ,
-                  :url => request.url %>
-              </div>
-              <%= render 'join_event_button' %>
-
-              <div id="follow_form"  style="display: none" ></div>
-
-              <% if @follow_item.present? %>
-                <span class="icon_fol mr5">感兴趣中</span>
-                <span class="cancl_fol mr5"> 
-                  <%= link_to "(取消)", event_follow_path(@event, @follow_item), :method => :delete %>
-                </span>
-              <% else %>
-                <%= link_to  new_event_follow_path(@event), 
-                  :class => [:btn_bluesky_ss, :ajax], 
-                  :remote => true do %>
-                    <span>我感兴趣</span>
-                  <% end %>
-                <% end %>
-                <!--end action-->
-            </div>
-            <!--end base_content-->
-          </div>
-          <div class="clear"></div>
-          <!--end base-->
-        </div>
-
+        <%= render "event_detail" %>
         <div class="section">
           <div class="title">
             <%= link_to event_path(@event), :class => [:btn_gray, :float_r] do %>
@@ -69,9 +19,13 @@
             <h2>活动参与者</h2>
           </div>
           <div class="sort">
-            <span class="current">参加(<%= @event.participants_count %>)</span>
-            <span><a href="#" class="">感兴趣(<%= @event.followers_count %>)</a></span>
+            <span>
+              <%= link_to "参加(#{@event.participants_count})", participants_event_path(@event) %>
+            </span>
+            <span class="current">
+              感兴趣(<%= @event.followers_count %>)</span>
             <div class="clear"></div>
+
           </div>
 
           <div class="content">
@@ -120,7 +74,7 @@
                 <dd>
                   <h3> <%= link_to event.title, event_path(event)  %></h3>
                   <div class="info">
-                    <%= event.begin_end_at %>
+                    <%= event.begin_end_at_cn %>
                     <br />
                     <%= event.full_address %>
                     <br />

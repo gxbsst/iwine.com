@@ -12,17 +12,17 @@
      </div>
      <div class="required">
        <label><span>*</span>产区</label>
-       <% if @read_only %><%=  @register.region_path_zh(@wine.region_tree_id) %> <% else %><%= render "region_tree" %><% end %>
+       <% if @read_only %><%=  @register.region_path_zh %> <% else %><%= render "region_tree" %><% end %>
      </div>
 
      <div class="required">
        <label><span>*</span>年份</label>
-       <%= f.date_select :vintage, :discard_day => true, :discard_month => true, :start_year => 1950, :end_year => Time.now.year, :prompt => {:year => "选择年份"} %>年
+       <%= f.date_select :vintage, :discard_day => true, :discard_month => true, :start_year => Time.now.year, :end_year => 1950, :prompt => {:year => "选择年份"} %>年
        <label class="nv"><%= check_box_tag("wines_register[is_nv]", 1, @register.is_nv.to_i == 1) %>NV/无年份葡萄酒</label>
      </div>
      <div class="required">
        <label><span>*</span>容量</label>
-       <%= f.select :capacity, APP_DATA['wines']['capacity'].collect{|i| [i, i]} %>
+       <%= f.select :capacity, APP_DATA['wines']['capacity'].each{|key, value| [key, value]} %>
      </div>
      <div class="optional">
        <%= f.label :photo_name %>

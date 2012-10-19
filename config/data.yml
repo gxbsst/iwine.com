@@ -191,8 +191,8 @@ timeline:
      
        
 search_server:
-  host: 180.168.220.98
-  port: 8081
+  host: search.iwine.com
+  port: 8080
   entry_url: /patrick/query/all
   word_url: /patrick/query/associate
   user_url: /patrick/query/user
@@ -258,13 +258,6 @@ api:
      message: ""
 
 event:
- publish_status:
-  cancle: 0
-  draft: 1
-  published: 2
-  locked: 3
- city: { '上海': 1,  '成都': 2, '北京': 3, '深圳': 4, '广州': 5}
-event_participant:
- join_status:
-  joined: 1
-  cancle: 0
+
+ city: { '上海': 1,  '成都': 2, '北京': 3, '深圳': 4, '广州': 5, '其他':'6'}
+

@@ -1,9 +1,15 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
- 
+  resources :system_messages do
+    collection do
+      post :mark_as_read
+      match :move_to_trash, :via => [:get, :post]
+    end
+  end
   resources :events do
+    resources :photos
     resources :event_wines
-    resources :event_invitees
+    resources :event_invitees, :as => 'invitees'
     resources :event_participants, :as => 'participants' do
       member do
         match :cancle, :via => [:put, :get]
@@ -13,7 +19,10 @@ Patrick::Application.routes.draw do
     resources :follows, :controller => "follows" 
     member do
       get :upload_poster
+      get :photo_upload
       get :published
+      get :cancle
+      get :draft
       get :participants
       get :followers
     end
@@ -154,8 +163,8 @@ Patrick::Application.routes.draw do
       match "albums/:album_id/photo/:photo_id", :via => [:get], :to => "albums#photo", :as => :album_photo_show
       # Cellars
       match "cellars/:cellar_id", :via => [:get], :to => "cellars#show", :as => :cellars
-      get :follow
-      get :unfollow
+      put :follow
+      put :unfollow
     end
     collection do
       get "register_success"
@@ -265,6 +274,7 @@ Patrick::Application.routes.draw do
       resources :uploads
       resources :profiles
       resources :oauths
+      resources :confirmations
     end
    end
   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
@@ -272,7 +282,7 @@ Patrick::Application.routes.draw do
   # STATIC
   statics = %w(about_us contact_us help private agreement terms_and_conditions site_map home feedback)
   statics.each do |i|
-     match "/#{i}", :to => "static##{i}"
+    match "/#{i}", :to => "static##{i}"
   end
 
   # Feedback

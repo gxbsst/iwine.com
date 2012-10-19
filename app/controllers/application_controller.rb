@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class ApplicationController < ActionController::Base
 
-  #protect_from_forgery
+  protect_from_forgery
   #before_filter :authenticate_user!
 
   before_filter :set_locale
@@ -77,19 +77,24 @@ class ApplicationController < ActionController::Base
       else
         return request.env['omniauth.origin'] || devise_return_location
       end
+    else
+      admin_root_path
     end
 
   end
 
   def render_404(exception)
-     #@not_found_path = exception.message
-     respond_to do |format|
-       format.html { render template: 'errors/error_404', layout: 'layouts/application', status: 404 }
-       format.all  { render nothing: true, status: 404 }
-     end
-   end
+    #@not_found_path = exception.message
+    respond_to do |format|
+      format.html { render template: 'errors/error_404', layout: 'layouts/application', status: 404 }
+      format.all  { render nothing: true, status: 404 }
+    end
+  end
 
    def render_500(exception)
+     ExceptionNotifier::Notifier
+     .exception_notification(request.env, exception)
+     .deliver
      @error = exception
      respond_to do |format|
        format.html { render template: 'errors/error_500', layout: 'layouts/application', status: 500 }
@@ -122,5 +127,16 @@ class ApplicationController < ActionController::Base
   # 关注某个人
   def follow_one_user(user_id)
     current_user.follow_user(user_id)
+  end
+  
+  #获取未读状态的私信和通知
+  def get_unread_count
+    @unread_receipts_count = current_user.receipts.
+                            not_trash.
+                            unread.
+                            joins(:notification).
+                            where('notifications.type' => SystemMessage.to_s).
+                            size
+    @unread_messages_count = Conversation.unread(current_user).count
   end
 end

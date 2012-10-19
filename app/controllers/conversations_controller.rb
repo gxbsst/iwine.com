@@ -4,17 +4,13 @@ class ConversationsController < ApplicationController
   # before_filter :get_mailbox, :get_box, :get_actor
   before_filter :get_mailbox, :get_box
   before_filter :check_current_subject_in_conversation, :only => [:show, :update, :destroy,:reply]
+  before_filter :mark_read, :only => :show
+  before_filter :get_unread_count, :only => [:show, :index]
   def index
     @title = "我的私信"
     @conversations = @mailbox.conversations.order("created_at DESC").page(params[:page]).per(9)
-    
+
     # mask all items as read
-    @unreads = Conversation.unread(current_user)
-    unless @unreads.blank?
-      @unreads.each do |i|
-        i.mark_as_read(current_user)
-      end
-    end
     # if @box.eql? "inbox"
     #   @conversations = @mailbox.inbox.page(params[:page]).per(9)
     # elsif @box.eql? "sentbox"
@@ -26,13 +22,12 @@ class ConversationsController < ApplicationController
 
   def show
     @title = "对话"
-    @conversation = Conversation.find_by_id(params[:id])
     unless @conversation.is_participant?(current_user)
       notice_stickie t("notice.no_ability")
       return redirect_to root_path
     end
     @message = Message.new conversation_id: @conversation.id
-    current_user.read(@conversation)
+
     #
     #
     # if @box.eql? 'trash'
@@ -147,6 +142,11 @@ class ConversationsController < ApplicationController
       redirect_to conversations_path(:box => @box)
       return
     end
+  end
+  
+  def mark_read
+    @conversation = Conversation.find_by_id(params[:id])
+    current_user.read(@conversation)
   end
 
 end

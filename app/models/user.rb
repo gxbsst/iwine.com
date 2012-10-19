@@ -62,13 +62,13 @@ class User < ActiveRecord::Base
            :include => :followable,
            :class_name => "Follow",
            :conditions => {:followable_type => "Winery"}
-
   #TODO: 现在只是调用酒的部分， 如果调用酒庄， 请把include wine去掉， 因为酒庄没有wine
   has_many :feeds,
     :class_name => "Users::Timeline",
-    :include => [:ownerable, {:timeline_event => [:actor]}, {:receiverable =>  [:covers, :wine]}],
+    :include => [:ownerable, {:timeline_event => [:actor]}, {:receiverable =>  [:covers]}],
     :order => "created_at DESC",
-    :conditions => ["receiverable_type = ?", "Wines::Detail"] 
+    :group => 'receiverable_id'
+    # :conditions => ["receiverable_type = ?", "Wines::Detail"] 
   has_many :followers, :class_name => 'Friendship', :include => :follower do
     def map_user
       map {|f| f.follower }
@@ -115,6 +115,7 @@ class User < ActiveRecord::Base
   extend FriendlyId
   friendly_id :pretty_url, :use => [:slugged]
 
+  alias_method :friends, :followers
   counts :comments_count => {
           :with => "Comment",
           :receiver => lambda {|comment| comment.user },

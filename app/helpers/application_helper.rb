@@ -1,6 +1,18 @@
 # -*- coding: utf-8 -*-
 module ApplicationHelper
 
+  def truncate_u(text, length = 30, truncate_string = "...")
+    l=0
+    char_array=text.unpack("U*")
+    char_array.each_with_index do |c,i|
+      l = l+ (c<127 ? 0.5 : 1)
+      if l>=length
+        return char_array[0..i].pack("U*")+(i<char_array.length-1 ? truncate_string : "")
+      end
+    end
+    return text
+  end 
+
   def photo_photo_comments_path(commentable,comment)
     return "/photos/#{commentable.id}/comments"
   end
@@ -268,12 +280,12 @@ module ApplicationHelper
     end
   end
 
-  #  下拉菜单: 获取热门酒款
+  #  下拉菜单: 获取热门酒
   def get_hot_wine(limit)
     Wines::Detail.hot_wines(1)
   end
 
-  #  下拉菜单: 获取热门酒款
+  #  下拉菜单: 获取热门酒
   def get_hot_wineries(limit)
     Winery.hot_wineries(1)
   end
@@ -319,11 +331,15 @@ module ApplicationHelper
   def sns_image_url(object, options = {})
     if object.class.name == "Photo"
       cover = object
+    elsif object.class.name == "Event"
+      photo = object.poster_url(options[:thumb_name]) if object.poster.present?
     else
       cover = get_cover(object)
     end
     if cover
       "#{root_url}#{cover.image_url(options[:thumb_name])}"
+    elsif photo
+      "#{root_url}#{photo}"
     end
   end
 
@@ -452,11 +468,11 @@ module ApplicationHelper
   end
 
   #获取随机数
-  def get_rand_id(id)
+  def get_rand_id(actor_type, actor_id)
     chars = ("0".."9").to_a
-    rand_id = ''
-    1.upto(5){|i| rand_id << chars[rand(chars.size-1)]}
-    return "#{id}#{rand_id}"
+    newpass = ""
+    1.upto(6){|i| newpass << chars[rand(chars.size-1)]}
+    "#{actor_type.gsub('::Detail', '')}#{actor_id}#{newpass}"
   end
 
   #首页展示不同文字

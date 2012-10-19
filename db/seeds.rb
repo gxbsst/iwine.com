@@ -51,7 +51,7 @@ require 'csv'
  end
 
 
-## 导入一个酒款
+## 导入一个酒
 #wine = {
 #    'name_en' => '',
 #    'name_zh' => '',

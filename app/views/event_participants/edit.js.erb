@@ -2,8 +2,8 @@ $("#join_form").html("<%= escape_javascript(render('join_form', :participant => 
 $.fancybox({
         padding: 0,
          maxWidth       : 550,
-        maxHeight       : 350,
-        minHeight: 350,
+        maxHeight       : 370,
+        minHeight: 370,
         fitToView       : false,
         width           : '100%',
         height          : '100%',
@@ -56,6 +56,7 @@ $.fancybox({
       if (!self.validateEmail($(element['input']).val())){
 
       self.flashWaring(element['input'],'请输入正确的邮箱格式');
+      errors.push(element);
       }
     }
     }

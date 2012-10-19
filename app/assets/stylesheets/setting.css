@@ -39,13 +39,14 @@
 .message_list .content p span, .message_talk .content p span {float:right;}
 .message_list .content p.info, .message_talk .content p.info {margin-top:10px;}
 ul.private_list {border-top:1px solid #ccc;margin-bottom:20px;}
-ul.private_list li {padding:15px 10px;border-bottom:1px solid #ccc;}
+ul.private_list li {padding:15px 5px;border-bottom:1px solid #ccc;}
 .send_private_msg {margin:0 0 15px 0;}
 .send_private_msg .title{padding-left:60px;color:#333;margin-bottom:5px;}
 .send_private_msg .content {float:left;width:520px;}
 .send_private_msg textarea {height:80px;width:510px;margin-bottom:10px;}
 .send_private_msg .btn {text-align:right;}
 .message_talk {margin:10px 0 0 0;}
+.message h2 {font-size:14px;}
 .talk_l, .talk_r {margin:0 0 10px 0;}
 .talk_r {padding-left:60px;}
 .talk_l .userimg {float:left;width:50px;margin:0 10px 0 0;}
@@ -53,6 +54,26 @@ ul.private_list li {padding:15px 10px;border-bottom:1px solid #ccc;}
 .message_talk .content { float:left;display:inline-block;width:500px;}
 .talk_l .content {background-color:#f3f3f3;padding:10px;}
 .talk_r .content {background-color:#f9f9f9;padding:10px;}
+
+.notice_list {margin:0 0 20px 0;border-top:1px solid #ccc;}
+.message .title input.checkall {margin:5px;float:right;}
+.notice_list dl {padding: 15px 5px;border-bottom:1px solid #ccc;}
+.notice_list dt {width:200px;float:left;}
+.notice_list dd {float:left;width:430px;position:relative;}
+.notice_list dd .checkbox {float:right;}
+.notice_list dd .title {float:left;width:300px;}
+.notice_list dd .title a {color:#333;}
+.notice_list dd .title a:hover {color:#993333;text-decoration:none;}
+.notice_list dd .action {position:absolute;left:405px;top:15px;text-align:right;}
+.notice_list .unread {background-color:#f7f7f7;}
+.notice_list .unread .title {font-weight:bold;color:#000;}
+.notice_list .face {width:30px;float:left;margin:0 20px 0 0;}
+.notice_detail {margin:20px 0 20px 0;padding: 20px 0 0 0;border-top:1px solid #ccc;}
+.notice_detail .face {width:50px;float:left;margin: 0 20px 0 0;}
+.notice_detail .m_title {display:block;padding:5px 10px;background-color:#f3f3f3;margin:10px 0 20px 0;}
+.notice_detail h1 {font-size:14px;}
+.notice_detail .main {padding: 0 10px;}
+
 
 /*-------------sys--------------*/
 .sys ul {zoom:1;}

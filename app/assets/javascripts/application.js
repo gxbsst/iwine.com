@@ -31,15 +31,27 @@
 $(document).ready(function(){
 
     // 下拉菜单
-    $(".user-select").bind('mouseenter mouseleave', function(e){
-       $(".drop_down_menu", this).toggle();
+    $(".user-select").live('mouseenter', function(){
+        $(".drop_down_menu", this).show();
     });
-    $('.globel_navi li.arrow').bind('mouseenter mouseleave', function(e) {
-        $('.CategoryDropdown', this).toggle();
+    $(".user-select").live('mouseleave', function(){
+        $(".drop_down_menu", this).hide();
     });
-    $(".share_sns").bind('mouseenter mouseleave', function(e){
-       $(".dropbox",this).toggle();
+
+    $('.globel_navi li.arrow').live('mouseenter', function(){
+        $('.CategoryDropdown', this).show();
     });
+    $('.globel_navi li.arrow').live('mouseleave', function(){
+        $('.CategoryDropdown', this).hide();
+    });
+
+    $(".share_sns").live('mouseenter', function(){
+        $(".dropbox",this).show();
+    });
+    $(".share_sns").live('mouseleave', function(){
+        $(".dropbox",this).hide();
+    });
+
     // 酒详细页面
     $("a.wine_profile").fancybox();
 
@@ -55,29 +67,6 @@ $(document).ready(function(){
         closeClick      : false,
         openEffect      : 'none',
         closeEffect     : 'none',
-        helpers : {
-            overlay : {
-                opacity : 0.8,
-                css : {
-                    'background-color' : '#FFF'
-                }
-            }
-        } // end helper
-
-    });
-    $("a.sns_fancybox").fancybox({
-        maxWidth        : 900,
-        maxHeight       : 850,
-        padding : 0,
-        fitToView       : false,
-        width           : '100%',
-        height          : '100%',
-        autoSize        : false,
-        closeClick      : false,
-        openEffect      : 'none',
-        closeEffect     : 'none',
-        type            : 'iframe',
-       
         helpers : {
             overlay : {
                 opacity : 0.8,
@@ -166,12 +155,23 @@ $(document).ready(function(){
     $("a.submit").click(function(){
 			$(this).parents("form").submit();
 	});
+    //补充自定义方法
+    jQuery.fn.toggleAttr = function toggleAttr(attr, value1, value2){
+        if($(this).attr(attr) == value1){
+            $(this).attr(attr, value2);
+        }else if ($(this).attr(attr) == value2){
+            $(this).attr(attr, value1);
+        }
+    }
+    jQuery.fn.toggleDisabled = function toggleDisabled(){
+        if ($(this).attr('disabled') == undefined){
+            $(this).attr('disabled', true);
+        }else if($(this).attr('disabled') == 'disabled'){
+            $(this).attr('disabled', false);
+        }
+    }
    
 });
-
-
-
-    
 
 
 

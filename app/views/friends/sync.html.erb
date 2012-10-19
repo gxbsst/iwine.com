@@ -11,7 +11,7 @@
     <% if @authorized %>
         <p class="mb30">
           <span class="font14">共找到<%= @recommend_friends.length %>好友</span>
-          <%= link_to follow_user_path(current_user, :user_id=> @user_ids.join(',')), :class => "btn_gray mr5" do %>
+          <%= link_to follow_user_path(current_user, :user_id=> @user_ids.join(',')), :class => "btn_gray mr5", :method => :put do %>
               <span>全部加为好友</span>
           <% end %>
           <%= link_to find_friends_path(), :class => "btn_gray" do %>
@@ -20,35 +20,50 @@
         </p>
         <%= render :partial => "friends/friend" %>
     <% else %>
-        <p class="mb30"><span class="font14">你还没有设置<%= params[:sns_name] %>账号</span></p>
+        <p class="mb30">
+          <span class="font14">
+            <% if @refresh_access_token %>
+              你的授权已过期，请重新授权。
+            <% else %>
+              你还没有设置<%= params[:sns_name] %>账号
+            <% end %>
+          </span>
+        </p>
         <div class="align_c">
-          <%= link_to_sync_button params[:sns_name].to_s, new_sns_friends_path(:sns_name => params[:sns_name]) %>
+          <% if params[:sns_name] == "weibo" %>
+              <%= link_to image_tag("common/btn_syn_weibo.jpg", :title => "微博" ),
+                  user_omniauth_authorize_path(:weibo) %>
+          <% else %>
+            <%= link_to_sync_button params[:sns_name].to_s, new_sns_friends_path(:sns_name => params[:sns_name]) %>
+          <% end %>
         </div>
     <% end %>
   </div>
 </div>
 <script type="text/javascript">
   <% if params[:success] %>
-    var href = parent.$('iframe.fancybox-iframe').attr('src');
-    var patt_weibo = new RegExp("weibo");
-    var patt_qq = new RegExp("qq");
-    var patt_douban = new RegExp('douban');
-    if (patt_weibo.test(href)){
-      parent.$('.share_weibo input').removeAttr('disabled');
-      parent.$('.share_weibo a').attr({href: 'javascript:void(0);', class: ''});
-      parent.$('.share_weibo .sns_on').toggle();
-      parent.$('.share_weibo_image').attr({src: '/assets/icon/weibo_s_on.png', class: 'image_on'});
-    }else if (patt_qq.test(href)){
-      parent.$('.share_qq input').removeAttr('disabled');
-      parent.$('.share_qq a').attr({href: 'javascript:void(0);', class: ''});
-      parent.$('.share_qq .sns_on').toggle();
-      parent.$('.share_qq_image').attr({src: '/assets/icon/tencen_s_on.png', class: 'image_on'});
-    }else if (patt_douban.test(href)){
-      parent.$('.share_douban input').removeAttr('disabled');
-      parent.$('.share_douban a').attr({href: 'javascript:void(0);', class: ''});
-      parent.$('.share_douban .sns_on').toggle();
-      parent.$('.share_douban_image').attr({src: '/assets/icon/douban_s_on.png', class: 'image_on'});
+    if (window.opener){
+      parent_dom = window.opener.document;
+      var href = window.location.href;
+      var patt_weibo = new RegExp("weibo");
+      var patt_qq = new RegExp("qq");
+      var patt_douban = new RegExp('douban');
+      if (patt_weibo.test(href)){
+        parent_dom.querySelector('.share_weibo input').removeAttribute('disabled');
+        parent_dom.querySelector('.share_weibo a').removeAttribute('class');
+        parent_dom.querySelector('.share_weibo img').setAttribute('src', "/assets/icon/weibo_s_on.png");
+      }else if (patt_qq.test(href)){
+        parent_dom.querySelector('.share_qq input').removeAttribute('disabled');
+        parent_dom.querySelector('.share_qq a').removeAttribute('class');
+        parent_dom.querySelector('.share_qq img').setAttribute('src', "/assets/icon/tencen_s_on.png");
+      }else if (patt_douban.test(href)){
+        parent_dom.querySelector('.share_douban input').removeAttribute('disabled');
+        parent_dom.querySelector('.share_douban a').removeAttribute('class');
+        parent_dom.querySelector('.share_douban img').setAttribute('src', "/assets/icon/douban_s_on.png");
+      }
+
+      close();
     }
-    parent.$.fancybox.close();
+
   <% end %>
 </script>

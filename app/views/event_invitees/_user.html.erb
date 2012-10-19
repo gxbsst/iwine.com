@@ -1,0 +1,16 @@
+<% @users.map_user.each do |user| %>
+  <li>
+    <div class="userpic">
+      <%= link_to_user user, user_path(user, :trailing_slash => true), {:with_avatar => true, :avatar_version => :middle}, {:width => 50, :height => 50} %>
+    </div>
+    <div class="userinfo">
+      <div class="username">
+        <%= link_to user.username, user_path(user, :trailing_slash => true) %>
+      </div>
+      <div class="userlocation"></div>
+      <div class="select">
+        <input name="users[]" type="checkbox" id= "<%= "user_#{user.id}" %>"value=<%= user.id %> />
+      </div>
+    </div>
+  </li>
+<% end %>

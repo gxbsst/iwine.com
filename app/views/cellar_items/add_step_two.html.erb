@@ -11,44 +11,48 @@
         <div class="step_sec"></div>
       </div>
       
-      <% unless @search.wines.blank? %>
+      <% unless @wines.blank? %>
           <div class="mb20">
             <div class="float_r">
               <span class="notice_b">这些都不是您要找的酒？</span>
               <%= link_to add_wines_path(:step => 1), :class => "btn_gray" do %>
-                  <span>添加酒款</span>
+                  <span>添加酒</span>
               <% end %>
             </div>
             <%= render "search_item", :object => @search %>
             <div class="clear"></div>
           </div>
           <ul class="wine_list">
-            <% @search.wines.each do |wine_detail| %>
+            <% @wines.each do |wine| %>
+                <% releast_detail = wine.details.releast_detail.first %>
                 <li>
                   <div class="add_to_cellar">
-                    <%= link_to new_cellar_item_path(current_user.cellar, :wine_detail_id => wine_detail.id), :class => "btn_blue" do %>
+                    <%= link_to new_cellar_item_path(current_user.cellar, :wine_id => wine.id), :class => "btn_blue" do %>
                         <span>加入酒窖</span>
                     <% end %>
                   </div>
                   <div class="wine_img">
-                    <%= link_to wine_path(wine_detail.id) do %>
-                      <%= wine_label_tag( wine_detail, :thumb_name => "thumb_x", :width => "70", :height => "70" ) %>
+                    <%= link_to wine_path(releast_detail) do %>
+                      <%= wine_label_tag( releast_detail, :thumb_name => "thumb_x", :width => "70", :height => "70" ) %>
                     <% end %>
                   </div>
                   <div class="wine_info">
                     <h2>
-                      <%= wine_name_zh_link(wine_detail.cname, wine_detail) %>
+                      <%= wine_name_zh_link(wine.name_zh, releast_detail) %>
                     </h2>
-                    <h3><%= link_to wine_detail.origin_name, wine_path(wine_detail.id) %></h3>
-                    <p><%= wine_detail.wine.region_path_zh %></p>
-                    <p><%= wine_detail.wine.style.name_zh %></p>
+                    <h3><%= link_to wine.origin_name, wine_path(releast_detail) %></h3>
+                    <p><%= wine.region_path_zh %></p>
+                    <p><%= wine.style.name_zh %></p>
                   </div>
                   <div class="clear"></div>
                 </li>
             <% end %>
           </ul>
+          <div class="pagination">
+            <%= paginate @wines %>
+          </div>
       <% else %>
-        <p class="notice_b mb20">对不起，没有找到关于“<%= @search.keywords %>”的信息，您是否愿意帮助我们添加酒款？</p>
+        <p class="notice_b mb20">对不起，没有找到关于“<%= @search.keywords %>”的信息，您是否愿意帮助我们添加酒？</p>
         <p>
           <%= link_to new_wine_path, :class => "btn_gray mr5" do %>
             <span>我来添加</span>

@@ -3,15 +3,15 @@
 <%= stylesheet_link_tag :setting %>
 <% end %>
 <div class="whitespace message">
- 
-  <div class="reply_form" id="send_message_form" style="display: none">
-  </div>
+  	<%= render :partial => "share/notification_title", :locals => {:message => true} %>
+  	<div class="reply_form" id="send_message_form" style="display: none">
+  	</div>
 
-  <div class="title clearfix">
+  	<div class="title clearfix">
 		<div class="message_search">
-			  <%= render :partial => 'search_form' %>   
+			<%= render :partial => 'search_form' %>   
 		</div>
-		<h1>我的私信</h1>
+		<h2>我的私信</h2>
 	</div>
 	<div class="path">
 		<%= link_to "返回私信列表", conversations_path %> 》当前共<%=  @conversation.count_messages %>条私信
@@ -38,7 +38,7 @@
 	<div class="message_talk">
 
 		<% @conversation.messages.each do |message| %>
-		<%= render message %>	
+			<%= render message %>	
 		<% end %>
 
 	</div>

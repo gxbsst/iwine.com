@@ -32,7 +32,10 @@
 	                                  :remote => true do %>
 		<span>评论</span>
 	<% end %>
-	<%= link_to  add_to_cellar_wine_path(@wine_detail), :class => [:btn_gray] do %>
+	<%= link_to  add_to_cellar_wine_path(@wine_detail, 
+								:wine_id => @wine_detail.wine_id, 
+								:wine_detail_id => @wine_detail.id), 
+								:class => [:btn_gray] do %>
 		<span>加入酒窖</span>
 	<% end %>
 </div>

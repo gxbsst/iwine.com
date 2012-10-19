@@ -9,6 +9,52 @@
 <script type="text/javascript">
 function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua.indexOf(t)>-1},g='gecko',w='webkit',s='safari',o='opera',m='mobile',h=document.documentElement,b=[(!(/opera|webtv/i.test(ua))&&/msie\s(\d)/.test(ua))?('ie ie'+RegExp.$1):is('firefox/2')?g+' ff2':is('firefox/3.5')?g+' ff3 ff3_5':is('firefox/3.6')?g+' ff3 ff3_6':is('firefox/3')?g+' ff3':is('gecko/')?g:is('opera')?o+(/version\/(\d+)/.test(ua)?' '+o+RegExp.$1:(/opera(\s|\/)(\d+)/.test(ua)?' '+o+RegExp.$2:'')):is('konqueror')?'konqueror':is('blackberry')?m+' blackberry':is('android')?m+' android':is('chrome')?w+' chrome':is('iron')?w+' iron':is('applewebkit/')?w+' '+s+(/version\/(\d+)/.test(ua)?' '+s+RegExp.$1:''):is('mozilla/')?g:'',is('j2me')?m+' j2me':is('iphone')?m+' iphone':is('ipod')?m+' ipod':is('ipad')?m+' ipad':is('mac')?'mac':is('darwin')?'mac':is('webtv')?'webtv':is('win')?'win'+(is('windows nt 6.0')?' vista':''):is('freebsd')?'freebsd':(is('x11')||is('linux'))?'linux':'','js']; c = b.join(' '); h.className += ' '+c; return c;}; css_browser_selector(navigator.userAgent);
 </script>
+<script type="text/javascript">
+<!--
+var timeout         = 100;
+var closetimer		= 0;
+var ddmenuitem      = 0;
+
+// open hidden layer
+function mopen(id)
+{	
+	// cancel close timer
+	mcancelclosetime();
+
+	// close old layer
+	if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+
+	// get new layer and show it
+	ddmenuitem = document.getElementById(id);
+	ddmenuitem.style.visibility = 'visible';
+
+}
+// close showed layer
+function mclose()
+{
+	if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+}
+
+// go close timer
+function mclosetime()
+{
+	closetimer = window.setTimeout(mclose, timeout);
+}
+
+// cancel close timer
+function mcancelclosetime()
+{
+	if(closetimer)
+	{
+		window.clearTimeout(closetimer);
+		closetimer = null;
+	}
+}
+
+// close layer when click-out
+document.onclick = mclose; 
+// -->
+</script>
 </head>
 
 <body>
@@ -47,22 +93,33 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
       	<div class="base">
         	<div class="poster"><img src="images/test/event_150_01.jpg" width="150" height="225" /></div>
             <div class="base_content">
-            	<span class="type">体验活动</span>
+            	<div id="manage">
+                	<p><a href="#" onmouseover="mopen('mbox')" onmouseout="mclosetime()"><img src="images/icon/manage.png" width="22" height="22" alt="管理" /></a></p>
+                	<div id="mbox" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+                    	<a class="icon_edit2" href="event_edit.html">编辑活动</a>
+                        <a class="icon_cancle" href="#">取消活动</a>
+                        <a class="icon_member" href="event_create_member.html">查看参与者</a>
+                        <a class="icon_members" href="event_invite.html">邀请好友参加</a>
+                    </div>
+                </div>
+                
+       	        <div class="tag"><span class="type">体验活动</span></div>
                 <h1>鸡尾酒初级体验班</h1>
                 <div class="info">时间:  6.17 14:00 - 6.17 20:30<br />
                   地点:  上海 浦东新区 成上路云台路上南八村27号<br />
                   费用:  20元<br />
                 组织者：<a href="#">Sheren</a></div>
                 <span class="p_count">54人参加  |  98人感兴趣</span>
-                <div class="action">
+                <!--<div class="action">
                 	<div class="share lh">分享到：<a href="#"><img src="images/icon/sina_s_on.png" alt="新浪" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/tencen_s_on.png" alt="腾讯" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/douban_s_on.png" alt="豆瓣" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/kaixin_s_on.png" alt="开心网" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/renren_s_on.png" alt="人人网" width="17" height="17" align="absmiddle" /></a></div>
                     <span class="full_ss mr5"><em>人数已满</em></span><a href="#" class="btn_bluesky_ss"><span>我感兴趣</span></a>
-                </div>
+                </div><-->
+                <div class="mb10">活动剩余名额：20</div>
                 <div class="action">
                 	<div class="share lh">分享到：<a href="#"><img src="images/icon/sina_s_on.png" alt="新浪" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/tencen_s_on.png" alt="腾讯" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/douban_s_on.png" alt="豆瓣" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/kaixin_s_on.png" alt="开心网" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/renren_s_on.png" alt="人人网" width="17" height="17" align="absmiddle" /></a></div>
                     <a href="#" class="btn_bluesky_ss mr5"><span>我要参加</span></a><a href="#" class="btn_bluesky_ss"><span>我感兴趣</span></a>
                 </div>
-                <div class="action">
+                <!--<div class="action">
                 <div class="share lh">分享到：<a href="#"><img src="images/icon/sina_s_on.png" alt="新浪" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/tencen_s_on.png" alt="腾讯" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/douban_s_on.png" alt="豆瓣" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/kaixin_s_on.png" alt="开心网" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/renren_s_on.png" alt="人人网" width="17" height="17" align="absmiddle" /></a></div>
                 <span class="icon_fol mr5">已报名</span><span class="cancl_fol mr5"> <a href="#">(取消)</a> <a class="mr5" href="#">(修改)</a><a href="#" class="btn_bluesky_ss"><span>我感兴趣</span></a></span>
                 </div>
@@ -77,7 +134,7 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 <div class="action">
                 <div class="share">分享到：<a href="#"><img src="images/icon/sina_s_on.png" alt="新浪" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/tencen_s_on.png" alt="腾讯" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/douban_s_on.png" alt="豆瓣" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/kaixin_s_on.png" alt="开心网" width="17" height="17" align="absmiddle" /></a><a href="#"><img src="images/icon/renren_s_on.png" alt="人人网" width="17" height="17" align="absmiddle" /></a></div>
                <span class="event_cancle mr10">活动已取消</span><span class="icon_fol mr5">感兴趣中</span><span class="cancl_fol mr5"> <a href="#">(取消)</a></span>
-                </div>
+                </div>-->
             </div>
             <div class="clear"></div>
         </div>

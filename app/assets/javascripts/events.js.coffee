@@ -48,8 +48,11 @@ jQuery ->
         tag.set select: ''
         @options.selectTags.remove(selectTagItem)
       else
-        tag.set select: 'select'
-        @options.selectTags.add(tag)
+        if @options.selectTags.length < 5
+          tag.set select: 'select'
+          @options.selectTags.add(tag)
+        else
+          alert("最多可添加5个标签")
     render: ->
       $(@el).html @template {}
       selectTags = @options.selectTags
@@ -96,12 +99,17 @@ jQuery ->
     updateHotTagsSelectStatus: (event) ->
       @collection.off('add')
       @collection.reset()
-      value = @.$('input').val()
+      value = @.$('input').val().replace(/；/g, ";")
+      # debugger
       if value.trim() != ''
-        value.split(',').forEach (tagName) =>
+        value.split(';').forEach (tagName) =>
           if tagName.trim() != ''
             tag = new window.app.Tag name: tagName, select: 'select'
-            @collection.add tag
+            console.info(@collection.length)
+            if @collection.length > 4
+              alert("最多可添加5个标签")
+            else
+              @collection.add tag
       @options.hotTags.trigger('update_status')
       $("#event_tag_list").val(@collection.pluck('name').join(","))
     initialize: ->
@@ -109,7 +117,7 @@ jQuery ->
       @collection.bind('remove', @renderInputValue , @)
       @options.hotTags.bind('select', @renderInputValue, @)
     renderInputValue: ->
-      $("#event_tags").val(@collection.pluck('name').join(","))
+      $("#event_tags").val(@collection.pluck('name').join(";"))
       $("#event_tag_list").val(@collection.pluck('name').join(","))
 
 

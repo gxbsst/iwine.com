@@ -6,7 +6,7 @@ gem 'rails', '3.2.5'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-gem 'jquery-rails'
+gem 'jquery-rails', :git => 'git://github.com/indirect/jquery-rails'
 gem 'devise', "~> 2.0.4"
 gem 'cancan'
 gem 'passenger'
@@ -83,6 +83,7 @@ group :development, :test do
   gem "thin"
   gem 'sextant' #通过 http://localhost:3000/rails/routes 查看routes
   gem 'annotator'
+  gem 'rack-mini-profiler'
 end
 # Gems used only for assets and not required
 # in production environments by default.
@@ -97,7 +98,7 @@ end
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use unicorn as the web server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
 gem 'capistrano'
@@ -146,3 +147,15 @@ gem 'acts-as-taggable-on', '~> 2.3.1'
 # address  latitude & longitude
 gem "geocoder"
 gem 'google_places'
+
+# crontab
+#gem 'rcov', '0.9.11'
+gem 'whenever', :require => false
+#, :git => 'git://github.com/javan/whenever'
+
+# monitor
+gem 'newrelic_rpm'
+gem 'garelic'
+
+# delay job
+gem 'daemons'

@@ -1,5 +1,5 @@
 <% @timelines.each do |l| %>
-    <% item_id = get_rand_id(l.secondary_actor.id) %>
+    <% item_id = get_rand_id(l.secondary_actor_type, l.secondary_actor_id) %>
     <div class="iw item" id="<%= item_id %>">
         <%= render :partial => "share/follow_and_comment_button", :locals => {:parent => l.secondary_actor, :item_id => item_id} %>
         <div class="iw_img">
@@ -14,7 +14,8 @@
             </h2>
             <p class="iw_action"><%= time_line_text(l.event_type) %></p>
         </div>
-        <%= render :partial => "share/time_line_wine", :locals => {:l => l} %>
+        <%= render :partial => "share/time_line_wine", 
+                   :locals => {:event_type => l.event_type, :secondary_actor => l.secondary_actor, :actor => l.actor} %>
         <% if current_user %>
             <div class="iw_comment clearfix" style="display:none;">
                 <div class="left">

@@ -160,8 +160,8 @@ describe Event do
     end
 
     describe "block_in" do
-      it "should be 10" do
-        @event.block_in.should be(10) 
+      it "should be 1" do
+        @event.block_in.should be(1) 
       end
     end
 
@@ -192,13 +192,14 @@ describe Event do
       @ep_info = {:telephone => '13472466606',
         :user_id => @user.id,
         :email => @user.email,
+        :people_num => 3,
         :note => "here is note",
         :username => @user.username}
     end
     describe "#participants_count"  do
       it "should be  1" do
        @user.join_event(@event, @ep_info)
-       Event.find(@event).participants_count.should be(1)
+       Event.find(@event).participants_count.should be(3)
        @participant = @user.cancle_join_event(@event, :cancle_note => 'cancle note') 
        @participant.join_status.should be(0)
        Event.find(@event).participants_count.should be(0)
@@ -213,6 +214,19 @@ describe Event do
        Event.find(@event).followers_count.should be(0)
       end
     end
+
+    describe "#ausgebucht?" do
+      it "block in should be 1" do
+        @event.block_in.should be(1)
+      end
+
+      it "should not  join when event is ausgebucht" do
+        @user.join_event(@event, @ep_info)
+        Event.find(@event).joinedable?.should be_false
+        #Event.find(@event).ausgebucht?.should be_true
+      end
+    end
+
   end
 
   context "Invite User" do

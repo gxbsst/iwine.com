@@ -9,8 +9,9 @@ class WineDetailsController < ApplicationController
   before_filter :check_region_tree, :only => :create
   before_filter :check_edit_register, :only => [:edit, :update]
   before_filter :check_and_create_albums, :only => [:photo_upload]
+  
   def index
-    @title = "酒款"
+    @title = "酒"
     # @wines = Wines::Detail.includes(:wine, :cover).order("created_at ASC").page params[:page] || 1
     @timelines = Wines::Detail.timeline_events
 
@@ -37,7 +38,7 @@ class WineDetailsController < ApplicationController
     @title = @wine_detail.name
   end
 
-  #搜索要添加的酒款
+  #搜索要添加的酒
   def add
     if params[:step].to_i == 1
       @search = ::Search.new
@@ -75,7 +76,7 @@ class WineDetailsController < ApplicationController
 
   end
 
-  #添加新酒款
+  #添加新酒
   def new
     if params[:wine_id]
       @read_only = true
@@ -145,10 +146,12 @@ class WineDetailsController < ApplicationController
 
   # 添加到酒窖
   def add_to_cellar
-     redirect_to new_cellar_item_path(current_user.cellar.id, :wine_detail_id => params[:id] )
+     redirect_to new_cellar_item_path(current_user.cellar.id, 
+                                      :wine_id => params[:wine_id], 
+                                      :wine_detail_id => params[:wine_detail_id])
   end
 
-  #上传酒款成功
+  #上传酒成功
   def add_success
     
   end
@@ -165,7 +168,7 @@ class WineDetailsController < ApplicationController
   end
 
   def get_wine_detail
-    #如果是成功上传酒款就不需要@wine_detail
+    #如果是成功上传酒就不需要@wine_detail
     @wine_detail = Wines::Detail.includes(:label, :photos).find(params[:id]) unless params[:register_success]
   end
 
