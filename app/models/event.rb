@@ -295,7 +295,7 @@ class Event < ActiveRecord::Base
   end
   
   def begin_end_at_cn
-    begin_at.to_s(:cn_yt) << "至" << end_at.to_s(:cn_yt)
+    begin_at.to_s(:cn_yt) << " 至 " << end_at.to_s(:cn_yt)
   end
   # 是否已经感兴趣活动
   # 这个方法重复定义, 但是为了和酒庄／酒相同，这里重复定义
