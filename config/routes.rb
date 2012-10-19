@@ -240,6 +240,7 @@ Patrick::Application.routes.draw do
         get :follow
       end
     end
+
   end
   # SETTINGS
   resources :settings do

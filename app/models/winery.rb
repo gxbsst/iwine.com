@@ -97,7 +97,7 @@ class Winery < ActiveRecord::Base
       per(options[:per] || 16) #如果想使用limit而不用分页效果可以使用per
   end
 
-  # 是否已经关注酒庄
+  # 是否已经关注酒
   def is_followed_by? user
     return follows.where("user_id = ? ", user.id).first ? true : false
   end
