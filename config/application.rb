@@ -63,6 +63,7 @@ module Patrick
     Time::DATE_FORMATS[:yt] = "%m.%d %I:%M"
     Time::DATE_FORMATS[:cn] = "%Y年%m月%d日  %I:%M"
     Time::DATE_FORMATS[:cn_short] = "%m月%d日"
+    Time::DATE_FORMATS[:cn_yt] = "%m月%d日  %I:%M"
     Time::DATE_FORMATS[:year] = "%Y"
     Time::DATE_FORMATS[:cn_normal] = "%Y-%m-%d %I:%M" 
     if Rails.env.development?

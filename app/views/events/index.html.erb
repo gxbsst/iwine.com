@@ -22,7 +22,7 @@
             <%= link_to truncate_u(event.title, 29), event_path(event)  %>
           </h1>
           <div class="info">
-            时间：<%= event.begin_end_at %>
+            时间：<%= event.begin_end_at_cn %>
             <br />
             地点：<%= event.full_address  %>
             <br />
@@ -95,7 +95,7 @@
                   <%= event_item_tags(event) %>
                 </span>
                   <h2><%= link_to truncate_u(event.title, 29), event_path(event)  %></h2>
-                  <div class="info">时间:  <%= event.begin_end_at %><br />
+                  <div class="info">时间:  <%= event.begin_end_at_cn %><br />
                     地点:  <%= event.full_address %><br />
                     组织者：<%= link_to  event.user.username,
                                      user_path(event.user, :trailing_slash => true) %>
@@ -140,7 +140,7 @@
                     <dd>
                       <h3><%= link_to event.title, event_path(event) %></h3>
                       <div class="info">
-                        <%= event.begin_end_at_with_cn %>
+                        <%= event.begin_end_at_cn %>
                         <br />
                         <%= event.full_address %>
                       </div>
@@ -175,7 +175,7 @@
                     <dd>
                       <h3><%= link_to event.title, event_path(event) %></h3>
                       <div class="info">
-                        <%= event.begin_end_at_with_cn %>
+                        <%= event.begin_end_at_cn %>
                         <br />
                         <%= event.full_address %>
                       </div>
@@ -210,7 +210,7 @@
                     <dd>
                       <h3><%= link_to event.title, event_path(event) %></h3>
                       <div class="info">
-                        <%= event.begin_end_at_with_cn %>
+                        <%= event.begin_end_at_cn %>
                         <br />
                         <%= event.full_address %>
                       </div>
