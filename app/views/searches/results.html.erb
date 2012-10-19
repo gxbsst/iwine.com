@@ -72,6 +72,11 @@
                     <span> <%= link_to detail.show_year, wine_path(detail)  %></span>
                 <% end %>
               </p>
+              <p class="mt10">
+                <%= link_to new_wine_path(:wine_id => wine.id), :class => "btn_gray" do %>
+                  <span>添加新年份</span>
+                <% end %>
+              </p>
             </div>
             <div class="clear"></div>
           </div>
