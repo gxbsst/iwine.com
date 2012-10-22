@@ -1,6 +1,6 @@
 <% if !@followings.blank? %>
   <ul class="userlist">
-    <% @followings.map_user.each do |user| %>
+    <% @followings.map_user.each_with_index do |user, index| %>
       <li>
         <div class="userpic">
           <%= link_to_user user,
