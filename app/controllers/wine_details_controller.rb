@@ -89,7 +89,7 @@ class WineDetailsController < ApplicationController
           :wine_style_id => @wine.wine_style_id,
           :region_tree_id => @wine.region_tree_id,
           :user_id => current_user.id,
-          :winery_id => 1
+          :winery_id => @wine.winery_id
       )
     else
       @register = current_user.registers.new()
@@ -196,7 +196,7 @@ class WineDetailsController < ApplicationController
       if params[:winery][:name_en]
         @winery = Winery.where("name_en = ? or origin_name = ? ", params[:winery][:name_en], params[:winery][:name_en]).first
       end
-      if !@winery && params[:winery][:name_zh]
+      if !@winery && params[:winery][:name_zh].present?
         name_zh_arr = change_name_zh(params[:winery][:name_zh])
         name_zh_arr.each do |name_zh|
           @winery = Winery.where("name_zh = ?", name_zh).first
