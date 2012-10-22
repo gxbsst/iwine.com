@@ -20,7 +20,8 @@ OWNER_TYPES = {
 SNS_SERVERS = [
   'weibo',
   'qq',
-  'douban'
+  'douban',
+  'renren'
 ]
 
 EMAIL_SERVERS = [
