@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $("#create_variety").click(function(){
-        if ($("#wines_register_variety_name_value").attr('value') == '' || $("#new_variety").attr('value') == ''){
-            alert('葡萄品种或成分未填写值！');
+        if ($("#wines_register_variety_name_value").attr('value') == ''){
+            alert('葡萄品种未填写值！');
             return false;
         }
         var name = $("#wines_register_variety_name_value").attr('value');
@@ -15,8 +15,8 @@ $(document).ready(function(){
     });
 
     $("#add_detail_variety").click(function(){
-        if ($("#variety_name").attr('value') == '' || $("#variety_percentage").attr('value') == ''){
-            alert('葡萄品种或成分未填写值！');
+        if ($("#variety_name").attr('value') == ''){
+            alert('葡萄品种未填写值！');
             return false;
         }
         var name = $("#variety_name").attr('value');
