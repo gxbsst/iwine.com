@@ -1,5 +1,6 @@
 #encoding: utf-8
 class AfterFirstSigninsController < ApplicationController
+  before_filter :authenticate_user!
   include Wicked::Wizard
 
   steps :upload_avatar, :update_info, :follow_users, :follow_wines, :follow_wineries
