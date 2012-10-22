@@ -1,4 +1,3 @@
-
 ## audit_log
 OWNER_TYPE_USER = 1
 OWNER_TYPE_WINE = 2
@@ -20,8 +19,7 @@ OWNER_TYPES = {
 SNS_SERVERS = [
   'weibo',
   'qq',
-  'douban',
-  'renren'
+  'douban'
 ]
 
 EMAIL_SERVERS = [

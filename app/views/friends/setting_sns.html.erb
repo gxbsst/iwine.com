@@ -48,12 +48,7 @@
             </p>
         <% end %>
       </li>
-
-
-
-
-
-
+      
       <li class='last'>
         <% if current_user.check_oauth?("douban") %>
             <span class="sys_on"></span>
@@ -72,27 +67,7 @@
             </p>
         <% end %>
       </li>
-
-      <li>
-        <% if current_user.check_oauth?("renren") %>
-          <span class="sys_on"></span>
-          <%= image_tag("/assets/common/btn_syn_renren.jpg", :alt => "人人") %>
-          <p>
-            <em>已设置同步到人人</em>
-            <%= link_to "取消同步", delete_sns_friends_path(:sns_name => "renren") %>
-          </p>
-        <% else %>
-          <%= image_tag("/assets/common/btn_syn_renren_off.jpg", :alt => "人人") %>
-          <p><span>尚未设置同步</span></p>
-          <p>
-            <%= link_to new_sns_friends_path(:sns_name => "renren"), :class => "btn_gray", :target => "_blank" do %>
-              <span>同步到人人</span>
-            <% end %>
-          </p>
-        <% end %>
-      </li>
       <div class="clear"></div>
-
     </ul>
   </div>
 </div>
