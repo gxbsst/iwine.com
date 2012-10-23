@@ -45,23 +45,21 @@ class EventsController < ApplicationController
   end
 
   def update
-   render_404('')  unless @event.editable?
+    render_404('')  unless @event.editable?
     respond_to do |wants|
-      if params[:event][:poster].present?
-        notice_stickie "上传成功."
-        @event.update_attribute(:poster, params[:event][:poster])
-        wants.html { redirect_to( upload_poster_event_path(@event)) }
-      elsif params[:event][:crop_x].present?
-        crop_poster
-        notice_stickie "更新成功."
-        wants.html { redirect_to(edit_event_path(@event)) }
-      else
+      if params_has?(:poster)    # 上传海报
+        do_upload_poster(wants)
+      elsif params_has?(:crop_x)  # 编辑海报
+        crop_poster(wants)
+      elsif params_has?(:title)   # 更新活动的基本信息
         if @event.update_attributes(build_old_event)
           notice_stickie "更新成功."
           wants.html { redirect_to(edit_event_path(@event)) }
         else
           wants.html { render :action => "edit" }
         end
+      else
+        wants.html { render :action => "edit" }
       end
     end
   end
@@ -227,13 +225,15 @@ class EventsController < ApplicationController
     } 
   end
 
-  def crop_poster
+  def crop_poster(wants)
     event = params[:event]
     @event.attributes = {:crop_x => event[:crop_x],
                                :crop_y => event[:crop_y],
                                :crop_h => event[:crop_h],
                                :crop_w => event[:crop_w]}
     @event.save # skipping validate
+    notice_stickie "更新成功."
+    wants.html { redirect_to(edit_event_path(@event)) }
   end
 
   def new_normal_comment
@@ -293,4 +293,20 @@ class EventsController < ApplicationController
     end
   end
 
+  def do_upload_poster(wants)
+    notice_stickie "上传成功."
+    @event.update_attribute(:poster, params[:event][:poster])
+    wants.html { redirect_to(upload_poster_event_path(@event)) }
+  end
+
+  def params_has?(params_key)
+    if params[:event].present?
+      params[:event].has_key?(params_key)
+    else
+      false
+    end
+  end
+
 end
+
+

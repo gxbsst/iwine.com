@@ -1,4 +1,3 @@
-
 ## audit_log
 OWNER_TYPE_USER = 1
 OWNER_TYPE_WINE = 2
