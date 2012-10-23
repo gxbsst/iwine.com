@@ -42,7 +42,7 @@
                     </h2>
                     <h3><%= link_to wine.origin_name, wine_path(releast_detail) %></h3>
                     <p><%= wine.region_path_zh %></p>
-                    <p><%= wine.style.name_zh %></p>
+                    <p><%= wine.style.try(:name_zh) %></p>
                   </div>
                   <div class="clear"></div>
                 </li>
