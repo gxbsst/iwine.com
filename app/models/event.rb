@@ -30,7 +30,8 @@ class Event < ActiveRecord::Base
   validates :publish_status, :inclusion => { :in => [0,1,2,3] }
   validate :begin_at_be_before_end_at
   validate :begin_at_be_after_now
-  validates :block_in, :numericality => {:allow_blank => true}, :exclusion => {:in => [0]}
+  validates :block_in, :numericality => {:allow_blank => true}
+  #, :exclusion => {:in => [0]}
 
   scope :published, where(:publish_status => PUBLISHED_STATUS ).order("begin_at ASC")
   scope :live, published.where( "begin_at > ?", Time.now ) # 未举行
