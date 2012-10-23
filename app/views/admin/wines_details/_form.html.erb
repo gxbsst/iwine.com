@@ -27,11 +27,6 @@
       <tr><td></td><td><%= link_to "更新基本信息", edit_admin_wine_path(@wines_detail.wine) %></td></tr>
       <tr></tr>
         <tr>
-          <td><label>种类</label></td>
-          <td><%= d.select :wine_style_id, Wines::Style.all.collect{|s| ["#{s.name_zh}/#{s.name_en}", s.id]} %></td>
-        </tr>
-
-        <tr>
           <td><label>价格</label></td>
           <td><%= d.text_field :price %></td>
         </tr>
