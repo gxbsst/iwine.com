@@ -20,6 +20,14 @@
           <td><%= w.text_field :other_cn_name %></td>
         </tr>
         <tr>
+          <td><label>种类</label></td>
+          <td>
+            <select id="wine_wine_style_id" name="wine[wine_style_id]">
+               <%= render "share/wine_style_select", :wine_style_id => @wine.wine_style_id %>
+            </select>
+          </td>
+        </tr>
+        <tr>
           <td><label>区域</label></td>
           <td><%= render :partial => 'admin/share/region_tree', :locals => {:wine_parent => @wine, :region_tree_id => @wine.region_tree_id } %></td>
         </tr>

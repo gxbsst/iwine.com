@@ -1,0 +1,7 @@
+<% @wine_select_parent = Wines::Style.where(:id => [1,2,3]) %> 
+<%= option_groups_from_collection_for_select(@wine_select_parent, :children, :name, :id, :name, wine_style_id) %>
+<optgroup label="Other/其它">
+   <option value="4" <%= selected="selected" if wine_style_id == 4 %> >Sweet Wine/甜酒</option>
+   <option value="5" <%= selected="selected" if wine_style_id == 5 %> >Other/其它</option>
+</optgroup>
+            
