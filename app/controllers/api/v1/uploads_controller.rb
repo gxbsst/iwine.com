@@ -34,11 +34,11 @@ module Api
         params[:auth_token] = @auth_token 
       end
 
-      def invalid_json(object)
+      def invalid_json
         render :json => {:success => 0, 
           :resultCode => APP_DATA["api"]["return_json"]["normal_failed"]["code"],
-          :errorDesc => APP_DATA["api"]["return_json"]["normal_failed"]["message"],
-          :message => object.errors.messages
+          :errorDesc => APP_DATA["api"]["return_json"]["normal_failed"]["message"]
+          #:message => object.errors.messages
         }
       end
 

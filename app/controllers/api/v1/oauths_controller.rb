@@ -48,7 +48,7 @@ module Api
         @user = User.find_by_email(email)
         unless @user.present?
           password = generate_pass
-          @user = User.new(:username => oauth_user[:sns_user_id],
+          @user = User.new(:username => oauth_user[:sns_user_id] + '_'+ SecureRandom.random_number(10000).to_s,
                            :email => email,
                            :password => password,
                            :password_confirmation => password
