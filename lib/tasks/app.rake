@@ -18,7 +18,42 @@ namespace :app do
   task :init_wines_data => [:upload_all_wines, :new_approve_wines] do
 
   end
+  
+  # ##矫正酒的品种数据错误。
 
+  task :improve_variety_percent => :environment do
+    puts "================ upload_all_wines task begin"
+    require 'csv'
+    file_directories = Rails.root.join("lib", "tasks","data", "wine", "*.csv")
+    logger = Logger.new Rails.root.join("log", "variety_percent.log")
+    logger.info "===============#{Time.now}======================"
+    logger.info "name_en variety percent year(detail)"
+    Dir.glob(file_directories).each do |csv_file|
+      puts "*************** begin load #{csv_file} *****************"
+      csv = CSV.read(csv_file)
+      csv.each_with_index do |item, index|
+        begin
+          #年代
+          next if item[9].blank? #年代为空(没有任何值)跳过此条目
+          if item[9].strip == "NV"
+            wine_detail = Wines::Detail.where(" name_en = ? and is_nv = 1 ", to_ascii(item[1].strip)).joins(:wine).first
+          else
+            wine_detail = Wines::Detail.where(" name_en = ? and year like ? ", to_ascii(item[1].strip), "#{item[9]}%").joins(:wine).first
+          end
+            
+          # if [3496, 7718, 4563].include?(wine_detail.try(:id))
+          if wine_detail
+            #酒类品种及百分比处理
+            variety_name, variety_percentage = get_variety_percentage(item[12], wine_detail)
+            Wines::VarietyPercentage.build_variety_percentage(variety_name, variety_percentage, wine_detail, logger) if variety_name.present?
+          end
+        rescue Exception => e
+          logger.info e
+        end
+      end
+    end
+    logger.close
+  end
 
   desc "TODO"
   task :init_style_and_region_data => :environment do
@@ -74,7 +109,7 @@ namespace :app do
 
   desc "TODO"
   task :init_varieties => :environment do
-    puts "================ init_varieties task begin"
+    puts "================ init_varieties task begin==================="
     require 'csv'
     #
     # ## 导入酒庄
@@ -301,10 +336,10 @@ namespace :app do
   end
 
   #处理酒的品种和百分比
-  def get_variety_percentage(variety)
+  def get_variety_percentage(variety, wine_detail)
     return [nil, nil] if variety.blank?
     #将variety 格式化为类似于[‘Cf', '10', "DE", '', 'MER'. '12']
-    variety_arr = to_ascii(variety).split("\n")
+    variety_arr = to_ascii(variety).to_s.gsub("\v", "\n").split("\n")
     new_variety_arr = variety_arr.collect{|v| v.split "/"}
     #没有百分比的将百分比设置为空
     new_variety_arr.collect{|v| v.push("") if v.size.odd? }
@@ -313,10 +348,9 @@ namespace :app do
     variety_percentage = []
     variety_name = []
     Hash[*final_variety_arr].each do |key, value|
-      variety_name.push key
-      variety_percentage.push value
+      variety_name.push key.strip
+      variety_percentage.push value.strip
     end
-
     #将简写转化为原始数据
     variety_name = short_variety_to_long(variety_name)
     return [variety_name, variety_percentage]
