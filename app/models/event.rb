@@ -349,6 +349,9 @@ class Event < ActiveRecord::Base
        end
      elsif params[:city].present? # CITY
        events = events.city_with(params[:city])
+     elsif params[:word].present?   # 使用 lucene
+       search = HotSearch.new
+       events = search.search_event(params['word'])
      end
      events
    end
