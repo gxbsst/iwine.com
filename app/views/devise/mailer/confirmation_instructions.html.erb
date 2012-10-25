@@ -1,4 +1,7 @@
-<p><b>亲爱的<%= @resource.username %>：</b></p>
+<p><b>亲爱的<%= link_to user_url(@resource) do %>
+	<%= @resource.username %>：
+	<% end %>
+</b></p>
 <p>欢迎加入iWine!</p>
 <p>请点击下面的链接完成注册：<br />
 <%= link_to confirmation_url(@resource, :confirmation_token => @resource.confirmation_token), confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %>
