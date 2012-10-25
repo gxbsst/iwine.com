@@ -63,9 +63,9 @@
                   <%= link_to "(取消)", event_follow_path(@event, @follow_item), :method => :delete %>
               </span>
           <% else %>
-              <%= link_to  new_event_follow_path(@event), 
-                :class => [:btn_bluesky_ss, :ajax], 
-                :remote => true do %>
+              <%= link_to  event_follows_path(@event),
+                :class => [:btn_bluesky_ss],
+                :method => :post do %>
                   <span>我感兴趣</span>
               <% end %>
           <% end %>

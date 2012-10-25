@@ -13,7 +13,11 @@ class FollowsController < ApplicationController
   def create
     @follow = build_follow
     if @follow.save
-      notice_stickie t("notice.comment.follow_success")
+      if @followable.class.name == 'Event'
+        notice_stickie '已经保存到您的感兴趣列表中.'
+      else
+        notice_stickie t("notice.comment.follow_success")
+      end
       redirect_to params[:return_url] ?  params[:return_url] : @followable_path
     else
       notice_stickie('已经被关注')
@@ -24,7 +28,11 @@ class FollowsController < ApplicationController
   def destroy
     @follow = get_user_follow_item
     if @follow.destroy
-      notice_stickie t("notice.comment.cancle_follow")
+      if @followable.class.name == 'Event'
+        notice_stickie "成功取消感兴趣."
+      else
+        notice_stickie t("notice.comment.cancle_follow")
+      end
       redirect_to params[:return_url] ?  params[:return_url] : @followable_path
     end
   end
