@@ -124,7 +124,7 @@ jQuery ->
   class EventAppView extends Backbone.View
     el: $('.whitespace')
     events: 
-      'click #button_add_wines': 'submit'
+#      'click #button_add_wines': 'submit'
       'click #submits .publish': 'update_status_as_publish'
       'click #submits .not_publish': 'update_status_as_draft'
       'click #submits .cancle': 'update_status_as_cancle'

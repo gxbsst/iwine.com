@@ -40,7 +40,8 @@ class EventsController < ApplicationController
     event = params[:event]
     @event = build_new_event
     if @event.save
-      redirect_to new_event_event_wine_path(@event)
+      notice_stickie "保存成功."
+      redirect_to edit_event_path(@event)
     else
       render :action => :new
     end
