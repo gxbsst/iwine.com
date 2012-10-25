@@ -13,18 +13,22 @@
   #  else
   #    可以参加
   #  end
-  #else 活动不是可以参加的
+  #else 活动不是可以参加的      1. 活动过期 2. 活动人数已满 3. 活动已经被取消
   #  if 用户是登录的
   #    if 用户已经参加
-  #      取消参加
+  #      if 活动过期
+  #      elsif 活动取消
+  #      else 取消参加
   #    else
   #      if 活动过期
+  #      elsif 活动取消
   #      elsif 活动人数已经满了
   #      end
   #    end
   #  else
   #    if 活动过期
   #    elsif 活动人数已经满了
+  #    elsif 活动取消
   #    end
   #  end
   #end
@@ -67,6 +71,8 @@
    <% if user_signed_in? %>
      <% if @event.cancle? %>
        <span class="event_cancle mr10">活动已取消</span>
+     <% elsif @event.timeout? %>
+      <span class="event_end mr10">活动已结束</span>
      <% elsif @event.have_been_joined? @user.id %>
        <span class="icon_fol mr5">已报名</span>
        <span class="cancl_fol mr5">
@@ -74,10 +80,7 @@
          <%= link_to '(修改)', edit_event_participant_path(@event,@participant), :class => [:ajax], :remote => true %>
        </span>
      <% else %>
-       <!--活动已经举行-->
-       <% if @event.timeout?  %>
-         <span class="event_end mr10">活动已结束</span>
-       <% elsif @event.ausgebucht? %>
+       <% if @event.ausgebucht? %>
          <span class="full mr5"><em>人数已满</em></span>
        <% end %>
        <!--user_signed_in-->
