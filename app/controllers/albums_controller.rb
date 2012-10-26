@@ -52,7 +52,7 @@ class AlbumsController < ApplicationController
       album = Album.new
       album.attributes = params[:album]
       album.created_by = current_user.id
-      album.save
+      album.valid? ? album.save : error_stickie("相册标题不能为空.")
       redirect_to request.referer
       return
     end
