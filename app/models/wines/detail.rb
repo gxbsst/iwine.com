@@ -65,8 +65,8 @@ class Wines::Detail < ActiveRecord::Base
   validate :year_and_is_nv_presence
 
   def year_and_is_nv_presence 
-    if (wine.is_nv && year) || (!wine.is_nv && is_nv)
-      errors[:base] << "detail 不能同时有year和is_nv的双重记录。"
+    if (wine.is_nv && year) || (!wine.is_nv && !year)
+      errors[:base] << "酒的年代信息不合格。"
     end
   end
 
@@ -115,7 +115,7 @@ class Wines::Detail < ActiveRecord::Base
   end
 
   def is_nv?
-    self.is_nv == 1
+    wine.is_nv
   end
   
   def show_year
@@ -137,7 +137,6 @@ class Wines::Detail < ActiveRecord::Base
         :wine_style_id => register.wine_style_id,
         :audit_id => audit_log_id,
         :user_id => register.user_id,
-        :is_nv => register.is_nv,
         :description => register.description
       )
     end
