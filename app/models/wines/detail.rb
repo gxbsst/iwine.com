@@ -61,6 +61,14 @@ class Wines::Detail < ActiveRecord::Base
   # Friendly Url
   extend FriendlyId
   friendly_id :pretty_url, :use => [:slugged]
+  
+  validate :year_and_is_nv_presence
+
+  def year_and_is_nv_presence 
+    if (wine.is_nv && year) || (!wine.is_nv && is_nv)
+      errors[:base] << "detail 不能同时有year和is_nv的双重记录。"
+    end
+  end
 
   def pretty_url
     "#{wine.origin_name} #{show_year.to_s.downcase}"
@@ -111,7 +119,7 @@ class Wines::Detail < ActiveRecord::Base
   end
   
   def show_year
-    if is_nv?
+    if wine.is_nv
       'NV'
     else
       year.strftime("%Y") unless year.blank?
@@ -181,7 +189,7 @@ class Wines::Detail < ActiveRecord::Base
   end
 
   def show_alcoholicity
-    alcoholicity.blank? ? nil : "#{alcoholicity}%Vol"
+    "#{alcoholicity.gsub('%', '')}%Vol" if alcoholicity.present?
   end
 
   def all_photo_ids
