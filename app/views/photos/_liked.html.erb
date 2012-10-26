@@ -1,4 +1,4 @@
-<div class="like float_r">
+<div class="like float_r">|&nbsp;&nbsp;&nbsp;
 	<%= link_to  vote_photo_path(@photo.id), :remote => true, :class => "ajax vote icon_like"  do %>
 	赞(<span class="likes_count"><%= @photo.likes.size %></span>)
 	<% end %>

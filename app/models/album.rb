@@ -1,6 +1,6 @@
 class Album < ActiveRecord::Base
   belongs_to :user, :foreign_key => 'created_by'
-  has_many :images, :class_name => "Photo"
+  has_many :images, :class_name => "Photo", :dependent => :destroy
   has_many :photos, :as => :imageable
   has_many :covers, :as => :imageable, :class_name => "Photo", :conditions => { :photo_type => APP_DATA["photo"]["photo_type"]["cover"] }
 
