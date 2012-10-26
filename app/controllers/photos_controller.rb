@@ -7,6 +7,7 @@ class PhotosController < ApplicationController
   before_filter :authenticate_user!, :only => [:new, :create]
   before_filter :get_follow_item, :only => [:show, :index]
   before_filter :check_and_create_albums, :only => :new
+
   def index
     @photos = @imageable.photos.approved.page(params[:page] || 1).per(8)
     case @resource
@@ -178,27 +179,35 @@ class PhotosController < ApplicationController
     @participant = @event.have_been_joined? @user.id if @user
   end
 
-  def get_photo_imageable
+  def get_photo_imageable(image)
+    #上传酒并选择保存到相册里时同时创建两个photo记录，并返回保存到相册中
     if params[:wine_id].present?
       @resource, @id = ["Wines::Detail", params[:wine_id]]
+      create_no_album_photo(Wines::Detail.find(params[:wine_id]), image) if params[:album_id]
     elsif params[:winery_id].present?
       @resource, @id = ["Winery", params[:winery_id]]
+      create_no_album_photo(Winery.find(params[:winery_id]), image) if params[:album_id]
     elsif params[:event_id].present?
       @resource, @id = ["Event", params[:event_id]]
-    else
-      @resource, @id = ["Album",  params[:album_id]]
+      create_no_album_photo(Event.find(params[:event_id]), image) if params[:album_id]
     end
+    @resource, @id = ["Album",  params[:album_id]] if params[:album_id]
     @imageable = @resource.singularize.classify.constantize.find(@id)
   end
 
   def create_photo(image)
-    @imageable = get_photo_imageable
+    @imageable = get_photo_imageable(image)
     @photo = @imageable.photos.build
     @photo.album_id = params[:album_id] || -1 #上传酒或酒庄图片
     @photo.image = image
     @photo.user_id = @user.id
-
-    return @photo    
+    return @photo
+  end
+  
+  def create_no_album_photo(imageable, image)
+    photo = imageable.photos.build(:album_id => -1, :image => image, :user_id => @user.id)
+    photo.save
+    photo.approve_photo
   end
 
   # 登录用户是否关注酒或者酒庄
