@@ -29,6 +29,6 @@ class Wines::VarietyPercentage < ActiveRecord::Base
   end
 
   def show_percentage
-    percentage.to_s.include?("%") ? percentage : "#{percentage}%"
+    "#{percentage.gsub('%', '')}%" if percentage.present?
   end
 end

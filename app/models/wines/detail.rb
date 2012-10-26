@@ -189,7 +189,7 @@ class Wines::Detail < ActiveRecord::Base
   end
 
   def show_alcoholicity
-    alcoholicity.blank? ? nil : "#{alcoholicity}%Vol"
+    "#{alcoholicity.gsub('%', '')}%Vol" if alcoholicity.present?
   end
 
   def all_photo_ids
