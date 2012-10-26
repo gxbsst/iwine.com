@@ -89,7 +89,8 @@ class WineDetailsController < ApplicationController
           :wine_style_id => @wine.wine_style_id,
           :region_tree_id => @wine.region_tree_id,
           :user_id => current_user.id,
-          :winery_id => @wine.winery_id
+          :winery_id => @wine.winery_id,
+          :is_nv => @wine.is_nv
       )
     else
       @register = current_user.registers.new()
@@ -104,11 +105,17 @@ class WineDetailsController < ApplicationController
   end
 
   def create
+    #for readonly
+    if params[:wine_id].present?
+      @read_only = true
+      @wine_id = params[:wine_id]
+    end
     @register = params[:register_id] ? Wines::Register.find_by_id(params[:register_id]) : current_user.registers.new(params[:wines_register])
     @register.attributes = params[:wines_register]
     @register.region_tree_id ||= @region_tree_id
     @register.variety_name = @register.variety_name_value
     @register.variety_percentage = @register.variety_percentage_value
+
     if @register.save
       redirect_to edit_wine_path @register
     else

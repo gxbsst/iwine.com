@@ -47,6 +47,7 @@ class CellarItemsController < ApplicationController
     @cellar_item = @cellar.items.build
     @cellar_item.attributes = params[:users_wine_cellar_item]
     @cellar_item.wine_detail = @wine_detail
+    @cellar_item.is_nv = @wine.is_nv
     @cellar_item.user = current_user
 
     ## TODO: 如果这个年份的酒不存在， 则创建这个年份的酒记录 new = old.dup to clone
@@ -95,7 +96,7 @@ class CellarItemsController < ApplicationController
 
     def get_wine_detail
       @wine_detail = @wine.copy_detail(@wine_detail, 
-                                       params[:users_wine_cellar_item][:is_nv], 
+                                       @wine.is_nv, 
                                        params[:users_wine_cellar_item]['year(1i)'])
     end
     
