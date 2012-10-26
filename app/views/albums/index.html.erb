@@ -20,7 +20,7 @@
   <% @albums.each_with_index do |album, index| %>
     <%= raw show_clear_div(index) %>
     <li> 
-      <%= album_cover_tag(@user, album) %>
+      <div class="cover_outer"><%= album_cover_tag(@user, album) %></div>
       <h2><%= album.is_public.to_i == 0 && !is_login_user?(@user) ? album.name : 
                  link_to(album.name, album_show_user_path(@user, album)) %></h2>
       <p class="info">
