@@ -44,7 +44,7 @@ namespace :app do
           # if [3496, 7718, 4563].include?(wine_detail.try(:id))
           if wine_detail
             #酒类品种及百分比处理
-            variety_name, variety_percentage = get_variety_percentage(item[12], wine_detail)
+            variety_name, variety_percentage = get_variety_percentage(item[12])
             Wines::VarietyPercentage.build_variety_percentage(variety_name, variety_percentage, wine_detail, logger) if variety_name.present?
           end
         rescue Exception => e
@@ -134,12 +134,21 @@ namespace :app do
     require 'csv'
     require "fileutils"
     ## 导入酒和详细信息
+    logger = Logger.new Rails.root.join("log", "register.log")
+    logger.info "===============#{Time.now}======================"
+    logger.info "name_en year [error]"
     file_directories = Rails.root.join("lib", "tasks","data", "wine", "*.csv")
     Dir.glob(file_directories).each do |csv_file|
       puts "*************** begin load #{csv_file} *****************"
       csv = CSV.read(csv_file)
       csv.each_with_index do |item, index|
         begin
+          #匹配不以零开头的四位数字或者NV
+          register_year = item[9].to_s.strip
+          unless register_year =~ /^([1-9]\d{3}|NV)$/
+            logger.info "#{item[1]}, #{item[9]}" 
+            next
+          end
           #转换数据类型
           item.collect{|i| i.to_s.force_encoding('utf-8')}
           #查找region_tree
@@ -148,27 +157,42 @@ namespace :app do
           drinkable_begin, drinkable_end = get_drinkable_time(item[10])
           #酒类品种及百分比处理
           variety_name, variety_percentage = get_variety_percentage(item[12])
-          # get wine_style_id
+          #get wine_style_id
           wine_style = Wines::Style.where("name_zh = ? ", item[4]).first
           #查找酒庄
           winery = Winery.where("name_en = ? ", to_ascii(item[7])).first
           #中文名处理
           name_zh_arr = change_name_zh_to_arr item[2]
-          #年代
-          vintage = (item[9] != "NV" && item[9].present?) ? DateTime.parse("#{item[9]}-01-01") : nil
-          register = Wines::Register.where("name_en = ? and vintage = ?", to_ascii(item[1]), item[9]).first_or_create!(
-            :origin_name => item[1].force_encoding('utf-8'),
-            :name_en => to_ascii(item[1]),
+          name_en = to_ascii(item[1].to_s.strip)
+          #确定NV和vintage必须有一个
+          if register_year == 'NV'
+            register = Wines::Register.where("name_en = ? and vintage is not null", name_en).first
+          else
+            register = Wines::Register.where("name_en = ? and is_nv = 1", name_en).first
+          end
+          if register #如果存在说明有重复现象
+            logger.info "#{item[1]}, #{item[9]}"
+            next
+          end
+          #查找register
+          if register_year == "NV"
+            wine_register = Wines::Register.where("name_en = ? and is_nv = 1", name_en)
+          else
+            wine_register = Wines::Register.where("name_en = ? and vintage = ?", name_en, Time.local(register_year))
+          end
+          register = wine_register.first_or_create!(
+            :origin_name => item[1].strip.force_encoding('utf-8'),
+            :name_en => name_en,
             :name_zh => first_name_zh(name_zh_arr),                                   #去除第一个当做名字
             :other_cn_name => other_name_zh(name_zh_arr),
-            :vintage => vintage,
-            :is_nv => item[9].to_s == "NV" ? 1 : 0,
+            :vintage => register_year == "NV" ? nil : Time.local(register_year),
+            :is_nv => register_year == "NV" ? true : false,
             :official_site => to_utf8(item[3]).gsub(/http:\/\//, ''),
             :wine_style_id => wine_style ? wine_style.id : nil,
             :region_tree_id => region_tree_id,
             :winery_id => winery ? winery.id : nil,
-            :drinkable_begin => drinkable_begin,
-            :drinkable_end => drinkable_end,
+            :drinkable_begin => drinkable_begin.present? ? Time.local(drinkable_begin) : nil,
+            :drinkable_end => drinkable_end.present? ? Time.local(drinkable_end) : nil,
             :alcoholicity => item[11],
             :variety_percentage => variety_percentage,
             :variety_name => variety_name,
@@ -182,9 +206,11 @@ namespace :app do
           build_special_comment(register, {"RP" => item[14], "JR" => item[16]})
         rescue Exception => e
           puts e
+          logger.info e
         end
       end
     end
+    logger.close
   end
 
   #发布酒
@@ -214,17 +240,19 @@ namespace :app do
   desc "（新版）将wine_registers中的数据分别导入到对应的wine 和wine_details表中"
   task :new_approve_wines => :environment do
     puts "================ new_approve_wines task begin"
+    logger = Logger.new Rails.root.join("log", "approve_wine.log")
     Wines::Register.where("status = 0").each do|register|
       begin
         Wine.transaction do
-          wine_detail_id = register.new_approve_wine
+          wine_detail_id = register.new_approve_wine(logger)
           puts "#{wine_detail_id} #{register.vintage}"
         end
       rescue Exception => e
         register.update_attribute(:status, -1) #发布失败
-        puts e
+        logger.info e
       end
     end
+    logger.close
 
   end
 
@@ -336,7 +364,7 @@ namespace :app do
   end
 
   #处理酒的品种和百分比
-  def get_variety_percentage(variety, wine_detail)
+  def get_variety_percentage(variety)
     return [nil, nil] if variety.blank?
     #将variety 格式化为类似于[‘Cf', '10', "DE", '', 'MER'. '12']
     variety_arr = to_ascii(variety).to_s.gsub("\v", "\n").split("\n")

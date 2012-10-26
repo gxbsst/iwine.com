@@ -39,6 +39,7 @@ class Wine < ActiveRecord::Base
         :official_site => register.official_site,
         :wine_style_id => register.wine_style_id,
         :region_tree_id => register.region_tree_id,
+        :is_nv => register.is_nv,
         :winery_id => register.winery_id
       )
     end
