@@ -1,12 +1,5 @@
-<p><b>亲爱的
-	<%= link_to user_url(@following_user) do %>
-	  <%= @following_user.username %>：
-	<% end %>
-</b></p>
+<p><b>亲爱的<%= link_to @following_user.username, user_url(@following_user) %>：</b></p>
 <p>你被iWine.com用户<b>
-	<%= link_to user_url(@follower_user) do %>
-	  <%= @follower_user.username %>
-	<% end %>
-</b>关注了。</p>
+	<%= link_to @follower_user.username, user_url(@follower_user) %></b>关注了。</p>
 <p><b>--爱红酒（ iWine.com）</b></p>
 <p>(这是一封系统自动产生的email，请勿回复。)</p>

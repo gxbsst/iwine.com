@@ -1,8 +1,4 @@
-<p><b>亲爱的
-	<%= link_to user_url(@user) do %>
-	   <%= @user.username %>：
-    <% end %>
-</b></p>
+<p><b>亲爱的<%= link_to @user.username, user_url(@user) %> ：</b></p>
 <p>欢迎加入iWine!</p>
 <p>您的注册已经成功，到各个版块转转吧？</p>
 <p>酒：<%= link_to wines_url, wines_url %></p>
