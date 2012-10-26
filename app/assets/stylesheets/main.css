@@ -67,7 +67,7 @@ input.common_search {width:250px;}
 .min_height { min-height:500px;}
 .align_c {text-align:center;}
 .share_btn {border-top:1px solid #ccc;padding:15px 0 0 0;margin:30px 0 0 0;}
-.share {width:175px;}
+.share {padding-right:5px;}
 .share img{margin:0 5px 0 0;}
 .year span a {margin:0 5px 0 0;color:#993333;text-decoration:underline;display:inline-block;}
 .year span a:hover {text-decoration:none;color:#993333;}
