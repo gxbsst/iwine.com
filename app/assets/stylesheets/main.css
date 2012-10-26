@@ -178,7 +178,7 @@ table.form th {text-align:right;}
 a.icon_delet, a.icon_edit, a.icon_add, a.icon_delet2, a.icon_cellar {text-indent: -9999px;display:inline-block;}
 a.icon_mail {background-position:0 4px;_background-position:0 2px;background-position:0 2px\0;display:inline-block;padding:0 0 0 20px;}
 a.icon_like {background-position: 0 -16px;padding:0 0 0 20px;}
-a.icon_add_album {background-position: 0 -35px;padding:0 0 0 20px;height:17px;line-height:17px;}
+a.icon_add_album {background-position: 0 -220px;padding:0 0 0 20px;height:17px;line-height:17px;}
 a.icon_delet {background-position:0 -56px;height:13px;width:13px;}
 a.icon_edit {background-position:0 -74px;height:13px;width:13px;}
 a.icon_add {background-position:0 -92px; height:14px;width:14px;}

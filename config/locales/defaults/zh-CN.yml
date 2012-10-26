@@ -1,8 +1,8 @@
 zh-CN:
   mailboxer:
     message_mailer:
-      subject_new: 您有新的消息
-      subject_reply: 您的朋友回复了您的信息
+      subject_new: 您收到一封新的私信
+      subject_reply: 您的朋友回复了您的私信
 
   add: "添加"
   cancle: "取消"
