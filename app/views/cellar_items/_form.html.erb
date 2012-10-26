@@ -10,8 +10,8 @@
         <% if @wine.is_nv %>
           <label class="nv">NV/无年份葡萄酒 </label>
         <% else %>
-          <%= f.date_select :year, :discard_day => true, 
-            :discard_month => true, :start_year => Time.now.year, 
+          <%= f.date_select :year, :discard_day => true,
+            :discard_month => true, :start_year => Time.now.year,
             :end_year => 1950, :prompt => {:year => "选择年份"} %>年
         <% end %>
       </div>
@@ -42,7 +42,7 @@
     </div>
     <div class="optional">
       <label>购入时间</label>
-      <%= f.date_select :buy_date, :start_year =>  1990, :end_year => Time.now.year  %>
+      <%= f.date_select :buy_date, :start_year =>  1990, :end_year => Time.now.year, :use_month_numbers => true  %>
     </div>
     <div class="optional">
       <label>适饮年限</label>
