@@ -47,7 +47,7 @@ module Notificationer
             电话:#{self.telephone}<br />
             邮箱:#{self.email}<br/>
             留言:#{self.note}<br />
-            <a href="/users/#{self.user.slug || self.user.id}/events/#{self.event_id}/participants"点击查看报名情况。</a>
+            <a href="/users/#{self.user.slug || self.user.id}/events/#{self.event_id}/participants">点击查看报名情况。</a>
         BODY_TEXT
 
           event.send_system_message(event_owner, body, subject)
@@ -59,7 +59,7 @@ module Notificationer
           body = <<-BODY_TEXT
           #{self.username}退出了#{self.event.begin_at.to_s(:cn)}的?活动，原因是:<br />
           #{self.cancle_note}<br />
-          <a href="/users/#{self.user.slug || self.user.id}/events/#{self.event_id}/participants"点击查看报名情况。</a>
+          <a href="/users/#{self.user.slug || self.user.id}/events/#{self.event_id}/participants">点击查看报名情况。</a>
           BODY_TEXT
           event.send_system_message(event_owner, body, subject)
         end
@@ -73,7 +73,7 @@ module Notificationer
             电话:#{self.telephone}<br />
             邮箱:#{self.email}<br/>
             留言:#{self.note}<br />
-            <a href="/users/#{self.user.slug || self.user.id}/events/#{self.event_id}/participants"点击查看报名情况。</a>
+            <a href="/users/#{self.user.slug || self.user.id}/events/#{self.event_id}/participants">点击查看报名情况。</a>
           BODY
           event.send_system_message(event_owner, body, subject)
         end

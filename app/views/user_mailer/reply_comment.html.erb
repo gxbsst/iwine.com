@@ -1,12 +1,5 @@
-<p><b>亲爱的<%= link_to user_url(@parent_user) do %>
-     	<%= @parent_user.username %>：
-      <% end %>
-</b></p>
-<p><b><%= link_to user_path(@reply_user) do %>
-	   <%= @reply_user.username %>
-      <% end %>
-      回复了您的评论：
-</b></p>
+<p><b>亲爱的<%= link_to @parent_user.username, user_url(@parent_user) %>：</b></p>
+<p><b><%= link_to @reply_user.username, user_path(@reply_user) %>回复了您的评论：</b></p>
 <p><b><%= @parent_comment.body %></b></p>
 <p>回复内容：</p>
 <p>

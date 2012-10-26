@@ -1,8 +1,4 @@
-<p>您的朋友 
-	<%= link_to user_url(@user) do %>
-	  <%= @user.username %> 
-	<% end %>
-	邀请您加入iWine</p>
+<p>您的朋友<%= link_to @user.username, user_url(@user) %> 邀请您加入iWine</p>
 <p>iWine (爱红酒) 是个很有用的葡萄酒社区网站，快来看看吧！</p>
 <p>访问请点击：<a href="http://www.iwine.com">iWine(爱红酒)</a></p>
 <p>这是一封由电脑系统代为发送的email，请勿回复。)</p>
