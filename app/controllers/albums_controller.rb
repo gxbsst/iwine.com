@@ -136,7 +136,7 @@ class AlbumsController < ApplicationController
     @comments =  @photo.comments.page(page).per(20)
     @commentable = @photo
     new_normal_comment
-    @other_albums = @user.albums.where("id != #{@album.id}")
+    @other_albums = @user.albums.public.where("id != #{@album.id}")
   end
 
   def index

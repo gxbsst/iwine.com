@@ -20,6 +20,9 @@ class Album < ActiveRecord::Base
   has_many :photos, :as => :imageable
   has_many :covers, :as => :imageable, :class_name => "Photo", :conditions => { :photo_type => APP_DATA["photo"]["photo_type"]["cover"] }
 
+  scope :public, where('is_public=1')
+  scope :private, where('is_public=0')
+
   acts_as_votable
   counts :photos_count => {:with => "Photo",
                            :receiver => lambda {|photo| photo.album }, 
