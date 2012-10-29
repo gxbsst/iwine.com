@@ -47,5 +47,16 @@ class Album < ActiveRecord::Base
     index = 0 if index < 0
     Photo.first :conditions => { :album_id => id } , :order => 'id DESC' , :offset => index , :limit => 1
   end
+ 
+  def all_photo_comments_count
+    images.sum(:comments_count)
+  end
 
+  def all_photo_views_count
+    images.sum(:views_count)
+  end
+
+  def all_photo_votes_count
+    images.sum(:votes_count)
+  end
 end
