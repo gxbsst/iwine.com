@@ -272,6 +272,10 @@ module ApplicationHelper
     end
   end
 
+  def show_username(user)
+    is_login_user?(user) ? "我" : user.username
+  end
+
   def conversation_url(user)
     if is_login_user?(user)
       link_to "私信", conversations_path, :class => "icon_mail"
