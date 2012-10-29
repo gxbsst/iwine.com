@@ -83,3 +83,4 @@ ul.private_list li {padding:15px 5px;border-bottom:1px solid #ccc;}
 .sys img {margin: 0 0 10px 0;}
 .sys p {margin-bottom:10px;}
 .sys em {background:url(icon/icon_all.gif) no-repeat 0 -174px;padding-left:15px; font-style:normal;}
+.ui-menu-item:hover {background:url(bg/body_bg.jpg) repeat;}
