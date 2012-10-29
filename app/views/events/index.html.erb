@@ -3,7 +3,7 @@
   <%#= javascript_include_tag "events" %>
 <% end %>
 <% content_for :css do %>
-	<%= stylesheet_link_tag "event" %>
+  <%= stylesheet_link_tag "event" %>
 <% end %>
 <div class="kv_2col">
   <% @top_events.each do |event| %>
@@ -26,12 +26,12 @@
             <br />
             地点：<%= event.full_address  %>
             <br />
-            组织者: 
-            <%= link_to  event.user.username, 
-            user_path(event.user, :trailing_slash => true) %>
+            组织者:
+            <%= link_to  event.user.username,
+                         user_path(event.user, :trailing_slash => true) %>
           </div>
           <span class="p_count">
-            <%= event.participants_count %>人参加  |  
+            <%= event.participants_count %>人参加  |
             <%= event.followers_count %>人感兴趣
           </span>
         </dd>
@@ -39,198 +39,202 @@
     </div>
   <% end %>
   <div class="clear"></div>
-  </div>
-      <div class="whitespace eventmain">
-     <div class="left">
-       <div class="event_tag">
-         <div class="title">
-           <!--
-           <div class="search">
-             <input class="text mr5" style="width:200px;" placeholder="搜索活动" name="" type="text" />
-             <a href="javascript:void(0)" class="btn_gray"><span>搜索</span></a>
-           </div>
-           -->
-           <h2>活动 <span class="font12 more"><a href="winery_comment_list.html"></a></span></h2>
-           <div class="clear"></div>
-         </div>
-       </div>
+</div>
+<div class="whitespace eventmain">
+  <div class="left">
+    <div class="event_tag">
+      <div class="title">
 
-       <div class="tags_sort">
-         <span>城市:</span>
-         <ul class="tags">
-           <%= city_tags %>
-         </ul>
-         <div class="clear"></div>
-       </div>
+        <div class="search">
+          <%= form_tag '/events', :method => :get do %>
+            <input class="text mr5" style="width:200px;" placeholder="搜索活动" name="word" type="text" />
+            <a href="javascript:void(0)" class="btn_gray submit"><span>搜索</span></a>
+          <% end %>
+        </div>
 
-       <div class="tags_sort">
-         <span>活动时间:</span>
-         <ul class="tags">
-           <%= static_date_tags %>
-         </ul>
-         <div class="clear"></div>
-       </div>
+        <h2>活动 <span class="font12 more"><a href="winery_comment_list.html"></a></span></h2>
+        <div class="clear"></div>
+      </div>
+    </div>
 
-       <div class="tags_sort">
-         <span>热门标签:</span>
-         <ul class="tags">
-           <%= tags_cloud %>
-         </ul>
-         <div class="clear"></div>
-       </div>
+    <div class="tags_sort">
+      <span>城市:</span>
+      <ul class="tags">
+        <%= city_tags %>
+      </ul>
+      <div class="clear"></div>
+    </div>
 
-        <div class="event_list">
-          <% if @events.blank? %>
-           <p>未发现将要进行的活动...</p>
-          <% else %>
-            <% @events.each do |event| %>
-              <dl class="clearfix">
-                <dt>
-                  <%= link_to event_path(event) do %>
-                    <%= image_tag event.poster_url(:thumb), :size => '100x150', :alt => event.title %>
-                  <% end %>
-                </dt>
-                <dd>
+    <div class="tags_sort">
+      <span>活动时间:</span>
+      <ul class="tags">
+        <%= static_date_tags %>
+      </ul>
+      <div class="clear"></div>
+    </div>
+
+    <div class="tags_sort">
+      <span>热门标签:</span>
+      <ul class="tags">
+        <%= tags_cloud %>
+      </ul>
+      <div class="clear"></div>
+    </div>
+
+    <div class="event_list">
+      <% if @events.blank? %>
+        <p>未发现将要进行的活动...</p>
+      <% else %>
+        <% @events.each do |event| %>
+          <dl class="clearfix">
+            <dt>
+              <%= link_to event_path(event) do %>
+                <%= image_tag event.poster_url(:thumb), :size => '100x150', :alt => event.title %>
+              <% end %>
+            </dt>
+            <dd>
                 <span class="type">
                   <%= event_item_tags(event) %>
                 </span>
-                  <h2><%= link_to truncate_u(event.title, 29), event_path(event)  %></h2>
-                  <div class="info">时间:  <%= event.begin_end_at_cn %><br />
-                    地点:  <%= event.full_address %><br />
-                    组织者：<%= link_to  event.user.username,
-                                     user_path(event.user, :trailing_slash => true) %>
-                  </div>
-                  <div class="p_count2">
+              <h2><%= link_to truncate_u(event.title, 29), event_path(event)  %></h2>
+              <div class="info">时间:  <%= event.begin_end_at_cn %><br />
+                地点:  <%= event.full_address %><br />
+                组织者：<%= link_to  event.user.username,
+                                 user_path(event.user, :trailing_slash => true) %>
+              </div>
+              <div class="p_count2">
                   <span>
                     <%= event.participants_count %>人参加  |
                     <%= event.followers_count %>人感兴趣
                   </span>
-                  </div>
-                </dd>
-              </dl>
-            <% end %>
-          <% end %>
-        </div>
-        <div class="pagination">
-          <%= paginate @events, :outer_window => 2 %>
-        </div>
-        </div>
-   	  <div class="right">
-        <div class="sidebox">
-          <%= link_to new_event_path, :class => :btn_createvent do %>
-            <span>我要创建活动</span>
-          <% end %>
-        </div>
-
-        <% if @create_events.present? # 创建的活动  %>
-          <div class="sidebox">
-            <div class="title">
-              <%= link_to "查看全部", create_events_user_events_path(current_user), :class => :float_r %>
-              <h3>我组织的活动</h3>
-            </div>
-            <div class="side_event">
-              <% @create_events.each do |event| %>
-                <dl class="clearfix">
-                  <dt>
-                    <%= link_to event_path(event) do %>
-                      <%= image_tag event.poster_url(:x_thumb), 
-                        :size => '70x105', :alt => event.title %>
-                      <% end %>
-                    </dt>
-                    <dd>
-                      <h3><%= link_to event.title, event_path(event) %></h3>
-                      <div class="info">
-                        <%= event.begin_end_at_cn %>
-                        <br />
-                        <%= event.full_address %>
-                      </div>
-                      <div class="p_count2">
-                        <%= event.participants_count %>人参加  |
-                        <%= event.followers_count %>人感兴趣
-                      </div>
-                    </dd>
-                    <div class="clear"></div>
-                  </dl>
-                <% end %>
               </div>
-              <!--end sidebox-->
-            </div>
-          <% end %>
-
-        <% if @join_events.present? # 参加活动  %>
-          <div class="sidebox">
-            <div class="title">
-              <%= link_to "查看全部", join_events_user_events_path(current_user), :class => :float_r %>
-              <h3>我参加的活动</h3>
-            </div>
-            <div class="side_event">
-              <% @join_events.each do |event| %>
-                <dl class="clearfix">
-                  <dt>
-                    <%= link_to event_path(event) do %>
-                      <%= image_tag event.poster_url(:x_thumb), 
-                        :size => '70x105', :alt => event.title %>
-                      <% end %>
-                    </dt>
-                    <dd>
-                      <h3><%= link_to event.title, event_path(event) %></h3>
-                      <div class="info">
-                        <%= event.begin_end_at_cn %>
-                        <br />
-                        <%= event.full_address %>
-                      </div>
-                      <div class="p_count2">
-                        <%= event.participants_count %>人参加  |
-                        <%= event.followers_count %>人感兴趣
-                      </div>
-                    </dd>
-                    <div class="clear"></div>
-                  </dl>
-                <% end %>
-              </div>
-              <!--end sidebox-->
-            </div>
-          <% end %>
-         
-        <% if @follow_events.present? # 关注的活动  %>
-          <div class="sidebox">
-            <div class="title">
-              <%= link_to "查看全部", follow_events_user_events_path(current_user), :class => :float_r %>
-              <h3>我感兴趣的活动</h3>
-            </div>
-            <div class="side_event">
-              <% @follow_events.each do |event| %>
-                <dl class="clearfix">
-                  <dt>
-                    <%= link_to event_path(event) do %>
-                      <%= image_tag event.poster_url(:x_thumb), 
-                        :size => '70x105', :alt => event.title %>
-                      <% end %>
-                    </dt>
-                    <dd>
-                      <h3><%= link_to event.title, event_path(event) %></h3>
-                      <div class="info">
-                        <%= event.begin_end_at_cn %>
-                        <br />
-                        <%= event.full_address %>
-                      </div>
-                      <div class="p_count2">
-                        <%= event.participants_count %>人参加  |
-                        <%= event.followers_count %>人感兴趣
-                      </div>
-                    </dd>
-                    <div class="clear"></div>
-                  </dl>
-                <% end %>
-              </div>
-              <!--end sidebox-->
-            </div>
-          <% end %> 
-
-          <div class="sidebox">
-            <%= render 'recommends' %>
-          </div>
-          <!--end right-->
-        </div>
-        <div class="clear"></div>
+            </dd>
+          </dl>
+        <% end %>
+      <% end %>
+    </div>
+    <% unless @events.blank? %>
+      <div class="pagination">
+        <%= paginate @events, :outer_window => 2 %>
       </div>
+    <% end %>
+  </div>
+  <div class="right">
+    <div class="sidebox">
+      <%= link_to new_event_path, :class => :btn_createvent do %>
+        <span>我要创建活动</span>
+      <% end %>
+    </div>
+
+    <% if @create_events.present? # 创建的活动  %>
+      <div class="sidebox">
+        <div class="title">
+          <%= link_to "查看全部", create_events_user_events_path(current_user), :class => :float_r %>
+          <h3>我组织的活动</h3>
+        </div>
+        <div class="side_event">
+          <% @create_events.each do |event| %>
+            <dl class="clearfix">
+              <dt>
+                <%= link_to event_path(event) do %>
+                  <%= image_tag event.poster_url(:x_thumb),
+                                :size => '70x105', :alt => event.title %>
+                <% end %>
+              </dt>
+              <dd>
+                <h3><%= link_to event.title, event_path(event) %></h3>
+                <div class="info">
+                  <%= event.begin_end_at_cn %>
+                  <br />
+                  <%= event.full_address %>
+                </div>
+                <div class="p_count2">
+                  <%= event.participants_count %>人参加  |
+                  <%= event.followers_count %>人感兴趣
+                </div>
+              </dd>
+              <div class="clear"></div>
+            </dl>
+          <% end %>
+        </div>
+        <!--end sidebox-->
+      </div>
+    <% end %>
+
+    <% if @join_events.present? # 参加活动  %>
+      <div class="sidebox">
+        <div class="title">
+          <%= link_to "查看全部", join_events_user_events_path(current_user), :class => :float_r %>
+          <h3>我参加的活动</h3>
+        </div>
+        <div class="side_event">
+          <% @join_events.each do |event| %>
+            <dl class="clearfix">
+              <dt>
+                <%= link_to event_path(event) do %>
+                  <%= image_tag event.poster_url(:x_thumb),
+                                :size => '70x105', :alt => event.title %>
+                <% end %>
+              </dt>
+              <dd>
+                <h3><%= link_to event.title, event_path(event) %></h3>
+                <div class="info">
+                  <%= event.begin_end_at_cn %>
+                  <br />
+                  <%= event.full_address %>
+                </div>
+                <div class="p_count2">
+                  <%= event.participants_count %>人参加  |
+                  <%= event.followers_count %>人感兴趣
+                </div>
+              </dd>
+              <div class="clear"></div>
+            </dl>
+          <% end %>
+        </div>
+        <!--end sidebox-->
+      </div>
+    <% end %>
+
+    <% if @follow_events.present? # 关注的活动  %>
+      <div class="sidebox">
+        <div class="title">
+          <%= link_to "查看全部", follow_events_user_events_path(current_user), :class => :float_r %>
+          <h3>我感兴趣的活动</h3>
+        </div>
+        <div class="side_event">
+          <% @follow_events.each do |event| %>
+            <dl class="clearfix">
+              <dt>
+                <%= link_to event_path(event) do %>
+                  <%= image_tag event.poster_url(:x_thumb),
+                                :size => '70x105', :alt => event.title %>
+                <% end %>
+              </dt>
+              <dd>
+                <h3><%= link_to event.title, event_path(event) %></h3>
+                <div class="info">
+                  <%= event.begin_end_at_cn %>
+                  <br />
+                  <%= event.full_address %>
+                </div>
+                <div class="p_count2">
+                  <%= event.participants_count %>人参加  |
+                  <%= event.followers_count %>人感兴趣
+                </div>
+              </dd>
+              <div class="clear"></div>
+            </dl>
+          <% end %>
+        </div>
+        <!--end sidebox-->
+      </div>
+    <% end %>
+
+    <div class="sidebox">
+      <%= render 'recommends' %>
+    </div>
+    <!--end right-->
+  </div>
+  <div class="clear"></div>
+</div>

@@ -385,18 +385,18 @@ module ApplicationHelper
   def album_cover_tag(user, album)
     cover = album.photos.visible.cover.first
     if album.is_public.to_i == 0 && !is_login_user?(user)
-      tag = image_tag("common/p_album.png", :class => :cover, :size => '150x150')
+      tag = image_tag("common/p_album.png")
     else
       if cover
-        tag =  image_tag(cover.image_url(:xx_middle), :class => 'cover', :size => '150x150')
+        tag =  image_tag(cover.image_url(:x_middle))
       else
-        tag = image_tag( "album.jpg", :class => :cover, :size => '150x150')
+        tag = image_tag( "album.jpg")
       end
     end
     if album.is_public.to_i == 0 && !is_login_user?(user) #非公开
       tag
     else
-      link_to tag, album_show_user_path(user, album) 
+      link_to tag, album_show_user_path(user, album), :class => :cover
     end
   end
 
@@ -410,7 +410,7 @@ module ApplicationHelper
   def item_non_public(is_public)
     if is_public.to_i == 1
       %Q[<span class="non_public"> \
-      #{image_tag("/assets/waterfall/images/icon/non_public.png", 
+      #{image_tag("icon/non_public.png", 
       :width => "16",
       :height => "16",
       :alt => "仅自己可见", 

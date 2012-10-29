@@ -7,6 +7,7 @@ class HotSearch
     @entry_url = server['entry_url']
     @word_url = server['word_url']
     @user_url = server['user_url']
+    @event_url = server['event_url']
     @http = Net::HTTP.start( server['host'] , server['port'] )
   end
 
@@ -39,7 +40,13 @@ class HotSearch
     user_ids = get_ids(words['users'])
     users = User.order("followers_count desc").find(user_ids) if user_ids.present?
   end
-  
+
+  # 搜索活动
+  def search_event(word)
+    words = JSON.parse @http.post(@event_url, "query=#{word}").body
+    events = Event.order('created_at DESC').find(words['events']) unless words['events'].blank?
+  end
+
   #从搜到的数据获得wine_ids或winery_ids
   def get_ids(objects)
     objects.inject([]){|memo, obj| memo << obj['id']}.compact

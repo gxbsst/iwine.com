@@ -90,8 +90,8 @@ class Event < ActiveRecord::Base
 
   # 活动开始时间应该大于结束时间
   def begin_at_be_after_now
-    if begin_at.present?
-      errors.add(:end_at, "请输入有效的开始时间") if self.begin_at < Time.now
+    if end_at.present?
+      errors.add(:end_at, "请输入有效的结束时间") if self.end_at < Time.now
     end
   end
 
@@ -156,6 +156,7 @@ class Event < ActiveRecord::Base
     value.blank? ? 0 : value
   end
 
+  # 人数已满
   def ausgebucht?
     return false  unless set_blocked?
     (block_in <= get_participant_number)? true: false
@@ -193,7 +194,8 @@ class Event < ActiveRecord::Base
   def invite_one_user(inviter_id, invitee_id, params = {})
     return if (have_been_invited?(invitee_id))
 
-    invitee = invitees.build(:inviter_id => inviter_id,                             :invitee_id => invitee_id,
+    invitee = invitees.build(:inviter_id => inviter_id,
+                             :invitee_id => invitee_id,
                              :invite_log => params[:invite_log])
     invitee.save
     #TODO: Send Message OR Email
@@ -207,7 +209,7 @@ class Event < ActiveRecord::Base
 
   # 活动是否已经过期
   def timeout?
-    Time.now > begin_at if published?
+    Time.now > end_at if published?
   end
 
   # 活动状态是否意见被锁定
@@ -349,6 +351,9 @@ class Event < ActiveRecord::Base
        end
      elsif params[:city].present? # CITY
        events = events.city_with(params[:city])
+     elsif params[:word].present?   # 使用 lucene
+       search = HotSearch.new
+       events = search.search_event(params['word'])
      end
      events
    end

@@ -50,7 +50,8 @@
 								<label>生日</label>
 								<%= p.date_select :birthday, 
 		                            :start_year => Time.now.year - 18, 
-		                            :end_year => 1910, 
+		                            :end_year => 1910,
+                                :use_month_numbers => true,
 		                            :prompt => {:year => '请选择年', :month => '请选择月', :day => '请选择日'} %>
 		                    </div>
 		                    <div class="optional">

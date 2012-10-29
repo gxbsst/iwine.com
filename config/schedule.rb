@@ -19,8 +19,12 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every :day, :at => '1:30pm' do
+every :day, :at => '7:00am' do
   rake 'notificationer:event:hold_tomorow'
+end
+
+every :day, :at => '12:00am' do
+  rake 'search:build'
 end
 
 #every 2.hours do

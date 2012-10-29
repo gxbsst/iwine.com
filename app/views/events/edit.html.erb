@@ -5,8 +5,8 @@
 <script language="javascript" type="text/javascript">
   $(document).ready(function(){
       $('input.date').datetimepicker({
-        numberOfMonths: 2,
-        minDate: 0
+        numberOfMonths: 2
+//        minDate: 0
        // maxDate: 30
       });
   });
@@ -70,8 +70,9 @@
     </div>
   <% else %>
     <div class="mb30 align_c">
-      <a href="javascript:void(0)"  id="button_add_wines"  class=" btn_gray_b">
-        <span>添加活动用酒</span></a>
+      <%= link_to new_event_event_wine_path(@event), :class => :btn_gray_b, :id => :button_add_wines do  %>
+        <span>添加活动用酒</span>
+      <% end %>
     </div>
   <% end %>
   <div class="add_event_step">

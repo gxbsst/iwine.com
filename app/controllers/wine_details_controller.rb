@@ -7,7 +7,6 @@ class WineDetailsController < ApplicationController
   before_filter :find_register, :only => [:edit, :update]
   before_filter :find_winery, :only => [:update]
   before_filter :check_region_tree, :only => :create
-  before_filter :check_edit_register, :only => [:edit, :update]
   before_filter :check_and_create_albums, :only => [:photo_upload]
   
   def index
@@ -66,7 +65,6 @@ class WineDetailsController < ApplicationController
   def update
     params[:wines_register].delete('special_comments')
     Wines::SpecialComment.build_special_comment(@register, params[:special_comment])
-    @register.result = 1 #设置为一，用户无法再编辑
     if @register.update_attributes(params[:wines_register])
       # redirect_to wine_path(@register)
       render "add_success"
@@ -89,7 +87,8 @@ class WineDetailsController < ApplicationController
           :wine_style_id => @wine.wine_style_id,
           :region_tree_id => @wine.region_tree_id,
           :user_id => current_user.id,
-          :winery_id => @wine.winery_id
+          :winery_id => @wine.winery_id,
+          :is_nv => @wine.is_nv
       )
     else
       @register = current_user.registers.new()
@@ -104,11 +103,17 @@ class WineDetailsController < ApplicationController
   end
 
   def create
+    #for readonly
+    if params[:wine_id].present?
+      @read_only = true
+      @wine_id = params[:wine_id]
+    end
     @register = params[:register_id] ? Wines::Register.find_by_id(params[:register_id]) : current_user.registers.new(params[:wines_register])
     @register.attributes = params[:wines_register]
     @register.region_tree_id ||= @region_tree_id
     @register.variety_name = @register.variety_name_value
     @register.variety_percentage = @register.variety_percentage_value
+
     if @register.save
       redirect_to edit_wine_path @register
     else
@@ -172,14 +177,6 @@ class WineDetailsController < ApplicationController
     @wine_detail = Wines::Detail.includes(:label, :photos).find(params[:id]) unless params[:register_success]
   end
 
-  def check_edit_register
-    if @register.result.to_i == 1
-      notice_stickie t("notice.wine_detail.check_edit_register")
-      # redirect_to mine_wine_path(@register)
-      render "add_success"
-    end
-  end
-
   def check_region_tree
     if params[:region]
       @region_tree_id = params[:region].values.delete_if{|a| a == ""}.pop
@@ -187,7 +184,12 @@ class WineDetailsController < ApplicationController
   end
 
   def find_register
-    @register = Wines::Register.find(params[:id])
+    @register = current_user.registers.find(params[:id])
+    #已发布的酒不能再编辑
+    if @register.status.to_i == 1
+      notice_stickie t("notice.register.no_access_to_update")
+      redirect_to(user_path(current_user))
+    end
   end
   
   #根据用户输入查找匹配的第一个酒庄

@@ -1,7 +1,7 @@
 class Wine extends Backbone.Model
 class Wines extends Backbone.Collection
-  url: '/searches/wine.json?word=' 
-  origin_url: '/searches/wine.json?word=' 
+  url: '/searches/wine.json?word='
+  origin_url: '/searches/wine.json?word='
   model: Wine
 
 @app = window.app ? {}
@@ -35,7 +35,7 @@ jQuery ->
       newModel.set('wine_detail_id', wine_detail_id)
       @collection.trigger 'select', newModel
 
-  class SelectWineView extends WineView 
+  class SelectWineView extends WineView
     tagName: 'dl'
     template: _.template($("#select_wine_template").html())
     initialize: ->
@@ -84,7 +84,7 @@ jQuery ->
           @.$('.wines').append view.render().el
         @showSubmitButton()
       @
-    events: 
+    events:
       'click .save_button': 'submitForm'
     submitForm: (event) ->
       event.preventDefault
@@ -93,7 +93,7 @@ jQuery ->
       else
         $('#new_event_wine').submit()
     showSubmitButton: ->
-      $('.btn_submit').show()
+      $('.btn_submit .btn_bluesky_s').show()
       @.$('.save_button').live ('click'), (event) =>
         @submitForm(event)
         # $('#new_event_wine').submit()
@@ -109,7 +109,7 @@ jQuery ->
        alert("这支酒已经添加了")
   class InputSearchView extends Backbone.View
     el: $("#search_input_view")
-    events: 
+    events:
       'keypress input': 'searchWine'
       'click .search_wine_button': 'searchWine'
       'focusout input': 'hideWarning'
@@ -122,7 +122,7 @@ jQuery ->
         else
           @showLoading()
           wines = window.app.SearchWines
-          wines.url = wines.origin_url + name 
+          wines.url = wines.origin_url + name
           wines.fetch success: =>
             @hideLoading()
             @showSearchResult()
@@ -162,4 +162,4 @@ jQuery ->
   $("#result_container .select_result").append(@app.SelectWineListView.render().el)
   @app.SearchWineListView = new SearchWineListView collection: window.app.SearchWines
   $("#result_container .search_result").append(@app.SearchWineListView.render().el)
-  
+

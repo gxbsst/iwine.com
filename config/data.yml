@@ -196,6 +196,7 @@ search_server:
   entry_url: /patrick/query/all
   word_url: /patrick/query/associate
   user_url: /patrick/query/user
+  event_url: /patrick/query/events
 
 search:
   wine:

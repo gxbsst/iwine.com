@@ -18,7 +18,14 @@ class EventsController < ApplicationController
     @top_events = Event.recommends(2)
     @recommend_events = Event.recommends(4)
     @events = Event.search(params)
-    @events = @events.page(params[:page] || 1).per(6)
+
+    if !(@events.nil?)
+      unless @events.kind_of?(Array)
+        @events = @events.page(params[:page]).per(6)
+      else
+        @events = Kaminari.paginate_array(@events).page(params[:page]).per(6)
+      end
+    end
   end
 
   def new
@@ -33,7 +40,8 @@ class EventsController < ApplicationController
     event = params[:event]
     @event = build_new_event
     if @event.save
-      redirect_to new_event_event_wine_path(@event)
+      notice_stickie "保存成功."
+      redirect_to edit_event_path(@event)
     else
       render :action => :new
     end

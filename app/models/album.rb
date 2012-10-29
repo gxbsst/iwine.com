@@ -1,24 +1,13 @@
-# Attributes:
-# * id [integer, primary, not null, limit=4] - primary key
-# * commented_num [integer, default=0, limit=4] - TODO: document me
-# * cover_id [integer, default=0, limit=4] - TODO: document me
-# * created_at [datetime, not null] - creation time
-# * created_by [integer, not null, limit=4] - belongs to User
-# * deleted_at [datetime] - TODO: document me
-# * intro [text] - TODO: document me
-# * is_order_asc [boolean, not null, limit=1] - TODO: document me
-# * liked_num [integer, default=0, limit=4] - TODO: document me
-# * name [string, not null]
-# * photos_count [integer, default=0, limit=4] - TODO: document me
-# * photos_num [integer, default=0, limit=4] - TODO: document me
-# * updated_at [datetime, not null] - last update time
-# * user_id [integer, limit=4] - TODO: document me
-# * viewed_num [integer, default=0, limit=4] - TODO: document me
 class Album < ActiveRecord::Base
   belongs_to :user, :foreign_key => 'created_by'
-  has_many :images, :class_name => "Photo"
+  has_many :images, :class_name => "Photo", :dependent => :destroy
   has_many :photos, :as => :imageable
   has_many :covers, :as => :imageable, :class_name => "Photo", :conditions => { :photo_type => APP_DATA["photo"]["photo_type"]["cover"] }
+
+  scope :public, where('is_public=1')
+  scope :private, where('is_public=0')
+
+  validates :name, :presence => true
 
   acts_as_votable
   counts :photos_count => {:with => "Photo",

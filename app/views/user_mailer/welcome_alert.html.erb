@@ -1,4 +1,8 @@
-<p><b>亲爱的<%= @user.username %>：</b></p>
+<p><b>亲爱的<%= link_to @user.username, user_url(@user) %> ：</b></p>
 <p>欢迎加入iWine!</p>
+<p>您的注册已经成功，到各个版块转转吧？</p>
+<p>酒：<%= link_to wines_url, wines_url %></p>
+<p>酒庄：<%= link_to wineries_url, wineries_url %> </p>
+<p>活动：<%= link_to events_url, events_url%></p>
 <p><b>--爱红酒（ iWine.com）</b></p>
 <p>(这是一封系统自动产生的email，请勿回复。)</p>

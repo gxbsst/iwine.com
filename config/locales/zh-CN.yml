@@ -12,6 +12,8 @@ zh-CN:
     upload_photo_failure: "上传图片失败。"
     login_success: "成功登陆iWine。"
     require_no_user: "需要退出登陆才能执行此操作。"
+    register:
+      no_access_to_update: "不能编辑已发布的酒。"
     cellar_item:
       create_success: "成功添加酒到您的酒窖。"
     comment:

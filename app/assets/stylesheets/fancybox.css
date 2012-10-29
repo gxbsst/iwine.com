@@ -82,8 +82,8 @@
   left: 50%;
   margin-top: -21px;
   margin-left: -21px;
-  width: 42px;
-  height: 42px;
+  width: 30px;
+  height: 30px;
   background: url("fancybox_loading.gif");
   opacity: 0.8;
   cursor: pointer;

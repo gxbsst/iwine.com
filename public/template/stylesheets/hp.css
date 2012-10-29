@@ -63,7 +63,23 @@
 /*-------------album style----------------*/
 ul.album_list {padding:0 0 0 10px;}
 ul.album_list li {float:left;width:163px;margin:0 25px 40px 25px;}
-ul.album_list li img.cover {background:url(../images/bg/bg_album.gif) no-repeat left top;padding:5px 8px 8px 5px;margin:0 0 10px 0;}
+ul.album_list li div.cover_outer {
+    overflow: auto;
+    background:url(bg/bg_album.gif) no-repeat left top;
+    padding:5px 8px 8px 5px;
+}
+ul.album_list li a.cover {
+    display: block;
+    width: 150px;
+    height: 150px;
+    margin:0 0 10px 0;
+    overflow: hidden;
+    position: relative;
+}
+ul.album_list li a.cover img {
+    position: absolute;
+}
+/*ul.album_list li img.cover {background:url(../images/bg/bg_album.gif) no-repeat left top;padding:5px 8px 8px 5px;margin:0 0 10px 0;}*/
 ul.album_list li h2, ul.photo_list li .name, .album_left .photo .name, .side_album_list h3 {font-size:13px;margin:0 0 5px 0;}
 ul.album_list li h2 a, .side_album_list h3 a, .like a {color:#333;}
 ul.album_list li h2 a:hover, .side_album_list h3 a:hover, .like a:hover {color:#cc3333;text-decoration:none;}

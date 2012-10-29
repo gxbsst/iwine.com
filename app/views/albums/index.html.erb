@@ -6,7 +6,7 @@
       <div class="btn_action">
           <% if current_user && current_user == @user %>
              <%= link_to new_photo_path(), :class => "btn_gray mr5" do %>
-                <span>添加照片</span>
+                <span>上传照片</span>
              <% end %>
              <%= link_to new_album_path(), :class => "new_album fancybox.ajax btn_gray"  do  %>
                 <span>创建相册</span>
@@ -20,7 +20,7 @@
   <% @albums.each_with_index do |album, index| %>
     <%= raw show_clear_div(index) %>
     <li> 
-      <%= album_cover_tag(@user, album) %>
+      <div class="cover_outer"><%= album_cover_tag(@user, album) %></div>
       <h2><%= album.is_public.to_i == 0 && !is_login_user?(@user) ? album.name : 
                  link_to(album.name, album_show_user_path(@user, album)) %></h2>
       <p class="info">

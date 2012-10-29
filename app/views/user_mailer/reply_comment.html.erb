@@ -1,5 +1,6 @@
-<p><b>亲爱的<%= @parent_user.username %>：</b></p>
-<p><%= @reply_user.username %>回复了您的评论：<b><%= @parent_comment.body %></b></p>
+<p><b>亲爱的<%= link_to @parent_user.username, user_url(@parent_user) %>：</b></p>
+<p><b><%= link_to @reply_user.username, user_path(@reply_user) %>回复了您的评论：</b></p>
+<p><b><%= @parent_comment.body %></b></p>
 <p>回复内容：</p>
 <p>
 	

@@ -27,7 +27,11 @@
         </tr>
         <tr>
           <td><%= f.label :wine_style_id %></td>
-          <td><%= f.select :wine_style_id, Wines::Style.all.collect{ |s| [s.name_zh + '/' + s.name_en, s.id] } %></td>
+          <td>
+            <select id="wines_register_wine_style_id" name="wines_register[wine_style_id]">
+               <%= render "share/wine_style_select", :wine_style_id => @wines_register.wine_style_id %>
+            </select> 
+          </td>
         </tr>
         <tr>
           <td><%= f.label :official_site %></td>
@@ -35,7 +39,16 @@
         </tr>
         <tr>
           <td><%= f.label :vintage %></td>
-          <td><%= f.date_select :vintage, :discard_day => true, :discard_month => true, :start_year => 1990, :end_year => Time.now.year %>年</td>
+          <td><%= f.date_select :vintage, 
+                  :discard_day => true, 
+                  :discard_month => true, 
+                  :start_year => 1990, 
+                  :end_year => Time.now.year,
+                  :prompt => {:year => "选择年份"} %>年</td>
+        </tr>
+        <tr>
+          <td>IS_NV</td>
+          <td><%= f.check_box :is_nv %></td>
         </tr>
         <tr>
           <td><%= f.label :drinkable_begin %></td>

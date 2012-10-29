@@ -52,7 +52,7 @@ class AlbumsController < ApplicationController
       album = Album.new
       album.attributes = params[:album]
       album.created_by = current_user.id
-      album.save
+      album.valid? ? album.save : error_stickie("相册标题不能为空.")
       redirect_to request.referer
       return
     end
@@ -65,7 +65,6 @@ class AlbumsController < ApplicationController
       @album = Album.first :conditions => { :id => params[:id] , :created_by => current_user.id }
       if @album.present? && @album.name != 'avatar'
         @album.destroy
-        @blbum.photos.each{|photo| photo.update_attribute(:deleted_at, Time.now)} if @album.photos.present?
       end
       redirect_to albums_user_path(@user)
       return
@@ -74,9 +73,9 @@ class AlbumsController < ApplicationController
   end
 
   def delete_photo
+    photo = Photo.find params[:photo_id]
+    photo.update_attribute(:deleted_at, Time.now) if photo && photo.user_id == current_user.id
     if request.post?
-      photo = Photo.find params[:photo_id]
-      photo.update_attribute(:deleted_at, Time.now) if photo && photo.user_id == current_user.id
       redirect_to request.referer
       return
     end
@@ -136,7 +135,7 @@ class AlbumsController < ApplicationController
     @comments =  @photo.comments.page(page).per(20)
     @commentable = @photo
     new_normal_comment
-    @other_albums = @user.albums.where("id != #{@album.id}")
+    @other_albums = @user.albums.public.where("id != #{@album.id}")
   end
 
   def index

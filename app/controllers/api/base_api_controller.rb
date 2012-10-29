@@ -21,7 +21,7 @@ module Api
           :bio => @user.profile.bio ? @user.profile.bio : "",
           :phone_number => @user.profile.phone_number ? @user.profile.phone_number : '',
           :birthday => @user.profile.birthday ? @user.profile.birthday : '',
-          :pofile_id => @user.profile.id
+          :profile_id => @user.profile.id
         }
       } 
     end
