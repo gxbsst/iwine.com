@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="album_right pt60 pl30">
-          <h2>我的其他相册</h2>
+          <h2><%= show_username(@user) %>的其它相册</h2>
           
           <ul class="side_album_list">
             <% @other_albums.each do |album| %>

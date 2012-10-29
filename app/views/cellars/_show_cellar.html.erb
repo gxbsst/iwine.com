@@ -1,6 +1,6 @@
     <div id="cellar">
       <div class="title_btn">
-        <h1><%= is_login_user?(@user) ? "我的酒窖" : "他的酒窖" %> <span class="font12">(共<%= @cellar_items.size %>款)</span></h1>
+        <h1><%= show_username(@user) %>的酒窖 <span class="font12">(共<%= @cellar_items.size %>款)</span></h1>
       </div>
       <div class="sort_search mb20">
         <div class="float_r">

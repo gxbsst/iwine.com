@@ -25,11 +25,7 @@
     <div class="hp_info">
       <div class="hp_right">
         <%= link_to cellars_user_path(@user, @user.cellar), :class => "btn_red_sb" do %>
-          <% if is_login_user? @user %>
-            <span>我的酒窖</span>
-          <% else %>
-            <span><%= @user.username %>的酒窖</span>
-          <% end %>
+          <span><%= show_username(@user) %>的酒窖</span>
         <% end %>
       </div>
       <% if is_login_user? @user  # 如果用户登录而且访问自己的页面 %>
