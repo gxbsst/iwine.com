@@ -26,6 +26,8 @@ zh-CN:
     friend:
       follow: "关注成功。"
       unfollow: "成功取消关注。"
+      re_follow: "不能重复关注某人"
+      self_follow: "不能关注自己"
       email_invite: "收件人不能为空！"
       search_failure: "查询好友失败，请重新搜索！"
     message:
