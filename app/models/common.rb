@@ -45,4 +45,21 @@ module Common
     end
     path.reverse!
   end
+  
+  #更新酒庄和酒时执行
+  def init_cn_names
+    name_zh_arr = get_name_arr
+    name_zh_arr.each do |name|
+      self.cn_names.where(:name_zh => name).
+        first_or_create(:name_zh => name)
+    end
+  end
+  
+  #将酒和酒庄的name_zh和other_cn_name 加载到一个数组里
+  def get_name_arr
+    name_arr = []
+    name_arr << name_zh if name_zh.present?
+    name_arr << other_cn_name.split('/') if other_cn_name.present?
+    final_name = name_arr.flatten.uniq.compact
+  end
 end

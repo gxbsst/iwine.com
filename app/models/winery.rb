@@ -51,6 +51,7 @@ class Winery < ActiveRecord::Base
   has_many :covers, :as => :imageable, :class_name => "Photo", :conditions => {:photo_type => APP_DATA["photo"]["photo_type"]["cover"]}
   has_one :label, :as => :imageable, :class_name => "Photo", :conditions => {:photo_type => APP_DATA["photo"]["photo_type"]["label"]}
   has_many :wines
+  has_many :cn_names, :as => :nameable
   has_many :comments, :class_name => "WineryComment", :as => :commentable
   has_many :follows, :as => :followable, :class_name => "WineryFollow"
   scope :hot_wineries, lambda { |limit| joins(:follows).
@@ -65,7 +66,7 @@ class Winery < ActiveRecord::Base
   accepts_nested_attributes_for :photos, :allow_destroy => true
   accepts_nested_attributes_for :info_items, :reject_if => lambda {|t| t[:title].blank? }, :allow_destroy => true
   serialize :config, Hash
-
+  after_save :init_cn_names
   # Friendly Url
   extend FriendlyId
   friendly_id :origin_name, :use => [:slugged]
@@ -106,6 +107,18 @@ class Winery < ActiveRecord::Base
   class << self
     def timeline_events
       TimelineEvent.wineries
+    end
+
+    def find_winery(ename, oname, name_zh_arr)
+      winery = Winery.where("name_en = ? or origin_name = ?", ename, oname).first
+      if winery
+        winery
+      elsif name_zh_arr.present?
+        name_zh_arr.each do |name_zh|
+          winery = Winery.where("name_zh = ?", name_zh).first
+          break if winery
+        end
+      end
     end
   end
 

@@ -159,8 +159,6 @@ namespace :app do
           variety_name, variety_percentage = get_variety_percentage(item[12])
           #get wine_style_id
           wine_style = Wines::Style.where("name_zh = ? ", item[4]).first
-          #查找酒庄
-          winery = Winery.where("name_en = ? ", to_ascii(item[7])).first
           #中文名处理
           name_zh_arr = change_name_zh_to_arr item[2]
           name_en = to_ascii(item[1].to_s.strip)
@@ -190,7 +188,8 @@ namespace :app do
             :official_site => to_utf8(item[3]).gsub(/http:\/\//, ''),
             :wine_style_id => wine_style ? wine_style.id : nil,
             :region_tree_id => region_tree_id,
-            :winery_id => winery ? winery.id : nil,
+            :winery_origin_name => item[7].present? ? item[7].strip : nil,
+            :winery_name_en => item[7].present? ? to_ascii(item[7].strip) : nil,
             :drinkable_begin => drinkable_begin.present? ? Time.local(drinkable_begin) : nil,
             :drinkable_end => drinkable_end.present? ? Time.local(drinkable_end) : nil,
             :alcoholicity => item[11],
