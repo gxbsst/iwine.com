@@ -15,7 +15,7 @@
         <% if @register.winery && @register.winery.name_en.present? %>
           <%= @register.winery.name_en %>
         <% else %>
-          <input name="winery[name_en]" type="text" class="text name" value="<%= @register.winery.name_en if @register.winery %>"/>
+          <%= f.text_field :winery_origin_name, :class => "text name" %>
         <% end %>
       </div>
       <div class="required">
@@ -23,7 +23,7 @@
         <% if @register.winery && @register.winery.name_zh.present? %>
           <%= @register.winery.name_zh %>
         <% else %>
-          <input name="winery[name_zh]" type="text" class="text name" value="<%= @register.winery.name_zh if @register.winery %>" />
+          <%= f.text_field :winery_name_zh, :class => "text name" %>
           多个名称用“；”隔开
         <% end %>
       </div>

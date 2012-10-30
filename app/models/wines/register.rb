@@ -42,6 +42,8 @@ class Wines::Register < ActiveRecord::Base
   end
 
   def approve_wine
+    split_name_zh
+    find_and_init_winery_cn_names
     audit_log = AuditLog.build_log(id, 4)
     self.update_attributes!(:audit_log_id => audit_log.id, :status => 1, :result => 1)
     wine = Wine.approve_wine(self)
@@ -56,6 +58,8 @@ class Wines::Register < ActiveRecord::Base
 
   #更改csv文件结构后的程序
   def new_approve_wine(logger = nil)
+    split_name_zh
+    find_and_init_winery_cn_names
     #打印variety_percent 日志
     audit_log = AuditLog.build_log(id, 4)
     self.update_attributes!(:audit_log_id => audit_log.id, :status => 1, :result => 1)
@@ -84,5 +88,38 @@ class Wines::Register < ActiveRecord::Base
 
   def show_vintage
     vintage.strftime("%Y") unless vintage.blank?
+  end
+  #仅在发布时使用
+  #将用户输入的多个酒的中文名转化为一个数组
+  def split_name_zh
+    if name_zh.present? && user_id != -1
+      name_arr = change_name_zh_to_array(name_zh)
+      self.name_zh = name_arr.delete_at 0 
+      self.other_cn_name = name_arr.join('/')
+    end
+  end
+  
+  #处理用户上传新酒款的酒庄中文名
+  def find_and_init_winery_cn_names
+    if user_id != -1 
+      name_zh_arr = change_name_zh_to_array(winery_name_zh)
+      if winery_id.blank?
+        winery = Winery.find_winery(winery_name_en, winery_origin_name, name_zh_arr)
+        update_attribute(:winery_id, winery.id) if winery
+      else
+        winery = Winery.find(winery_id)
+      end
+      if winery
+        name_zh_arr.each do |name_zh|
+          winery.cn_names.where(:name_zh => name_zh).
+            first_or_create(:user_id => user_id,
+                           :name_zh => name_zh)
+        end
+      end
+    end
+  end
+
+  def change_name_zh_to_array(name)
+    name.delete(' ').gsub(";", "；").split("；")
   end
 end

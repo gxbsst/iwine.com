@@ -5,7 +5,6 @@ class WineDetailsController < ApplicationController
   before_filter :get_wine_detail, :only => [:show, :owners, :followers, :photo_upload]
   before_filter :get_follow_item, :only => [:show]
   before_filter :find_register, :only => [:edit, :update]
-  before_filter :find_winery, :only => [:update]
   before_filter :check_region_tree, :only => :create
   before_filter :check_and_create_albums, :only => [:photo_upload]
   
@@ -65,6 +64,8 @@ class WineDetailsController < ApplicationController
   def update
     params[:wines_register].delete('special_comments')
     Wines::SpecialComment.build_special_comment(@register, params[:special_comment])
+    name_en = params[:wines_register][:winery_origin_name]
+    @register.winery_name_en = name_en.to_ascii_brutal if name_en
     if @register.update_attributes(params[:wines_register])
       # redirect_to wine_path(@register)
       render "add_success"
@@ -192,30 +193,6 @@ class WineDetailsController < ApplicationController
     end
   end
   
-  #根据用户输入查找匹配的第一个酒庄
-  def find_winery
-    if params[:winery] 
-      if params[:winery][:name_en]
-        @winery = Winery.where("name_en = ? or origin_name = ? ", params[:winery][:name_en], params[:winery][:name_en]).first
-      end
-      if !@winery && params[:winery][:name_zh].present?
-        name_zh_arr = change_name_zh(params[:winery][:name_zh])
-        name_zh_arr.each do |name_zh|
-          @winery = Winery.where("name_zh = ?", name_zh).first
-          break if @winery
-        end
-      end
-
-      #赋值
-      @register.winery_id = @winery.id if @winery
-    end
-  end
-
-  def change_name_zh(name_zh)
-    if name_zh.present?
-      name_zh_arr = name_zh.gsub(";", "；").split("；")#处理英文";"并转换化为数组
-    end
-  end
 
   # 登录用户是否关注酒
   def get_follow_item
