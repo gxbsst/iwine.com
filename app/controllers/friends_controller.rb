@@ -10,7 +10,8 @@ class FriendsController < ApplicationController
     begin
       @search = Search.find(params[:id])
       server = HotSearch.new
-      @users = server.search_user(@search.keywords)
+      @search_users = server.search_user(@search.keywords)
+      @users = @search_users.to_a.delete_if{|u| u == current_user}
       @user_ids = get_user_ids
       page = params[:page] || 1
       if @users.present?
@@ -150,7 +151,15 @@ class FriendsController < ApplicationController
       else
         ids = @users.pluck(:id)
       end
+      id = no_need_user_ids(ids) #去掉 current_user
       return ids.join(",") #转化为字符串
     end
+  end
+  
+  #去掉自己和已关注的人的id
+  def no_need_user_ids(ids)
+    following_ids = current_user.followings.pluck(:id) 
+    following_ids << current_user.id
+    ids - following_ids
   end
 end
