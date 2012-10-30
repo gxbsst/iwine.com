@@ -56,7 +56,7 @@ class Wine < ActiveRecord::Base
   end
 
   def years 
-    details.collect {|wine| [wine.year.year, wine.slug]}
+    details.collect {|wine| [wine.show_year, wine.slug]}
   end
 
   

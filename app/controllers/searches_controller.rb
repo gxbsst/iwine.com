@@ -66,7 +66,7 @@ class SearchesController < ApplicationController
         wine = {}
         details = item.details
         wine_detail = details.first
-        years = details.collect {|detail| [detail.year.year, "/wines/#{detail.slug}", detail.id] }
+        years = details.collect {|detail| [detail.show_year, "/wines/#{detail.slug}", detail.id] }
         item.name_zh ||= item.origin_name
         year = years.first.first.to_s
         wine[:wine_detail_id] = wine_detail.id
