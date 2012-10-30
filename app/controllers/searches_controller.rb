@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class SearchesController < ApplicationController
-  before_filter :get_recommend_users, :only => [:results, :search_wines, :winery]
-
+  before_filter :get_recommend_users, :only => [:results, :search_wines, :winery] 
+  
   def new
     @search = Search.new
   end
@@ -118,11 +118,11 @@ class SearchesController < ApplicationController
 
   end
 
-  private
-
+  private 
   def get_recommend_users
-    if current_user
-      @recommend_users = User.no_self_recommends(5, current_user.id)
+    if current_user 
+      # @recommend_users = User.no_self_recommends(5, current_user.id)
+      @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+ current_user.id.to_s , :limit => 5
     else
       @recommend_users = User.recommends(5)
     end
