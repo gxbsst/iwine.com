@@ -46,7 +46,7 @@
             <br />
             地址：<%= winery.address %>
             <br />
-            官方网站：<%=link_to winery.official_site, winery.official_site %><br />
+            官方网站：<a href="http://<%= winery.official_site %>"><%= winery.official_site %></a><br/>
             电子邮件：<%= winery.email %><br />
             电话：<%= winery.cellphone %><br />
             传真：<%= winery.fax %>

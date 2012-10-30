@@ -170,7 +170,8 @@ table.form th {text-align:right;}
 .logreg_box .right .sns p {padding:0 0 5px 0;}
 .logreg_box .right .sns p span {margin-bottom:10px;display:block;}
 .logreg_box .mid .info {margin:0 0 20px 0;font-size:14px;line-height:20px;}
-.logreg_box .mid .welcome {font-weight:bold;font-size:18px;padding:0 60px 30px 60px;}
+.logreg_box .mid .welcome {font-weight:bold;font-size:18px;padding:0 60px 30px 60px;} 
+.logreg_box .field_with_errors label.message {padding:20px 0 0 0;display:block;}
 
 
 /*icon*/
