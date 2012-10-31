@@ -74,7 +74,9 @@ class AlbumsController < ApplicationController
 
   def delete_photo
     photo = Photo.find params[:photo_id]
-    photo.update_attribute(:deleted_at, Time.now) if photo && photo.user_id == current_user.id
+    unless params[:fancybox]
+      photo.update_attribute(:deleted_at, Time.now) if photo && photo.user_id == current_user.id
+    end
     if request.post?
       redirect_to request.referer
       return
