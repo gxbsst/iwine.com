@@ -1,6 +1,6 @@
 # encoding: UTF-8
 class SearchesController < ApplicationController
-  before_filter :get_recommend_users, :only => [:results, :search_wines, :winery] 
+  before_filter :get_recommend_users, :only => [:results, :search_wines, :winery, :wine]
   
   def new
     @search = Search.new
@@ -42,22 +42,8 @@ class SearchesController < ApplicationController
 
   end
 
-  def winery
-    @title = "搜索酒庄"
-    server = HotSearch.new
-    @entries = server.all_entries( params[:word])
-    @wineries = @entries['wineries']
-    page = params[:page] || 1
-    if !(@wineries.nil?)
-      unless @wineries.kind_of?(Array)
-        @wineries = @wineries.page(page).per(10)
-      else
-        @wineries = Kaminari.paginate_array(@wineries).page(page).per(10)
-      end
-    end
-  end
-
-  def wine 
+  # for Events
+  def event_wine
     server = HotSearch.new
     @entries = server.all_entries(params[:word])
     @wines= @entries['wines']
@@ -116,6 +102,36 @@ class SearchesController < ApplicationController
       @all_tab = 'current'
     end
 
+  end
+
+  # 搜索酒庄
+  def winery
+    @title = "搜索酒庄"
+    server = HotSearch.new
+    @wineries = server.search_winery(params[:word])
+    page = params[:page] || 1
+    if !(@wineries.nil?)
+      unless @wineries.kind_of?(Array)
+        @wineries = @wineries.page(page).per(10)
+      else
+        @wineries = Kaminari.paginate_array(@wineries).page(page).per(10)
+      end
+    end
+  end
+
+  # 搜索酒庄
+  def wine
+    @title = "搜索酒庄"
+    server = HotSearch.new
+    @wines = server.search_wine(params[:word])
+    page = params[:page] || 1
+    if !(@wineries.nil?)
+      unless @wineries.kind_of?(Array)
+        @wineries = @wineries.page(page).per(10)
+      else
+        @wineries = Kaminari.paginate_array(@wineries).page(page).per(10)
+      end
+    end
   end
 
   private 

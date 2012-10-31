@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe SearchesController do
     before(:each) do
-      get "searches/wine.json", :word=> "Baron de Milon"
+      get "searches/event_wine.json", :word=> "Baron de Milon"
       @response = response
       @parsed_body = JSON.parse(@response.body)
     end

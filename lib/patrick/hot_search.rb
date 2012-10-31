@@ -8,6 +8,8 @@ class HotSearch
     @word_url = server['word_url']
     @user_url = server['user_url']
     @event_url = server['event_url']
+    @wine_url = server['wine_url']
+    @winery_url = server['winery_url']
     @http = Net::HTTP.start( server['host'] , server['port'] )
   end
 
@@ -45,6 +47,20 @@ class HotSearch
   def search_event(word)
     words = JSON.parse @http.post(@event_url, "query=#{word}").body
     events = Event.order('created_at DESC').find(words['events']) unless words['events'].blank?
+  end
+
+  # 搜索酒
+  def search_wine(word)
+    words = JSON.parse @http.post(@wine_url, "query=#{word}").body
+    wine_ids = get_ids(words['wine'])
+    wines = Wine.find(wine_ids) if wine_ids.present?
+  end
+
+  # 搜索酒庄
+  def search_winery(word)
+    words = JSON.parse @http.post(@winery_url, "query=#{word}").body
+    winery_ids = get_ids(words['winery'])
+    wineries = Winery.find(winery_ids) if winery_ids.present?
   end
 
   #从搜到的数据获得wine_ids或winery_ids
