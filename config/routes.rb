@@ -262,6 +262,7 @@ Patrick::Application.routes.draw do
       get :suggestion, :via => [:get , :put]
       get :results, :via => [:get , :put]
       get :wine
+      get :event_wine
       post :search_user
     end
   end
