@@ -69,7 +69,7 @@ class Wine < ActiveRecord::Base
   def copy_detail(detail, is_nv, year)
     #查找detail
     if is_nv
-      wine_detail = details.where("is_nv = ?", 1).first
+      wine_detail = details.first
     else
       wine_detail = details.where("year like ?", "#{year}%").first
     end
@@ -78,11 +78,7 @@ class Wine < ActiveRecord::Base
     else
       #创建detail
       wine_detail = Wines::Detail.new(:wine_id => id)
-      if is_nv
-        wine_detail.is_nv = true 
-      else
-        wine_detail.year = Time.mktime(year) 
-      end
+      wine_detail.year = Time.mktime(year) 
       wine_detail.save
       return wine_detail
     end

@@ -109,7 +109,7 @@ class Wines::Register < ActiveRecord::Base
       else
         winery = Winery.find(winery_id)
       end
-      if winery
+      if winery && name_zh_arr
         name_zh_arr.each do |name_zh|
           winery.cn_names.where(:name_zh => name_zh).
             first_or_create(:user_id => user_id,
@@ -120,6 +120,6 @@ class Wines::Register < ActiveRecord::Base
   end
 
   def change_name_zh_to_array(name)
-    name.delete(' ').gsub(";", "；").split("；")
+    name.delete(' ').gsub(";", "；").split("；") if name.present?
   end
 end
