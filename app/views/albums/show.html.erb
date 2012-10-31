@@ -46,7 +46,7 @@
       <p class="info">
         <%= photo.created_at.to_s(:normal) %> 上传
         <% if current_user && current_user == @user %>
-         | <%= link_to "删除", delete_photo_albums_path(:photo_id => photo.id), :class => "fancybox_delete_photo fancybox.ajax" %>
+         | <%= link_to "删除", delete_photo_albums_path(:photo_id => photo.id,:fancybox => true), :class => "fancybox_delete_photo fancybox.ajax" %>
         <% end %>
         <br />
         <%= photo.views_count %>浏览 | <%= photo.comments_count%>评论 | <%= photo.likes.size %>赞
