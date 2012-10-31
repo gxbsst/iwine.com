@@ -64,6 +64,7 @@ class AlbumsController < ApplicationController
     if request.post?
       @album = Album.first :conditions => { :id => params[:id] , :created_by => current_user.id }
       if @album.present? && @album.name != 'avatar'
+        @album.photos.each{|photo| photo.update_attribute(:deleted_at, Time.now)} if @album.photos.present?
         @album.destroy
       end
       redirect_to albums_user_path(@user)
