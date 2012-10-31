@@ -34,6 +34,7 @@ class Event < ActiveRecord::Base
   #, :exclusion => {:in => [0]}
 
   scope :published, where(:publish_status => PUBLISHED_STATUS ).order("begin_at ASC")
+  scope :cancle, where(:publish_status => CANCLED_STATUS ).order("begin_at ASC")
   scope :live, published.where( "begin_at > ?", Time.now ) # 未举行
   scope :recommends, lambda {|limit| live.order('participants_count DESC').limit(limit) }  # 推荐
   scope :recent_week, where(['begin_at >= ? AND begin_at <= ?', Time.current, Time.current + 1.week])

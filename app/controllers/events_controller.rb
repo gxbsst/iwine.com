@@ -77,13 +77,24 @@ class EventsController < ApplicationController
 
     if user_signed_in? # 登录用户对自己的活动有所有权
       unless current_user.is_owner_of_event? @event
-        @event = Event.includes([:participants => [:user], :follows => [:user]]).
-          published.
-          find(params[:id])
+        if @event.published?
+          @event = Event.includes([:participants => [:user], :follows => [:user]]).
+            published.
+            find(params[:id])
+        else
+           @event = Event.includes([:participants => [:user], :follows => [:user]]).
+            cancle.
+            find(params[:id])
+        end
       end
     else
-      @event = Event.includes([:participants => [:user], :follows => [:user]]).
-        published.find(params[:id])
+      if @event.published?
+        @event = Event.includes([:participants => [:user], :follows => [:user]]).
+          published.find(params[:id])
+      else
+        @event = Event.includes([:participants => [:user], :follows => [:user]]).
+          cancle.find(params[:id])
+      end
     end
 
     order = "votes_count DESC, created_at DESC"
