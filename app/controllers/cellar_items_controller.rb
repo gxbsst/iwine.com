@@ -37,7 +37,7 @@ class CellarItemsController < ApplicationController
     if params[:wine_detail_id]
       wine_detail = Wines::Detail.find(params[:wine_detail_id])
       @cellar_item.year = wine_detail.year if wine_detail.year.present?
-      @cellar_item.is_nv = wine_detail.is_nv if wine_detail.is_nv.present?
+      @cellar_item.is_nv = wine_detail.wine.is_nv if wine_detail.is_nv?
     end
   end
 
