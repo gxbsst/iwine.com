@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class SearchesController < ApplicationController
-  before_filter :get_recommend_users, :only => [:results, :search_wines, :winery]
-
+  before_filter :get_recommend_users, :only => [:results, :search_wines, :winery, :wine]
+  
   def new
     @search = Search.new
   end
@@ -42,22 +42,8 @@ class SearchesController < ApplicationController
 
   end
 
-  def winery
-    @title = "搜索酒庄"
-    server = HotSearch.new
-    @entries = server.all_entries( params[:word])
-    @wineries = @entries['wineries']
-    page = params[:page] || 1
-    if !(@wineries.nil?)
-      unless @wineries.kind_of?(Array)
-        @wineries = @wineries.page(page).per(10)
-      else
-        @wineries = Kaminari.paginate_array(@wineries).page(page).per(10)
-      end
-    end
-  end
-
-  def wine 
+  # for Events
+  def event_wine
     server = HotSearch.new
     @entries = server.all_entries(params[:word])
     @wines= @entries['wines']
@@ -66,7 +52,7 @@ class SearchesController < ApplicationController
         wine = {}
         details = item.details
         wine_detail = details.first
-        years = details.collect {|detail| [detail.year.year, "/wines/#{detail.slug}", detail.id] }
+        years = details.collect {|detail| [detail.show_year, "/wines/#{detail.slug}", detail.id] }
         item.name_zh ||= item.origin_name
         year = years.first.first.to_s
         wine[:wine_detail_id] = wine_detail.id
@@ -118,11 +104,41 @@ class SearchesController < ApplicationController
 
   end
 
-  private
+  # 搜索酒庄
+  def winery
+    @title = "搜索酒庄"
+    server = HotSearch.new
+    @wineries = server.search_winery(params[:word])
+    page = params[:page] || 1
+    if !(@wineries.nil?)
+      unless @wineries.kind_of?(Array)
+        @wineries = @wineries.page(page).per(10)
+      else
+        @wineries = Kaminari.paginate_array(@wineries).page(page).per(10)
+      end
+    end
+  end
 
+  # 搜索酒庄
+  def wine
+    @title = "搜索酒庄"
+    server = HotSearch.new
+    @wines = server.search_wine(params[:word])
+    page = params[:page] || 1
+    if !(@wineries.nil?)
+      unless @wineries.kind_of?(Array)
+        @wineries = @wineries.page(page).per(10)
+      else
+        @wineries = Kaminari.paginate_array(@wineries).page(page).per(10)
+      end
+    end
+  end
+
+  private 
   def get_recommend_users
-    if current_user
-      @recommend_users = User.no_self_recommends(5, current_user.id)
+    if current_user 
+      # @recommend_users = User.no_self_recommends(5, current_user.id)
+      @recommend_users = current_user.remove_followings_from_user User.all :conditions =>  "id <> "+ current_user.id.to_s , :limit => 5
     else
       @recommend_users = User.recommends(5)
     end

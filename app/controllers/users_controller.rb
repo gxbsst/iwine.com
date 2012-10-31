@@ -35,14 +35,19 @@ class UsersController < ApplicationController
 
   def followings
     @title = ["关注的人", @user.username].join("-")
-    @followings = @user.followings.page(params[:page] || 1).per(10)
-    # @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
+    @followings = @user.followings.page(params[:page] || 1).per(18)
+    unless current_user == nil
+      @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
+    end
   end
 
   def followers
     @title = ["粉丝", @user.username].join("-")
-    @followers = @user.followers.page(params[:page] || 1).per(10)
-    # @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
+    @followers = @user.followers.page(params[:page] || 1).per(18)
+    unless current_user == nil
+       @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
+    end
+   
   end
 
   # 用户第一次登录
@@ -75,21 +80,30 @@ class UsersController < ApplicationController
     end
   end
 
-  def follow
+  def follow  
+    if current_user.is_following params[:id]  
+      #重复关注某人 
+       notice_stickie t("notice.friend.re_follow")
+    end
 
-    if params[:user_id].present?
-      # 关注多个
-      params[:user_id].split(',').each do |user_id|
-        if current_user.id != user_id.to_i
-          current_user.follow_user user_id
-          # notice_stickie t("notice.friend.follow")
-        end
-      end
+    if current_user.slug == params[:id]
+      #关注自己 
+       notice_stickie t("notice.friend.self_follow")
     else
-      # 关注一个
-      if current_user.follow_user params[:id]
-        notice_stickie t("notice.friend.follow")
-      end
+        if params[:user_id].present?
+          # 关注多个
+          params[:user_id].split(',').each do |user_id|
+            if current_user.id != user_id.to_i
+              current_user.follow_user user_id
+              # notice_stickie t("notice.friend.follow")
+            end
+          end
+        else
+          # 关注一个
+          if current_user.follow_user params[:id]
+            notice_stickie t("notice.friend.follow")
+          end
+        end
     end
     redirect_to(followings_user_path(current_user))
   end

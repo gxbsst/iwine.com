@@ -11,9 +11,11 @@ class Wine < ActiveRecord::Base
   has_many   :covers, :as => :imageable, 
     :class_name => "Photo", 
     :conditions => {:photo_type => APP_DATA["photo"]["photo_type"]["cover"]}
+  has_many :cn_names, :as => :nameable
   has_one :label, :as => :imageable, 
     :class_name => "Photo", 
     :conditions => {:photo_type => APP_DATA["photo"]["photo_type"]["label"]}
+  after_save :init_cn_names
 
   counts :photos_count   => {:with => "AuditLog",
     :receiver => lambda {|audit_log| audit_log.logable.imageable }, 
@@ -42,6 +44,10 @@ class Wine < ActiveRecord::Base
         :is_nv => register.is_nv,
         :winery_id => register.winery_id
       )
+    else
+      wine.name_zh = register.name_zh #不保存
+      wine.other_cn_name = register.other_cn_name
+      wine.init_cn_names
     end
     return wine
   end
@@ -56,7 +62,7 @@ class Wine < ActiveRecord::Base
   end
 
   def years 
-    details.collect {|wine| [wine.year.year, wine.slug]}
+    details.collect {|wine| [wine.show_year, wine.slug]}
   end
 
   
@@ -81,4 +87,5 @@ class Wine < ActiveRecord::Base
       return wine_detail
     end
   end
+
 end

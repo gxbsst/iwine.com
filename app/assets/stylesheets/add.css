@@ -31,3 +31,4 @@
 .wine_select dt {width:70px;float:left;margin-right:15px;}
 .wine_select dd {width:220px;float:left;}
 .wine_select dl span {position:absolute;left:59px;top:-9px;}
+.ui-menu-item:hover {background:url(bg/body_bg.jpg) repeat;}

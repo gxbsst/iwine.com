@@ -1,7 +1,7 @@
 class Wine extends Backbone.Model
 class Wines extends Backbone.Collection
-  url: '/searches/wine.json?word='
-  origin_url: '/searches/wine.json?word='
+  url: '/searches/event_wine.json?word='
+  origin_url: '/searches/event_wine.json?word='
   model: Wine
 
 @app = window.app ? {}
