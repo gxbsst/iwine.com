@@ -217,7 +217,7 @@ Devise.setup do |config|
     config.omniauth :qq_connect, '100294118', '244168f2df7b9468eeac0fc885b965b9' #私有账号
   else
     config.omniauth :qq_connect, '100298233', '633ccc9eedd21fd4b35ffe24ccc7af9a'
-    config.omniauth :weibo, '384497258','9a9ec8e54fe6df240004c09cae4d15c3'
+    config.omniauth :weibo, '2787070179','2ef08ce2f31b8237e5e5d3bef2ccf17d'
     config.omniauth :renren, '98420f24310c4b53bd450ff20966eb07', '9ec0d36f41384cb0b8553976537c9fa2' 
   end
   # ==> Warden configuration
