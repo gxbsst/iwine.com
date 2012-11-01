@@ -2,16 +2,16 @@
 <% @followings.map_user.each_with_index do |user, index|%>
 <span>
   <% if index > 0 %>
-  <%= link_to_user user, user_path(user, :trailing_slash => true), 
+  <%= link_to_user user, user_path(user, :trailing_slash => true),
   {:with_avatar => true, :avatar_version => :middle},
   {:width => 50, :height => 50, :alt => user.username} %>
   <% else %>
-  <%= link_to_user user, user_path(user, :trailing_slash => true), 
+  <%= link_to_user user, user_path(user, :trailing_slash => true),
   {:with_avatar => true, :avatar_version => :large},
   {:width => 101, :height => 101, :alt => user.username} %>
   <% end %>
 </span>
-<% end %>	
+<% end %>
 <div class="clear"></div>
 <% else %>
 <p>还有关注任何人！</p>
