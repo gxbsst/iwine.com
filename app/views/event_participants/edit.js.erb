@@ -43,7 +43,7 @@ $.fancybox({
 		validateForm: function(){
 			var errors = []
 			elements = this.inputs;
-			self = this;
+			var self = this;
     var reg_email = /email/;
 			_.each(elements, function(element){
 				if(self.check_prence(element['input'])){

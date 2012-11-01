@@ -5,7 +5,7 @@ $("#reply_comment_<%= @comment.id %>")
  // 评论表单
 $("#reply_comment_<%= @comment.id %> form")
 .bind("ajax:success", function(evt, data, status, xhr){
-  self = this;
+  var self = this;
   $(this).parent().parent().slideUp("slow", function(){
 });
   $(this).parent().parent().parent()

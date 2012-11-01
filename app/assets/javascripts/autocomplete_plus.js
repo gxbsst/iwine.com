@@ -55,7 +55,7 @@ $(document).ready(function(){
       },
 
       showRegionTree: function(event){
-        self = this;
+        var self = this;
         str = $(this.el).find('input').val();
         if(str.length > 2) {
           var collections = new RegionTrees();
@@ -67,7 +67,7 @@ $(document).ready(function(){
       },
       renderRegions: function(collections){
         $("#region_tree_auto").html("");
-        self = this;
+        var self = this;
         collections.each(function(model){
           var regionTreeView = new RegionTreeView({model: model, inputView: self});
           $("#region_tree").append(regionTreeView.render().el);
