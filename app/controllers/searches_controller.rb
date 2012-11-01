@@ -30,8 +30,7 @@ class SearchesController < ApplicationController
     end
     server = HotSearch.new
     @words = server.hot_words params[:word]
-
-    if ( @words['wines'].length + @words['wineries'].length ) > 0 
+    if @words['wines'].present? || @words['wineries'].present?
       render :layout => false
     else
       render :text => ''
@@ -119,9 +118,9 @@ class SearchesController < ApplicationController
     end
   end
 
-  # 搜索酒庄
+  # 搜索酒
   def wine
-    @title = "搜索酒庄"
+    @title = "搜索酒"
     server = HotSearch.new
     @wines = server.search_wine(params[:word])
     page = params[:page] || 1
