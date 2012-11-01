@@ -9,8 +9,6 @@ class Users::SyncsController < ApplicationController
   def callback
     client = OauthChina::Sina.load(Rails.cache.read(build_oauth_token_key(params[:type], params[:oauth_token])))
     client.authorize(:oauth_verifier => params[:oauth_verifier])
-
-    binding.pry
     results = client.dump
 
     if results[:access_token] && results[:access_token_secret]
