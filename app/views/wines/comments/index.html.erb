@@ -122,7 +122,7 @@
 
     window.StarsView = Backbone.View.extend({
         initialize: function() {
-            self = this
+            var self = this;
             _.each([1, 2, 3, 4, 5], function(num){
                 self.addOne(num);
             });

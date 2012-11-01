@@ -82,7 +82,7 @@ $(function(){
         }
       },
       populateFrom: function(url) {
-        self = this;
+        var self = this;
         regions = this.collection;
         regions.url = url;
         regions.fetch({

@@ -27,7 +27,7 @@ $(function(){
 
     window.StarsView = Backbone.View.extend({
         initialize: function() {
-            self = this
+            var self = this;
             _.each([1, 2, 3, 4, 5], function(num){
                 self.addOne(num);
             });
@@ -97,6 +97,7 @@ $(function(){
         // end: 为显示几个星星
         // color: 显示什么颜色
         showColorStar: function(end, color){
+            alert('....')
             var self = this;
             var items = $(this.el).parent().children().slice(0, end);
             _.each(items, function(item){
