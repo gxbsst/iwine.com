@@ -2,7 +2,7 @@
 <% if event_type == "new_comment" %>
     <div class="iw_main">
         <ul>
-            <% secondary_actor.comments.recent(6).each do |comment|%>
+            <% secondary_actor.comments.real_comments.recent(6).each do |comment|%>
                 <%= render :partial => "share/short_comment", :locals => {:comment => comment} %>
             <% end %>
         </ul>
