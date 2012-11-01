@@ -1,17 +1,12 @@
 
 <div id="login">
-
-  <% if !devise_error_messages!.blank? %>
-    <div class="error"><%= devise_error_messages! %></div>
-  <% end %>
-
   <div class="password">
     <div class="logreg_box">
       <div class="top2"></div>
       <div class="mid">
         <div class="content">
           <h2>重置密码</h2>
-          <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :validate => true, :html => { :method => :put }) do |f| %>
+          <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
 
             <%= f.hidden_field :reset_password_token %>
             <div id="stylized">
@@ -20,7 +15,7 @@
                   <td>新密码</td>
                   <td>
                     <div class="un">
-                      <%= f.password_field :password, :class => "text", :placeholder => "请输入新密码", :validate => { :presence => true } %>
+                      <%= f.password_field :password, :class => "text", :placeholder => "请输入新密码"%>
                     </div>
                   </td>
                 </tr>
