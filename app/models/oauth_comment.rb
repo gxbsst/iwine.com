@@ -153,7 +153,7 @@ class OauthComment < ActiveRecord::Base
       # :pic_url =>  "http://patrickdev.sidways.com#{image_url}", 
       response = qq_client.post("http://open.t.qq.com/api/t/add_pic_url", 
       	             {:content => body, 
-                      :pic_url => "http://patrickdev.sidways.com#{image_url}",
+                      :pic_url => "#{QQ_PIC_URL}#{image_url}",
       	              :clientip => inet_ntoa}).body
     else
    	  response = qq_client.add_status(body, :clientip => inet_ntoa).body
