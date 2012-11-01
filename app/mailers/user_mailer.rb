@@ -1,14 +1,16 @@
+#encoding: utf-8
 class UserMailer < ActionMailer::Base
   add_template_helper(ApplicationHelper)
   default from: APP_DATA["email"]["from"]["normal"]
 
   # email 收件人地址， body邮件内容，user发件人
-  def invoting_friends(email, body, user)
-  	#TODO: 将记录放到UserInViteLog
+  def invoting_friends(email, body, user) 
+  	#TODO: 将记录放到UserInViteLog    
+    subject = "#{user.username}邀请您加入iwine.com"  
     @user = user
     @email = email
-    @body = body
-    mail(:to => email, :subject => body)
+    @body = body 
+    mail(:to => email, :subject => subject)
   end
 
   # 发送Welcome Email

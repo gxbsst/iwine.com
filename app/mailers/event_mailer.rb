@@ -5,7 +5,7 @@ class EventMailer < ActionMailer::Base
 
   # 活动明天举行
   def event_hold_tomorrow(email, event, participant = '')
-    subject = "#{event.title}活动明天就要举办了"
+    subject = "您报名参加的#{event.title}活动明天就要举办了"
     @event = event
     @participant = participant
     mail(:to => email, :subject => subject)
