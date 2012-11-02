@@ -19,7 +19,7 @@
 				   <% @recommend_users.each_with_index do |user, index| %>			
 				   		<li>
 				   			<%= link_to_user user,
-				   				user_path(user.id, :trailing_slash => true),
+				   				user_path(user, :trailing_slash => true),
 				   				{:with_avatar => true, :avatar_version => :large},
 				   				{:width => 50, :height => 50} %>
 				   			<div class="meta">
