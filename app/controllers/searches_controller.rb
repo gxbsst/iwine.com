@@ -124,11 +124,11 @@ class SearchesController < ApplicationController
     server = HotSearch.new
     @wines = server.search_wine(params[:word])
     page = params[:page] || 1
-    if !(@wineries.nil?)
-      unless @wineries.kind_of?(Array)
-        @wineries = @wineries.page(page).per(10)
+    if !(@wines.nil?)
+      unless @wines.kind_of?(Array)
+        @wines = @wines.page(page).per(10)
       else
-        @wineries = Kaminari.paginate_array(@wineries).page(page).per(10)
+        @wines = Kaminari.paginate_array(@wines).page(page).per(10)
       end
     end
   end
