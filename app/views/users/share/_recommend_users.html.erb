@@ -3,7 +3,7 @@
 <li>
   <div class="userpic">
     <%= link_to_user user, 
-		user_path(user.id,:trailing_slash => true), 
+		user_path(user,:trailing_slash => true),
 		{:with_avatar => true, :avatar_version => :large}, 
 		{:width => 50, :height => 50} %>
   </div>
@@ -13,9 +13,11 @@
       <span class="location">上海</span>
     </p>
      <p class="statu">
-      <%= link_to follow_user_path(user), :class => :btn_gray, :method => :put do %>
-       <span>加关注</span>
-      <% end %>
+       <% if current_user.id != user.id %>
+          <%= link_to follow_user_path(user), :class => :btn_gray, :method => :put do %>
+           <span>加关注</span>
+          <% end %>
+       <% end %>   
      </p>
   </div>
 </li>

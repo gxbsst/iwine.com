@@ -8,6 +8,7 @@ load "config/recipes/unicorn"
 #load "config/recipes/nodejs"
 #load "config/recipes/rbenv"
 load "config/recipes/check"
+load "config/recipes/monit"
 
 server "dev.iwine.com", :web, :app, :db, primary: true
 
@@ -23,17 +24,18 @@ set :use_sudo, false
 set :scm, "git"
 set :repository, "ssh://git@www.sidways.com:20248/patrick_ruby"
 
-#if ENV['RAILS_ENV'] =='production'
-#  set :branch, "master"
-#  set :deploy_to, "/srv/rails/production.iwine.com"
-#else
-#  set :branch, "develop"
-#  set :deploy_to, "/srv/rails/develop.iwine.com"
-#end
+if ENV['RAILS_ENV'] =='production'
+  set :branch, "master"
+  set :deploy_to, "/srv/rails/production.iwine.com"
+else
+  set :branch, "develop"
+  set :deploy_to, "/srv/rails/development.iwine.com"
+end
 
-set :branch, "develop"
-set :deploy_to, "/srv/rails/iwine.com"
-
+#set :branch, "master"
+#set :deploy_to, "/srv/rails/production.iwine.com"
+#set :branch, "develop"
+#set :deploy_to, "/srv/rails/iwine.com"
 
 
 default_run_options[:pty] = true
@@ -51,8 +53,10 @@ namespace :deploy do
   #end
 
   task :restart, roles: :app do
+    run "sudo kill -9 `cat #{deploy_to}/current/tmp/pids/unicorn.pid`"
+    run "cd #{deploy_to}/current/ && bundle exec unicorn_rails -c ./config/unicorn.rb -D  -E production"
     #  run "touch #{current_path}/tmp/restart.txt" # passenger
-    run "/home/iwine/unicorn_restart.sh" # unicorn
+    #sudo "/home/iwine/unicorn_restart.sh" # unicorn
   end
 
   task :setup_config, roles: :app do
@@ -89,9 +93,10 @@ namespace :deploy do
 
   desc "Update the crontab file"
   task :update_crontab, :roles => :db do
-    run "cd #{release_path} && whenever --update-crontab #{application}"
+    run "cd #{deploy_to}/current && whenever --update-crontab #{application}"
   end
   after 'deploy', "deploy:create_database", 'deploy:migrate'
+  after "deploy:update", "deploy:update_crontab"
 
   desc "create database "
   task "create_database", :roles => :web do
@@ -145,6 +150,6 @@ namespace :delayed_job do
   end
 end
 
-#after "deploy:update_code", "delayed_job:restart"
+after "deploy:update", "delayed_job:restart"
 
 
