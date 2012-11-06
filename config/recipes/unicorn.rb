@@ -20,7 +20,7 @@ namespace :unicorn do
 
   desc "symlink unicorn  configuration"
   task :symlink_file, roles: :app do
-    run "ln -nfs #{shared_path}/config/unicorn.rb #{release_path}/config/unicorn.rb"
+    run "ln -nfs #{shared_path}/config/unicorn.rb #{current_path}/config/unicorn.rb"
   end
 
   after "deploy:symlink_config", "unicorn:symlink_file"
