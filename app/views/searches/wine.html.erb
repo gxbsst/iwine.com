@@ -11,49 +11,22 @@
     <div class="clear"></div>
     <div class="tabs">
       <ul>
-        <li class="<%= @all_tab%>">
+        <li>
           <a href="<%= url_for( '/searches/results?tab=all&word=' + params[:word] )%>">全部</a>
         </li>
-        <li class="<%= @wine_tab%>">
+        <li class="current">
           <a href="<%= url_for( '/searches/wine?word=' + params[:word] )%>">酒</a>
         </li>
-        <li class="<%= @winery_tab%>">
+        <li>
           <a href="<%= url_for( '/searches/winery?word=' + params[:word] )%>">酒庄</a>
         </li>
       </ul>
     </div>
     <div class="clear"></div>
-    <% if @all_wines.blank? && @wineries.blank? %>
+    <% if @wines.blank? %>
       不好意思，没有找到相关内容
     <% else %>
       <div class="nor_notice mb20">太好了，我们找到了一些相关内容：</div>
-      <% if @wineries.present? && @all_tab == 'current'%>
-        <div class="winery_result">
-          <ul>
-            <% @wineries[0..1].each do|winery| %>
-              <li>
-                <%= link_to  winery_path(winery) do %>
-                  <%= winery_label_tag winery, :thumb_name => :thumb_x, :size => "70x70", :alt => winery.origin_name %>
-                <% end %>
-                <div class="meta">
-                  <h1 class="zh">
-                    <%= link_to winery.name_zh, winery_path(winery) %>
-                  </h1>
-                  <h1 class="en">
-                    <%= link_to winery.origin_name, winery_path(winery) %>
-                  </h1>
-                  <p class="location"><%= winery.region_path_zh %></p>
-                </div>
-              </li>
-            <% end %>
-            <li class="more">
-              <a href="<%= url_for( '/searches/winery?word=' + params[:word] )%>">更多...</a>
-            </li>
-            <div class="clear"></div>
-          </ul>
-          <div class="clear"></div>
-        </div>
-      <% end %>
       <div class="wine_list">
         <% @wines.each do |wine| %>
           <% releast_detail = wine.details.order("year desc").first  %>

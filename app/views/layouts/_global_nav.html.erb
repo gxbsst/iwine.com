@@ -12,7 +12,7 @@
                 <div class="item">
                   <% values.each do |item|  %>
                     <span>
-                      <%= link_to item, results_searches_path(:tab => :wine, :word => item) %>
+                      <%= link_to item, wine_searches_path(:tab => :wine, :word => item) %>
                     </span>
                   <% end %>
                 </div>
