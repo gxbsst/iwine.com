@@ -77,9 +77,9 @@ class Wines::Detail < ActiveRecord::Base
   end
   
   #只有是新的detail时，才更新slug
-  def should_generate_new_friendly_id?
-    new_record?
-  end
+  # def should_generate_new_friendly_id?
+  #   new_record?
+  # end
 
   # scope :with_recent_comment, joins(:comments) & ::CommenGt.recent(6)
 
@@ -264,8 +264,7 @@ class Wines::Detail < ActiveRecord::Base
         destroy_event_wine
         destroy_timeline_events
         self.deleted_at = Time.now
-        self.slug = nil
-        self.save
+        self.update_attribute(:slug, nil)
       end
     end
   end
