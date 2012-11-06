@@ -124,7 +124,7 @@ class User < ActiveRecord::Base
             :if => lambda {|comment| comment.comments_counter_should_increment? }},
           :decrement => {
             :on => :save,  
-            :if => lambda {|comment| comment.comments_counter_should_decrement? }}                              
+            :if => lambda {|comment| comment.comments_counter_should_decrement? }}
          },
          :wines_count => {
           :with => "Users::WineCellarItem",
@@ -140,7 +140,7 @@ class User < ActiveRecord::Base
            :if => lambda {|photo| photo.album_id > 0}},
           :decrement => {
            :on => :save,
-           :if => lambda {|photo| !photo.deleted_at.blank? && photo.album_id > 0 }}                              
+           :if => lambda {|photo| !photo.deleted_at.blank? && photo.album_id > 0 }}
          },  
          :wine_followings_count => {
           :with => "Follow",
@@ -160,26 +160,26 @@ class User < ActiveRecord::Base
             :if => lambda{|follow| follow.follow_counter_should_increment_for("Winery")}},
            :decrement => {
             :on => :destroy, 
-            :if => lambda{|follow| follow.follow_counter_should_decrement_for("Winery")}}                              
+            :if => lambda{|follow| follow.follow_counter_should_decrement_for("Winery")}}
          }, 
          :followers_count =>  {
            :with => "Friendship",
-           :receiver => lambda {|friendship| friendship.user }, 
+           :receiver => lambda {|friendship| friendship.user },
            :increment => {:on => :create},
-           :decrement => {:on => :destroy}                              
+           :decrement => {:on => :destroy}
          }, 
          :followings_count => {
            :with => "Friendship",
-           :receiver => lambda {|friendship| friendship.follower }, 
+           :receiver => lambda {|friendship| friendship.follower },
            :increment => {:on => :create},
-           :decrement => {:on => :destroy}                              
+           :decrement => {:on => :destroy}
          },   
          :albums_count => {
            :with => "Album",
            :receiver => lambda {|album| album.user }, 
            :increment => {:on => :create},
-           :decrement => {:on => :destroy}                              
-         }                                                  
+           :decrement => {:on => :destroy}
+         }
 
   def domain=(value)
     if self.domain.present?

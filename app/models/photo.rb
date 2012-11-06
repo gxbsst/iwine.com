@@ -39,6 +39,7 @@ class Photo < ActiveRecord::Base
   #after_save :recreate_delayed_versions!
   before_save :set_geometry
   before_update :set_audit_status_changed?
+  after_update :delete_comments
   serialize :counts, Hash
 
   scope :covers, where(:photo_type => APP_DATA["photo"]["photo_type"]["cover"])
@@ -58,6 +59,12 @@ class Photo < ActiveRecord::Base
   #def crop_avatar
   #  image.recreate_versions! if crop_x.present?
   #end
+  
+  def delete_comments
+    if deleted_at
+      comments.each{|c| c.update_attribute(:deleted_at, Time.now)}
+    end
+  end
 
   def approve_photo
     update_attribute(:audit_status, APP_DATA['audit_log']['status']['approved'])

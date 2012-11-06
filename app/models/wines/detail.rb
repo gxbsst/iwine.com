@@ -22,7 +22,7 @@ class Wines::Detail < ActiveRecord::Base
                               :receiver => lambda {|cellar_item| cellar_item.wine_detail},
                               :increment => {:on => :create},
                               :decrement => {:on => :destroy}
-                             }                    
+                             }
         
 
   include Common
@@ -36,7 +36,7 @@ class Wines::Detail < ActiveRecord::Base
   has_many :comments, :class_name => "WineComment", :foreign_key => 'commentable_id', :include => [:user], :conditions => {:commentable_type => self.to_s, :parent_id => nil }
   #  has_many :good_comments, :foreign_key => 'wine_detail_id', :class_name => 'Wines::Comment', :order => 'good_hit DESC, id DESC', :limit => 5, :include => [:user_good_hit]
   # has_one :statistic, :foreign_key => 'wine_detail_id'
-  has_one :item, :class_name => "Users::WineCellarItem", :foreign_key => "wine_detail_id"
+  has_many :items, :class_name => "Users::WineCellarItem", :foreign_key => "wine_detail_id"
   belongs_to :audit_log, :class_name => "AuditLog", :foreign_key => "audit_id"
   belongs_to :style, :foreign_key => "wine_style_id"
   has_many :covers, :as => :imageable, :class_name => "Photo", :conditions => { :photo_type => APP_DATA["photo"]["photo_type"]["cover"] }
@@ -48,6 +48,8 @@ class Wines::Detail < ActiveRecord::Base
   has_many :special_comments, :as => :special_commentable
   has_many :follows, :as => :followable, :class_name => "WineFollow"
   has_one  :winery, :through => :wine
+  has_many :timeline_events, :as => :secondary_actor
+  has_many :event_wines, :foreign_key => :wine_detail_id
   scope :hot_wines, lambda { |limit| joins(:follows).
                                      includes([:wine, :covers]).
                                      select("wine_details.*, count(*) as c").
@@ -55,6 +57,7 @@ class Wines::Detail < ActiveRecord::Base
                                      order("c DESC").
                                      limit(limit)
                            }
+  default_scope where("wine_details.deleted_at is null")
   scope :releast_detail, lambda {order("year desc").limit(1)}
   accepts_nested_attributes_for :photos, :reject_if => proc { |attributes| attributes['image'].blank? }
   accepts_nested_attributes_for :label, :reject_if => proc { |attributes| attributes['filename'].blank? }
@@ -63,7 +66,6 @@ class Wines::Detail < ActiveRecord::Base
   friendly_id :pretty_url, :use => [:slugged]
   
   validate :year_and_is_nv_presence
-
   def year_and_is_nv_presence 
     if (wine.is_nv && year) || (!wine.is_nv && !year)
       errors[:base] << "酒的年代信息不合格。"
@@ -72,6 +74,11 @@ class Wines::Detail < ActiveRecord::Base
 
   def pretty_url
     "#{wine.origin_name} #{show_year.to_s.downcase}"
+  end
+  
+  #只有是新的detail时，才更新slug
+  def should_generate_new_friendly_id?
+    new_record?
   end
 
   # scope :with_recent_comment, joins(:comments) & ::CommenGt.recent(6)
@@ -243,6 +250,53 @@ class Wines::Detail < ActiveRecord::Base
     }
     
     result
+  end
+ 
+  #删除酒 并更改和其相关的counts和 相关表记录
+  #注意顺序，最后再设置detail的deleted_at
+  def set_deleted
+    if !deleted_at && slug
+      Wines::Detail.transaction do 
+        delete_comment
+        delete_photo
+        destroy_follow
+        destroy_item
+        destroy_event_wine
+        destroy_timeline_events
+        self.deleted_at = Time.now
+        self.slug = nil
+        self.save
+      end
+    end
+  end
+
+  def destroy_timeline_events
+    timeline_events.each{|t| t.destroy}
+  end
+
+  def destroy_event_wine
+    event_wines.each{|e| e.destroy}
+  end
+  
+  def destroy_item
+    items.each{|i| i.destroy}
+  end
+
+  def destroy_follow
+    follows.each{|f| f.destroy}
+  end
+  
+  def delete_comment
+    comments.each{|c| c.update_attribute(:deleted_at, Time.now)}
+  end
+ 
+  #需要更改audit_status， detail的photos_count才会变化
+  def delete_photo
+    photos.each do |p|
+      p.deleted_at =  Time.now
+      p.audit_status = APP_DATA['audit_log']['status']['rejected']  #会修改detail表中 photos_count
+      p.save
+    end
   end
 
   # 类方法

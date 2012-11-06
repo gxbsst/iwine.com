@@ -13,6 +13,16 @@ ActiveAdmin.register Wines::Detail do
         render :action => :edit
       end
     end
+
+    def destroy
+      @wines_detail = Wines::Detail.find(params[:id])
+      if @wines_detail.set_deleted
+        flash.notice = t("notice.destroy_success")
+      else
+        flash.notice = t("notice.failure")
+      end
+      redirect_to  admin_wines_details_path
+    end
   end
 
   show do |detail|

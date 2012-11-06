@@ -3,7 +3,7 @@ class TimelineEvent < ActiveRecord::Base
   belongs_to :subject,            :polymorphic => true
   belongs_to :secondary_subject,  :polymorphic => true
   belongs_to :secondary_actor,    :polymorphic => true
-  
+  has_many :user_timelines, :class_name => "Users::Timeline", :dependent => :destroy
   # belongs_to :timeline, :class_name
   # belongs_to :timeline, 
   #   :class_name => "User::Timeline", 
