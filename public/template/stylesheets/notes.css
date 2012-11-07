@@ -1,0 +1,45 @@
+@charset "UTF-8";
+.notes_img_detail {position:relative;margin:0 0 20px 0;}
+.notes_img_detail .sharebar {position:absolute;width:575px;height:35px; background:url(../images/bg/black_80.png) repeat ;padding: 15px 15px 0 0;}
+.sharebar ul li {float:right;display:inline-block;}
+.sharebar li.collect {margin-left:10px;}
+.sharebar li.share {margin-left:13px;}
+.sharebar li.like {color:#fff;}
+.notes_winename {margin:0 0 40px 0;}
+.notes_winename .star {float:right;}
+.notes_winename .name h1.ch {font-size:16px;}
+.notes_winename .name h1.en {font-size:12px;color:#666;font-weight:normal;}
+.notes_table th, .notes_table td {padding:10px 15px;}
+.notes_table th {background-color:#f1ede3;text-align:left;border-bottom:1px solid #fff;border-right:1px solid #fff;width:100px;}
+.notes_table td {background-color:#f8f6f1;border-bottom:1px solid #fff;}
+.feature {margin: 10px 0 0 0;}
+.feature li {float:left;margin:0 9px 10px 0;text-align:center;position:relative;}
+.feature li img {margin:0 0 5px 0;}
+
+.notes {padding:30px 40px;}
+.notes .left {width:590px;float:left;margin-right:28px;}
+.notes .left .last {margin-bottom:0;}
+.notes .right {width:250px;float:left;}
+.notes .section {margin-bottom:50px;}
+.notes .section .title {border-bottom:1px solid #cccccc;padding-bottom:15px;margin-bottom:20px;}
+.notes .section h2 {font-size:16px;}
+.notes .sidebox {margin: 0 0 20px 0;}
+.notes .sidebox .title {border-radius:0;background-color:#ebe2d1;padding:5px 15px;margin: 0 0 20px 0;}
+.notes .sidebox .title span {float:right;}
+.notes .sidebox .title h3 {font-size:14px;}
+.notes .sidebox .main {padding:15px;background-color:#f7f7f7;}
+.side_notes dl {margin:0 0 20px 0;}
+.side_notes dt {width:70px;float:left;float:left;margin-right:15px;}
+.side_notes dd {width:165px;float:left;}
+.side_notes dd .star {margin: 0 0 5px 0;}
+dd.info h3 a {font-size:12px;}
+dd.info h3.en a {font-weight:normal;color:#666;}
+.f1, .f2, .f3, .f4 {background:url(../images/icon/notes_icon.gif) no-repeat;padding:0 0 0 30px;display:block;height:20px;}
+.f1 {background-position:0 0;}
+.f2 {background-position:0 -47px;}
+.f3 {background-position:0 -106px;}
+.f4 {background-position:0 -166px;}
+.notes_list li {margin:0 0 20px 0;padding: 0 0 20px 0;border-bottom:1px solid #ddd;}
+.notes_list .left {width:100px;float:left;margin-right:20px;text-align:center;}
+.notes_list a img{margin:0 0 10px 0;}
+.notes_list .right {width:470px;float:left;}
