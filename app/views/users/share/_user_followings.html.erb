@@ -23,7 +23,7 @@
               <p> 互相关注 </p>
             <% end %>
           <% else %>
-            <% if current_user.id != user.id %>
+            <% if current_user != user %>
               <%= link_to follow_user_path(user), :class => "btn_gray", :method => :put do  %>
                 <span>加关注</span>
               <% end %>
