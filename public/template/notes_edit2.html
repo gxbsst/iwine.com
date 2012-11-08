@@ -45,7 +45,7 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
     </div>
     <div id="wrapper950">
       <div class="whitespace addwine">
-        <h1 class="main_title">添加品酒辞</h1>
+        <h1 class="main_title">编辑品酒辞</h1>
             <div class="add_notes_step">
        	    高级品鉴记录（选填）</div>
         <div class="myform mb30 addnotes">
@@ -58,20 +58,20 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 <th width="90" rowspan="2">澄清度</th>
                 <td>
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input name="radio1" type="radio" value="radio" checked="checked" />
                 明亮</label>
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input type="radio" name="radio1" value="radio" />
                 黯淡</label>
                 </td>
               </tr>
               <tr>
                 <td>
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input name="radio2" type="radio" value="radio" checked="checked" />
                 清澈</label>
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input type="radio" name="radio2" value="radio" />
                    浑浊</label>
                 </td>
               </tr>
@@ -79,25 +79,25 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 <th>强度</th>
                 <td> 
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio3" type="radio" value="" />
                 弱</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio3" type="radio" value="" />
                 中等偏低</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio3" type="radio" value="" checked="checked" />
                 中等</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio3" type="radio" value="" />
                 中等偏高</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio3" type="radio" value="" />
                 强</label></td>
               </tr>
               <tr>
                 <th>颜色</th>
                 <td>
-               	  <p class="mb20"><a href="lightbox_color.html" target="_blank" class="btn_gray"><span>选择颜色</span></a></p>
+               	  <p class="mb20"><a href="#" class="btn_gray"><span>选择颜色</span></a></p>
                   <ul class="feature">
                   	<li><img src="images/color/Red-Garnet-2.png" width="128" height="128" /><br />
                     浅三文鱼色
@@ -107,7 +107,7 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
               </tr>
               <tr>
                 <th>其他信息</th>
-                <td><textarea name="textarea" id="textarea" cols="60" rows="5"></textarea></td>
+                <td><textarea name="textarea" id="textarea" cols="60" rows="5">信息内容信息内容信息内容信息内容信息内容信息内容信息内容信息内容</textarea></td>
               </tr>
             </table>
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -118,10 +118,10 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 <th width="90">状况</th>
                 <td>
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input name="radio4" type="radio" value="radio" checked="checked" />
                 干净</label>
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input type="radio" name="radio4" value="radio" />
                 浑浊</label>
                 </td>
               </tr>
@@ -129,42 +129,42 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 <th>强度</th>
                 <td> 
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio5" type="radio" value="" />
                 淡</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio5" type="radio" value="" checked="CHECKED" />
                 中等偏低</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio5" type="radio" value="" />
                 中等</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio5" type="radio" value="" />
                 中等偏高</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio5" type="radio" value="" />
                 浓烈</label></td>
               </tr>
               <tr>
                 <th>发展</th>
                 <td>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio6" type="radio" value="" checked="checked" />
                 年轻</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio6" type="radio" value="" />
                 正在发展</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio6" type="radio" value="" />
                 完全发展</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio6" type="radio" value="" />
                 已过巅峰</label>
                 </td>
               </tr>
               <tr>
                 <th>香气特征</th>
                 <td>
-               	  <p class="mb20"><a href="lightbox_feature.html" target="_blank" class="btn_gray"><span>选择香气特征</span></a></p>
+               	  <p class="mb20"><a href="#" class="btn_gray"><span>选择香气特征</span></a></p>
                   <ul class="feature">
                   	<li><a href="#"><span class="delet"></span></a><img src="images/nose/DairyMLF/DairyMLF_Yoghurt.png" width="128" height="128" /><br />
                	    薰衣草</li>
@@ -187,25 +187,25 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 <th>甜度</th>
                 <td colspan="2">
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input type="radio" name="radio7" value="radio" />
                 干</label>
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input type="radio" name="radio7" value="radio" />
                 半干</label>
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input name="radio7" type="radio" value="radio" checked="checked" />
                 M-dry</label>
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input type="radio" name="radio7" value="radio" />
                 中等</label>
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input type="radio" name="radio7" value="radio" />
                 半甜</label>
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input type="radio" name="radio7" value="radio" />
                 甜</label>
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input type="radio" name="radio7" value="radio" />
                 甘美</label>
                 </td>
               </tr>
@@ -213,38 +213,38 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 <th>酸度</th>
                 <td colspan="2"> 
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio8" type="radio" value="" />
                 低</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio8" type="radio" value="" />
                 中等偏低</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio8" type="radio" value="" />
                 中等</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio8" type="radio" value="" checked="checked" />
                 中等偏高</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio8" type="radio" value="" />
                 高</label></td>
               </tr>
               <tr>
                 <th>酒精度</th>
                 <td colspan="2">
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio15" type="radio" value="" />
                 低</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio15" type="radio" value="" checked="checked" />
                 中等偏低</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio15" type="radio" value="" />
                 中等</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio15" type="radio" value="" />
                 中等偏高</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio15" type="radio" value="" />
                 高</label>
                 </td>
               </tr>
@@ -253,32 +253,32 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 <td>
                 <ul class="danning_list">
                     <span>程度</span>
-                	<li><label><input name="radio1" type="radio" value="" /> 无</label></li>
-                    <li><label><input name="radio1" type="radio" value="" /> 
-                      低</label></li>
-                    <li><label><input name="radio1" type="radio" value="" /> 
+                	<li><label><input name="radio9" type="radio" value="" /> 无</label></li>
+                    <li><label><input name="radio9" type="radio" value="" checked="checked" /> 
+                  低</label></li>
+                    <li><label><input name="radio9" type="radio" value="" /> 
                       中等偏低</label></li>
-                    <li><label><input name="radio1" type="radio" value="" /> 
+                    <li><label><input name="radio9" type="radio" value="" /> 
                       中等</label></li>
-                      <li><label><input name="radio1" type="radio" value="" /> 
+                      <li><label><input name="radio9" type="radio" value="" /> 
                       中等偏高</label></li>
                 </ul>
                 <ul class="danning_list">
                 	<span>性质</span>
-                    <li><label><input name="radio2" type="radio" value="" /> 无</label></li>
-                    <li><label><input name="radio2" type="radio" value="" /> 
+                    <li><label><input name="radio10" type="radio" value="" /> 无</label></li>
+                    <li><label><input name="radio10" type="radio" value="" /> 
                     成熟</label></li>
-                    <li><label><input name="radio2" type="radio" value="" /> 
-                    柔顺</label></li>
-                    <li><label><input name="radio2" type="radio" value="" /> 
+                    <li><label><input name="radio10" type="radio" value="" checked="checked" /> 
+                  柔顺</label></li>
+                    <li><label><input name="radio10" type="radio" value="" /> 
                     不成熟</label></li>
-                    <li><label><input name="radio2" type="radio" value="" /> 
+                    <li><label><input name="radio10" type="radio" value="" /> 
                     绿</label></li>
-                    <li><label><input name="radio2" type="radio" value="" /> 
+                    <li><label><input name="radio10" type="radio" value="" /> 
                     茎</label></li>
-                    <li><label><input name="radio2" type="radio" value="" /> 
+                    <li><label><input name="radio10" type="radio" value="" /> 
                     粗糙</label></li>
-                    <li><label><input name="" type="radio" value="" /> 
+                    <li><label><input name="radio10" type="radio" value="" /> 
                     细腻</label></li>
                 </ul>
                 </td>
@@ -287,20 +287,20 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 <th>酒体</th>
                 <td colspan="2">
                 	<label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio11" type="radio" value="" />
                 清淡
                 	</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio11" type="radio" value="" />
                 中等偏低</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio11" type="radio" value="" checked="checked" />
                 中等</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio11" type="radio" value="" />
                 中等偏高</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio11" type="radio" value="" />
                 饱满</label>
                 </td>
               </tr>
@@ -308,19 +308,19 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 <th>风味浓郁度</th>
                 <td colspan="2">
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio12" type="radio" value="" />
                 淡</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio12" type="radio" value="" />
                 中等偏低</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio12" type="radio" value="" />
                 中等</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio12" type="radio" value="" checked="checked" />
                 中等偏高</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio12" type="radio" value="" />
                 浓郁</label>
                 </td>
               </tr>
@@ -328,26 +328,26 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 <th>余味</th>
                 <td colspan="2">
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio13" type="radio" value="" />
                 短</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio13" type="radio" value="" checked="checked" />
                 中等偏低</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio13" type="radio" value="" />
                 中等</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio13" type="radio" value="" />
                 中等偏长</label>
                 <label>
-                <input name="radio" type="radio" value="" />
+                <input name="radio13" type="radio" value="" />
                 长</label>
                 </td>
               </tr>
               <tr>
                 <th>风味特征</th>
                 <td colspan="2">
-               	  <p class="mb20"><a href="lightbox_feature.html" target="_blank" class="btn_gray"><span>选择风味特征</span></a></p>
+               	  <p class="mb20"><a href="#" class="btn_gray"><span>选择风味特征</span></a></p>
                   <ul class="feature">
                   	<li><a href="#"><span class="delet"></span></a><img src="images/nose/DairyMLF/DairyMLF_Yoghurt.png" width="128" height="128" /><br />
                	    薰衣草</li>
@@ -363,7 +363,7 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
               </tr>
               <tr>
                 <th>其他细节</th>
-                <td colspan="2"><textarea name="textarea" id="textarea" cols="60" rows="5"></textarea></td>
+                <td colspan="2"><textarea name="textarea" id="textarea" cols="60" rows="5">其他细节其他细节其他细节其他细节其他细节其他细节其他细节其他细节其他细节</textarea></td>
               </tr>
             </table>
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -374,25 +374,25 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 <th>质量</th>
                 <td colspan="2">
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input type="radio" name="radio14" value="radio" />
                 欠佳</label>
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input type="radio" name="radio14" value="radio" />
                 尚可</label>
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input name="radio14" type="radio" value="radio" checked="checked" />
                 良好</label>
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input type="radio" name="radio14" value="radio" />
                 出色</label>
                 <label>
-                  <input type="radio" name="radio" value="radio" />
+                  <input type="radio" name="radio14" value="radio" />
                 顶级佳酿</label>
                 </td>
               </tr>
               <tr>
                 <th>理由</th>
-                <td colspan="2"><textarea name="textarea2" id="textarea2" cols="60" rows="5"></textarea></td>
+                <td colspan="2"><textarea name="textarea2" id="textarea2" cols="60" rows="5">理由理由理由理由理由理由理由理由理由理由理由理由理由理由理由</textarea></td>
               </tr>
               <tr>
                 <th>适饮期限</th>
@@ -408,12 +408,12 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
               </tr>
               <tr>
                 <th>其他</th>
-                <td colspan="2"><textarea name="textarea" id="textarea" cols="60" rows="5"></textarea></td>
+                <td colspan="2"><textarea name="textarea" id="textarea" cols="60" rows="5">其他其他其他其他其他其他其他其他其他其他其他其他其他其他其他</textarea></td>
               </tr>
             </table>
         </form>
         </div>
-  <div class="btn_submit"><a href="add_notes_s1.html" class="btn_brown_d mr10"><span>返回上一步</span></a><a href="add_notes_success.html" class="btn_brown_d mr10"><span>立即发布</span></a><a href="event.html" class="btn_brown_g"><span>保存为草稿</span></a></div>
+  <div class="btn_submit"><a href="notes_edit1.html" class="btn_brown_d mr10"><span>返回上一步</span></a><a href="add_notes_success.html" class="btn_brown_d mr10"><span>保存</span></a><a href="notes_detail.html" class="btn_brown_g"><span>放弃修改</span></a></div>
       </div>
     </div>
     <div id="footer">
