@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>iWine</title>
+<link href="stylesheets/main.css" rel="stylesheet" type="text/css" />
+<link href="stylesheets/event.css" rel="stylesheet" type="text/css" />
+<link href="stylesheets/notes.css" rel="stylesheet" type="text/css" />
+<script src="javascripts/input.js" type="text/javascript"></script>
+<script type="text/javascript">
+function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua.indexOf(t)>-1},g='gecko',w='webkit',s='safari',o='opera',m='mobile',h=document.documentElement,b=[(!(/opera|webtv/i.test(ua))&&/msie\s(\d)/.test(ua))?('ie ie'+RegExp.$1):is('firefox/2')?g+' ff2':is('firefox/3.5')?g+' ff3 ff3_5':is('firefox/3.6')?g+' ff3 ff3_6':is('firefox/3')?g+' ff3':is('gecko/')?g:is('opera')?o+(/version\/(\d+)/.test(ua)?' '+o+RegExp.$1:(/opera(\s|\/)(\d+)/.test(ua)?' '+o+RegExp.$2:'')):is('konqueror')?'konqueror':is('blackberry')?m+' blackberry':is('android')?m+' android':is('chrome')?w+' chrome':is('iron')?w+' iron':is('applewebkit/')?w+' '+s+(/version\/(\d+)/.test(ua)?' '+s+RegExp.$1:''):is('mozilla/')?g:'',is('j2me')?m+' j2me':is('iphone')?m+' iphone':is('ipod')?m+' ipod':is('ipad')?m+' ipad':is('mac')?'mac':is('darwin')?'mac':is('webtv')?'webtv':is('win')?'win'+(is('windows nt 6.0')?' vista':''):is('freebsd')?'freebsd':(is('x11')||is('linux'))?'linux':'','js']; c = b.join(' '); h.className += ' '+c; return c;}; css_browser_selector(navigator.userAgent);
+</script>
+<script type="text/javascript">
+<!--
+var timeout         = 100;
+var closetimer		= 0;
+var ddmenuitem      = 0;
+
+// open hidden layer
+function mopen(id)
+{	
+	// cancel close timer
+	mcancelclosetime();
+
+	// close old layer
+	if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+
+	// get new layer and show it
+	ddmenuitem = document.getElementById(id);
+	ddmenuitem.style.visibility = 'visible';
+
+}
+// close showed layer
+function mclose()
+{
+	if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+}
+
+// go close timer
+function mclosetime()
+{
+	closetimer = window.setTimeout(mclose, timeout);
+}
+
+// cancel close timer
+function mcancelclosetime()
+{
+	if(closetimer)
+	{
+		window.clearTimeout(closetimer);
+		closetimer = null;
+	}
+}
+
+// close layer when click-out
+document.onclick = mclose; 
+// -->
+</script>
+</head>
+
+<body>
+	<div id="header">
+    <div class="main950">
+        	<div id="logo"><img src="images/common/logo.png" alt="iWine" width="299" height="43" /></div>
+            <form action="search.html">
+                <div id="top_search">
+                    <input class="search_btn" name="" type="image" src="images/icon/search.gif"/>
+                    <input class="search" type="text" value="搜索酒款、酒庄" onclick="clearDefaultText(this,'搜索酒款、酒庄')"  />
+                </div>
+            </form>
+            <div id="top_right">
+            	<ul>
+                	<li class="userbox">
+                    	<a class="userpic" href="#"><img src="images/userimage/06.jpg" width="20" height="20" /></a><a href="#"><img src="images/common/userbox_arrow.jpg" width="22" height="30" /></a>
+                    </li>
+                    <li class="top_add"><a href="#" class="btn_add">添加</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="globel_navi">
+    	<ul>
+        	<li class=""><a href="index.html">首页</a></li>
+            <li class="arrow"><a href="wine.html">酒款</a></li>
+            <li class="arrow"><a href="winery.html">酒庄</a></li>
+            <li class="last arrow current"><a href="event.html">活动</a></li>
+          <div class="clear"></div>
+      </ul>
+    </div>
+    <div id="wrapper950">
+      <div class="whitespace notes">
+   	  <div class="left">
+      	<div class="user_space">
+   	  <div class="info2">
+             	<span class="date">2012-11-05</span>
+                <span class="form">来自iWine.com</span>
+            </div>
+        	<div class="img"><a href="#"><img src="images/userimage/1.jpg" width="50" height="50" alt="username" /></a></div>
+            <div class="info">
+            	<span class="name"><a href="#">不良夏生</a></span>
+                <span class="location">上海市徐汇区茶陵北路20号</span>
+            </div>
+            <div class=""></div>
+      	  <div class="clear"></div>
+        </div>
+        <div class="notes_img_detail">
+       	  <div class="sharebar">
+          	<ul>
+            	<li class="collect"><a href="#"><img src="images/icon/collect.png" width="20" height="19" align="absmiddle" /></a></li>
+                <li class="share"><a href="#"><img src="images/icon/share.png" width="21" height="17" align="absmiddle" /></a></li>
+                <li class="like"><a href="#"><img src="images/icon/like_red.png" width="22" height="20" align="absmiddle" /></a>（2）</li>
+            </ul>
+          </div>
+          <img src="images/test/notes_img590.jpg" width="590" height="590" /></div>
+          <div class="notes_winename">
+          	<div class="star"><span class="star star_b_s45"></span></div>
+            <div class="name">
+            	<h1 class="ch"><a href="#">2005 波特米勒站赤霞珠干红葡萄酒</a></h1>
+              <h1 class="en"><a href="#">2005 PORTER MILL STATION Cabernet Sauvignon</a></h1>
+            </div>
+          </div>
+          <div class="section">
+                	<div class="title">
+               	    <h2>简评</h2></div>
+                    <div class="content">
+                      <p>香味闭塞的一款酒，表现不能令人满意，过重的苦感加上寡淡的酒体使得该酒非常浅薄。入口比较苦，是草药的那种苦味；酒精感明显；丹宁柔弱，几乎被苦味掩盖；平衡性较差，醒酒以后变化不大。酒在舌头上感觉很干涩，没有丰富的果味来调和，酸度一般。酒体很轻，非常轻浮，没有厚度，个人感觉很寡淡。</p>
+                    </div>
+                </div>
+          <div class="section">
+                	<div class="title">
+               	    <h2>详细信息</h2></div>
+                    <div class="content">
+                      <table class="notes_table" width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <th>产区</th>
+                            <td>法国>波尔多>利布尔讷>圣埃米利永<br />
+                            France>Bordeaux>Libournais >Saint-Émilion</td>
+                          </tr>
+                          <tr>
+                            <th>类型</th>
+                            <td>白葡萄酒</td>
+                          </tr>
+                          <tr>
+                            <th>葡萄酒品种</th>
+                            <td>Cabernet Franc (ML%) </td>
+                          </tr>
+                          <tr>
+                            <th>酒精度</th>
+                            <td>22%</td>
+                          </tr>
+                          <tr>
+                            <th>价格</th>
+                            <td>￥225 元</td>
+                          </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="section">
+                	<div class="title">
+               	    <h2>高级品鉴记录</h2></div>
+                    <div class="content">
+                      <table class="notes_table" width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <th><span class="f1">外观</span></th>
+                            <td>明亮、澄清、强度中等
+                            <ul class="feature">
+                                	<li><img src="images/color/Red-Garnet-2.png" width="128" height="128" /><br />浅三文鱼色</li>
+                              </ul>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th><span class="f2">香气</span></th>
+                            <td>干净，中等偏低的香气，完全发展，有 鹅莓，温柏的味道
+                            	<ul class="feature">
+                                	<li><img src="images/nose/BlackFruit/BlackFruit_Bramble.png" width="128" height="128" /><br />蓝莓</li>
+                                    <li><img src="images/nose/CitrusFruit/CitrusFruit_Grapefruit.png" width="128" height="128" /><br />西柚</li>
+                                </ul>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th><span class="f3">口感</span></th>
+                            <td>微干，中等偏低的酸度，中等偏低的单宁，中等的酒精度，中等偏低酒体，中等的西柚，余味中等
+                            <ul class="feature">
+                                	<li><img src="images/nose/DriedFruit/DriedFruit_Jamminess.png" width="128" height="128" /><br />蜂蜜</li>
+                                    <li><img src="images/nose/DriedFruit/DriedFruit_Fig.png" width="128" height="128" /><br />某种水果</li>
+                                    <li><img src="images/nose/CitrusFruit/CitrusFruit_Lemon.png" width="128" height="128" /><br />柠檬</li>
+                                    <li></li>
+                              </ul>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th><span class="f4">结论</span></th>
+                            <td>质量良<br />
+                            好适饮期限为：2012～2018</td>
+                          </tr>
+                        </table>
+                    </div>
+                </div>
+      	<div class="section last">
+           	<div class="title"><a href="event_comment_list.html" class="btn_gray float_r font12"><span>我要留言</span></a>
+              <h2>留言 <span class="font12 more"><a href="event_comment_list.html">（共10条）</a></span></h2></div>
+                    <div class="content">
+                    	<ul class="comment_list">
+                	<li>
+                    	<div class="userpic"><a href="#"><img src="images/userimage/1.jpg" width="50" height="50" alt="username" /></a></div>
+                        <div class="main">
+                        	<div class="username"><a href="#">不良夏生</a><span class="date">2012-4-28</span></div>
+                            <div class="content">现在还能报名么？我也想去！</div>
+                        </div>
+                    </li>
+                   <li>
+                    	<div class="userpic"><a href="#"><img src="images/userimage/07.jpg" width="50" height="50" alt="username" /></a></div>
+                        <div class="main">
+                        	<div class="username"><a href="#">不良夏生</a><span class="date">2012-4-28</span></div>
+                            <div class="content">这个活动有意思，周末要抽空去看一下，哈哈～</div>
+                            <p><a href="event_comment_detail.html">回复(3)</a> | <a href="#">删除</a></p>
+                        </div>
+                 </li>
+                    <div class="clear"></div>
+              </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+      	<div class="sidebox"><img src="images/common/notes_ad.jpg" width="250" height="197" /></div>
+        <div class="sidebox"><a href="#"><img src="images/common/btn_add_notes.jpg" alt="我也喝过，去写品酒辞！" width="250" height="50" /></a></div>
+      	<div class="sidebox">
+          <div class="title">
+          	<span class="more"><a href="#">更多</a></span>
+          	<h3>他们也品鉴了这支酒</h3>
+        </div>
+            <div class="side_notes">
+                <dl class="clearfix">
+                	<dt><a href="#"><img src="images/userimage/1.jpg" width="50" height="50" alt="username" /></a><a href="event_detail.html"></a></dt>
+                    <dd>
+                        <p><a href="event_detail.html">不良夏生</a></p>
+                        <p class="info">年份：1998</p>
+                        <p><span class="star star_s4_h"></span></p>
+                        <p><a href="#">详细 》</a></p>
+                    </dd>
+                    <div class="clear"></div>
+                </dl>
+                <dl class="clearfix">
+           	    <dt><a href="#"><img src="images/userimage/1.jpg" width="50" height="50" alt="username" /></a><a href="event_detail.html"></a></dt>
+                    <dd>
+                        <p><a href="event_detail.html">不良夏生</a></p>
+                        <p class="info">年份：1998</p>
+                        <p><span class="star star_s4_h"></span></p>
+                        <p><a href="#">详细 》</a></p>
+                    </dd>
+                    <div class="clear"></div>
+                </dl>
+                <dl class="clearfix">
+           	    <dt><a href="#"><img src="images/userimage/1.jpg" width="50" height="50" alt="username" /></a><a href="event_detail.html"></a></dt>
+                    <dd>
+                        <p><a href="event_detail.html">不良夏生</a></p>
+                        <p class="info">年份：1998</p>
+                        <p><span class="star star_s4_h"></span></p>
+                        <p><a href="#">详细 》</a></p>
+                    </dd>
+                    <div class="clear"></div>
+                </dl>
+            </div>
+            </div>
+            <div class="sidebox">
+          <div class="title">
+          	<span class="more"><a href="#">更多</a></span>
+          	<h3>他还品鉴了这些酒</h3>
+        </div>
+            <div class="side_notes">
+                <dl class="clearfix">
+                	<dt><a href="#"><img src="images/test/wine70_02.jpg" width="70" height="70" alt="username" /></a><a href="event_detail.html"></a></dt>
+                    <dd class="info">
+                        <h3 class="zh"><a href="event_detail.html">2005 波特米勒站赤霞珠干红葡萄酒</a></h3>
+                        <h3 class="en"><a href="event_detail.html">2005 PORTER MILL STATION Cabernet Sauvignon</a></h3>
+                        <p><span class="star star_s4_h"></span></p>
+                        <p><a href="#">详细 》</a></p>
+                    </dd>
+                    <div class="clear"></div>
+                </dl>
+                <dl class="clearfix">
+           	    <dt><a href="#"><img src="images/test/wine70_03.jpg" width="70" height="70" alt="username" /></a><a href="event_detail.html"></a></dt>
+                    <dd class="info">
+                        <h3 class="zh"><a href="event_detail.html">2005 波特米勒站赤霞珠干红葡萄酒</a></h3>
+                        <h3 class="en"><a href="event_detail.html">2005 PORTER MILL STATION Cabernet Sauvignon</a></h3>
+                        <p><span class="star star_s4_h"></span></p>
+                        <p><a href="#">详细 》</a></p>
+                    </dd>
+                    <div class="clear"></div>
+                </dl>
+                <dl class="clearfix">
+           	    <dt><a href="#"><img src="images/test/wine70.jpg" width="70" height="70" alt="username" /></a><a href="event_detail.html"></a></dt>
+                    <dd class="info">
+                        <h3 class="zh"><a href="event_detail.html">2005 波特米勒站赤霞珠干红葡萄酒</a></h3>
+                        <h3 class="en"><a href="event_detail.html">2005 PORTER MILL STATION Cabernet Sauvignon</a></h3>
+                        <p><span class="star star_s4_h"></span></p>
+                        <p><a href="#">详细 》</a></p>
+                    </dd>
+                    <div class="clear"></div>
+                </dl>
+            </div>
+            </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="link"><a href="aboutus.html">关于我们</a> | <a href="contactus.html">联系我们</a> | <a href="help.html">帮助中心</a> | <a href="privacy.html">隐私条款</a> | <a href="agreement.html">用户协议</a> | <a href="disclaimer.html">免责声明</a> | <a href="sitemap.html">网站地图</a> | <a href="feedback.html">意见反馈</a></div>
+        <div class="copyright">Copyright © 2011 iWine, Inc. All rights reserved. <a href="#">沪ICP备12345678号</a></div>
+    </div>
+</body>
+</html>
