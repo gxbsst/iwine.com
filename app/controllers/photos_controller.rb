@@ -1,8 +1,8 @@
 # encoding: utf-8
 class PhotosController < ApplicationController
+  before_filter :get_imageable, :except => [:new, :create]
   before_filter :get_approved, :only => [:show]
   before_filter :get_photo, :only => [:edit, :update, :destroy, :reply, :vote]
-  before_filter :get_imageable, :except => [:new, :create]
   before_filter :get_user
   before_filter :authenticate_user!, :only => [:new, :create]
   before_filter :get_follow_item, :only => [:show, :index]
@@ -110,12 +110,12 @@ class PhotosController < ApplicationController
   end
 
   def get_approved 
-    @photo = Photo.approved.where("id = ?", params[:id]).first
-    render(:status => 404) unless @photo
+    @photo = @imageable.photos.approved.where("id = ?", params[:id]).first
+    render_404('') unless @photo
   end
 
   def get_photo
-    @photo = Photo.find(params[:id])
+    @photo = @imageable.photos.find(params[:id])
   end
 
   def get_user
