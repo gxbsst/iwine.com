@@ -4,7 +4,8 @@ class CreateNotes < ActiveRecord::Migration
       t.string :id, :limit => 36
       t.belongs_to  :user
       t.belongs_to  :wine_detail
-      t.belongs_to  :wine_region_tree
+      # t.belongs_to  :wine_region_tree
+      t.integer     :region_tree_id
       t.belongs_to  :wine_style
       t.string      :photo
       t.integer     :vintage

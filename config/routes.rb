@@ -6,6 +6,12 @@ Patrick::Application.routes.draw do
       match :move_to_trash, :via => [:get, :post]
     end
   end
+
+  resources :notes do
+    collection do
+      match :upload_photo, :via => [:get, :post, :put]
+    end
+  end
   resources :events do
     resources :photos
     resources :event_wines

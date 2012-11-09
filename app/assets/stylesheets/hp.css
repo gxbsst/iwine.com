@@ -165,3 +165,14 @@ td.img div {position:relative;}
 .event_member_list td.name {width:80px;}
 .event_member_list td.email {width:180px;}
 .event_member_list td.tel {width:120px;}
+
+/*----------------notes---------------*/
+#hp .left .notes_list li {margin:0 0 20px 0;padding:0 0 20px 0;border-bottom:1px solid #ddd;}
+#hp .left .notes_list .pic{width:100px;float:left;margin-right:20px;}
+#hp .left .notes_list .info {width:470px;float:left;}
+#hp .left .notes_list .info p.star {margin:5px 0 10px 0;}
+#hp .left .notes_list .info h3.en a{color:#999;font-weight:normal;}
+#hp .left .notes_list .year span a {margin:0 5px 0 0;color:#993333;text-decoration:underline;display:inline-block;}
+#hp .left .notes_list .year span a:hover {text-decoration:none;color:#993333;}
+#hp .left .notes_list .date {font-weight:normal;display:inline-block;margin: 0 0 0 10px;}
+

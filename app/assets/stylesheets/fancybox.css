@@ -82,8 +82,8 @@
   left: 50%;
   margin-top: -21px;
   margin-left: -21px;
-  width: 30px;
-  height: 30px;
+  width: 42px;
+  height: 42px;
   background: url("fancybox_loading.gif");
   opacity: 0.8;
   cursor: pointer;
@@ -334,3 +334,19 @@
 #comment_form .new_message .text_area {padding:5px;}
 .light_nor {padding:10px 20px;}
 #comment_form ul li.ui-menu-item {float:none;}
+
+.notes_feature h3 {text-align:center;}
+.notes_feature .left {width:190px;float:left;background-color:#f3f3f3;height:580px;overflow:auto;}
+.notes_feature .left .search {padding:10px;}
+.notes_feature .left .search .space {background-color:#fff;border:1px solid#ccc;width:155px;}
+.notes_feature .left .search input.main {border:none;width:120px;}
+.notes_feature .left .search .btn_feature_search {float:right;padding:2px 5px 0 0;}
+.notes_feature .right {width:650px;float:left;padding:20px 0 0 10px;height:560px;overflow:auto;}
+.notes_feature .right .feature_list li {width:130px;float:left;margin:0 13px;height:180px;}
+.notes_feature .right .feature_list li .pic {border:1px solid #ddd;margin-bottom:10px;position:relative;}
+.notes_feature .right .feature_list li .pic span.rg {position:absolute;background:url(icon/r_g2.png) no-repeat;width:18px;height:18px;left:110px;top:110px;z-index:1;}
+.notes_feature .right .feature_list li .name {text-align:center;}
+#comment_form ul.feature_catalog li {float:none;}
+#comment_form ul.feature_catalog li a {padding:10px 20px;border-top:1px solid #ccc;display:block;color:#333;}
+#comment_form ul.feature_catalog li a:hover {background-color:#ffcc00; text-decoration:none;}
+#comment_form ul.feature_catalog li.current {background-color:#ffcc00;}

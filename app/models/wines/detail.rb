@@ -50,6 +50,7 @@ class Wines::Detail < ActiveRecord::Base
   has_one  :winery, :through => :wine
   has_many :timeline_events, :as => :secondary_actor
   has_many :event_wines, :foreign_key => :wine_detail_id
+  has_many :notes, :foreign_key => :wine_detail_id
   scope :hot_wines, lambda { |limit| joins(:follows).
                                      includes([:wine, :covers]).
                                      select("wine_details.*, count(*) as c").
