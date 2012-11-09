@@ -9,7 +9,6 @@ class NotesController < ApplicationController
       wine_detail = Wines::Detail.find(params[:wine_detail_id])
       @note = current_user.notes.new
       copy_detail_info(wine_detail)
-      @@wine_note = "nihao"
     end
 
   end
@@ -27,7 +26,6 @@ class NotesController < ApplicationController
   end
 
   def upload_photo
-    binding.pry
     #提交照片
     if request.put?
       if params[:note].present?
