@@ -20,6 +20,11 @@
             <% @events.each do |event| %>
               <dl class="clearfix">
                 <dt>
+                  <% if event.timeout? %>
+                    <span class="label_end">已结束</span>
+                  <% elsif event.cancle? %>
+                    <span class="label_cancle">已取消</span>  
+                  <% end %> 
                   <%= link_to event_path(event) do %>
                     <%= image_tag event.poster_url(:thumb), :size => '100x150', :alt => event.title %>
                   <% end %>

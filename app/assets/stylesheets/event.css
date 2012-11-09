@@ -14,8 +14,8 @@
 .event_tag .search {float:right;}
 .event_tag {padding: 0 0 15px 0;margin-bottom:20px;border-bottom:1px solid #ccc;}
 .event_list .type a {color:#989186;}
-.event_list dl {margin: 0 0 25px 0;}
-.event_list dt {width:100px;float:left;margin-right:25px;}
+.event_list dl {margin: 0 0 20px 0;padding: 0 0 20px 0;border-bottom:1px solid #ddd;}
+.event_list dt {width:100px;float:left;margin-right:25px; position:relative;}
 .event_list dd {width:465px;float:left;}
 .event_list h2 {font-size:14px;margin:0 0 10px 0;}
 .event_list .info {margin:0 0 10px 0;}
@@ -36,10 +36,6 @@
 .base .action {margin:0 0 10px 0;}
 .lh {line-height:30px;}
 .base .share {float:right;}
-.event_end, .event_cancle, .event_unpublic {display:inline-block;padding:2px 5px;border-radius: 5px 5px 5px 5px;}
-.event_end {background-color:#6CF;color:#fff;}
-.event_cancle {background-color:#F93;color:#fff;}
-.event_unpublic {background-color:#9C3;color:#fff;}
 .tags_sort  {border-bottom:1px dotted #ccc;padding: 0 0 15px 0;margin: 0 0 15px 0;}
 .tags_sort .tags {float:left;width:490px;}
 .tags_sort span {float:left;width:100px;}
@@ -115,8 +111,8 @@ img.cover_s {background:url(bg/bg_album_s.gif) no-repeat left top;padding:5px 8p
 .side_album_list li {margin:0 0 30px 0;}
 .add_album {margin:0 0 0 20px;}
 input.photo_name, textarea.photo_des {width:184px;}
-textarea.photo_des {min-height: 70px;} 
-li.photo_des p {margin: 0 0 5px 0;} 
+textarea.photo_des {min-height: 70px;}
+li.photo_des p {margin: 0 0 5px 0;}
 
 .photolist li {width:130px;float:left;margin-right:20px;}
 .photolist li.last {margin-right:0;}

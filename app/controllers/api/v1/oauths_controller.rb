@@ -64,7 +64,7 @@ module Api
       end
 
       def generate_email(sns_user_id, sns_name)
-        sns_user_id + sns_name +  '@iwine.com' 
+        SecureRandom.uuid + '_' + sns_name + '@iwine.com'
       end
 
     end

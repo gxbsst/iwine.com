@@ -1,286 +1,286 @@
 /* fancyBox v2.0.4 fancyapps.com | fancyapps.com/fancybox/#license */
 /* line 4, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-tmp iframe, .fancybox-tmp object {
-  vertical-align: top;
-  padding: 0;
-  margin: 0;
+    vertical-align: top;
+    padding: 0;
+    margin: 0;
 }
 
 /* line 10, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-wrap {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1002;
-  /* border:5px solid #666666; */
-  -moz-box-shadow: 0 0 5px #888;
-  -webkit-box-shadow: 0 0 5px#888;
-  box-shadow: 0 0 5px #888;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1002;
+    /* border:5px solid #666666; */
+    -moz-box-shadow: 0 0 5px #888;
+    -webkit-box-shadow: 0 0 5px#888;
+    box-shadow: 0 0 5px #888;
 }
 
 /* line 21, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-outer {
-  padding: 0;
-  margin: 0;
-  background: #FFF;
-  color: #444;
-  text-shadow: none;
+    padding: 0;
+    margin: 0;
+    background: #FFF;
+    color: #444;
+    text-shadow: none;
 }
 
 /* line 29, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-opened {
-  z-index: 1003;
+    z-index: 1003;
 }
 
 /* line 38, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-inner {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  position: relative;
-  outline: none;
-  overflow: hidden;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    outline: none;
+    overflow: hidden;
 }
 /* line 46, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-inner h3.title, .fancybox-inner #add_data h3{
-  background: url(fancybox/bg_title.gif) repeat-x left top;
-  padding: 0 20px;
-  height:55px;
-  line-height:50px;
+    background: url(fancybox/bg_title.gif) repeat-x left top;
+    padding: 0 20px;
+    height:55px;
+    line-height:50px;
 }
 .fancybox-inner #add_data h3 {text-align:center;}
 /* line 53, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-error {
-  color: #444;
-  font: 14px/20px "Helvetica Neue", Helvetica, Arial, sans-serif;
-  margin: 0;
-  padding: 10px;
+    color: #444;
+    font: 14px/20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 10px;
 }
 
 /* line 60, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-image, .fancybox-iframe {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  padding: 0;
-  margin: 0;
-  vertical-align: top;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    vertical-align: top;
 }
 
 /* line 70, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-image {
-  max-width: 100%;
-  max-height: 100%;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 /* line 75, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 #fancybox-loading {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin-top: -21px;
-  margin-left: -21px;
-  width: 30px;
-  height: 30px;
-  background: url("fancybox_loading.gif");
-  opacity: 0.8;
-  cursor: pointer;
-  z-index: 1010;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -21px;
+    margin-left: -21px;
+    width: 42px;
+    height: 42px;
+    background: url("fancybox_loading.gif");
+    opacity: 0.8;
+    cursor: pointer;
+    z-index: 1010;
 }
 
 /* line 89, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-close, .fancybox-prev span, .fancybox-next span {
-  background:url(fancybox/fancy_close.png) no-repeat left top;
+    background:url(fancybox/fancy_close.png) no-repeat left top;
 }
 
 /* line 93, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-close {
-  position: absolute;
-  cursor: pointer;
-  top: -15px;
-  right:-15px;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  z-index: 1004;
+    position: absolute;
+    cursor: pointer;
+    top: -15px;
+    right:-15px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    z-index: 1004;
 }
 
 /* line 103, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-prev, .fancybox-next {
-  position: absolute;
-  top: 0;
-  width: 40%;
-  height: 100%;
-  cursor: pointer;
-  background: transparent url("blank.gif");
-  /* helps IE */
-  z-index: 1003;
+    position: absolute;
+    top: 0;
+    width: 40%;
+    height: 100%;
+    cursor: pointer;
+    background: transparent url("blank.gif");
+    /* helps IE */
+    z-index: 1003;
 }
 
 /* line 113, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-prev {
-  left: 0;
+    left: 0;
 }
 
 /* line 117, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-next {
-  right: 0;
+    right: 0;
 }
 
 /* line 121, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-prev span, .fancybox-next span {
-  position: absolute;
-  top: 50%;
-  left: -9999px;
-  width: 36px;
-  height: 36px;
-  margin-top: -18px;
-  cursor: pointer;
-  z-index: 1003;
+    position: absolute;
+    top: 50%;
+    left: -9999px;
+    width: 36px;
+    height: 36px;
+    margin-top: -18px;
+    cursor: pointer;
+    z-index: 1003;
 }
 
 /* line 132, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-prev span {
-  background-position: 0 -36px;
+    background-position: 0 -36px;
 }
 
 /* line 136, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-next span {
-  background-position: 0 -72px;
+    background-position: 0 -72px;
 }
 
 /* line 140, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-prev:hover, .fancybox-next:hover {
-  visibility: visible;
+    visibility: visible;
 }
 
 /* line 144, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-prev:hover span {
-  left: 20px;
+    left: 20px;
 }
 
 /* line 148, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-next:hover span {
-  left: auto;
-  right: 20px;
+    left: auto;
+    right: 20px;
 }
 
 /* line 153, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-tmp {
-  position: absolute;
-  top: -9999px;
-  left: -9999px;
-  padding: 0;
-  overflow: visible;
-  visibility: hidden;
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    padding: 0;
+    overflow: visible;
+    visibility: hidden;
 }
 
 /* Overlay helper */
 /* line 164, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 #fancybox-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  display: none;
-  z-index: 1001;
-  background: #000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    display: none;
+    z-index: 1001;
+    background: #000;
 }
 
 /* Title helper */
 /* line 176, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-title {
-  visibility: hidden;
-  font: normal 13px/20px "Helvetica Neue", Helvetica, Arial, sans-serif;
-  position: relative;
-  text-shadow: none;
-  z-index: 1005;
+    visibility: hidden;
+    font: normal 13px/20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    position: relative;
+    text-shadow: none;
+    z-index: 1005;
 }
 
 /* line 184, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-opened .fancybox-title {
-  visibility: visible;
+    visibility: visible;
 }
 
 /* line 188, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-title-float-wrap {
-  position: absolute;
-  bottom: 0;
-  right: 50%;
-  margin-bottom: -35px;
-  z-index: 1003;
-  text-align: center;
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    margin-bottom: -35px;
+    z-index: 1003;
+    text-align: center;
 }
 
 /* line 197, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-title-float-wrap .child {
-  display: inline-block;
-  margin-right: -100%;
-  padding: 2px 20px;
-  background: transparent;
-  /* Fallback for web browsers that doesn't support RGBa */
-  background: rgba(0, 0, 0, 0.8);
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  border-radius: 15px;
-  text-shadow: 0 1px 2px #222;
-  color: #FFF;
-  font-weight: bold;
-  line-height: 24px;
-  white-space: nowrap;
+    display: inline-block;
+    margin-right: -100%;
+    padding: 2px 20px;
+    background: transparent;
+    /* Fallback for web browsers that doesn't support RGBa */
+    background: rgba(0, 0, 0, 0.8);
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    text-shadow: 0 1px 2px #222;
+    color: #FFF;
+    font-weight: bold;
+    line-height: 24px;
+    white-space: nowrap;
 }
 
 /* line 213, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-title-outside-wrap {
-  position: relative;
-  margin-top: 10px;
-  color: #fff;
+    position: relative;
+    margin-top: 10px;
+    color: #fff;
 }
 
 /* line 219, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-title-inside-wrap {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 /* line 223, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-title-over-wrap {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  color: #fff;
-  padding: 10px;
-  background: #000;
-  background: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #fff;
+    padding: 10px;
+    background: #000;
+    background: rgba(0, 0, 0, 0.8);
 }
 
 /* line 233, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-inner .text_info {
-  background: #FFC;
-  border-top: 1px solid #CCC;
-  border-bottom: 1px solid #CCC;
-  text-align: center;
-  padding: 5px 0;
-  /* position: absolute; */
+    background: #FFC;
+    border-top: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
+    text-align: center;
+    padding: 5px 0;
+    /* position: absolute; */
 }
 
 /* line 242, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 
 /* line 246, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-inner #add_data ul {
-  margin: 20px 0;
-  padding-left:80px;
-  _padding-left:50px;
+    margin: 20px 0;
+    padding-left:80px;
+    _padding-left:50px;
 }
 
 /* line 249, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 .fancybox-inner #add_data ul li a {
-  width: 130px;
-  height:154px;
-  background:url(common/add.jpg) no-repeat;
-  text-indent:-9999px;
-  display:block;
+    width: 130px;
+    height:154px;
+    background:url(common/add.jpg) no-repeat;
+    text-indent:-9999px;
+    display:block;
 }
 .fancybox-inner #add_data ul li {margin: 20px;float:left;display:block;}
 .fancybox-inner #add_data ul li a.add_new_wine {background-position: 0 0;}
@@ -292,17 +292,17 @@
 }
 /* line 261, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 #comment_form #wine_profile_star_bar {
-  padding: 10px 0 10px 10px;
+    padding: 10px 0 10px 10px;
 }
 /* line 264, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 #comment_form .text_area, #comment_form .private, #comment_form .share {
-  padding: 0px 0 10px 17px;
+    padding: 0px 0 10px 17px;
 }
 /* line 267, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 #comment_form .share {
-  padding: 20px;
-  border-top: 1px solid #CCC;
-  width:auto;
+    padding: 20px;
+    border-top: 1px solid #CCC;
+    width:auto;
 }
 .share .sh {float:left;padding:0 10px 0 0;margin:0 10px 0 0; border-right:1px solid #ccc;}
 .com_s {padding-top:0;}
@@ -310,18 +310,18 @@
 .share label.follow {display:inline-block;margin-left:20px;}
 /* line 270, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 #comment_form .share .absolute {
-  right: 10px;
-  top: 7px;
+    right: 10px;
+    top: 7px;
 }
 /* line 275, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 #comment_form ul {
-  display: inline;
+    display: inline;
 }
 #comment_form ul li {float:left;}
 /* line 280, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 #comment_form textarea {
-  width: 454px;
-  height: 75px;
+    width: 454px;
+    height: 75px;
 }
 .creat_new, .confirm {padding:15px 20px;}
 .creat_new textarea {width:250px;}
@@ -334,3 +334,19 @@
 #comment_form .new_message .text_area {padding:5px;}
 .light_nor {padding:10px 20px;}
 #comment_form ul li.ui-menu-item {float:none;}
+
+.notes_feature h3 {text-align:center;}
+.notes_feature .left {width:190px;float:left;background-color:#f3f3f3;height:580px;overflow:auto;}
+.notes_feature .left .search {padding:10px;}
+.notes_feature .left .search .space {background-color:#fff;border:1px solid#ccc;width:155px;}
+.notes_feature .left .search input.main {border:none;width:120px;}
+.notes_feature .left .search .btn_feature_search {float:right;padding:2px 5px 0 0;}
+.notes_feature .right {width:650px;float:left;padding:20px 0 0 10px;height:560px;overflow:auto;}
+.notes_feature .right .feature_list li {width:130px;float:left;margin:0 13px;height:180px;}
+.notes_feature .right .feature_list li .pic {border:1px solid #ddd;margin-bottom:10px;position:relative;}
+.notes_feature .right .feature_list li .pic span.rg {position:absolute;background:url(icon/r_g2.png) no-repeat;width:18px;height:18px;left:110px;top:110px;z-index:1;}
+.notes_feature .right .feature_list li .name {text-align:center;}
+#comment_form ul.feature_catalog li {float:none;}
+#comment_form ul.feature_catalog li a {padding:10px 20px;border-top:1px solid #ccc;display:block;color:#333;}
+#comment_form ul.feature_catalog li a:hover {background-color:#ffcc00; text-decoration:none;}
+#comment_form ul.feature_catalog li.current {background-color:#ffcc00;}
