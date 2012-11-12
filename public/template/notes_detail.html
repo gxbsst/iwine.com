@@ -106,7 +106,15 @@ document.onclick = mclose;
         </div>
         <div class="notes_img_detail">
        	  <div class="sharebar">
-          	<ul>
+          	<div id="manage">
+                	<p><a href="#" onmouseover="mopen('mbox')" onmouseout="mclosetime()"><img src="images/icon/manage_w.png" width="21" height="21" alt="管理" /></a></p>
+                	<div id="mbox" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+                    	<a class="icon_edit2" href="notes_edit1.html">编辑品酒辞</a>
+                        <a class="icon_cancle" href="#">删除品酒辞</a>
+                        <a class="icon_public" href="#">发布品酒辞</a>
+                    </div>
+                </div>
+            <ul>
             	<li class="collect"><a href="#"><img src="images/icon/collect.png" width="20" height="19" align="absmiddle" /></a></li>
                 <li class="share"><a href="#"><img src="images/icon/share.png" width="21" height="17" align="absmiddle" /></a></li>
                 <li class="like"><a href="#"><img src="images/icon/like_red.png" width="22" height="20" align="absmiddle" /></a>（2）</li>
