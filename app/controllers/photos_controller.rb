@@ -109,8 +109,13 @@ class PhotosController < ApplicationController
     @imageable_path = self.send("#{@resource_path.singularize}_path", @imageable)
   end
 
-  def get_approved 
-    @photo = @imageable.photos.approved.where("id = ?", params[:id]).first
+  def get_approved
+    #需要同时展示wine和wine_detail的照片
+    if @imageable.class.name == "Wines::Detail"
+      @photo = @imageable.all_photos.where("id = ?", params[:id]).first
+    else
+      @photo = @imageable.photos.approved.where("id = ?", params[:id]).first
+    end
     render_404('') unless @photo
   end
 
