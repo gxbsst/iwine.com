@@ -51,8 +51,9 @@ jQuery ->
         if @options.selectTags.length < 5
           tag.set select: 'select'
           @options.selectTags.add(tag)
+          @hideError('#tags_error')
         else
-          alert("最多可添加5个标签")
+          @flashError('#tags_error', '标签数不能多于5个')
     render: ->
       $(@el).html @template {}
       selectTags = @options.selectTags
@@ -71,6 +72,10 @@ jQuery ->
         if items.length > 0
           items.forEach (item) ->
            item.updateSelectStatus()
+    flashError: (element, error) ->
+      $(element).html(error)
+    hideError: (element) ->
+      $(element).html('')
 
   class TagsView extends Backbone.View
     tagName: 'li'
@@ -105,10 +110,11 @@ jQuery ->
         value.split(';').forEach (tagName) =>
           if tagName.trim() != ''
             tag = new window.app.Tag name: tagName, select: 'select'
-            console.info(@collection.length)
+#            console.info(@collection.length)
             if @collection.length > 4
-              alert("最多可添加5个标签")
+              @flashError('#tags_error', '标签数不能多于5个')
             else
+              @hideError('#tags_error')
               @collection.add tag
       @options.hotTags.trigger('update_status')
       $("#event_tag_list").val(@collection.pluck('name').join(","))
@@ -119,6 +125,10 @@ jQuery ->
     renderInputValue: ->
       $("#event_tags").val(@collection.pluck('name').join(";"))
       $("#event_tag_list").val(@collection.pluck('name').join(","))
+    flashError: (element, error) ->
+      $(element).html(error)
+    hideError: (element) ->
+      $(element).html('')
 
 
   class EventAppView extends Backbone.View
