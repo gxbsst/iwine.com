@@ -2,7 +2,6 @@
 class StaticController < ApplicationController
 
   caches_page :private, :agreement, :terms_and_conditions, :site_map, :help, :about_us, :contact_us
-  caches_action :feedback
 
   def home
     @title =  t("nav.home")

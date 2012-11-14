@@ -1,8 +1,8 @@
 # encoding: utf-8
 class PhotosController < ApplicationController
+  before_filter :get_imageable, :except => [:new, :create]
   before_filter :get_approved, :only => [:show]
   before_filter :get_photo, :only => [:edit, :update, :destroy, :reply, :vote]
-  before_filter :get_imageable, :except => [:new, :create]
   before_filter :get_user
   before_filter :authenticate_user!, :only => [:new, :create]
   before_filter :get_follow_item, :only => [:show, :index]
@@ -109,13 +109,18 @@ class PhotosController < ApplicationController
     @imageable_path = self.send("#{@resource_path.singularize}_path", @imageable)
   end
 
-  def get_approved 
-    @photo = Photo.approved.where("id = ?", params[:id]).first
-    render(:status => 404) unless @photo
+  def get_approved
+    #需要同时展示wine和wine_detail的照片
+    if @imageable.class.name == "Wines::Detail"
+      @photo = @imageable.all_photos.where("id = ?", params[:id]).first
+    else
+      @photo = @imageable.photos.approved.where("id = ?", params[:id]).first
+    end
+    render_404('') unless @photo
   end
 
   def get_photo
-    @photo = Photo.find(params[:id])
+    @photo = @imageable.photos.find(params[:id])
   end
 
   def get_user

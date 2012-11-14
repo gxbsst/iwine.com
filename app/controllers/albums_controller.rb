@@ -126,7 +126,7 @@ class AlbumsController < ApplicationController
     @title = ['图片', @album.name, "相册", @user.username].join("-")
     redirect_to request.referer if @album.blank?
     order = "votes_count DESC, created_at DESC"
-    @photo = Photo.find(params[:photo_id])
+    @photo = @album.photos.find(params[:photo_id])
     @photo.update_attribute(:views_count, @photo.views_count + 1)
     @comments  =  @photo.comments.all(:include => [:user],
       # :joins => :votes,
