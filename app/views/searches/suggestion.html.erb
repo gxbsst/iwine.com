@@ -1,32 +1,36 @@
 <% content_for :title, @title%>
-<p class="title"><a href="#">搜索酒 》</a></p>
-<div id="search_scroll_wines" class="wineResult">
-  <% @words['wines'].each do |wine|%>
-  <dl onmouseover="$(this).addClass( 'current' );" onmouseout="$(this).removeClass('current')" class="clearfix" onclick="location.href='<%= url_for( '/wines/' + wine.id.to_s )%>'">
-      <dt>
-      <%= wine_label_tag(wine, :thumb_name => :thumb, :width => 30 , :height => 30 )%>
-      </dt>
-      <dd>
-        <span><%= wine.cname%></span>
-        <p><%= wine.origin_name%></p>
-      </dd>
-      <div class="clear"></div>
-    </dl>
-  <% end %>
-</div>
-<p class="title"><a href="#">搜索酒庄 》</a></p>
-<div id="search_scroll_wineries" class="wineryResult">
-  <% @words['wineries'].each do |winery| %>
-    <dl class="clearfix" onclick="location.href='<%= url_for( '/wineries/' + winery.id.to_s )%>'">
-      <dt>
-        <%= winery_label_tag(winery, :thumb_name => :thumb, :width => 30, :height => 30) %>
-      </dt>
-      <dd><span><%= winery.name_zh %></span>
-        <p><%= winery.origin_name %></p></dd>
-      <div class="clear"></div>
-    </dl>
-  <% end %>
-</div>
+<% if @words['wines'].present? %>
+  <p class="title"><a href="#">搜索酒 》</a></p>
+  <div id="search_scroll_wines" class="wineResult">
+    <% @words['wines'].each do |wine|%>
+    <dl onmouseover="$(this).addClass( 'current' );" onmouseout="$(this).removeClass('current')" class="clearfix" onclick="location.href='<%= url_for( '/wines/' + wine.id.to_s )%>'">
+        <dt>
+        <%= wine_label_tag(wine, :thumb_name => :thumb, :width => 30 , :height => 30 )%>
+        </dt>
+        <dd>
+          <span><%= wine.cname%></span>
+          <p><%= wine.origin_name%></p>
+        </dd>
+        <div class="clear"></div>
+      </dl>
+    <% end %>
+  </div>
+<% end %>
+<% if @words['wineries'].present? %>
+  <p class="title"><a href="#">搜索酒庄 》</a></p>
+  <div id="search_scroll_wineries" class="wineryResult">
+    <% @words['wineries'].each do |winery| %>
+      <dl class="clearfix" onclick="location.href='<%= url_for( '/wineries/' + winery.id.to_s )%>'">
+        <dt>
+          <%= winery_label_tag(winery, :thumb_name => :thumb, :width => 30, :height => 30) %>
+        </dt>
+        <dd><span><%= winery.name_zh %></span>
+          <p><%= winery.origin_name %></p></dd>
+        <div class="clear"></div>
+      </dl>
+    <% end %>
+  </div>
+<% end %>
 <script type="text/javascript">
 (function(){
   var wines = $('#search_scroll_wines').children();
