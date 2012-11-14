@@ -16,7 +16,7 @@ module Api
           :email => is_public ? '' : @user.email,
           :username => @user.username,
           :slug => @user.slug,
-          :avatar => @user.avatar.url(:large),
+          :avatar => @user.avatar.url(:large) + "?t=#{@user.updated_at.to_i}",
           :city => @user.city ? @user.city : "",
           :bio => @user.profile.bio ? @user.profile.bio : "",
           :phone_number => @user.profile.phone_number ? @user.profile.phone_number : '',

@@ -46,7 +46,7 @@ module Api
         return {:success => 1, 
           :resultCode => APP_DATA["api"]["return_json"]["normal_success"]["code"],
           :errorDesc => APP_DATA["api"]["return_json"]["normal_success"]["message"],
-          :avatar => user.avatar.url(:large)}
+          :avatar => user.avatar.url(:large) + "?t=#{@user.updated_at.to_i}"}
       end
 
     end
