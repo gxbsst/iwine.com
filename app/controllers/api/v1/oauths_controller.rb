@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Api
   module V1
     class OauthsController < ::Api::BaseApiController
@@ -64,7 +65,7 @@ module Api
       end
 
       def generate_email(sns_user_id, sns_name)
-        sns_user_id + sns_name +  '@iwine.com' 
+        Base64.strict_encode64(sns_user_id) + '_' + sns_name + '@iwine.com'
       end
 
     end

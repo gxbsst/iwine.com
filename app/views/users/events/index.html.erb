@@ -24,6 +24,13 @@
             <% @create_events.each do |event| %>
               <dl class="clearfix">
                 <dt>
+                  <% if event.draft? %>
+                    <span class="label_unpublic">未发布</span>
+                  <% elsif event.timeout? %>
+                    <span class="label_end">已结束</span>
+                  <% elsif event.cancle? %>
+                    <span class="label_cancle">已取消</span>  
+                  <% end %> 
                   <%= link_to event_path(event) do %>
                     <%= image_tag event.poster_url(:thumb), :size => '100x150', :alt => event.title %>
                   <% end %>
@@ -65,6 +72,11 @@
             <% @join_events.each do |event| %>
               <dl class="clearfix">
                 <dt>
+                  <% if event.timeout? %>
+                    <span class="label_end">已结束</span>
+                  <% elsif event.cancle? %>
+                    <span class="label_cancle">已取消</span>  
+                  <% end %> 
                   <%= link_to event_path(event) do %>
                     <%= image_tag event.poster_url(:thumb), :size => '100x150', :alt => event.title %>
                   <% end %>
@@ -107,6 +119,11 @@
               <% @follow_events.each do |event| %>
                 <dl class="clearfix">
                   <dt>
+                      <% if event.timeout? %>
+                    <span class="label_end">已结束</span>
+                  <% elsif event.cancle? %>
+                    <span class="label_cancle">已取消</span>  
+                  <% end %> 
                     <%= link_to event_path(event) do %>
                       <%= image_tag event.poster_url(:thumb), :size => '100x150', :alt => event.title %>
                     <% end %>

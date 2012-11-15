@@ -53,8 +53,9 @@ namespace :deploy do
   #end
 
   task :restart, roles: :app do
-    run "sudo kill -9 `cat #{deploy_to}/current/tmp/pids/unicorn.pid`"
-    run "cd #{deploy_to}/current/ && bundle exec unicorn_rails -c ./config/unicorn.rb -D  -E production"
+    #run "sudo kill -9 `cat #{deploy_to}/current/tmp/pids/unicorn.pid`"
+    #run "cd #{deploy_to}/current/ && bundle exec unicorn_rails -c ./config/unicorn.rb -D  -E production"
+    run "/etc/init.d/unicorn_#{application} restart"
     #  run "touch #{current_path}/tmp/restart.txt" # passenger
     #sudo "/home/iwine/unicorn_restart.sh" # unicorn
   end
@@ -86,7 +87,7 @@ namespace :deploy do
     run "ln -nfs #{shared_path}/config/oauth/douban.yml #{release_path}/config/oauth/douban.yml"
     run "ln -nfs #{shared_path}/config/oauth/qq.yml #{release_path}/config/oauth/qq.yml"
     run "ln -nfs #{shared_path}/config/oauth/sina.yml #{release_path}/config/oauth/sina.yml"
-    #run "ln -nfs #{shared_path}/config/unicorn.rb #{release_path}/config/unicorn.rb"
+    run "ln -nfs #{shared_path}/config/unicorn.rb #{release_path}/config/unicorn.rb"
   end
   after "deploy:finalize_update", "deploy:symlink_config"
 

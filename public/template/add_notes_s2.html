@@ -97,7 +97,7 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
               <tr>
                 <th>颜色</th>
                 <td>
-               	  <p class="mb20"><a href="#" class="btn_gray"><span>选择颜色</span></a></p>
+               	  <p class="mb20"><a href="lightbox_color.html" target="_blank" class="btn_gray"><span>选择颜色</span></a></p>
                   <ul class="feature">
                   	<li><img src="images/color/Red-Garnet-2.png" width="128" height="128" /><br />
                     浅三文鱼色
@@ -164,15 +164,15 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
               <tr>
                 <th>香气特征</th>
                 <td>
-               	  <p class="mb20"><a href="#" class="btn_gray"><span>选择香气特征</span></a></p>
+               	  <p class="mb20"><a href="lightbox_feature.html" target="_blank" class="btn_gray"><span>选择香气特征</span></a></p>
                   <ul class="feature">
-                  	<li><a href="#"><span class="delet"></span></a><img src="images/nose/DairyMLF/DairyMLF_Yoghurt.png" width="128" height="128" /><br />
+                  	<li><a href="#"><span class="delet"></span></a><img src="images/nose/DairyMLF_Yoghurt.png" width="128" height="128" /><br />
                	    薰衣草</li>
-                    <li><a href="#"><span class="delet"></span></a><img src="images/nose/DairyMLF/DairyMLF_Cheese.png" width="128" height="128" /><br />
+                    <li><a href="#"><span class="delet"></span></a><img src="images/nose/DairyMLF_Cheese.png" width="128" height="128" /><br />
                     薰衣草</li>
-                    <li><a href="#"><span class="delet"></span></a><img src="images/nose/FloralFruit/Floral_Elderflower.png" width="128" height="128" /><br />
+                    <li><a href="#"><span class="delet"></span></a><img src="images/nose/Floral_Elderflower.png" width="128" height="128" /><br />
                     薰衣草</li>
-                    <li><a href="#"><span class="delet"></span></a><img src="images/nose/Herbal/Herbal_Lavender.png" width="128" height="128" /><br />
+                    <li><a href="#"><span class="delet"></span></a><img src="images/nose/Herbal_Lavender.png" width="128" height="128" /><br />
                     薰衣草
                     </li>
                   </ul>
@@ -249,47 +249,13 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 </td>
               </tr>
               <tr>
-                <th>单宁</th>
-                <td>
-                <ul class="danning_list">
-                    <span>程度</span>
-                	<li><label><input name="radio1" type="radio" value="" /> 无</label></li>
-                    <li><label><input name="radio1" type="radio" value="" /> 
-                      低</label></li>
-                    <li><label><input name="radio1" type="radio" value="" /> 
-                      中等偏低</label></li>
-                    <li><label><input name="radio1" type="radio" value="" /> 
-                      中等</label></li>
-                      <li><label><input name="radio1" type="radio" value="" /> 
-                      中等偏高</label></li>
-                </ul>
-                <ul class="danning_list">
-                	<span>性质</span>
-                    <li><label><input name="radio2" type="radio" value="" /> 无</label></li>
-                    <li><label><input name="radio2" type="radio" value="" /> 
-                    成熟</label></li>
-                    <li><label><input name="radio2" type="radio" value="" /> 
-                    柔顺</label></li>
-                    <li><label><input name="radio2" type="radio" value="" /> 
-                    不成熟</label></li>
-                    <li><label><input name="radio2" type="radio" value="" /> 
-                    绿</label></li>
-                    <li><label><input name="radio2" type="radio" value="" /> 
-                    茎</label></li>
-                    <li><label><input name="radio2" type="radio" value="" /> 
-                    粗糙</label></li>
-                    <li><label><input name="" type="radio" value="" /> 
-                    细腻</label></li>
-                </ul>
-                </td>
-              </tr>
-              <tr>
-                <th>酒体</th>
-                <td colspan="2">
-                	<label>
+                <th rowspan="3">单宁</th>
+                <td  class="tannin">
+                <span>程度</span>
+                <label>
                 <input name="radio" type="radio" value="" />
-                清淡
-                	</label>
+                低
+                </label>
                 <label>
                 <input name="radio" type="radio" value="" />
                 中等偏低</label>
@@ -299,10 +265,53 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
                 <label>
                 <input name="radio" type="radio" value="" />
                 中等偏高</label>
+                </td>
+              </tr>
+              <tr>
+                <td class="tannin">
+                <span>性质</span>
+                <ul class="danning_list">
+                	<li><label><input name="" type="radio" value="" /> 成熟</label></li>
+                    <li><label><input name="" type="radio" value="" /> 柔顺</label></li>
+                    <li><label><input name="" type="radio" value="" /> 不成熟</label></li>
+                </ul>
+                <ul class="danning_list">
+                	<li><label><input name="" type="radio" value="" /> 青涩</label></li>
+                    <li><label><input name="" type="radio" value="" /> 根茎味道</label></li>
+                </ul>
+                <ul class="danning_list">
+                	<li><label><input name="" type="radio" value="" /> 粗糙</label></li>
+                    <li><label><input name="" type="radio" value="" /> 细腻</label></li>
+                </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="tannin">
                 <label>
                 <input name="radio" type="radio" value="" />
-                饱满</label>
+                无
+                </label>
                 </td>
+              </tr>
+              <tr>
+                <th>酒体</th>
+                <td colspan="3">
+                  <label>
+                    <input name="radio" type="radio" value="" />
+                    清淡
+                    </label>
+                  <label>
+                    <input name="radio" type="radio" value="" />
+                  中等偏低</label>
+                  <label>
+                    <input name="radio" type="radio" value="" />
+                  中等</label>
+                  <label>
+                    <input name="radio" type="radio" value="" />
+                  中等偏高</label>
+                  <label>
+                    <input name="radio" type="radio" value="" />
+                  饱满</label>                </td>
               </tr>
               <tr>
                 <th>风味浓郁度</th>
@@ -347,15 +356,15 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
               <tr>
                 <th>风味特征</th>
                 <td colspan="2">
-               	  <p class="mb20"><a href="#" class="btn_gray"><span>选择风味特征</span></a></p>
+               	  <p class="mb20"><a href="lightbox_feature.html" target="_blank" class="btn_gray"><span>选择风味特征</span></a></p>
                   <ul class="feature">
-                  	<li><a href="#"><span class="delet"></span></a><img src="images/nose/DairyMLF/DairyMLF_Yoghurt.png" width="128" height="128" /><br />
+                  	<li><a href="#"><span class="delet"></span></a><img src="images/nose/DairyMLF_Yoghurt.png" width="128" height="128" /><br />
                	    薰衣草</li>
-                    <li><a href="#"><span class="delet"></span></a><img src="images/nose/DairyMLF/DairyMLF_Cheese.png" width="128" height="128" /><br />
+                    <li><a href="#"><span class="delet"></span></a><img src="images/nose/DairyMLF_Cheese.png" width="128" height="128" /><br />
                     薰衣草</li>
-                    <li><a href="#"><span class="delet"></span></a><img src="images/nose/FloralFruit/Floral_Elderflower.png" width="128" height="128" /><br />
+                    <li><a href="#"><span class="delet"></span></a><img src="images/nose/Floral_Elderflower.png" width="128" height="128" /><br />
                     薰衣草</li>
-                    <li><a href="#"><span class="delet"></span></a><img src="images/nose/Herbal/Herbal_Lavender.png" width="128" height="128" /><br />
+                    <li><a href="#"><span class="delet"></span></a><img src="images/nose/Herbal_Lavender.png" width="128" height="128" /><br />
                     薰衣草
                     </li>
                   </ul>

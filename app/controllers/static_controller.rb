@@ -1,6 +1,8 @@
 # encoding: UTF-8
 class StaticController < ApplicationController
-   
+
+  caches_page :private, :agreement, :terms_and_conditions, :site_map, :help, :about_us, :contact_us
+
   def home
     @title =  t("nav.home")
   end

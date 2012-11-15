@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>iWine</title>
+<link href="stylesheets/main.css" rel="stylesheet" type="text/css" />
+<link href="stylesheets/fancybox.css" rel="stylesheet" type="text/css" />
+<script src="javascripts/input.js" type="text/javascript"></script>
+<script type="text/javascript">
+function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua.indexOf(t)>-1},g='gecko',w='webkit',s='safari',o='opera',m='mobile',h=document.documentElement,b=[(!(/opera|webtv/i.test(ua))&&/msie\s(\d)/.test(ua))?('ie ie'+RegExp.$1):is('firefox/2')?g+' ff2':is('firefox/3.5')?g+' ff3 ff3_5':is('firefox/3.6')?g+' ff3 ff3_6':is('firefox/3')?g+' ff3':is('gecko/')?g:is('opera')?o+(/version\/(\d+)/.test(ua)?' '+o+RegExp.$1:(/opera(\s|\/)(\d+)/.test(ua)?' '+o+RegExp.$2:'')):is('konqueror')?'konqueror':is('blackberry')?m+' blackberry':is('android')?m+' android':is('chrome')?w+' chrome':is('iron')?w+' iron':is('applewebkit/')?w+' '+s+(/version\/(\d+)/.test(ua)?' '+s+RegExp.$1:''):is('mozilla/')?g:'',is('j2me')?m+' j2me':is('iphone')?m+' iphone':is('ipod')?m+' ipod':is('ipad')?m+' ipad':is('mac')?'mac':is('darwin')?'mac':is('webtv')?'webtv':is('win')?'win'+(is('windows nt 6.0')?' vista':''):is('freebsd')?'freebsd':(is('x11')||is('linux'))?'linux':'','js']; c = b.join(' '); h.className += ' '+c; return c;}; css_browser_selector(navigator.userAgent);
+</script>
+</head>
+
+<body>
+	<div id="header">
+<div class="main950">
+        	<div id="logo"><img src="images/common/logo.png" alt="iWine" width="299" height="43" /></div>
+            <form action="search.html">
+                <div id="top_search">
+                    <input class="search_btn" name="" type="image" src="images/icon/search.gif"/>
+                    <input class="search" type="text" value="搜索酒款、酒庄" onclick="clearDefaultText(this,'搜索酒款、酒庄')"  />
+                </div>
+            </form>
+            <div id="top_right">
+            	<ul>
+                	<li class="userbox">
+                    	<a class="userpic" href="#"><img src="images/userimage/06.jpg" width="20" height="20" /></a><a href="#"><img src="images/common/userbox_arrow.jpg" width="22" height="30" /></a>
+                    </li>
+                    <li class="top_add"><a href="#" class="btn_add">添加</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="globel_navi">
+    	<ul>
+        	<li class="current"><a href="index.html">首页</a></li>
+            <li class="arrow"><a href="wine.html">酒款</a></li>
+            <li class="last arrow"><a href="winery.html">酒庄</a></li>
+            <div class="clear"></div>
+      </ul>
+    </div>
+    <div class="fancybox-wrap fancybox-default fancybox-opened" style="width: 850px; height: auto; display: block; position: fixed; top: 192px; left: 602px; overflow: visible;">
+        <div class="fancybox-outer" style="width: auto; height: auto;">
+            <div class="fancybox-inner">
+            <div style="" id="comment_form" class="notes_feature">
+                <h3 class="title">请选择颜色</h3>
+                <div class="">
+                	<div class="left">
+                      <ul class="color_catalog">
+                        	<li class="current"><a href="#">红葡萄酒</a></li>
+                            <li><a href="#">白葡萄酒</a></li>
+                            <li><a href="#">桃红葡萄酒</a></li>
+                        </ul>
+                    </div>
+                    <div class="color">
+                    	<ul class="color_list">
+                        	<li>
+                            	<p class="pic"><a href="#"><img src="images/color/Red-Purple-1.png" width="128" height="128" /></a></p>
+                                <p class="name">浅紫色</p>
+                          </li>
+                            <li>
+                            	<p class="pic"><a href="#"><img src="images/color/Red-Purple-2.png" width="128" height="128" /></a></p>
+                                <p class="name">紫色</p>
+                            </li>
+                            <li>
+                            	<p class="pic"><a href="#"><img src="images/color/Red-Purple-3.png" width="128" height="128" /></a></p>
+                                <p class="name">深紫色</p>
+                            <li>
+                            	<p class="pic"><span class="rg"></span><a href="#"><img src="images/color/Red-Ruby-1.png" width="128" height="128" /></a></p>
+                                <p class="name">浅宝石色</p>
+                            </li>
+                            <li>
+                            	<p class="pic"><a href="#"><img src="images/color/Red-Ruby-2.png" width="128" height="128" /></a></p>
+                                <p class="name">宝石色</p>
+                          </li>
+                            <li>
+                            	<p class="pic"><a href="#"><img src="images/color/Red-Ruby-3.png" width="128" height="128" /></a></p>
+                                <p class="name">深宝石色</p>
+                          </li>
+							<li>
+                            	<p class="pic"><a href="#"><img src="images/color/Red-Garnet-1.png" width="128" height="128" /></a></p>
+                                <p class="name">浅石榴色</p>
+                            </li>
+                            <li>
+                            	<p class="pic"><a href="#"><img src="images/color/Red-Garnet-2.png" width="128" height="128" /></a></p>
+                                <p class="name">石榴色</p>
+                          </li>
+                            <li>
+                            	<p class="pic"><a href="#"><img src="images/color/Red-Garnet-3.png" width="128" height="128" /></a></p>
+                                <p class="name">深石榴色</p>
+                          </li>
+                          <li>
+                            	<p class="pic"><span class="rg"></span><a href="#"><img src="images/color/Red-Tawny-1.png" width="128" height="128" /></a></p>
+                                <p class="name">浅茶色</p>
+                          </li>
+                            <li>
+                            	<p class="pic"><a href="#"><img src="images/color/Red-Tawny-2.png" width="128" height="128" /></a></p>
+                                <p class="name">茶色</p>
+                          </li>
+                            <li>
+                            	<p class="pic"><a href="#"><img src="images/color/Red-Tawny-3.png" width="128" height="128" /></a></p>
+                                <p class="name">深茶色</p>
+                          </li>
+                      </ul>
+                    </div>
+                    <div class="clear"></div>
+              </div>
+        </div></div></div>
+         <div class="fancybox-item fancybox-close" title="Close"></div></div>
+</body>
+</html>

@@ -111,8 +111,8 @@ img.cover_s {background:url(bg/bg_album_s.gif) no-repeat left top;padding:5px 8p
 .side_album_list li {margin:0 0 30px 0;}
 .add_album {margin:0 0 0 20px;}
 input.photo_name, textarea.photo_des {width:184px;}
-textarea.photo_des {min-height: 70px;} 
-li.photo_des p {margin: 0 0 5px 0;} 
+textarea.photo_des {min-height: 70px;}
+li.photo_des p {margin: 0 0 5px 0;}
 
 .photolist li {width:130px;float:left;margin-right:20px;}
 .photolist li.last {margin-right:0;}

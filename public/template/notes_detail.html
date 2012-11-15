@@ -106,7 +106,15 @@ document.onclick = mclose;
         </div>
         <div class="notes_img_detail">
        	  <div class="sharebar">
-          	<ul>
+          	<div id="manage">
+                	<p><a href="#" onmouseover="mopen('mbox')" onmouseout="mclosetime()"><img src="images/icon/manage_w.png" width="21" height="21" alt="管理" /></a></p>
+                	<div id="mbox" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+                    	<a class="icon_edit2" href="notes_edit1.html">编辑品酒辞</a>
+                        <a class="icon_cancle" href="#">删除品酒辞</a>
+                        <a class="icon_public" href="#">发布品酒辞</a>
+                    </div>
+                </div>
+            <ul>
             	<li class="collect"><a href="#"><img src="images/icon/collect.png" width="20" height="19" align="absmiddle" /></a></li>
                 <li class="share"><a href="#"><img src="images/icon/share.png" width="21" height="17" align="absmiddle" /></a></li>
                 <li class="like"><a href="#"><img src="images/icon/like_red.png" width="22" height="20" align="absmiddle" /></a>（2）</li>
@@ -173,8 +181,8 @@ document.onclick = mclose;
                             <th><span class="f2">香气</span></th>
                             <td>干净，中等偏低的香气，完全发展，有 鹅莓，温柏的味道
                             	<ul class="feature">
-                                	<li><img src="images/nose/BlackFruit/BlackFruit_Bramble.png" width="128" height="128" /><br />蓝莓</li>
-                                    <li><img src="images/nose/CitrusFruit/CitrusFruit_Grapefruit.png" width="128" height="128" /><br />西柚</li>
+                                	<li><img src="images/nose/BlackFruit_Bramble.png" width="128" height="128" /><br />蓝莓</li>
+                                    <li><img src="images/nose/CitrusFruit_Grapefruit.png" width="128" height="128" /><br />西柚</li>
                                 </ul>
                             </td>
                           </tr>
@@ -182,9 +190,9 @@ document.onclick = mclose;
                             <th><span class="f3">口感</span></th>
                             <td>微干，中等偏低的酸度，中等偏低的单宁，中等的酒精度，中等偏低酒体，中等的西柚，余味中等
                             <ul class="feature">
-                                	<li><img src="images/nose/DriedFruit/DriedFruit_Jamminess.png" width="128" height="128" /><br />蜂蜜</li>
-                                    <li><img src="images/nose/DriedFruit/DriedFruit_Fig.png" width="128" height="128" /><br />某种水果</li>
-                                    <li><img src="images/nose/CitrusFruit/CitrusFruit_Lemon.png" width="128" height="128" /><br />柠檬</li>
+                                	<li><img src="images/nose/DriedFruit_Jamminess.png" width="128" height="128" /><br />蜂蜜</li>
+                                    <li><img src="images/nose/DriedFruit_Fig.png" width="128" height="128" /><br />某种水果</li>
+                                    <li><img src="images/nose/CitrusFruit_Lemon.png" width="128" height="128" /><br />柠檬</li>
                                     <li></li>
                               </ul>
                             </td>
