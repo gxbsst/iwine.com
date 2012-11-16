@@ -38,8 +38,10 @@
 .addnotes td {border-bottom:1px dotted #ccc;padding: 10px 20px;}
 .addnotes th {border-bottom:1px dotted #ccc;border-right:1px dotted #ccc;width:70px;text-align:right;padding:10px 20px 10px 0;}
 .addnotes label {margin:0 20px 0 0;}
+.addnotes td.tannin span{display:inline-block;float:left;margin:0 20px 0 0;padding:3px 10px;background-color:#ece9e2;}
 .addnotes .delet {position:absolute;left:115px;top:-5px;z-index:1;}
-ul.danning_list {width:200px;float:left;}
-ul.danning_list li {margin:0 0 5px 20px;}
+ul.danning_list {width:120px;float:left;}
+ul.danning_list li {margin:0 20px 5px 0;}
 ul.danning_list span {background:url(../images/bg/bg_f.gif) no-repeat left top;width:89px;height:32px;text-align:center;padding:5px 0 0 0;line-height:27px;display:block;font-weight:bold;}
 .f1, .f2, .f3, .f4 {margin: 0 0 0 5px;}
+ul#stars li{float:left;display:inline;}
