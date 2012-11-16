@@ -1,8 +1,8 @@
 # encoding: utf-8
 class PhotosController < ApplicationController
-  before_filter :get_imageable, :except => [:new, :create]
+  before_filter :get_imageable, :except => [:new, :create, :vote]
   before_filter :get_approved, :only => [:show]
-  before_filter :get_photo, :only => [:edit, :update, :destroy, :reply, :vote]
+  before_filter :get_photo, :only => [:edit, :update, :destroy, :reply]
   before_filter :get_user
   before_filter :authenticate_user!, :only => [:new, :create]
   before_filter :get_follow_item, :only => [:show, :index]
@@ -45,10 +45,15 @@ class PhotosController < ApplicationController
       render_event_photo_detail
     end
   end
-  
+
   def vote
-    @photo.liked_by @user
-     render :json => @photo.likes.size.to_json
+    @photo = Photo.find(params[:id])
+    if(@photo)
+      @photo.liked_by @user
+      render :json => @photo.likes.size.to_json
+    else
+      render_404('')
+    end
   end
 
   def new
