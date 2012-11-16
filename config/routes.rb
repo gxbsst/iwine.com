@@ -126,9 +126,7 @@ Patrick::Application.routes.draw do
   resources :photos do
     resources :comments#, :as => "photo_comments"
     # resources :comments, :controller => "comments"
-    member do
-      get "vote"
-    end
+    member { put :vote }
   end
   # 相册
    resources :albums do
@@ -293,6 +291,8 @@ Patrick::Application.routes.draw do
       get "success"
     end
   end
+
+  resources :notes
 
   ## GLOBAL
   match ':controller(/:action(/:id(.:format)))'
