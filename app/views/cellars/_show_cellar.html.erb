@@ -3,11 +3,13 @@
         <h1><%= show_username(@user) %>的酒窖 <span class="font12">(共<%= @cellar_items.size %>款)</span></h1>
       </div>
       <div class="sort_search mb20">
-        <div class="float_r">
+        <% if @cellar_items.present?%>
+            <div class="float_r">
                <%= link_to cellars_user_path(@user, @cellar, :format => "xls") ,:class => "btn_blue_b" do %>                   
                 <span>导出数据</span>
               <% end %>
             </div>
+        <% end %>
             <div class="float_r mr5">
               <% if is_login_user?(@user) %>
                 <%= link_to add_cellar_items_path(@cellar, :step => 1), :class => "btn_blue_b" do %>
