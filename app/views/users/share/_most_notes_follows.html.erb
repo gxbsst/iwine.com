@@ -1,0 +1,21 @@
+<ul class="sidewine">
+   <% if @user_notes.present? %> 
+   <% @user_notes.each_with_index do |user_note,i| %>
+   <% if i < 5 %>
+  	<li>
+        <%= link_to cover(user_note[:photo], 'customer', '70x70', '70x70'), note_path(user_note[:note]) %> 
+          <div class="info">
+          	<h3 class="zh">
+              <%= link_to user_note[:wine].name_zh, note_path(user_note[:note]) %>
+            </h3>
+              <p class="star"><%= star_rate_tag(user_note[:wine].rating) %></p>
+              <p><%= link_to '详细 》', note_path(user_note[:note]) %></p>
+        </div>
+    </li> 
+    <% end %>
+   <% end %>
+    <% else %>
+        无
+    <% end %>
+    <div class="clear"></div>
+</ul>

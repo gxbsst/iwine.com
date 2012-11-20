@@ -1,0 +1,39 @@
+<% content_for :title, @title%>
+<div class="whitespace">
+<div id="hp">
+    <%= render "users/sub_nav", :action => params[:action] %>
+  <div class="clear"></div>
+ 
+<div class="content">
+    <div class="tabs3">
+      <ul> 
+          <li><%= link_to "评论",comments_user_path(@user.slug) %></li>
+          <li class="current"><%= link_to "品酒辞", notes_user_path(@user.slug)%></li>
+      </ul>
+     </div>
+      <div class="content2" id="tab_one_2">
+     <div class="left">
+      <div class="title_btn">
+          <h1>品酒辞 <span class="font_12 more">(共 <%= @user_notes.total_count %> 条)</span></h1>
+        </div>
+         <%= render "users/share/notes" %>
+        <div class="pagination">  
+        <%= paginate @user_notes %>
+        <!-- pagination  end   -->
+        </div>      
+    </div>
+    <div class="right">
+      <div class="sidebox">
+          <div class="title"><h3>热门品酒辞</h3></div>
+            <div class="main">
+              <%= render "users/share/most_notes_follows" %>
+            </div>
+        </div>
+    </div> 
+
+
+  <div class="clear"></div>
+</div>
+
+</div>
+</div>

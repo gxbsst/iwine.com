@@ -28,9 +28,16 @@ class UsersController < ApplicationController
 
   # 我的评论
   def comments
+    @current_tab = params[:tab] || 'comment'
     @title = ["评论", @user.username].join("-")
     @hot_wines = Wines::Detail.hot_wines(5)
-    @comments = @user.comments.real_comments.page(params[:page] || 1).per(10)
+    @comments = @user.comments.real_comments.page(params[:page] || 1).per(10)  
+  end
+
+  def notes
+    notes_result = Notes::NotesRepository.find_by_user(7) 
+    @user_notes = Notes::HelperMethods.build_user_notes(notes_result) if notes_result['state']  
+    @user_notes = Kaminari.paginate_array(@user_notes).page(params[:page] || 1).per(10)
   end
 
   def followings

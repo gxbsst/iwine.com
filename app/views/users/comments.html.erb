@@ -3,26 +3,34 @@
 <div id="hp">
     <%= render "users/sub_nav", :action => params[:action] %>
   <div class="clear"></div>
-  
+ 
 <div class="content">
-	<div class="left">
-  	<div class="title_btn">
-        <h1>评论 <span class="font_12 more">(共 <%= @user.comments_count %> 条)</span> </h1>
-      </div>
-       <%= render "users/share/comments" %>
-      <div class="pagination">
-	    <%= paginate @comments %>
-      <!-- pagination  end   -->
-      </div>      
-  </div>
-  <div class="right">
-  	<div class="sidebox">
-      	<div class="title"><h3>热门酒</h3></div>
-          <div class="main">
-            <%= render "users/share/most_wine_follows" %>
-          </div>
-      </div>
-  </div>
+    <div class="tabs3">
+      <ul> 
+          <li class="current"><%= link_to "评论",comments_user_path(@user.slug) %></li>
+          <li><%= link_to "品酒辞", notes_user_path(@user.slug)%></li> 
+      </ul> 
+    </div> 
+  	<div class="left">
+    	<div class="title_btn">
+          <h1>评论 <span class="font_12 more">(共 <%= @user.comments_count %> 条)</span></h1>
+        </div>
+         <%= render "users/share/comments" %>
+        <div class="pagination">
+  	    <%= paginate @comments %>
+        <!-- pagination  end   -->
+        </div>      
+    </div>
+    <div class="right">
+    	<div class="sidebox">
+        	<div class="title"><h3>热门酒</h3></div>
+            <div class="main">
+              <%= render "users/share/most_wine_follows" %>
+            </div>
+        </div>
+    </div>
+ 
+
   <div class="clear"></div>
 </div>
 
