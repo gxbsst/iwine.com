@@ -1,9 +1,16 @@
 # encoding: utf-8
 module Notes
   class NoteItem
-    attr_accessor :appearance, :nose, :palate, :conclusion, :photo, :wine, :location, :note
+    extend ActiveModel::Naming
+    #include ActiveModel
+    #include ActiveModel::Serialization
+    #
+    #has_many :comments
+
+    attr_accessor :appearance, :nose, :palate, :conclusion, :photo, :wine, :location, :note, :id
     NOTE_TRAIT_ZH = NOTE_TRAIT['zh']
     def initialize(note)
+      self.id = note['id']
       self.photo      = Photo.new(note['cover'])
       self.wine       = Wine.new(note['wine'])
       self.appearance = Appearance.new(note['appearance'])
@@ -12,9 +19,21 @@ module Notes
       self.conclusion = Conclusion.new(note['conclusion'])
       self.location   = Location.new(note['location'])
       self.note = Note.new(note)
+
     end
 
+    def self.find(id)
+      result = {}
+      result['id']  = id
+      Note.new(result)
+    end
+
+    #def comments
+    #  ::Comment.where(:commentable_type => 'Note', :commentable_id => 1)
+    #end
+
     class Note < Struct.new(:serverTime, :id, :rating)
+
        def initialize(result)
          @serverTime = result['serverTime']
          self.id = result['id']
