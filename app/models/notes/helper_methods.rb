@@ -32,4 +32,19 @@ module Notes::HelperMethods
     new_array
   end
 
+  # 首页
+  def self.build_all_notes(result)
+    new_array = []
+    result['data'].each do |note|
+      new_array <<  {
+          :location => Notes::NoteItem::Location.new(note),
+          :user => User.find(note['uid']),
+          :note => Notes::NoteItem::Note.new(note),
+          :photo => Notes::NoteItem::Photo.new(note),
+          :wine =>  Notes::NoteItem::Wine.new(note)
+      }
+    end
+    new_array
+  end
+
 end
