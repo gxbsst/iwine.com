@@ -277,6 +277,15 @@ Patrick::Application.routes.draw do
       resources :oauths
       resources :confirmations
     end
+
+    api_version(:module => "v2", :header => "Accept", :value => "application/vnd.iwine.com; version=2") do
+      resources :registrations
+      resources :sessions
+      resources :uploads
+      resources :profiles
+      resources :oauths
+      resources :confirmations
+    end
    end
   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
 

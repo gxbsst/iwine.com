@@ -18,6 +18,11 @@ Dir[Rails.root + 'lib/notificationers/*.rb'].each do |file|
   require file
 end
 
+Dir[Rails.root + 'app/controllers/api/lib/*.rb'].each do |file|
+  require file
+end
+
+
 require Rails.root + 'lib/patrick/hot_search.rb'
 
 # 动态加入方法

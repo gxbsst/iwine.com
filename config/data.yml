@@ -251,14 +251,34 @@ api:
      code: 422 
      message: 'Failed'
    miss_parameter: 
-     coode: 422
+     code: 422
      message: "Missing some parameter"
    auth_failed:
      code: 401
-     message: 'Error with your login or password'
+     message: ''
    register_failed:
      code: 422
      message: ""
+   register:
+     success:
+      code: 200
+      message: ""
+     other_failed:
+      code: 420
+      message: ""
+     name_existed:
+      code: 421
+      message: ""
+     email_existed:
+      code: 422
+      message: ""
+   login:
+     success:
+      code: 200
+      message: ""
+     other_failed:
+      code: 410
+      message: ""
 
 event:
 
