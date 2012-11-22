@@ -80,7 +80,7 @@ describe Users::Profile do
          @user.receive_product_info_email?.should be_true
         end
       end
-      describe "#account or service" do
+      describe "#account or lib" do
         it "should include 5" do
           @user.profile.config.notice.email.should include('5')
         end
@@ -168,7 +168,7 @@ describe Users::Profile do
          @user.receive_product_info_email?.should be_false
         end
       end
-      describe "#account or service" do
+      describe "#account or lib" do
         it "should include 5" do
           @user.profile.config.notice.email.should_not include('5')
         end

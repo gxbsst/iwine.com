@@ -37,6 +37,7 @@ end
 APP_DATA = YAML.load_file(Rails.root.join('config', 'data.yml'))
 NOTE_DATA = YAML.load_file(Rails.root.join('config', 'note.yml'))
 NOTE_TRAIT = YAML.load_file(Rails.root.join('config', 'note_trait.yml'))
+NOTE_COLOR = YAML.load_file(Rails.root.join('config', 'note_color.yml'))
 EMAIL_SITE = YAML.load_file(Rails.root.join('config', 'email_site.yml'))
 
 ## USER CONFIGs

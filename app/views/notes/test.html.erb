@@ -1,0 +1,28 @@
+<% content_for :js do %>
+  <%= javascript_include_tag "notes" %>
+<% end %>
+
+<div id="trait_box">
+
+</div>
+
+<script type="text/template" id="trait_list_template">
+  <ul class="feature_list"></ul>
+</script>
+
+<script type="text/template" id="trait_item_template">
+  <p class="pic">
+    <span class="<@= select @>"></span>
+    <a href="#">
+      <@ if (image == "") { @>
+      <img alt="<@= key @>" height="128" src="/assets/nose/<@= key @>.png" width="128">
+      <@ } else { @>
+      <img alt="<@= key @>" height="128" src="/assets/color/<@= image @>" width="128">
+      <@ } @>
+    </a>
+  </p>
+  <p class="name"><@= name_zh + " " + name_en @> </p>
+</script>
+
+<%= link_to "香气特征", trait_notes_path, :remote => true %>
+<%= link_to "color", color_notes_path, :remote => true %>

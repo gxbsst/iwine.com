@@ -35,6 +35,10 @@ module NotesHelper
     html
   end
 
+  def trait_img_tag(trait_key)
+    image_tag("nose/#{trait_key}.png", :size =>'128x128' )
+  end
+
   ## 显示评星
   #def star_rate_tag(point)
   #  point ||= 0

@@ -1,0 +1,40 @@
+
+<div style="" id="comment_form" class="notes_feature">
+  <h3 class="title">请选择香味特征</h3>
+  <div class="">
+    <div class="left">
+      <div class="search" id="search_trait">
+        <div class="space">
+          <%= image_submit_tag('icon/search_gray.gif', :class => :btn_feature_search, :id => :search_trait_button) %>
+          <input name="" type="text" value="" class="main" placeholder="search" id="search_trait_input" />
+        </div>
+      </div>
+      <ul class="feature_catalog" id="feature_catalog">
+        <li class="current"><a href="javascript:void(0)" data-value=0>全部</a></li>
+        <% @categories.each do |parent| %>
+          <li><a href="javascript:void(0)" data-value=<%= parent.id %>><%= parent.name %></a></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="feature">
+      <div id="traits_container">
+        <p class="loading"></p>
+      </div>
+      <a href="#" id="commfirm_button">确认</a>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<div id="json" style="display: none;">
+  <%= @traits.to_json %>
+</div>
+<div id="model"><%= @traits.first.class.to_s  %></div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    var _ref, collection, sidebarView, traitListView;
+    window.app = (_ref = window.app) != null ? _ref : {};
+    collection = new window.Traits(JSON.parse($('#json').html()));
+    window.app.noteAppView = new NoteAppView({ collection: collection, forModel: $('#model').html()  });
+    window.app.noteAppView.render();
+  });
+</script>

@@ -302,7 +302,13 @@ Patrick::Application.routes.draw do
     end
   end
 
-  resources :notes
+  resources :notes do
+    collection do
+      get :trait
+      get :color
+      get :test
+    end
+  end
 
   ## GLOBAL
   match ':controller(/:action(/:id(.:format)))'

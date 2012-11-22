@@ -23,6 +23,6 @@ class AdminUser < ActiveRecord::Base
 
   ActiveAdmin.register AdminUser do
     menu :if => proc{can? :manage,AdminUser}
-    controller.authorize_resource
+    #controller.authorize_resource
   end
 end

@@ -1,0 +1,25 @@
+level:
+ Light:
+   text: 浅
+   num: 1
+ Medium:
+   text: Medium
+   num: 2
+ Deep:
+   text: 深
+   num: 3
+name:
+ White:
+   Lemon-green: 柠檬绿
+   Lemon: 柠檬色
+   Gold: 金色
+   Amber: 琥珀色
+ Red:
+   Purple: 紫色
+   Ruby: 宝石色
+   Garnet: 石榴色
+   Tawny: 茶色
+ Rose:
+   Pink: 桃红色
+   Salmon: 三文鱼色
+   Orange: 橘色
