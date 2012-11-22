@@ -71,7 +71,7 @@ class NotesController < ApplicationController
         redirect_to edit_note_path(@note, :step => step)
       else
         if params[:status] == "submitted"
-          render :text => "用户列表"
+          redirect_to notes_user_path(current_user)
         else
           redirect_to note_path(@note.app_note_id)
         end
