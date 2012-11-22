@@ -161,6 +161,7 @@ Patrick::Application.routes.draw do
       match "wine_follows", :via => [:get]
       match "winery_follows", :via => [:get]
       match "comments", :via => [:get]
+      match "notes", :via => [:get]
       match "followings", :via => [:get]
       match "start", :via => [:get, :post]
       match "followers", :via => [:get]
@@ -278,6 +279,15 @@ Patrick::Application.routes.draw do
   # API
   namespace :api do
     api_version(:module => "v1", :header => "Accept", :value => "application/vnd.iwine.com; version=1") do
+      resources :registrations
+      resources :sessions
+      resources :uploads
+      resources :profiles
+      resources :oauths
+      resources :confirmations
+    end
+
+    api_version(:module => "v2", :header => "Accept", :value => "application/vnd.iwine.com; version=2") do
       resources :registrations
       resources :sessions
       resources :uploads

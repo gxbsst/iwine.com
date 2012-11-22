@@ -4,7 +4,7 @@ class FilelessIO < StringIO
 end
 
 module Api
-  module V1
+  module V2
     class UploadsController < ::Api::BaseApiController
       before_filter :parse_xml
       before_filter :get_token

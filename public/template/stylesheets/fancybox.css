@@ -340,7 +340,7 @@
 .notes_feature .left .search {padding:10px;border-bottom:1px solid #ccc;}
 .notes_feature .left .search .space {background-color:#fff;border:1px solid #ccc;width:155px;}
 .notes_feature .left .search input.main {border:none;width:120px;}
-.notes_feature .left .search .btn_feature_search {float:right;padding:2px 5px 0 0;border-bottom:1px solid #ccc;}
+.notes_feature .left .search .btn_feature_search {float:right;padding:2px 5px 0 0;}
 .notes_feature .feature {width:650px;float:left;padding:20px 0 0 10px;height:560px;overflow:auto;}
 .notes_feature .feature .feature_list li {width:130px;float:left;margin:0 13px;height:180px;}
 .notes_feature .feature .feature_list li .pic {border:1px solid #ddd;margin-bottom:10px;position:relative;}

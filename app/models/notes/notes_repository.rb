@@ -13,7 +13,10 @@ module Notes
     end
 
     def self.all
-
+      hot = '/hot'
+      path = PRE_PATH + hot
+      response =  Notes::NoteAgent.get(:path => path)
+      response ? JSON.parse(response.body) : false
     end
 
     # 他还品鉴了这些酒

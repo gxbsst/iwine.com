@@ -267,14 +267,34 @@ api:
      code: 422 
      message: 'Failed'
    miss_parameter: 
-     coode: 422
+     code: 422
      message: "Missing some parameter"
    auth_failed:
      code: 401
-     message: 'Error with your login or password'
+     message: ''
    register_failed:
      code: 422
      message: ""
+   register:
+     success:
+      code: 200
+      message: ""
+     other_failed:
+      code: 420
+      message: ""
+     name_existed:
+      code: 421
+      message: ""
+     email_existed:
+      code: 422
+      message: ""
+   login:
+     success:
+      code: 200
+      message: ""
+     other_failed:
+      code: 410
+      message: ""
 
 event:
   city: { '上海': 1,  '成都': 2, '北京': 3, '深圳': 4, '广州': 5, '其他':'6'}
