@@ -1,0 +1,70 @@
+$("#note_fancybox_photo").html("<%= escape_javascript(render('photo_fancybox')) %>");
+$.fancybox({
+        padding: 0,
+        fitToView       : false,
+        width           : 800,
+        height          : 800,
+        autoSize        : false,
+        closeClick      : false,
+        openEffect      : 'none',
+        closeEffect     : 'none',
+        'href'                  : '#note_fancybox_photo',
+         helpers        :         {
+        overlay                      : {
+            opacity                 : 0.8,
+            css                     : {
+                'background-color'  : '#FFF'
+            }
+        }
+    } // end helper
+});
+$(".close_fancybox").click(function(){
+  $.fancybox.close();
+});
+$(function() {
+  var AvatarCropper,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+  jQuery(function() {
+    return new AvatarCropper();
+  });
+
+  AvatarCropper = (function() {
+
+    function AvatarCropper() {
+      this.updatePreview = __bind(this.updatePreview, this);
+
+      this.update = __bind(this.update, this);
+      $('#note_cropbox').Jcrop({
+        aspectRatio: 1,
+        setSelect: [0, 0, 200, 200],
+        bgColor: 'black',
+        bgOpacity: .5,
+        minSize: [200, 200],
+        maxSize: [800, 800],
+        onSelect: this.update,
+        onChange: this.update
+      });
+    }
+
+    AvatarCropper.prototype.update = function(coords) {
+      $('#note_crop_x').val(coords.x);
+      $('#note_crop_y').val(coords.y);
+      $('#note_crop_w').val(coords.w);
+      return $('#note_crop_h').val(coords.h);
+    };
+
+    AvatarCropper.prototype.updatePreview = function(coords) {
+      return $('#preview').css({
+        width: Math.round(50 / coords.w * $('#note_cropbox').width()) + 'px',
+        height: Math.round(50 / coords.h * $('#note_cropbox').height()) + 'px',
+        marginLeft: '-' + Math.round(50 / coords.w * coords.x) + 'px',
+        marginTop: '-' + Math.round(50 / coords.h * coords.y) + 'px'
+      });
+    };
+
+    return AvatarCropper;
+
+  })();
+
+}).call(this)

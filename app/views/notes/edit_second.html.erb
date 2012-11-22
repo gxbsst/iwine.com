@@ -1,0 +1,257 @@
+<% content_for :css do %>
+  <%= stylesheet_link_tag "main", "event", "notes", "add" %>
+<% end %>
+<div class="whitespace addwine">
+  <h1 class="main_title">添加品酒辞</h1>
+  <div class="add_notes_step">高级品鉴记录(选填)</div>
+  <div class="myform mb30 addnotes">
+    <%= form_for @note, :html => {:id => "note_second_form"} do |f| %>
+      <input type="hidden" name="step" value="second"/>
+      <input type="hidden" name="status" value="next" id="note_status"/>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" valign="top" class="title"><span class="f1">外观</span></td>
+        </tr>
+        <tr>
+          <th width="90" rowspan="2">澄清度</th>
+          <td>
+            <%=raw note_radio_button(NOTE_DATA['note']['appearance']['clarity_a'],
+             'appearance_clarity_a', @note.appearance_clarity_a) %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%=raw note_radio_button(NOTE_DATA['note']['appearance']['clarity_b'],
+              'appearance_clarity_b', @note.appearance_clarity_b) %>
+          </td>
+        </tr>
+        <tr>
+          <th>强度</th>
+          <td>
+            <%=raw note_radio_button(NOTE_DATA['note']['appearance']['intensity'], 
+              'appearance_intensity', @note.appearance_intensity) %>
+          </td>
+        </tr>
+        <tr>
+          <th>颜色</th>
+          <td>
+            <p class="mb20">
+              <%= link_to "javascript:void(0);", :class => "btn_gray" do %>
+                <span>选择颜色</span>
+              <% end %>
+            </p>
+            <ul class="feature">
+              <li><img src="images/color/Red-Garnet-2.png" width="128" height="128" /><br />
+              浅三文鱼色
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th>其他信息</th>
+          <td><%= f.text_area :appearance_other, :cols => "60", :rows => "5" %></td>
+        </tr>
+      </table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="2" valign="top" class="title">
+            <span class="f2">香气</span>
+          </td>
+        </tr>
+        <tr>
+          <th width="90">状况</th>
+          <td>
+            <%=raw note_radio_button(NOTE_DATA['note']['nose']['condition'], 
+             'nose_condition', @note.nose_condition) %>
+          </td>
+        </tr>
+        <tr>
+          <th>强度</th>
+          <td>
+            <%= raw note_radio_button(NOTE_DATA['note']['nose']['intensity'],
+             'nose_intensity', @note.nose_intensity) %>
+          </td>
+        </tr>
+        <tr>
+          <th>发展</th>
+          <td>
+            <%=raw note_radio_button(NOTE_DATA['note']['nose']['development'],
+            'nose_development', @note.nose_development) %>
+          </td>
+        </tr>
+        <tr>
+          <th>香气特征</th>
+          <td></td>
+        </tr>
+      </table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="3" valign="top" class="title">
+            <span class="f3">口感</span>
+          </td>
+        </tr>
+        <tr>
+          <th>甜度</th>
+          <td colspan="2">
+            <%=raw note_radio_button(NOTE_DATA['note']['palate']['sweetness'], 
+            'palate_sweetness', @note.palate_sweetness) %>
+          </td>
+        </tr>
+        <tr>
+          <th>酸度</th>
+          <td>
+            <%= raw note_radio_button(NOTE_DATA['note']['palate']['acidity'],
+            'palate_acidity', @note.palate_acidity) %>
+          </td>
+        </tr>
+        <tr>
+          <th>酒精度</th>
+          <td>
+            <%=raw note_radio_button(NOTE_DATA['note']['palate']['alcohol'],
+            'palate_alcohol', @note.palate_alcohol) %>
+          </td>
+        </tr>
+        <tr>
+          <th rowspan="3">单宁</th>
+          <td class="tannin tannin_input">
+            <span>程度</span>
+            <%= raw note_radio_button(NOTE_DATA['note']['palate']['tanninLevel'],
+            'palate_tannin_level', @note.palate_tannin_level) %>
+          </td>
+        </tr>
+        <tr>
+          <td class="tannin tannin_input">
+            <span>性质</span>
+            <ul class="danning_list">
+              <%=raw note_radio_button(NOTE_DATA['note']['palate']['tannin_nature_a'],
+              'tannin_nature_a', @note.palate_tannin_nature_a, true) %>
+            </ul>
+            <ul class="danning_list">
+              <%=raw note_radio_button(NOTE_DATA['note']['palate']['tannin_nature_b'],
+                'tannin_nature_b', @note.palate_tannin_nature_b, true) %>
+            </ul>
+            <ul class="danning_list">
+              <%=raw note_radio_button(NOTE_DATA['note']['palate']['tannin_nature_c'],
+                'tannin_nature_c', @note.palate_tannin_nature_c, true) %>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="tannin">
+            <label><input type="radio" value="" id="set_tannin_null"/> 无</label>
+          </td>
+        </tr>
+        <tr>
+          <th>酒体</th>
+          <td colspan="2">
+            <%=raw note_radio_button(NOTE_DATA['note']['palate']['body'],
+            'palate_body', @note.palate_body) %>
+          </td>
+        </tr>
+        <tr>
+          <th>风味浓郁度</th>
+          <td colspan="2">
+            <%=raw note_radio_button(NOTE_DATA['note']['palate']['flavorIntensity'],
+            'palate_flavor_intensity', @note.palate_flavor_intensity) %>
+          </td>
+        </tr>
+        <tr>
+          <th>余味</th>
+          <td colspan="2">
+            <%=raw note_radio_button(NOTE_DATA['note']['palate']['length'],
+            'palate_length', @note.palate_length) %>
+          </td>
+        </tr>
+        <tr>
+          <th>风味特征</th>
+          <td colspan="2">
+            
+          </td>
+        </tr>
+        <tr>
+          <th>其他细节</th>
+          <td colspan="2">
+            <%= f.text_area :palate_other, :id => "text_area", 
+            :cols => "60", :rows => "5" %>
+          </td>
+        </tr>
+      </table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="3" valign="top" class="title">
+            <span class="f4">结论</span>
+          </td>
+        </tr>
+        <tr>
+          <th>质量</th>
+          <td colspan="2">
+            <%=raw note_radio_button(NOTE_DATA['note']['conclusion']['quality'],
+              'conclusion_quality', @note.conclusion_quality) %>
+          </td>
+        </tr>
+        <tr>
+          <th>理由</th>
+          <td colspan="2">
+            <%= f.text_area :conclusion_reason, :id => "textarea2", :cols => "60", :rows => "5" %>
+          </td>
+        </tr>
+        <tr>
+          <th>适饮年限</th>
+          <td colspan="2">
+            <label>
+              <%= select_year @note.drinkable_begin_at, {:start_year => Time.now.year, 
+                :end_year => 1950, :prompt => {:year => "选择年份" }},{:name => "note[drinkable_begin_at]"}%>
+              <%= select_year @note.drinkable_end_at, {:start_year => Time.now.year, 
+                :end_year => 1950, :prompt => {:year => "选择年份" }}, {:name => "note[drinkable_end_at]"} %>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <th>其他</th>
+          <td colspan="2">
+            <%= f.text_area :conclusion_other, :id => "text_area", 
+             :cols => "60", :rows => "5" %>
+          </td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+  <div class="btn_submit">
+    <%= link_to edit_note_path(@note, :step => "first"), :class => "btn_brown_d mr10" do %>
+      <span>返回上一步</span>
+    <% end %>
+    <%= link_to "javascript:void(0);", :class => "btn_brown_d mr10 submit_approved" do %>
+      <span>立即发布</span>
+    <% end %>
+    <%= link_to "javascript:void(0);", :class => "btn_brown_g submit_draft" do %>
+      <span>保存为草稿</span>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+
+  $('a.submit_approved').click(function(){
+    $("#note_status").attr('value', 'next');
+    $("#note_second_form").submit();
+    return false;
+  });
+
+  $("a.submit_draft").click(function(){
+    $("#note_status").attr('value', 'submitted');
+    $("#note_second_form").submit();
+    return false;
+  });
+
+  $("#set_tannin_null").click(function(){
+    $(".tannin_input input").attr('checked', false);
+  });
+  
+  $(".tannin_input input").click(function(){
+    var set_tannin_null = $("#set_tannin_null")
+    if (set_tannin_null.attr('checked')) {
+      set_tannin_null.attr('checked', false);
+    };
+  });
+
+</script>

@@ -1,0 +1,140 @@
+note:
+  photo_location:
+    host: "http://iwinenotes.iwine.com:8080"
+    base_url: "iwinenotes/images"
+    version: "normal"
+  user_agent:
+    app: "iwine_notes"
+    local: "iwine.com"
+  status_flag:
+    submitted: 1
+    published: 0
+  appearance:
+    clarity_a:
+      0: ''
+      1: 明亮
+      2: 暗淡
+    clarity_b:
+      0: ''
+      1: 清澈
+      2: 浑浊
+    intensity:
+      0: ''
+      1: 弱
+      2: 中等偏低
+      3: 中等
+      4: 中等偏高
+      5: 强
+    color:
+      Light: 浅
+      Medium: ''
+      Deep: 深
+    color_num:
+      Light: 1
+      Medium: 2
+      Deep: 3
+    color_name:
+      Lemon-green: 柠檬绿
+      Lemon: 柠檬色
+      Gold: 金色
+      Amber: 琥珀色
+      Brown: 棕色
+      Purple: 紫色
+      Ruby:  宝石色
+      Garnet: 石榴色
+      Tawny: 茶色
+      Brown: 棕色
+      Pink: 桃红色
+      Salmon: 三文鱼色
+      Orange: 橘色
+      Onion-skin: 洋葱皮
+  nose:
+    condition:
+      0: ''
+      1: 干净
+      2: 浑浊
+    intensity:
+      0: ''
+      1: 淡
+      2: 中等偏低
+      3: 中等
+      4: 中等偏高
+      5: 浓烈
+    development:
+      0: ''
+      1: 年轻
+      2: 正在发展
+      3: 完全发展
+      4: 已过巅峰
+  palate:
+    sweetness:
+      0: ''
+      1: 干
+      2: 半干
+      3: M-dry
+      4: 中等
+      5: 半甜
+      6: 甜
+      7: 甘美
+    acidity:
+      0: ''
+      1: 低
+      2: 中等偏低
+      3: 中等
+      4: 中等偏高
+      5: 高
+    alcohol:
+      1: 低
+      2: 中等偏低
+      3: 中等
+      4: 中等偏高
+      5: 高
+    tanninLevel:
+      0: ''
+      1: 低
+      2: 中等偏低
+      3: 中等
+      4: 中等偏高
+      5: 高
+    tannin_nature_a:
+      0: ''
+      1: 成熟
+      2: 柔顺
+      3: 不成熟
+    tannin_nature_b:
+      0: ''
+      1: 青涩
+      2: 根茎味道
+    tannin_nature_c:
+      0: ''
+      1: 粗糙
+      2: 细腻
+    body:
+      0: ''
+      1: 清淡
+      2: 中等偏低
+      3: 中等
+      4: 中等偏高
+      5: 饱满
+    flavorIntensity:
+      0: ''
+      1: 淡
+      2: 中等偏低
+      3: 中等
+      4: 中等偏高
+      5: 浓郁
+    length:
+      0: ''
+      1: 短
+      2: 中等偏低
+      3: 中等
+      4: 中等偏高
+      5: 长
+  conclusion:
+    quality:
+      0: ''
+      1: 欠佳
+      2: 尚可
+      3: 良好
+      4: 出色
+      5: 顶级佳酿

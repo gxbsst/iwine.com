@@ -1,0 +1,289 @@
+<% content_for :css do %>
+  <%= stylesheet_link_tag :notes %>
+<% end %>
+<%= content_for :js do %>
+  <script type="text/javascript">
+
+  var timeout         = 100;
+  var closetimer		= 0;
+  var ddmenuitem      = 0;
+
+  // open hidden layer
+  function mopen(id)
+  {
+  // cancel close timer
+  mcancelclosetime();
+
+  // close old layer
+  if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+
+  // get new layer and show it
+  ddmenuitem = document.getElementById(id);
+  ddmenuitem.style.visibility = 'visible';
+
+  }
+  // close showed layer
+  function mclose()
+  {
+  if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+  }
+
+  // go close timer
+  function mclosetime()
+  {
+  closetimer = window.setTimeout(mclose, timeout);
+  }
+
+  // cancel close timer
+  function mcancelclosetime()
+  {
+  if(closetimer)
+  {
+  window.clearTimeout(closetimer);
+  closetimer = null;
+  }
+  }
+
+  // close layer when click-out
+  document.onclick = mclose;
+  // -->
+  </script>
+
+<% end %>
+<div class="whitespace notes">
+<div class="left">
+  <div class="user_space">
+    <div class="info2">
+      <span class="date"><%= @note.note.created_at.to_s(:cn_short) %></span>
+      <span class="form">来自<%=  link_to 'iWineNote', 'http://www.iwine.com/notes/app/' %></span>
+    </div>
+    <div class="img">
+     <%= link_to(image_tag(avatar(@user, :middle), :size => '50x50'), user_path(@user)) %>
+    </div>
+    <div class="info">
+      <span class="name"><%= link_to @user.username, user_path(@user) %></span>
+      <span class="location"><%=  @note.location.location %></span>
+    </div>
+    <div class=""></div>
+    <div class="clear"></div>
+  </div>
+  <div class="notes_img_detail">
+    <!--
+    <div class="sharebar">
+
+      <div id="manage">
+        <p>
+          <a href="#" onmouseover="mopen('mbox')" onmouseout="mclosetime()">
+            <%= image_tag('icon/manage_w.png', :size => '21x21', :alt => '管理') %>
+          </a>
+        </p>
+        <div id="mbox" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+          <a class="icon_edit2" href="notes_edit1.html">编辑品酒辞</a>
+          <a class="icon_cancle" href="#">删除品酒辞</a>
+          <a class="icon_public" href="#">发布品酒辞</a>
+        </div>
+      </div>
+      <ul>
+        <li class="collect">
+          <%= link_to image_tag("icon/collect.png", :size => '20x19', :align => :absmiddle) %>
+        </li>
+        <li class="share">
+          <%= link_to image_tag("icon/share.png", :size => '21x17', :align => :absmiddle) %>
+
+        </li>
+        <li class="like">
+          <%= link_to image_tag("icon/collect.png", :size => '22x20', :align => :absmiddle) %>
+        </li>
+      </ul>
+    </div>
+    -->
+    <%= cover(@note.photo) %>
+  </div>
+  <div class="notes_winename">
+    <div class="star">
+      <%= star_rate_tag(@note.wine.rating)%>
+
+    </div>
+    <div class="name">
+      <h1 class="ch"><%= @note.wine.name_zh %></h1>
+      <h1 class="en"><%= @note.wine.name_en %></h1>
+    </div>
+  </div>
+  <div class="section">
+    <div class="title">
+      <h2>简评</h2></div>
+    <div class="content">
+      <p>
+        <%= @note.wine.comment %>
+      </p>
+    </div>
+  </div>
+  <div class="section">
+    <div class="title">
+      <h2>详细信息</h2></div>
+    <div class="content">
+      <table class="notes_table" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <th>产区</th>
+          <td><%=  @note.wine.region_zh %><br />
+            <%=  @note.wine.region_en %></td>
+        </tr>
+        <tr>
+          <th>类型</th>
+          <td><%= wine_style(@note.wine.style) %></td>
+        </tr>
+        <tr>
+          <th>葡萄酒品种</th>
+          <td><%= varieties(@note.wine.varienty) %> </td>
+        </tr>
+        <tr>
+          <th>酒精度</th>
+          <td><%= alcohol(@note.wine.alcohol) %></td>
+        </tr>
+        <tr>
+          <th>价格</th>
+          <td> <%= price(@note.wine.price) %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="section">
+    <div class="title">
+      <h2>高级品鉴记录</h2></div>
+    <div class="content">
+      <table class="notes_table" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <th><span class="f1">外观</span></th>
+          <td>
+            <%= @note.appearance.text %>
+            <ul class="feature">
+              <li>
+                <%= show_color(@note.appearance.color_image_name) %>
+                <br />
+                <%= @note.appearance.color_text %>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th><span class="f2">香气</span></th>
+          <td>
+            <%= @note.nose.text %>
+            <ul class="feature">
+              <%= raw nose_aroma(@note.nose.aroma) %>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th><span class="f3">口感</span></th>
+          <td>
+            <%= @note.palate.text %>
+            <ul class="feature">
+              <%= raw nose_aroma(@note.palate.flavor) %>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th><span class="f4">结论</span></th>
+          <td>
+            <%= @note.conclusion.text  %><br />
+            好适饮期限为：<%= drinkwindow(@note.conclusion.drinkwindow) %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!--
+  <div class="section last">
+    <div class="title"><a href="event_comment_list.html" class="btn_gray float_r font12"><span>我要留言</span></a>
+      <h2>留言 <span class="font12 more"><a href="event_comment_list.html">（共10条）</a></span></h2></div>
+    <div class="content">
+      <ul class="comment_list">
+        <li>
+          <div class="userpic">
+            <a href="#"><img src="images/userimage/1.jpg" width="50" height="50" alt="username" /></a>
+
+          </div>
+          <div class="main">
+            <div class="username"><a href="#">不良夏生</a><span class="date">2012-4-28</span></div>
+            <div class="content">现在还能报名么？我也想去！</div>
+          </div>
+        </li>
+        <div class="clear"></div>
+      </ul>
+    </div>
+  </div>
+  -->
+</div>
+<div class="right">
+  <div class="sidebox">
+    <%= link_to (image_tag 'common/notes_ad.jpg', :size => '250x197'), 'http://www.iwine.com/notes/app/' %>
+  </div>
+  <!--
+  <div class="sidebox">
+    <%= link_to image_tag('common/btn_add_notes.jpg', :size => '250x50', :alt => '我也喝过，去写品酒辞'), '' %>
+  </div>
+  -->
+  <div class="sidebox">
+    <div class="title">
+      <span class="more">
+        <%#= link_to '更多', '#' %>
+      </span>
+      <h3>他们也品鉴了这支酒</h3>
+    </div>
+    <div class="side_notes">
+      <% if @wine_note_users  %>
+       无
+      <% else  %>
+        <% @wine_note_users.each do |user_note| %>
+        <dl class="clearfix">
+          <dt>
+            <%= link_to(image_tag(avatar(user_note[:user], :middle), :size => '50x50'), user_path(@user)) %>
+          </dt>
+          <dd>
+            <p><%= link_to user_note[:user].username, user_path(user_note[:user]) %></p>
+            <p class="info">年份：<%= user_note[:vintage] %></p>
+            <p><%= star_rate_tag(user_note[:note].rating) %></p>
+            <p><%= link_to '详细 》', note_path(user_note[:note]) %></p>
+          </dd>
+          <div class="clear"></div>
+        </dl>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="sidebox">
+    <div class="title">
+      <!--<span class="more"><a href="#">更多</a></span>-->
+      <h3>他还品鉴了这些酒</h3>
+    </div>
+    <div class="side_notes">
+      <% if @user_notes %>
+        <% @user_notes.each_with_index do |user_note,i| %>
+          <% if i < 5 %>
+            <dl class="clearfix">
+              <dt>
+                <%= link_to cover(user_note[:photo], 'customer', '70x70', '70x70'), note_path(user_note[:note]) %>
+              </dt>
+              <dd class="info">
+                <h3 class="zh">
+                  <%= link_to user_note[:wine].name_zh, note_path(user_note[:note]) %>
+                </h3>
+                <h3 class="en">
+                  <%= link_to user_note[:wine].name_en, note_path(user_note[:note]) %>
+                </h3>
+                <p><%= star_rate_tag(user_note[:wine].rating) %></p>
+                <p><%= link_to '详细 》', note_path(user_note[:note]) %></p>
+              </dd>
+              <div class="clear"></div>
+            </dl>
+          <% end %>
+        <% end %>
+      <% else %>
+        无
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+</div>
+

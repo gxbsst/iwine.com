@@ -16,6 +16,17 @@ class ApplicationController < ActionController::Base
     $0 = request.path[0,15] + "*"
   end
 
+  before_filter :set_process_name_from_request
+  after_filter :unset_process_name_from_request
+
+  def set_process_name_from_request
+    $0 = request.path[0,16]
+  end
+
+  def unset_process_name_from_request
+    $0 = request.path[0,15] + "*"
+  end
+
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception, with: :render_500
     rescue_from ActionController::RoutingError, with: :render_404

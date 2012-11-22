@@ -1,0 +1,131 @@
+<% content_for :css do %>
+  <%= stylesheet_link_tag "main", "add", "event", "jcrop" %>
+<% end %>
+<% content_for :js do %>
+  <%= javascript_include_tag "star_rate" %>
+<% end %>
+<div class="whitespace addwine">
+  <h1 class="main_title">添加品酒辞</h1>
+  <div class="add_notes_step mb20">填写基本信息</div>
+  <div id="stylized" class="myform mb30">
+    <table class="form" width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th width="90" valign="top">图片</th>
+        <td>
+          <%= form_for @note, :url =>  upload_photo_notes_path, 
+            :html => {:multipart => true, :id => "form", :method => :put} do |f| %>
+            <input type="hidden" name="note_id" value="<%= @note.id %>"/>
+            <p>从电脑上传（支持JPG、GIF、PNG图片格式，且小于5M）</p>
+            <p class="mt20">
+              <%= f.file_field :photo, :align => "center", :class => "text name mr5" %>
+              <%= link_to "javascript:void(0);", :class => "btn_gray submit_avatar" do %>
+                <span> 上传照片</span>
+              <% end %>
+            </p>
+          <% end %>
+          <% if @note.photo.present? %>
+            <p class="mt20">
+              <%= image_tag "#{@note.photo_url(:middle_x)}?timestamp=#{Time.now}", :class => "btn_gray mr5" %>
+            </p>
+            <p class="mt20">
+              <%= link_to upload_photo_notes_path(:note_id => @note.id), :class => "btn_gray mr5", :remote => true do %>
+                <span>修改照片</span>
+              <% end %>
+            </p>
+          <% end %>
+        </td>
+      </tr>
+      <%= form_for @note, :html => {:id => "note_first_form"} do |f| %>
+        <input type="hidden" name="step" value="first"/>
+        <input type="hidden" name="status" value="next" id="note_status"/>
+        <tr>
+          <th valign="top">中文名</th>
+          <td><%= @note.other_name %></td>
+        </tr>
+        <tr>
+          <th>英文名</th>
+          <td><%= @note.name %></td>
+        </tr>
+        <tr>
+          <th>年份</th>
+          <td><%= @note.show_vintage %></td>
+        </tr>
+        <tr>
+          <th>产区</th>
+          <td><%= @note.region_path_zh %></td>
+        </tr>
+        <tr>
+          <th>类型</th>
+          <td><%= @note.style.try(:name) %></td>
+        </tr>
+        <tr>
+          <th>葡萄品种</th>
+          <td><%= variety_percentage_lists(@note.wine_detail.variety_percentages) %></td>
+        </tr>
+        <tr>
+          <th>酒精度</th>
+          <td><%= @note.show_alcohol %></td>
+        </tr>
+        <tr>
+          <th>价格</th>
+          <td><%= f.text_field :price, :class => "text price" %></td>
+        </tr>
+        <tr>
+          <th>品鉴地点</th>
+          <td><%= f.text_field :location, :class => "text name" %></td>
+        </tr>
+        <tr>
+          <th>评分</th>
+          <td>
+            <div class="star_rate" id="note_star_bar">
+              <ul id="stars"> </ul>
+              <input type='hidden' name='rate_value' value=<%= @note.rating || 0 %> />
+            </div>
+            <span class="text_value"></span>
+            <script type="text/template" id="star_item">
+              <%= image_tag 'base/star_gray.gif', :width => 15, :height => 14 %>
+            </script>
+          </td>
+
+        </tr>
+        <tr>
+          <th>简评</th>
+          <td><%= f.text_area :comment, :cols => "60", :rows => "5" %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <div class="btn_submit">
+    <%= link_to "javascript:void(0);", :class => "btn_brown_d mr10", :id => "submit_next" do %>
+      <span>下一步</span>
+    <% end %>
+    <%= link_to "javascript:void(0);", :class => "btn_brown_g", :id => "submit_as_draft" do %>
+      <span>保存为草稿</span>
+    <% end %>
+  </div>
+</div>
+<div id="note_fancybox_photo" style="display:none;">
+
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+    $('a.submit_avatar').click(function(){
+      $(this).parents('form').submit();
+      return false;
+    });
+    $("#submit_next").click(function(){
+      $("#note_status").attr('value', 'next');
+      $("#note_first_form").submit();
+      return false;
+    });
+    $("#submit_as_draft").click(function(){
+      $("#note_status").attr('value', 'submitted');
+      $("#note_first_form").submit();
+      return false;
+    });
+    window.StarApp = new StarsView({el:$("#note_star_bar")});
+    StarApp.itemView = new StarItemView();
+    StarApp.setDefaultRateStar();
+  });
+</script>

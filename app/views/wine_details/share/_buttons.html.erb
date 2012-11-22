@@ -32,7 +32,7 @@
 	                                  :remote => true do %>
 		<span>评论</span>
 	<% end %>
-	<%= link_to new_note_path(:step => "first", :wine_detail_id => @wine_detail.id),
+	<%= link_to new_note_path(:wine_detail_id => @wine_detail.id),
 					 :class => "btn_gray mr5" do %>
 		<span>写品酒辞</span>
 	<% end %>

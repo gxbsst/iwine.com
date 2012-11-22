@@ -34,7 +34,10 @@ class EventInviteesController < ApplicationController
         #TODO: Ian 更新通知的内容
         recipients = User.find(new_array)
         subject = "活动邀请"
-        msg_body = "您的朋友邀请您参加其创建的活动"
+        msg_body = <<-BODY
+            您的朋友 <a href="/users/#{current_user.slug || current_user.id}/">#{current_user.username}</a>邀请您参加其创建的活动: <br />
+            <a href="/events/#{@event.id}" >#{@event.title}</a>
+        BODY
         @event.delay.send_system_message(recipients, msg_body, subject, sanitize_text=true, attachment=nil)
         notice_stickie "您的邀请已经发送..."
         redirect_to event_path(@event)

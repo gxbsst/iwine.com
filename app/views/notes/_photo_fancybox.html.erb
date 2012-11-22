@@ -1,0 +1,23 @@
+<h3 class="title"> 上传照片 </h3>
+<%= form_for @note, :url => upload_photo_notes_path,
+  :html => {:method => :post, :id => :slice_form} do |f| %>
+  <div class="comment_box">
+    <p class="mt20">
+      <div>
+        <%= image_tag "#{@note.photo_url(:origin)}?timestamp=#{Time.now}", :class => "btn_gray mr5", :id => "note_cropbox" %>
+      </div>
+    </p>
+    <% %w[x y w h].each do |a| %>
+      <%= f.hidden_field "crop_#{a}" %>
+    <% end %>
+    <p class="mt20">
+      <%= link_to "javascript:void(0);", :class => "btn_gray mr5 submit_avatar",
+         :onclick => "$(this).parents('form').submit();" do %>
+        <span>保存</span>
+      <% end %>
+      <%= link_to "javascript:void(0);", :class => "btn_gray close_fancybox" do %>
+        <span>取消</span>
+      <% end %>
+    </p>
+  </div>
+<% end %>
