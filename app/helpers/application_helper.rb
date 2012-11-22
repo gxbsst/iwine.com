@@ -490,4 +490,15 @@ module ApplicationHelper
       "有人把它加入了酒窖"
     end
   end
+
+  def note_radio_button(hash_values, name, current_value, has_li = false)
+    table_label = ""
+    hash_values.select{|key, val| val.present?}.each do |key, value|
+      table_label << "<li>" if has_li
+      table_label << %Q[<label>#{radio_button_tag("note[#{name}]", key, current_value == key)}\
+        #{value}</label>]
+      table_label << "</li>" if has_li
+    end
+    table_label
+  end
 end

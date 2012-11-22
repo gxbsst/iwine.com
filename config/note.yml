@@ -1,4 +1,14 @@
 note:
+  photo_location:
+    host: "http://iwinenotes.iwine.com:8080"
+    base_url: "iwinenotes/images"
+    version: "normal"
+  user_agent:
+    app: "iwine_notes"
+    local: "iwine.com"
+  status_flag:
+    submitted: 1
+    published: 0
   appearance:
     clarity_a:
       0: ''

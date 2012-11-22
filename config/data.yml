@@ -79,6 +79,22 @@ oauth_comments:
 
 # 图片缩略图
 image:
+  note:
+    origin:
+      width: 800
+      height: 800
+    large:
+      width: 600
+      height: 600
+    middle_x:
+      width: 200
+      height: 200
+    middle:
+      width: 100
+      height: 100
+    thumb:
+      width: 70
+      height: 70
   album:
     x_middle:
       width: 190
@@ -281,6 +297,5 @@ api:
       message: ""
 
 event:
-
- city: { '上海': 1,  '成都': 2, '北京': 3, '深圳': 4, '广州': 5, '其他':'6'}
+  city: { '上海': 1,  '成都': 2, '北京': 3, '深圳': 4, '广州': 5, '其他':'6'}
 

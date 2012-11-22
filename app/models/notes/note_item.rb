@@ -97,6 +97,7 @@ module Notes
                       end
           new_array <<  join_text
         end
+        new_array << "#{self.other}" if self.other.present?
         new_array.compact.delete_if{|i|i.blank?}.join("、")
       end
 
@@ -230,7 +231,7 @@ module Notes
         # 其他
         new_array << self.other unless self.other.blank?
         # 余味
-        (new_array << "余味#{ PALATE['length'][self.length]}") if self.length > 0
+        (new_array << "余味#{ PALATE['length'][self.length]}") if self.length.to_i > 0
 
         new_array.compact.delete_if{|i|i.blank?}.join("、")
       end
@@ -289,9 +290,9 @@ module Notes
 
       # TODO: move to ...
       DEFAULT_CONFIG = {
-          :host => "http://iwinenotes.iwine.com:8080",
-          :base_url => 'iwinenotes/images',
-          :version => 'normal',
+          :host => NOTE_DATA['note']['photo_location']['host'],
+          :base_url => NOTE_DATA['note']['photo_location']['base_url'],
+          :version => NOTE_DATA['note']['photo_location']['version'],
           :id => '',
           :pattern => ''
       }

@@ -1,0 +1,21 @@
+<% content_for :css do %>
+  <%= stylesheet_link_tag "main", "add", "event", "jcrop" %>
+<% end %>
+<%= form_for @note, :url => upload_photo_notes_path,
+  :html => {:method => :post, :id => :slice_form} do |f| %>
+  <p class="mt20">
+    <%= image_tag "#{@note.photo_url(:origin)}?timestamp=#{Time.now}", :class => "btn_gray mr5", :id => "cropbox" %>
+  </p>
+  <% %w[x y w h].each do |a| %>
+    <%= f.hidden_field "crop_#{a}" %>
+  <% end %>
+  <p class="mt20">
+    <%= link_to "javascript:void(0);", :class => "btn_gray mr5 submit_avatar",
+       :onclick => "$(this).parents('form').submit();" do %>
+      <span>保存</span>
+    <% end %>
+    <%= link_to "javascript:void(0);", :class => "btn_gray" do %>
+      <span>取消</span>
+    <% end %>
+  </p>
+<% end %>

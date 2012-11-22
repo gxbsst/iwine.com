@@ -34,6 +34,7 @@ else
   QQ_PIC_URL = "http://dev.iwine.com"
   OAUTH_DATA = YAML.load_file(Rails.root.join('config', 'oauth', 'development_all.yml'))
 end
+
 APP_DATA = YAML.load_file(Rails.root.join('config', 'data.yml'))
 NOTE_DATA = YAML.load_file(Rails.root.join('config', 'note.yml'))
 NOTE_TRAIT = YAML.load_file(Rails.root.join('config', 'note_trait.yml'))

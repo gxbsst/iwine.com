@@ -23,6 +23,14 @@ class Wines::VarietyPercentage < ActiveRecord::Base
     end
   end
 
+  def self.sync_app_variety(detail, variety_arr)
+    variety_arr.each do |variety|
+      detail.
+      where("variety_id = ? and percentage = ? ", variety['id'], variety['percentage']).
+      first_or_create(:percentage => variety['percentage'], :variety_id => variety['id'])
+    end
+  end
+
   def self.build_variety_and_percentage(parent, percentage)
     Wines::VarietyPercentage.build_variety_percentage(percentage[:variety_name], percentage[:variety_percentage], parent)
     Wines::VarietyPercentage.delete(percentage[:destroy]) if percentage[:destroy]

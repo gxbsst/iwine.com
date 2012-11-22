@@ -26,8 +26,7 @@ module Notes
     def self.post(options)
       options = DEFAULT_OPTIONS.merge options
       http = get_http_client(options[:host], options[:port])
-
-      # Setting up an Post
+      # # Setting up an Post
       request = Net::HTTP::Post.new options[:path]
       request.set_form_data(options[:body])
       #request.set_content_type options[:content_type] unless options[:content_type].blank?
@@ -37,7 +36,7 @@ module Notes
       begin
         response = http.request(request)
       rescue => e
-        # do something
+        Rails.logger.info(e)
       ensure
         # do something
       end

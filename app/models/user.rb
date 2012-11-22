@@ -81,6 +81,7 @@ class User < ActiveRecord::Base
   end 
   has_many :follows, :include =>[:user]
   has_many :events, :order => 'created_at DESC'
+  has_many :notes
 
   # 推荐的用户
   # default_scope where('sign_in_count > 0 and confirmation_token is null')

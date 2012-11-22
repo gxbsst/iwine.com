@@ -19,6 +19,7 @@
 //= require best_in_place
 //= require stickies
 //= require settings
+//= require note_photo
 //= require jquery-tools/tabs/tabs
 //= require jquery-tools/tabs/tabs.slideshow
 //= require waterfall
@@ -77,6 +78,8 @@ $(document).ready(function(){
         } // end helper
 
     });
+    // 编辑note照片
+
     // 回复信息
     $("a.reply_conversation").fancybox({
         maxWidth        : 500,

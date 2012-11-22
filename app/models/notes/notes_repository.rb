@@ -6,7 +6,7 @@ module Notes
     # return hash
     #
     def self.find(id)
-      detail = '/detail/' + id
+      detail = "/detail/#{id}"
       path = PRE_PATH + detail
       response =  Notes::NoteAgent.get(:path => path)
       response ? JSON.parse(response.body) : false
@@ -38,6 +38,59 @@ module Notes
           'filterId' => note_id
       }
       path = PRE_PATH + base_url
+      response =  Notes::NoteAgent.post(:path => path, :body => body)
+      response ? JSON.parse(response.body) : false
+    end
+
+    def self.post_note(note)
+      base_url = "/push"
+      body = {
+        "id" => note.app_note_id.try(:to_s),
+        "notesId" => note.uuid,
+        "location.location" => note.location,
+        "createdDate" => note.created_at.to_s(:app_time),
+        "modifiedDate" => note.modifiedDate.to_s(:app_time),
+        "deleteFlag" => note.delete_flag,
+        "syncFlag" => note.sync_flag,
+        "statusFlag" => note.status_flag,
+        "agent" => note.user_agent,
+        "uid" => note.user_id.try(:to_s),
+        "covers[0].image" => note.byte_array_image,
+        "wine.detail" => note.wine_detail_id.try(:to_s),
+        "wine.sName" => note.name,
+        "wine.oName" => note.other_name,
+        "wine.region" => note.region_tree_id.try(:to_s),
+        "wine.vintage" => note.is_nv ? "NV" : note.vintage.try(:to_s),
+        "wine.style" => note.wine_style_id.try(:to_s),
+        "wine.alcohol" => note.alcohol,
+        "wine.price" => note.price.try(:to_s),
+        "wine.comment" => note.comment,
+        "wine.rating" => (note.rating.to_i - 1).to_s,
+        "wine.varienty" => note.upload_variety_percentage,
+        "notesAdvance.appearanceClarity" => note.appearance_clarity,
+        "notesAdvance.appearanceIntensity" => note.appearance_intensity,
+        "notesAdvance.appearanceColor" => note.appearance_color,
+        "notesAdvance.appearanceOther" => note.appearance_other,
+        "notesAdvance.noseCondition" => note.nose_condition,
+        "notesAdvance.noseIntensity" => note.nose_intensity,
+        "notesAdvance.noseDevelopment" => note.nose_development,
+        "notesAdvance.noseAroma" => note.nose_aroma,
+        "notesAdvance.palateSweetness" => note.palate_sweetness,
+        "notesAdvance.palateAcidity" => note.palate_acidity,
+        "notesAdvance.palateAlcohol" => note.palate_alcohol,
+        "notesAdvance.palateTanninLevel" => note.palate_tannin_level,
+        "notesAdvance.palateTanninNature" => note.palate_tannin_nature,
+        "notesAdvance.palateBody" => note.palate_body,
+        "notesAdvance.palateFlavorIntensity" => note.palate_flavor_intensity,
+        "notesAdvance.palateFlavor" => note.palate_flavor,
+        "notesAdvance.palateLength" => note.palate_length,
+        "notesAdvance.palateOther" => note.palate_other,
+        "notesAdvance.conclusionQuality" => note.conclusion_quality,
+        "notesAdvance.conclusionReason" => note.conclusion_reason,
+        "notesAdvance.conclusionDrinkwindow" => note.drinkwindow,
+        "notesAdvance.conclusionOther" => note.conclusion_other
+      }
+      path = "#{PRE_PATH}#{base_url}"
       response =  Notes::NoteAgent.post(:path => path, :body => body)
       response ? JSON.parse(response.body) : false
     end

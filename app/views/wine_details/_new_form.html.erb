@@ -11,8 +11,8 @@
        <label><span>*</span>类型</label>
        <% if @read_only %> <%= @register.style.name %> <% else %><%#= f.select :wine_style_id, Wines::Style.all.collect{ |s| [s.name_zh + '/' + s.name_en, s.id] } %>
       <select id="wines_register_wine_style_id" name="wines_register[wine_style_id]">
-          <%= render "share/wine_style_select", :wine_style_id => @register.wine_style_id %>   
-       </select> 
+          <%= render "share/wine_style_select", :wine_style_id => @register.wine_style_id %>
+       </select>
        <% end %>
      </div>
      <div class="required">
