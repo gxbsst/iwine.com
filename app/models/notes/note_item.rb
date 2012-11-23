@@ -290,7 +290,7 @@ module Notes
 
       # TODO: move to ...
       DEFAULT_CONFIG = {
-          :host => '192.168.11.29',
+          :host => '192.168.11.29:8082',
           :base_url => 'iwinenotes/images',
           :version => 'noraml',
           #:host => NOTE_DATA['note']['photo_location']['host'],

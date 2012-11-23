@@ -296,12 +296,13 @@
 </script>
 
 <script type="text/template" id="trait_item_display_template">
+
   <@ if (image == "") { @>
   <img alt="<@= key @>" height="128" src="/assets/nose/<@= key @>.png" width="128">
   <@ } else { @>
   <img alt="<@= key @>" height="128" src="/assets/color/<@= image @>" width="128">
   <@ } @>
   <br />
-  <@= name_zh @>
+  <@= name_zh @>  <a href="javascript:void(0)" class="remove">x</a>
 </script>
 
