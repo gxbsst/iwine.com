@@ -63,15 +63,19 @@ jQuery ->
 
   class window.TraitItemView extends Backbone.View
     tagName: 'li'
+
     template: _.template($("#trait_item_template").html())
+
     render: ->
       $(@el).html @template @model.toJSON()
       $(@tagName).css('overflow', 'auto');
       @
+
     initialize: ->
       _.bindAll(@, 'render')
-      debugger
       @model.bind('change', @render, @)
+      @model.bind('destroy', @remove, @)
+
     events:
           'click li p a': 'select'
     select: ->
@@ -83,11 +87,23 @@ jQuery ->
   class window.TraitItemDisplayView extends window.TraitItemView
     template: _.template($("#trait_item_display_template").html())
 
+    events:
+        'click a.remove': 'remove'
+
+    remove: ->
+      @model.cancleSelect()
+      $(@.el).remove()
+      n = new window.NoteAppView collection: @model.collection, forModel: @options.forModel
+      n.save()
+#      selectLink = '#select_' + @options.forModel
+#      n.addParamsToUrl(@model.collection, selectLink)
 
   class window.TraitListView extends Backbone.View
     template: _.template($('#trait_list_template').html())
+
     initialize: ->
       _.bindAll(@, 'render')
+
     render: ->
       $(@el).html @template {}
       @collection.forEach (model) =>
@@ -100,6 +116,7 @@ jQuery ->
       el: '#feature_catalog'
       events:
         'click li a': 'reloadTraits'
+
       reloadTraits: (event) ->
         e = event.target
         @toggleClassName(e)
@@ -110,6 +127,7 @@ jQuery ->
         else
           v = new TraitListView({collection: result, forModel:@options.forModel})
         v.render()
+
       toggleClassName: (e) ->
         _.each @.$("li"), (li) =>
           $(li).removeClass('current')
@@ -117,9 +135,11 @@ jQuery ->
 
   class window.SearchView extends Backbone.View
     el: '#search_trait'
+
     events:
       'click #search_trait_button': 'search'
       'keypress #search_trait_input': 'search'
+
     search: (event) ->
       if (event.keyCode is 13 || $(event.target).attr('id') == 'search_trait_button') # ENTER
         value = @.$('#search_trait_input').val()
@@ -127,25 +147,25 @@ jQuery ->
           result = @collection
         else
           result = @collection.search(value)
-        debugger
         v = new TraitListView({collection: result, forModel: @options.forModel}).render()
-
 
   class window.NoteAppView extends Backbone.View
     el: "#comment_form"
+
     events:
       'click #save_button .btn_gray_b': 'save'
+
     initialize: ->
       @.options.sidebarView = new window.SideBarView({collection: @collection, forModel: @options.forModel})
       @.options.traitListView = new window.TraitListView({collection: @collection, forModel: @options.forModel})
       @.options.SearchView = new window.SearchView({collection: @collection, forModel: @options.forModel})
+
     render: ->
       @.options.traitListView.render()
 
     save: ->
-      $(outer).html('')
-
       outer = "#" + @options.forModel + '_' + 'outer'
+      $(outer).html('')
       selectLink = '#select_' + @options.forModel
       input = selectLink + '_input'
 
@@ -161,7 +181,6 @@ jQuery ->
         p.get('id')
       for_model = '&model=' + @.options.forModel
       params_text = "?ids=" + ids.join(',')
-      debugger
       pathname = $(element)[0].pathname
       href = pathname + params_text + for_model
       $(element).attr('href', href)
@@ -169,13 +188,12 @@ jQuery ->
     renderItem: (result, element) ->
       $(element).html('')
       result.forEach (model) =>
-        traitItemView = new window.TraitItemDisplayView  model:model
+        traitItemView = new window.TraitItemDisplayView  model:model, forModel: @options.forModel
         $(element).append(traitItemView.render().el)
 
     fillInput: (element, result) ->
       a = []
       a.push item.get 'key' for item in result
-      debugger
       $(element).attr 'value', a.join(";")
 
 
