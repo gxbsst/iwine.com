@@ -39,14 +39,15 @@
         <tr>
           <th>颜色</th>
           <td>
-            <%= hidden_field_tag :color, '', :id => 'select_color_input' %>
+            <%= hidden_field_tag "note[appearance_color]", @note.appearance_color, :id => 'select_color_input' %>
             <p class="mb20">
-              <%= link_to color_notes_path(:model => 'color'), :remote => true, :class => "btn_gray", :id => :select_color do %>
+              <%= link_to color_notes_path(:model => 'color', :ids => @note.color.try(:id)),
+               :remote => true, :class => "btn_gray", :id => :select_color do %>
                 <span>选择颜色</span>
               <% end %>
             </p>
             <ul class="feature" id="color_outer">
-
+              <%= show_color_image(@note.color) %>
             </ul>
           </td>
         </tr>
@@ -85,12 +86,12 @@
         <tr>
           <th>香气特征</th>
           <td>
-            <%= hidden_field_tag :nose, '', :id => 'select_nose_input' %>
-            <%= link_to trait_notes_path(:model => 'nose'), :remote => true, :class => "btn_gray", :id => :select_nose do %>
+            <%= hidden_field_tag "note[nose_aroma]", @note.nose_aroma, :id => 'select_nose_input' %>
+            <%= link_to trait_notes_path(:model => 'nose', :ids => @note.nose_ids), :remote => true, :class => "btn_gray", :id => :select_nose do %>
               <span>选择香气特征</span>
             <% end %>
             <ul class="feature" id="nose_outer">
-
+              <%=raw nose_and_trait_images(@note.nose_aroma) %>
             </ul>
           </td>
         </tr>
@@ -176,12 +177,12 @@
         <tr>
           <th>风味特征</th>
           <td colspan="2">
-            <%= hidden_field_tag :trait, '', :id => 'select_trait_input' %>
-            <%= link_to trait_notes_path(:model => :trait), :remote => true, :class => "btn_gray", :id => :select_trait do %>
+            <%= hidden_field_tag "note[palate_flavor]", @note.palate_flavor, :id => 'select_trait_input' %>
+            <%= link_to trait_notes_path(:model => :trait, :ids => @note.trait_ids), :remote => true, :class => "btn_gray", :id => :select_trait do %>
               <span>风味特征</span>
             <% end %>
             <ul class="feature" id="trait_outer">
-
+              <%=raw nose_and_trait_images(@note.palate_flavor) %>
             </ul>
           </td>
         </tr>

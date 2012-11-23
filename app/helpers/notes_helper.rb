@@ -79,4 +79,20 @@ module NotesHelper
     new_array.join("<br />")
   end
 
+  def show_color_image(color)
+    if color
+      content_tag(:li, content_tag(:img,"", :src => "/assets/color/#{color.image}", :size => "128×128", :alt => color.name_en))
+    end
+  end
+
+  def nose_and_trait_images(image_values)
+    if image_values.present?
+      image_labels = ""
+      image_values.split(";").each do |image|
+       image_labels << content_tag(:li, content_tag(:img, "", :src => "/assets/nose/#{image}.png", :size => "128", :alt => "image"))
+      end
+      image_labels
+    end
+  end
+
 end

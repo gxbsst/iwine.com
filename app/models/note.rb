@@ -108,7 +108,39 @@ class Note < ActiveRecord::Base
       variety_and_percentages.gsub(/;$/, '')
     end
   end
+
+  def color
+    if appearance_color.present?
+      WineColor.where(:key => appearance_color).first
+    end
+  end
+
+  def noses
+    if nose_aroma.present?
+      nose_arr = nose_aroma.split(";")
+       WineTrait.where(:key => nose_arr)
+    end
+  end
+
+  def nose_ids
+    if noses
+      noses.pluck(:id).join(',')
+    end
+  end
+
+  def traits
+    if palate_flavor.present?
+      trait_arr = palate_flavor.split(";")
+      WineTrait.where(:key => trait_arr)
+    end
+  end
   
+
+  def trait_ids
+    if traits
+      traits.pluck(:id).join(',')
+    end
+  end
   private
 
   def sync_wine_detail_info(wine_info)
