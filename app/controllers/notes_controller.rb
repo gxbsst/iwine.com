@@ -3,6 +3,7 @@ class NotesController < ApplicationController
   before_filter :authenticate_user!, :except => [:show]
   before_filter :update_note_from_app, :only => [:app_edit]
   before_filter :find_note, :only => [:edit, :update]
+
   #包含两部操作
   def new
     wine_detail = Wines::Detail.find(params[:wine_detail_id])
