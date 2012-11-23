@@ -234,7 +234,8 @@
     <% end %>
   </div>
   <div class="btn_submit">
-    <%= link_to edit_note_path(@note, :step => "first"), :class => "btn_brown_d mr10" do %>
+    <%= link_to edit_note_path(@note, :step => "first"),
+        :class => "btn_brown_d mr10", :confirm => "返回上一步会丢失本页面数据，请保存草稿后再执行此操作。" do %>
       <span>返回上一步</span>
     <% end %>
     <%= link_to "javascript:void(0);", :class => "btn_brown_d mr10 submit_approved" do %>
