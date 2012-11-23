@@ -1,3 +1,31 @@
+# =====================================================
+#* Backbone Js  添加品酒辞的颜色/风味特征
+#*    by Weston, 20th NOV 2012
+#* ------------------------------
+#* Usage:
+#* 1. 先在模板添加， 参考: note/edit_seond_html.erb
+# 2.如下为颜色， 但要注意： link 的参数和 ID
+    # <%= hidden_field_tag :color, '', :id => 'select_color_input' %>
+    #<%= link_to color_notes_path(:model => 'color'), :remote => true, :class => "btn_gray", :id => :select_color do %>
+    #<span>选择颜色</span>
+    #<% end %>
+    #</p>
+    #<ul class="feature" id="color_outer">
+    #
+    #</ul>
+#  3. 参考 notes_controller 的 action 及 wine_color model 要处理 已经选择的部分
+#  4. 注意设置 NoteAppView 的 el
+#  5. 运行
+#$(document).ready(function(){
+#var _ref, collection, sidebarView, traitListView;
+#  window.app = (_ref = window.app) != null ? _ref : {};
+#  collection = new window.Traits(JSON.parse($('#json').html()));
+#  window.app.noteAppView = new NoteAppView({ collection: collection, forModel: $('#for_model').html()  });
+#  window.app.noteAppView.render();
+#});
+#* =====================================================
+#
+
 class window.Trait extends Backbone.Model
   defaults: {
   "select":  "",
@@ -139,6 +167,7 @@ jQuery ->
       $(element).attr('href', href)
 
     renderItem: (result, element) ->
+      $(element).html('')
       result.forEach (model) =>
         traitItemView = new window.TraitItemDisplayView  model:model
         $(element).append(traitItemView.render().el)
