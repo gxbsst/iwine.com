@@ -24,15 +24,14 @@
     </div>
     <div class="feature">
       <div id="traits_container">
-        <p class="loading"></p>
+        <p class="loading"><%= image_tag 'common/loading.gif' %></p>
       </div>
-      <div class="clear"></div>
-      <div id="save_button"  class="share relative clearfix align_c">
-        <a href="#" class="btn_gray_b"><span>保存</span></a>
-      </div>
-
     </div>
     <div class="clear"></div>
+  </div>
+  <div class="clear"></div>
+  <div id="save_button"  class="share relative clearfix align_c">
+    <a href="#" class="btn_gray_b"><span>保存</span></a>
   </div>
 </div>
 <div id="json" style="display: none;">
@@ -46,5 +45,8 @@
     collection = new window.Traits(JSON.parse($('#json').html()));
     window.app.noteAppView = new NoteAppView({ collection: collection, forModel: $('#for_model').html()  });
     window.app.noteAppView.render();
+    $("#json").remove();
+    $("#for_model").remove();
+
   });
 </script>
