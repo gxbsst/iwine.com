@@ -23,7 +23,7 @@ namespace :wine_color do
         NOTE_COLOR_NAME.each do |k2, v2|
           parent_id = ::WineColor.where(:key => k2).first.id
           v2.each do |k3, v3|
-            key = "#{k}_#{k2}_#{k3}"
+            key = "ATN_Color_Pre_#{k} ATN_Color_#{k2}_#{k3}"
             name_en = "#{k} #{k3}"
             name_zh = "#{v['text']} #{v3}"
             k_e = if k3 == 'Lemon-green'

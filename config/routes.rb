@@ -10,11 +10,15 @@ Patrick::Application.routes.draw do
   resources :notes do
     collection do
       match :upload_photo, :via => [:get, :post, :put]
+      get :trait
+      get :color
+      get :test
     end
     member do
       get :app_edit
     end
   end
+
   resources :events do
     resources :photos
     resources :event_wines
@@ -311,13 +315,7 @@ Patrick::Application.routes.draw do
     end
   end
 
-  resources :notes do
-    collection do
-      get :trait
-      get :color
-      get :test
-    end
-  end
+
 
   ## GLOBAL
   match ':controller(/:action(/:id(.:format)))'

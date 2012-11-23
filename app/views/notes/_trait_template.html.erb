@@ -1,6 +1,12 @@
 
 <div style="" id="comment_form" class="notes_feature">
-  <h3 class="title">请选择香味特征</h3>
+  <% if params[:model] == 'nose' %>
+    <h3 class="title">请选择香味特征</h3>
+  <% elsif params[:model] == 'trait' %>
+    <h3 class="title">请选择风气特征</h3>
+  <% else %>
+    <h3 class="title">请选择颜色</h3>
+  <% end %>
   <div class="">
     <div class="left">
       <div class="search" id="search_trait">
@@ -20,21 +26,25 @@
       <div id="traits_container">
         <p class="loading"></p>
       </div>
-      <a href="#" id="commfirm_button">确认</a>
+      <div class="clear"></div>
+      <div id="save_button"  class="share relative clearfix align_c">
+        <a href="#" class="btn_gray_b"><span>保存</span></a>
+      </div>
+
     </div>
     <div class="clear"></div>
   </div>
 </div>
 <div id="json" style="display: none;">
-  <%= @traits.to_json %>
+  <%= @traits.to_json(:methods => :select) %>
 </div>
-<div id="model"><%= @traits.first.class.to_s  %></div>
+<div id="for_model" style="display: none;"><%= params[:model] %></div>
 <script type="text/javascript">
   $(document).ready(function(){
     var _ref, collection, sidebarView, traitListView;
     window.app = (_ref = window.app) != null ? _ref : {};
     collection = new window.Traits(JSON.parse($('#json').html()));
-    window.app.noteAppView = new NoteAppView({ collection: collection, forModel: $('#model').html()  });
+    window.app.noteAppView = new NoteAppView({ collection: collection, forModel: $('#for_model').html()  });
     window.app.noteAppView.render();
   });
 </script>

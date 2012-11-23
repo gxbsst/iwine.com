@@ -3,8 +3,8 @@ module Notes
   class NoteAgent
     # Default options while posting an ERP request
     DEFAULT_OPTIONS = {
-        :host => 'iwinenotes.iwine.com',
-        :port => '8080',
+        :host => '192.168.11.29',
+        :port => '8082',
         :path => '',
         :content_type => "application/text; charset=utf-8;",
         :body => ""

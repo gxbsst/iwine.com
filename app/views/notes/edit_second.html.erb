@@ -1,3 +1,7 @@
+<% content_for :js do %>
+  <%= javascript_include_tag "notes" %>
+<% end %>
+
 <% content_for :css do %>
   <%= stylesheet_link_tag "main", "event", "notes", "add" %>
 <% end %>
@@ -35,15 +39,14 @@
         <tr>
           <th>颜色</th>
           <td>
+            <%= hidden_field_tag :color, '', :id => 'select_color_input' %>
             <p class="mb20">
-              <%= link_to "javascript:void(0);", :class => "btn_gray" do %>
+              <%= link_to color_notes_path(:model => 'color'), :remote => true, :class => "btn_gray", :id => :select_color do %>
                 <span>选择颜色</span>
               <% end %>
             </p>
-            <ul class="feature">
-              <li><img src="images/color/Red-Garnet-2.png" width="128" height="128" /><br />
-              浅三文鱼色
-              </li>
+            <ul class="feature" id="color_outer">
+
             </ul>
           </td>
         </tr>
@@ -81,7 +84,15 @@
         </tr>
         <tr>
           <th>香气特征</th>
-          <td></td>
+          <td>
+            <%= hidden_field_tag :nose, '', :id => 'select_nose_input' %>
+            <%= link_to trait_notes_path(:model => 'nose'), :remote => true, :class => "btn_gray", :id => :select_nose do %>
+              <span>选择香气特征</span>
+            <% end %>
+            <ul class="feature" id="nose_outer">
+
+            </ul>
+          </td>
         </tr>
       </table>
       <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -165,7 +176,13 @@
         <tr>
           <th>风味特征</th>
           <td colspan="2">
-            
+            <%= hidden_field_tag :trait, '', :id => 'select_trait_input' %>
+            <%= link_to trait_notes_path(:model => :trait), :remote => true, :class => "btn_gray", :id => :select_trait do %>
+              <span>风味特征</span>
+            <% end %>
+            <ul class="feature" id="trait_outer">
+
+            </ul>
           </td>
         </tr>
         <tr>
@@ -255,3 +272,36 @@
   });
 
 </script>
+
+<div id="trait_box">
+
+</div>
+
+<script type="text/template" id="trait_list_template">
+  <ul class="feature_list"></ul>
+</script>
+
+<script type="text/template" id="trait_item_template">
+  <p class="pic">
+    <span class="<@= select @>"></span>
+    <a href="#">
+      <@ if (image == "") { @>
+      <img alt="<@= key @>" height="128" src="/assets/nose/<@= key @>.png" width="128">
+      <@ } else { @>
+      <img alt="<@= key @>" height="128" src="/assets/color/<@= image @>" width="128">
+      <@ } @>
+    </a>
+  </p>
+  <p class="name"><@= name_zh + " " + name_en @> </p>
+</script>
+
+<script type="text/template" id="trait_item_display_template">
+  <@ if (image == "") { @>
+  <img alt="<@= key @>" height="128" src="/assets/nose/<@= key @>.png" width="128">
+  <@ } else { @>
+  <img alt="<@= key @>" height="128" src="/assets/color/<@= image @>" width="128">
+  <@ } @>
+  <br />
+  <@= name_zh @>
+</script>
+
