@@ -27,8 +27,9 @@ namespace :trait do
         'Maturity' => { :zh => '熟成', :en => 'Maturity'},
         'Mineral' => { :zh => '矿物', :en => 'Mineral'}
     }
-    NOTE_TRAIT_ZH = NOTE_TRAIT['zh']
-    NOTE_TRAIT_EN = NOTE_TRAIT['en']
+    TRAIT = YAML.load_file(Rails.root.join('lib', 'tasks', 'data', 'trait.yml'))
+    NOTE_TRAIT_ZH = TRAIT['zh']
+    NOTE_TRAIT_EN = TRAIT['en']
 
 
     # init parent
