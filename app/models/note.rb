@@ -116,8 +116,9 @@ class Note < ActiveRecord::Base
   end
 
   def color_to_json
-    if color.present?
-      [color.mark_select].to_json(:methods => :select)
+    c = WineColor.where(:key => appearance_color)
+    if c.present?
+      c.each {|trait| trait.mark_select }.to_json(:methods => :select)
     end
   end
 
