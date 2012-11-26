@@ -16,6 +16,7 @@
         </div>
       </div>
       <ul class="feature_catalog" id="feature_catalog">
+        <li ><a href="javascript:void(0)" data-value=-1>已选择</a></li>
         <li class="current"><a href="javascript:void(0)" data-value=0>全部</a></li>
         <% @categories.each do |parent| %>
           <li><a href="javascript:void(0)" data-value=<%= parent.id %>><%= parent.name %></a></li>

@@ -9,12 +9,12 @@ class WineColor < ActiveRecord::Base
   end
 
 
-  def select
-    @select
-  end
+  #def select
+  #  @select
+  #end
 
   def mark_select
-    @select = 'rg'
+    self.select = 'rg'
   end
 
 

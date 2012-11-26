@@ -2,15 +2,15 @@ class Note < ActiveRecord::Base
   mount_uploader :photo, NotePhotoUploader
 
   attr_accessible :name, :orther_name, :vintage, :rating, :location, :grape, :alcohol, :price,
-    :comment, :appearance_clarity, :appearance_intensity, :appearance_color, :appearance_other,
-    :nose_condition, :nose_intensity, :nose_development, :nose_aroma, :palate_sweetness, :palate_acidity,
-    :palate_alcohol, :palate_tannin_level, :palate_tannin_nature, :palate_body, :palate_flavor_intensity,
-    :palate_flavor, :palate_length, :palate_other, :conclusion_quality, :conclusion_reason, :drinkable_begin_at,
-    :drinkable_end_at, :conclusion_other,:crop_x, :crop_y, :crop_w, :crop_h, :appearance_clarity_a, :user_agent,
-    :appearance_clarity_b, :palate_tannin_nature_a, :palate_tannin_nature_b, :palate_tannin_nature_c
+                  :comment, :appearance_clarity, :appearance_intensity, :appearance_color, :appearance_other,
+                  :nose_condition, :nose_intensity, :nose_development, :nose_aroma, :palate_sweetness, :palate_acidity,
+                  :palate_alcohol, :palate_tannin_level, :palate_tannin_nature, :palate_body, :palate_flavor_intensity,
+                  :palate_flavor, :palate_length, :palate_other, :conclusion_quality, :conclusion_reason, :drinkable_begin_at,
+                  :drinkable_end_at, :conclusion_other,:crop_x, :crop_y, :crop_w, :crop_h, :appearance_clarity_a, :user_agent,
+                  :appearance_clarity_b, :palate_tannin_nature_a, :palate_tannin_nature_b, :palate_tannin_nature_c
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :drinkable_end, :drinkable_begin, :appearance_clarity_a,
-    :appearance_clarity_b, :palate_tannin_nature_a, :palate_tannin_nature_b, :palate_tannin_nature_c
+                :appearance_clarity_b, :palate_tannin_nature_a, :palate_tannin_nature_b, :palate_tannin_nature_c
   include Common
 
   before_create :init_uuid
@@ -20,7 +20,7 @@ class Note < ActiveRecord::Base
   belongs_to :style, :class_name => "Wines::Style", :foreign_key => :wine_style_id
   belongs_to :wine_detail, :class_name => "Wines::Detail", :foreign_key => :wine_detail_id
   belongs_to :exchange_rate
-  
+
   def init_uuid
     #如果本地没有note,新建note时使用从app得到的uuid
     self.uuid = SecureRandom.uuid if self.new_record? && user_agent.to_s == NOTE_DATA['note']['user_agent']['local']
@@ -63,7 +63,7 @@ class Note < ActiveRecord::Base
       resize_photo(:large, :thumb)
     end
   end
-  
+
   #将app数据同步到本地数据库。
   def sync_data(app_note)
     return false if self.modifiedDate.to_s(:app_time) == app_note['modifiedDate']
@@ -77,8 +77,8 @@ class Note < ActiveRecord::Base
     sync_flags app_note
     self.save
   end
- 
- #上传用户剪切好的图片
+
+  #上传用户剪切好的图片
   def byte_array_image
     if photo.present?
       photo_string = photo.large.read
@@ -115,10 +115,22 @@ class Note < ActiveRecord::Base
     end
   end
 
+  def color_to_json
+    if color.present?
+      [color.mark_select].to_json(:methods => :select)
+    end
+  end
+
   def noses
     if nose_aroma.present?
       nose_arr = nose_aroma.split(";")
-       WineTrait.where(:key => nose_arr)
+      WineTrait.where(:key => nose_arr)
+    end
+  end
+
+  def noses_to_json
+    if noses.present?
+      noses.each {|trait| trait.mark_select }.to_json(:methods => :select)
     end
   end
 
@@ -134,7 +146,13 @@ class Note < ActiveRecord::Base
       WineTrait.where(:key => trait_arr)
     end
   end
-  
+
+  def traits_to_json
+    if traits.present?
+      traits.each {|trait| trait.mark_select }.to_json(:methods => :select)
+    end
+  end
+
 
   def trait_ids
     if traits
@@ -181,7 +199,7 @@ class Note < ActiveRecord::Base
     self.price = basic_info['wine']['price']
     self.comment = basic_info['wine']['comment']
     self.alcohol = basic_info['wine']['alcohol'].to_f if basic_info['wine']['alcohol'].present?
-    self.rating = basic_info['wine']['rating'].to_i + 1 
+    self.rating = basic_info['wine']['rating'].to_i + 1
   end
 
   def sync_conclusion(conclusion)
@@ -217,7 +235,7 @@ class Note < ActiveRecord::Base
     self.palate_length = palate['length']
     self.palate_other = palate['other']
   end
-  
+
   #处理酒的适饮年限
   def sync_drinkable(drinkwindow)
     if drinkwindow.present?
@@ -227,7 +245,7 @@ class Note < ActiveRecord::Base
       self.drinkable_end_at = drinkable_arr[1].include?('?') ? nil : drinkable_arr[1].strip
     end
   end
-  
+
   #通过图片超链接更新本地图片
   def sync_photo(image)
     if image.present? && image['image'].present?
