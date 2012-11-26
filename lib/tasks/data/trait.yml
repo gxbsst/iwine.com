@@ -1,0 +1,313 @@
+zh:
+#  FloralFruit: 花香/水果
+  Floral:
+    Floral_Acacia:	金合欢
+    Floral_Honeysuckle:	金银花
+    Floral_Chamomile:	洋甘菊
+    Floral_Elderflower: 接骨木花
+    Floral_Geranium: 天竺葵
+    Floral_Blossom: 花簇
+    Floral_Rose:	玫瑰
+    Floral_Violet: 紫罗兰
+    Floral_Iris:	鸢尾
+    Floral_Neroli:	橙花
+  GreenFruit:
+    GreenFruit_GreenApple:	青苹果
+    GreenFruit_RedApple:	红苹果
+    GreenFruit_Gooseberry:	鹅莓
+    GreenFruit_Pear:	梨子
+    GreenFruit_CustardApple:	番荔枝
+    GreenFruit_Quince:	温柏
+    GreenFruit_Grape:	葡萄
+  CitrusFruit:
+    CitrusFruit_Grapefruit:
+    CitrusFruit_Lemon:	柠檬
+    CitrusFruit_Lime:	青柠
+    CitrusFruit_OrangePeel:	橙皮
+    CitrusFruit_LemonPeel:	柠檬皮
+  StoneFruit:
+    StoneFruit_Peach:	桃子
+    StoneFruit_Apricot:	杏子
+    StoneFruit_DriedApricot:	杏铺
+    StoneFruit_Nectarine:	油桃
+  TropicalFruit:
+    TropicalFruit_Banana:	香蕉
+    TropicalFruit_Lychee:	荔枝
+    TropicalFruit_Mango:	芒果
+    TropicalFruit_Melon:	蜜瓜
+    TropicalFruit_PassionFruit:	百香果
+    TropicalFruit_Pineapple:	菠萝
+  RedFruit:
+    RedFruit_Redcurrant:	红加仑
+    RedFruit_Cranberry:	蔓越莓
+    RedFruit_Raspberry:	覆盆子
+    RedFruit_Strawberry:	草莓
+    RedFruit_RedCherry:	红樱桃
+    RedFruit_Plum:	李子
+    RedFruit_BakedPlum:	烤李子
+  BlackFruit:
+    BlackFruit_Blackcurrant:	黑加仑
+    BlackFruit_Blackberry:	黑莓
+    BlackFruit_Bramble:	悬钩子
+    BlackFruit_Blueberry:	蓝莓
+    BlackFruit_BlackCherry:	黑樱桃
+  DriedFruit:
+    DriedFruit_Fig:	无花果
+    DriedFruit_Prune:	西莓
+    DriedFruit_Raisin:	葡萄干
+    DriedFruit_Sultana:	汤普森无核葡萄
+    DriedFruit_Kirsch:	樱桃酒
+    DriedFruit_Jamminess:	果酱
+    DriedFruit_Cooked:	煮过
+    DriedFruit_Baked:	烘烤过
+    DriedFruit_Stewed:	炖煮过
+#  SpiceVegetable:	香料/蔬菜
+  Unripe:
+    Unripe_GreenBellPepper:	青椒
+    Unripe_Grass:	青草
+    Unripe_WhitePepper:	白胡椒
+    Unripe_Leafiness:	树叶
+    Unripe_Tomato:	蕃茄
+    Unripe_Potato:	土豆
+  Herbaceous:
+    Herbaceous_Grass:	青草
+    Herbaceous_Asparagus:	芦笋
+    Herbaceous_BlackcurrantLeaf:	黑加仑树叶
+    Herbaceous_Pyrazine:	吡嗪
+  Herbal:
+    Herbal_Eucalyptus:	桉树
+    Herbal_Mint:	薄荷
+    Herbal_Medicinal:	草药
+    Herbal_Lavender:	熏衣草
+    Herbal_Fennel:	茴香
+    Herbal_Dill:	莳萝
+  Vegetable:
+    Vegetable_Cabbage:	包菜
+    Vegetable_Peas:	豌豆
+    Vegetable_Beans:	蚕豆
+    Vegetable_GreenOlive:	青橄榄
+    Vegetable_BlackOlive:	黑橄榄
+  SweetSpice:
+    SweetSpice_Cinnamon:	肉桂
+    SweetSpice_Cloves:	丁香
+    SweetSpice_Ginger:	姜
+    SweetSpice_Nutmeg:	肉豆蔻
+    SweetSpice_Vanilla:	香草
+  PungentSpice:
+    PungentSpice_BlackPepper:	黑胡椒
+    PungentSpice_WhitePepper:	白胡椒
+    PungentSpice_Licorice:	甘草
+    PungentSpice_Juniper:	杜松子
+  Autolytic:
+    Autolytic_Yeast:	酵母
+    Autolytic_Biscuit:	饼干
+    Autolytic_Bread:	面包
+    Autolytic_Toast:	吐司
+    Autolytic_Pastry:	油酥糕点
+    Autolytic_Brioche:	奶油蛋卷
+    Autolytic_Lees:	酵母渣
+  DairyMLF:
+    DairyMLF_Butter:	黄油
+    DairyMLF_Cheese:	奶酪
+    DairyMLF_Cream:	奶油
+    DairyMLF_Yoghurt:	酸奶
+  Oak:
+    Oak_Vanilla:	香草
+    Oak_Butterscotch:	奶油硬糖
+    Oak_Toast:	吐司
+    Oak_Cedar:	雪松
+    Oak_CharredWood:	烤焦的木头
+    Oak_Smoke:	烟熏
+    Oak_Acrid:	辛辣
+    Oak_Resinous:	树脂
+  Kernel:
+    Kernel_Almond:	杏仁
+    Kernel_Marzipan:	杏仁蛋白软糖
+    Kernel_Coconut:	椰子
+    Kernel_Hazelnut:	榛子
+    Kernel_Walnut:	核桃
+    Kernel_Chocolate:	巧克力
+    Kernel_Coffee:	咖啡
+  Animal:
+    Animal_Leather:	皮革
+    Animal_Meaty:	肉类
+    Animal_Farmyard:	农场
+  Maturity:
+    Maturity_Vegetable:	蔬菜
+    Maturity_Mushroom:	蘑菇
+    Maturity_Hay:	干草
+    Maturity_WetLeaves:	湿树叶
+    Maturity_ForestFloor:	森林的地面
+    Maturity_Game:	野味
+    Maturity_Savory:	鲜味
+    Maturity_Tobacco:	烟草
+    Maturity_Cedar:	雪松
+    Maturity_Honey:	蜂蜜
+    Maturity_Cereal:	谷物
+  Mineral:
+    Mineral_Earth:	泥土
+    Mineral_Petrol:	汽油
+    Mineral_Kerosene:	煤油
+    Mineral_Rubber:	橡皮
+    Mineral_Tar:	焦油
+    Mineral_Smoke:	烟熏
+    Mineral_Stony:	石头
+    Mineral_Steely:	钢铁
+    Mineral_WetWool: 湿羊毛
+
+en:
+#  FloralFruit: 	Floral/Fruit
+  Floral:
+    Floral_Acacia:	Acacia
+    Floral_Honeysuckle:	Honeysuckle
+    Floral_Chamomile:	Chamomile
+    Floral_Elderflower: Elderflower
+    Floral_Geranium: Geranium
+    Floral_Blossom: Blossom
+    Floral_Rose:	Rose
+    Floral_Violet:	Violet
+    Floral_Iris:	Iris
+    Floral_Neroli:	Neroli
+  GreenFruit:
+    GreenFruit_GreenApple:	Green Apple
+    GreenFruit_RedApple:	Red Apple
+    GreenFruit_Gooseberry:	Gooseberry
+    GreenFruit_Pear:	Pear
+    GreenFruit_CustardApple:	Custard Apple
+    GreenFruit_Quince:	Quince
+    GreenFruit_Grape:	Grape
+  CitrusFruit:
+    CitrusFruit_Grapefruit:  Grapefruit
+    CitrusFruit_Lemon:		Lemon
+    CitrusFruit_Lime:		Lime
+    CitrusFruit_OrangePeel:		Orange Peel
+    CitrusFruit_LemonPeel:		Lemon Peel
+  StoneFruit:
+    StoneFruit_Peach:		Peach
+    StoneFruit_Apricot:		Apricot
+    StoneFruit_DriedApricot:		Dried Apricot
+    StoneFruit_Nectarine:		Nectarine
+  TropicalFruit:
+    TropicalFruit_Banana:		Banana
+    TropicalFruit_Lychee:		Lychee
+    TropicalFruit_Mango:		Mango
+    TropicalFruit_Melon:		Melon
+    TropicalFruit_PassionFruit:		Passion Fruit
+    TropicalFruit_Pineapple:		Pineapple
+  RedFruit:
+    RedFruit_Redcurrant:		Redcurrant
+    RedFruit_Cranberry:		Cranberry
+    RedFruit_Raspberry:		Raspberry
+    RedFruit_Strawberry:		Strawberry
+    RedFruit_RedCherry:		Red Cherry
+    RedFruit_Plum:		Plum
+    RedFruit_BakedPlum:		Baked Plum
+  BlackFruit:
+    BlackFruit_Blackcurrant:		Blackcurrant
+    BlackFruit_Blackberry:		Blackberry
+    BlackFruit_Bramble:		Bramble
+    BlackFruit_Blueberry:		Blueberry
+    BlackFruit_BlackCherry:		Black Cherry
+  DriedFruit:
+    DriedFruit_Fig:		Fig
+    DriedFruit_Prune:		Prune
+    DriedFruit_Raisin:		Raisin
+    DriedFruit_Sultana:		Sultana
+    DriedFruit_Kirsch:		Kirsch
+    DriedFruit_Jamminess:		Jamminess
+    DriedFruit_Cooked:		Cooked
+    DriedFruit_Baked:		Baked
+    DriedFruit_Stewed:		Stewed
+#  SpiceVegetable:		Spice/Vegetable
+  Unripe:
+    Unripe_GreenBellPepper:		Green Bell Pepper (Capsicum)
+    Unripe_Grass:		Grass
+    Unripe_WhitePepper:		White Pepper
+    Unripe_Leafiness:		Leafiness
+    Unripe_Tomato:		Tomato
+    Unripe_Potato:		Potato
+  Herbaceous:
+    Herbaceous_Grass:		Grass
+    Herbaceous_Asparagus:		Asparagus
+    Herbaceous_BlackcurrantLeaf:		Blackcurrant Leaf
+    Herbaceous_Pyrazine:		Pyrazine
+    Herbal:		Herbal
+    Herbal_Eucalyptus:		Eucalyptus
+    Herbal_Mint:		Mint
+    Herbal_Medicinal:		Medicinal
+    Herbal_Lavender:		Lavender
+    Herbal_Fennel:		Fennel
+    Herbal_Dill:		Dill
+  Vegetable:
+    Vegetable_Cabbage:		Cabbage
+    Vegetable_Peas:		Peas
+    Vegetable_Beans:		Beans
+    Vegetable_GreenOlive:		Green Olive
+    Vegetable_BlackOlive:		Black Olive
+  SweetSpice:
+    SweetSpice_Cinnamon:		Cinnamon
+    SweetSpice_Cloves:		Cloves
+    SweetSpice_Ginger:		Ginger
+    SweetSpice_Nutmeg:		Nutmeg
+    SweetSpice_Vanilla:		Vanilla
+  PungentSpice:
+    PungentSpice_BlackPepper:		Black Pepper
+    PungentSpice_WhitePepper:		White Pepper
+    PungentSpice_Licorice:		Licorice
+    PungentSpice_Juniper:		Juniper
+  Autolytic:
+    Autolytic_Yeast:		Yeast
+    Autolytic_Biscuit:		Biscuit
+    Autolytic_Bread:		Bread
+    Autolytic_Toast:		Toast
+    Autolytic_Pastry:		Pastry
+    Autolytic_Brioche:		Brioche
+    Autolytic_Lees:		Lees
+  DairyMLF:
+    DairyMLF_Butter:		Butter
+    DairyMLF_Cheese:		Cheese
+    DairyMLF_Cream:		Cream
+    DairyMLF_Yoghurt:		Yoghurt
+  Oak:
+    Oak_Vanilla:		Vanilla
+    Oak_Butterscotch:		Butterscotch
+    Oak_Toast:		Toast
+    Oak_Cedar:		Cedar
+    Oak_CharredWood:		Charred Wood
+    Oak_Smoke:		Smoke
+    Oak_Acrid:		Acrid
+    Oak_Resinous:		Resinous
+  Kernel:
+    Kernel_Almond:		Almond
+    Kernel_Marzipan:		Marzipan
+    Kernel_Coconut:		Coconut
+    Kernel_Hazelnut:		Hazelnut
+    Kernel_Walnut:		Walnut
+    Kernel_Chocolate:		Chocolate
+    Kernel_Coffee:		Coffee
+  Animal:
+    Animal_Leather:		Leather
+    Animal_Meaty:		Meaty
+    Animal_Farmyard:		Farmyard
+  Maturity:
+    Maturity_Vegetable:		Vegetable
+    Maturity_Mushroom:		Mushroom
+    Maturity_Hay:		Hay
+    Maturity_WetLeaves:		Wet Leaves
+    Maturity_ForestFloor:		Forest Floor
+    Maturity_Game:		Game
+    Maturity_Savory:		Savory
+    Maturity_Tobacco:		Tobacco
+    Maturity_Cedar:		Cedar
+    Maturity_Honey:		Honey
+    Maturity_Cereal:		Cereal
+  Mineral:
+    Mineral_Earth:		Earth
+    Mineral_Petrol:		Petrol
+    Mineral_Kerosene:		Kerosene
+    Mineral_Rubber:		Rubber
+    Mineral_Tar:		Tar
+    Mineral_Smoke:		Smoke
+    Mineral_Stony:		Stony
+    Mineral_Steely:		Steely
+    Mineral_WetWool: 	Wet Wool
