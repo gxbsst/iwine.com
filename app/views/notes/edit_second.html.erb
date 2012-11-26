@@ -47,7 +47,7 @@
               <% end %>
             </p>
             <ul class="feature" id="color_outer">
-              <%= show_color_image(@note.color) %>
+              <%=raw show_color_image(@note.color) %>
             </ul>
           </td>
         </tr>
@@ -91,7 +91,7 @@
               <span>选择香气特征</span>
             <% end %>
             <ul class="feature" id="nose_outer">
-              <%=raw nose_and_trait_images(@note.nose_aroma) %>
+              <%=raw nose_and_trait_images(@note.noses) %>
             </ul>
           </td>
         </tr>
@@ -182,7 +182,7 @@
               <span>风味特征</span>
             <% end %>
             <ul class="feature" id="trait_outer">
-              <%=raw nose_and_trait_images(@note.palate_flavor) %>
+              <%=raw nose_and_trait_images(@note.traits) %>
             </ul>
           </td>
         </tr>
