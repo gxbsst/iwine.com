@@ -12,12 +12,17 @@ module Notes
       response ? JSON.parse(response.body) : false
     end
 
-    def self.all
-      hot = '/hot'
+    def self.all(modified_date = "")
+      if modified_date.blank?
+        hot = '/hot'
+      else
+        hot = '/hot?modifiedDate=#{modified_date}'
+      end 
       path = PRE_PATH + hot
       response =  Notes::NoteAgent.get(:path => path)
       response ? JSON.parse(response.body) : false
     end
+
 
     # 他还品鉴了这些酒
     # TODO 加限定返回数量
