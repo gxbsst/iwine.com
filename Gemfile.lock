@@ -518,7 +518,7 @@ DEPENDENCIES
   bullet
   capistrano
   capybara
-  carrierwave (= 0.5.8)
+  carrierwave
   client_side_validations
   coffee-rails (~> 3.2.1)
   compass-rails

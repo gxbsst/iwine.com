@@ -19,7 +19,7 @@ gem 'best_in_place'
 
 #gem "rmagick"
 gem "mini_magick"
-gem "carrierwave",  "0.5.8"
+gem "carrierwave"
 gem "fileutils"
 
 gem 'omniauth'
