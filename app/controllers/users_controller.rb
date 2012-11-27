@@ -35,9 +35,8 @@ class UsersController < ApplicationController
   end
 
   def notes 
-    notes_result = Notes::NotesRepository.find_by_user(7)
-    @user_notes = Notes::HelperMethods.build_user_notes(notes_result) if notes_result['state'] 
-    binding.pry
+    notes_result = Notes::NotesRepository.find_by_user(@user.id)
+    @user_notes = Notes::HelperMethods.build_user_notes(notes_result) if notes_result['state']  
     unless @user_notes.blank?
       if @user != current_user
          @user_notes = @user_notes.select {|user_note| user_note[:note].statusFlag.to_i <= 0}
