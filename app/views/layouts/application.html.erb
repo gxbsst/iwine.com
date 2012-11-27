@@ -56,7 +56,8 @@
       <% if params[:controller] == "home" || 
         (params[:controller] == "wine_details" && params[:action] == "index") || 
         (params[:controller] == "wineries" && params[:action] == "index") ||
-        (params[:controller] == "static" && params[:action] == "index")
+        (params[:controller] == "static" && params[:action] == "index") || 
+        (params[:controller] == "notes" && params[:action] == "index")
         %>
       <div id="home">
       <% else %>

@@ -1,0 +1,14 @@
+<div class="iw_user">
+    <div class="left">   
+       <%= link_to(image_tag(avatar(note[:user], :middle), :size => '30x30'), user_path(note[:user])) %>
+    </div> 
+    <div class="right">
+        <p class="username">
+            <%= link_to note[:user].username, user_path(note[:user]) %>
+        </p>
+        <p class="content">
+           <span><%= note[:location].location %></span>
+        </p>
+    </div> 
+    <div class="clear"></div>
+</div>
