@@ -302,6 +302,14 @@ api:
      other_failed:
       code: 431
       message: ""
+   friend:
+     success:
+      code: 200
+      message: ""
+     other_failed:
+      code: 431
+      message: ""
+
 
 event:
   city: { '上海': 1,  '成都': 2, '北京': 3, '深圳': 4, '广州': 5, '其他':'6'}

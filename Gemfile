@@ -8,8 +8,8 @@ gem 'rails', '3.2.5'
 gem 'mysql2'
 gem 'jquery-rails', :git => 'git://github.com/indirect/jquery-rails'
 gem 'devise', "~> 2.0.4"
-gem 'cancan'
-gem 'passenger'
+#gem 'cancan'
+#gem 'passenger'
 gem 'kaminari'
 #gem 'uploadify'
 # gem 'flash_cookie_session'
@@ -17,9 +17,9 @@ gem 'best_in_place'
 # gem 'contacts_cn'  # 连接email
 # gem 'hpricot'
 
-gem "rmagick"
+#gem "rmagick"
 gem "mini_magick"
-gem "carrierwave"
+gem "carrierwave",  "0.5.8"
 gem "fileutils"
 
 gem 'omniauth'
@@ -159,3 +159,6 @@ gem 'garelic'
 
 # delay job
 gem 'daemons'
+
+# 虚拟属性 象  active record
+gem 'virtus'

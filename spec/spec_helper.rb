@@ -36,6 +36,9 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
     config.include(MailerMacros)
 
+    config.include Devise::TestHelpers, :type => :controller
+    config.extend ControllerMacros, :type => :controller
+
     config.before(:each) do
       DatabaseCleaner.start
       reset_email

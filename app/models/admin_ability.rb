@@ -1,5 +1,5 @@
 class AdminAbility
-  include CanCan::Ability
+  #include CanCan::Ability
 
   def initialize(user)
     #user ||= AdminUser.new

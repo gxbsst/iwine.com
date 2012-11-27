@@ -6,8 +6,8 @@ module Users::Helpers::FriendHelperMethods
 
   module InstanceMethods
     # 关注某人
-    def follow_user(user_id) 
-      unless is_following user_id 
+    def follow_user(user_id)
+      unless is_following user_id
         user = User.find(user_id)
         friendship = Friendship.create(:user_id => user.id, :follower_id => id)
       else
@@ -27,6 +27,7 @@ module Users::Helpers::FriendHelperMethods
 
     # 判断是否已经关注某人
     def is_following user_id
+      return true if id == user_id
       user = User.find(user_id) 
       Friendship.first :conditions => { :user_id => user.id , :follower_id => id }
     end
