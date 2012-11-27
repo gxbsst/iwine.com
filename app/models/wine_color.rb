@@ -17,5 +17,4 @@ class WineColor < ActiveRecord::Base
     @select = 'rg'
   end
 
-
 end

@@ -1,27 +1,30 @@
- <ul class="notes_list">
+<ul class="notes_list">
     <% if @user_notes.present? %> 
-        <% @user_notes.each_with_index do |user_note,i| %> 
-    	<li class="clearfix">  
-            <div class="pic"> 
-                <%= link_to cover(user_note[:photo], 'customer', '100x100', '100x100'), note_path(user_note[:note]) %> 
-            </div>
-            <div class="info"> 
-                <h3 class="zh">
-                    <%= link_to user_note[:wine].name_zh, note_path(user_note[:note]) %>
-                    <span class="date"><%= user_note[:note].created_at.to_s(:cn_short) %></span>  
-                </h3>
-                <h3 class="en">
-                    <%= link_to user_note[:wine].name_en, note_path(user_note[:note]) %>
-                </h3>
-                <p class="star"><%= star_rate_tag(user_note[:wine].rating) %></p>
-                <p><%= user_note[:wine].comment %></p>
-                <p><%= link_to '详细 》', note_path(user_note[:note]) %></p>
-            </div>           
-            <div class="clear"></div>
-        </li> 
+        <% @user_notes.each_with_index do |user_note,i| %>
+            <li class="clearfix"> 
+                <div class="pic"> 
+                    <% if user_note[:note].statusFlag.to_i == "1" %>
+                      <span class="label_unpublic">草稿</span> 
+                    <% end %> 
+                    <%= link_to cover(user_note[:photo], 'customer', '100x100', '100x100'), note_path(user_note[:note]) %>
+                </div>
+                <div class="info">
+                    <h3 class="zh">
+                        <%= link_to user_note[:wine].name_zh, note_path(user_note[:note]) %>
+                        <span class="date"><%= user_note[:note].created_at.to_s(:cn_short) %></span>
+                    </h3>
+                    <h3 class="en">
+                        <%= link_to user_note[:wine].name_en, note_path(user_note[:note]) %>
+                    </h3>
+                    <p class="star"><%= star_rate_tag(user_note[:wine].rating) %></p>
+                    <p><%= user_note[:wine].comment %></p>
+                    <p><%= link_to '详细 》', note_path(user_note[:note]) %></p>
+                </div>          
+                <div class="clear"></div>
+            </li> 
         <% end %>
-      <% else %>
+    <% else %>
         无
-      <% end %>
- </ul>
+    <% end %>
+</ul>
  

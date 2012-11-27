@@ -63,4 +63,21 @@ module ErrorValue
 
   end
 
+  class UserPasswordError < Base
+
+    def parse_error
+      if @user.errors[:email].present?
+        self.success = 0
+        self.code =  API_ERROR['password']['other_failed']['code']
+        self.message =  API_ERROR['password']['other_failed']['message']
+      else
+        self.success = 1
+        self.code =  API_ERROR['password']['success']['code']
+        self.message =  API_ERROR['password']['success']['message']
+      end
+      self
+    end
+
+  end
+
 end

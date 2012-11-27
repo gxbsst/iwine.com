@@ -32,12 +32,14 @@ module Notes
     #  ::Comment.where(:commentable_type => 'Note', :commentable_id => 1)
     #end
 
-    class Note < Struct.new(:serverTime, :id, :rating)
+    class Note < Struct.new(:serverTime, :id, :rating, :modifiedDate, :statusFlag)
 
-       def initialize(result)
+       def initialize(result) 
          @serverTime = result['serverTime']
          self.id = result['id']
          @rating = result['rating']
+         self.modifiedDate = result['modifiedDate']
+         self.statusFlag = result['statusFlag']   
        end
 
        def created_at=(servertime)
@@ -289,9 +291,10 @@ module Notes
     class Photo < Struct.new(:image, :size)
 
       # TODO: move to ...
-      DEFAULT_CONFIG = {
+      DEFAULT_CONFIG = { 
           :host => '192.168.11.29:8082',
           :base_url => 'iwinenotes/images',
+ 
           :version => 'noraml',
           #:host => NOTE_DATA['note']['photo_location']['host'],
           #:base_url => NOTE_DATA['note']['photo_location']['base_url'],
@@ -398,8 +401,7 @@ module Notes
         path.reverse!
       end
 
-    end
-
+    end 
     # 地址
     class Location < Struct.new(:location, :la, :lo)
 
@@ -409,7 +411,6 @@ module Notes
         self.lo = r['lo']
       end
 
-    end
-
+    end  
   end
 end

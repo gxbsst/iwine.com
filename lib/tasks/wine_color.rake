@@ -26,14 +26,8 @@ namespace :wine_color do
             key = "ATN_Color_Pre_#{k} ATN_Color_#{k2}_#{k3}"
             name_en = "#{k} #{k3}"
             name_zh = "#{v['text']} #{v3}"
-            k_e = if k3 == 'Lemon-green'
-                    'LemonGreen'
-                  elsif k3 == 'Onion-skin'
-                   'Onion'
-                  else
-                    k3
-                  end
-            image = "#{k2}-#{k_e}-#{v['num']}.png"
+
+            image = "#{k2}-#{k3}-#{v['num']}.png"
 
             ::WineColor.where(:key => key).first_or_create(:parent_id => parent_id,
                                                           key => key,

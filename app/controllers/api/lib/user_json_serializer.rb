@@ -67,4 +67,17 @@ module UserJsonSerializer
     end
   end
 
+  class PasswordJsonSerializer
+    def self.as_json(user)
+      error = ErrorValue::UserPasswordError.build(user)
+      result = {}
+      result = {
+          :success => error.success,
+          :resultCode => error.code,
+          :message => error.message
+      }
+      DEFAULT_JSON.merge(result)
+    end
+  end
+
 end

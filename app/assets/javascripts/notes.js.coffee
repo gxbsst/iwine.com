@@ -122,8 +122,13 @@ jQuery ->
         @toggleClassName(e)
         parent_id = parseInt(e.getAttribute('data-value'))
         result = @collection.where({parent_id: parent_id})
+#        全部
         if parent_id == 0
           v = new TraitListView({collection: @collection, forModel:@options.forModel})
+#        已选择
+        else if parent_id == -1
+          result = @collection.where({select: 'rg'})
+          v = new TraitListView({collection: result, forModel:@options.forModel})
         else
           v = new TraitListView({collection: result, forModel:@options.forModel})
         v.render()
