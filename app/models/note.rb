@@ -25,6 +25,7 @@ class Note < ActiveRecord::Base
     #如果本地没有note,新建note时使用从app得到的uuid
     self.uuid = SecureRandom.uuid if self.new_record? && user_agent.to_s == NOTE_DATA['note']['user_agent']['local']
   end
+
   def show_vintage
     is_nv ? "NV" : vintage
   end
@@ -64,6 +65,36 @@ class Note < ActiveRecord::Base
     end
   end
 
+  def publish
+    if status_flag.to_i == NOTE_DATA['note']['status_flag']['submitted']
+      self.update_attribute(:status_flag, NOTE_DATA['note']['status_flag']['published'])
+      post_form
+    else
+      return true
+    end
+  end
+  
+  #删除并同步到app
+  def delete_note
+    #已删除的则不再删除
+    if delete_flag.to_i == NOTE_DATA['note']['delete_flag']['unremove']
+      self.update_attribute(:delete_flag, NOTE_DATA['note']['delete_flag']['removed'])
+      delete_note_from_app
+    else
+      return true
+    end
+  end
+
+  def delete_note_from_app
+    response = response = Notes::NotesRepository.delete_note(self)
+    if response && response['state']
+      true
+    else
+      self.update_attribute(:delete_flag, NOTE_DATA['note']['delete_flag']['unremove'])
+      return false
+    end
+  end
+  
   #将app数据同步到本地数据库。
   def sync_data(app_note)
     return false if self.modifiedDate.to_s(:app_time) == app_note['modifiedDate']
@@ -195,7 +226,6 @@ class Note < ActiveRecord::Base
   end
 
   def sync_basic_info(basic_info)
-    self.user_agent = NOTE_DATA['note']['user_agent']['app']
     self.location = basic_info['location']['location']
     self.price = basic_info['wine']['price']
     self.comment = basic_info['wine']['comment']

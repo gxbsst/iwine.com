@@ -1,0 +1,25 @@
+<% unless @notes.nil? %> 
+  <% @notes.each do |note| %>
+      <div class="iw item">
+        <%= render :partial => "user", :locals => {:note => note} %> 
+        <div class="iw_img"> 
+          <%= link_to cover(note[:photo], 'customer', '200x200', '200x200'), note_path(note[:note])%>
+        </div>
+        <div class="iw_info">
+          <h1><%= link_to note[:wine].name_zh, note_path(note[:note]) %></h1>
+          <h2><%= link_to note[:wine].name_en, note_path(note[:note]) %></h2>
+          <p class="iw_action"><%= star_rate_tag(note[:wine].rating) %></p>
+        </div> 
+        <div class="iw_main">
+          <ul>
+             <%= note[:wine].comment %>
+          </ul>
+        </div>
+        <div class="iw_more">
+            <%= link_to "查看完整评酒辞", note_path(note[:note]) %>
+        </div>
+      </div>
+  <% end %> 
+<% else %> 
+ <p> 还有没有数据. </p>
+<% end %> 

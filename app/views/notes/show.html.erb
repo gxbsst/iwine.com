@@ -68,7 +68,6 @@
     <div class="clear"></div>
   </div>
   <div class="notes_img_detail">
-    <!--
     <div class="sharebar">
 
       <div id="manage">
@@ -78,9 +77,8 @@
           </a>
         </p>
         <div id="mbox" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
-          <a class="icon_edit2" href="notes_edit1.html">编辑品酒辞</a>
-          <a class="icon_cancle" href="#">删除品酒辞</a>
-          <a class="icon_public" href="#">发布品酒辞</a>
+          <%= link_to "编辑品酒辞", app_edit_note_path(@note.id), :class => "icon_edit2" %>
+          <%= link_to "删除品酒辞", note_path(@note.id), :method => :delete, :confirm => "确认删除吗？", :class => "icon_cancle" %>
         </div>
       </div>
       <ul>
@@ -96,7 +94,6 @@
         </li>
       </ul>
     </div>
-    -->
     <%= cover(@note.photo) %>
   </div>
   <div class="notes_winename">
@@ -231,23 +228,23 @@
       <h3>他们也品鉴了这支酒</h3>
     </div>
     <div class="side_notes">
-      <% if @wine_note_users  %>
-       无
-      <% else  %>
+      <% if @wine_note_users.present? %>
         <% @wine_note_users.each do |user_note| %>
-        <dl class="clearfix">
-          <dt>
-            <%= link_to(image_tag(avatar(user_note[:user], :middle), :size => '50x50'), user_path(@user)) %>
-          </dt>
-          <dd>
-            <p><%= link_to user_note[:user].username, user_path(user_note[:user]) %></p>
-            <p class="info">年份：<%= user_note[:vintage] %></p>
-            <p><%= star_rate_tag(user_note[:note].rating) %></p>
-            <p><%= link_to '详细 》', note_path(user_note[:note]) %></p>
-          </dd>
-          <div class="clear"></div>
-        </dl>
+          <dl class="clearfix">
+            <dt>
+              <%= link_to(image_tag(avatar(user_note[:user], :middle), :size => '50x50'), user_path(@user)) %>
+            </dt>
+            <dd>
+              <p><%= link_to user_note[:user].username, user_path(user_note[:user]) %></p>
+              <p class="info">年份：<%= user_note[:vintage] %></p>
+              <p><%= star_rate_tag(user_note[:note].rating) %></p>
+              <p><%= link_to '详细 》', note_path(user_note[:note]) %></p>
+            </dd>
+            <div class="clear"></div>
+          </dl>
         <% end %>
+      <% else  %>
+        无
       <% end %>
     </div>
   </div>

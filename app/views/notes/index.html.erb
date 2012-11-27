@@ -1,0 +1,22 @@
+<% content_for :js do %>
+  <%= javascript_include_tag :notes_home %>
+<% end %>
+<% content_for :title, @title%>
+<% content_for :css  do %>
+<%= stylesheet_link_tag :home %>
+<% end %>
+<div id="container" >
+    <%= render "timeline" %>
+	<div style="display: none">
+	  <nav class="pagination">
+	    <span class = "page"><a href="/notes?modifiedDate=#{<%= @modified_date %>}" rel="next"></a></span>
+	  </nav>
+	</div>
+	<div class="clear"></div>
+</div>  
+<div class="loading" id="waterfall_loading" style="display: none">
+  <%= image_tag "common/loading.gif", :size => "16x16", :alt => "loading", :align => :absmiddle %>
+  <span>更多的内容正在载入中，请稍等...</span>
+</div> 
+<p align="center" class="end_waterfall_text_info">^_^ 已经到底了...</p>
+<%= render "layouts/waterfall_js" %>
