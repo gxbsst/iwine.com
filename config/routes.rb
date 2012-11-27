@@ -16,6 +16,7 @@ Patrick::Application.routes.draw do
     end
     member do
       get :app_edit
+      get :publish
     end
   end
 

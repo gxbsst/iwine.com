@@ -9,6 +9,9 @@ note:
   status_flag:
     submitted: 1
     published: 0
+  delete_flag:
+    removed: 1
+    unremove: 0
   appearance:
     clarity_a:
       0: ''

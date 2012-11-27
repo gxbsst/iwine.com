@@ -42,6 +42,19 @@ module Notes
       response ? JSON.parse(response.body) : false
     end
 
+    def self.delete_note(note)
+      base_url = "/push"
+      body = {"id" => note.app_note_id.to_s, 
+        "wine.vintage" => note.is_nv ? "NV" : note.vintage.try(:to_s),
+        "wine.style" => note.wine_style_id.try(:to_s),
+        "wine.sName" => note.name,
+        "agent" => note.user_agent,
+        "deleteFlag" => note.delete_flag}
+      path = "#{PRE_PATH}#{base_url}"
+      response =  Notes::NoteAgent.post(:path => path, :body => body)
+      response ? JSON.parse(response.body) : false
+    end
+
     def self.post_note(note)
       base_url = "/push"
       body = {
@@ -83,7 +96,7 @@ module Notes
         "notesAdvance.palateBody" => note.palate_body,
         "notesAdvance.palateFlavorIntensity" => note.palate_flavor_intensity,
         "notesAdvance.palateFlavor" => note.palate_flavor,
-        "notesAdvance.palateLength" => note.palate_length,
+        "notesAdvance.palateLength" => note.palate_length.to_i.to_s,
         "notesAdvance.palateOther" => note.palate_other,
         "notesAdvance.conclusionQuality" => note.conclusion_quality,
         "notesAdvance.conclusionReason" => note.conclusion_reason,

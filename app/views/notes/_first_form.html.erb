@@ -15,6 +15,7 @@
           <%= form_for @note, :url =>  upload_photo_notes_path, 
             :html => {:multipart => true, :id => "form", :method => :put} do |f| %>
             <input type="hidden" name="note_id" value="<%= @note.id %>"/>
+            <input type="hidden" name="wine_detail_id" value="<%= params[:wine_detail_id] || @note.wine_detail_id %>"/>
             <p>从电脑上传（支持JPG、GIF、PNG图片格式，且小于5M）</p>
             <p class="mt20">
               <%= f.file_field :photo, :align => "center", :class => "text name mr5" %>
@@ -36,6 +37,7 @@
         </td>
       </tr>
       <%= form_for @note, :html => {:id => "note_first_form"} do |f| %>
+        <input type="hidden" name="wine_detail_id" value="<%= params[:wine_detail_id] || @note.wine_detail_id %>"/>
         <input type="hidden" name="step" value="first"/>
         <input type="hidden" name="status" value="next" id="note_status"/>
         <tr>
