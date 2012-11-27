@@ -10,11 +10,14 @@
                 </div>
                 <div class="info">
                     <% if user_note[:user] == current_user %>
-                        <a href="#" class="icon_cancle float_r" title="删除品酒辞"></a>
+                        <%= link_to '', note_path(user_note[:note], :user_profile => true), :method => :delete,
+                             :confirm => "确定删除吗？", :class => "icon_cancle float_r", :title => "删除品酒辞" %>
                            <% if user_note[:note].statusFlag == 1 %>
-                               <a href="#" class="icon_public float_r mr5" title="发布品酒辞"></a>
+                              <%= link_to '', publish_note_path(user_note[:note]), :class => "icon_public float_r mr5",
+                                :title => "发布品酒辞" %>
                            <% end %>
-                        <a href="#" class="icon_edit2 float_r mr5" title="修改品酒辞"></a>
+                        <%= link_to '', app_edit_note_path(user_note[:note]), :class => "icon_edit2 float_r mr5",
+                            :title => "修改品酒辞" %>
                     <% end %>
                     <h3 class="zh">
                         <%= link_to user_note[:wine].name_zh, note_path(user_note[:note]) %>
@@ -34,4 +37,3 @@
         无
     <% end %>
 </ul>
- 
