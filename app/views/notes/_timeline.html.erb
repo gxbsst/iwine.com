@@ -11,8 +11,8 @@
           <p class="iw_action"><%= star_rate_tag(note[:wine].rating) %></p>
         </div> 
         <div class="iw_main">
-          <ul>
-             <%= note[:wine].comment %>
+          <ul> 
+             <%= truncate(note[:wine].comment, :length => 100) %>
           </ul>
         </div>
         <div class="iw_more">

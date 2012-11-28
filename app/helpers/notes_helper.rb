@@ -96,7 +96,7 @@ module NotesHelper
       image_labels
     end
   end
-
+ 
   def link_to_agent(agent)
     if agent == 'iWine'
       link_to 'iWine', 'http://www.iwine.com'
@@ -119,6 +119,13 @@ module NotesHelper
     if note.new_record? || note.status_flag == NOTE_DATA['note']['status_flag']['submitted']
       %Q[<a id="#{options[:id]}" class="#{options[:class]}" href="javascript:void(0);">
         <span>保存为草稿</span></a>]
+    end 
+  end
+  # 更多酒的品酒辞
+  def link_to_wine_notes(detail= '')
+     unless detail.blank?
+      wine = Wines::Detail.find(detail)
+      link_to '更多', notes_wine_path(wine)
     end
   end
 
