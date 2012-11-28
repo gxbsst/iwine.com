@@ -16,9 +16,9 @@ module Notes
       if modified_date.blank?
         hot = '/hot'
       else
-        hot = '/hot?modifiedDate=#{modified_date}'
-      end 
-      path = PRE_PATH + hot
+        hot = "/hot?modifiedDate=#{modified_date}"
+      end
+      path = PRE_PATH + URI::escape(hot)
       response =  Notes::NoteAgent.get(:path => path)
       response ? JSON.parse(response.body) : false
     end

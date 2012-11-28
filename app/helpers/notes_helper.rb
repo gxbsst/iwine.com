@@ -97,4 +97,22 @@ module NotesHelper
     end
   end
 
+  def link_to_agent(agent)
+    if agent == 'iWine'
+      link_to 'iWine', 'http://www.iwine.com'
+    else
+      link_to 'iWineNote', 'http://www.iwine.com/notes/app/'
+    end
+  end
+
+  def note_pagenate(notes)
+    last_modified_date = notes.last[:note].modifiedDate
+    %Q[<span class="next">#{ link_to 'next', notes_path(:modified_date => last_modified_date)}</span>]
+  end
+
+  # 判断是否是最后一页
+  def is_last_page?(notes)
+    notes.size < 20 ? true : false
+  end
+
 end

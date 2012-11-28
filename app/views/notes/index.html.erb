@@ -9,7 +9,7 @@
     <%= render "timeline" %>
 	<div style="display: none">
 	  <nav class="pagination">
-	    <span class = "page"><a href="/notes?modifiedDate=#{<%= @modified_date %>}" rel="next"></a></span>
+      <%= raw note_pagenate(@notes) %>
 	  </nav>
 	</div>
 	<div class="clear"></div>

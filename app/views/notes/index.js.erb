@@ -1,10 +1,12 @@
 $('#container').append('<%= j render "timeline" %>');
-<% unless @timelines.last_page? %>
-$('.pagination').replaceWith('<%= j paginate(@timelines) %>');
+
+<% unless is_last_page?(@notes) %>
+$('.pagination').html('<%= raw note_pagenate(@notes) %>');
 <% else %>
 $('.pagination').remove();
 // TODO: 提示用户已经没有数据可以加载了
 $('p.end_waterfall_text_info').html('^_^ 已经到底了...');
 <% end %>
+
 
 $('#container').masonry( 'reload');

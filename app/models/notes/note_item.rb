@@ -32,35 +32,42 @@ module Notes
     #  ::Comment.where(:commentable_type => 'Note', :commentable_id => 1)
     #end
 
-    class Note < Struct.new(:serverTime, :id, :rating, :modifiedDate, :statusFlag)
+    class Note < Struct.new(:serverTime, :id, :rating, :modifiedDate, :statusFlag, :agent)
 
-       def initialize(result) 
-         @serverTime = result['serverTime']
-         self.id = result['id']
-         @rating = result['rating']
-         self.modifiedDate = result['modifiedDate']
-         self.statusFlag = result['statusFlag']   
-       end
+      AGENT = {'NOTES_AGENT' => 'iWineNote', 'IWINE_AGENT' => 'iWine'}
 
-       def created_at=(servertime)
-         @serverTime = serverTime
-       end
+      def initialize(result)
+        @serverTime = result['serverTime']
+        self.id = result['id']
+        @rating = result['rating']
+        self.modifiedDate = result['modifiedDate']
+        self.statusFlag = result['statusFlag']
+        @agent =  result['agent']
+      end
 
-       def created_at
-         Date.parse(@serverTime)
-       end
+      def created_at=(servertime)
+        @serverTime = serverTime
+      end
 
-       def to_param  # overridden
-         self.id
-       end
+      def created_at
+        Date.parse(@serverTime)
+      end
 
-       def rating=(rating)
-         @rating = rating
-       end
+      def to_param  # overridden
+        self.id
+      end
 
-       def rating
-         @rating + 1
-       end
+      def rating=(rating)
+        @rating = rating
+      end
+
+      def rating
+        @rating + 1
+      end
+
+      def agent
+        AGENT[@agent]
+      end
 
     end
 
@@ -153,7 +160,7 @@ module Notes
           new_array <<  join_text
         end
         # 风味特征
-        new_array << "#{self.aroma_text}的味道" if self.aroma_text.present?
+        new_array << "有#{self.aroma_text}的味道" if self.aroma_text.present?
         new_array.compact.delete_if{|i|i.blank?}.join("，")
       end
 
@@ -179,8 +186,7 @@ module Notes
         @alcohol = result['alcohol']
         @body = result['body']
         @tanninLevel = result['tanninLevel']
-        @flavorIntensity = result['flavorIntensity']
-
+        self.flavorIntensity = result['flavorIntensity']
 
         tannin = Notes::HelperMethods.polishing(result['tanninNature'], 3)
         @tannin_nature_a = tannin[0].to_i
@@ -229,13 +235,12 @@ module Notes
         # 单宁
         (new_array << "#{self.tannin_text}、#{PALATE['tanninLevel'][@tanninLevel.to_i]} 的单宁") unless self.tannin_text.blank?
         # 风味浓郁度
-        new_array << "#{self.flavor_text}的味道" unless self.flavor_text.blank?
-        # 其他
-        new_array << self.other unless self.other.blank?
+        new_array << "有#{flavorIntensity_text}#{self.flavor_text}的味道" unless self.flavor_text.blank?
         # 余味
         (new_array << "余味#{ PALATE['length'][self.length]}") if self.length.to_i > 0
-
-        new_array.compact.delete_if{|i|i.blank?}.join("、")
+        # 其他
+        new_array << self.other unless self.other.blank?
+        new_array.compact.delete_if{|i|i.blank?}.join("， ")
       end
 
       def tannin_text
@@ -243,6 +248,12 @@ module Notes
          PALATE['tannin_nature_b'][@tannin_nature_b],
          PALATE['tannin_nature_c'][@tannin_nature_c]
          ].compact.delete_if{|i|i.blank?}.join('、')
+      end
+
+      def flavorIntensity_text
+        if self.flavorIntensity.to_i != 0
+          "#{PALATE['flavorIntensity'][self.flavorIntensity]}的"
+        end
       end
 
       def flavor_text
@@ -281,9 +292,22 @@ module Notes
           v = instance_variable_get a
           h[n] = v
         }
+
+
         new_array = []
-        h.each {|k,v| new_array << CONCLUSION[k][v.to_i]}
-        new_array.compact.delete_if{|i|i.blank?}.join("、")
+        h.each do |k,v|
+          join_text = if k == 'quality'
+                        "质量#{CONCLUSION[k][v.to_i]}" unless CONCLUSION[k][v.to_i].blank?
+                      else
+                        CONCLUSION[k][v.to_i]
+                      end
+          new_array <<  join_text
+        end
+        # 理由
+        new_array << "因为#{self.reason}" unless self.reason.blank?
+        # 其他
+        new_array << "#{self.other}" unless self.other.blank?
+        new_array.compact.delete_if{|i|i.blank?}.join("，")
       end
     end
 
@@ -291,7 +315,8 @@ module Notes
     class Photo < Struct.new(:image, :size)
 
       # TODO: move to ...
-      DEFAULT_CONFIG = { 
+      DEFAULT_CONFIG = {
+          :pre => 'http://',
           :host => '192.168.11.29:8082',
           :base_url => 'iwinenotes/images',
  

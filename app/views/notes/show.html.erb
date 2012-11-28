@@ -55,7 +55,7 @@
   <div class="user_space">
     <div class="info2">
       <span class="date"><%= @note.note.created_at.to_s(:cn_short) %></span>
-      <span class="form">来自<%=  link_to 'iWineNote', 'http://www.iwine.com/notes/app/' %></span>
+      <span class="form">来自<%= link_to_agent(@note.note.agent)%></span>
     </div>
     <div class="img">
      <%= link_to(image_tag(avatar(@user, :middle), :size => '50x50'), user_path(@user)) %>
@@ -94,7 +94,7 @@
         </li>
       </ul>
     </div>
-    <%= cover(@note.photo) %>
+    <%= cover(@note.photo, 'customer', '590x590', '') %>
   </div>
   <div class="notes_winename">
     <div class="star">
@@ -184,7 +184,7 @@
           <th><span class="f4">结论</span></th>
           <td>
             <%= @note.conclusion.text  %><br />
-            好适饮期限为：<%= drinkwindow(@note.conclusion.drinkwindow) %></td>
+            适饮期限为：<%= drinkwindow(@note.conclusion.drinkwindow) %></td>
         </tr>
       </table>
     </div>

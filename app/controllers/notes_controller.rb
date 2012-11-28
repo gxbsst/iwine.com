@@ -7,11 +7,11 @@ class NotesController < ApplicationController
   before_filter :create_or_init_data, :only => :upload_photo
 
   def index 
-   date = params[:modified_date] 
+   date = params[:modified_date]
+
    result      = Notes::NotesRepository.all(date)
    return render_404('') unless result['state']
    @notes = Notes::HelperMethods.build_all_notes(result)
-   @modified_date = @notes.last[:note].modifiedDate
   end 
 
   def show
