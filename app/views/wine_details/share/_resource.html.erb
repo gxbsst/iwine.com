@@ -3,6 +3,6 @@
 	<%= link_to "#{@wine_detail.owners_count}<br /> 拥有".html_safe, owners_wine_path(@wine_detail)  %>
 	<%= link_to "#{@wine_detail.comments_count}<br /> 评论".html_safe, wine_comments_path(@wine_detail) %>
 	<%= link_to "#{@wine_detail.all_photo_counts}<br /> 照片".html_safe, wine_photos_path(@wine_detail) %>
-	<%= link_to "#{@wine_notes_count}<br /> 品酒辞".html_safe, notes_wine_path(@detail) %>
+	<%= link_to "#{@wine_notes_count}<br /> 品酒辞".html_safe, notes_wine_path(@wine_detail) %>
 	<div class="clear"></div>
 </div>
