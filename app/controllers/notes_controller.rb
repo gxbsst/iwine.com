@@ -177,10 +177,13 @@ class NotesController < ApplicationController
   end
 
   def set_status_flag
-    if params[:status] == "submitted"
-      @note.status_flag = NOTE_DATA['note']['status_flag']['submitted']
-    else
+    if params[:status] == "next" && params[:step] == "second"
       @note.status_flag = NOTE_DATA['note']['status_flag']['published']
+    else
+      #发布状态不能再次设置为草稿状态。
+      if @note.status_flag != NOTE_DATA['note']['status_flag']['published']
+        @note.status_flag = NOTE_DATA['note']['status_flag']['submitted']
+      end
     end
   end
 
@@ -218,18 +221,15 @@ class NotesController < ApplicationController
   def update_note_from_app
     result = Notes::NotesRepository.find(params[:id])
     if result['state']
-      check_app_user(result['data']['uid'])
-      @note = current_user.notes.where(:uuid => result['data']['notesId']).
-          first_or_initialize(:user_id => current_user.id, :app_note_id => params[:id])
-      @note.sync_data(result['data'])
-    end
-  end
-
-  #检查该app_note的user和当前user是不是同一个人
-  def check_app_user(uid)
-    if current_user.try(:id) != uid
-      notice_stickie t('notice.no_ability')
-      redirect_to note_path(params[:id])
+      #检查该app_note的user和当前user是不是同一个人
+      if current_user.try(:id) != result['data']['uid']
+        notice_stickie t('notice.no_ability')
+        redirect_to note_path(params[:id])
+      else
+        @note = current_user.notes.where(:uuid => result['data']['notesId']).
+            first_or_initialize(:user_id => current_user.id, :app_note_id => params[:id])
+        @note.sync_data(result['data'])
+      end
     end
   end
 

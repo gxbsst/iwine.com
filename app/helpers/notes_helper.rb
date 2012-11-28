@@ -97,4 +97,11 @@ module NotesHelper
     end
   end
 
+  def show_draft_button(note, options = {})
+    if note.new_record? || note.status_flag == NOTE_DATA['note']['status_flag']['submitted']
+      %Q[<a id="#{options[:id]}" class="#{options[:class]}" href="javascript:void(0);">
+        <span>保存为草稿</span></a>]
+    end
+  end
+
 end

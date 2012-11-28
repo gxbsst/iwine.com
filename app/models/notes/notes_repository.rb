@@ -53,7 +53,7 @@ module Notes
         "wine.vintage" => note.is_nv ? "NV" : note.vintage.try(:to_s),
         "wine.style" => note.wine_style_id.try(:to_s),
         "wine.sName" => note.name,
-        "agent" => note.user_agent,
+        "agent" => NOTE_DATA['note']['user_agent']['local'],
         "deleteFlag" => note.delete_flag}
       path = "#{PRE_PATH}#{base_url}"
       response =  Notes::NoteAgent.post(:path => path, :body => body)
@@ -71,7 +71,7 @@ module Notes
         "deleteFlag" => "#{note.delete_flag.to_i}",
         "syncFlag" => note.sync_flag,
         "statusFlag" => "#{note.status_flag.to_i}",
-        "agent" => note.user_agent,
+        "agent" => NOTE_DATA['note']['user_agent']['local'],
         "uid" => note.user_id.try(:to_s),
         "covers[0].image" => note.byte_array_image,
         "wine.detail" => note.wine_detail_id.try(:to_s),
