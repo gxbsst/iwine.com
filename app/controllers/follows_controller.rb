@@ -67,7 +67,6 @@ class FollowsController < ApplicationController
 
   def check_followed
     if @followable.is_followed_by?(@user)
-      notice_stickie t("notice.comment.check_follow")
       redirect_to(@followable_path)
     end
   end
