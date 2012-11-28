@@ -1,7 +1,7 @@
 <ul>
-  <% global_nav = {"home" => root_path, "wines" => wines_path, "wineries" => wineries_path, "events" => events_path} %>
+  <% global_nav = {"home" => root_path, "wines" => wines_path, "wineries" => wineries_path, "events" => events_path, "notes" => notes_path } %>
   <% global_nav.each do |key, value| %>
-    <% if key == "wines" || key == "wineries" || key == 'events' %>
+    <% if key == "wines" || key == "wineries" || key == 'events' || key == "notes"%>
       <%= content_tag :li, :class => "arrow" do %>
         <%= link_to t("nav.#{key}"), value, :class => "arrow_link" %>
         <% if key == "wines" # 酒 %>

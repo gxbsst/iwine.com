@@ -21,8 +21,15 @@ module Notes
       path = PRE_PATH + hot
       response =  Notes::NoteAgent.get(:path => path)
       response ? JSON.parse(response.body) : false
-    end
+    end 
 
+    #一支酒的所有评酒辞
+    def self.find_wine_notes(wine_detail_id) 
+      detail = "/notes/detail/#{wine_detail_id}"
+      path = PRE_PATH + detail
+      response =  Notes::NoteAgent.get(:path => path)
+      response ? JSON.parse(response.body) : false
+    end
 
     # 他还品鉴了这些酒
     # TODO 加限定返回数量

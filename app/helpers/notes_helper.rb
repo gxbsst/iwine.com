@@ -97,4 +97,12 @@ module NotesHelper
     end
   end
 
+  # 更多酒的品酒辞
+  def link_to_wine_notes(detail= '')
+     unless detail.blank?
+      wine = Wines::Detail.find(detail)
+      link_to '更多', notes_wine_path(wine)
+    end
+  end
+
 end

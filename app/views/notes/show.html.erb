@@ -223,7 +223,7 @@
   <div class="sidebox">
     <div class="title">
       <span class="more">
-        <%#= link_to '更多', '#' %>
+        <%= link_to_wine_notes(@note.wine.detail) %> 
       </span>
       <h3>他们也品鉴了这支酒</h3>
     </div>
@@ -250,7 +250,9 @@
   </div>
   <div class="sidebox">
     <div class="title">
-      <!--<span class="more"><a href="#">更多</a></span>-->
+      <span class="more">
+        <%= link_to '更多', notes_user_path(@user) %>
+      </span>
       <h3>他还品鉴了这些酒</h3>
     </div>
     <div class="side_notes">

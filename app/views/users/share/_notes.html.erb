@@ -27,7 +27,7 @@
                         <%= link_to user_note[:wine].name_en, note_path(user_note[:note]) %>
                     </h3>
                     <p class="star"><%= star_rate_tag(user_note[:wine].rating) %></p>
-                    <p><%= user_note[:wine].comment %></p>
+                    <p><%= truncate(user_note[:wine].comment, :length => 100) %></p>
                     <p><%= link_to '详细 》', note_path(user_note[:note]) %></p>
                 </div>          
                 <div class="clear"></div>

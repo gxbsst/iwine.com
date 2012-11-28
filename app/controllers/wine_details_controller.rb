@@ -122,6 +122,24 @@ class WineDetailsController < ApplicationController
     end
   end
   
+  #评酒辞
+  def notes 
+    @detail = params[:id]
+    @wine_detail_id = Wines::Detail.find(params[:id]).id
+    result      = Notes::NotesRepository.find_wine_notes(@wine_detail_id)
+    return render_404('') unless result['state']
+    # 一支酒的所有评酒辞
+    @wine_notes = Notes::HelperMethods.build_wine_list_notes(result) if result['state'] 
+    @wine_notes = Kaminari.paginate_array(@wine_notes).page(params[:page] || 1).per(10) 
+
+    # 酒的详细信息
+    @wine_detail = Wines::Detail.find(@wine_detail_id)
+    @wine_notes_count = @wine_notes.total_count
+    # 酒
+    @wine = @wine_detail.wine 
+    
+  end
+
   # 关注者
   def followers
     @wine      = @wine_detail.wine
