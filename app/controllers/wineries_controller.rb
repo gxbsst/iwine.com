@@ -35,7 +35,7 @@ class WineriesController < ApplicationController
 
   def followers_list
     @title = ["关注者", @winery.name].join("-")
-    @users = @winery.followers(:page => params[:page], :per => 10)
+    @users = @winery.followers(:page => params[:page], :per => 30)
   end
   
   def photo_upload
