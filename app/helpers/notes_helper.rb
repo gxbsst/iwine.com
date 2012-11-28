@@ -129,4 +129,22 @@ module NotesHelper
     end
   end
 
+  def link_to_cname(wine)
+     if wine.detail.blank?
+       wine.name_zh
+     else
+       wine_detail = Wines::Detail.find(wine.detail)
+       link_to wine.name_zh, wine_path(wine_detail)
+     end
+  end
+
+  def link_to_ename(wine)
+    if wine.detail.blank?
+      wine.name_en
+    else
+      wine_detail = Wines::Detail.find(wine.detail)
+      link_to wine.name_en, wine_path(wine_detail)
+    end
+  end
+
 end

@@ -103,8 +103,8 @@
 
     </div>
     <div class="name">
-      <h1 class="ch"><%= @note.wine.name_zh %></h1>
-      <h1 class="en"><%= @note.wine.name_en %></h1>
+      <h1 class="ch"><%= link_to_cname @note.wine %></h1>
+      <h1 class="en"><%= link_to_ename @note.wine %></h1>
     </div>
   </div>
   <div class="section">
