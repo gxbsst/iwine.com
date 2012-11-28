@@ -110,6 +110,7 @@ Patrick::Application.routes.draw do
   resources :wine_details, :controller => "wine_details", :as => :wines, :path => :wines  do
     member do
       # 自定义actions
+      get :notes
       get :followers
       get :owners
       get :add_to_cellar
