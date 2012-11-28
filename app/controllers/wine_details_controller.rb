@@ -129,7 +129,7 @@ class WineDetailsController < ApplicationController
     result      = Notes::NotesRepository.find_wine_notes(@wine_detail_id)
     return render_404('') unless result['state']
     # 一支酒的所有评酒辞
-    @wine_notes = Notes::HelperMethods.build_wine_list_notes(result) if result['state'] 
+    @wine_notes = Notes::HelperMethods.build_user_notes(result) if result['state'] 
     @wine_notes = Kaminari.paginate_array(@wine_notes).page(params[:page] || 1).per(10) 
 
     # 酒的详细信息
@@ -147,9 +147,9 @@ class WineDetailsController < ApplicationController
     
     if !(@followers.nil?)
       unless @followers.kind_of?(Array)
-        @followers = @followers.page(params[:page]).per(8)
+        @followers = @followers.page(params[:page]).per(30)
       else
-        @followers = Kaminari.paginate_array(@followers).page(params[:page]).per(8)
+        @followers = Kaminari.paginate_array(@followers).page(params[:page]).per(30)
       end
     end
   end

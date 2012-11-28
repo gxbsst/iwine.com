@@ -46,18 +46,4 @@ module Notes::HelperMethods
     end
     new_array
   end
-  
-  # 一支酒的所有评酒辞 
-  def self.build_wine_list_notes(result)
-    new_array = []
-    result['data'].each do |note|
-      new_array <<  { 
-          :user => User.find(note['uid']),
-          :note => Notes::NoteItem::Note.new(note),
-          :photo => Notes::NoteItem::Photo.new(note['cover']),
-          :wine =>  Notes::NoteItem::Wine.new(note['wine'])
-      }
-    end
-    new_array 
-  end
 end
