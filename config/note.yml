@@ -4,8 +4,8 @@ note:
     base_url: "iwinenotes/images"
     version: "normal"
   user_agent:
-    app: "iwine_notes"
-    local: "iwine.com"
+    app: "NOTES_AGENT"
+    local: "IWINE_AGENT"
   status_flag:
     submitted: 1
     published: 0

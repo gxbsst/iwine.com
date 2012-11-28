@@ -241,9 +241,7 @@
   <%= link_to "javascript:void(0);", :class => "btn_brown_d mr10 submit_approved" do %>
     <span>立即发布</span>
   <% end %>
-  <%= link_to "javascript:void(0);", :class => "btn_brown_g submit_draft" do %>
-    <span>保存为草稿</span>
-  <% end %>
+  <%=raw show_draft_button(@note, :class => "btn_brown_g submit_draft") %>
 </div>
 </div>
 
