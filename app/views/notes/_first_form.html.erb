@@ -83,7 +83,7 @@
               <ul id="stars"> </ul>
               <input type='hidden' name='rate_value' value=<%= @note.rating || 0 %> />
             </div>
-            <span class="text_value"></span>
+            <div class="text_value" style="height:16px;"></div>
             <div class="clear"></div>
             <script type="text/template" id="star_item">
               <%= image_tag 'base/star_gray.gif', :width => 16, :height => 16 %>
@@ -102,9 +102,7 @@
     <%= link_to "javascript:void(0);", :class => "btn_brown_d mr10", :id => "submit_next" do %>
       <span>下一步</span>
     <% end %>
-    <%= link_to "javascript:void(0);", :class => "btn_brown_g", :id => "submit_as_draft" do %>
-      <span>保存为草稿</span>
-    <% end %>
+    <%=raw show_draft_button(@note, :class => "btn_brown_g", :id => "submit_as_draft") %>
   </div>
 </div>
 <div id="note_fancybox_photo" style="display:none;">
