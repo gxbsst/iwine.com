@@ -22,7 +22,7 @@ class NotesController < ApplicationController
    notes_result = Notes::NotesRepository.find_by_user(result['data']['uid'], @note.note.id)
    @user_notes = Notes::HelperMethods.build_user_notes(notes_result)  if notes_result['state']
    wine_result =  Notes::NotesRepository.find_by_wine(@note.wine.vintage, @note.wine.sName, @note.wine.oName, @note.note.id)
-   @wine_note_users = Notes::HelperMethods.build_wine_notes(wine_result)  if wine_result['state'] 
+   @wine_note_users = Notes::HelperMethods.build_wine_notes(wine_result)  if wine_result['state']
   end
 
   #包含两部操作
@@ -246,11 +246,16 @@ class NotesController < ApplicationController
   end
 
   def init_basic_data_of_note
-    wine_detail = Wines::Detail.find(params[:wine_detail_id])
     @note = current_user.notes.new
     @note.user_agent = NOTE_DATA['note']['user_agent']['local']
     @note.status_flag = NOTE_DATA['note']['status_flag']['submitted']
-    copy_detail_info(wine_detail)
+    if params[:wine_detail_id].present?     #来自 wine_detail profile
+      wine_detail = Wines::Detail.find(params[:wine_detail_id])
+      copy_detail_info(wine_detail)
+    elsif params[:app_note_id].present? #来自 note profile
+      result = Notes::NotesRepository.find(params[:app_note_id])
+      @note.init_basic_data_from_app(result['data'])
+    end
   end
 
 end

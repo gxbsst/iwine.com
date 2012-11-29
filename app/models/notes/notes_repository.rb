@@ -91,7 +91,8 @@ module Notes
         "wine.price" => note.price.try(:to_s),
         "wine.comment" => note.comment,
         "wine.rating" => (note.rating.to_i - 1).to_s,
-        "wine.varienty" => note.upload_variety_percentage,
+        "wine.currency" => note.exchange_rate.name_en,
+        "wine.variety" => note.upload_variety_percentage,
         "notesAdvance.appearanceClarity" => note.appearance_clarity,
         "notesAdvance.appearanceIntensity" => note.appearance_intensity,
         "notesAdvance.appearanceColor" => note.appearance_color,
@@ -116,7 +117,7 @@ module Notes
         "notesAdvance.conclusionOther" => note.conclusion_other
       }
       path = "#{PRE_PATH}#{base_url}"
-      response =  Notes::NoteAgent.post(:path => path, :body => body)
+      response =  Notes::NoteAgent.post(:path => path, :body => body.delete_if{|k, v| v.blank?})
       response ? JSON.parse(response.body) : false
     end
   end
