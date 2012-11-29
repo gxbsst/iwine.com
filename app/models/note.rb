@@ -7,7 +7,7 @@ class Note < ActiveRecord::Base
                   :palate_alcohol, :palate_tannin_level, :palate_tannin_nature, :palate_body, :palate_flavor_intensity,
                   :palate_flavor, :palate_length, :palate_other, :conclusion_quality, :conclusion_reason, :drinkable_begin_at,
                   :drinkable_end_at, :conclusion_other,:crop_x, :crop_y, :crop_w, :crop_h, :appearance_clarity_a, :user_agent,
-                  :appearance_clarity_b, :palate_tannin_nature_a, :palate_tannin_nature_b, :palate_tannin_nature_c
+                  :appearance_clarity_b, :palate_tannin_nature_a, :palate_tannin_nature_b, :palate_tannin_nature_c, :exchange_rate_id
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :drinkable_end, :drinkable_begin, :appearance_clarity_a,
                 :appearance_clarity_b, :palate_tannin_nature_a, :palate_tannin_nature_b, :palate_tannin_nature_c
@@ -94,6 +94,10 @@ class Note < ActiveRecord::Base
       return false
     end
   end
+
+  def init_basic_data_from_app(app_note)
+    sync_wine_detail_info app_note['wine']
+  end
   
   #将app数据同步到本地数据库。
   def sync_data(app_note)
@@ -130,13 +134,15 @@ class Note < ActiveRecord::Base
 
   def upload_variety_percentage
     variety_and_percentages = ""
-    variety_percentages = self.wine_detail.variety_percentages
+    variety_percentages = self.wine_detail.try(:variety_percentages)
     if variety_percentages.present?
       variety_percentages.each_with_index do |v, i|
         percentage = v.percentage.present? ? v.percentage.gsub("%", '') : 0
         variety_and_percentages << "#{v.variety_id}:#{percentage};"
       end
       variety_and_percentages.gsub(/;$/, '')
+    else
+      variety
     end
   end
 
@@ -204,7 +210,9 @@ class Note < ActiveRecord::Base
     self.region_tree_id = wine_info['region']
     self.wine_style_id = wine_info['style']
     self.wine_detail_id = wine_info['detail']
-    init_variety_percentage(wine_info['detail'], wine_info['varienty'])
+    self.variety = wine_info['varienty']
+    self.alcohol = wine_info['alcohol'].to_f if wine_info['alcohol'].present?
+    init_variety_percentage(wine_info['detail'], wine_info['varienty']) if wine_info['detail'].present?
   end
 
   def init_variety_percentage(detail, variety)
@@ -229,7 +237,6 @@ class Note < ActiveRecord::Base
     self.location = basic_info['location']['location']
     self.price = basic_info['wine']['price']
     self.comment = basic_info['wine']['comment']
-    self.alcohol = basic_info['wine']['alcohol'].to_f if basic_info['wine']['alcohol'].present?
     self.rating = basic_info['wine']['rating'].to_i + 1
   end
 

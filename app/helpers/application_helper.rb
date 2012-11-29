@@ -356,13 +356,24 @@ module ApplicationHelper
   end
 
   #展示所有的 variety_percentage
-  def variety_percentage_lists(variety_percentages)
-    count = variety_percentages.length
+  def variety_percentage_lists(detail, variety = nil)
     show_list = ''
-    variety_percentages.each_with_index do |v, index|
-      show_list << "#{v.origin_name} (#{v.show_percentage})#{' 、' if index + 1 != count}"
+    if variety.present?
+      variety_arr = variety.gsub(";", ":").split(":")
+      variety_hash = Hash[*variety_arr]
+      variety_hash.each do |key, value|
+        name = Wines::VarietyPercentage.where(:id => key).first.try(:name_en)
+        percentage = value.to_i == 0 ? nil : "#{value}%"
+        show_list << %Q[#{name}(value)]
+      end
+      show_list.gsub(/、$/, '')
+    elsif detail
+      count = detail.variety_percentages.length
+      detail.variety_percentages.each_with_index do |v, index|
+        show_list << "#{v.origin_name} (#{v.show_percentage})#{' 、' if index + 1 != count}"
+      end
+      show_list
     end
-    return show_list
   end
 
   def yield_for(content_sym, default)

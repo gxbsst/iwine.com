@@ -431,9 +431,11 @@ module Notes
     class Location < Struct.new(:location, :la, :lo)
 
       def initialize(r)
-        self.location = r['location']
-        self.la = r['la']
-        self.lo = r['lo']
+        if r
+          self.location = r['location']
+          self.la = r['la']
+          self.lo = r['lo']
+        end
       end
 
     end  
