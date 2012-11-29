@@ -364,7 +364,7 @@ module ApplicationHelper
       variety_hash.each do |key, value|
         name = Wines::VarietyPercentage.where(:id => key).first.try(:name_en)
         percentage = value.to_i == 0 ? nil : "#{value}%"
-        show_list << %Q[#{name}(value)]
+        show_list << %Q[#{name}(#{percentage})]
       end
       show_list.gsub(/、$/, '')
     elsif detail

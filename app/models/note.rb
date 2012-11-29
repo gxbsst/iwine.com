@@ -142,7 +142,7 @@ class Note < ActiveRecord::Base
       end
       variety_and_percentages.gsub(/;$/, '')
     else
-      variety
+      grape
     end
   end
 
@@ -197,6 +197,7 @@ class Note < ActiveRecord::Base
       traits.pluck(:id).join(',')
     end
   end
+
   private
 
   def sync_wine_detail_info(wine_info)
@@ -210,23 +211,23 @@ class Note < ActiveRecord::Base
     self.region_tree_id = wine_info['region']
     self.wine_style_id = wine_info['style']
     self.wine_detail_id = wine_info['detail']
-    self.variety = wine_info['varienty']
+    self.grape = wine_info['varienty']
     self.alcohol = wine_info['alcohol'].to_f if wine_info['alcohol'].present?
-    init_variety_percentage(wine_info['detail'], wine_info['varienty']) if wine_info['detail'].present?
+    # init_variety_percentage(wine_info['detail'], wine_info['varienty']) if wine_info['detail'].present?
   end
 
-  def init_variety_percentage(detail, variety)
-    if detail.present? && variety.present?
-      variety_arr = variety.split(";")
-      variety_hash = {}
-      variety_arr.each do |v|
-        variety_id_arr = v.split(":")
-        percentage = variety_id_arr[1].to_i == 0 ? nil : variety_id_arr[1]
-        variety_hash.merge! :variety_id => variety_id_arr[0], :percentage => percentage
-      end
-      Wines::VarietyPercentage.sync_app_variety(Wines::Detail.find(detail), variety_hash)
-    end
-  end
+  # def init_variety_percentage(detail, variety)
+  #   if detail.present? && variety.present?
+  #     variety_arr = variety.split(";")
+  #     variety_all = []
+  #     variety_arr.each do |v|
+  #       variety_id_arr = v.split(":")
+  #       percentage = variety_id_arr[1].to_i == 0 ? nil : variety_id_arr[1]
+  #       variety_all << {:id => variety_id_arr[0], :percentage => percentage}
+  #     end
+  #     Wines::VarietyPercentage.sync_app_variety(Wines::Detail.find(detail), variety_all)
+  #   end
+  # end
 
   def sync_flags(app_note)
     self.delete_flag = app_note['deleteFlag']

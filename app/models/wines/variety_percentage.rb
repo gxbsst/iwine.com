@@ -26,8 +26,8 @@ class Wines::VarietyPercentage < ActiveRecord::Base
   def self.sync_app_variety(detail, variety_arr)
     variety_arr.each do |variety|
       detail.
-      where("variety_id = ? and percentage = ? ", variety['id'], variety['percentage']).
-      first_or_create(:percentage => variety['percentage'], :variety_id => variety['id'])
+      variety_percentages.where("variety_id = ? and percentage = ? ", variety[:id], variety[:percentage]).
+      first_or_create(:percentage => variety[:percentage], :variety_id => variety[:id])
     end
   end
 
