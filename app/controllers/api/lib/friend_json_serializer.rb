@@ -27,6 +27,7 @@ module FriendJsonSerializer
     end
   end
 
+  # 取消关注
   class DestroySerializer
     STATUS = {
         :success => true,

@@ -60,7 +60,7 @@ namespace :app do
     puts "================ init_style_and_region_data task begin"
     require 'csv'
     parent_styles = [
-      ['Table Wine', '佐餐葡萄酒'],
+      ['Still Wine', '静态葡萄酒'],
       ['Sparkling', '起泡酒'],
       ['Fortified', '加强酒'],
       ['Sweet Wine', '甜酒'],

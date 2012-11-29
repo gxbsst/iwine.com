@@ -1,3 +1,4 @@
+require "#{Rails.root}/app/controllers/api/lib/error_value.rb"
 module ErrorValue
 
   class FriendError < Base

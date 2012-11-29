@@ -1,7 +1,8 @@
 # encoding: utf-8
 module Notes
   class NoteAgent
-    # Default options while posting an ERP request
+    # Default options while posting an  request
+
     DEFAULT_OPTIONS = {
         :host => '192.168.11.29',
         :port => '8082',

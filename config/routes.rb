@@ -12,7 +12,6 @@ Patrick::Application.routes.draw do
       match :upload_photo, :via => [:get, :post, :put]
       get :trait
       get :color
-      get :test
     end
     member do
       get :app_edit

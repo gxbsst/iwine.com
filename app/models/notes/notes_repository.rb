@@ -34,20 +34,21 @@ module Notes
     # 他还品鉴了这些酒
     # TODO 加限定返回数量
     def self.find_by_user(user_id, filter_id = '')
-      base_url = "/notes/user?uid=#{user_id.to_s}&filterId=#{filter_id}"
+      base_url = "/notes/user?uid=#{user_id.to_s}&filterId=#{filter_id}&maxDoc=5"
       path = PRE_PATH + base_url
       response =  Notes::NoteAgent.get(:path => path)
       response ? JSON.parse(response.body) : false
     end
 
     # 他们也品鉴了这支酒
-    def self.find_by_wine(vintage, name_en, name_zh, note_id, limit = 5)
+    def self.find_by_wine(vintage, name_en, name_zh, note_id, limit = 5, filter_id ="")
       base_url = "/notes/guys"
       body = {
           'content' => "#{name_en} #{name_zh}",
           'vintage' => vintage,
           'maxDoc' => limit,
-          'filterId' => note_id
+          'filterId' => note_id,
+          'minScore' => 0.9 # 根据匹配度返回值
       }
       path = PRE_PATH + base_url
       response =  Notes::NoteAgent.post(:path => path, :body => body)

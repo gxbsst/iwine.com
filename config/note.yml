@@ -1,6 +1,7 @@
 note:
   photo_location:
-    host: "http://iwinenotes.iwine.com:8080"
+    host: "iwinenotes.iwine.com"
+    port: 8080
     base_url: "iwinenotes/images"
     version: "normal"
   user_agent:
