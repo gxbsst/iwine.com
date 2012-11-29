@@ -36,6 +36,7 @@ class UsersController < ApplicationController
 
   def notes 
     notes_result = Notes::NotesRepository.find_by_user(@user.id)
+    return render_404('') unless notes_result['state']
     @user_notes = Notes::HelperMethods.build_user_notes(notes_result) if notes_result['state']  
     unless @user_notes.blank?
       if @user != current_user
