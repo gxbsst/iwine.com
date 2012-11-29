@@ -210,7 +210,7 @@ class NotesController < ApplicationController
     @note.wine_style_id = wine_detail.wine.wine_style_id
     @note.wine_detail_id = wine_detail.id
     #TODO 葡萄酒品种
-    #@note.grape
+    @note.grape = @note.upload_variety_percentage
     @note.alcohol = wine_detail.alcoholicity.delete("%") if wine_detail.alcoholicity
   end
 
