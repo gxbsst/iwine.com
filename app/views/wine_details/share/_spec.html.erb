@@ -14,7 +14,7 @@
 	类型：<%= @wine.style.name_zh if @wine.style%><br />
 	容量：<%= @wine_detail.show_capacity %><br />
 	酒精度：<%= @wine_detail.show_alcoholicity %><br />
-	葡萄品种： <%= variety_percentage_lists(@wine_detail.variety_percentages) %>
+	葡萄品种： <%= variety_percentage_lists(@wine_detail) %>
 </div>
 
 

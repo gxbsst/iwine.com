@@ -14,7 +14,7 @@
         <td>
           <%= form_for @note, :url =>  upload_photo_notes_path, 
             :html => {:multipart => true, :id => "form", :method => :put} do |f| %>
-            <input type="hidden" name="note_id" value="<%= @note.id %>"/>
+            <input type="hidden" name="app_note_id" value="<%= params[:app_note_id] %>"/>
             <input type="hidden" name="wine_detail_id" value="<%= params[:wine_detail_id] || @note.wine_detail_id %>"/>
             <p>从电脑上传（支持JPG、GIF、PNG图片格式，且小于5M）</p>
             <p class="mt20">
@@ -62,15 +62,23 @@
         </tr>
         <tr>
           <th>葡萄品种</th>
-          <td><%= variety_percentage_lists(@note.wine_detail.variety_percentages) %></td>
+          <td>
+            <%= variety_percentage_lists(@note.wine_detail, @note.variety) %>
+            <%= f.hidden_field :variety %>
+          </td>
         </tr>
         <tr>
           <th>酒精度</th>
-          <td><%= @note.show_alcohol %></td>
+          <td>
+            <%= @note.show_alcohol %>
+          </td>
         </tr>
         <tr>
           <th>价格</th>
-          <td><%= f.text_field :price, :class => "text price" %></td>
+          <td>
+            <%= f.text_field :price, :class => "text price" %>
+            <%= collection_select(:note, :exchange_rate_id, ExchangeRate.all, :id, :name) %>
+          </td>
         </tr>
         <tr>
           <th>品鉴地点</th>

@@ -216,11 +216,9 @@
   <div class="sidebox">
     <%= link_to (image_tag 'common/notes_ad.jpg', :size => '250x197'), 'http://www.iwine.com/notes/app/' %>
   </div>
-  <!--
   <div class="sidebox">
-    <%= link_to image_tag('common/btn_add_notes.jpg', :size => '250x50', :alt => '我也喝过，去写品酒辞'), '' %>
+    <%= link_to image_tag('common/btn_add_notes.jpg', :size => '250x50', :alt => '我也喝过，去写品酒辞'), new_note_path(:app_note_id => @note.id) %>
   </div>
-  -->
   <div class="sidebox">
     <div class="title">
       <span class="more">
