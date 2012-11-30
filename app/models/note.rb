@@ -102,7 +102,7 @@ class Note < ActiveRecord::Base
   
   #将app数据同步到本地数据库。
   def sync_data(app_note)
-    return false if self.modifiedDate.to_s(:app_time) == app_note['modifiedDate']
+    return false if !self.new_record? && (self.modifiedDate.to_s(:app_time) == app_note['modifiedDate'])
     sync_wine_detail_info app_note['wine']
     sync_basic_info app_note
     sync_photo app_note['cover']
@@ -236,7 +236,7 @@ class Note < ActiveRecord::Base
   end
 
   def sync_basic_info(basic_info)
-    self.location = basic_info['location']['location']
+    self.location = basic_info['location']['location'] if basic_info['location']
     self.price = basic_info['wine']['price']
     self.comment = basic_info['wine']['comment']
     self.rating = basic_info['wine']['rating'].to_i + 1

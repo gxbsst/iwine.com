@@ -233,6 +233,8 @@ class NotesController < ApplicationController
             first_or_initialize(:user_id => current_user.id, :app_note_id => params[:id])
         @note.sync_data(result['data'])
       end
+    else
+      render_404('') #处理note被删除或者网络问题无法加载note的错误
     end
   end
 
