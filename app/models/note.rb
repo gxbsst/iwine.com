@@ -236,6 +236,7 @@ class Note < ActiveRecord::Base
   end
 
   def sync_basic_info(basic_info)
+    self.app_note_id = basic_info['id']
     self.location = basic_info['location']['location'] if basic_info['location']
     self.price = basic_info['wine']['price']
     self.comment = basic_info['wine']['comment']
