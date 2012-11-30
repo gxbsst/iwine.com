@@ -13,23 +13,27 @@
     </div>
     <div class="wp_space_line ptb30">
     	<ul class="notes_list">
-        <% @wine_notes.each do |wine_note| %>
-        	<li class="clearfix">
-        	  <div class="left">
-             <%= link_to cover(wine_note[:photo], 'customer', '100x100', '100x100'), note_path(wine_note[:note]) %>
-            </div>
-            <div class="right">
-           	  <span class="date  float_r"><%= wine_note[:note].created_at.to_s(:cn_short) %></span>
-              <p>来自 <%= link_to wine_note[:user].username, user_path(wine_note[:user]) %> 的品酒辞</p>
-              <p class="mb10">年份：<%= wine_note[:wine].vintage %>年
-                | 评分：
-                <span><%= star_rate_tag(wine_note[:wine].rating) %></span>
-              </p>
-              <p><%= wine_note[:wine].comment %></p>
-              <p><%= link_to '详细 》', note_path(wine_note[:note]) %></p>
-            </div>
-            <div class="clear"></div>
-          </li>
+        <% if @wine_notes.present? %>
+          <% @wine_notes.each do |wine_note| %>
+          	<li class="clearfix">
+          	  <div class="left">
+               <%= link_to cover(wine_note[:photo], 'customer', '100x100', '100x100'), note_path(wine_note[:note]) %>
+              </div>
+              <div class="right">
+             	  <span class="date  float_r"><%= wine_note[:note].created_at.to_s(:cn_short) %></span>
+                <p>来自 <%= link_to wine_note[:user].username, user_path(wine_note[:user]) %> 的品酒辞</p>
+                <p class="mb10">年份：<%= wine_note[:wine].vintage %>年
+                  | 评分：
+                  <span><%= star_rate_tag(wine_note[:wine].rating) %></span>
+                </p>
+                <p><%= wine_note[:wine].comment %></p>
+                <p><%= link_to '详细 》', note_path(wine_note[:note]) %></p>
+              </div>
+              <div class="clear"></div>
+            </li>
+          <% end %>
+        <% else %>
+          无
         <% end %>
       </ul>
       <div class="clear"></div>

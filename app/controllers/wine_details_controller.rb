@@ -26,14 +26,22 @@ class WineDetailsController < ApplicationController
   end
 
   # Wine Profile
-  def show
+  def show 
     @wine             = @wine_detail.wine
     @comments         = @wine_detail.all_comments(:limit => 6)
     @owners           = @wine_detail.owners(:limit => 4)
     @followers        = @wine_detail.followers(:limit => 11)
     @photos           = @wine_detail.all_photos.limit(6)
     @covers           = @wine_detail.show_covers
-    @title = @wine_detail.name
+    @title = @wine_detail.name 
+
+    #品酒辞
+    @wine_detail_id = Wines::Detail.find(params[:id]).id
+    result      = Notes::NotesRepository.find_wine_notes(@wine_detail_id)  
+    return render_404('') unless result['state']
+    # 一支酒的所有评酒辞
+    @wine_notes = Notes::HelperMethods.build_user_notes(result) if result['state']   
+    @wine_notes_count = @wine_notes.count
   end
 
   #搜索要添加的酒

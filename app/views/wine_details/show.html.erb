@@ -1,7 +1,7 @@
 <% content_for :title, @title%>
 
 <% content_for :css do %>
-<%= stylesheet_link_tag :wine, :thumb %>
+<%= stylesheet_link_tag :wine, :thumb, :notes %>
 <% end %>
 <div id="comment_form"  style="display: none" >
 
@@ -40,7 +40,8 @@
   <%#= render "wine_details/share/likers" %>
   <div class="wp_space_line ptb30">
     <%= render "comments/comments"  %>
-  </div>
+  </div> 
+  <%= render "wine_details/share/notes" %> 
   <%= render "wine_details/share/followers" %>
   <%= render "wine_details/share/owners" %>
   <%#= render "wine_details/share/events" %>
