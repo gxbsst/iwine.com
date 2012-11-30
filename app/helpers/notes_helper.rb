@@ -151,4 +151,10 @@ module NotesHelper
     end
   end
 
+  def add_similar_note(note)
+    query_params = note.wine.detail ? {:wine_detail_id =>  note.wine.detail} : {:app_note_id => note.id}
+    %Q[#{link_to image_tag('common/btn_add_notes.jpg', :size => '250x50', :alt => '我也喝过，去写品酒辞'),
+     new_note_path(query_params)}] 
+  end
+
 end
