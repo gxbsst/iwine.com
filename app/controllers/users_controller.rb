@@ -43,7 +43,6 @@ class UsersController < ApplicationController
     else
       @user_notes = Notes::HelperMethods.build_user_notes(notes_result)
     end
-
     #unless @user_notes.blank?
     #  if @user != current_user
     #     @user_notes = @user_notes.select {|user_note| user_note[:note].statusFlag.to_i <= 0}

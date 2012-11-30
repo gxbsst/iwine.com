@@ -1,7 +1,7 @@
 # encoding: utf-8
 class NotesController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [:show]
+  before_filter :authenticate_user!, :except => [:show, :index]
   before_filter :update_note_from_app, :only => [:app_edit]
   before_filter :find_note, :only => [:edit, :update]
   before_filter :init_basic_data_of_note, :only => [:create, :new]
@@ -10,10 +10,9 @@ class NotesController < ApplicationController
 
   def index 
    date = params[:modified_date]
-
    result      = Notes::NotesRepository.all(date)
    return render_404('') unless result['state']
-   @notes = Notes::HelperMethods.build_all_notes(result) 
+   @notes = Notes::HelperMethods.build_all_notes(result)
   end 
 
   def show
@@ -24,7 +23,7 @@ class NotesController < ApplicationController
    notes_result = Notes::NotesRepository.find_by_user(result['data']['uid'], @note.note.id)
    @user_notes = Notes::HelperMethods.build_user_notes(notes_result)  if notes_result['state']
    wine_result =  Notes::NotesRepository.find_by_wine(@note.wine.vintage, @note.wine.sName, @note.wine.oName, @note.note.id, 5,  @note.note.id)
-   @wine_note_users = Notes::HelperMethods.build_wine_notes(wine_result)  if wine_result['state']
+   @wine_note_users = Notes::HelperMethods.build_wine_notes(wine_result)  if wine_result['state'] 
   end
 
   #包含两部操作

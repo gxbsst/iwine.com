@@ -6,8 +6,8 @@
           <%= link_to cover(note[:photo], 'customer', '200x200', '200x200'), note_path(note[:note])%>
         </div>
         <div class="iw_info">
-          <h1><%= link_to note[:wine].name_zh, note_path(note[:note]) %></h1>
-          <h2><%= link_to note[:wine].name_en, note_path(note[:note]) %></h2>
+          <h1><%= link_to_cname note[:wine] %></h1> 
+          <h2><%= link_to_ename note[:wine] %></h2>
           <p class="iw_action"><%= star_rate_tag(note[:wine].rating) %></p>
         </div> 
         <div class="iw_main">
