@@ -1,6 +1,6 @@
 # encoding: UTF-8
 class WineDetailsController < ApplicationController
-  before_filter :authenticate_user!, :except => [:index, :show, :comments, :notes, :owners, :followers]
+  before_filter :authenticate_user!, :except => [:index, :show, :comments, :owners, :followers]
   before_filter :set_current_user
   before_filter :get_wine_detail, :only => [:show, :owners, :followers, :photo_upload]
   before_filter :get_follow_item, :only => [:show]
