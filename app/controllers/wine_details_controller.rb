@@ -40,7 +40,7 @@ class WineDetailsController < ApplicationController
     result      = Notes::NotesRepository.find_wine_notes(@wine_detail_id)  
     return render_404('') unless result['state']
     # 一支酒的所有评酒辞
-    @wine_notes = Notes::HelperMethods.build_user_notes(result) if result['state']   
+    @wine_notes = Notes::HelperMethods.build_user_notes(result)  
     @wine_notes_count = @wine_notes.count
   end
 

@@ -37,7 +37,7 @@ class UsersController < ApplicationController
   def notes 
     notes_result = Notes::NotesRepository.find_by_user(@user.id)
     return render_404('') unless notes_result['state']
-    @user_notes = Notes::HelperMethods.build_user_notes(notes_result) if notes_result['state']  
+    @user_notes = Notes::HelperMethods.build_user_notes(notes_result)   
     unless @user_notes.blank?
       if @user != current_user
          @user_notes = @user_notes.select {|user_note| user_note[:note].statusFlag.to_i <= 0}
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
     #热门品酒辞
     result      = Notes::NotesRepository.all 
     return render_404('') unless result['state']
-    @notes = Notes::HelperMethods.build_all_notes(result) if result['state']
+    @notes = Notes::HelperMethods.build_all_notes(result)  
   end
 
   def followings
