@@ -44,6 +44,11 @@ class UsersController < ApplicationController
       end 
     end 
     @user_notes = Kaminari.paginate_array(@user_notes).page(params[:page] || 1).per(10)  
+
+    #热门品酒辞
+    result      = Notes::NotesRepository.all 
+    return render_404('') unless result['state']
+    @notes = Notes::HelperMethods.build_all_notes(result) if result['state']
   end
 
   def followings
