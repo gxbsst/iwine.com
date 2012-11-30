@@ -48,7 +48,7 @@ module Notes
           'vintage' => vintage,
           'maxDoc' => limit,
           'filterId' => note_id,
-          'minScore' => 0.9 # 根据匹配度返回值
+          'minScore' => 1 # 根据匹配度返回值
       }
       path = PRE_PATH + base_url
       response =  Notes::NoteAgent.post(:path => path, :body => body)
