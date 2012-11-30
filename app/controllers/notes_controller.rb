@@ -41,7 +41,7 @@ class NotesController < ApplicationController
         redirect_to edit_note_path(@note, :step => "second")
       end
     else
-      notice_stickie t("notice.failure")
+      error_stickie t("notice.failure")
       render :action => :new
     end
   end
@@ -91,8 +91,16 @@ class NotesController < ApplicationController
       union_clarity_and_tannin_nature
     end
     set_status_flag
-    #保存
-    if @note.update_attributes(params[:note]) && (@note.post_form)
+    
+    #验证comemnt 不能为空
+    @note.attributes = params[:note]
+    unless @note.valid?
+      error_stickie "简评不能为空！"
+      redirect_to edit_note_path(@note, :step => 'first') 
+      return
+    end
+
+    if @note.save && (@note.post_form)
       if params[:step] == "first"
         step = params[:status] == "submitted" ? "first" : "second"
         redirect_to edit_note_path(@note, :step => step)
@@ -104,7 +112,7 @@ class NotesController < ApplicationController
         end
       end
     else
-      notice_stickie t("notice.failure")
+      error_stickie t("notice.failure")
       render "edit_#{params[:step]}"
     end
   end
@@ -223,8 +231,7 @@ class NotesController < ApplicationController
     if result['state']
       #检查该app_note的user和当前user是不是同一个人
       if current_user.try(:id) != result['data']['uid']
-        notice_stickie t('notice.no_ability')
-        redirect_to note_path(params[:id])
+        render_404('')
       else
         @note = current_user.notes.where(:uuid => result['data']['notesId']).
             first_or_initialize(:user_id => current_user.id, :app_note_id => params[:id])
