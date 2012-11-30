@@ -20,6 +20,7 @@ class Note < ActiveRecord::Base
   belongs_to :style, :class_name => "Wines::Style", :foreign_key => :wine_style_id
   belongs_to :wine_detail, :class_name => "Wines::Detail", :foreign_key => :wine_detail_id
   belongs_to :exchange_rate
+  validates :comment, :presence => true, :allow_nil => true
 
   def init_uuid
     #如果本地没有note,新建note时使用从app得到的uuid
