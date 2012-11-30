@@ -8,7 +8,7 @@ zh-CN:
     update_success: "更新成功。"
     destroy_success: "删除成功。"
     destroy_failure: "删除失败。"
-    failure: "操作失败！"
+    failure: "保存失败， 请联系网站管理员."
     no_ability: "您没有权限执行此操作！"
     upload_photo_success: "成功上传图片。"
     upload_photo_failure: "上传图片失败。"
