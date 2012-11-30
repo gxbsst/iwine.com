@@ -11,7 +11,7 @@ class NotesController < ApplicationController
 
    result      = Notes::NotesRepository.all(date)
    return render_404('') unless result['state']
-   @notes = Notes::HelperMethods.build_all_notes(result) if result['state']
+   @notes = Notes::HelperMethods.build_all_notes(result) 
   end 
 
   def show
