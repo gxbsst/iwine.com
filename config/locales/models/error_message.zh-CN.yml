@@ -56,6 +56,10 @@ zh-CN:
               too_long: '用户设置域名最长可使用32个字符，可由数字、字母、“-”、“-” 组成'
               taken: '真可惜，这个个性域名已经被人使用啦，换一个试试吧。'
               invalid: '用户设置域名最长可使用32个字符，可由数字、字母、“-”、“-” 组成'
+        note:
+          attributes:
+            comment:
+              blank: 请填写简评
 
               
         users/profile:
