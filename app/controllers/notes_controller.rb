@@ -95,26 +95,43 @@ class NotesController < ApplicationController
     #验证comemnt 不能为空
     @note.attributes = params[:note]
     unless @note.valid?
-      error_stickie "简评不能为空！"
-      redirect_to edit_note_path(@note, :step => 'first') 
+      error_stickie ("请完善您的输入信息.")
+      render 'edit_first'
       return
+    else
+       @note.save  # 保存到数据库
+       if @note.post_form # 传到API
+         if params[:step] == "first"
+           step = params[:status] == "submitted" ? "first" : "second"
+           redirect_to edit_note_path(@note, :step => step)
+         else
+           if params[:status] == "submitted"
+             redirect_to notes_user_path(current_user)
+           else
+             redirect_to note_path(@note.app_note_id)
+           end
+         end
+       else
+         error_stickie t("notice.failure")
+         render "edit_#{params[:step]}"
+       end
     end
 
-    if @note.save && (@note.post_form)
-      if params[:step] == "first"
-        step = params[:status] == "submitted" ? "first" : "second"
-        redirect_to edit_note_path(@note, :step => step)
-      else
-        if params[:status] == "submitted"
-          redirect_to notes_user_path(current_user)
-        else
-          redirect_to note_path(@note.app_note_id)
-        end
-      end
-    else
-      error_stickie t("notice.failure")
-      render "edit_#{params[:step]}"
-    end
+    #if @note.save && (@note.post_form)
+    #  if params[:step] == "first"
+    #    step = params[:status] == "submitted" ? "first" : "second"
+    #    redirect_to edit_note_path(@note, :step => step)
+    #  else
+    #    if params[:status] == "submitted"
+    #      redirect_to notes_user_path(current_user)
+    #    else
+    #      redirect_to note_path(@note.app_note_id)
+    #    end
+    #  end
+    #else
+    #  error_stickie t("notice.failure")
+    #  render "edit_#{params[:step]}"
+    #end
   end
 
   def upload_photo
