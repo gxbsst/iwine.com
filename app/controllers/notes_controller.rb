@@ -1,10 +1,12 @@
 # encoding: utf-8
-class NotesController < ApplicationController 
+class NotesController < ApplicationController
+
   before_filter :authenticate_user!, :except => [:show]
   before_filter :update_note_from_app, :only => [:app_edit]
   before_filter :find_note, :only => [:edit, :update]
   before_filter :init_basic_data_of_note, :only => [:create, :new]
   before_filter :create_or_init_data, :only => :upload_photo
+
 
   def index 
    date = params[:modified_date]
@@ -16,7 +18,7 @@ class NotesController < ApplicationController
 
   def show
    result      = Notes::NotesRepository.find(params[:id])
-   return render_404('') unless result['state']
+   return render_404('') if (!result['state'] || result['data']['statusFlag'].to_i != Note::STATUS_FLAG[:published])
    @note = Notes::NoteItem.new(result['data'])
    @user       = User.find(result['data']['uid'])
    notes_result = Notes::NotesRepository.find_by_user(result['data']['uid'], @note.note.id)

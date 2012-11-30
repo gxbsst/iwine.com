@@ -33,8 +33,8 @@ module Notes
 
     # 他还品鉴了这些酒
     # TODO 加限定返回数量
-    def self.find_by_user(user_id, filter_id = '')
-      base_url = "/notes/user?uid=#{user_id.to_s}&filterId=#{filter_id}&maxDoc=5"
+    def self.find_by_user(user_id, filter_id = '', max_doc = 5)
+      base_url = "/notes/user?uid=#{user_id.to_s}&filterId=#{filter_id}&maxDoc=#{max_doc}"
       path = PRE_PATH + base_url
       response =  Notes::NoteAgent.get(:path => path)
       response ? JSON.parse(response.body) : false

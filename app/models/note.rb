@@ -1,4 +1,9 @@
 class Note < ActiveRecord::Base
+
+  STATUS_FLAG = {
+      :draft => NOTE_DATA['note']['status_flag']['submitted'],
+      :published => NOTE_DATA['note']['status_flag']['published']
+  }
   mount_uploader :photo, NotePhotoUploader
 
   attr_accessible :name, :orther_name, :vintage, :rating, :location, :grape, :alcohol, :price,

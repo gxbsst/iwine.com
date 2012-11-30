@@ -32,7 +32,7 @@ gem 'memcache-client'
 
 gem 'rails-i18n'
 
-gem 'fancybox-rails', :git => 'git://github.com/sverigemeny/fancybox-rails'
+gem 'fancybox-rails', :git => 'git://github.com/sverigemeny/fancybox-rails', :ref => "17db886581f3"
 gem 'jcrop-rails'
 gem 'backbone-on-rails'
 gem "jquery-tools", "~> 0.0.3"

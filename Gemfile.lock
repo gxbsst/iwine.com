@@ -8,7 +8,8 @@ GIT
 
 GIT
   remote: git://github.com/sverigemeny/fancybox-rails
-  revision: 10851fd5b580ba9729c21cfc2af2556a4ce4a740
+  revision: 17db886581f38fbcd4b0ac0349fc9493554ee261
+  ref: 17db886581f3
   specs:
     fancybox-rails (0.1.4)
       railties (>= 3.1.0)

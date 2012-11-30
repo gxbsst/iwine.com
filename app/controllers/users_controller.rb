@@ -35,14 +35,21 @@ class UsersController < ApplicationController
   end
 
   def notes 
-    notes_result = Notes::NotesRepository.find_by_user(@user.id)
+    notes_result = Notes::NotesRepository.find_by_user(@user.id, '', '')
     return render_404('') unless notes_result['state']
-    @user_notes = Notes::HelperMethods.build_user_notes(notes_result)   
-    unless @user_notes.blank?
-      if @user != current_user
-         @user_notes = @user_notes.select {|user_note| user_note[:note].statusFlag.to_i <= 0}
-      end 
-    end 
+
+    if @user == current_user
+      @user_notes = Notes::HelperMethods.build_user_notes(notes_result, false)
+    else
+      @user_notes = Notes::HelperMethods.build_user_notes(notes_result)
+    end
+
+    #unless @user_notes.blank?
+    #  if @user != current_user
+    #     @user_notes = @user_notes.select {|user_note| user_note[:note].statusFlag.to_i <= 0}
+    #  end
+    #end
+
     @user_notes = Kaminari.paginate_array(@user_notes).page(params[:page] || 1).per(10)  
 
     #热门品酒辞

@@ -6,9 +6,10 @@ module Notes::HelperMethods
   end
 
   # 他还品鉴了这些酒
-  def self.build_user_notes(result)
+  def self.build_user_notes(result, filter_draft = true)
     new_array = []
     result['data'].each do |note|
+      next if note['statusFlag'].to_i == Note::STATUS_FLAG[:draft]  if  filter_draft
       new_array <<  {
           :user => User.find(note['uid']),
           :wine => Notes::NoteItem::Wine.new(note['wine']),
@@ -20,9 +21,10 @@ module Notes::HelperMethods
   end
 
   # 他们也品鉴了这支酒
-  def self.build_wine_notes(result)
+  def self.build_wine_notes(result, filter_draft = true)
     new_array = []
     result['data'].each do |note|
+      next if note['statusFlag'].to_i == Note::STATUS_FLAG[:draft] if  filter_draft
       new_array <<  {
           :user => User.find(note['uid']),
           :note => Notes::NoteItem::Note.new(note),
@@ -33,9 +35,10 @@ module Notes::HelperMethods
   end
 
   # 首页
-  def self.build_all_notes(result)
+  def self.build_all_notes(result, filter_draft = true)
     new_array = []
     result['data'].each do |note|
+      next if note['statusFlag'].to_i == Note::STATUS_FLAG[:draft]  if  filter_draft
       new_array <<  {
           :location => Notes::NoteItem::Location.new(note),
           :user => User.find(note['uid']),
