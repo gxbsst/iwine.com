@@ -336,7 +336,7 @@ module Notes
 
       def images(options = {})
         if self.image.blank?
-          'Not Image'
+          false
         else
           version =  (options.has_key? :version) ? options[:version] : 'normal'
           self.image.split(',').map{|file| self.generate_url(:id => file, :version => version, :pattern => options[:pattern])}

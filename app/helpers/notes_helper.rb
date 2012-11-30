@@ -1,10 +1,14 @@
 # encoding: utf-8
 module NotesHelper
   def cover(photo, version = 'normal', pattern = '', size = '590x590')
-    if photo.images.is_a? Array
-      image_tag(photo.images(:version => version, :pattern => pattern).first, :size => size)
+    if photo.images
+      if photo.images.is_a? Array
+        image_tag(photo.images(:version => version, :pattern => pattern).first, :size => size)
+      else
+        image_tag(photo.images(:version => version, :pattern => pattern), :size => size)
+      end
     else
-      image_tag(photo.images(:version => version, :pattern => pattern), :size => size)
+      image_tag('avatar_default_bg_large.png', :size => size)
     end
   end
 
