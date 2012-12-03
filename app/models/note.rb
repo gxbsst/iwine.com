@@ -18,22 +18,18 @@ class Note < ActiveRecord::Base
                 :appearance_clarity_b, :palate_tannin_nature_a, :palate_tannin_nature_b, :palate_tannin_nature_c
   include Common
 
-  before_create :init_uuid
   after_save :crop_photo
   before_save :set_modifie_date
   belongs_to :user
   belongs_to :style, :class_name => "Wines::Style", :foreign_key => :wine_style_id
   belongs_to :wine_detail, :class_name => "Wines::Detail", :foreign_key => :wine_detail_id
   belongs_to :exchange_rate
-  validates :comment, :presence => true, :allow_nil => true
-
-  def init_uuid
-    #如果本地没有note,新建note时使用从app得到的uuid
-    self.uuid = SecureRandom.uuid if self.new_record? && user_agent.to_s == NOTE_DATA['note']['user_agent']['local']
-  end
+  validates :uuid, :name, :vintage, :presence => true
+  validates :comment, :presence => true, :on => :update
+  validates :uuid, :uniqueness => true
 
   def show_vintage
-    is_nv ? "NV" : vintage
+    vintage.to_i == -1 ? "NV" : vintage
   end
 
   def show_alcohol
@@ -102,7 +98,26 @@ class Note < ActiveRecord::Base
   end
 
   def init_basic_data_from_app(app_note)
-    sync_wine_detail_info app_note['wine']
+    if app_note #检测是否成功获取来自app的数据。
+      if app_note['wine']['detail']
+        wine_detail = Wines::Detail.find(app_note['wine']['detail'])
+        init_basic_data_from_wine_detail wine_detail
+      else
+        sync_wine_detail_info app_note['wine']
+      end
+    end
+  end
+
+  
+  def init_basic_data_from_wine_detail(wine_detail)
+    self.name = wine_detail.wine.origin_name
+    self.other_name = wine_detail.wine.name_zh
+    self.vintage = wine_detail.is_nv? ? -1 : wine_detail.year.to_s(:year)
+    self.region_tree_id = wine_detail.wine.region_tree_id
+    self.wine_style_id = wine_detail.wine.wine_style_id
+    self.wine_detail_id = wine_detail.id
+    self.grape = self.upload_variety_percentage
+    self.alcohol = wine_detail.alcoholicity.delete("%") if wine_detail.alcoholicity
   end
   
   #将app数据同步到本地数据库。
@@ -209,11 +224,7 @@ class Note < ActiveRecord::Base
   def sync_wine_detail_info(wine_info)
     self.name = wine_info['sName']
     self.other_name = wine_info['oName']
-    if wine_info['vintage'].present? && wine_info['vintage'].to_s.include?("NV")
-      self.is_nv  = true
-    else
-      self.vintage = wine_info['vintage']
-    end
+    self.vintage = wine_info['vintage']
     self.region_tree_id = wine_info['region']
     self.wine_style_id = wine_info['style']
     self.wine_detail_id = wine_info['detail']
@@ -246,6 +257,7 @@ class Note < ActiveRecord::Base
     self.price = basic_info['wine']['price']
     self.comment = basic_info['wine']['comment']
     self.rating = basic_info['wine']['rating'].to_i + 1
+    self.uuid = basic_info['notesId']
   end
 
   def sync_conclusion(conclusion)

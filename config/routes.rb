@@ -9,11 +9,11 @@ Patrick::Application.routes.draw do
 
   resources :notes do
     collection do
-      match :upload_photo, :via => [:get, :post, :put]
       get :trait
       get :color
     end
     member do
+      match :upload_photo, :via => [:get, :post, :put]
       get :app_edit
       get :publish
     end
