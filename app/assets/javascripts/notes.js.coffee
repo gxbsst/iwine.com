@@ -81,7 +81,11 @@ jQuery ->
     select: ->
       # 如果是颜色，只能单选
       if @options.forModel == 'color'
-        @model.collection.cancleAllSelected()
+        colls = @model.collection.reject (model) =>
+          model == @model
+        colls.forEach (m) =>
+          m.cancleSelect()
+#        @model.collection.where({}).cancleAllSelected()
       @model.markSelect()
 
   class window.TraitItemDisplayView extends window.TraitItemView
