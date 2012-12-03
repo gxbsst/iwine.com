@@ -111,9 +111,13 @@
     <div class="title">
       <h2>简评</h2></div>
     <div class="content">
-      <p>
-        <%= @note.wine.comment %>
-      </p>
+      <% if @note.wine.comment.present?%>
+        <p>
+          <%= @note.wine.comment %>
+        </p>
+      <% else %>
+        无
+      <% end %>
     </div>
   </div>
   <div class="section">
@@ -255,7 +259,7 @@
       <h3>他还品鉴了这些酒</h3>
     </div>
     <div class="side_notes">
-      <% if @user_notes %>
+      <% if @user_notes.present? %>
         <% @user_notes.each_with_index do |user_note,i| %>
           <% if i < 5 %>
             <dl class="clearfix">
