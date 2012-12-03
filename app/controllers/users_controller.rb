@@ -104,7 +104,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def follow  
+  def follow
     if current_user.is_following params[:id]  
       #重复关注某人 
        notice_stickie t("notice.friend.re_follow")
@@ -129,7 +129,7 @@ class UsersController < ApplicationController
           end
         end
     end
-    redirect_to(followings_user_path(current_user))
+    redirect_to request.referer || followings_user_path(current_user)
   end
 
   def unfollow
