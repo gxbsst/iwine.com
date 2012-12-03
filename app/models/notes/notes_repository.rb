@@ -58,13 +58,13 @@ module Notes
     def self.delete_note(note)
       base_url = "/push"
       body = {"id" => note.app_note_id.to_s, 
-        "wine.vintage" => note.is_nv ? "NV" : note.vintage.try(:to_s),
+        "wine.vintage" => note.vintage.try(:to_s),
         "wine.style" => note.wine_style_id.try(:to_s),
         "wine.sName" => note.name,
         "agent" => NOTE_DATA['note']['user_agent']['local'],
-        "deleteFlag" => note.delete_flag}
+        "deleteFlag" => note.delete_flag.to_i.to_s}
       path = "#{PRE_PATH}#{base_url}"
-      response =  Notes::NoteAgent.post(:path => path, :body => body)
+      response =  Notes::NoteAgent.post(:path => path, :body => body.delete_if{|k, v| v.blank?})
       response ? JSON.parse(response.body) : false
     end
 
