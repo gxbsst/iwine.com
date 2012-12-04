@@ -6,6 +6,10 @@
 .addwine .step .step_fir {background-position:0 -130px;}
 .addwine .step .step_sec {background-position:0 -170px;}
 .addwine .step .step_thr {background-position:0 -210px;}
+.step_notes {margin: 0 0 40px 0;}
+.step_notes .step_fir {background-position:0 -260px;}
+.step_notes .step_sec {background-position:0 -300px;}
+.step_notes .step_thr {background-position:0 -340px;}
 .box  {background:url(../images/bg/bg_box_m.gif) repeat-y    ;margin: 0 0 20px 0;}
 .box_t {width:680px;height:10px;background:url(../images/bg/bg_box_t.gif) no-repeat left top;}
 .box_b {width:680px;height:25px;background:url(../images/bg/bg_box_b.gif) no-repeat left top;}
