@@ -4,7 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>iWine</title>
 <link href="stylesheets/main.css" rel="stylesheet" type="text/css" />
-<link href="stylesheets/fancybox.css" rel="stylesheet" type="text/css" />
+<link href="stylesheets/hp.css" rel="stylesheet" type="text/css" />
+<link href="stylesheets/add.css" rel="stylesheet" type="text/css" />
 <script src="javascripts/input.js" type="text/javascript"></script>
 <script type="text/javascript">
 function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua.indexOf(t)>-1},g='gecko',w='webkit',s='safari',o='opera',m='mobile',h=document.documentElement,b=[(!(/opera|webtv/i.test(ua))&&/msie\s(\d)/.test(ua))?('ie ie'+RegExp.$1):is('firefox/2')?g+' ff2':is('firefox/3.5')?g+' ff3 ff3_5':is('firefox/3.6')?g+' ff3 ff3_6':is('firefox/3')?g+' ff3':is('gecko/')?g:is('opera')?o+(/version\/(\d+)/.test(ua)?' '+o+RegExp.$1:(/opera(\s|\/)(\d+)/.test(ua)?' '+o+RegExp.$2:'')):is('konqueror')?'konqueror':is('blackberry')?m+' blackberry':is('android')?m+' android':is('chrome')?w+' chrome':is('iron')?w+' iron':is('applewebkit/')?w+' '+s+(/version\/(\d+)/.test(ua)?' '+s+RegExp.$1:''):is('mozilla/')?g:'',is('j2me')?m+' j2me':is('iphone')?m+' iphone':is('ipod')?m+' ipod':is('ipad')?m+' ipad':is('mac')?'mac':is('darwin')?'mac':is('webtv')?'webtv':is('win')?'win'+(is('windows nt 6.0')?' vista':''):is('freebsd')?'freebsd':(is('x11')||is('linux'))?'linux':'','js']; c = b.join(' '); h.className += ' '+c; return c;}; css_browser_selector(navigator.userAgent);
@@ -40,28 +41,21 @@ function css_browser_selector(u){var ua=u.toLowerCase(),is=function(t){return ua
             <div class="clear"></div>
       </ul>
     </div>
-         
-         <div class="fancybox-wrap fancybox-default fancybox-opened" style="width: 650px; height: auto; display: block; position: fixed; top: 267px; left: 592px;">
-            <div class="fancybox-outer">
-                <div class="fancybox-inner">
-                    <div id="add_data" style="display: block;">
-                        <h3>请选择要添加的内容类型</h3>
-                        <ul>
-                            <li>
-                                <a class="add_new_wine" href="#">添加新酒</a>
-                            </li>
-                            <li>
-                                <a class="add_cellar_wine" href="#">添加藏酒</a>
-                            </li>
-                            <li>
-                                <a class="add_notes" href="#">添加藏酒</a>
-                            </li>
-                            <div class="clear"></div>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        <div class="fancybox-item fancybox-close" title="Close"></div>
-        </div>
+    <div id="wrapper950">
+    	<div class="whitespace addwine">
+            <h1 class="main_title">添加品酒辞</h1>
+            <div class="step_notes">
+                <div class="step_fir"></div>
+          </div>
+              <div class="search">
+              	 <p class="notice_b mb20">请输入想要品鉴的酒款名称以查询该酒款是否已经存在</p>
+                  <input name="请输入酒款名称" type="text" class="text common_search mr5" value="请输入酒款名称" onclick="clearDefaultText(this,'请输入酒款名称')"/><a href="add_wine_searchyear.html" class="btn_gray"><span>搜索</span></a>
+              </div>
+      </div>
+    </div>
+    <div id="footer">
+        <div class="link"><a href="aboutus.html">关于我们</a> | <a href="contactus.html">联系我们</a> | <a href="help.html">帮助中心</a> | <a href="privacy.html">隐私条款</a> | <a href="agreement.html">用户协议</a> | <a href="disclaimer.html">免责声明</a> | <a href="sitemap.html">网站地图</a> | <a href="feedback.html">意见反馈</a></div>
+        <div class="copyright">Copyright © 2011 iWine, Inc. All rights reserved. <a href="#">沪ICP备12345678号</a></div>
+    </div>
 </body>
 </html>
