@@ -285,8 +285,10 @@
 .fancybox-inner #add_data ul li {margin: 20px;float:left;display:block;}
 .fancybox-inner #add_data ul li a.add_new_wine {background-position: 0 0;}
 .fancybox-inner #add_data ul li a.add_cellar_wine {background-position: -137px 0;}
+.fancybox-inner #add_data ul li a.add_notes {background-position: -274px 0;}
 .fancybox-inner #add_data ul li a.add_new_wine:hover {background-position: 0 -190px;}
 .fancybox-inner #add_data ul li a.add_cellar_wine:hover {background-position: -137px -190px;}
+.fancybox-inner #add_data ul li a.add_notes:hover {background-position: -274px -190px;}
 /* line 258, ../../../../app/assets/themes/waterfall/stylesheets/fancybox.css.scss */
 #comment_form {
 }

@@ -58,7 +58,7 @@ $(document).ready(function(){
 
     // 添加朋友、酒等
     $("a.btn_add.fancybox").fancybox({
-        maxWidth        : 520,
+        maxWidth        : 650,
         maxHeight       : 299,
         padding : 0,
         fitToView       : false,

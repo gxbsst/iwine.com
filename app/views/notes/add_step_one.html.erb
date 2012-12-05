@@ -1,0 +1,10 @@
+<div class="whitespace addwine">
+    <%= render "notes/addwine_step", :step => "step_fir" %>
+    <div class="search">
+        <%= render :partial => "notes/search_wine", :object => @search %>
+    </div>
+</div>
+ 
+<% content_for :css do %>
+<%= stylesheet_link_tag :hp, :add %>
+<% end %>

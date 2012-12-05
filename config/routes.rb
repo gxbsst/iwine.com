@@ -17,6 +17,9 @@ Patrick::Application.routes.draw do
       get :app_edit
       get :publish
     end
+    collection do
+      get :add
+    end
   end
 
   resources :events do
