@@ -37,7 +37,7 @@ describe Api::V2::FriendsController do
       end
 
       it { @result["success"].should == 0}
-      it { @result["resultCode"].should == 431}
+      it { @result["resultCode"].should == 441}
 
     end
   end
@@ -73,7 +73,7 @@ describe Api::V2::FriendsController do
       end
 
       it { @result["success"].should == 0}
-      it { @result["resultCode"].should == 431}
+      it { @result["resultCode"].should == 441}
     end
 
   end

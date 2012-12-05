@@ -18,6 +18,7 @@ class Users::Oauth < ActiveRecord::Base
                                    :sns_name    => provider_info[:provider]).
                             first_or_initialize(:sns_name => auth.provider,
                                                 :sns_user_id => auth.uid,
+                                                :provider_user_id => auth.uid,
                                                 :access_token => auth.credentials.token)
     # TODO
     # 1. 先检查user_oauth表有没有记录
@@ -26,13 +27,14 @@ class Users::Oauth < ActiveRecord::Base
   end
 
   def self.build_binding_oauth(user, auth)
-    oauth_user = user.oauths.oauth_binding.where(:sns_user_id => auth.uid, 
-                                     :sns_name    => auth.provider).
-                        first_or_initialize(:sns_name => auth.provider,
-                                            :sns_user_id => auth.uid,
-                                            :access_token => auth.credentials.token,
-                                            :user_id => user.id,
-                                            :setting_type => APP_DATA['user_oauths']['setting_type']['binding'])
+    oauth_user = user.oauths.oauth_binding.
+        where(:sns_user_id => auth.uid, :sns_name => auth.provider).
+        first_or_initialize(:sns_name => auth.provider,
+                            :sns_user_id => auth.uid,
+                            :provider_user_id => auth.uid,
+                            :access_token => auth.credentials.token,
+                            :user_id => user.id,
+                            :setting_type => APP_DATA['user_oauths']['setting_type']['binding'])
   end 
 
   def self.new_with_session(params, session)

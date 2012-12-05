@@ -1,10 +1,7 @@
 # encoding: utf-8
 module Api
   module V2
-
-    class FriendsController < ::Api::BaseApiController
-      #require Rails.root.join('app','controllers', 'api', 'v2', 'helpers', 'friend_json_serializer')
-
+    class FriendsController < Api::BaseApiController
       #   返回
       #1. 关注数／被关注数
       #2. 关注状态（是否为互相关注）
@@ -26,16 +23,23 @@ module Api
 
       def create
         # follow
-        resource = User.find(params[:user][:id])
-        render :json => ::Api::Helpers::FriendJsonSerializer.as_json(resource,
-                                                                     @user.follow_user(resource.id))
+        if params[:user][:id].present?
+          resource = User.find(params[:user][:id])
+          render :json => ::Api::Helpers::FriendJsonSerializer.as_json(resource, @user.follow_user(resource.id))
+        else
+          render :json => 'id不能为空'
+        end
       end
 
       def destroy
         # unfollow
-        resource = User.find(params[:id])
-        render :json => ::Api::Helpers::FriendJsonSerializer.as_json(resource,
-                                                                     @user.unfollow(resource))
+        if params[:id].present?
+          resource = User.find(params[:id])
+          render :json => ::Api::Helpers::FriendJsonSerializer.as_json(resource,
+                                                                       @user.unfollow(resource))
+        else
+          render :json => 'id不能为空'
+        end
       end
 
       protected

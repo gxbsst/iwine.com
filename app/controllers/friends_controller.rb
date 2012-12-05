@@ -51,15 +51,18 @@ class FriendsController < ApplicationController
       end
       @availabe_sns = current_user.available_sns
       @user_ids = []
+      @recommend_friends = []
       if client.present? || @oauth_user
         oauth_users = @oauth_user ? current_user.weibo_friends('weibo', 
                                               @oauth_user.access_token, 
                                               @oauth_user.sns_user_id) :  client.possible_local_friends(oauth)
-        @recommend_friends = current_user.remove_followings oauth_users
-        @authorized = true
-        @recommend_friends.each do |f|
-          @user_ids.push( f.user_id )
+        if oauth_users.present?
+          @recommend_friends = current_user.remove_followings oauth_users
+          @recommend_friends.each do |f|
+            @user_ids.push( f.user_id )
+          end
         end
+        @authorized = true
       else
         @authorized = false
       end
@@ -94,16 +97,26 @@ class FriendsController < ApplicationController
       client.authorize(:oauth_verifier => params[:oauth_verifier])
       results = client.dump
 
+      Rails.logger.info("==========================")
+      Rails.logger.info(results)
+      Rails.logger.info(client.user_id)
+      Rails.logger.info("==========================")
+
       if results[:access_token] && results[:access_token_secret]
         flash[:notice] = "done"
       else
         flash[:notice] = "fail"
       end
       # 创建UserOauth记录
+
       user_oauth = current_user.oauth_token client.name.to_s
       user_oauth.access_token = results[:access_token]
       user_oauth.sns_user_id = client.user_id # sns.rb Sina#user_id
+
+      user_oauth.provider_user_id = client.user_id
+
       user_oauth.refresh_token = results[:access_token_secret]
+
       user_oauth.save
       redirect_to sync_friends_path(:sns_name => params[:type], :success => true) #success 参数 判断用户同步成功 
     rescue Exception => e

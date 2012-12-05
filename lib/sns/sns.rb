@@ -22,7 +22,6 @@ module SNS
     def possible_local_friends(user_oauth)
       sns_user_ids = []
       friends_hash = {}
-
       friends.each do |friend|
         sns_user_ids.push friend[:sns_user_id]
         friends_hash[ friend[:sns_user_id] ] = friend
@@ -38,66 +37,89 @@ module SNS
 
     def me
       user = self.get("http://api.t.sina.com.cn/account/verify_credentials.json").body
-      JSON.parse user
+      #JSON.parse user
+      @me ||= JSON.parse user
     end
 
     def user_id
-      me['id']
+      @me ? @me['id'] : me['id']
     end
+
+    def username
+      @me ? @me['screen_name'] : ['screen_name']
+    end
+
   end
 
   module Qq
-
     def me
       user = self.get('http://open.t.qq.com/api/user/info').body
-      JSON.parse user
+      @me ||= JSON.parse user
     end
 
     def user_id
-      me['data']['name']
+      @me ? @me['data']['openid'] : me['data']['openid']
     end
 
+    def username
+      @me ? @me['data']['name'] : me['data']['name']
+    end
+
+
     def friends(user_oauth)
-      data = self.get("http://open.t.qq.com/api/friends/mutual_list?name=#{user_oauth.sns_user_id}").body
+      data = self.get("http://open.t.qq.com/api/friends/mutual_list?fopenid=#{user_oauth.sns_user_id}").body
       data = JSON.parse data
       list = []
 
-      data['data']['info'].each do |friend|
-        list.push( {
-          :sns_user_id => friend['name'],
-          :username => friend['nick'],
-          :avatar => friend['headurl']
-        } )
+      if data['data']
+        data['data']['info'].each do |friend|
+          list.push( { :sns_user_id => friend['name'],
+                       :username => friend['nick'],
+                       :avatar => friend['headurl'],
+                       :openid => friend['openid']
+                     } )
+        end
+        @friends ||= list
       end
-      list
     end
-        
+
     def possible_local_friends(user_oauth)
       sns_user_ids = []
       friends_hash = {}
 
-      friends(user_oauth).each do |friend|
-        sns_user_ids.push friend[:sns_user_id]
-        friends_hash[ friend[:sns_user_id] ] = friend
-      end
-      local_user = Users::Oauth.all :conditions => { 'sns_name' => 'qq', 'sns_user_id' => sns_user_ids }
+      begin
+        if friends(user_oauth).present?
+          @friends.each do |friend|
+            sns_user_ids.push friend[:sns_user_id]
+            friends_hash[ friend[:sns_user_id] ] = friend
+          end
+          local_user = Users::Oauth.all :conditions => { 'sns_name' => 'qq', 'sns_user_id' => sns_user_ids }
 
-      local_user.each do |friend|
-        friend.sns_info = friends_hash[friend.sns_user_id.to_i]
-      end
+          local_user.each do |friend|
+            friend.sns_info = friends_hash[friend.sns_user_id.to_i]
+          end
 
-      local_user
+          local_user
+        end
+      rescue Exception => e
+        Rails.logger.info(e)
+      end
     end
   end
 
   module Douban 
     def me
       user = self.get('http://api.douban.com/people/%40me?alt=json').body
-      JSON.parse user
+      #JSON.parse user
+      @me ||= JSON.parse user
     end
 
     def user_id
-      me['db:uid']['$t']
+      @me ? @me['db:uid']['$t'] :  me['db:uid']['$t']
+    end
+
+    def username
+      @me ? @me['title']['$t'] :  me['title']['$t']
     end
 
 
