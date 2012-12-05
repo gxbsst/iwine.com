@@ -216,10 +216,10 @@
       <th>适饮年限</th>
       <td colspan="2">
         <label>
-          <%= select_year @note.drinkable_begin_at, {:start_year => Time.now.year,
-                                                     :end_year => 1950, :prompt => {:year => "选择年份" }},{:name => "note[drinkable_begin_at]"}%>
-          <%= select_year @note.drinkable_end_at, {:start_year => Time.now.year,
-                                                   :end_year => 1950, :prompt => {:year => "选择年份" }}, {:name => "note[drinkable_end_at]"} %>
+          <%= select_year @note.drinkable_begin_at, {:start_year => 1990,
+                                                     :end_year => Time.now.year + 150, :prompt => {:year => "选择年份" }},{:name => "note[drinkable_begin_at]"}%>
+          <%= select_year @note.drinkable_end_at, {:start_year => 1990,
+                                                   :end_year => Time.now.year + 150, :prompt => {:year => "选择年份" }}, {:name => "note[drinkable_end_at]"} %>
         </label>
       </td>
     </tr>

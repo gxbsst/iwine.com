@@ -10,6 +10,12 @@ class SearchesController < ApplicationController
     @search = Search.create!(params[:search])
     redirect_to add_cellar_items_path(current_user.cellar.id, :step => 2, :search_id => @search.id)
   end
+  
+  def search_note_wines
+    @title = "搜索酒款"
+    @search = Search.create!(params[:search])
+    redirect_to add_notes_path(:step => 2, :id => @search.id)
+  end
 
   def search_wines
     @title = "搜索酒"

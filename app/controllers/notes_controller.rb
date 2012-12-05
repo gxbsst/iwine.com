@@ -23,6 +23,27 @@ class NotesController < ApplicationController
    @wine_note_users = Notes::HelperMethods.build_wine_notes(wine_result)  if wine_result['state'] 
   end
 
+  def add
+    if params[:step].to_i == 1
+      @search = ::Search.new
+      render :template => "notes/add_step_one"
+    elsif params[:step].to_i == 2
+      @search = Search.find(params[:id])
+      server = HotSearch.new
+      @entries = server.all_entries(@search.keywords)
+      @all_wines = @entries['wines']
+      page = params[:page] || 1
+      if @all_wines.present?
+        unless @all_wines.kind_of?(Array)
+          @wines = @all_wines.page(page).per(10)
+        else
+          @wines = Kaminari.paginate_array(@all_wines).page(page).per(10)
+        end
+      end
+      render :template => "notes/add_step_two"
+    end
+    
+  end
   #接收app_note_id 或者 wine_detail_id
   def new
     @note = current_user.notes.new
