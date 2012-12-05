@@ -119,7 +119,7 @@ module Notes
       def color_text
         return '' if self.color.blank?
         new_array = self.color.gsub(" ", "_").split('_').values_at(3,6,7)
-        "#{APPEARANCE['color'][new_array[0]]}  #{APPEARANCE['color_name'][new_array[2]]}"
+        "#{APPEARANCE['color'][new_array[0]]}#{APPEARANCE['color_name'][new_array[2]]}"
       end
 
     end

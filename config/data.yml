@@ -304,9 +304,11 @@ api:
       message: ""
    friend:
      success:
+      success: 1
       code: 200
       message: ""
      other_failed:
+      success: 0
       code: 431
       message: ""
 

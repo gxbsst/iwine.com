@@ -58,13 +58,13 @@ module Notes
     def self.delete_note(note)
       base_url = "/push"
       body = {"id" => note.app_note_id.to_s, 
-        "wine.vintage" => note.is_nv ? "NV" : note.vintage.try(:to_s),
+        "wine.vintage" => note.vintage.try(:to_s),
         "wine.style" => note.wine_style_id.try(:to_s),
         "wine.sName" => note.name,
         "agent" => NOTE_DATA['note']['user_agent']['local'],
-        "deleteFlag" => note.delete_flag}
+        "deleteFlag" => note.delete_flag.to_i.to_s}
       path = "#{PRE_PATH}#{base_url}"
-      response =  Notes::NoteAgent.post(:path => path, :body => body)
+      response =  Notes::NoteAgent.post(:path => path, :body => body.delete_if{|k, v| v.blank?})
       response ? JSON.parse(response.body) : false
     end
 
@@ -86,13 +86,13 @@ module Notes
         "wine.sName" => note.name,
         "wine.oName" => note.other_name,
         "wine.region" => note.region_tree_id.try(:to_s),
-        "wine.vintage" => note.is_nv ? "NV" : note.vintage.try(:to_s),
+        "wine.vintage" => note.vintage.try(:to_s),
         "wine.style" => note.wine_style_id.try(:to_s),
         "wine.alcohol" => note.alcohol.to_f.to_s,
         "wine.price" => note.price.try(:to_s),
         "wine.comment" => note.comment,
         "wine.rating" => (note.rating.to_i - 1).to_s,
-        "wine.currency" => note.exchange_rate.name_en,
+        "wine.currency" => note.exchange_rate.try(:name_en),
         "wine.variety" => note.upload_variety_percentage,
         "notesAdvance.appearanceClarity" => note.appearance_clarity,
         "notesAdvance.appearanceIntensity" => note.appearance_intensity,

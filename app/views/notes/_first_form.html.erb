@@ -12,11 +12,8 @@
       <tr>
         <th width="90" valign="top">图片</th>
         <td>
-          <%= form_for @note, :url =>  upload_photo_notes_path, 
+          <%= form_for @note, :url =>  upload_photo_note_path(@note), 
             :html => {:multipart => true, :id => "form", :method => :put} do |f| %>
-            <input type="hidden" name="note_id" value="<%= @note.id %>"/>
-            <input type="hidden" name="app_note_id" value="<%= params[:app_note_id] || @note.app_note_id %>"/>
-            <input type="hidden" name="wine_detail_id" value="<%= params[:wine_detail_id] || @note.wine_detail_id %>"/>
             <p>从电脑上传（支持JPG、GIF、PNG图片格式，且小于5M）</p>
             <p class="mt20">
               <%= f.file_field :photo, :align => "center", :class => "text name mr5" %>
@@ -30,7 +27,7 @@
               <%= image_tag "#{@note.photo_url(:middle_x)}?timestamp=#{Time.now}", :class => "btn_gray mr5" %>
             </p>
             <p class="mt20">
-              <%= link_to upload_photo_notes_path(:app_note_id => @note.app_note_id, :note_id => @note.id), :class => "btn_gray mr5", :remote => true do %>
+              <%= link_to upload_photo_note_path(@note), :class => "btn_gray mr5", :remote => true do %>
                 <span>修改照片</span>
               <% end %>
             </p>
@@ -38,7 +35,6 @@
         </td>
       </tr>
       <%= form_for @note, :html => {:id => "note_first_form"} do |f| %>
-        <input type="hidden" name="wine_detail_id" value="<%= params[:wine_detail_id] || @note.wine_detail_id %>"/>
         <input type="hidden" name="step" value="first"/>
         <input type="hidden" name="status" value="next" id="note_status"/>
         <tr>

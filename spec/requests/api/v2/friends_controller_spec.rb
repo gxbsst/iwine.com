@@ -38,6 +38,7 @@ describe Api::V2::FriendsController do
 
       it { @result["success"].should == 0}
       it { @result["resultCode"].should == 431}
+
     end
   end
 
@@ -61,6 +62,7 @@ describe Api::V2::FriendsController do
 
     end
 
+
     context "unfollow is failed" do
       before(:each) do
         delete api_friend_path(@be_follower),
@@ -72,8 +74,21 @@ describe Api::V2::FriendsController do
 
       it { @result["success"].should == 0}
       it { @result["resultCode"].should == 431}
-      it {@response.body.should include("cellar_count")}
+    end
 
+  end
+
+  describe 'recommend friends' do
+    before(:each) do
+      #post api_friends_path,
+      #     {:user => {:id => @be_follower.id}, :auth_token => @token},
+      #     {'Accept' => 'application/vnd.iwine.com; version=2'}
+      #
+      #delete api_friend_path(@be_follower),
+      #       {:auth_token => @token},
+      #       {'Accept' => 'application/vnd.iwine.com; version=2'}
+      #@response = response
+      #@result = JSON.parse(@response.body)
     end
 
   end

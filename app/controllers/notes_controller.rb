@@ -3,10 +3,7 @@ class NotesController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:show, :index]
   before_filter :update_note_from_app, :only => [:app_edit]
-  before_filter :find_note, :only => [:edit, :update]
-  before_filter :init_basic_data_of_note, :only => [:create, :new]
-  before_filter :create_or_init_data, :only => :upload_photo
-
+  before_filter :find_note, :only => [:edit, :update, :upload_photo]
 
   def index 
    date = params[:modified_date]
@@ -26,26 +23,44 @@ class NotesController < ApplicationController
    @wine_note_users = Notes::HelperMethods.build_wine_notes(wine_result)  if wine_result['state'] 
   end
 
-  #包含两部操作
+  #接收app_note_id 或者 wine_detail_id
   def new
-  end
-
-  def create
-    @note.rating = params[:rate_value].to_i
-    @note.attributes = params[:note]
-    if @note.save && @note.post_form
-      #是否设置为草稿
-      if params[:status] == 'submitted'
-        notice_stickie t('notice.note.submitted_success')
-        redirect_to edit_note_path(@note, :step => "first")
-      else
-        redirect_to edit_note_path(@note, :step => "second")
-      end
+    @note = current_user.notes.new
+    @note.user_agent = NOTE_DATA['note']['user_agent']['local']
+    @note.status_flag = NOTE_DATA['note']['status_flag']['submitted']
+    @note.uuid = SecureRandom.uuid
+    if params[:wine_detail_id].present?     #来自 wine_detail profile
+      wine_detail = Wines::Detail.find(params[:wine_detail_id])
+      @note.init_basic_data_from_wine_detail wine_detail
+    elsif params[:app_note_id].present? #来自 note profile
+      result = Notes::NotesRepository.find(params[:app_note_id])
+      @note.init_basic_data_from_app(result['data'])
+    end
+    if @note.save
+      redirect_to edit_note_path(@note, :step => "first")
     else
       error_stickie t("notice.failure")
-      render :action => :new
+      redirect_to request.referer || root_url
     end
   end
+
+  #暂时弃用
+  # def create
+  #   @note.rating = params[:rate_value].to_i
+  #   @note.attributes = params[:note]
+  #   if @note.save && @note.post_form
+  #     #是否设置为草稿
+  #     if params[:status] == 'submitted'
+  #       notice_stickie t('notice.note.submitted_success')
+  #       redirect_to edit_note_path(@note, :step => "first")
+  #     else
+  #       redirect_to edit_note_path(@note, :step => "second")
+  #     end
+  #   else
+  #     error_stickie t("notice.failure")
+  #     render :action => :new
+  #   end
+  # end
 
   #接收来自app的id 对应于本地app_note_id
   def app_edit
@@ -141,7 +156,7 @@ class NotesController < ApplicationController
       if params[:note].present?
         @note.update_attribute(:photo, params[:note][:photo])
       end
-      redirect_to @note.new_record? ? new_note_path : edit_note_path(@note, :step => :first)
+      redirect_to edit_note_path(@note, :step => :first)
     end
 
     #剪裁图片
@@ -163,7 +178,7 @@ class NotesController < ApplicationController
 
   def trait
     @categories = WineTrait.where(:parent_id => 0)
-    @traits = WineTrait.where('parent_id !=0')
+    @traits = WineTrait.where('parent_id !=0').order(:parent_id)
     if params[:ids].present?
       params[:ids].split(',').each do |id|
         @traits.each do |trait|
@@ -175,7 +190,7 @@ class NotesController < ApplicationController
 
   def color
     @categories = WineColor.where(:parent_id => 0)
-    @traits = WineColor.where('parent_id !=0')
+    @traits = WineColor.where('parent_id !=0').order(:parent_id)
     if params[:ids].present?
       params[:ids].split(',').each do |id|
         @traits.each do |trait|
@@ -224,22 +239,6 @@ class NotesController < ApplicationController
     @note.palate_tannin_level = params[:note][:palate_tannin_level].to_i #不选择时设置为零。
   end
 
-  def copy_detail_info(wine_detail)
-    @note.name = wine_detail.wine.origin_name
-    @note.other_name = wine_detail.wine.name_zh
-    if wine_detail.year
-      @note.vintage = wine_detail.year.to_s(:year)
-    else
-      @note.is_nv  = true
-    end
-    @note.region_tree_id = wine_detail.wine.region_tree_id
-    @note.wine_style_id = wine_detail.wine.wine_style_id
-    @note.wine_detail_id = wine_detail.id
-    #TODO 葡萄酒品种
-    @note.grape = @note.upload_variety_percentage
-    @note.alcohol = wine_detail.alcoholicity.delete("%") if wine_detail.alcoholicity
-  end
-
   def update_note_from_app
     result = Notes::NotesRepository.find(params[:id])
     if result['state']
@@ -258,27 +257,6 @@ class NotesController < ApplicationController
 
   def find_note
     @note = current_user.notes.find(params[:id])
-  end
-
-  def create_or_init_data
-    if params[:note_id].present?
-      @note = current_user.notes.find params[:note_id]
-    else
-      init_basic_data_of_note
-    end
-  end
-
-  def init_basic_data_of_note
-    @note = current_user.notes.new
-    @note.user_agent = NOTE_DATA['note']['user_agent']['local']
-    @note.status_flag = NOTE_DATA['note']['status_flag']['submitted']
-    if params[:wine_detail_id].present?     #来自 wine_detail profile
-      wine_detail = Wines::Detail.find(params[:wine_detail_id])
-      copy_detail_info(wine_detail)
-    elsif params[:app_note_id].present? #来自 note profile
-      result = Notes::NotesRepository.find(params[:app_note_id])
-      @note.init_basic_data_from_app(result['data'])
-    end
   end
 
 end
