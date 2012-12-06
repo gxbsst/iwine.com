@@ -9,13 +9,18 @@ module SnsProviders
       end
 
       def get_friends(name)
-        data = JSON.parse self.get(friends_url(name)).body
-        f_info = data['data']['info']
         friends = []
-        if f_info.present?
-          f_info.each do |i|
-            friends << ::UserSnsFriend::Friend.new( i['openid'], i['nick'], i['name'], i['headurl'])
+        begin
+          data = JSON.parse self.get(friends_url(name)).body
+          f_info = data['data']['info']
+          if f_info.present?
+            f_info.each do |i|
+              friends << ::UserSnsFriend::Friend.new( i['openid'], i['nick'], i['name'], i['headurl'])
+            end
           end
+        rescue
+          puts name
+          true
         end
         friends
       end
@@ -30,13 +35,18 @@ module SnsProviders
       end
 
       def get_friends(name)
-        data = JSON.parse self.get(friends_url(name)).body
-        f_info = data['entry']
         friends = []
-        if f_info.present?
-          f_info.each do |i|
-            friends << ::UserSnsFriend::Friend.new( i['db:uid']['$t'], i['title'], i['title'], i['link'][2]['@href'])
+        begin
+          data = JSON.parse self.get(friends_url(name)).body
+          f_info = data['entry']
+          if f_info.present?
+            f_info.each do |i|
+              friends << ::UserSnsFriend::Friend.new( i['db:uid']['$t'], i['title'], i['title'], i['link'][2]['@href'])
+            end
           end
+        rescue
+          puts name
+          true
         end
         friends
       end
@@ -69,6 +79,7 @@ module SnsProviders
             f_info = data['users']
             f_info.each {|i| friends << ::UserSnsFriend::Friend.new( i['id'], i['screen_name'], i['name'], i['profile_image_url']) } if f_info.present?
           rescue
+            puts name
             true
           end
           friends
