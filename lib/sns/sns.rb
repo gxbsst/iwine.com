@@ -67,7 +67,7 @@ module SNS
 
 
     def friends(user_oauth)
-      data = self.get("http://open.t.qq.com/api/friends/mutual_list?fopenid=#{user_oauth.sns_user_id}").body
+      data = self.get("http://open.t.qq.com/api/friends/mutual_list?name=#{user_oauth.sns_user_id}").body
       data = JSON.parse data
       list = []
 
@@ -76,7 +76,7 @@ module SNS
           list.push( { :sns_user_id => friend['name'],
                        :username => friend['nick'],
                        :avatar => friend['headurl'],
-                       :openid => friend['openid']
+                       :uid => friend['openid']
                      } )
         end
         @friends ||= list
