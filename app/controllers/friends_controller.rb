@@ -41,9 +41,15 @@ class FriendsController < ApplicationController
 
   #新浪微博单独使用oauth2获取粉丝
   def sync
-    @recommend_friends = Service::FriendService::Recommend.call(current_user, params[:sns_name])
     @availabe_sns = current_user.available_sns
-    @authorized = true   # TODO 如果要验证请在 Users::Oauth 写方法验证
+    oauth = current_user.oauths.oauth_binding.where("sns_name = ? ", params[:sns_name]).first
+    if oauth
+      @recommend_friends = Service::FriendService::Recommend.call(current_user, params[:sns_name])
+      @authorized = true
+      #@refresh_access_token TODO: 写方法去验证是否过期
+    else
+      @authorized = false
+    end
     #@authorized
     #begin
     #  #找到对应的oauth
