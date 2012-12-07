@@ -27,6 +27,10 @@ every :day, :at => '12:00am' do
   rake 'search:build'
 end
 
+every :day, :at => '9:00am' do
+  rake 'sync_sns_friends:sync_all'
+end
+
 #every 2.hours do
   #rake "notificationer:event:hold_tomorow"
 #end
