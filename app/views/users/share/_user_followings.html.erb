@@ -23,15 +23,28 @@
               <p> 互相关注 </p>
             <% end %>
           <% else %>
-            <% if current_user != user %>
-            <% if current_user.is_following user.id %>
-              <span>已被关注</span>
-            <% else%>
+            <% if current_user.present? %>
+              <% if current_user != user %>
+                <% if current_user.is_following user.id %>
+                  <p>
+                    <span class="cancl_fol">
+                      <%= link_to "取消关注", unfollow_user_path(user), :method => :put %>
+                    </span>
+                  </p>
+                  <% if user.is_following current_user.id %>
+                    <p> 互相关注 </p>
+                  <% end %>
+                <% else %>
+                  <%= link_to follow_user_path(user), :class => "btn_gray", :method => :put do  %>
+                    <span>加关注</span>
+                  <% end %>
+                <% end%>
+              <% end %>
+            <% else %>
               <%= link_to follow_user_path(user), :class => "btn_gray", :method => :put do  %>
                 <span>加关注</span>
               <% end %>
-            <% end%>
-            <% end %>
+            <% end %> 
           <% end %>
         </div>
       </li>
