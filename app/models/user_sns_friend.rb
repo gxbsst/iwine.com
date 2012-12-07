@@ -65,7 +65,7 @@ class UserSnsFriend < ActiveRecord::Base
 
     def fetch_friends(oauth_user)
       client = eval(SNS_PROVIDER[oauth_user.sns_name]).load( oauth_user.tokens )
-      client.get_friends(oauth_user.sns_user_id)
+      client.get_friends(oauth_user.provider_user_id)
     end
 
   end

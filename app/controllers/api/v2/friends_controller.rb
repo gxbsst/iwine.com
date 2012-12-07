@@ -15,8 +15,11 @@ module Api
       before_filter :get_user
 
       def index
+        resource = Service::FriendService::Recommend.call(@user, params[:sns_name])
+        resource.delete_if{|user| @user.is_following user.id}
+        status = resource.present? ? true : false
+        render :json => ::Api::Helpers::FriendJsonSerializer.as_json(resource, status)
         # 推荐的好友， 即微博好友已经在网站登陆但是未被关注的
-
         #resource = @user.recommends(params[:ids])
         #render :json => ::Api::Helpers::FriendJsonSerializer.as_json(resource, true)
       end
