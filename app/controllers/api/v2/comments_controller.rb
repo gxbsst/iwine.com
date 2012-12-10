@@ -7,8 +7,9 @@ module Api
 
       def index
         #params: commentable_id & commentable_type
-        resource = NoteComment.where(:commentable_id => params[:commentable_id], :commentable_type => params[:commentable_type])
+        resource = NoteComment.includes(:user).where(:commentable_id => params[:commentable_id], :commentable_type => params[:commentable_type])
         status  = resource.present? ? true : false
+
         render :json => ::Api::Helpers::CommentJsonSerializer.as_json(resource, status)
       end
 

@@ -38,6 +38,10 @@ describe Api::V2::CommentsController do
 
       it { @result["success"].should == 1}
       it { @result["resultCode"].should == 2000}
+      it { @result["data"].should include("created_at")}
+      it { @result["data"].should include("avatar")}
+      it { @result["data"].should include("username")}
+
     end
 
   end
