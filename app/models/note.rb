@@ -1,5 +1,7 @@
 class Note < ActiveRecord::Base
 
+  acts_as_votable
+
   STATUS_FLAG = {
       :draft => NOTE_DATA['note']['status_flag']['submitted'],
       :published => NOTE_DATA['note']['status_flag']['published']
@@ -217,6 +219,19 @@ class Note < ActiveRecord::Base
     if traits
       traits.pluck(:id).join(',')
     end
+  end
+
+  def followers_count
+    Follow.where(:followable_type => 'Note', :followable_id => app_note_id).count
+  end
+
+  def likes_count
+    # new时， 记得将app_note_id 付值给 id
+    likes.count
+  end
+
+  def comments_count
+   Comment.where(:commentable_type => 'Note', :commentable_id => app_note_id).count
   end
 
   private

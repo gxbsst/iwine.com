@@ -1,13 +1,13 @@
 # encoding: utf-8
 module Api::Helpers
-  class FriendsError < Error
+  class FollowsError < Error
 
     STATUS_MAPPING = { true => 'success', false => 'other_failed'}
 
     def initialize(status)
       super
       @status = status ? true : false
-      @configs = @errors['friend']
+      @configs = @errors['follow']
     end
 
     def success

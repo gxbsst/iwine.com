@@ -1,10 +1,12 @@
+#encoing: utf-8
 module Service
   module FriendService
 
     class Recommend  # 某用户的推荐好友
 
       SNS_FRIEND = {
-          'qq' => '::SnsProviders::QqWeibo',
+          'tencent' => '::SnsProviders::QqWeibo',
+          'qq' =>  '::SnsProviders::QqWeibo',
           'weibo' => '::SnsProviders::SinaWeibo',
           'sina' =>  '::SnsProviders::SinaWeibo',
           'douban' => '::SnsProviders::Douban'

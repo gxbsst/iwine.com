@@ -93,6 +93,7 @@ describe Api::V2::FriendsController do
 
       @result['data'].count.should >  0
       @result['success'].should == 1
+
     end
 
   end

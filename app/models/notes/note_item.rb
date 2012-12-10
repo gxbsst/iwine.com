@@ -2,8 +2,8 @@
 module Notes
   class NoteItem
     extend ActiveModel::Naming
-    #include ActiveModel
-    #include ActiveModel::Serialization
+    include ActiveModel
+    include ActiveModel::Serialization
     #
     #has_many :comments
 
