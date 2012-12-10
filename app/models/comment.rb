@@ -50,10 +50,22 @@ class Comment < ActiveRecord::Base
 
   # NOTE: Comments belong to a user
   belongs_to :user
-
+  
+  after_create :change_commentable_id
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text
   # example in readme
+
+  #仅对commentable_type 是 Note是起作用
+  def change_commentable_id
+    self.update_attribute(:commentable_id, Note.find(commentable_id).app_note_id) if commentable_type == "Note"
+  end
+  
+  #判断commentable 是否是 note
+  def commentable
+    commentable_type == "Note" ? note = Note.find_by_app_note_id(commentable_id) : super
+  end
+
   def self.build_from(obj, user_id, comment, options = { } )
     c = self.new
     c.commentable_id = obj.id

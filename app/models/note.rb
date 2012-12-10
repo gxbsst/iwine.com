@@ -12,7 +12,8 @@ class Note < ActiveRecord::Base
                   :palate_alcohol, :palate_tannin_level, :palate_tannin_nature, :palate_body, :palate_flavor_intensity,
                   :palate_flavor, :palate_length, :palate_other, :conclusion_quality, :conclusion_reason, :drinkable_begin_at,
                   :drinkable_end_at, :conclusion_other,:crop_x, :crop_y, :crop_w, :crop_h, :appearance_clarity_a, :user_agent,
-                  :appearance_clarity_b, :palate_tannin_nature_a, :palate_tannin_nature_b, :palate_tannin_nature_c, :exchange_rate_id
+                  :appearance_clarity_b, :palate_tannin_nature_a, :palate_tannin_nature_b, :palate_tannin_nature_c, :exchange_rate_id,
+                  :user_id, :app_note_id
 
   attr_accessor :crop_x, :crop_y, :crop_w, :crop_h, :drinkable_end, :drinkable_begin, :appearance_clarity_a,
                 :appearance_clarity_b, :palate_tannin_nature_a, :palate_tannin_nature_b, :palate_tannin_nature_c
@@ -24,9 +25,45 @@ class Note < ActiveRecord::Base
   belongs_to :style, :class_name => "Wines::Style", :foreign_key => :wine_style_id
   belongs_to :wine_detail, :class_name => "Wines::Detail", :foreign_key => :wine_detail_id
   belongs_to :exchange_rate
+  has_many :comments, :class_name => "NoteComment", :as => :commentable
   validates :uuid, :name, :vintage, :presence => true
   validates :comment, :presence => true, :on => :update
   validates :uuid, :uniqueness => true
+  scope :find_app_note, lambda {|app_note_id| where(:app_note_id => app_note_id)}
+
+  
+  def self.local_note(app_note_id)
+    Note.find_app_note(app_note_id).first
+  end
+  
+  #用主要的数据创建包含少数信息的note
+  def self.init_main_data(info)
+    note = Note.find_app_note(info['id']).first
+    unless note
+      local_note = Note.new(:user_id => info['uid'], :app_note_id => info['id'])
+      local_note.sync_main_data(info)
+    end
+  end
+ 
+  #初始化主要数据，如果api有调整则需要调整此处。
+  def sync_main_data(info)
+    self.location = info['location']
+    self.name = info['sName']
+    self.other_name = info['oName']
+    self.comment = info['comment']
+    self.vintage = info['vintage']
+    self.rating = info['rating']
+    self.modifiedDate = info['modifiedDate']
+    self.status_flag = info['statusFlag']
+    self.uuid = info["notesId"]
+    #sync_photo(info)  #此处暂不同步图片，以加快加载速度。
+    self.save
+  end
+
+  #分享到 sns 的内容
+  def share_name
+    ""
+  end
 
   def show_vintage
     vintage.to_i == -1 ? "NV" : vintage
@@ -307,11 +344,15 @@ class Note < ActiveRecord::Base
   #通过图片超链接更新本地图片
   def sync_photo(image)
     if image.present? && image['image'].present?
-      host = "#{NOTE_DATA['note']['photo_location']['host']}"
-      base_url = "#{NOTE_DATA['note']['photo_location']['base_url']}"
-      version = "#{NOTE_DATA['note']['photo_location']['version']}"
-      photo_url = "#{host}/#{base_url}/#{version}/#{image['image'].gsub(/,$/, '')}"
-      self.remote_photo_url = photo_url
+      begin
+        host = "#{NOTE_DATA['note']['photo_location']['host']}"
+        base_url = "#{NOTE_DATA['note']['photo_location']['base_url']}"
+        version = "#{NOTE_DATA['note']['photo_location']['version']}"
+        photo_url = "http://#{host}:8080/#{base_url}/#{version}/#{image['image'].gsub(/,$/, '')}"
+        self.remote_photo_url = photo_url
+      rescue OpenURI::HTTPError
+        puts "sync photo failure." 
+      end
     end
   end
 

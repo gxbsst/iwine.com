@@ -1,9 +1,14 @@
 <%
-	tag = case @comment.commentable_type
+	tag, count = case @comment.commentable_type
 	when 'Winery'
-		"winery"
+    comment_count = @comment.commentable.current_comments_count
+		["winery", comment_count]
 	when 'Wines::Detail'
-		"wine"
+    comment_count = @comment.commentable.current_comments_count
+		["wine", comment_count]
+  when "Note"
+    comment_count = @comment.commentable.comments.size
+    ["note", comment_count]
 	end
 	selector_comment_num = "##{@item_id} .iw_more_comment a"
 	selector_list = "##{@item_id} ul"
@@ -11,5 +16,5 @@
 %>
 $("<%= selector_list %>").append("<%= escape_javascript(render(:partial =>'share/short_comment', :locals => {:comment => @comment})) %>");
 $("<%= selector_form %>").val('');
-$("<%= selector_comment_num %>").html("共<%= @comment.commentable.current_comments_count %>条评论");
+$("<%= selector_comment_num %>").html("共<%= count %>条评论");
  $('#container').masonry('reload');

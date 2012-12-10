@@ -50,6 +50,9 @@
   </script>
 
 <% end %>
+<div id="comment_form"  style="display: none" >
+
+</div>
 <div class="whitespace notes">
 <div class="left">
   <div class="user_space">
@@ -194,27 +197,40 @@
       </table>
     </div>
   </div>
-  <!--
+
   <div class="section last">
-    <div class="title"><a href="event_comment_list.html" class="btn_gray float_r font12"><span>我要留言</span></a>
-      <h2>留言 <span class="font12 more"><a href="event_comment_list.html">（共10条）</a></span></h2></div>
+    <div class="title">
+      <%= link_to new_note_comment_path(@local_note, :do => "comment"), :class => "btn_gray float_r font12", :remote => true do %>
+        <span>我要留言</span>
+      <% end %>
+      <h2>留言 <span class="font12 more">（共<%= @comments.total_count %>条）</span></h2>
+    </div>
     <div class="content">
       <ul class="comment_list">
-        <li>
-          <div class="userpic">
-            <a href="#"><img src="images/userimage/1.jpg" width="50" height="50" alt="username" /></a>
-
-          </div>
-          <div class="main">
-            <div class="username"><a href="#">不良夏生</a><span class="date">2012-4-28</span></div>
-            <div class="content">现在还能报名么？我也想去！</div>
-          </div>
-        </li>
+        <% @comments.each do |comment| %>
+          <li>
+            <div class="userpic">
+              <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true), 
+                              {:with_avatar => true, :avatar_version => :middle},
+                               {:width => 50, :height => 50, :alt => comment.user.username} %>
+            </div>
+            <div class="main">
+              <div class="username">
+                <%= link_to comment.user.username, user_path(comment.user) %>
+                <span class="date"><%= comment.created_at.to_s(:normal) %></span>
+              </div>
+              <div class="content"><%= comment.body %></div>
+            </div>
+          </li>
+        <% end %>
         <div class="clear"></div>
       </ul>
+      <div class="pagination">
+        <%= paginate @comments %>
+      </div>
     </div>
   </div>
-  -->
+
 </div>
 <div class="right">
   <div class="sidebox">

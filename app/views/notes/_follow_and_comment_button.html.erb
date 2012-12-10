@@ -1,0 +1,9 @@
+<div class="action clearfix" style="display:none;">
+  <% if current_user %>
+      <a class="btn_iw hc" href="javascript:void(0);"><span><em>评论</em></span></a>
+  <% else %>
+    <%= link_to login_path, :class => "btn_iw hc" do %>
+      <span><em>评论</em></span>
+    <% end %>
+  <% end %>
+</div>

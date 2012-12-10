@@ -102,7 +102,8 @@ class CommentsController < ApplicationController
       respond_to do |format|
         format.html {
           notice_stickie t("notice.comment.#{@comment.do == 'follow' ? 'follow' : 'comment'}_success")
-          redirect_to params[:return_url] ?  params[:return_url] : @commentable_comments_path
+          #选择跳转路径
+          redirect_to select_callback_url
         }
         format.js {render :action => "ajax_create"}
       end
@@ -278,6 +279,7 @@ class CommentsController < ApplicationController
   
   #初始化oauth_comment
   def init_oauth_comments
+    return if @comment.commentable_type == "Note"
     sns_arr = params[:sns_type] 
     if sns_arr.present?
       sns_arr.each do |sns_type|
@@ -383,5 +385,15 @@ class CommentsController < ApplicationController
   def init_event_object
     @recommend_events = Event.recommends(4)
     @participant = @event.have_been_joined? @user.id if @user
+  end
+
+  def select_callback_url
+    if params[:return_url]
+      params[:return_url]
+    elsif @comment.commentable_type == "Note" #note没有评论列表页，返回到note profile
+      note_path(@commentable.app_note_id)
+    else
+      @commentable_comments_path
+    end
   end
 end

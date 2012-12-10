@@ -28,9 +28,9 @@ module Notes
       Note.new(result)
     end
 
-    #def comments
-    #  ::Comment.where(:commentable_type => 'Note', :commentable_id => 1)
-    #end
+    def comments
+      Comment.real_comments.find_comments_for_commentable("Note", self.id)
+    end
 
     class Note < Struct.new(:serverTime, :id, :rating, :modifiedDate, :statusFlag, :agent)
 

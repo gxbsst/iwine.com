@@ -16,11 +16,14 @@ class NotesController < ApplicationController
    result      = Notes::NotesRepository.find(params[:id])
    return render_404('') if (!result['state'] || result['data']['statusFlag'].to_i != Note::STATUS_FLAG[:published])
    @note = Notes::NoteItem.new(result['data'])
+   page = params[:page] || 1
+   @comments = @note.comments.page(page).per(10)
    @user       = User.find(result['data']['uid'])
    notes_result = Notes::NotesRepository.find_by_user(result['data']['uid'], @note.note.id)
    @user_notes = Notes::HelperMethods.build_user_notes(notes_result)  if notes_result['state']
    wine_result =  Notes::NotesRepository.find_by_wine(@note.wine.vintage, @note.wine.sName, @note.wine.oName, @note.note.id, 5,  @note.note.id)
    @wine_note_users = Notes::HelperMethods.build_wine_notes(wine_result)  if wine_result['state'] 
+   init_app_note_to_local(result['data'])
   end
 
   def add
@@ -267,7 +270,7 @@ class NotesController < ApplicationController
       if current_user.try(:id) != result['data']['uid']
         render_404('')
       else
-        @note = current_user.notes.where(:uuid => result['data']['notesId']).
+        @note = current_user.notes.where(:app_note_id => result['data']['id']).
             first_or_initialize(:user_id => current_user.id, :app_note_id => params[:id])
         @note.sync_data(result['data'])
       end
@@ -278,6 +281,17 @@ class NotesController < ApplicationController
 
   def find_note
     @note = current_user.notes.find(params[:id])
+  end
+ 
+  #初始化或者搜索local note
+  def init_app_note_to_local(note_info)
+    if local_note = Note.find_app_note(note_info['id']).first
+      @local_note = local_note
+    else
+      user = User.find(note_info['uid'])
+      @local_note = user.notes.new(:app_note_id => note_info['id'])
+      @local_note.sync_data(note_info)
+    end
   end
 
 end

@@ -8,6 +8,11 @@ Patrick::Application.routes.draw do
   end
 
   resources :notes do
+    resources :comments, :controller => "comments" do
+      collection do
+        post :create, :as => "note" # 这里主要是为了使评论表单的URL为一致
+      end
+    end   
     collection do
       get :trait
       get :color

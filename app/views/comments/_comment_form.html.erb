@@ -30,10 +30,12 @@
     <%= link_to "javascript:void(0)", :class => "btn_gray float_r do_#{comment.do}_button" do  %>
       <span>保存</span>
     <% end %>
-    <div class="sh">
-      分享到<%= f.check_box :is_share, :checked => current_user.profile.config.share.wine_simple_comment.to_i == 1 %> 广播
-    </div>
-    <div class="com_s float_l"><%= render "comments/share/comment_sns" %></div>
+    <% unless @comment.commentable_type == "Note" %>
+      <div class="sh">
+        分享到<%= f.check_box :is_share, :checked => current_user.profile.config.share.wine_simple_comment.to_i == 1 %> 广播
+      </div>
+      <div class="com_s float_l"><%= render "comments/share/comment_sns" %></div>
+    <% end %>
   </div>
   <span class="red text_error" style="display: block; float: right; margin-right: 20px"></span>
 <% end -%>

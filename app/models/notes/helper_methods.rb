@@ -39,6 +39,7 @@ module Notes::HelperMethods
     new_array = []
     result['data'].each do |note|
       next if note['statusFlag'].to_i == Note::STATUS_FLAG[:draft]  if  filter_draft
+      Note.init_main_data(note)
       new_array <<  {
           :location => Notes::NoteItem::Location.new(note),
           :user => User.find(note['uid']),
