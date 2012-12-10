@@ -311,6 +311,43 @@ api:
       success: 0
       code: 441
       message: ""
+   comment:
+     success:
+      success: 1
+      code: 200
+      message: ""
+     other_failed:
+      success: 0
+      code: 441
+      message: ""
+   follow:
+     success:
+      success: 1
+      code: 200
+      message: ""
+     other_failed:
+      success: 0
+      code: 441
+      message: ""
+   vote:
+     success:
+      success: 1
+      code: 200
+      message: ""
+     other_failed:
+      success: 0
+      code: 441
+      message: ""
+   count:
+     success:
+      success: 1
+      code: 200
+      message: ""
+     other_failed:
+      success: 0
+      code: 441
+      message: ""
+
 
 
 event:

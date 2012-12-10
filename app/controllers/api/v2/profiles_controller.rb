@@ -1,4 +1,4 @@
-
+#encoding: utf-8
 module Api
   module V2
     class ProfilesController < ::Api::BaseApiController

@@ -41,35 +41,45 @@ class FriendsController < ApplicationController
 
   #新浪微博单独使用oauth2获取粉丝
   def sync
-    begin
-      #找到对应的oauth
-      oauth = current_user.oauths.oauth_binding.where("sns_name = ? ", params[:sns_name]).first
-      if params[:sns_name] == "weibo"
-        @oauth_user = current_user.oauths.oauth_binding.where("sns_name = 'weibo'").first
-      else
-        client = current_user.oauth_client( params[:sns_name] )
-      end
-      @availabe_sns = current_user.available_sns
-      @user_ids = []
-      @recommend_friends = []
-      if client.present? || @oauth_user
-        oauth_users = @oauth_user ? current_user.weibo_friends('weibo', 
-                                              @oauth_user.access_token, 
-                                              @oauth_user.sns_user_id) :  client.possible_local_friends(oauth)
-        if oauth_users.present?
-          @recommend_friends = current_user.remove_followings oauth_users
-          @recommend_friends.each do |f|
-            @user_ids.push( f.user_id )
-          end
-        end
-        @authorized = true
-      else
-        @authorized = false
-      end
-    rescue OAuth2::Error => e
-      @refresh_access_token = true 
-      notice_stickie t("notice.oauth.refresh_access_token")
+    @availabe_sns = current_user.available_sns
+    oauth = current_user.oauths.oauth_binding.where("sns_name = ? ", params[:sns_name]).first
+    if oauth
+      @recommend_friends = Service::FriendService::Recommend.call(current_user, params[:sns_name])
+      @authorized = true
+      #@refresh_access_token TODO: 写方法去验证是否过期
+    else
+      @authorized = false
     end
+    #@authorized
+    #begin
+    #  #找到对应的oauth
+    #  oauth = current_user.oauths.oauth_binding.where("sns_name = ? ", params[:sns_name]).first
+    #  if params[:sns_name] == "weibo"
+    #    @oauth_user = current_user.oauths.oauth_binding.where("sns_name = 'weibo'").first
+    #  else
+    #    client = current_user.oauth_client( params[:sns_name] )
+    #  end
+    #  @availabe_sns = current_user.available_sns
+    #  @user_ids = []
+    #  @recommend_friends = []
+    #  if client.present? || @oauth_user
+    #    oauth_users = @oauth_user ? current_user.weibo_friends('weibo',
+    #                                          @oauth_user.access_token,
+    #                                          @oauth_user.sns_user_id) :  client.possible_local_friends(oauth)
+    #    if oauth_users.present?
+    #      @recommend_friends = current_user.remove_followings oauth_users
+    #      @recommend_friends.each do |f|
+    #        @user_ids.push( f.user_id )
+    #      end
+    #    end
+    #    @authorized = true
+    #  else
+    #    @authorized = false
+    #  end
+    #rescue OAuth2::Error => e
+    #  @refresh_access_token = true
+    #  notice_stickie t("notice.oauth.refresh_access_token")
+    #end
   end
 
   def delete_sns
@@ -96,11 +106,6 @@ class FriendsController < ApplicationController
       client = oauth_module.load(Rails.cache.read(build_oauth_token_key(params[:type], params[:oauth_token])))
       client.authorize(:oauth_verifier => params[:oauth_verifier])
       results = client.dump
-
-      Rails.logger.info("==========================")
-      Rails.logger.info(results)
-      Rails.logger.info(client.user_id)
-      Rails.logger.info("==========================")
 
       if results[:access_token] && results[:access_token_secret]
         flash[:notice] = "done"

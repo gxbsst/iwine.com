@@ -1,6 +1,6 @@
 # encoding: utf-8
 module Api::Helpers
-  class FriendsError < Error
+  class VotesError < Error
 
     STATUS_MAPPING = { true => 'success', false => 'other_failed'}
 

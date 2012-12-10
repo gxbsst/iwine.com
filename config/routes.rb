@@ -7,6 +7,34 @@ Patrick::Application.routes.draw do
     end
   end
 
+  # API
+  namespace :api do
+    api_version(:module => "v1", :header => "Accept", :value => "application/vnd.iwine.com; version=1") do
+      resources :registrations
+      resources :sessions
+      resources :uploads
+      resources :profiles
+      resources :oauths
+      resources :confirmations
+    end
+
+    api_version(:module => "v2", :header => "Accept", :value => "application/vnd.iwine.com; version=2") do
+      resources :registrations
+      resources :sessions
+      resources :uploads
+      resources :profiles
+      resources :oauths
+      resources :confirmations
+      resources :passwords
+      resources :friends
+      resources :comments
+      resources :follows
+      resources :votes
+      resources :counts
+    end
+  end
+  match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
+
   resources :notes do
     resources :comments, :controller => "comments" do
       collection do
@@ -87,6 +115,7 @@ Patrick::Application.routes.draw do
     get :logout , :to => 'devise/sessions#destroy'
     get :register , :to => 'devise/registrations#new'
   end
+
 
 
   
@@ -289,29 +318,7 @@ Patrick::Application.routes.draw do
   end
 
 
-  # API
-  namespace :api do
-    api_version(:module => "v1", :header => "Accept", :value => "application/vnd.iwine.com; version=1") do
-      resources :registrations
-      resources :sessions
-      resources :uploads
-      resources :profiles
-      resources :oauths
-      resources :confirmations
-    end
 
-    api_version(:module => "v2", :header => "Accept", :value => "application/vnd.iwine.com; version=2") do
-      resources :registrations
-      resources :sessions
-      resources :uploads
-      resources :profiles
-      resources :oauths
-      resources :confirmations
-      resources :passwords
-      resources :friends
-    end
-   end
-  match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
 
   # STATIC
   statics = %w(about_us contact_us help private agreement terms_and_conditions site_map home feedback)

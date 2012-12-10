@@ -112,7 +112,7 @@ class UsersController < ApplicationController
 
     if current_user.slug == params[:id]
       #关注自己 
-       notice_stickie t("notice.friend.self_follow")
+      #notice_stickie t("notice.friend.self_follow")
     else
         if params[:user_id].present?
           # 关注多个

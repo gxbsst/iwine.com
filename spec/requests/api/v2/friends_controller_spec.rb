@@ -80,15 +80,20 @@ describe Api::V2::FriendsController do
 
   describe 'recommend friends' do
     before(:each) do
-      #post api_friends_path,
-      #     {:user => {:id => @be_follower.id}, :auth_token => @token},
-      #     {'Accept' => 'application/vnd.iwine.com; version=2'}
-      #
-      #delete api_friend_path(@be_follower),
-      #       {:auth_token => @token},
-      #       {'Accept' => 'application/vnd.iwine.com; version=2'}
-      #@response = response
-      #@result = JSON.parse(@response.body)
+      @user = User.find_by_email('gxbsst@gmail.com')
+      @sns_name = 'sina'
+      get api_friends_path,
+          {:sns_name => @sns_name, :auth_token => @token},
+          {'Accept' => 'application/vnd.iwine.com; version=2'}
+      @response = response
+      @result = JSON.parse(@response.body)
+    end
+
+    it 'should return some friends' do
+
+      @result['data'].count.should >  0
+      @result['success'].should == 1
+
     end
 
   end
