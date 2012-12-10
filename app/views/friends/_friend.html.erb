@@ -13,7 +13,14 @@
                 <%= link_to friend.username, user_path(friend) %>
               </div>
               <% if current_user.is_following friend.id %>
-                <span>已被关注</span>
+                <p>
+                  <span class="cancl_fol">
+                    <%= link_to "取消关注", unfollow_user_path(friend), :method => :put %>
+                  </span>
+                </p>
+                <% if friend.is_following current_user.id %>
+                  <p> 互相关注 </p>
+                <% end %>
               <% else %>
                 <p>
                   <%= link_to follow_user_path(friend), :class => "btn_gray", :method => :put do %>
