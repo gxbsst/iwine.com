@@ -163,6 +163,16 @@ class Note < ActiveRecord::Base
     self.grape = self.upload_variety_percentage
     self.alcohol = wine_detail.alcoholicity.delete("%") if wine_detail.alcoholicity
   end
+ 
+  #根据app_note_id 初始化数据到local database
+  def self.sync_note_base_app_note_id(app_note_id)
+    result = Notes::NotesRepository.find(app_note_id)
+    if result['state']
+      note = Note.new(:app_note_id => app_note_id, :user_id => result['data']['uid'])
+      note.sync_data(result['data'])
+      note
+    end
+  end
   
   #将app数据同步到本地数据库。
   def sync_data(app_note)
