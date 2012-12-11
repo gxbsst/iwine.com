@@ -1,0 +1,12 @@
+<%= link_to image_tag("icon/like_red.png", :size => '22x20', :align => :absmiddle),
+  vote_note_path(@note.id), :remote => true, :method => :put, :class => "ajax vote " %>
+(<span id="vote_count"><%= @local_note.likes_count %></span>)
+
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+    // "有用" 成功时，更新有用的数量
+    $("a.vote").bind("ajax:success", function(event, data, textStatus, jqXHR){
+      $("#vote_count").text(data);
+    });
+  });
+</script>

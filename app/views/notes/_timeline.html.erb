@@ -3,7 +3,7 @@
       <% item_id = get_rand_id("note", note[:note].id) %>
       <% local_note = Note.local_note(note[:note].id) %>
       <div class="iw item" id="<%= item_id %>">
-        <%= render :partial => "follow_and_comment_button", :locals => {:parent => local_note, :item_id => item_id} %>
+        <%= render :partial => "follow_and_comment_button", :locals => {:local_note => local_note, :item_id => item_id, :app_note => note} %>
         <%= render :partial => "user", :locals => {:note => note} %> 
         <div class="iw_img"> 
           <%= link_to cover(note[:photo], 'customer', '200x200', '200x200'), note_path(note[:note])%>
@@ -12,11 +12,22 @@
           <h1><%= link_to_cname note[:wine] %></h1> 
           <h2><%= link_to_ename note[:wine] %></h2>
           <p class="iw_action"><%= star_rate_tag(note[:wine].rating) %></p>
-        </div> 
-        <div class="iw_main">
-          <ul> 
-             <%= truncate(note[:wine].comment, :length => 100) %>
-          </ul>
+        </div>
+        <% if note[:wine].comment.present? %>
+          <div class="iw_main">
+            <p><%= truncate(note[:wine].comment, :length => 100) %></p>
+          </div>
+        <% end %>
+        <div class="note_comment_list">
+        <% if  note[:note].comments.present? %>
+            <div class="iw_main">
+              <ul>
+                <% note[:note].comments.limit(5).each do |comment| %>
+                  <%= render :partial => "share/short_comment", :locals => {:comment => comment} %>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
         </div>
         <div class="iw_more">
             <%= link_to "查看完整评酒辞", note_path(note[:note]) %>
@@ -41,3 +52,16 @@
  <p> 还有没有数据. </p>
 <% end %> 
 <%= javascript_include_tag 'waterfall_comment_follow' %>
+<script type="text/javascript" >
+    function setShare(title, url, summary, image_url) {
+        jiathis_config.title = title;
+        jiathis_config.url = url;
+        jiathis_config.summary = summary;
+        jiathis_config.pic = image_url;
+    }
+    var jiathis_config={
+        data_track_clickback:true,
+        hideMore:false
+    }
+</script>
+<script type="text/javascript" src="http://v2.jiathis.com/code_mini/jia.js?uid=1623461" charset="utf-8"></script>

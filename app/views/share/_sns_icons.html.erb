@@ -13,8 +13,7 @@
         });
     </script>
 <% else %>
-    <%=  %>
-    <div id="ckepop"><span class="jiathis_txt">分享到：</span>
+    <div id="ckepop"><% unless defined?(no_content) %><span class="jiathis_txt">分享到：</span> <% end %>
       <a class="jiathis_button_tsina"></a>
       <a class="jiathis_button_tqq"></a>
       <a class="jiathis_button_renren"></a>

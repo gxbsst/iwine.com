@@ -9,14 +9,14 @@ class Photo < ActiveRecord::Base
                              :increment => {:on => :create, 
                                             :if => lambda {|comment| comment.counter_should_increment_for("Photo")}},
                              :decrement => {:on => :save,   
-                                            :if => lambda {|comment| comment.counter_should_decrement_for("Photo")}}                              
+                                            :if => lambda {|comment| comment.counter_should_decrement_for("Photo")}}
                             },
          :votes_count =>    {:with => "ActsAsVotable::Vote", 
                              :receiver => lambda {|vote| vote.votable },
                              :increment => {:on => :create,  
                                             :if => lambda {|vote| vote.votable_type == "Photo" && vote.vote_flag == true}},
                              :decrement => {:on => :destroy, 
-                                            :if => lambda {|vote| vote.votable_type == "Photo" && vote.vote_flag == true}}                                            }
+                                            :if => lambda {|vote| vote.votable_type == "Photo" && vote.vote_flag == true}}}
   # fires :new_photo, :on                 => :create,
   #                     :actor            => :user,
   #                     :secondary_actor => :imageable,

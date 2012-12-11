@@ -1,10 +1,17 @@
 @charset "UTF-8";
 .notes_img_detail {position:relative;margin:0 0 20px 0;}
-.notes_img_detail .sharebar {position:absolute;width:575px;height:35px; background:url(bg/black_80.png) repeat ;padding: 15px 15px 0 0;}
+.notes_img_detail .sharebar {position:absolute;width:575px;background:url(bg/black_80.png) repeat ;padding:0 15px 0 0;}
+.sharebar ul {position:relative;}
 .sharebar ul li {float:right;display:inline-block;}
 .sharebar li.collect {margin-left:10px;}
 .sharebar li.share {margin-left:13px;}
 .sharebar li.like {color:#fff;}
+.sharebar ul li a {padding:15px 0;display:inline-block;}
+.sharebar ul .dropbox a {padding:0;}
+.dropbox {position:absolute;left:465px;top:56px;background: url("bg/black_80.png") repeat scroll 0 0 transparent;padding:3px 5px 5px 5px;}
+.dropbox .com_s {padding-top:0;width:100px;text-align:center;}
+.dropbox .com_s a {display:block;margin:5px 0 5px 5px;float:left;}
+.dropbox .com_s .sns_on {position:absolute;left:8px;top:8px;}
 .notes_winename {margin:0 0 40px 0;}
 .notes_winename .star {float:right;}
 .notes_winename .name h1.ch {font-size:16px;}
@@ -43,8 +50,7 @@ dd.info h3.en a {font-weight:normal;color:#666;}
 .notes_list .left {width:100px;float:left;margin-right:20px;text-align:center;}
 .notes_list a img{margin:0 0 10px 0;}
 .notes_list .right {width:470px;float:left;}
-
-.notes #manage {position:absolute;left:20px;top:13px;}
+.notes #manage {position:absolute;left:20px;top:15px;}
 .notes #manage div {position:absolute; visibility: hidden;left:0px;background-color:#f8f8f8;border:1px solid #ddd;border-bottom:none;width:120px;}
 .notes #manage div a {display:block;position:relative;padding: 5px 5px 5px 33px;border-bottom:1px solid #ddd;}
 .notes #manage div a:hover {background-color:#eee;text-decoration:none;}

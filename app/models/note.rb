@@ -28,10 +28,15 @@ class Note < ActiveRecord::Base
   belongs_to :wine_detail, :class_name => "Wines::Detail", :foreign_key => :wine_detail_id
   belongs_to :exchange_rate
   has_many :comments, :class_name => "NoteComment", :as => :commentable
+  has_many :follows, :as => :followable
   validates :uuid, :name, :vintage, :presence => true
   validates :comment, :presence => true, :on => :update
   validates :uuid, :uniqueness => true
   scope :find_app_note, lambda {|app_note_id| where(:app_note_id => app_note_id)}
+
+  def is_followed_by?(user)
+    Follow.where(:followable_type => "Note", :followable_id => app_note_id, :user_id => user.id).first ? true : false
+  end
 
   
   def self.local_note(app_note_id)
@@ -264,7 +269,9 @@ class Note < ActiveRecord::Base
 
   def likes_count
     # new时， 记得将app_note_id 付值给 id
-    likes.count
+    note = Note.new
+    note.id = app_note_id
+    note.likes.count
   end
 
   def comments_count
@@ -363,7 +370,7 @@ class Note < ActiveRecord::Base
         host = "#{NOTE_DATA['note']['photo_location']['host']}"
         base_url = "#{NOTE_DATA['note']['photo_location']['base_url']}"
         version = "#{NOTE_DATA['note']['photo_location']['version']}"
-        photo_url = "http://#{host}:8080/#{base_url}/#{version}/#{image['image'].gsub(/,$/, '')}"
+        photo_url = "#{host}/#{base_url}/#{version}/#{image['image'].gsub(/,$/, '')}"
         self.remote_photo_url = photo_url
       rescue OpenURI::HTTPError
         puts "sync photo failure." 

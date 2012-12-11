@@ -4,6 +4,15 @@ class Follow < ActiveRecord::Base
   belongs_to :user
   validates :followable_type, :followable_id, :user_id, :presence => true
   scope :recent, lambda { |limit| order("created_at DESC").limit(limit) }
+  after_create :change_followable_id
+
+  def change_followable_id
+    self.update_attribute(:followable_id, Note.find(followable_id).app_note_id) if followable_type == "Note"
+  end
+
+  def followable
+    followable_type == "Note" ? Note.find_by_app_note_id(followable_id) : super
+  end
  # COUNTER
  # increment
  def follow_counter_should_increment_for(followable_type)

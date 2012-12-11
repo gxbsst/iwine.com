@@ -302,6 +302,8 @@ module ApplicationHelper
       winery_url(object)
     when 'Wines::Detail'
       wine_url(object)
+    when "Note"
+      note_url(object.app_note_id)
     end
     sns_url
   end
@@ -316,6 +318,8 @@ module ApplicationHelper
       object.username
     when 'Event'
       object.title
+    when "Note"
+      "iWine.com品酒辞推荐"
     end
     "【#{title}】"
   end
@@ -328,14 +332,38 @@ module ApplicationHelper
       object.description
     when 'Event'
       object.title
+    when "Note"
+      object.comment
     end
     truncate(desc.to_s.gsub(" ", '').gsub(/\r|\n/, ''), :length => 70)
   end
 
+      #分享到sns
+  def note_sns_summary(local_note)
+    %Q[#{local_note.show_vintage} #{local_note.name} #{star_content(local_note.rating)} #{sns_summary(local_note)}]
+  end
+
+  def star_content(rating)
+    star = case rating
+    when 1
+      "1星"
+    when 2
+      "2星"
+    when 3
+      "3星"
+    when 4
+      "4星"
+    when 5
+      "5星"
+    end
+    star
+  end
+
   def sns_image_url(object, options = {})
-    if object.class.name == "Photo"
+    case object.class.name
+    when "Photo"
       cover = object
-    elsif object.class.name == "Event"
+    when  "Event"
       photo = object.poster_url(options[:thumb_name]) if object.poster.present?
     else
       cover = get_cover(object)

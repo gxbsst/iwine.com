@@ -1,0 +1,14 @@
+<% if @from_index %>
+  <%
+    content = @followed ? "取消收藏" : "收藏"
+    selector = "##{@item_id} .action .hf em"
+    selector_follow_num = "##{@item_id} .iw_more_follow a"
+  %>
+  $("<%= selector %>").html("<%= content %>");
+<% else %>
+  <% if @followed %>
+    $("#follow_note img").attr("src", "/assets/icon/collect_on.png");
+  <% else %>
+    $("#follow_note img").attr("src", "/assets/icon/collect.png");
+  <% end %>
+<% end %>

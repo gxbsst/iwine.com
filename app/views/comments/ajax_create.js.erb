@@ -7,14 +7,23 @@
     comment_count = @comment.commentable.current_comments_count
 		["wine", comment_count]
   when "Note"
-    comment_count = @comment.commentable.comments.size
+    comment_count = @comment.commentable.comments_count
     ["note", comment_count]
 	end
 	selector_comment_num = "##{@item_id} .iw_more_comment a"
 	selector_list = "##{@item_id} ul"
 	selector_form = "##{@item_id} form textarea##{tag}_comment_body"
 %>
-$("<%= selector_list %>").append("<%= escape_javascript(render(:partial =>'share/short_comment', :locals => {:comment => @comment})) %>");
+<% if @comment.commentable_type == "Note" %>
+  if($("#<%= @item_id%> .note_comment_list .iw_main").length > 0){
+    $("<%= selector_list %>").append("<%= escape_javascript(render(:partial =>'share/short_comment', :locals => {:comment => @comment})) %>");
+  }else{
+    $("#<%= @item_id %> .note_comment_list").append("<%= escape_javascript(render(:partial =>'notes/note_ajax_comment', :locals => {:comment => @comment})) %>");
+  }
+<% else %>
+  $("<%= selector_list %>").append("<%= escape_javascript(render(:partial =>'share/short_comment', :locals => {:comment => @comment})) %>");
+  $("<%= selector_comment_num %>").html("共<%= count %>条评论");
+<% end %>
+
 $("<%= selector_form %>").val('');
-$("<%= selector_comment_num %>").html("共<%= count %>条评论");
- $('#container').masonry('reload');
+$('#container').masonry('reload');

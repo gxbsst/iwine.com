@@ -1,6 +1,5 @@
 # encoding: utf-8
 class NotesController < ApplicationController
-
   before_filter :authenticate_user!, :except => [:show, :index]
   before_filter :update_note_from_app, :only => [:app_edit]
   before_filter :find_note, :only => [:edit, :update, :upload_photo]
@@ -224,6 +223,36 @@ class NotesController < ApplicationController
     end
 
     render 'trait'
+  end
+  
+  #接受app_note_id
+  def vote
+    #临时的note
+    @note = Note.new
+    @note.id = params[:id] #app_note_id
+    if Service::VoteService::Vote.run(@note, current_user)
+      render :json => @note.likes.size.to_json
+    else
+      render_404('')
+    end
+  end
+
+  #接受本地note id
+  def follow
+    @from_index = params[:from_index]
+    @item_id = params[:item_id]
+    @note = Note.find(params[:id])
+    if @note.is_followed_by? current_user
+      follow = current_user.follows.where(:followable_type => "Note", :followable_id => @note.app_note_id).first
+      follow.destroy
+      @followed = false #判断图标的转换
+    else
+      @note.follows.create(:user_id => current_user.id)
+      @followed = true
+    end
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

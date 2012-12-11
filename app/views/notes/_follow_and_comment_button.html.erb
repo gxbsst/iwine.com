@@ -1,9 +1,39 @@
 <div class="action clearfix" style="display:none;">
   <% if current_user %>
-      <a class="btn_iw hc" href="javascript:void(0);"><span><em>评论</em></span></a>
+    <a class="btn_iw hc" href="javascript:void(0);"><span><em>评论</em></span></a>
+    <%= link_to follow_note_path(local_note, :from_index =>true, :item_id => item_id), :class => "btn_iw hf", :remote => true, :method => :put do %>
+      <span><em><%= show_follow_content(local_note) %></em></span>
+    <% end %>
   <% else %>
     <%= link_to login_path, :class => "btn_iw hc" do %>
       <span><em>评论</em></span>
     <% end %>
+    <%= link_to login_path, :class => "btn_iw hf" do %>
+      <span><em>收藏</em></span>
+    <% end %>
   <% end %>
+  <span class="share_sns">
+    <a class="btn_iw hs" href="javascript:void(0);"><span><em>分享</em></span></a>
+    <div class="dropbox" style="display:none;">
+      <div class="com_s sns clearfix" id="sns<%= item_id %>">
+      <div id="ckepop">
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_tqq"></a>
+          <a class="jiathis_button_renren"></a>
+          <a class="jiathis_button_douban"></a>
+      </div>
+      <div class="clear"></div>   
+      </div>
+    </div>
+  </span>
 </div>
+<script type="text/javascript">
+    $("#sns<%= item_id %>").mouseover(function(){
+        setShare(
+          "<%= sns_title(local_note) %>", 
+        "<%= sns_url(local_note) %>", 
+        "<%= note_sns_summary(local_note) %>", 
+        "<%= app_note[:photo].images(:version => :customer, :pattern => '590x590').first %>"
+        );
+    }); 
+</script>

@@ -44,14 +44,14 @@ Patrick::Application.routes.draw do
     collection do
       get :trait
       get :color
+      get :add
     end
     member do
       match :upload_photo, :via => [:get, :post, :put]
       get :app_edit
       get :publish
-    end
-    collection do
-      get :add
+      put :vote
+      put :follow
     end
   end
 

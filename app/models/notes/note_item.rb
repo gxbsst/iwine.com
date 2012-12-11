@@ -69,6 +69,10 @@ module Notes
         AGENT[@agent]
       end
 
+      def comments
+        Comment.real_comments.find_comments_for_commentable("Note", self.id)
+      end
+
     end
 
     # 外观

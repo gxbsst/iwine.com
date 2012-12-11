@@ -1,5 +1,12 @@
 # encoding: utf-8
 module NotesHelper
+  def show_follow_content(local_note)
+    if current_user && local_note.is_followed_by?(current_user)
+      "取消收藏"
+    else
+      "收藏"
+    end
+  end
   def cover(photo, version = 'normal', pattern = '', size = '590x590')
     if photo.images
       if photo.images.is_a? Array
@@ -155,6 +162,16 @@ module NotesHelper
     query_params = note.wine.detail ? {:wine_detail_id =>  note.wine.detail} : {:app_note_id => note.id}
     %Q[#{link_to image_tag('common/btn_add_notes.jpg', :size => '250x50', :alt => '我也喝过，去写品酒辞'),
      new_note_path(query_params)}] 
+  end
+
+  def follow_note(local_note)
+    if current_user && local_note.is_followed_by?(current_user)
+      image_location = "icon/collect_on.png"
+    else
+      image_location = "icon/collect.png"
+    end
+    link_to image_tag(image_location, :size => '20x19', :align => :absmiddle), 
+            follow_note_path(local_note), :method => :put, :remote => true, :id => "follow_note", :class => "ajax"
   end
 
 end

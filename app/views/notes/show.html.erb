@@ -71,39 +71,50 @@
     <div class="clear"></div>
   </div>
   <div class="notes_img_detail">
-  <!--
     <div class="sharebar">
       <div id="manage">
-        <p>
-          <a href="#" onmouseover="mopen('mbox')" onmouseout="mclosetime()">
-            <%= image_tag('icon/manage_w.png', :size => '21x21', :alt => '管理') %>
-          </a>
-        </p>
-        <div id="mbox" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
-          <%= link_to "编辑品酒辞", app_edit_note_path(@note.id), :class => "icon_edit2" %>
-          <%= link_to "删除品酒辞", note_path(@note.id), :method => :delete, :confirm => "确认删除吗？", :class => "icon_cancle" %>
-        </div>
+        <% if is_login_user?(@user) %>
+          <p>
+            <a href="#" onmouseover="mopen('mbox')" onmouseout="mclosetime()">
+              <%= image_tag('icon/manage_w.png', :size => '21x21', :alt => '管理') %>
+            </a>
+          </p>
+          <div id="mbox" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+            <%= link_to "编辑品酒辞", app_edit_note_path(@note.id), :class => "icon_edit2" %>
+            <%= link_to "删除品酒辞", note_path(@note.id), :method => :delete, :confirm => "确认删除吗？", :class => "icon_cancle" %>
+          </div>
+        <% end %>
       </div>
       <ul>
         <li class="collect">
-          <%= link_to image_tag("icon/collect.png", :size => '20x19', :align => :absmiddle) %>
+          <%= follow_note(@local_note) %>
         </li>
-        <li class="share">
-          <%= link_to image_tag("icon/share.png", :size => '21x17', :align => :absmiddle) %>
-
-        </li>
+        <span class="share-dropbox">
+          <li class="share ">
+            <%= link_to image_tag("icon/share.png", :size => '21x17', :align => :absmiddle), "javascript:void(0);", :style => "height:26px;" %>
+          </li>
+          <div class="dropbox" style="display:none;">
+            <div class="com_s clearfix">
+              <%=render "share/sns_icons",
+                          :image_url =>  @note.photo.images(:version => :customer, :pattern => '590x590').first,
+                          :title => sns_title(@local_note),
+                          :summary => note_sns_summary(@local_note),
+                          :url => sns_url(@local_note),
+                          :no_content => true 
+                           %>
+            </div>
+          </div>
+        </span>
         <li class="like">
-          <%= link_to image_tag("icon/collect.png", :size => '22x20', :align => :absmiddle) %>
+          <%= render "liked" %>
         </li>
       </ul>
     </div>
-  -->
     <%= cover(@note.photo, 'customer', '590x590') %>
   </div>
   <div class="notes_winename">
     <div class="star">
       <%= star_rate_tag(@note.wine.rating)%>
-
     </div>
     <div class="name">
       <h1 class="ch"><%= link_to_cname @note.wine %></h1>
@@ -200,7 +211,7 @@
 
   <div class="section last">
     <div class="title">
-      <%= link_to new_note_comment_path(@local_note, :do => "comment"), :class => "btn_gray float_r font12", :remote => true do %>
+      <%= link_to new_note_comment_path(@local_note, :do => "comment"), :class => "btn_gray float_r font12 ajax", :remote => true do %>
         <span>我要留言</span>
       <% end %>
       <h2>留言 <span class="font12 more">（共<%= @comments.total_count %>条）</span></h2>
@@ -304,4 +315,12 @@
 </div>
 <div class="clear"></div>
 </div>
+<script type="text/javascript">
+  $(".share-dropbox").mouseenter(function(){
+    $(".dropbox").show();
+  });
+    $(".share-dropbox").mouseleave(function(){
+    $(".dropbox").hide();
+  });
+</script>
 
