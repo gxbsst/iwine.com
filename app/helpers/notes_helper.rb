@@ -12,6 +12,16 @@ module NotesHelper
     end
   end
 
+  def cover_for_id(id, size = '70x70')
+    location = NOTE_DATA['note']['photo_location']
+    if Rails.env == 'development'
+      location['host'] = '192.168.11.29'
+      location['port'] = '8082'
+    end
+    url = "http://#{location['host']}:#{location['port']}/#{location['base_url']}/special/#{id}/#{size}"
+    image_tag(url, :size => size)
+  end
+
   def appearance_color_img(color_string)
     color_string
   end

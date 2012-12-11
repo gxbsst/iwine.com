@@ -36,5 +36,15 @@ describe "Service::FriendService" do
       end
     end
 
+    context 'sina weibo for iphone' do
+      it "return some friends" do
+        friends = Service::FriendService::Recommend.call_with_classify(@user, 'weibo')
+        friends.should include("sina")
+        friends.should include("tencent")
+        friends.should include("douban")
+        friends['sina'].size.should > 1
+      end
+    end
+
   end
 end

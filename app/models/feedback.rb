@@ -25,23 +25,23 @@ class Feedback < ActiveRecord::Base
       FeedbackMailer.error_feedback(self).deliver
     elsif type == "Feedback::ComplementFeedback"
       FeedbackMailer.complement_feedback(self).deliver
+    elsif type == "Feedback::NoteReport"
+      true # do nothing
     else
       FeedbackMailer.feedback(self).deliver
     end
   end
 
   # 反馈
-  class NormalFeedback < Feedback
-
-  end
+  class NormalFeedback < Feedback; end
 
   # 纠错
-  class ErrorFeedback < Feedback
-
-  end
+  class ErrorFeedback < Feedback; end
 
   # 补充
-  class ComplementFeedback < Feedback
+  class ComplementFeedback < Feedback; end
 
-  end
+  #品酒辞举报
+  class NoteReport < Feedback; end
+
 end

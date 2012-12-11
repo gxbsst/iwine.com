@@ -347,6 +347,25 @@ api:
       success: 0
       code: 441
       message: ""
+   report:
+     success:
+      success: 1
+      code: 200
+      message: ""
+     other_failed:
+      success: 0
+      code: 441
+      message: ""
+   oauth:
+     success:
+      success: 1
+      code: 200
+      message: ""
+     other_failed:
+      success: 0
+      code: 441
+      message: ""
+
 
 
 

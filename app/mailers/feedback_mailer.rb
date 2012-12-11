@@ -15,5 +15,10 @@ class FeedbackMailer < ActionMailer::Base
 	def complement_feedback(feedback)
 		@feedback = feedback
 		mail(:subject => "补充:#{@feedback.subject}" )
-	end
+  end
+
+  def note_report(feedback)
+    @feedback = feedback
+    mail(:subject => "品酒辞举报" )
+  end
 end

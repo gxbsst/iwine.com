@@ -1,0 +1,4 @@
+<p>[<%= "#{@feedback.name}, #{@feedback.email}"%>]在<%= @feedback.created_at.to_s(:cn) %> 举报品酒辞</p>
+<p>品酒辞：<br />
+  <%= link_to "品酒辞地址", "http://#{Service::MailerService::Mailer::HOST}/notes/#{@feedback.description}" %>
+</p>
