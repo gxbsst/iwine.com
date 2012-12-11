@@ -21,6 +21,7 @@ describe Api::V2::FriendsController do
              {'Accept' => 'application/vnd.iwine.com; version=2'}
         @response = response
         @result = JSON.parse(@response.body)
+
       end
 
       it { @result["success"].should == 1}

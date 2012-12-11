@@ -16,6 +16,12 @@ module Service
         new(user,sns_name).friends
       end
 
+      def self.call_with_classify(user, sns_name = '')
+        #binding.pry
+        new(user,sns_name).friends_for_classify
+      end
+
+
       def initialize(user, sns_name)
         @user = user
         @sns_name = sns_name
@@ -37,6 +43,34 @@ module Service
         else
           false
         end
+        rfriends
+      end
+
+      def friends_for_classify
+        rfriends = {}
+        sns_providers_map = {"SnsProviders::QqWeibo" => "tencent", "SnsProviders::Douban" => "douban", "SnsProviders::SinaWeibo" => "sina"}
+        sns_providers_map.values.each {|value| rfriends[value] = []}
+
+        friends = sns_provider.where(:user_id => @user.id)
+        oauth_users = if @sns_name.present?
+                        ::Users::Oauth.includes(:user).where(:sns_name => @sns_name)
+                      else
+                        ::Users::Oauth.includes(:user).all
+                      end
+
+        if friends.present? && oauth_users.present?
+          oauth_users.each do |ouser|
+            friends.each do |f|
+              if ouser.user_id != @user.id
+                rfriends[sns_providers_map[f.type]] << ouser.user if (f.uid == ouser.sns_user_id) || (f.uid == ouser.provider_user_id)
+              end
+            end
+          end
+          #rfriends.delete_if{|i| i.id == @user.id }.uniq!
+        else
+          false
+        end
+
         rfriends
       end
 

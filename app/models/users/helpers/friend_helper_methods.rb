@@ -28,7 +28,7 @@ module Users::Helpers::FriendHelperMethods
     # 判断是否已经关注某人
     def is_following user_id
       return true if id == user_id
-      user = User.find(user_id) 
+      user = User.find(user_id)
       Friendship.first :conditions => { :user_id => user.id , :follower_id => id }
     end
 

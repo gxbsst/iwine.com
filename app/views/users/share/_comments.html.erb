@@ -88,6 +88,25 @@
           <div class="content"><%= comment.body %></div>
         </div>
       </li>
+    <% elsif comment.commentable_type == 'Note' %>
+          <li>
+            <div class="pic">
+              <%= link_to "/notes/#{comment.commentable_id}" do %>
+                  <%= cover_for_id(comment.commentable_id) %>
+              <% end %>
+            </div>
+            <div class="main">
+              <div class="winename">
+                评论了品酒辞:
+                <%= link_to 'aa', "/notes/#{comment.commentable_id}" %>
+                <span class="date">
+              <%= comment.created_at.to_s(:normal)%>
+
+            </span>
+              </div>
+              <div class="content"><%= comment.body %></div>
+            </div>
+          </li>
     <% end %>
   <% end %>
 </ul>
