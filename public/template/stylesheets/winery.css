@@ -5,6 +5,7 @@
 .winery_header .logo {margin:0 0 10px 0;}
 .winery_header .right{width:203px;float:left;padding:20px;}
 .winery_header .score_star .star {margin-right:10px;}
+.winery_header .share a {float:none;display:inline-block;}
 h1.winery_name_ch {font-size:20px;color:#000;margin:0 0 3px 0;line-height:24px;}
 h1.winery_name_en {font-size:14px;color:#666;font-weight:normal;margin: 0 0 15px 0;}
 .winery_header .count {float:right;padding-top:5px;}
