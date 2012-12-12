@@ -1,0 +1,5 @@
+host: 192.168.11.29
+port: 8082
+image:
+  base_url: "iwinenotes/images"
+  version: "normal"

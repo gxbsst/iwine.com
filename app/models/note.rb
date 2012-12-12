@@ -377,13 +377,15 @@ class Note < ActiveRecord::Base
   def sync_photo(image)
     if image.present? && image['image'].present?
       begin
-        host = "#{NOTE_DATA['note']['photo_location']['host']}"
-        base_url = "#{NOTE_DATA['note']['photo_location']['base_url']}"
-        version = "#{NOTE_DATA['note']['photo_location']['version']}"
-        photo_url = "#{host}/#{base_url}/#{version}/#{image['image'].gsub(/,$/, '')}"
+        pre = 'http://'
+        host = NOTE_HTTP['host']
+        port = NOTE_HTTP['port']
+        base_url = NOTE_HTTP['image']['base_url']
+        version = NOTE_HTTP['image']['version']
+        photo_url = "#{pre}#{host}:#{port}/#{base_url}/#{version}/#{image['image'].gsub(/,$/, '')}"
         self.remote_photo_url = photo_url
       rescue OpenURI::HTTPError
-        puts "sync photo failure." 
+        puts "sync photo failure."
       end
     end
   end

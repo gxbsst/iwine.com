@@ -1,0 +1,5 @@
+host: iwinenotes.iwine.com
+port: 8080
+image:
+  base_url: "iwinenotes/images"
+  version: "normal"

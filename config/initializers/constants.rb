@@ -30,9 +30,13 @@ EMAIL_SERVERS = [
 if Rails.env == 'production'
   OAUTH_DATA = YAML.load_file(Rails.root.join('config', 'oauth', 'production_all.yml'))
   QQ_PIC_URL = "http://www.iwine.com"
+  # NOTE API HTTP CONFIG
+  NOTE_HTTP = YAML.load_file(Rails.root.join('config', 'notes', 'http.live.yml'))
 elsif Rails.env == 'development' || Rails.env == 'test'
   QQ_PIC_URL = "http://dev.iwine.com"
   OAUTH_DATA = YAML.load_file(Rails.root.join('config', 'oauth', 'development_all.yml'))
+  # NOTE API HTTP CONFIG
+  NOTE_HTTP = YAML.load_file(Rails.root.join('config', 'notes', 'http.dev.yml'))
 end
 
 APP_DATA = YAML.load_file(Rails.root.join('config', 'data.yml'))

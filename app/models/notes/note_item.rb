@@ -321,13 +321,9 @@ module Notes
       # TODO: move to ...
       DEFAULT_CONFIG = {
           :pre => 'http://',
-          :host => '192.168.11.29:8082',
-          :base_url => 'iwinenotes/images',
- 
-          :version => 'noraml',
-          #:host => NOTE_DATA['note']['photo_location']['host'],
-          #:base_url => NOTE_DATA['note']['photo_location']['base_url'],
-          #:version => NOTE_DATA['note']['photo_location']['version'],
+          :host => "#{NOTE_HTTP['host']}:#{NOTE_HTTP['port']}",
+          :base_url => NOTE_HTTP['image']['base_url'],
+          :version => NOTE_HTTP['image']['version'],
           :id => '',
           :pattern => ''
       }

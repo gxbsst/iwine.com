@@ -65,6 +65,8 @@ namespace :deploy do
     #sudo "ln -nfs #{current_path}/config/unicorn_init.sh /etc/init.d/unicorn_#{application}"
     run "mkdir -p #{shared_path}/config"
     run "mkdir -p #{shared_path}/config/oauth"
+    run "mkdir -p #{shared_path}/config/notes"
+
     # database config
     put File.read("config/database.example.yml"), "#{shared_path}/config/database.yml"
     # oauth config
@@ -76,6 +78,11 @@ namespace :deploy do
 
     # photos
     run "mkdir -p #{shared_path}/uploads"
+
+    # note http config
+    put File.read("config/notes/http.live.example.yml"), "#{shared_path}/config/notes/http.live.yml"
+    put File.read("config/notes/http.dev.example.yml"), "#{shared_path}/config/notes/http.dev.yml"
+
     puts "Now edit the config files in #{shared_path}."
   end
   after "deploy:setup", "deploy:setup_config"
@@ -88,6 +95,9 @@ namespace :deploy do
     run "ln -nfs #{shared_path}/config/oauth/qq.yml #{release_path}/config/oauth/qq.yml"
     run "ln -nfs #{shared_path}/config/oauth/sina.yml #{release_path}/config/oauth/sina.yml"
     run "ln -nfs #{shared_path}/config/unicorn.rb #{release_path}/config/unicorn.rb"
+
+    run "ln -nfs #{shared_path}/config/notes/http.live.yml #{release_path}/config/notes/http.live.yml"
+    run "ln -nfs #{shared_path}/config/notes/http.dev.yml #{release_path}/config/notes/http.dev.yml"
   end
   after "deploy:finalize_update", "deploy:symlink_config"
 
