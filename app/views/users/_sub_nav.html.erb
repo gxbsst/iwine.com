@@ -3,13 +3,11 @@
 <% end %>
 
 <% sub_menu = {
-     "cellars"   =>  [cellars_user_path(@user, @user.cellar), @user.cellar.items_count],
-     "wine_follows"     => [wine_follows_user_path(@user), @user.wine_followings_count],
-     "winery_follows"   => [winery_follows_user_path(@user), @user.winery_followings_count],
-     "comments"  => [comments_user_path(@user), @user.comments_count],
-     # "testing_notes"  => ["testing_notes", 0],
-     "followings"     => [followings_user_path(@user), @user.followings_count],
+     "cellars"   =>  [cellars_user_path(@user, @user.cellar), @user.cellar.items_count], 
      "followers"    => [followers_user_path(@user), @user.followers_count],
+     "follows"     => [wine_follows_user_path(@user), @user.wine_followings_count+@user.winery_followings_count+@user.followings_count], 
+     "comments"  => [comments_user_path(@user), @user.comments_count],
+     # "testing_notes"  => ["testing_notes", 0],  
      "albums"       => [albums_user_path(@user, :trailing_slash => true), @user.albums_count],
      "events"       => [user_events_path(@user, :trailing_slash => true), @user.events_count]
  } %>
@@ -76,7 +74,7 @@
        </div>
       <% end %>
       <ul class="hp_navi">
-        <% sub_menu.each do |action_name, url| %>
+        <% sub_menu.each do |action_name, url| %> 
           <%= content_tag :li, :class => ( if (params[:action] == action_name) || (params[:controller] == action_name); :current; end) do %>
             <%= link_to "#{url[1]} <br />".html_safe + t("nav.sub_nav.mine.#{action_name}"),  url[0] %>
           <% end %>
