@@ -204,10 +204,10 @@ a.icon_comment {background-position:0 -143px;padding-left:15px;}
 .icon_join {background:url(icon/join.png) no-repeat 0 -1px;padding: 0 0 0 18px;}
 .icon_text_edit {background:url(icon/join_edit.png) no-repeat 0 -1px;padding:0 0 0 18px;}
 .icon_public {background:url(icon/public.png) no-repeat 0 0;padding:2px 0 0 18px;height:20px;}
-.icon_sina2 {background:url(icon/sina_s_on.png) no-repeat 0 0;display:block;width:17px;height:17px;}
-.icon_tt2 {background:url(icon/tencen_s_on.png) no-repeat 0 0;display:block;width:17px;height:17px;}
-.icon_douban {background:url(icon/douban_s_on.png) no-repeat 0 0;display:block;width:17px;height:17px;}
-.icon_renren {background:url(icon/renren_s_on.png) no-repeat 0 0;display:block;width:17px;height:17px;}
+.icon_sina2 {background:url(icon/sina_s_on.png) no-repeat 0 0;display:block;width:17px;height:17px;cursor:pointer;}
+.icon_tt2 {background:url(icon/tencen_s_on.png) no-repeat 0 0;display:block;width:17px;height:17px;cursor:pointer;}
+.icon_douban {background:url(icon/douban_s_on.png) no-repeat 0 0;display:block;width:17px;height:17px;cursor:pointer;}
+.icon_renren {background:url(icon/renren_s_on.png) no-repeat 0 0;display:block;width:17px;height:17px;cursor:pointer;}
 
 .label_end, .label_cancle, .label_unpublic {display:inline-block;padding:2px 5px;position:absolute;}
 .label_end {background-color:#417630;color:#fff;}

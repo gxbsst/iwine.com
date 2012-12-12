@@ -9,8 +9,8 @@
 .sharebar ul li a {padding:15px 0;display:inline-block;}
 .sharebar ul .dropbox a {padding:0;}
 .dropbox {position:absolute;left:465px;top:56px;background: url("../images/bg/black_80.png") repeat scroll 0 0 transparent;padding:3px 5px 5px 5px;}
-.dropbox .com_s {padding-top:0;width:100px;text-align:center;}
-.dropbox .com_s a {display:block;margin:5px 0 5px 5px;float:left;}
+.dropbox .com_s {padding-top:0;width:110px;text-align:center;}
+.dropbox .com_s a {display:block;margin:5px;float:left;}
 .dropbox .com_s .sns_on {position:absolute;left:8px;top:8px;}
 .notes_winename {margin:0 0 40px 0;}
 .notes_winename .star {float:right;}
