@@ -17,7 +17,7 @@ module Api
       def index
         resource = Service::FriendService::Recommend.call_with_classify(@user, params[:sns_name])
         %w(sina douban tencent).each do  |key|
-          resource[key].uniq!.delete_if{ |user| @user.is_following user.id }  if resource[key].present?
+          resource[key].uniq.delete_if{ |user| @user.is_following user.id }  if resource[key].present?
         end
         #status = resource.present? ? true : false
         render :json => ::Api::Helpers::FriendJsonSerializer.as_json(resource, true)
@@ -42,6 +42,12 @@ module Api
         else
           render :json => 'id不能为空'
         end
+      end
+
+      def state
+        user_b = User.find(params[:user_id])
+        resource = Service::FriendService::State.run(@user, user_b)
+        render :json => ::Api::Helpers::FriendJsonSerializer.as_json(resource, true)
       end
 
       protected

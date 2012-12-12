@@ -81,5 +81,30 @@ module Service
 
     end
 
+    class State
+      STATE_CODE = {:non_follow => 0, :following => 1, :follower => 2, :mutual_follow => 3}
+
+      def self.run(user_a, user_b)
+        new(user_a, user_b).check
+      end
+
+      def initialize(user_a, user_b)
+        @user_a = user_a
+        @user_b = user_b
+      end
+
+      def check
+        if (@user_a.is_following @user_b.id) && (@user_b.is_following @user_a.id)
+          STATE_CODE[:mutual_follow]
+        elsif @user_a.is_following @user_b.id
+          STATE_CODE[:following]
+        elsif @user_b.is_following @user_a.id
+          STATE_CODE[:follower]
+        else
+          STATE_CODE[:non_follow]
+        end
+      end
+
+    end
   end
 end
