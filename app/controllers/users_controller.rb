@@ -62,6 +62,8 @@ class UsersController < ApplicationController
     @followings = @user.followings.page(params[:page] || 1).per(18)
     unless current_user == nil
       @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
+      @recommend_from_sns =  Service::FriendService::Recommend.call(current_user)
+      @recommend_from_sns.delete_if{ |user| current_user.is_following user.id }  if @recommend_from_sns.present?
     end
   end
 
@@ -70,6 +72,8 @@ class UsersController < ApplicationController
     @followers = @user.followers.page(params[:page] || 1).per(18)
     unless current_user == nil
        @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
+       @recommend_from_sns =  Service::FriendService::Recommend.call(current_user)
+       @recommend_from_sns.delete_if{ |user| current_user.is_following user.id }  if @recommend_from_sns.present?
     end
    
   end
