@@ -5,6 +5,15 @@
     <div class="clear"></div>
     <div class="content">
       <div class="left">
+        <div class="tabs3">
+          <ul>
+            <ul>
+            <li><%= link_to "关注的酒",wine_follows_user_path(@user.slug) %></li>
+            <li><%= link_to "关注的酒庄",winery_follows_user_path(@user.slug) %></li>
+            <li class="current"><%= link_to "关注的人",followings_user_path(@user.slug) %></li>
+          </ul>
+          </ul>
+        </div>
         <div class="title_btn">
            <h1>关注的人 <span class="font12 more">(共<%= @user.followings_count %>个...)</span></h1>
         </div>
