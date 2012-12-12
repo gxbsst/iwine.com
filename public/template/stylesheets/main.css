@@ -68,6 +68,7 @@ input.common_search {width:250px;}
 .align_c {text-align:center;}
 .share_btn {border-top:1px solid #ccc;padding:15px 0 0 0;margin:30px 0 0 0;}
 .share {padding-right:5px;}
+.share a {float:right;margin-left:5px;}
 .share img{margin:0 5px 0 0;}
 .year span a {margin:0 5px 0 0;color:#993333;text-decoration:underline;display:inline-block;}
 .year span a:hover {text-decoration:none;color:#993333;}
@@ -171,7 +172,7 @@ table.form th {text-align:right;}
 .logreg_box .right .sns p span {margin-bottom:10px;display:block;}
 .logreg_box .mid .info {margin:0 0 20px 0;font-size:14px;line-height:20px;}
 .logreg_box .mid .welcome {font-weight:bold;font-size:18px;padding:0 60px 30px 60px;}
-.logreg_box .field_with_errors label.message {padding:20px 0 0 0;display:block;}
+
 
 /*icon*/
 .icon_mail, .icon_like, .icon_add_album, .icon_delet, .icon_edit, .icon_add, .icon_delet2, .icon_comment, .icon_fol, .icon_fol_e, .icon_cellar {background:url(../images/icon/icon_all.gif) no-repeat;display:inline-block;}
