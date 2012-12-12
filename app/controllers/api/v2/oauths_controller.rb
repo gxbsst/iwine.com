@@ -2,11 +2,10 @@
 module Api
   module V2
     class OauthsController < ::Api::BaseApiController
-      #before_filter :authenticate_user!
-      #before_filter :get_user
+      before_filter :authenticate_user!, :only => [:bind]
 
       def create
-
+        #TODO: 如果不存在用户则返回告诉让他注册
         @user = create_new_user
         sign_in @user, :bypass => true
         @user.reset_authentication_token!
@@ -20,6 +19,12 @@ module Api
                            :errorDesc =>  APP_DATA["api"]["return_json"]["normal_failed"]["message"],
                            :message => @user_oauth.errors }, :status => 422
         end
+      end
+
+      def bind
+        resource = Service::OauthService::Binding.process(current_user, params)
+        status = resource.errors.any? ? true : false
+        render :json => ::Api::Helpers::ReportJsonSerializer.as_json(resource, status)
       end
 
       protected

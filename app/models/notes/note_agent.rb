@@ -4,8 +4,8 @@ module Notes
     # Default options while posting an  request
 
     DEFAULT_OPTIONS = {
-        :host => '192.168.11.29',
-        :port => '8082',
+        :host => NOTE_HTTP['host'],
+        :port => NOTE_HTTP['port'],
         :path => '',
         :content_type => "application/text; charset=utf-8;",
         :body => ""

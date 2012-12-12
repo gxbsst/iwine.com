@@ -21,6 +21,7 @@ describe Api::V2::FriendsController do
              {'Accept' => 'application/vnd.iwine.com; version=2'}
         @response = response
         @result = JSON.parse(@response.body)
+
       end
 
       it { @result["success"].should == 1}
@@ -96,6 +97,20 @@ describe Api::V2::FriendsController do
 
     end
 
+  end
+
+  describe "State" do
+    before(:each) do
+      get state_api_friends_path,
+          {:user_id => 3, :auth_token => @token},
+          {'Accept' => 'application/vnd.iwine.com; version=2'}
+
+      @response = response
+      @result = JSON.parse(@response.body)
+
+    end
+
+    it { @result['data'].should be(3) }
   end
 
 end

@@ -40,6 +40,7 @@ zh-CN:
         wine_follows : "关注的酒"
         winery_follows : "关注的酒庄"
         followings : "关注的人"
+        follows : "关注"
         followers : "粉丝"
         index : "首页"
         settings: "设置"

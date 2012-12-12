@@ -23,10 +23,14 @@ Patrick::Application.routes.draw do
       resources :sessions
       resources :uploads
       resources :profiles
-      resources :oauths
+      resources :oauths do
+       collection { post :bind }
+      end
       resources :confirmations
       resources :passwords
-      resources :friends
+      resources :friends do
+        collection { get :state }
+      end
       resources :comments
       resources :follows
       resources :votes

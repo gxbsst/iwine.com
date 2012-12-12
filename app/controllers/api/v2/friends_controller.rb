@@ -15,13 +15,12 @@ module Api
       before_filter :get_user
 
       def index
-        resource = Service::FriendService::Recommend.call(@user, params[:sns_name])
-        resource.delete_if{|user| @user.is_following user.id}
-        status = resource.present? ? true : false
-        render :json => ::Api::Helpers::FriendJsonSerializer.as_json(resource, status)
-        # 推荐的好友， 即微博好友已经在网站登陆但是未被关注的
-        #resource = @user.recommends(params[:ids])
-        #render :json => ::Api::Helpers::FriendJsonSerializer.as_json(resource, true)
+        resource = Service::FriendService::Recommend.call_with_classify(@user, params[:sns_name])
+        %w(sina douban tencent).each do  |key|
+          resource[key].uniq!.delete_if{ |user| @user.is_following user.id }  if resource[key].present?
+        end
+        #status = resource.present? ? true : false
+        render :json => ::Api::Helpers::FriendJsonSerializer.as_json(resource, true)
       end
 
       def create
@@ -43,6 +42,12 @@ module Api
         else
           render :json => 'id不能为空'
         end
+      end
+
+      def state
+        user_b = User.find(params[:user_id])
+        resource = Service::FriendService::State.run(@user, user_b)
+        render :json => ::Api::Helpers::FriendJsonSerializer.as_json(resource, true)
       end
 
       protected

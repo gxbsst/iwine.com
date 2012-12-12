@@ -30,7 +30,7 @@ module Service
 
     end
 
-    class Counter < Struct.new(:followers_count, :likes_count, :comments_count)
+    class Counter < Struct.new(:followers, :likes, :comments)
 
     end
 

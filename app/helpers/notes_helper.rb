@@ -19,6 +19,11 @@ module NotesHelper
     end
   end
 
+  def cover_for_id(id, size = '70x70')
+    url = "http://#{NOTE_HTTP['host']}:#{NOTE_HTTP['port']}/#{NOTE_HTTP['image']['base_url']}/special/#{id}/#{size}"
+    image_tag(url, :size => size)
+  end
+
   def appearance_color_img(color_string)
     color_string
   end
@@ -172,6 +177,10 @@ module NotesHelper
     end
     link_to image_tag(image_location, :size => '20x19', :align => :absmiddle), 
             follow_note_path(local_note), :method => :put, :remote => true, :id => "follow_note", :class => "ajax"
+  end
+
+  def ename(note)
+    "#{note.vintage} #{note.name}"
   end
 
 end
