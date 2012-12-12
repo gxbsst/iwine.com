@@ -184,4 +184,8 @@ module NotesHelper
             follow_note_path(local_note), :method => :put, :remote => true, :id => "follow_note", :class => "ajax"
   end
 
+  def ename(note)
+    "#{note.vintage} #{note.name}"
+  end
+
 end
