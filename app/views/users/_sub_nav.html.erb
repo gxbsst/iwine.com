@@ -9,7 +9,8 @@
      "comments"  => [comments_user_path(@user), @user.comments_count],
      # "testing_notes"  => ["testing_notes", 0],  
      "albums"       => [albums_user_path(@user, :trailing_slash => true), @user.albums_count],
-     "events"       => [user_events_path(@user, :trailing_slash => true), @user.events_count]
+     "events"       => [user_events_path(@user, :trailing_slash => true), @user.events_count],
+     "note_follows"  => [note_follows_user_path(@user), @user.note_followings.count]
  } %>
 
   <div class="hp_header">

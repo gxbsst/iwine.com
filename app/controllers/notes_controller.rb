@@ -252,6 +252,9 @@ class NotesController < ApplicationController
     end
     respond_to do |format|
       format.js
+      format.html do
+        redirect_to note_follows_user_path(current_user)
+      end
     end
   end
 

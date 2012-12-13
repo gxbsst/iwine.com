@@ -25,6 +25,16 @@ class UsersController < ApplicationController
     @follows = @user.winery_followings.order("created_at DESC").page(params[:page] || 1).per(10)
     @hot_wineries = Winery.hot_wineries(5)
   end
+  
+  def note_follows
+    @title = ["收藏", @user.username].join("-")
+    @follows = @user.note_followings.order("created_at DESC").page(params[:page] || 1).per(10) 
+    # 热门品酒辞
+    result      = Notes::NotesRepository.all 
+    return render_404('') unless result['state']
+    @notes = Notes::HelperMethods.build_all_notes(result)  
+  end
+
 
   # 我的评论
   def comments

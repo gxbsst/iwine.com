@@ -62,6 +62,11 @@ class User < ActiveRecord::Base
            :include => :followable,
            :class_name => "Follow",
            :conditions => {:followable_type => "Winery"}
+  has_many :note_followings,
+           :include => :followable,
+           :class_name => "Follow",
+           :conditions => {:followable_type => "Note"}
+ 
 
   has_many :feeds,
     :class_name => "Users::Timeline",

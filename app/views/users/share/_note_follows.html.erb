@@ -1,0 +1,31 @@
+<% if !@follows.blank? %>
+<ul class="notes_list">
+  <% @follows.each do |follow| %>
+  <li class="clearfix">
+    <div class="pic">
+      <% if follow.followable.status_flag.to_i == 1 %>
+        <span class="label_unpublic">草稿</span> 
+      <% end %> 
+      <%= link_to note_path(follow.followable_id) do %>
+        <%= cover_for_id(follow.followable_id,'100x100') %>
+      <% end %> 
+    </div>
+    <div class="info">
+        <% if current_user.present? %>
+          <%= link_to '', follow_note_path(follow.followable), :method => :put, :class => "icon_cancle float_r", :title => "取消收藏"%>
+        <% end %>
+        <h3 class="zh"><%= link_to follow.followable.name, note_path(follow.followable_id)%>
+          <span class="date"><%= follow.followable.created_at.to_s(:normal) %></span>
+        </h3>
+        <h3 class="en"><%= link_to follow.followable.name, note_path(follow.followable_id)%></h3>
+        <p class="star"><%= star_rate_tag(follow.followable.rating) %></p>
+        <p><%= follow.followable.comment %></p>
+        <p><%= link_to '详细 》', note_path(follow.followable_id) %></p>
+    </div>
+    <div class="clear"></div>
+  </li>
+  <% end %>
+</ul>
+<% else %>
+<p>暂时没有收藏品酒辞.</p>
+<% end %>
