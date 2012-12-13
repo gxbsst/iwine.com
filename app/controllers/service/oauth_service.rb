@@ -2,8 +2,9 @@
 module Service
   module OauthService
 
-    class Binding  # 赞
+    class Binding  #
 
+      # params {:oauth_user => {:sns_user_id => "....", :sns_name => "weibo"}}
       def self.process(user, params)
         new(user, params).create
       end
