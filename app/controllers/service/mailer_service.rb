@@ -6,6 +6,9 @@ module Service
 
       HOST = Rails.configuration.action_mailer.default_url_options[:host]
 
+      #params
+      # mailer UserMailer
+      # action :action_name
       def self.deliver(mailer, action, params)
         new(mailer, action, params).process
       end
