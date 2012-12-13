@@ -29,7 +29,10 @@ Patrick::Application.routes.draw do
       resources :confirmations
       resources :passwords
       resources :friends do
-        collection { get :state }
+        collection do
+          get :state
+          post :invite
+        end
       end
       resources :comments
       resources :follows

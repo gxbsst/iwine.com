@@ -44,10 +44,17 @@ module Api
         end
       end
 
+      # 获取朋友关系状态
       def state
         user_b = User.find(params[:user_id])
         resource = Service::FriendService::State.run(@user, user_b)
         render :json => ::Api::Helpers::FriendJsonSerializer.as_json(resource, true)
+      end
+
+      # invite
+      def invite
+        Service::MailerService::Mailer.deliver(FriendMailer, :invite, params)
+        render :json => ::Api::Helpers::FriendJsonSerializer.as_json(true, true)
       end
 
       protected
