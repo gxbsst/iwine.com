@@ -125,18 +125,21 @@ class OauthComment < ActiveRecord::Base
 
   #发送评论
   def send_weibo
-    oauth_weibo = user.oauths.oauth_binding.where('sns_name = ?', 'weibo').first
-    if image_url
-      #调用新浪发送图片的api
-      conn = Faraday.new(:url => "https://upload.api.weibo.com"){|f| f.request(:multipart); f.adapter(:net_http)}
-      response = conn.post('/2/statuses/upload.json', 
-                            :access_token => oauth_weibo.access_token, 
-                            :status => body, 
-                            :pic => Faraday::UploadIO.new("#{Rails.root.join('public')}#{image_url}", 'image/jpeg')).body
-    else
-      access_token = user.init_client('weibo', oauth_weibo.access_token)
-      response = access_token.post("/statuses/update.json", :params => {:status => body}).body
-    end
+    #oauth_user = user.oauths.oauth_binding.where('sns_name = ?', 'weibo').first
+    #if image_url
+    #  #调用新浪发送图片的api
+    #  conn = Faraday.new(:url => "https://upload.api.weibo.com"){|f| f.request(:multipart); f.adapter(:net_http)}
+    #  response = conn.post('/2/statuses/upload.json',
+    #                        :access_token => oauth_weibo.access_token,
+    #                        :status => body,
+    #                        :pic => Faraday::UploadIO.new("#{Rails.root.join('public')}#{image_url}", 'image/jpeg')).body
+    #else
+    #  access_token = user.init_client('weibo', oauth_weibo.access_token)
+    #  response = access_token.post("/statuses/update.json", :params => {:status => body}).body
+    #end
+    oauth_user = user.oauths.oauth_binding.where('sns_name = ?', 'weibo').first
+    options = image_url ? {:image_url => image_url} : {}
+    response = ::SnsProviders::SinaWeibo::Poster.perform(body, oauth_user.tokens, options)
     #处理结果信息
     result_data = JSON.parse response
     if result_data['error']
@@ -147,17 +150,22 @@ class OauthComment < ActiveRecord::Base
   end
 
   def send_qq
-    qq_client = user.oauth_client('qq')
-    #TODO 修改ip
-    if image_url
-      # :pic_url =>  "http://patrickdev.sidways.com#{image_url}", 
-      response = qq_client.post("http://open.t.qq.com/api/t/add_pic_url", 
-      	             {:content => body, 
-                      :pic_url => "#{QQ_PIC_URL}#{image_url}",
-      	              :clientip => inet_ntoa}).body
-    else
-   	  response = qq_client.add_status(body, :clientip => inet_ntoa).body
-   	end
+    #qq_client = user.oauth_client('qq')
+    ##TODO 修改ip
+    #if image_url
+    #  # :pic_url =>  "http://patrickdev.sidways.com#{image_url}",
+    #  response = qq_client.post("http://open.t.qq.com/api/t/add_pic_url",
+    #  	             {:content => body,
+    #                  :pic_url => "#{QQ_PIC_URL}#{image_url}",
+    #  	              :clientip => inet_ntoa}).body
+    #else
+   	#  response = qq_client.add_status(body, :clientip => inet_ntoa).body
+   	#end
+
+    oauth_user = user.oauths.oauth_binding.where('sns_name = ?', 'qq').first
+    options = image_url ? {:image_url => image_url} : {}
+    response = ::SnsProviders::QqWeibo::Poster.perform(body, oauth_user.tokens, options)
+
    	#处理结果信息
    	result_data = JSON.parse response
    	if result_data['msg'] == 'ok'
@@ -168,8 +176,12 @@ class OauthComment < ActiveRecord::Base
   end
 
   def send_douban
-    douban_client = user.oauth_client('douban')
-    response = douban_client.add_douban_status(body)
+    #douban_client = user.oauth_client('douban')
+    #response = douban_client.add_douban_status(body)
+
+    oauth_user = user.oauths.oauth_binding.where('sns_name = ?', 'douban').first
+    response = ::SnsProviders::Douban::Poster.perform(body, oauth_user.tokens)
+
     if response.code > "202" #豆瓣的文档，大于202则为错误代码
       failure_share(response.msg)
     else
