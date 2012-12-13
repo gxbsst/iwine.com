@@ -53,7 +53,8 @@
                 :image_url => sns_image_url(@event, :thumb_name => :large),
                 :title => sns_title(@event),
                 :summary => @event.title ,
-                :url => request.url %>
+                :url => request.url,
+                :float => "right" %>
           </div>
           <%= render 'events/join_event_button' %>
           <div id="follow_form"  style="display: none" ></div>

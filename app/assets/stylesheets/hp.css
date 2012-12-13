@@ -58,6 +58,7 @@
 #hp .right .sidewine .info h3.zh {font-size:12px;}
 #hp .right .sidewine .info h3.en a {font-size:12px;font-weight:normal;color:#999;}
 #hp .right .sidewine .info h3.en a:hover {color:#999;text-decoration:none;}
+#hp .right .sidewine .info p.star {margin:0 0 5px 0;}
 
 
 /*-------------album style----------------*/
@@ -106,7 +107,7 @@ img.cover_s {background:url(bg/bg_album_s.gif) no-repeat left top;padding:5px 8p
 .side_album_list li {margin:0 0 30px 0;}
 .add_album {margin:0 0 0 20px;}
 input.photo_name, textarea.photo_des {width:178px;}
-textarea.photo_des {min-height: 70px;_height:70px;}
+textarea.photo_des {min-height: 70px;_height:70px;} 
 li.photo_des p {margin: 0 0 5px 0;}
 .uploade {margin-bottom:20px;}
 .uploade table {border-top:1px solid #ccc;border-right:1px solid #ccc;border-left:1px solid #ccc;}

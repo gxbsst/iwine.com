@@ -531,7 +531,7 @@ module ApplicationHelper
   end
 
   def note_radio_button(hash_values, name, current_value, has_li = false)
-    table_label = ""
+  table_label = ""
     hash_values.select{|key, val| val.present?}.each do |key, value|
       table_label << "<li>" if has_li
       table_label << %Q[<label>#{radio_button_tag("note[#{name}]", key, current_value == key)}\
@@ -539,5 +539,35 @@ module ApplicationHelper
       table_label << "</li>" if has_li
     end
     table_label
+  end
+  #share_id 从jiathis网站获取
+  def link_to_jiathis_share(title, summary, url, image_url, share_id)
+    sns_params = {:webid => share_id, :title => title, :summary => summary, :url => url, :pic => image_url, :uid => "1623461"}
+    url = %Q[http://www.jiathis.com/send/?#{sns_params.to_param}]
+    span_class = case share_id
+    when "tsina"
+      "icon_sina2"
+    when "tqq"
+      "icon_tt2"
+    when "renren"
+      "icon_renren"
+    when "douban"
+      'icon_douban'
+    end
+    link_to url, :target => "_blank" do
+      content_tag :span, nil, :class => span_class
+    end
+  end
+  
+  #暂时使用此方法解决在erb 模版中出现空格的情况。
+  def content_no_space(title, summary, url, image_url, float, no_content)
+    content = no_content ? nil : "分享到："
+    whole_tag = ""
+    whole_tag << content.to_s
+    share_ids = (float == "right" ? ["renren", "douban", "tqq", "tsina"] : ["tsina", "tqq", "douban", "renren"])
+    share_ids.each do |share_id|
+      whole_tag << link_to_jiathis_share(title, summary, url, image_url, share_id)
+    end
+    whole_tag
   end
 end

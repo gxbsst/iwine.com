@@ -91,7 +91,7 @@
         </li>
         <span class="share-dropbox">
           <li class="share ">
-            <%= link_to image_tag("icon/share.png", :size => '21x17', :align => :absmiddle), "javascript:void(0);", :style => "height:26px;" %>
+            <%= link_to image_tag("icon/share.png", :size => '21x17', :align => :absmiddle), "javascript:void(0);", :style => "height:20px;" %>
           </li>
           <div class="dropbox" style="display:none;">
             <div class="com_s clearfix">
@@ -100,7 +100,8 @@
                           :title => sns_title(@local_note),
                           :summary => note_sns_summary(@local_note),
                           :url => sns_url(@local_note),
-                          :no_content => true 
+                          :float => "normal",
+                          :no_content => true,
                            %>
             </div>
           </div>
