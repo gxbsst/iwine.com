@@ -86,6 +86,10 @@ module SnsProviders
           friends
         end
 
+        def client
+          @access_object
+        end
+
       end
     end
 
