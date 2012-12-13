@@ -207,6 +207,7 @@ Patrick::Application.routes.draw do
   # USER
   resources :users do 
     member do 
+      match "note_follows", :via => [:get]
       match "wine_follows", :via => [:get]
       match "winery_follows", :via => [:get]
       match "comments", :via => [:get]
