@@ -27,8 +27,6 @@ describe Api::V2::CountsController do
 
     it { @parsed_body["success"].should == 1}
     it { @parsed_body["resultCode"].should == 200}
-
-
     it { @parsed_body['data'].should include("likes_count") }
     it { @parsed_body['data'].should include("comments_count") }
   end

@@ -15,7 +15,8 @@ module Api
 
       def create
         #params[:notes_comment] commentable_id commentable_type body  & auth_token
-        resource = NoteComment.new(params[:notes_comment])
+        note = Note.sync_note_base_app_note_id(params[:notes_comment][:commentable_id])
+        resource = note.comments.build(params[:notes_comment])
         resource.user_id = @user.id
         status  =  resource.valid? ? true : false
         render :json => ::Api::Helpers::CommentJsonSerializer.as_json(resource.save, status)

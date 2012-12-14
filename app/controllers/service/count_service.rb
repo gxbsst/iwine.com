@@ -13,11 +13,15 @@ module Service
       end
 
       def likes_count
-        @countable.likes.size
+        Rails.cache.fetch ([@countable, :likes_counter]) do
+          @countable.likes.size
+        end
       end
 
       def comments_count
-        @countable.comments_count
+        Rails.cache.fetch ([@countable, :comments_counter]) do
+          @countable.comments_count
+        end
       end
 
       def counts

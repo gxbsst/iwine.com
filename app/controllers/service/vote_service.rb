@@ -3,7 +3,10 @@ module Service
   module VoteService
 
     def self.is_liked? (voter, votable)
-      result =  voter.voted_as_when_voted_for votable
+      #binding.pry
+      result = Rails.cache.fetch([voter, votable, :liked]) do
+       voter.voted_as_when_voted_for votable
+      end
       result ? true : false
     end
 
@@ -19,6 +22,8 @@ module Service
       end
 
       def like
+        Rails.cache.delete([@voter, @votable, :liked])
+        Rails.cache.delete([@votable, :likes_counter])
         @votable.like_by @voter
       end
     end
@@ -34,12 +39,11 @@ module Service
       end
 
       def unlike
+        Rails.cache.delete([@voter, @votable, :liked])
+        Rails.cache.delete ([@votable, :likes_counter])
         @votable.disliked_by @voter
       end
     end
-
-
-
 
   end
 end

@@ -42,9 +42,7 @@ module Api
       end
 
       def build_coutable(id)
-        countable = Note.new
-        countable.id = id
-        countable
+        Note.find_by_app_note_id(id) || Note.sync_note_base_app_note_id(id)
       end
 
     end
