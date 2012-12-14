@@ -12,10 +12,6 @@ module Service
         @countable = countable
       end
 
-      def followers_count
-        @countable.followers_count
-      end
-
       def likes_count
         @countable.likes.size
       end
@@ -25,12 +21,12 @@ module Service
       end
 
       def counts
-        Counter.new(followers_count, likes_count, comments_count)
+        Counter.new(likes_count, comments_count)
       end
 
     end
 
-    class Counter < Struct.new(:followers, :likes, :comments)
+    class Counter < Struct.new(:likes, :comments)
 
     end
 

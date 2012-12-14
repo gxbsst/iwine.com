@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
+
+  acts_as_voter
+
   include Users::UserSupport
   include Users::SnsOauth
   init_resources "Users::Profile", "Users::WineCellar"
@@ -62,11 +65,6 @@ class User < ActiveRecord::Base
            :include => :followable,
            :class_name => "Follow",
            :conditions => {:followable_type => "Winery"}
-  has_many :note_followings,
-           :include => :followable,
-           :class_name => "Follow",
-           :conditions => {:followable_type => "Note"}
- 
 
   has_many :feeds,
     :class_name => "Users::Timeline",

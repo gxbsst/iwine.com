@@ -37,7 +37,9 @@ Patrick::Application.routes.draw do
       resources :comments
       resources :follows
       resources :votes
-      resources :counts
+      resources :counts do
+        collection { get :notes }
+      end
     end
   end
   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/

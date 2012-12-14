@@ -2,6 +2,12 @@
 module Service
   module VoteService
 
+    def self.is_liked? (voter, votable)
+      result =  voter.voted_as_when_voted_for votable
+      result ? true : false
+    end
+
+
     class Vote  # 赞
       def self.run(votable, voter)
         new(votable, voter).like
@@ -31,6 +37,8 @@ module Service
         @votable.disliked_by @voter
       end
     end
+
+
 
 
   end
