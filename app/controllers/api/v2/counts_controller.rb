@@ -13,16 +13,14 @@ module Api
 
 
       def notes #For Note
-        resource = {}
+        resource = []
         voter = User.find(params[:user_id])
         params[:ids].split(",").each do |id|
-          resource[id] = {}
           countable = build_coutable(id)
           is_liked = ::Service::VoteService.is_liked? voter, countable
           counter = Service::CountService::Count.call(countable)
-          resource[id][:likes] = counter.likes
-          resource[id][:comments] = counter.comments
-          resource[id][:is_liked] = is_liked
+          result = {:id => id, :likes => counter.likes, :comments => counter.comments, :liked => is_liked}
+          resource << result
         end
         render :json => ::Api::Helpers::CountJsonSerializer.as_json(resource, true)
       end
