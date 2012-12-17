@@ -8,7 +8,7 @@
         <%= link_to new_note_path(:wine_detail_id => @wine_detail.id, :step => :first),:class => "btn_gray float_r" do %>
           <span>写品酒辞</span>
         <% end %>  
-        <h1 class="wine_name_ch"><%= @wine_detail.cname %>的品酒辞</h1>
+        <h1 class="wine_name_ch"><%= @wine_detail.name_zh %>的品酒辞</h1>
         <div class="clear"></div>
     </div>
     <div class="wp_space_line ptb30">

@@ -92,6 +92,15 @@ class Wines::Detail < ActiveRecord::Base
     "#{show_year} #{wine.name_zh.to_s}"
   end
 
+  def name_zh
+     if wine.name_zh.blank?
+       cname = wine.name_en.to_s
+     else
+       cname = wine.name_zh.to_s
+     end
+    "#{show_year} #{cname}" 
+  end
+
   def origin_name
     "#{show_year} #{wine.origin_name.to_s}"
   end
