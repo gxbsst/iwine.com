@@ -39,7 +39,7 @@ module Api
         %w(sina douban tencent).each do  |key|
           resource[key].uniq!
           if resource[key].present?
-            resource[key].each{|user| @user.is_following user.id ? user.followed = true : user.followed = false}
+            resource[key].each{|user| (@user.is_following user.id) ? user.followed = true : user.followed = false}
             #.delete_if{ |user| @user.is_following user.id }
           end
         end
