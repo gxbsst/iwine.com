@@ -68,6 +68,11 @@ gem "timeline_fu", :path => "lib/gems"
 
 gem "friendly_id"
 
+group :development do
+  gem "better_errors"
+  gem "binding_of_caller"
+end
+
 group :development, :test do
   gem 'i18n'
   gem 'pry'  # "binding.pry" in action

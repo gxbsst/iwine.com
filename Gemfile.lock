@@ -125,6 +125,10 @@ GEM
     best_in_place (1.1.2)
       jquery-rails
       rails (~> 3.1)
+    better_errors (0.2.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.7.0)
+    binding_of_caller (0.6.8)
     bourbon (2.1.1)
       sass (>= 3.1)
     builder (3.0.4)
@@ -524,6 +528,8 @@ DEPENDENCIES
   autotest-rails
   backbone-on-rails
   best_in_place
+  better_errors
+  binding_of_caller
   bullet
   cancan
   capistrano

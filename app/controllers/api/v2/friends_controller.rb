@@ -11,13 +11,37 @@ module Api
       #6. 排名
       #7. 勋章
 
+      # 这里主要是为了给user添加一个followed 字段，判断用户是否被关注
+      ::User.class_eval do
+        attr_accessor :followed
+
+        def followed
+          @follow
+        end
+
+        def followed=(follow_status=false)
+          @follow = follow_status
+        end
+
+        def as_json(options = { })
+          h = super(options)
+          h[:followed]   = followed
+          h
+        end
+
+      end
+
       before_filter :authenticate_user!
       before_filter :get_user
 
       def index
         resource = Service::FriendService::Recommend.call_with_classify(@user, params[:sns_name])
         %w(sina douban tencent).each do  |key|
-          resource[key].uniq!.delete_if{ |user| @user.is_following user.id }  if resource[key].present?
+          resource[key].uniq!
+          if resource[key].present?
+            resource[key].each{|user| @user.is_following user.id ? user.followed = true : user.followed = false}
+            #.delete_if{ |user| @user.is_following user.id }
+          end
         end
         #status = resource.present? ? true : false
         render :json => ::Api::Helpers::FriendJsonSerializer.as_json(resource, true)
