@@ -386,6 +386,10 @@ module Notes
         @rating + 1
       end
 
+      def show_vintage
+        vintage.to_i == -1 ? nil : vintage
+      end
+
       def name_zh
         #(vintage || '').to_s <<  (oName || sName)
          if self.oName.blank?
@@ -393,11 +397,11 @@ module Notes
          else
            cname = oName
          end
-        "#{(vintage || '')} #{cname}"
+        "#{show_vintage} #{cname}"
       end
 
       def name_en
-        "#{(vintage || '')} #{sName}"
+        "#{(show_vintage)} #{sName}"
       end
 
       def region_zh(options = {})
