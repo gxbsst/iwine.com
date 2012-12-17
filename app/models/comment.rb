@@ -64,8 +64,7 @@ class Comment < ActiveRecord::Base
   #判断commentable 是否是 note
   def commentable
     if commentable_type == 'Note'
-      note = Note.find_by_app_note_id(commentable_id)
-      Note.sync_note_base_app_note_id(commentable_id) unless note
+      Note.find_by_app_note_id(commentable_id) || Note.sync_note_base_app_note_id(commentable_id)
     else
       super
     end

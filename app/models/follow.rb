@@ -12,8 +12,7 @@ class Follow < ActiveRecord::Base
 
   def followable
     if followable_type == 'Note'
-      note = Note.find_by_app_note_id(followable_id)
-      Note.sync_note_base_app_note_id(followable_id) unless note
+      Note.find_by_app_note_id(followable_id)  || Note.sync_note_base_app_note_id(followable_id)
     else
       super
     end
