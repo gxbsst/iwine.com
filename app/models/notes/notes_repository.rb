@@ -74,6 +74,8 @@ module Notes
         "id" => note.app_note_id.try(:to_s),
         "notesId" => note.uuid,
         "location.location" => note.location,
+        "location.lo" => note.lo || -1,
+        "location.la" => note.la || -1,
         "createdDate" => note.created_at.to_s(:app_time),
         "modifiedDate" => note.modifiedDate.to_s(:app_time),
         "deleteFlag" => "#{note.delete_flag.to_i}",
