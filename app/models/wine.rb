@@ -84,4 +84,13 @@ class Wine < ActiveRecord::Base
     end
   end
 
+  def name_zh
+    @name_zh || name_en
+  end
+
+  def name_zh=(name_zh)
+    @name_zh = name_zh
+  end
+
+
 end
