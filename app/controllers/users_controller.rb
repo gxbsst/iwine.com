@@ -25,6 +25,16 @@ class UsersController < ApplicationController
     @follows = @user.winery_followings.order("created_at DESC").page(params[:page] || 1).per(10)
     @hot_wineries = Winery.hot_wineries(5)
   end
+  
+  def note_follows
+    @title = ["收藏", @user.username].join("-")
+    @follows = @user.note_followings.order("created_at DESC").page(params[:page] || 1).per(10) 
+    # 热门品酒辞
+    result      = Notes::NotesRepository.all 
+    return render_404('') unless result['state']
+    @notes = Notes::HelperMethods.build_all_notes(result)  
+  end
+
 
   # 我的评论
   def comments
@@ -62,6 +72,8 @@ class UsersController < ApplicationController
     @followings = @user.followings.page(params[:page] || 1).per(18)
     unless current_user == nil
       @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
+      @recommend_from_sns =  Service::FriendService::Recommend.call(current_user)
+      @recommend_from_sns.delete_if{ |user| current_user.is_following user.id }  if @recommend_from_sns.present?
     end
   end
 
@@ -70,6 +82,8 @@ class UsersController < ApplicationController
     @followers = @user.followers.page(params[:page] || 1).per(18)
     unless current_user == nil
        @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
+       @recommend_from_sns =  Service::FriendService::Recommend.call(current_user)
+       @recommend_from_sns.delete_if{ |user| current_user.is_following user.id }  if @recommend_from_sns.present?
     end
    
   end

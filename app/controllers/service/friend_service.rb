@@ -94,6 +94,7 @@ module Service
       end
 
       def check
+         #state = @user_a.is_following @user_b.id, @user_b.is_following @user_a.id
         if (@user_a.is_following @user_b.id) && (@user_b.is_following @user_a.id)
           STATE_CODE[:mutual_follow]
         elsif @user_a.is_following @user_b.id
@@ -104,6 +105,22 @@ module Service
           STATE_CODE[:non_follow]
         end
       end
+
+      #def non_follow(state)
+      #  [nil, nil] == state
+      #end
+      #
+      #def following(state)
+      #
+      #end
+      #
+      #def follower(state)
+      #
+      #end
+      #
+      #def mutual_follow(state)
+      #
+      #end
 
     end
   end

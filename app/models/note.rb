@@ -170,7 +170,7 @@ class Note < ActiveRecord::Base
     if result['state']
       note = Note.new(:app_note_id => app_note_id, :user_id => result['data']['uid'])
       note.sync_data(result['data'])
-      note
+      Note.find_by_app_note_id(app_note_id)
     end
   end
   

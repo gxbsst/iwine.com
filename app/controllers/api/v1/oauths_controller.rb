@@ -29,7 +29,8 @@ module Api
          true
        else
          params[:user_id] = @user.id
-        if @user_oauth = Users::Oauth.create(params)
+         @user_oauth = Users::Oauth.new(params)
+        if @user_oauth.save
           true
         else
           false

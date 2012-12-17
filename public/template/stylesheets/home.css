@@ -38,6 +38,6 @@ a.hc:hover em {background-position:0 2px;}
 a.hf:hover  em {background-position:0 -28px;}
 a.hs:hover  em {background-position:27px -164px;}
 .dropbox {position:absolute;left:0;top:30px;background-color:#fff;border:1px solid #ccc;padding:3px 5px 5px 5px;border-radius: 5px 5px 5px 5px;}
-.dropbox .com_s {padding-top:0;width:120px;text-align:center;}
+.dropbox .com_s {padding-top:0;width:110px;text-align:center;}
 .dropbox .com_s a {display:block;margin:5px;float:left;}
 .dropbox .com_s .sns_on {position:absolute;left:8px;top:8px;}

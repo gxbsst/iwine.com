@@ -3,12 +3,26 @@ module Api
   module V2
     class CountsController < ::Api::BaseApiController
 
-      before_filter :get_countable
+      before_filter :get_countable, :except => [:notes]
 
       def index
         resource = Service::CountService::Count.call(@countable)
         status = @countable ? true : false
         render :json => ::Api::Helpers::CountJsonSerializer.as_json(resource, status)
+      end
+
+
+      def notes #For Note
+        resource = []
+        voter = User.find(params[:user_id])
+        params[:ids].split(",").each do |id|
+          countable = build_coutable(id)
+          is_liked = ::Service::VoteService.is_liked? voter, countable
+          counter = Service::CountService::Count.call(countable)
+          result = {:id => id, :likes => counter.likes, :comments => counter.comments, :liked => is_liked}
+          resource << result
+        end
+        render :json => ::Api::Helpers::CountJsonSerializer.as_json(resource, true)
       end
 
       protected
@@ -26,6 +40,11 @@ module Api
         end
         @countable
       end
+
+      def build_coutable(id)
+        Note.find_by_app_note_id(id) || Note.sync_note_base_app_note_id(id)
+      end
+
     end
 
   end

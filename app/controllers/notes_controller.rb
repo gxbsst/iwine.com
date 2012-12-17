@@ -4,7 +4,7 @@ class NotesController < ApplicationController
   before_filter :update_note_from_app, :only => [:app_edit]
   before_filter :find_note, :only => [:edit, :update, :upload_photo]
 
-  def index 
+  def index
    date = params[:modified_date]
    result      = Notes::NotesRepository.all(date)
    return render_404('') unless result['state']
@@ -252,6 +252,9 @@ class NotesController < ApplicationController
     end
     respond_to do |format|
       format.js
+      format.html do
+        redirect_to note_follows_user_path(current_user)
+      end
     end
   end
 

@@ -94,6 +94,7 @@ describe Api::V2::FriendsController do
 
       @result['data'].count.should >  0
       @result['success'].should == 1
+      @result['data'].should include('followed')
 
     end
 

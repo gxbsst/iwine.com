@@ -29,12 +29,17 @@ Patrick::Application.routes.draw do
       resources :confirmations
       resources :passwords
       resources :friends do
-        collection { get :state }
+        collection do
+          get :state
+          post :invite
+        end
       end
       resources :comments
       resources :follows
       resources :votes
-      resources :counts
+      resources :counts do
+        collection { get :notes }
+      end
     end
   end
   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/
@@ -204,6 +209,7 @@ Patrick::Application.routes.draw do
   # USER
   resources :users do 
     member do 
+      match "note_follows", :via => [:get]
       match "wine_follows", :via => [:get]
       match "winery_follows", :via => [:get]
       match "comments", :via => [:get]

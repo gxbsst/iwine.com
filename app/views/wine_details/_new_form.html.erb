@@ -8,8 +8,8 @@
        <% if @read_only %> <%= @register.name_en %> <% else %><%= f.text_field :name_en %><% end %>
      </div>
      <div class="required">
-       <label><span>*</span>类型</label>
-       <% if @read_only %> <%= @register.style.name %> <% else %><%#= f.select :wine_style_id, Wines::Style.all.collect{ |s| [s.name_zh + '/' + s.name_en, s.id] } %>
+       <label>类型</label>
+       <% if @read_only %> <%= @register.style.try(:name) %> <% else %><%#= f.select :wine_style_id, Wines::Style.all.collect{ |s| [s.name_zh + '/' + s.name_en, s.id] } %>
       <select id="wines_register_wine_style_id" name="wines_register[wine_style_id]">
           <%= render "share/wine_style_select", :wine_style_id => @register.wine_style_id %>
        </select>
@@ -33,7 +33,7 @@
        
      </div>
      <div class="required">
-       <label><span>*</span>容量</label>
+       <label>容量</label>
        <%= f.select :capacity, APP_DATA['wines']['capacity'].each{|key, value| [key, value]} %>
      </div>
      <div class="optional">

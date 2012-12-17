@@ -11,7 +11,12 @@ class Follow < ActiveRecord::Base
   end
 
   def followable
-    followable_type == "Note" ? Note.find_by_app_note_id(followable_id) : super
+    if followable_type == 'Note'
+      Note.find_by_app_note_id(followable_id)  || Note.sync_note_base_app_note_id(followable_id)
+    else
+      super
+    end
+    #followable_type == "Note" ? Note.find_by_app_note_id(followable_id) : super
   end
  # COUNTER
  # increment

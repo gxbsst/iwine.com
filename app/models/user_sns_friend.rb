@@ -34,6 +34,7 @@ class UserSnsFriend < ActiveRecord::Base
     end
 
     def sync_one(user, oauth_user)
+      return false unless SNS_PROVIDER.has_key? oauth_user.sns_name
       friends = fetch_friends(oauth_user)
       if friends.present?
         friends.each {|friend| create_one_friend(user, friend, oauth_user)}
