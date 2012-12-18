@@ -3,7 +3,7 @@ module Api::Helpers
   module ReportJsonSerializer
 
     def self.as_json(resource = "", status = "")
-      Result.new(resource, ReporstError.new(status)).to_json
+      Result.new(resource, ReportsError.new(status)).to_json
     end
 
   end

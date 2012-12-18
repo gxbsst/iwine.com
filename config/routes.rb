@@ -40,6 +40,7 @@ Patrick::Application.routes.draw do
       resources :counts do
         collection { get :notes }
       end
+      resources :reports
     end
   end
   match ':controller(/:action(/:id))', :controller => /api\/[^\/]+/

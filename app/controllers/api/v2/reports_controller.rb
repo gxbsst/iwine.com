@@ -2,16 +2,17 @@
 module Api
   module V2
     class ReportsController < ::Api::BaseApiController
-      before_filter :authenticate_user!, :except => [:create]
+      #before_filter :authenticate_user!, :except => [:create]
       before_filter :get_user
 
       def create
-        params = {
+        options = {
             :subject => "Note Report",
             :description => params[:note_id],
             :email => @user.email
         }
-        resource = Service::ReportService::NoteReport.process(params)
+
+        resource = Service::ReportService::NoteReport.process(options)
         status = resource.errors.any? ? true : false
         render :json => ::Api::Helpers::ReportJsonSerializer.as_json(resource, status)
       end
@@ -19,7 +20,7 @@ module Api
       protected
 
       def get_user
-        @user ||= current_user
+        @user ||= User.find(2)
       end
 
     end
