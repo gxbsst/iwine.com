@@ -10,7 +10,6 @@ module Service
       result ? true : false
     end
 
-
     class Vote  # 赞
       def self.run(votable, voter)
         new(votable, voter).like

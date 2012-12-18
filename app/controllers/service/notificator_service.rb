@@ -20,7 +20,7 @@ module Service
     #    content = "here is content"
     #    options = {:subject => "here is subject"}
     #    block = lambda {|receipt| do something }
-    #    Service::NotificatorService.message(sender, receiver, content, options) &block
+    #    Service::NotificatorService.notification(sender, receiver, content, options) &block
     def self.notification(sender, receiver, content, options = {}, &block)
       new(sender, receiver, content, options, &block).send_system_message
     end
