@@ -28,8 +28,12 @@ module Api
         @resource, @id = params[:votable_type], params[:id]
         @resource = "Wines::Detail" if @resource == "wines"
         # Note 是虚拟的数据
-        if @resource == 'Note'
-          @votable = Note.sync_note_base_app_note_id(@id)
+        if @votable == 'Note'
+          @votable = Note.new
+          @votable.id = @id
+          @votable.app_note_id = @id
+          @votable
+          #@votable = Note.sync_note_base_app_note_id(@id)
         else
           @votable = @resource.singularize.classify.constantize.find(@id)
         end

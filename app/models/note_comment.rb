@@ -7,7 +7,7 @@ class NoteComment < ::Comment
   after_save :flush_counter_cache  # delete Cache
 
   def flush_counter_cache
-    Rails.cache.delete([commentable, :comments_counter])
+    #Rails.cache.delete([commentable, :comments_counter])
   end
 
 end

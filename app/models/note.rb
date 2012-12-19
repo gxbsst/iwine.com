@@ -288,6 +288,10 @@ class Note < ActiveRecord::Base
    Comment.where(:commentable_type => 'Note', :commentable_id => app_note_id).count
   end
 
+  def cache_key
+    "/notes/#{app_note_id}"
+  end
+
   private
 
   def sync_wine_detail_info(wine_info)

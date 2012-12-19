@@ -4,24 +4,25 @@ module Service
 
     class Count  # 赞
 
-      def self.call(countable)
-        new(countable).counts
+      def self.call(countable, &block)
+        new(countable, block).counts
       end
 
-      def initialize(countable)
+      def initialize(countable, block)
         @countable = countable
+        @block = block
       end
 
       def likes_count
-        Rails.cache.fetch ([@countable, :likes_counter]) do
+        #Rails.cache.fetch ([@countable, :likes_counter]) do
           @countable.likes.size
-        end
+        #end
       end
 
       def comments_count
-        Rails.cache.fetch ([@countable, :comments_counter]) do
+        #Rails.cache.fetch ([@countable, :comments_counter]) do
           @countable.comments_count
-        end
+        #end
       end
 
       def counts

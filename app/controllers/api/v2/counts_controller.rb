@@ -22,7 +22,6 @@ module Api
           rescue ActiveRecord::RecordNotFound
             liked = false
           end
-
           counter = Service::CountService::Count.call(countable)
           result = {:id => id, :likes => counter.likes, :comments => counter.comments, :liked => liked}
           resource << result
@@ -47,6 +46,7 @@ module Api
       end
 
       def build_coutable(id)
+        #@votable = Note.sync_note_base_app_note_id(id)
         @countable = Note.new
         @countable.id = id
         @countable.app_note_id = id
