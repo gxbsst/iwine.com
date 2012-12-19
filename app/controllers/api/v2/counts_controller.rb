@@ -3,7 +3,7 @@ module Api
   module V2
     class CountsController < ::Api::BaseApiController
 
-      before_filter :get_countable, :except => [:notes]
+      #before_filter :get_countable, :except => [:notes]
 
       def index
         resource = Service::CountService::Count.call(@countable)
@@ -13,14 +13,16 @@ module Api
 
       def notes #For Note
         resource = []
-        begin
-          voter = User.find(params[:user_id])
-          liked = ::Service::VoteService.is_liked? voter, countable
-        rescue ActiveRecord::RecordNotFound
-          liked = false
-        end
         params[:ids].split(",").each do |id|
+
           countable = build_coutable(id)
+          begin
+            voter = User.find(params[:user_id])
+            liked = ::Service::VoteService.is_liked? voter, countable
+          rescue ActiveRecord::RecordNotFound
+            liked = false
+          end
+
           counter = Service::CountService::Count.call(countable)
           result = {:id => id, :likes => counter.likes, :comments => counter.comments, :liked => liked}
           resource << result
@@ -45,7 +47,11 @@ module Api
       end
 
       def build_coutable(id)
-        Note.find_by_app_note_id(id) || Note.sync_note_base_app_note_id(id)
+        @countable = Note.new
+        @countable.id = id
+        @countable.app_note_id = id
+        @countable
+        #Note.find_by_app_note_id(id) || Note.sync_note_base_app_note_id(id)
       end
 
     end
