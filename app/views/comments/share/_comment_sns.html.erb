@@ -63,7 +63,7 @@
 			}else if (patt_douban.test(type)){
 				openSns({url:"<%= new_sns_friends_url(:sns_name => 'douban') %>", style:"width=700, height=580"});
 			}else if (patt_qq.test(type)){
-				openSns({url:"<%= new_sns_friends_url(:sns_name => 'qq') %>", style:"width=840, height=830"});
+				openSns({url:'<%= "#{root_url[0..-2]}#{user_omniauth_authorize_path(:tqq2)}" %>', style:"width=840, height=830"});
 			}
 			return false;
 		}else{
