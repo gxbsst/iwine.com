@@ -54,6 +54,7 @@ class User < ActiveRecord::Base
            :foreign_key => 'user_id',
            :include => [:user]
   has_many :photo_comments
+  has_many :oauth_comments
   has_many :photos #关于用户上传的所有图片
   has_many :oauths, :class_name => 'Users::Oauth'
   has_many :timeline_events, :as => :actor

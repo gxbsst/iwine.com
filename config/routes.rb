@@ -62,6 +62,7 @@ Patrick::Application.routes.draw do
       get :publish
       put :vote
       put :follow
+      match :share, :via => [:get, :put]
     end
   end
 

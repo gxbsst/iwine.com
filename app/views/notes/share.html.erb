@@ -1,0 +1,106 @@
+<% content_for :css do %>
+  <%= stylesheet_link_tag :notes, :event, :add %>
+<% end %>
+<div class="whitespace addwine" style="min-height:300px;">
+  <h1 class="main_title">添加品酒辞</h1>
+  <div class="align_c">
+    <h3 class="mb30">您的品酒辞已经成功发布，想要把它分享到以下网站么？</h3>
+    <div class="publish_share">
+      <%= form_tag share_note_path(params[:id]), :method => :put, :id => "note_share_form" do%>
+        <span class="sns_switch share_weibo">
+          <% if current_user.check_oauth?('weibo') %>
+            <input type="hidden" name="sns_type[]" value="weibo"/>
+            <%= link_to "javascript:void(0);" do %>
+              <%= image_tag "common/icon_sina_on.png", :alt => "新浪微博", :width => "44", :height => "44", :align => "absmiddle", :class => "image_on" %>
+            <% end %>
+          <% else %>
+            <input type="hidden" name="sns_type[]" value="weibo" disabled="disabled" />
+            <%= link_to "javascript:void(0);", :class => "non_connect" do %>
+              <%= image_tag "common/icon_sina_off.png", :alt => "新浪微博", :width => "44", :height => "44", :align => "absmiddle", :class => "share_weibo_image" %>
+            <% end %>
+          <% end %>
+        </span>
+        <span class="sns_switch share_qq">
+          <% if current_user.check_oauth?('qq') %>
+            <input type="hidden"  name="sns_type[]" value="qq"/>
+            <%= link_to "javascript:void(0);" do %>
+              <%= image_tag "common/icon_qq_on.png", :alt => "腾讯微博", :width => "44", :height => "44", :align => "absmiddle", :class => "image_on" %>
+            <% end %>
+          <% else %>
+            <input type="hidden" name="sns_type[]" value="qq" disabled="disabled"/>
+            <%= link_to "javascript:void(0);", :class => "non_connect" do %>
+              <%= image_tag "common/icon_qq_off.png", :alt => "腾讯微博", :width => "44", :height => "44", :align => "absmiddle", :class => "share_qq_image" %>
+            <% end %>
+          <% end %>
+        </span>
+        <span class="sns_switch share_douban">
+          <% if current_user.check_oauth?('douban') %>
+            <input type="hidden" name="sns_type[]" value="douban"/>
+            <%= link_to "javascript:void(0);" do %>
+              <%= image_tag("common/icon_douban_on.png", :alt => "豆瓣", :width => "44", :height => "44", :align => "absmiddle", :class => "image_on") %>
+            <% end %>
+          <% else %>
+            <input type="hidden" name="sns_type[]" value="douban"  disabled="disabled"/>
+            <%= link_to "javascript:void(0);", :class => "non_connect" do %>
+              <%= image_tag "common/icon_douban_off.png", :alt => "豆瓣", :width => "44", :height => "44", :align => "absmiddle", :class => "share_douban_image" %>
+            <% end %>
+          <% end %>
+        </span>
+      <% end %>
+    </div>
+    <div class="btn_submit">
+      <%= link_to "javascript:void(0);", :class => "btn_brown_d mr10 submit_form" do %>
+        <span>分享品酒辞</span>
+      <% end %>
+      <%= link_to note_path(params[:id]), :class => "btn_brown_d" do %>
+        <span>不，谢谢</span>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(".submit_form").click(function(){
+    $("#note_share_form").submit();
+    return false;
+  });
+
+  function openSns(settings){
+    window.open(settings.url, "popUp", settings.style);
+  }
+
+  function switch_image(src, type){
+    var image_on = new RegExp('_on');
+    if (image_on.test(src)){
+      return ("/assets/common/icon_" + type + "_off.png");
+    }else{
+      return ("/assets/common/icon_" + type + "_on.png");
+    }
+  }
+
+  $("span.sns_switch").click(function(){
+    var type = $(this).attr('class');
+    var patt_weibo = new RegExp("weibo");
+    var patt_qq = new RegExp("qq");
+    var patt_douban = new RegExp('douban');
+    if ($("a", this).attr('class') == 'non_connect'){
+      if (patt_weibo.test(type)){
+        openSns({url:'<%= "#{root_url[0..-2]}#{user_omniauth_authorize_path(:weibo)}" %>', style:"width=770, height=460"});
+      }else if (patt_douban.test(type)){
+        openSns({url:"<%= new_sns_friends_url(:sns_name => 'douban') %>", style:"width=700, height=580"});
+      }else if (patt_qq.test(type)){
+        openSns({url:"<%= new_sns_friends_url(:sns_name => 'qq') %>", style:"width=840, height=830"});
+      }
+      return false;
+    }else{
+      var src = $("img", this).attr('src');
+      if (patt_weibo.test(type)){
+        $("img", this).attr('src', switch_image(src, 'sina'));
+      }else if(patt_douban.test(type)){
+        $("img", this).attr('src', switch_image(src, 'douban'));
+      }else if(patt_qq.test(type)){
+        $("img", this).attr('src', switch_image(src, 'qq'));
+      } 
+      $("input", this).toggleDisabled();
+    }
+  });
+</script>

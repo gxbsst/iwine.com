@@ -35,11 +35,11 @@ module Notes::HelperMethods
   end
 
   # 首页
-  def self.build_all_notes(result, filter_draft = true)
+  def self.build_all_notes(result, filter_draft = true, sync_local = false)
     new_array = []
     result['data'].each do |note|
       next if note['statusFlag'].to_i == Note::STATUS_FLAG[:draft]  if  filter_draft
-      Note.init_main_data(note)
+      Note.init_main_data(note) if sync_local
       new_array <<  {
           :location => Notes::NoteItem::Location.new(note),
           :user => User.find(note['uid']),
@@ -49,5 +49,10 @@ module Notes::HelperMethods
       }
     end
     new_array
+  end
+  
+  #同时将关键信息拉到数据库里
+  def self.build_and_sync_all_notes(result)
+    build_all_notes(result,true, true)
   end
 end
