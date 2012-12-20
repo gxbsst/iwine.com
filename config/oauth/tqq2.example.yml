@@ -1,0 +1,11 @@
+development:
+  key:    801091917 # iwine
+  secret: 400c5d0f2a08ea78e6e637c402eab604
+  url:    http://localhost:3000
+  callback: "http://localhost:3000/friends/sina/callback"
+
+production:
+  key:    801091917 # iwine
+  secret: 400c5d0f2a08ea78e6e637c402eab604
+  url:    http://www.iwine.com
+  callback: "http://www.iwine.com/friends/tqq2/callback"

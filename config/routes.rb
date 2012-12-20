@@ -24,7 +24,10 @@ Patrick::Application.routes.draw do
       resources :uploads
       resources :profiles
       resources :oauths do
-       collection { post :bind }
+       collection do
+         post :bind
+         post :unbind
+       end
       end
       resources :confirmations
       resources :passwords

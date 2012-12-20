@@ -5,8 +5,8 @@ module Service
     class Recommend  # 某用户的推荐好友
 
       SNS_FRIEND = {
-          'tencent' => '::SnsProviders::QqWeibo',
-          'qq' =>  '::SnsProviders::QqWeibo',
+          'tencent' => '::SnsProviders::Tqq2',
+          'qq' =>  '::SnsProviders::Tqq2',
           'weibo' => '::SnsProviders::SinaWeibo',
           'sina' =>  '::SnsProviders::SinaWeibo',
           'douban' => '::SnsProviders::Douban'
@@ -48,7 +48,9 @@ module Service
 
       def friends_for_classify
         rfriends = {}
-        sns_providers_map = {"SnsProviders::QqWeibo" => "tencent", "SnsProviders::Douban" => "douban", "SnsProviders::SinaWeibo" => "sina"}
+        sns_providers_map = {"SnsProviders::Tqq2" => "tencent",
+                             "SnsProviders::Douban" => "douban",
+                             "SnsProviders::SinaWeibo" => "sina"}
         sns_providers_map.values.each {|value| rfriends[value] = []}
 
         friends = sns_provider.where(:user_id => @user.id)

@@ -20,7 +20,6 @@ module SnsProviders
             end
           end
         rescue
-          puts name
           true
         end
         friends
@@ -88,6 +87,72 @@ module SnsProviders
 
         def client
           @access_object
+        end
+
+      end
+    end
+
+
+    module Oauth
+      class Tqq2
+
+        def self.load(auth_access_token)
+          new(auth_access_token)  # with access_token && openid
+        end
+
+        def initialize(auth_access_token)
+          @acces_token = auth_access_token[:access_token]
+          #@openid = auth_access_token[:openid]
+          @access_object = access_token(@acces_token)
+        end
+
+        def friends_url
+          "/api/friends/mutual_list"
+        end
+
+        def get_friends(provider_user_id)
+          friends = []
+          begin
+            data = JSON.parse @access_object.get(friends_url, :params => params.merge(:fopenid => provider_user_id, :openid => provider_user_id)).body
+            f_info = data['data']['info']
+            if f_info.present?
+              f_info.each do |i|
+                friends << ::UserSnsFriend::Friend.new( i['openid'], i['nick'], i['name'], i['headurl'])
+              end
+            end
+          rescue
+            true
+          end
+          friends
+        end
+
+        def client
+          @access_object
+        end
+
+        def access_token(token)
+            client =  OAuth2::Client.new(TQQ2['key'], TQQ2['secret'],{
+                :site           => "https://open.t.qq.com",
+                :authorize_url  => "/cgi-bin/oauth2/authorize",
+                :token_url      => "/cgi-bin/oauth2/access_token",
+                :raise_errors  => false,
+                :ssl           => {:verify => false}
+            })
+            access_token = OAuth2::AccessToken.new(client, token)
+            access_token.options[:mode] = :query
+            access_token.options[:param_name] = 'access_token'
+            access_token
+        end
+
+        def params
+          {:access_token => @acces_token,
+           :oauth_version => '2.a',
+           :oauth_consumer_key => TQQ2['key'],
+           :format => 'json',
+           :startindex => 0,
+           :reqnum => 30
+           #:openid => @openid
+          }
         end
 
       end

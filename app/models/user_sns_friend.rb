@@ -13,13 +13,13 @@ class UserSnsFriend < ActiveRecord::Base
 
 
   SNS_PROVIDER = {
-      'qq' => 'OauthChina::Qq',
+      'qq' => '::SnsProviders::HelperMethods::Oauth::Tqq2',
       'weibo' => '::SnsProviders::HelperMethods::Oauth::Sina',
       'sina' => '::SnsProviders::HelperMethods::Oauth::Sina',
       'douban' => '::OauthChina::Douban'
   }
   SNS_FRIEND = {
-      'qq' => '::SnsProviders::QqWeibo',
+      'qq' => '::SnsProviders::Tqq2',
       'weibo' => '::SnsProviders::SinaWeibo',
       'sina' =>  '::SnsProviders::SinaWeibo',
       'douban' => 'SnsProviders::Douban'
@@ -28,6 +28,7 @@ class UserSnsFriend < ActiveRecord::Base
   class << self
 
     def sync
+      ::SnsProviders::Tqq2.sync
       ::SnsProviders::QqWeibo.sync
       ::SnsProviders::SinaWeibo.sync
       ::SnsProviders::Douban.sync

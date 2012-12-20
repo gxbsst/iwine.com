@@ -2,7 +2,7 @@
 module Api
   module V2
     class OauthsController < ::Api::BaseApiController
-      before_filter :authenticate_user!, :only => [:bind]
+      before_filter :authenticate_user!, :only => [:bind, :unbind]
 
       def create
         #TODO: 如果不存在用户则返回告诉让他注册
@@ -22,9 +22,16 @@ module Api
       end
 
       def bind
-        resource = Service::OauthService::Binding.process(current_user, params)
-        status = resource.errors.any? ? true : false
-        render :json => ::Api::Helpers::ReportJsonSerializer.as_json(resource, status)
+        Service::OauthService::Binding.process(current_user, params) do |resource|
+          status = resource.errors.any? ? false : true
+          render :json => ::Api::Helpers::OauthJsonSerializer.as_json(resource, status)
+        end
+      end
+
+      def unbind
+        Service::OauthService::UnBinding.process(current_user, params) do |resource|
+          render :json => ::Api::Helpers::OauthJsonSerializer.as_json(resource, status)
+        end
       end
 
       protected

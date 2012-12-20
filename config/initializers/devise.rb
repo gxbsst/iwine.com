@@ -215,10 +215,12 @@ Devise.setup do |config|
     config.omniauth :renren, 'ef5981ff6b024cc6ba9b7a3174371787', 'e2caaee5bdda4785ab3abd99407017be'
     config.omniauth :weibo, '600927978','eddb6b4e3241e32490bb5ba2cad25421' 
     config.omniauth :qq_connect, '100294118', '244168f2df7b9468eeac0fc885b965b9' #私有账号
+    config.omniauth :tqq2, '801091917', '400c5d0f2a08ea78e6e637c402eab604'
   else
     config.omniauth :qq_connect, '100298233', '633ccc9eedd21fd4b35ffe24ccc7af9a'
     config.omniauth :weibo, '2787070179','2ef08ce2f31b8237e5e5d3bef2ccf17d'
-    config.omniauth :renren, '98420f24310c4b53bd450ff20966eb07', '9ec0d36f41384cb0b8553976537c9fa2' 
+    config.omniauth :renren, '98420f24310c4b53bd450ff20966eb07', '9ec0d36f41384cb0b8553976537c9fa2'
+    config.omniauth :tqq2, '801091917', '400c5d0f2a08ea78e6e637c402eab604'
   end
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

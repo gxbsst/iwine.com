@@ -75,6 +75,7 @@ namespace :deploy do
     put File.read("config/oauth/douban.example.yml"), "#{shared_path}/config/oauth/douban.yml"
     put File.read("config/oauth/qq.example.yml"), "#{shared_path}/config/oauth/qq.yml"
     put File.read("config/oauth/sina.example.yml"), "#{shared_path}/config/oauth/sina.yml"
+    put File.read("config/oauth/tqq2.example.yml"), "#{shared_path}/config/oauth/tqq2.yml"
 
     # photos
     run "mkdir -p #{shared_path}/uploads"
@@ -93,6 +94,7 @@ namespace :deploy do
     run "ln -nfs #{shared_path}/config/oauth/production_all.yml #{release_path}/config/oauth/production_all.yml"
     run "ln -nfs #{shared_path}/config/oauth/douban.yml #{release_path}/config/oauth/douban.yml"
     run "ln -nfs #{shared_path}/config/oauth/qq.yml #{release_path}/config/oauth/qq.yml"
+    run "ln -nfs #{shared_path}/config/oauth/tqq2.yml #{release_path}/config/oauth/tqq2.yml"
     run "ln -nfs #{shared_path}/config/oauth/sina.yml #{release_path}/config/oauth/sina.yml"
     run "ln -nfs #{shared_path}/config/unicorn.rb #{release_path}/config/unicorn.rb"
 

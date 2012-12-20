@@ -32,11 +32,16 @@ if Rails.env == 'production'
   QQ_PIC_URL = "http://www.iwine.com"
   # NOTE API HTTP CONFIG
   NOTE_HTTP = YAML.load_file(Rails.root.join('config', 'notes', 'http.live.yml'))
+  # TQQ2
+  TQQ2 = YAML.load_file(Rails.root.join('config', 'oauth', 'tqq2.yml'))['development']
+
 elsif Rails.env == 'development' || Rails.env == 'test'
   QQ_PIC_URL = "http://dev.iwine.com"
   OAUTH_DATA = YAML.load_file(Rails.root.join('config', 'oauth', 'development_all.yml'))
   # NOTE API HTTP CONFIG
   NOTE_HTTP = YAML.load_file(Rails.root.join('config', 'notes', 'http.dev.yml'))
+  # TQQ2
+  TQQ2 = YAML.load_file(Rails.root.join('config', 'oauth', 'tqq2.yml'))['production']
 end
 
 APP_DATA = YAML.load_file(Rails.root.join('config', 'data.yml'))

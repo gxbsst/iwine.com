@@ -348,6 +348,9 @@ GEM
     omniauth-qq-connect (0.2.0)
       omniauth (~> 1.0)
       omniauth-oauth2 (~> 1.0)
+    omniauth-tqq-oauth2 (0.0.4)
+      omniauth (~> 1.0)
+      omniauth-oauth2 (~> 1.0)
     omniauth-weibo-oauth2 (0.2.0)
       omniauth (~> 1.0)
       omniauth-oauth2 (~> 1.0)
@@ -576,6 +579,7 @@ DEPENDENCIES
   omniauth (= 1.1.1)
   omniauth-qq-connect (= 0.2.0)
   omniauth-renren!
+  omniauth-tqq-oauth2
   omniauth-weibo-oauth2 (= 0.2.0)
   passenger (= 3.0.17)
   pry (= 0.9.10)

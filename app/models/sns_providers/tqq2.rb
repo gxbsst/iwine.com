@@ -1,6 +1,6 @@
 # encoding: utf-8
 module SnsProviders
-  class QqWeibo < ::UserSnsFriend
+  class Tqq2 < ::UserSnsFriend
 
     SNS_NAME = 'qq'
 

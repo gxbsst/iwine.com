@@ -17,6 +17,7 @@ config/oauth/qq.yml
 config/oauth/sina.yml
 config/oauth/development_all.yml
 config/oauth/production_all.yml
+config/oauth/tqq2.yml
 config/notes/http.dev.yml
 config/notes/http.live.yml
 public/uploads/*

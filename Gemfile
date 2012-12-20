@@ -140,6 +140,7 @@ gem 'wicked', '0.2.0'
 gem 'omniauth-qq-connect', '0.2.0'
 gem 'omniauth-weibo-oauth2', '0.2.0'
 gem 'omniauth-renren', :path => 'lib/gems/ballantyne-omniauth-renren'
+gem 'omniauth-tqq-oauth2'
 # API VERSION
 gem 'versionist', '0.3.1'
 # XML Parser
