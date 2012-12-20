@@ -18,7 +18,7 @@ module SnsProviders
     class Poster
       # params
       # access_token
-      #   { :access_token => access_token, :access_token_secret => refresh_token }
+      #   { :access_token => access_token, :openid => openid }
       #   or oauth_user.tokens
       # options = {:image_url => '/upload/test.png'} // 如果需要传图片
 
@@ -30,6 +30,7 @@ module SnsProviders
         @content = content
         @access_token = access_token
         @options = options
+        @openid = access_token[:openid]
       end
 
       def update
@@ -43,15 +44,18 @@ module SnsProviders
       private
 
       def client
-        @client ||= ::Oauth::Tqq2.load(@access_token)
+        @client ||= SnsProviders::HelperMethods::Oauth::Tqq2.load(@access_token).client
       end
 
       def upload_with_image
-        client.post(post_image_url, {:content => @content, :pic_url => "#{QQ_PIC_URL}#{image_url}", :clientip => ip}).body
+        client.post(post_image_url,
+                    :body => {:content => @content, :pic_url => "#{QQ_PIC_URL}#{image_url}"},
+                    :params => request_params).body
       end
 
       def upload_with_text
-        @response =  client.add_status(@content, :clientip => ip).body
+
+        client.post(post_text_url, :body => {:content => @content}, :params => request_params).body
       end
 
 
@@ -64,11 +68,21 @@ module SnsProviders
       end
 
       def post_text_url
-        "/statuses/update.json"
+        "https://open.t.qq.com/api/t/add"
       end
 
       def ip
+        #"199.68.199.136"
         "222.73.181.116"
+      end
+
+      def request_params
+        {:access_token => @access_token,
+         :format => "json",
+         :oauth_version => "2.a",
+         :openid => @openid,
+         :oauth_consumer_key => TQQ2['key'],
+         :clientip => ip}
       end
 
     end
