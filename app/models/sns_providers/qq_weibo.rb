@@ -43,7 +43,7 @@ module SnsProviders
       private
 
       def client
-        @client ||= ::Oauth::Tqq2.load(@access_token)
+        @client ||= ::OauthChina::Qq.load(@access_token)
       end
 
       def upload_with_image
