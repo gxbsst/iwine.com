@@ -8,7 +8,7 @@ class NotesController < ApplicationController
    date = params[:modified_date]
    result      = Notes::NotesRepository.all(date)
    return render_404('') unless result['state']
-   @notes = Notes::HelperMethods.build_all_notes(result)
+   @notes = Notes::HelperMethods.build_and_sync_all_notes(result)
   end 
 
   def show
@@ -104,8 +104,7 @@ class NotesController < ApplicationController
   def publish
     note = current_user.notes.where(:app_note_id => params[:id]).first
     if note.publish
-      notice_stickie t("notice.note.publish_success")
-      redirect_to note_path(note.app_note_id)
+      redirect_to share_note_path(note.app_note_id)
     else
       notice_stickie t("notice.note.publish_failure")
       redirect_to notes_user_path(current_user)
@@ -147,7 +146,7 @@ class NotesController < ApplicationController
            if params[:status] == "submitted"
              redirect_to notes_user_path(current_user)
            else
-             redirect_to note_path(@note.app_note_id)
+             redirect_to share_note_path(@note.app_note_id)
            end
          end
        else
@@ -258,7 +257,28 @@ class NotesController < ApplicationController
     end
   end
 
+  #put 请求执行分享操作；get请求执行render view操作。接受app_note_id
+  def share
+    @note = current_user.notes.find_by_app_note_id(params[:id])
+    return render_404('') unless @note
+    if request.put?
+      share_to_sns if params[:sns_type]
+      notice_stickie t("notice.note.publish_success")
+      redirect_to note_path(@note.app_note_id)
+    end
+  end
+
   private
+
+  def share_to_sns
+    params[:sns_type].each do |sns_type|
+      OauthComment.build_delay_oauth_comment(sns_type, 
+                              current_user, 
+                              request.remote_ip, 
+                              @note.photo_url,
+                              @note.sns_summary(note_url(@note.app_note_id)))
+    end
+  end
   
   #来自user profile 跳转到 user profile, 来自 note profile 就跳转到 瀑布流
   def destroy_success_redirect_to

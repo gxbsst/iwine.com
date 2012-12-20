@@ -51,15 +51,15 @@
       if (patt_weibo.test(href)){
         parent_dom.querySelector('.share_weibo input').removeAttribute('disabled');
         parent_dom.querySelector('.share_weibo a').removeAttribute('class');
-        parent_dom.querySelector('.share_weibo img').setAttribute('src', "/assets/icon/weibo_s_on.png");
+        parent_dom.querySelector('.share_weibo img').setAttribute('src', parent_dom.querySelector('.share_weibo img').getAttribute('src').replace(/off/, "on"));
       }else if (patt_qq.test(href)){
         parent_dom.querySelector('.share_qq input').removeAttribute('disabled');
         parent_dom.querySelector('.share_qq a').removeAttribute('class');
-        parent_dom.querySelector('.share_qq img').setAttribute('src', "/assets/icon/tencen_s_on.png");
+        parent_dom.querySelector('.share_qq img').setAttribute('src', parent_dom.querySelector('.share_qq img').getAttribute('src').replace(/off/, "on"));
       }else if (patt_douban.test(href)){
         parent_dom.querySelector('.share_douban input').removeAttribute('disabled');
         parent_dom.querySelector('.share_douban a').removeAttribute('class');
-        parent_dom.querySelector('.share_douban img').setAttribute('src', "/assets/icon/douban_s_on.png");
+        parent_dom.querySelector('.share_douban img').setAttribute('src', parent_dom.querySelector('.share_douban img').getAttribute('src').replace(/off/, "on"));
       }
 
       close();

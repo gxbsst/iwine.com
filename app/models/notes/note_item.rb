@@ -62,7 +62,7 @@ module Notes
       end
 
       def rating
-        @rating + 1
+        @rating.to_i + 1
       end
 
       def agent

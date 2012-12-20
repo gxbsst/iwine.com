@@ -19,6 +19,19 @@ class OauthComment < ActiveRecord::Base
     return reply_list
   end
 
+  def self.build_delay_oauth_comment(sns_type, user, ip_address, image_url, body)
+    oauth_user = user.oauths.oauth_binding.where('sns_name = ?', sns_type).first
+    if oauth_user #检测用户是否绑定
+      oauth_comment = user.oauth_comments.new(:sns_type => sns_type,
+                              :body => body,
+                              :sns_user_id => oauth_user.sns_user_id,
+                              :ip_address => inet_aton(ip_address))
+      oauth_comment.image_url = image_url
+      oauth_comment.save
+      oauth_comment.delay.share_to_sns
+    end
+  end
+
   def share_to_sns
     begin
       if user.check_oauth?(sns_type) && is_unshare?
@@ -53,7 +66,10 @@ class OauthComment < ActiveRecord::Base
     end
   end
 
-  
+  #将ip地址转化为整数
+  def self.inet_aton(ip)
+    ip.split(/\./).map{|c| c.to_i}.pack("C*").unpack("N").first
+  end
   private
   #获取回复
 

@@ -283,25 +283,14 @@ class CommentsController < ApplicationController
     sns_arr = params[:sns_type] 
     if sns_arr.present?
       sns_arr.each do |sns_type|
-        oauth = @comment.user.oauths.oauth_binding.where('sns_name = ?', sns_type).first
-        next unless oauth #再次检测是否绑定此网站
-        content = build_content(sns_type)
-        oauth_comment = @comment.oauth_comments.build(:sns_type => sns_type,
-                                                      :body => content,  
-                                                      :sns_user_id => oauth.sns_user_id, 
-                                                      :user_id => @comment.user_id,
-                                                      :ip_address => inet_aton(request.remote_ip))
-        oauth_comment.image_url  = get_share_photo
-        oauth_comment.save
+        OauthComment.build_delay_oauth_comment(sns_type, 
+                                      current_user, 
+                                      request.remote_ip, 
+                                      get_share_photo,
+                                      build_content(sns_type)
+                                      )
       end
-      #发送weibo
-      @comment.delay.share_comment_to_weibo
     end
-  end
-
-  #将ip地址转化为整数
-  def inet_aton(ip)
-    ip.split(/\./).map{|c| c.to_i}.pack("C*").unpack("N").first
   end
 
   #得到要分享的图片

@@ -340,23 +340,7 @@ module ApplicationHelper
 
       #分享到sns
   def note_sns_summary(local_note)
-    %Q[#{local_note.show_vintage} #{local_note.name} #{star_content(local_note.rating)} #{sns_summary(local_note)}]
-  end
-
-  def star_content(rating)
-    star = case rating
-    when 1
-      "1星"
-    when 2
-      "2星"
-    when 3
-      "3星"
-    when 4
-      "4星"
-    when 5
-      "5星"
-    end
-    star
+    %Q[#{local_note.show_vintage} #{local_note.name} #{local_note.star_content} #{sns_summary(local_note)}]
   end
 
   def sns_image_url(object, options = {})
