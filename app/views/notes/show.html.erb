@@ -96,7 +96,7 @@
           <div class="dropbox" style="display:none;">
             <div class="com_s clearfix">
               <%=render "share/sns_icons",
-                          :image_url =>  @note.photo.images(:version => :customer, :pattern => '590x590').first,
+                          :image_url =>  @note.photo.sns_share_url,
                           :title => sns_title(@local_note),
                           :summary => note_sns_summary(@local_note),
                           :url => sns_url(@local_note),
