@@ -28,7 +28,7 @@ module Api
         @resource, @id = params[:votable_type], params[:id]
         @resource = "Wines::Detail" if @resource == "wines"
         # Note 是虚拟的数据
-        if @votable == 'Note'
+        if @resource == 'Note'
           @votable = Note.new
           @votable.id = @id
           @votable.app_note_id = @id
