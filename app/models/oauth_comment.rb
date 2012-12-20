@@ -177,10 +177,9 @@ class OauthComment < ActiveRecord::Base
     #else
    	#  response = qq_client.add_status(body, :clientip => inet_ntoa).body
    	#end
-
     oauth_user = user.oauths.oauth_binding.where('sns_name = ?', 'qq').first
     options = image_url ? {:image_url => image_url} : {}
-    response = ::SnsProviders::QqWeibo::Poster.perform(body, oauth_user.tokens, options)
+    response = ::SnsProviders::Tqq2::Poster.perform(body, oauth_user.qq_tokens, options)
 
    	#处理结果信息
    	result_data = JSON.parse response
