@@ -348,6 +348,11 @@ module Notes
         options =  DEFAULT_CONFIG.merge(options)
         url =  options.values.join("/")
       end
+      
+      #分享到第三方网站
+      def sns_share_url
+        images(:version => :customer, :pattern => '590x590').first if images
+      end
 
       #def url(options)
       #  if self.image.blank?
