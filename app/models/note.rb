@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Note < ActiveRecord::Base
 
   acts_as_votable
@@ -59,7 +60,7 @@ class Note < ActiveRecord::Base
     self.other_name = info['oName']
     self.comment = info['comment']
     self.vintage = info['vintage']
-    self.rating = info['rating']
+    self.rating = info['rating'].to_i + 1
     self.modifiedDate = info['modifiedDate']
     self.status_flag = info['statusFlag']
     self.uuid = info["notesId"]
@@ -70,6 +71,19 @@ class Note < ActiveRecord::Base
   #分享到 sns 的内容
   def share_name
     ""
+  end
+
+  def sns_summary(share_url)
+    "【iWine.com品酒辞推荐】 #{show_vintage} #{name}#{star_content} #{sns_content} #{share_url}"
+  end
+
+  def sns_content
+    comment.mb_chars[0, 70] if comment.present?
+  end
+  
+  #星级
+  def star_content
+    " #{rating}星 " if rating.to_i > 0
   end
 
   def show_vintage

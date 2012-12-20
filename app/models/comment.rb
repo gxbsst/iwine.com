@@ -180,7 +180,6 @@ class Comment < ActiveRecord::Base
   
   #分享评论到第三方网站
   def share_comment_to_weibo
-    sleep 10
     oauth_comments.unshare.each do |oauth_comment|
       oauth_comment.share_to_sns
     end
