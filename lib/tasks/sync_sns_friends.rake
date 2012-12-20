@@ -16,6 +16,11 @@ namespace :sync_sns_friends do
   end
 
   desc "TODO"
+  task :sync_tqq2 => :environment do
+    SnsProviders::Tqq2.sync
+  end
+
+  desc "TODO"
   task :sync_douban => :environment do
     SnsProviders::Douban.sync
   end
