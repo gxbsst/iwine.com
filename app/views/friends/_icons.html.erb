@@ -2,10 +2,12 @@
     <% if @availabe_sns[sns_name].present? %>
       <%= link_to_sns_icon true, sns_name, '/friends/sync?sns_name=' + sns_name %>
     <% else %>
-      <% if sns_name == "weibo" %>
-      	<%= link_to_sns_icon false, sns_name, user_omniauth_authorize_path(:weibo) %>
-      <% else %>
-      	<%= link_to_sns_icon false, sns_name, new_sns_friends_path(:sns_name => sns_name) %>
+      <% if sns_name == "douban" %>
+        <%= link_to_sns_icon false, sns_name, new_sns_friends_path(:sns_name => sns_name) %>
+      <% elsif sns_name == 'weibo' %>
+      	<%= link_to_sns_icon false, sns_name, user_omniauth_authorize_path(sns_name) %>
+      <% elsif sns_name == 'qq' %>
+        <%= link_to_sns_icon false, sns_name, user_omniauth_authorize_path(:tqq2) %>
       <% end %>
     <% end %>
     

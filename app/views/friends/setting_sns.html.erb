@@ -42,7 +42,7 @@
             <%= image_tag("/assets/common/btn_syn_qq_off.jpg", :alt => "腾讯微博") %>
             <p><span>尚未设置同步</span></p>
             <p>
-              <%= link_to new_sns_friends_path(:sns_name => "qq"), :class => "btn_gray", :target => "_blank" do %>
+              <%= link_to user_omniauth_authorize_path(:tqq2), :class => "btn_gray", :target => "_blank" do %>
                 <span>同步到腾讯微博</span>
               <% end %>
             </p>
