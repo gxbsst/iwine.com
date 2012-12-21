@@ -24,12 +24,11 @@ class Users::Oauth < ActiveRecord::Base
   end
 
   # Oauth Login
-  def self.from_omniauth(auth, provider)
-    provider_info = auth.slice(:provider, :uid) 
+  def self.from_omniauth(auth, provider, uid)
     #查找oauth_user, 如果没有新的纪录就在内存中新建一个oauth_user
-    oauth_user = oauth_login.where(:sns_user_id => provider_info[:uid], 
+    oauth_user = oauth_login.where(:sns_user_id => uid, 
                                    :sns_name    => provider).
-                            first_or_initialize(:provider_user_id => auth.uid,
+                            first_or_initialize(:provider_user_id => uid,
                                                 :access_token => auth.credentials.token)
     # TODO
     # 1. 先检查user_oauth表有没有记录
@@ -38,10 +37,10 @@ class Users::Oauth < ActiveRecord::Base
   end
 
   #创建oauth_user或者刷新access_token
-  def self.build_binding_oauth(user, auth, provider)
+  def self.build_binding_oauth(user, auth, provider, uid)
     oauth_user = user.oauths.oauth_binding.
-        where(:sns_user_id => auth.uid, :sns_name => provider).
-        first_or_initialize(:provider_user_id => auth.uid)
+        where(:sns_user_id => uid, :sns_name => provider).
+        first_or_initialize(:provider_user_id => uid)
     oauth_user.access_token = auth.credentials.token
     #新增或者更新openid 和 openkey
     if provider == "qq"
@@ -82,8 +81,8 @@ class Users::Oauth < ActiveRecord::Base
     end
   end
 
-  def self.update_token(sns_info, provider)
-    oauth_user = oauth_binding.where(:sns_user_id => sns_info.uid,
+  def self.update_token(sns_info, provider, uid)
+    oauth_user = oauth_binding.where(:sns_user_id => uid,
                                       :sns_name => provider).first
     if oauth_user
       oauth_user.openkey = sns_info.credentials.openkey if provider == 'qq'
