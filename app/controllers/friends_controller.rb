@@ -106,23 +106,19 @@ class FriendsController < ApplicationController
       client = oauth_module.load(Rails.cache.read(build_oauth_token_key(params[:type], params[:oauth_token])))
       client.authorize(:oauth_verifier => params[:oauth_verifier])
       results = client.dump
-
       if results[:access_token] && results[:access_token_secret]
         flash[:notice] = "done"
       else
         flash[:notice] = "fail"
       end
-      # 创建UserOauth记录
-
-      user_oauth = current_user.oauth_token client.name.to_s
-      user_oauth.access_token = results[:access_token]
-      user_oauth.sns_user_id = client.user_id # sns.rb Sina#user_id
-
-      user_oauth.provider_user_id = client.user_id
-
-      user_oauth.refresh_token = results[:access_token_secret]
-
-      user_oauth.save
+      # 创建UserOauth记录 
+      #目前仅用于创建豆瓣
+      Users::Oauth.build_binding_oauth(current_user,
+        {:sns_name => client.name.to_s,
+         :access_token =>  results[:access_token],
+         :uid => client.user_id,
+         :refresh_token => results[:access_token_secret]
+        })
       redirect_to sync_friends_path(:sns_name => params[:type], :success => true) #success 参数 判断用户同步成功 
     rescue Exception => e
       Rails.logger.error(e)
