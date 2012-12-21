@@ -19,7 +19,7 @@ module Service
       def create
        @params[:oauth_user][:sns_user_id] = sns_user_id
        @params[:oauth_user][:setting_type] = setting_type()
-       oauth_user =  Users::Oauth.where(:user_id => uid, :sns_name => sns_name ).first_or_initialize
+       oauth_user = @user.oauths.oauth_binding.where(:sns_name => sns_name).first_or_initialize
        oauth_user.attributes = @params[:oauth_user]
        oauth_user.save
        @block.call(oauth_user) if @block
