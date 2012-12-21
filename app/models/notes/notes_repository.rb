@@ -1,7 +1,7 @@
 # encoding: utf-8
 module Notes
   class NotesRepository
-    PRE_PATH =  '/iwinenotes/iwine'
+    PRE_PATH =  '/iwinenotes2/iwine'
 
     # return hash
     #
