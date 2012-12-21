@@ -1,18 +1,21 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def all
-    provider = request.env["omniauth.auth"].provider == 'tqq2' ? 'qq' : request.env["omniauth.auth"].provider
+    request_auth = request.env["omniauth.auth"]
+    provider = request_auth.provider == 'tqq2' ? 'qq' : request_auth.provider
+    uid = provider == "qq" ? request_auth.credentials.openid : request_auth.uid
+
     if current_user #绑定操作
-      Users::Oauth.build_binding_oauth(current_user, request.env["omniauth.auth"], provider)
+      Users::Oauth.build_binding_oauth(current_user, request_auth, provider, uid)
       notice_stickie t('notice.oauth.update_oauth')
       redirect_to sync_friends_path(:sns_name => provider, :success => true) #设置success控制sync页面得javascript
     else #登陆操作
-      oauth_user = Users::Oauth.from_omniauth(request.env["omniauth.auth"], provider)
+      oauth_user = Users::Oauth.from_omniauth(request_auth, provider, uid)
       if oauth_user.new_record?
         session["devise.user_attributes"] = oauth_user.attributes
         redirect_to new_oauth_login_path
       else
         notice_stickie t("notice.login_success")
-        Users::Oauth.update_token(request.env["omniauth.auth"], provider)
+        Users::Oauth.update_token(request_auth, provider, uid)
         @user = User.find(oauth_user.user_id)
         sign_in_and_redirect @user
       end
