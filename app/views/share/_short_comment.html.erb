@@ -6,7 +6,7 @@
         <p class="username">
             <%= link_to_user comment.user, user_path(comment.user, :trailing_slash => true) %>
         </p>
-        <p class="content"><%= comment.body %></p>
+        <p class="content"><%= truncate_u(comment.body, 50) %></p>
     </div>
     <div class="clear"></div>
 </li>
