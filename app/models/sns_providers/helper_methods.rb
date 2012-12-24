@@ -79,8 +79,9 @@ module SnsProviders
             f_info = data['users']
             f_info.each {|i| friends << ::UserSnsFriend::Friend.new( i['id'], i['screen_name'], i['name'], i['profile_image_url']) } if f_info.present?
           rescue
-            puts name
-            true
+            Rails.logger.info "Access Token is Expired"
+            #puts name
+            #true
           end
           friends
         end

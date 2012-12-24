@@ -10,7 +10,7 @@ load "config/recipes/unicorn"
 load "config/recipes/check"
 load "config/recipes/monit"
 
-server "dev.iwine.com", :web, :app, :db, primary: true
+server "www.iwine.com", :web, :app, :db, primary: true
 
 set :default_environment, {
   'LANG' => 'en_US.UTF-8'
@@ -164,5 +164,35 @@ namespace :delayed_job do
 end
 
 after "deploy:update", "delayed_job:restart"
+
+namespace :friends do
+  desc "Sync Sns Friends "
+  task "sync", :roles => :web do
+    run("cd #{deploy_to}/current && /usr/bin/env rake sync_sns_friends:sync_all RAILS_ENV=production")
+  end
+
+  namespace :qq do
+    desc "Sync Sns Friends "
+    task "sync", :roles => :web do
+      run("cd #{deploy_to}/current && /usr/bin/env rake sync_sns_friends:sync_qq RAILS_ENV=production")
+    end
+  end
+
+  namespace :sina do
+    desc "Sync Sns Friends "
+    task "sync", :roles => :web do
+      run("cd #{deploy_to}/current && /usr/bin/env rake sync_sns_friends:sync_sina RAILS_ENV=production")
+    end
+  end
+
+  namespace :douban do
+    desc "Sync Sns Friends "
+    task "sync", :roles => :web do
+      run("cd #{deploy_to}/current && /usr/bin/env rake sync_sns_friends:sync_douban RAILS_ENV=production")
+    end
+  end
+
+end
+
 
 

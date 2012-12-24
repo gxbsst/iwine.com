@@ -29,7 +29,7 @@ class UserSnsFriend < ActiveRecord::Base
 
     def sync
       ::SnsProviders::Tqq2.sync
-      ::SnsProviders::QqWeibo.sync
+      #::SnsProviders::QqWeibo.sync
       ::SnsProviders::SinaWeibo.sync
       ::SnsProviders::Douban.sync
     end
