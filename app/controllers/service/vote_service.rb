@@ -26,8 +26,8 @@ module Service
         #binding.pry
         #Rails.cache.delete([@voter, @votable, :liked])
         #Rails.cache.delete([@votable, :likes_counter])
-        @votable.like_by @voter
         @block.call(voter, votable) if @block
+        @votable.like_by @voter
       end
     end
 
