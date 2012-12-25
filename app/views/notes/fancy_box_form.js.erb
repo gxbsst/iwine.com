@@ -1,0 +1,34 @@
+$("#comment_form").html("<%= escape_javascript(render('comment_form', :comment => @comment, :commentable => @note)) %>");
+
+$.fancybox({
+        padding: 0,
+         maxWidth       : 500,
+        maxHeight       : 330,
+        fitToView       : false,
+        width           : '100%',
+        height          : '100%',
+        autoSize        : false,
+        closeClick      : false,
+        openEffect      : 'none',
+        closeEffect     : 'none',
+        'href'                  : '#comment_form',
+         helpers        :         {
+        overlay                      : {
+            opacity                 : 0.8,
+            css                     : {
+                'background-color'  : '#FFF'
+            }
+        }
+    } // end helper
+});
+
+<%= render "comments/star_rate.js" %>
+
+ <%= render :partial => "comments/share/validator.js" %>
+     $(function(){
+       window.commentFormView = new CommentFormView({el: "#do_comment_form"});
+       // 主要是为了“关注"不验证
+       $(".do_follow_button").click(function(){
+         $(this).parents('form').submit();
+       });
+ });

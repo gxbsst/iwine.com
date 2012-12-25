@@ -3,12 +3,13 @@ class NotesController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
   before_filter :update_note_from_app, :only => [:app_edit]
   before_filter :find_note, :only => [:edit, :update, :upload_photo]
+  before_filter :new_local_note, :only => [:comment, :create_comment]
 
   def index
    date = params[:modified_date]
    result      = Notes::NotesRepository.all(date)
    return render_404('') unless result['state']
-   @notes = Notes::HelperMethods.build_and_sync_all_notes(result)
+   @notes = Notes::HelperMethods.build_all_notes(result)
   end 
 
   def show
@@ -236,17 +237,19 @@ class NotesController < ApplicationController
     end
   end
 
-  #接受本地note id
+  #接受app_note_id
   def follow
-    @from_index = params[:from_index]
+    @from_index = params[:from_index] #有此参数则说明请求来自note index页面，否则来自show或其他页面。
     @item_id = params[:item_id]
-    @note = Note.find(params[:id])
-    if @note.is_followed_by? current_user
-      follow = current_user.follows.where(:followable_type => "Note", :followable_id => @note.app_note_id).first
+    @note = Note.new
+    @note.id = params[:id]
+
+    if follow = Note.followed_by?(@note.id, current_user)
       follow.destroy
       @followed = false #判断图标的转换
     else
-      @note.follows.create(:user_id => current_user.id)
+      follow = @note.follows.new(:user_id => current_user.id)
+      follow.save
       @followed = true
     end
     respond_to do |format|
@@ -267,8 +270,35 @@ class NotesController < ApplicationController
       redirect_to note_path(@note.app_note_id)
     end
   end
+  
+  #用于index页面创建comment
+  def comment
+    @comment = @note.comments.build
+    respond_to do |format|
+       format.js{
+        render params[:fancy_box] ? :fancy_box_form : :comment
+      }
+    end
+  end
+  
+  #用app_note_id 初始化本地note，但是不保存。
+  def create_comment
+    @comment = @note.comments.build(params[:note_comment])
+    @comment.user_id = current_user.id
+    @comment.save
+    respond_to do |format|
+      format.html {redirect_to(note_path(@note.id))}
+      format.js
+    end
+  end
 
   private
+
+  def new_local_note
+    @note = Note.new
+    @note.id = params[:id]
+    @item_id = params[:item_id]
+  end
 
   def share_to_sns
     params[:sns_type].each do |sns_type|

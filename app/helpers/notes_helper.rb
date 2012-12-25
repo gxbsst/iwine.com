@@ -1,7 +1,7 @@
 # encoding: utf-8
 module NotesHelper
-  def show_follow_content(local_note)
-    if current_user && local_note.is_followed_by?(current_user)
+  def show_follow_content(app_note_id)
+    if current_user && Note.followed_by?(app_note_id, current_user)
       "取消收藏"
     else
       "收藏"
@@ -169,18 +169,22 @@ module NotesHelper
      new_note_path(query_params)}] 
   end
 
-  def follow_note(local_note)
-    if current_user && local_note.is_followed_by?(current_user)
+  def follow_note(app_note_id)
+    if current_user && Note.followed_by?(app_note_id, current_user)
       image_location = "icon/collect_on.png"
     else
       image_location = "icon/collect.png"
     end
     link_to image_tag(image_location, :size => '20x19', :align => :absmiddle), 
-            follow_note_path(local_note), :method => :put, :remote => true, :id => "follow_note", :class => "ajax"
+            follow_note_path(app_note_id), :method => :put, :remote => true, :id => "follow_note", :class => "ajax"
   end
 
   def ename(note)
     "#{note.vintage} #{note.name}"
+  end
+
+  def note_sns_title
+    "【iWine.com品酒辞推荐】"
   end
 
 end

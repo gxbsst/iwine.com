@@ -20,4 +20,18 @@
 </div> 
 <p align="center" class="end_waterfall_text_info"></p>
 <%= render "layouts/waterfall_js" %>
-<%= javascript_include_tag 'waterfall_comment_follow' %>
+<script type="text/javascript">
+  $(document).ready(function(){
+      $('.item').live('mouseenter', function(){
+          $(".action", this).show();
+      });
+
+      $('.item').live('mouseleave', function(){
+          $(".action", this).hide();
+      });
+      $(".submit_a").live('click', function(){
+          $(this).parents('form').submit();
+          return false;
+      })
+  });
+</script>

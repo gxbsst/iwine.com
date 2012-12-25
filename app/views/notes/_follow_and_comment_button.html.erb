@@ -1,8 +1,10 @@
 <div class="action clearfix" style="display:none;">
   <% if current_user %>
-    <a class="btn_iw hc" href="javascript:void(0);"><span><em>评论</em></span></a>
-    <%= link_to follow_note_path(local_note, :from_index =>true, :item_id => item_id), :class => "btn_iw hf", :remote => true, :method => :put do %>
-      <span><em><%= show_follow_content(local_note) %></em></span>
+    <%= link_to comment_note_path(app_note[:note].id, :item_id => item_id), :remote => true, :class => "btn_iw hc ajax" do %>
+      <span><em>评论</em></span>
+    <% end %>
+    <%= link_to follow_note_path(app_note[:note].id, :from_index =>true, :item_id => item_id), :class => "btn_iw hf", :remote => true, :method => :put do %>
+      <span><em><%= show_follow_content(app_note[:note].id) %></em></span>
     <% end %>
   <% else %>
     <%= link_to login_path, :class => "btn_iw hc" do %>
@@ -16,12 +18,15 @@
     <a class="btn_iw hs" href="javascript:void(0);"><span><em>分享</em></span></a>
     <div class="dropbox" style="display:none;">
       <div class="com_s sns clearfix">
-        <% image_url = app_note[:photo].sns_share_url %>
+        <% wine =  app_note[:wine] %>
          <%= render "share/sns_icons",
-            :image_url =>  image_url,
-            :title => sns_title(local_note),
-            :summary => note_sns_summary(local_note),
-            :url => sns_url(local_note),
+            :image_url =>  app_note[:photo].sns_share_url,
+            :title => note_sns_title,
+            :summary => note_sns_summary(wine.show_vintage, 
+                                         wine.sName, 
+                                         wine.rating, 
+                                         wine.comment),
+            :url => note_url(app_note[:note].id),
             :float => "normal",
             :no_content => true %>
       </div>

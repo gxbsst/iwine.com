@@ -1,0 +1,25 @@
+$("#<%= @item_id %> .iw_comment .right").html("<%= escape_javascript(render(:partial => 'ajax_form', \
+    :locals => {:commentable => @note, :item_id => @item_id})) %>");
+var offset = {x:0,y:0};
+if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft))
+{
+    offset.x -= document.documentElement.scrollLeft;
+    offset.y -= document.documentElement.scrollTop;
+}
+else if (document.body && (document.body.scrollTop || document.body.scrollLeft))
+{
+    offset.x -= document.body.scrollLeft;
+    offset.y -= document.body.scrollTop;
+}
+else if (window.pageXOffset || window.pageYOffset)
+{
+    offset.x -= window.pageXOffset;
+    offset.y -= window.pageYOffset;
+}
+var iw_comment = $("#<%= @item_id %> .iw_comment");
+iw_comment.toggle();
+$('#container').masonry('reload');
+if (($(window).height() - offset.y) < iw_comment.offset().top + iw_comment.height()){
+    $('html, body').animate({scrollTop: iw_comment.offset().top - $(window).height()/2.0}, 500);
+}
+$('form textarea.comment_body', iw_comment).focus();

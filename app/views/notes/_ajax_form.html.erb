@@ -1,0 +1,10 @@
+<%= form_tag create_comment_note_path(commentable.id),
+    :remote => true, :method => :post, :html => {:id => "list_comment_form"} do -%>
+  <%= hidden_field_tag 'note_comment[do]', 'comment' %>
+  <%= hidden_field_tag :item_id, item_id %>
+
+  <%= text_area_tag 'note_comment[body]', nil, :class => "comment_body text" %>
+  <%= link_to "javascript:void(0);", :class => "btn_gray submit_a" do %>
+    <span>添加评论</span>
+  <% end %>
+<% end %>

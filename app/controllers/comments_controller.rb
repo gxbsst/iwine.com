@@ -44,12 +44,12 @@ class CommentsController < ApplicationController
     end
   end
 
-  def new   
+  def new
     if params[:do].present? && params[:do] == "follow"
       new_follow_comment
     else
       new_normal_comment
-    end   
+    end
   end
   
   def index

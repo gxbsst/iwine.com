@@ -1,0 +1,10 @@
+<% selector_comment_num = "##{@item_id} .iw_more_comment a"
+   selector_list = "##{@item_id} ul"
+   selector_form = "##{@item_id} form textarea#note_comment_body" %>
+if($("#<%= @item_id%> .note_comment_list .iw_main").length > 0){
+  $("<%= selector_list %>").append("<%= escape_javascript(render(:partial =>'share/short_comment', :locals => {:comment => @comment})) %>");
+}else{
+  $("#<%= @item_id %> .note_comment_list").append("<%= escape_javascript(render(:partial =>'notes/note_ajax_comment', :locals => {:comment => @comment})) %>");
+}
+$("<%= selector_form %>").val('');
+$('#container').masonry('reload');
