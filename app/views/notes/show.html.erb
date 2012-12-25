@@ -87,7 +87,7 @@
       </div>
       <ul>
         <li class="collect">
-          <%= follow_note(@local_note) %>
+          <%= follow_note(@note.id) %>
         </li>
         <span class="share-dropbox">
           <li class="share ">
@@ -95,11 +95,15 @@
           </li>
           <div class="dropbox" style="display:none;">
             <div class="com_s clearfix">
+              <% wine = @note.wine %>
               <%=render "share/sns_icons",
                           :image_url =>  @note.photo.sns_share_url,
-                          :title => sns_title(@local_note),
-                          :summary => note_sns_summary(@local_note),
-                          :url => sns_url(@local_note),
+                          :title => note_sns_title,
+                          :summary => note_sns_summary(wine.show_vintage, 
+                                                      wine.sName, 
+                                                      wine.rating, 
+                                                      wine.comment),
+                          :url => note_url(@note.id),
                           :float => "normal",
                           :no_content => true
                            %>
@@ -212,7 +216,7 @@
 
   <div class="section last">
     <div class="title">
-      <%= link_to new_note_comment_path(@local_note, :do => "comment"), :class => "btn_gray float_r font12 ajax", :remote => true do %>
+      <%= link_to comment_note_path(@note.id, :fancy_box => true), :class => "btn_gray float_r font12 ajax", :remote => true do %>
         <span>我要留言</span>
       <% end %>
       <h2>留言 <span class="font12 more">（共<%= @comments.total_count %>条）</span></h2>

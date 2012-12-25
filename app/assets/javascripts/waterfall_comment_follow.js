@@ -10,15 +10,7 @@ $(document).ready(function(){
 
     $('a.hc').live('click', function(){
         //获得当前窗口高度
-        var e = document.getElementById('xxx');
         var offset = {x:0,y:0};
-        while (e)
-        {
-            offset.x += e.offsetLeft;
-            offset.y += e.offsetTop;
-            e = e.offsetParent;
-        }
-
         if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft))
         {
             offset.x -= document.documentElement.scrollLeft;

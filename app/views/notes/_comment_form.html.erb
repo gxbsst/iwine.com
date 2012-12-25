@@ -1,0 +1,36 @@
+<h3 class="title"> 我要评论 </h3>
+<%= form_for [comment], :url => create_comment_note_path(commentable.id),
+   :validate => true, :html => {:id => "do_#{comment.do}_form"} do |f| -%>
+<%= f.hidden_field :do %>
+<div class="star_rate" id="wine_profile_star_bar">
+  <table border="0" cellspacing="5" cellpadding="5">
+    <tr>
+      <td>评价:</td>
+      <td>
+        <ul id="stars">
+
+        </ul>
+      </td>
+      <td>
+        <input type="hidden" name="rate_value" value=<%= comment.point || 0 %> />
+        <span class="text_value"></span>
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="clear"> </div>
+  <div class="text_area">
+    <p class="label">简短评论: </p>
+    <%= f.text_area :body,  :rows => 10, :cols => 25 %>
+  </div>
+  <div class="share relative clearfix">
+    <%= link_to "javascript:void(0)", :class => "btn_gray float_r do_#{comment.do}_button" do  %>
+      <span>保存</span>
+    <% end %>
+  </div>
+  <span class="red text_error" style="display: block; float: right; margin-right: 20px"></span>
+<% end -%>
+
+<script type="text/template" id="star_item">
+  <%= image_tag 'base/star_gray.gif', :width => 16, :height => 16 %>
+ </script>

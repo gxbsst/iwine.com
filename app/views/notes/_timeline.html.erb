@@ -1,9 +1,8 @@
-<% unless @notes.nil? %> 
+<% unless @notes.nil? %>
   <% @notes.each do |note| %>
       <% item_id = get_rand_id("note", note[:note].id) %>
-      <% local_note = Note.local_note(note[:note].id) %>
       <div class="iw item" id="<%= item_id %>">
-        <%= render :partial => "follow_and_comment_button", :locals => {:local_note => local_note, :item_id => item_id, :app_note => note} %>
+        <%= render :partial => "follow_and_comment_button", :locals => {:item_id => item_id, :app_note => note} %>
         <%= render :partial => "user", :locals => {:note => note} %> 
         <div class="iw_img"> 
           <%= link_to cover(note[:photo], 'customer', '200x200', '200x200'), note_path(note[:note])%>
@@ -40,9 +39,6 @@
                                                     {:width => 30, :height => 30, :alt => current_user.username} %>
                 </div>
                 <div class="right">
-                    <%= render :partial => "comments/share/ajax_form", 
-                               :locals => {:commentable => local_note,
-                                           :item_id => item_id} %>
                 </div>
             </div>
         <% end %>

@@ -318,14 +318,13 @@ module ApplicationHelper
       object.username
     when 'Event'
       object.title
-    when "Note"
-      "iWine.com品酒辞推荐"
     end
     "【#{title}】"
   end
 
-  def sns_summary(object)
-    desc = case object.class.name
+  def sns_summary(object, type = false)
+    model_type = type ? type : object
+    desc = case model_type
     when 'Winery'
       object.info_items.first.description if object.info_items.first
     when 'Wines::Detail'
@@ -333,14 +332,14 @@ module ApplicationHelper
     when 'Event'
       object.title
     when "Note"
-      object.comment
+      object
     end
-    truncate(desc.to_s.gsub(" ", '').gsub(/\r|\n/, ''), :length => 70)
+    truncate(desc.to_s.strip.gsub(/\r|\n/, ''), :length => 70)
   end
 
       #分享到sns
-  def note_sns_summary(local_note)
-    %Q[#{local_note.show_vintage} #{local_note.name} #{local_note.star_content} #{sns_summary(local_note)}]
+  def note_sns_summary(vintage, name, star, comment)
+    %Q[#{vintage} #{name} #{star}星 #{sns_summary(comment, 'Note')}]
   end
 
   def sns_image_url(object, options = {})

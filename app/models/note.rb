@@ -38,10 +38,19 @@ class Note < ActiveRecord::Base
   def is_followed_by?(user)
     Follow.where(:followable_type => "Note", :followable_id => app_note_id, :user_id => user.id).first ? true : false
   end
+  
+  #return note or nil
+  def self.followed_by?(app_note_id, user)
+    user.follows.where(:followable_type => "Note", :followable_id => app_note_id).first
+  end
 
   
-  def self.local_note(app_note_id)
-    Note.find_app_note(app_note_id).first
+  def self.local_note(app_note_id, sync_app_note = false)
+    note = Note.find_app_note(app_note_id).first
+    if sync_app_note && !note
+      note = sync_note_base_app_note_id(app_note_id)
+    end
+    note
   end
   
   #用主要的数据创建包含少数信息的note

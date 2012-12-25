@@ -66,6 +66,8 @@ Patrick::Application.routes.draw do
       put :vote
       put :follow
       match :share, :via => [:get, :put]
+      get :comment
+      post :create_comment
     end
   end
 
@@ -79,7 +81,7 @@ Patrick::Application.routes.draw do
       end
     end
     resources :comments
-    resources :follows, :controller => "follows" 
+    resources :follows, :controller => "follows"
     member do
       get :upload_poster
       get :photo_upload
