@@ -30,7 +30,6 @@ describe Api::V2::OauthsController do
             @response = response
             @response.status.should be(200)
             @parsed_body = JSON.parse(@response.body)
-        binding.pry
         @parsed_body['success'].should == 1
         @parsed_body['data'].should include("weibo")
       end
