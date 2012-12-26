@@ -27,9 +27,9 @@ describe Api::V2::OauthsController do
              }, :auth_token => @token
              },
              {'Accept' => 'application/vnd.iwine.com; version=2'}
-            @response = response
-            @response.status.should be(200)
-            @parsed_body = JSON.parse(@response.body)
+        @response = response
+        @response.status.should be(200)
+        @parsed_body = JSON.parse(@response.body)
         @parsed_body['success'].should == 1
         @parsed_body['data'].should include("weibo")
       end
@@ -53,6 +53,33 @@ describe Api::V2::OauthsController do
       end
     end
 
+    context "user had oauth item" do
+      before(:each) do
+        post api_oauths_path,
+             {:oauth_user => {
+                 :sns_name => 'sina',
+                 :nickname => 'weixuhongabc_dd',
+                 :provider_user_id => '2561852817',
+                 :access_token => "access_token"}
+             },
+             {'Accept' => 'application/vnd.iwine.com; version=2'}
+        #@response.status.should be(200)
+        #@response.body.should include("gxbsst")
+        @response = response
+      end
+
+      describe "#create" do
+
+        it "should auth success" do
+
+          @response.status.should be(200)
+          @parsed_body = JSON.parse(@response.body)
+          binding.pry
+          @parsed_body["success"].should be(10)
+        end
+      end
+
+    end
 
   end
 
