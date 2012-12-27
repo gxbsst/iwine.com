@@ -287,7 +287,8 @@ class CommentsController < ApplicationController
                                       current_user, 
                                       request.remote_ip, 
                                       get_share_photo,
-                                      build_content(sns_type)
+                                      build_content(sns_type),
+                                      @comment.id
                                       )
       end
     end

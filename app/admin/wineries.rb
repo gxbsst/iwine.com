@@ -1,6 +1,6 @@
 # encoding: utf-8
 ActiveAdmin.register Winery do
-
+  config.sort_order = 'updated_at_desc'
   controller do
     #helper :winery
 

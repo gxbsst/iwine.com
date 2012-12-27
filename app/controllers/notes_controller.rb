@@ -306,7 +306,8 @@ class NotesController < ApplicationController
                               current_user, 
                               request.remote_ip, 
                               @note.photo_url,
-                              @note.sns_summary(note_url(@note.app_note_id)))
+                              @note.sns_summary(note_url(@note.app_note_id)),
+                              @note.app_note_id)
     end
   end
   
