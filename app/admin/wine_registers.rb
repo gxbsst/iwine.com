@@ -1,6 +1,6 @@
 # encoding: UTF-8
 ActiveAdmin.register Wines::Register do
-
+  config.sort_order = 'updated_at_desc'
   filter :style, :as => :check_boxes
   filter :status
 

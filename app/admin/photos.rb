@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 ActiveAdmin.register Photo do
-
+  config.sort_order = 'updated_at_desc'
   scope :all, :default => true
   scope :approved
 

@@ -1,6 +1,6 @@
 #encoding: utf-8
-
 ActiveAdmin.register Comment, :as => "CustomerComment" do
+  config.sort_order = 'updated_at_desc'
   filter :user, :as => :check_boxes
   filter :is_share, :as => :check_boxes
   
@@ -16,8 +16,9 @@ ActiveAdmin.register Comment, :as => "CustomerComment" do
   	end
 
   	def index
+      order = get_order_params(params[:order])
   	  index! do |format|
-        @customer_comments = Comment.unscoped.where("parent_id is null").page(params[:page])
+        @customer_comments = Comment.unscoped.where("parent_id is null").page(params[:page]).order(order)
         format.html
       end
   	end
@@ -45,6 +46,7 @@ ActiveAdmin.register Comment, :as => "CustomerComment" do
    #  end
   	column :deleted_at
   	column :is_share
+    column :updated_at
   	# default_actions
   	column "管理" do |comment|
   	  if comment.deleted_at
@@ -58,4 +60,8 @@ ActiveAdmin.register Comment, :as => "CustomerComment" do
   def recount_comment(comment)
 
   end
+end
+
+def get_order_params(order)
+  order ? order.gsub(/_asc/, ' asc').gsub(/_desc/, ' desc') : "updated_at desc"
 end
