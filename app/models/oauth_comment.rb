@@ -18,11 +18,13 @@ class OauthComment < ActiveRecord::Base
   	reply_list = search_comments
     return reply_list
   end
-
-  def self.build_delay_oauth_comment(sns_type, user, ip_address, image_url, body)
+  
+  #comment_id 可以是 comment.id 或者 note.app_note_id
+  def self.build_delay_oauth_comment(sns_type, user, ip_address, image_url, body, comment_id)
     oauth_user = user.oauths.oauth_binding.where('sns_name = ?', sns_type).first
     if oauth_user #检测用户是否绑定
       oauth_comment = user.oauth_comments.new(:sns_type => sns_type,
+                              :comment_id => comment_id,
                               :body => body,
                               :sns_user_id => oauth_user.sns_user_id,
                               :ip_address => inet_aton(ip_address))
