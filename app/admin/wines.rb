@@ -1,6 +1,6 @@
 #encoding: utf-8
 ActiveAdmin.register Wine do
-
+ config.sort_order = 'updated_at_desc'
   controller do
     def update
       @wine = Wine.find(params[:id])

@@ -1,5 +1,6 @@
 #encoding: utf-8
 ActiveAdmin.register Wines::Detail do
+  config.sort_order = 'updated_at_desc'
 
   controller do
     def update
