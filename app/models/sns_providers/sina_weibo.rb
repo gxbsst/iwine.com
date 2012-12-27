@@ -31,7 +31,7 @@
       end
 
       def update
-        if @options.has_key? :image_url
+        if @options.has_key? :image_url && File.exist?(image_path)
           upload_with_image
         else
           upload_with_text
@@ -54,7 +54,11 @@
       end
 
       def image
-        Faraday::UploadIO.new("#{Rails.root.join('public')}#{@options[:image_url]}", 'image/jpeg')
+        Faraday::UploadIO.new(image_path, 'image/jpeg')
+      end
+
+      def image_path
+        "#{Rails.root.join('public')}#{@options[:image_url]}"
       end
 
       def post_image_url

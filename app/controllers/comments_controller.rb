@@ -1,6 +1,6 @@
 # encoding: utf-8
 class CommentsController < ApplicationController
-  before_filter :authenticate_user!, :except => [:index, :show, :list]
+  before_filter :authenticate_user!, :except => [:index, :show, :list, :get_sns_reply]
   before_filter :get_comment, :only => [:show, :edit, :update, :destroy, :reply, :vote, :children, :get_sns_reply]
   before_filter :get_commentable, :except => [:vote, :reply, :children, :show, :get_sns_reply]
   before_filter :get_user

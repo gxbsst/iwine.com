@@ -15,8 +15,12 @@ class OauthComment < ActiveRecord::Base
   end
 
   def get_sns_reply
-  	reply_list = search_comments
-    return reply_list
+  	#search_comments
+    begin
+      send :"#{sns_type}_comments" if user.check_oauth?(sns_type) && sns_comment_id #检测是否被同步，是否分享成功
+    rescue Exception => e
+      Rails.logger.error e
+    end
   end
 
   def self.build_delay_oauth_comment(sns_type, user, ip_address, image_url, body)
@@ -34,37 +38,19 @@ class OauthComment < ActiveRecord::Base
 
   def share_to_sns
     begin
-      if user.check_oauth?(sns_type) && is_unshare?
-      	case sns_type
-      	when 'qq'
-      	  send_qq
-      	when 'weibo'
-      	  send_weibo
-      	when 'douban'
-      	  send_douban
-      	end
-      end
+      send :"send_#{sns_type}" if user.check_oauth?(sns_type) && is_unshare?
     rescue OAuth2::Error => e
       failure_share e
     end
   end
 
-  def search_comments
-    begin
-      if user.check_oauth?(sns_type) && sns_comment_id #检测是否被同步，是否分享成功
-        case sns_type
-        when 'qq'
-          qq_comments 
-        when 'weibo'
-          weibo_comments
-        when 'douban'
-          douban_comments
-        end
-      end
-    rescue Exception => e
-      Rails.logger.error e
-    end
-  end
+  #def search_comments
+  #  begin
+  #    send :"#{sns_type}_comments" if user.check_oauth?(sns_type) && sns_comment_id #检测是否被同步，是否分享成功
+  #  rescue Exception => e
+  #    Rails.logger.error e
+  #  end
+  #end
 
   #将ip地址转化为整数
   def self.inet_aton(ip)
@@ -91,25 +77,16 @@ class OauthComment < ActiveRecord::Base
     end
     return reply_list
   end
-  
+
   def qq_comments
-    qq_client = user.oauth_client('qq')
-    response = qq_client.get("http://open.t.qq.com/api/t/re_list?flag=1&rootid=#{sns_comment_id}").body
-    data = JSON.parse response
-    return nil if data['data'].blank?
-    reply_list = []
-    data['data']['info'].each do |reply|
-      reply_hash = {:type => 'qq'}
-      reply_list << reply_hash.merge({
-        :name => reply['nick'],
-        :created_at => reply['timestamp'],
-        :content => reply['text'],
-        :head_url => "#{reply['head']}/30"
-      })
+    oauth_user = user.oauths.oauth_binding.where('sns_name = ?', 'qq').first
+    SnsProviders::Tqq2::Getter.get_reply(oauth_user.qq_tokens, :rootid => sns_comment_id) do |result|
+      data = JSON.parse(result)
+      return nil if data['data'].blank?
+      return qq_reply_list(data['data'])
     end
-    return reply_list
   end
-  
+
   #得到[{:type => '', :name => ''}, {:type = '', :name => ''}]
   #JSON::ParserError 对应广播被删除得情况
   def douban_comments
@@ -141,18 +118,6 @@ class OauthComment < ActiveRecord::Base
 
   #发送评论
   def send_weibo
-    #oauth_user = user.oauths.oauth_binding.where('sns_name = ?', 'weibo').first
-    #if image_url
-    #  #调用新浪发送图片的api
-    #  conn = Faraday.new(:url => "https://upload.api.weibo.com"){|f| f.request(:multipart); f.adapter(:net_http)}
-    #  response = conn.post('/2/statuses/upload.json',
-    #                        :access_token => oauth_weibo.access_token,
-    #                        :status => body,
-    #                        :pic => Faraday::UploadIO.new("#{Rails.root.join('public')}#{image_url}", 'image/jpeg')).body
-    #else
-    #  access_token = user.init_client('weibo', oauth_weibo.access_token)
-    #  response = access_token.post("/statuses/update.json", :params => {:status => body}).body
-    #end
     oauth_user = user.oauths.oauth_binding.where('sns_name = ?', 'weibo').first
     options = image_url ? {:image_url => image_url} : {}
     response = ::SnsProviders::SinaWeibo::Poster.perform(body, oauth_user.tokens, options)
@@ -166,17 +131,6 @@ class OauthComment < ActiveRecord::Base
   end
 
   def send_qq
-    #qq_client = user.oauth_client('qq')
-    ##TODO 修改ip
-    #if image_url
-    #  # :pic_url =>  "http://patrickdev.sidways.com#{image_url}",
-    #  response = qq_client.post("http://open.t.qq.com/api/t/add_pic_url",
-    #  	             {:content => body,
-    #                  :pic_url => "#{QQ_PIC_URL}#{image_url}",
-    #  	              :clientip => inet_ntoa}).body
-    #else
-   	#  response = qq_client.add_status(body, :clientip => inet_ntoa).body
-   	#end
     oauth_user = user.oauths.oauth_binding.where('sns_name = ?', 'qq').first
     options = image_url ? {:image_url => image_url} : {}
     response = ::SnsProviders::Tqq2::Poster.perform(body, oauth_user.qq_tokens, options)
@@ -216,5 +170,17 @@ class OauthComment < ActiveRecord::Base
   	self.error_info = error_info
   	self.status = APP_DATA['oauth_comments']['status']['failure']
   	self.save
+  end
+
+  def qq_reply_list(data)
+    data['info'].map do |reply|
+      {
+          :type => 'qq',
+          :name => reply['nick'],
+          :created_at => reply['timestamp'],
+          :content => reply['text'],
+          :head_url => "#{reply['head']}/30"
+      }
+    end
   end
 end

@@ -103,7 +103,7 @@ module SnsProviders
 
         def initialize(auth_access_token)
           @acces_token = auth_access_token[:access_token]
-          #@openid = auth_access_token[:openid]
+          @openid = auth_access_token[:openid]
           @access_object = access_token(@acces_token)
         end
 
@@ -151,8 +151,8 @@ module SnsProviders
            :oauth_consumer_key => TQQ2['key'],
            :format => 'json',
            :startindex => 0,
-           :reqnum => 30
-           #:openid => @openid
+           :reqnum => 30,
+           :openid => @openid
           }
         end
 

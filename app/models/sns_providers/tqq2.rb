@@ -87,6 +87,31 @@ module SnsProviders
 
     end
 
+    class Getter
+
+      attr_accessor :url,:params, :tqq2
+
+      def self.get_reply(access_token, params = {}, &block)
+        # api man: http://wiki.open.t.qq.com/index.php/API文档/微博相关/获取单条微博的转发或点评列表
+        options = {:flag => 2, :pageflag => 0, :pagetime => 0, :reqnum => 20, :twitterid => 0 }
+        new('api/t/re_list', access_token, params.merge(options), &block).execute
+      end
+
+      def initialize(url, access_token, params = {}, &block)
+        @url = url
+        @params = params
+        @block = block
+        @tqq2 ||= SnsProviders::HelperMethods::Oauth::Tqq2.load(access_token)
+      end
+
+      def execute
+        result = tqq2.client.get(url, :params => params.merge(tqq2.params)).body
+        @block.call(result) if @block
+        result
+      end
+
+    end
+
   end
 
 end
