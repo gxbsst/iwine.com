@@ -60,7 +60,8 @@ class CommentsController < ApplicationController
       order = "created_at DESC, votes_count DESC"
     else
       order = "votes_count DESC, created_at DESC"
-    end
+    end 
+    @wine_notes_count = @commentable.get_wine_notes_count(@commentable.id)
     @comments  =  @commentable.comments.all(:include => [:user],
     # :joins => :votes,
     :joins => "LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id",

@@ -299,6 +299,18 @@ class Wines::Detail < ActiveRecord::Base
     end
   end
 
+  #酒的所有品酒辞
+  def get_wine_notes_count(wine_detail_id)
+     #品酒辞
+    wine_detail_id = Wines::Detail.find(wine_detail_id).id
+    result      = Notes::NotesRepository.find_wine_notes(wine_detail_id) 
+    if result['state']
+      # 一支酒的所有评酒辞
+      wine_notes = Notes::HelperMethods.build_user_notes(result)
+      wine_notes.count
+    end 
+  end
+
   # 类方法
   class << self
    def timeline_events

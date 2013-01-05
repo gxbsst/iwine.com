@@ -40,7 +40,7 @@ class WineDetailsController < ApplicationController
     result      = Notes::NotesRepository.find_wine_notes(@wine_detail_id)  
     return render_404('') unless result['state']
     # 一支酒的所有评酒辞
-    @wine_notes = Notes::HelperMethods.build_user_notes(result)  
+    @wine_notes = Notes::HelperMethods.build_user_notes(result)
     @wine_notes_count = @wine_notes.count
   end
 
@@ -152,6 +152,7 @@ class WineDetailsController < ApplicationController
   def followers
     @wine      = @wine_detail.wine
     @followers = @wine_detail.followers
+    @wine_notes_count = @wine_detail.get_wine_notes_count(@wine_detail.id)
     
     if !(@followers.nil?)
       unless @followers.kind_of?(Array)
@@ -166,6 +167,8 @@ class WineDetailsController < ApplicationController
   def owners
     @wine   = @wine_detail.wine
     @owners = @wine_detail.owners
+    @wine_notes_count = @wine_detail.get_wine_notes_count(@wine_detail.id)
+    
     if !(@owners.nil?)
       unless @owners.kind_of?(Array)
         @owners = @owners.page(params[:page]).per(8)

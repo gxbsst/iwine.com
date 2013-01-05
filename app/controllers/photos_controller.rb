@@ -13,6 +13,7 @@ class PhotosController < ApplicationController
     case @resource
       when "Wines::Detail"
       # 包括detail和wine的图片
+      @wine_notes_count = @imageable.get_wine_notes_count(@imageable.id)
       @photos =  @imageable.all_photos.page(params[:page] || 1).per(8)
       render_wine_photo_list
     when "wineries"
