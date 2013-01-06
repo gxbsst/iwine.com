@@ -4,6 +4,7 @@ class FriendsController < ApplicationController
 
   # 查找好友
   def find
+    @title = "找朋友"
     @availabe_sns = current_user.available_sns
   end
 
@@ -31,6 +32,7 @@ class FriendsController < ApplicationController
 
   # 设置同步
   def setting_sns
+    @title = "同步设置"
     @availabe_sns = current_user.available_sns
   end
 

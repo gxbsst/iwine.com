@@ -6,6 +6,7 @@ class EventParticipantsController < ApplicationController
   before_filter :participant, :only => [:cancle, :edit, :update]
 
   def index
+    @title = ['参与者', @event.title].join('-')
     @participants = @event.participants
     @followers = @event.follows
   end

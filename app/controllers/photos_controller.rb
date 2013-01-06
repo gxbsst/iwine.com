@@ -9,6 +9,7 @@ class PhotosController < ApplicationController
   before_filter :check_and_create_albums, :only => :new
 
   def index
+    @title = "照片"
     @photos = @imageable.photos.approved.page(params[:page] || 1).per(8)
     case @resource
       when "Wines::Detail"

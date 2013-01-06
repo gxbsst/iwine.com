@@ -11,6 +11,7 @@ class EventInviteesController < ApplicationController
   before_filter :get_join_item
 
   def new
+    @title = ['邀请好友', @event.title].join('-')
     @recommend_events = Event.recommends(4)
     @event_invitee =  EventInvitee.new
     @users = @user.friends
@@ -19,6 +20,7 @@ class EventInviteesController < ApplicationController
   end
 
   def create
+    @title = ['邀请好友', @event.title].join('-')
     if params[:user_list].blank?
      render_404('') # 传错误的参数
     else

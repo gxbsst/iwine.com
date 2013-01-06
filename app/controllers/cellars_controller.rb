@@ -9,7 +9,7 @@ class CellarsController < ApplicationController
  
   def show
     @items = Users::WineCellarItem.order(:price)
-    @title = ["酒窖", @user.username].join("-")
+    @title = ["酒窖", title_username(@user)].join("-")
     if params[:wine_name]
       if mine_equal_current_user?(@user)
         @cellar_items = @cellar.mine_items.joins(:wine_detail => :wine).

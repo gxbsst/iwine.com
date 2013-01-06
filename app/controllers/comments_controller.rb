@@ -53,6 +53,7 @@ class CommentsController < ApplicationController
   end
   
   def index
+    @title = "评论"
     case params[:sort_by]
     when "hot"
       order = "votes_count DESC, created_at DESC"

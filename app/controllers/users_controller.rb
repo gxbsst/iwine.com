@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   before_filter :get_cellar_items, :only => [:show]
 
   def show
+    @title = title_username(@user)
     @followers = @user.followers
     @followings = @user.followings
     @comments = @user.comments.real_comments.limit(6)
@@ -14,20 +15,20 @@ class UsersController < ApplicationController
 
   # 关注的酒
   def wine_follows
-    @title = ["关注的酒", @user.username].join("-")
+    @title = ["关注的酒", title_username(@user)].join("-")
     @follows = @user.wine_followings.order("created_at DESC").page(params[:page] || 1).per(10)
     @hot_wines = Wines::Detail.hot_wines(5)
   end
 
   # 关注的酒庄
   def winery_follows
-    @title = ["关注的酒庄", @user.username].join("-")
+    @title = ["关注的酒庄", title_username(@user)].join("-")
     @follows = @user.winery_followings.order("created_at DESC").page(params[:page] || 1).per(10)
     @hot_wineries = Winery.hot_wineries(5)
   end
   
   def note_follows
-    @title = ["收藏", @user.username].join("-")
+    @title = ["收藏", title_username(@user)].join("-")
     @follows = @user.note_followings.order("created_at DESC").page(params[:page] || 1).per(10) 
     # 热门品酒辞
     result      = Notes::NotesRepository.all 
@@ -39,12 +40,13 @@ class UsersController < ApplicationController
   # 我的评论
   def comments
     @current_tab = params[:tab] || 'comment'
-    @title = ["评论", @user.username].join("-")
+    @title = ["评论", title_username(@user)].join("-")
     @hot_wines = Wines::Detail.hot_wines(5)
     @comments = @user.comments.real_comments.page(params[:page] || 1).per(10)
   end
 
   def notes 
+    @title = ["品酒辞", title_username(@user)].join("-")
     notes_result = Notes::NotesRepository.find_by_user(@user.id, '', '')
     return render_404('') unless notes_result['state']
 
@@ -68,7 +70,7 @@ class UsersController < ApplicationController
   end
 
   def followings
-    @title = ["关注的人", @user.username].join("-")
+    @title = ["关注的人", title_username(@user)].join("-")
     @followings = @user.followings.page(params[:page] || 1).per(18)
     unless current_user == nil
       @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5
@@ -78,7 +80,7 @@ class UsersController < ApplicationController
   end
 
   def followers
-    @title = ["粉丝", @user.username].join("-")
+    @title = ["粉丝", title_username(@user)].join("-")
     @followers = @user.followers.page(params[:page] || 1).per(18)
     unless current_user == nil
        @recommend_users = @user.remove_followings_from_user User.all :conditions =>  "id <> "+ @user.id.to_s , :limit => 5

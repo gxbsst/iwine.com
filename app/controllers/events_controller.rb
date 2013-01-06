@@ -15,6 +15,7 @@ class EventsController < ApplicationController
   before_filter :check_and_create_albums, :only => [:photo_upload]
 
   def index
+    @title = "活动"
     @top_events = Event.recommends(2)
     @recommend_events = Event.recommends(4)
     @events = Event.search(params)
@@ -73,6 +74,7 @@ class EventsController < ApplicationController
   end
 
   def show
+    @title = [@event.title, '活动'].join('-')
     @event = Event.includes([:participants => [:user], :follows => [:user]]).find(params[:id])
 
     if user_signed_in? # 登录用户对自己的活动有所有权
@@ -183,7 +185,7 @@ class EventsController < ApplicationController
 
     # 参与活动的人
     @participants = @event.participants
-
+    @title = ['参加的人', @event.title].join('-')
   end
 
   def followers
@@ -202,6 +204,7 @@ class EventsController < ApplicationController
     @recommend_events = Event.recommends(4)
 
     @follows= @event.follows
+    @title = ['感兴趣', @event.title].join('-')
 
   end
 

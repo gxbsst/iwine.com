@@ -39,6 +39,7 @@ class WineriesController < ApplicationController
   end
   
   def photo_upload
+    @title = "上传照片"
     @photo = @winery.photos.new
   end 
 

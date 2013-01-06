@@ -46,6 +46,7 @@ class WineDetailsController < ApplicationController
 
   #搜索要添加的酒
   def add
+    @title = "添加新酒"
     if params[:step].to_i == 1
       @search = ::Search.new
       render :template => "wine_details/add_step_one"
@@ -67,6 +68,7 @@ class WineDetailsController < ApplicationController
   end
 
   def edit
+    @title = "添加新酒"
   end
 
   def update
@@ -85,6 +87,7 @@ class WineDetailsController < ApplicationController
 
   #添加新酒
   def new
+    @title = "添加新酒"
     if params[:wine_id]
       @read_only = true
       @wine = Wine.find(params[:wine_id])
@@ -145,7 +148,7 @@ class WineDetailsController < ApplicationController
     @wine_notes_count = @wine_notes.total_count
     # 酒
     @wine = @wine_detail.wine 
-    
+    @title = ['品酒辞', @wine_detail.name].join('-')
   end
 
   # 关注者
@@ -161,6 +164,7 @@ class WineDetailsController < ApplicationController
         @followers = Kaminari.paginate_array(@followers).page(params[:page]).per(30)
       end
     end
+    @title = ['关注者', @wine_detail.name].join('-')
   end
 
   # 拥有者
@@ -176,7 +180,7 @@ class WineDetailsController < ApplicationController
         @owners = Kaminari.paginate_array(@owners).page(params[:page]).per(8)
       end
     end
-    
+    @title = ['拥有者', @wine_detail.name].join('-')
   end
 
   # 添加到酒窖
@@ -193,6 +197,7 @@ class WineDetailsController < ApplicationController
 
   #上传照片
   def photo_upload
+    @title = "上传照片"
     @photo = @wine_detail.photos.new
     @wine = @wine_detail.wine
   end

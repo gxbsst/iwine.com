@@ -27,7 +27,7 @@ class SettingsController < ApplicationController
   end
 
   def update_password
-    @title = "修改密码"
+    @title = "重置密码"
     @user = current_user
     if request.put?
       if params[:user][:password].blank?
@@ -142,6 +142,7 @@ class SettingsController < ApplicationController
     end
   end
   def domain
+    @title = "设置个性域名"
     @user = current_user
     redirect_to basic_settings_path if @user.domain.present?
     if request.put?

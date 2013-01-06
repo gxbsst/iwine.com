@@ -6,6 +6,7 @@ class NotesController < ApplicationController
   before_filter :new_local_note, :only => [:comment, :create_comment]
 
   def index
+   @title = "品酒辞"
    date = params[:modified_date]
    result      = Notes::NotesRepository.all(date)
    return render_404('') unless result['state']
@@ -24,9 +25,11 @@ class NotesController < ApplicationController
    wine_result =  Notes::NotesRepository.find_by_wine(@note.wine.vintage, @note.wine.sName, @note.wine.oName, @note.note.id, 5,  @note.note.id)
    @wine_note_users = Notes::HelperMethods.build_wine_notes(wine_result)  if wine_result['state'] 
    init_app_note_to_local(result['data'])
+   @title = [@note.wine.sName, '品酒辞'].join('-')
   end
 
   def add
+    @title = "添加品酒辞"
     if params[:step].to_i == 1
       @search = ::Search.new
       render :template => "notes/add_step_one"
@@ -49,6 +52,7 @@ class NotesController < ApplicationController
   end
   #接收app_note_id 或者 wine_detail_id
   def new
+    @title = "添加品酒辞"
     @note = current_user.notes.new
     @note.user_agent = NOTE_DATA['note']['user_agent']['local']
     @note.status_flag = NOTE_DATA['note']['status_flag']['submitted']
@@ -88,11 +92,13 @@ class NotesController < ApplicationController
 
   #接收来自app的id 对应于本地app_note_id
   def app_edit
+    @title = "编辑品酒辞"
     render "edit_first"
   end
 
 
   def edit
+    @title = "写品酒辞"
     if params[:step] == "first"
       render "edit_first"
     elsif params[:step] == "second"
@@ -124,6 +130,7 @@ class NotesController < ApplicationController
   end
 
   def update
+    @title = "写品酒辞"
     if params[:step] == "first"
       @note.rating = params[:rate_value]
     elsif params[:step] == "second"
@@ -262,6 +269,7 @@ class NotesController < ApplicationController
 
   #put 请求执行分享操作；get请求执行render view操作。接受app_note_id
   def share
+    @title = "分享品酒辞"
     @note = current_user.notes.find_by_app_note_id(params[:id])
     return render_404('') unless @note
     if request.put?
