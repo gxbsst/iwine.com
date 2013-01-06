@@ -200,6 +200,9 @@ class WineDetailsController < ApplicationController
     @title = "上传照片"
     @photo = @wine_detail.photos.new
     @wine = @wine_detail.wine
+
+    @wine_notes_count = @wine_detail.get_wine_notes_count(@wine_detail.id)
+
   end
   private
 
