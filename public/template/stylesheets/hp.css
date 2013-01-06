@@ -5,6 +5,7 @@
 .hp_userimg {float:left;width:130px;margin:0 20px 0 0;}
 .hp_header .hp_right {float:right;}
 .hp_info {float:left;width:720px;position:relative;_line-height:22px;}
+.hp_info .pf_name span {float:left;}
 .hp_info .username {font-size:20px;font-weight:bold;margin:0 0 5px 0;_margin:0;}
 .hp_info .mystatu {margin:0 0 5px 0;color:#666;}
 .hp_info .mystatu span {display:inline-block;margin-left:20px;}
