@@ -195,6 +195,9 @@ class WineDetailsController < ApplicationController
   def photo_upload
     @photo = @wine_detail.photos.new
     @wine = @wine_detail.wine
+
+    @wine_notes_count = @wine_detail.get_wine_notes_count(@wine_detail.id)
+
   end
   private
 
