@@ -61,7 +61,7 @@ class CommentsController < ApplicationController
     else
       order = "votes_count DESC, created_at DESC"
     end 
-    @wine_notes_count = @commentable.get_wine_notes_count(@commentable.id)
+   
     @comments  =  @commentable.comments.all(:include => [:user],
     # :joins => :votes,
     :joins => "LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id",
@@ -82,6 +82,7 @@ class CommentsController < ApplicationController
 
     case @resource
       when "Wines::Detail"
+        @wine_notes_count = @commentable.get_wine_notes_count(@commentable.id)
         render_wine_comments
       when "wineries"
         render_winery_comments
