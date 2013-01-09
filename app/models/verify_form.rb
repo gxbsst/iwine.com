@@ -1,33 +1,41 @@
-class VerifyForm
+# encoding: utf-8
 
+class VerifyForm
   include Virtus
   extend ActiveModel::Naming
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  attribute :indentify_card, String
+  attribute :identify_card, String
   attribute :description, String
-  attribute :image
-  attribute :verify_type, String
+  attribute :identify_photo
+  attribute :vocation_photo
+  attribute :verify_type
   attribute :real_name, String
   attribute :phone_number, String
   attribute :email, String
   attribute :user_id, Integer
 
   attr_accessor :user, :profile, :verify
-  validates :indentify_card, :presence => true
+  validates :identify_card, :description, :phone_number, :real_name, :presence => true
+  validates :identify_card, :identify_card_format => true
+  validates :agree_term, :acceptance => true, :on => :create
 
   def self.init(user)
-    verify = user.verify.where(user_id: user.id).first_or_initialize
+    verify = user.verify || user.build_verify
     new(:verify => verify, :user => user)
   end
 
-  #def to_param  # overridden
-    #self.verify
-  #end
+  def to_param  # overridden
+    self.verify.slug
+  end
 
-  def indentify_card
-    @indentify_card ||= verify.indentify_card
+  def to_model
+    self.verify
+  end
+
+  def identify_card
+    @identify_card ||= verify.identify_card
   end
 
   def description
@@ -74,7 +82,7 @@ class VerifyForm
   end
 
   def new_record?
-    verify && verify.new_record?
+    verify.nil? || verify.new_record?
   end
 
   private
@@ -91,10 +99,12 @@ class VerifyForm
 
   def verify_params
     {
-      indentify_card: indentify_card,
+      identify_card: identify_card,
       description: description,
       user_id: user_id,
-      image: image
+      identify_photo: identify_photo,
+      vocation_photo: vocation_photo,
+      verify_type: Verify::VERIFY_TYPE_PERSONAL # TODO, 现在默认是个人， 以后还要添加公司
     }
   end
 

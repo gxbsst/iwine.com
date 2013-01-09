@@ -1,8 +1,16 @@
 <% content_for :js do %>
 <%= javascript_include_tag "verifies" %>
 <% end %>
-<%= form_for @verify_form do |f| %>
-<%= render "form" %>
-<% end %>
+<div class="whitespace ws1">
+  <h1 class="main_title">用户认证</h1>
+  <div class="step_verify">
+    <div class="step_fir"></div>
+  </div>
+  <div class="myform mb30">
+    <%= form_for @verify_form, :validate => true do |f| %>
+        <%= render "form", :f => f %>
+    <% end %>
+  </div>
+</div>
 
 

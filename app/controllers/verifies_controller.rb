@@ -9,11 +9,12 @@ class VerifiesController < ApplicationController
   end
 
   def create
-    @verify_form = VerifyForm.new(params[:verify_form])
+    @verify_form = VerifyForm.new(params[:verify])
     @verify_form.user = @user
     if @verify_form.save
-      render :text => "coolll"
+      redirect_to edit_verify_path @verify_form
     else
+      @verify_form = init_verify_form(@user)
       render "new"
     end
   end
@@ -25,7 +26,7 @@ class VerifiesController < ApplicationController
 
   def update
     @verify_form = init_verify_form(@user)
-    @verify_form.update(params[:verify_form])
+    @verify_form.update(params[:verify])
     redirect_to edit_verify_path(@verify_form.verify)
   end
 

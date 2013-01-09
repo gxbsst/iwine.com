@@ -1,4 +1,20 @@
-<%= form_for @verify_form.verify, :method => :put do |f| %>
-<%= render "form" %>
+<% content_for :js do %>
+    <%= javascript_include_tag "verifies" %>
 <% end %>
+<div class="whitespace ws1">
+  <h1 class="main_title">用户认证</h1>
+  <div class="step_verify">
+    <div class="step_fir"></div>
+  </div>
+  <div class="myform mb30">
+    <p>
+      审核状态: <%= audit_status %>  <br/>
+    <%= audit_note %>
+      </p>
+    <%= form_for @verify_form, :method => :put do |f| %>
+        <%= render "form", :f => f %>
+    <% end %>
+  </div>
+</div>
+
 

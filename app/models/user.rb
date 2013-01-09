@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   include Users::SnsOauth
   init_resources "Users::Profile", "Users::WineCellar"
 
+  include Verifiable
+
   cattr_accessor :current_user
   attr_accessor :crop_x, 
                 :crop_y, 

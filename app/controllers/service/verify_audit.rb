@@ -3,30 +3,31 @@ module Service
   class VerifyAudit
     attr_reader :auditor, :user, :audit_log
 
-    def self.execute(auditor, user)
-      new(auditor, verify).run
-    end
+    ACCEPTED = 2
+    REJECTED = 1
 
-    def initialize(auditor, verify)
-      @auditor = auditor
-      @verify = verify
-    end
-
-    def run
-      # verify.audit
-      # audit log
-      # update user
-      # update verify
-      # email
-    end
-
-    def rejected
-    end
-
-    def accepted
+    def self.rejected(auditor, user, options = {})
       User.transaction do
-        AuditLog.create
-        user.accept
+        audit_log =  AuditLog.create(:owner_type => OWNER_TYPE_USER,
+                                     :business_id => user.id,
+                                     :created_by => auditor.id,
+                                     :result => REJECTED,
+                                     :comment => options[:comment]
+        )
+        user.accepted(audit_log)
+        # send email
+      end
+    end
+
+    def self.accepted(auditor, user, options = {})
+      User.transaction do
+        audit_log =  AuditLog.create(:owner_type => OWNER_TYPE_USER,
+                                     :business_id => user.id,
+                                     :created_by => auditor.id,
+                                     :result => ACCEPTED,
+                                     :comment => options[:comment]
+        )
+        user.accepted(audit_log)
         # send email
       end
     end
