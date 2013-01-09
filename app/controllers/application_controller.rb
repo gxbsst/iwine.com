@@ -60,6 +60,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def title_username(user)
+    "#{diff_username(user)}的iWine"
+  end
+
+  def diff_username(user)
+    is_login_user?(user) ? "我" : user.username
+  end
+
   def store_location
     session[:return_to] = request.referer
   end

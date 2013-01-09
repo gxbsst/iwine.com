@@ -53,6 +53,7 @@ class CommentsController < ApplicationController
   end
   
   def index
+    @title = "评论"
     case params[:sort_by]
     when "hot"
       order = "votes_count DESC, created_at DESC"
@@ -60,7 +61,8 @@ class CommentsController < ApplicationController
       order = "created_at DESC, votes_count DESC"
     else
       order = "votes_count DESC, created_at DESC"
-    end
+    end 
+   
     @comments  =  @commentable.comments.all(:include => [:user],
     # :joins => :votes,
     :joins => "LEFT OUTER JOIN `votes` ON comments.id = votes.votable_id",
@@ -81,6 +83,7 @@ class CommentsController < ApplicationController
 
     case @resource
       when "Wines::Detail"
+        @wine_notes_count = @commentable.get_wine_notes_count(@commentable.id)
         render_wine_comments
       when "wineries"
         render_winery_comments

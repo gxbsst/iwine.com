@@ -29,7 +29,7 @@ class CellarItemsController < ApplicationController
   end
 
   def new
-
+    @title = "添加藏酒"
     @cellar_item = Users::WineCellarItem.new(:number => 1, 
                                             :location => current_user.city,
                                             :private_type => false)
@@ -61,6 +61,7 @@ class CellarItemsController < ApplicationController
   end
 
   def add
+    @title = "添加藏酒"
     if params[:step].to_i == 1
       @search = ::Search.new
       render  "add_step_one"

@@ -40,12 +40,13 @@ class WineDetailsController < ApplicationController
     result      = Notes::NotesRepository.find_wine_notes(@wine_detail_id)  
     return render_404('') unless result['state']
     # 一支酒的所有评酒辞
-    @wine_notes = Notes::HelperMethods.build_user_notes(result)  
+    @wine_notes = Notes::HelperMethods.build_user_notes(result)
     @wine_notes_count = @wine_notes.count
   end
 
   #搜索要添加的酒
   def add
+    @title = "添加新酒"
     if params[:step].to_i == 1
       @search = ::Search.new
       render :template => "wine_details/add_step_one"
@@ -67,6 +68,7 @@ class WineDetailsController < ApplicationController
   end
 
   def edit
+    @title = "添加新酒"
   end
 
   def update
@@ -85,6 +87,7 @@ class WineDetailsController < ApplicationController
 
   #添加新酒
   def new
+    @title = "添加新酒"
     if params[:wine_id]
       @read_only = true
       @wine = Wine.find(params[:wine_id])
@@ -145,13 +148,14 @@ class WineDetailsController < ApplicationController
     @wine_notes_count = @wine_notes.total_count
     # 酒
     @wine = @wine_detail.wine 
-    
+    @title = ['品酒辞', @wine_detail.name].join('-')
   end
 
   # 关注者
   def followers
     @wine      = @wine_detail.wine
     @followers = @wine_detail.followers
+    @wine_notes_count = @wine_detail.get_wine_notes_count(@wine_detail.id)
     
     if !(@followers.nil?)
       unless @followers.kind_of?(Array)
@@ -160,12 +164,15 @@ class WineDetailsController < ApplicationController
         @followers = Kaminari.paginate_array(@followers).page(params[:page]).per(30)
       end
     end
+    @title = ['关注者', @wine_detail.name].join('-')
   end
 
   # 拥有者
   def owners
     @wine   = @wine_detail.wine
     @owners = @wine_detail.owners
+    @wine_notes_count = @wine_detail.get_wine_notes_count(@wine_detail.id)
+    
     if !(@owners.nil?)
       unless @owners.kind_of?(Array)
         @owners = @owners.page(params[:page]).per(8)
@@ -173,7 +180,7 @@ class WineDetailsController < ApplicationController
         @owners = Kaminari.paginate_array(@owners).page(params[:page]).per(8)
       end
     end
-    
+    @title = ['拥有者', @wine_detail.name].join('-')
   end
 
   # 添加到酒窖
@@ -190,8 +197,12 @@ class WineDetailsController < ApplicationController
 
   #上传照片
   def photo_upload
+    @title = "上传照片"
     @photo = @wine_detail.photos.new
     @wine = @wine_detail.wine
+
+    @wine_notes_count = @wine_detail.get_wine_notes_count(@wine_detail.id)
+
   end
   private
 

@@ -142,7 +142,7 @@ class AlbumsController < ApplicationController
   end
 
   def index
-    @title = ["相册", @user.username].join("-")
+    @title = ["相册", title_username(@user)].join("-")
     @albums = Album.where(["created_by= ?", @user.id]).order("id DESC").page params[:page] || 1
   end
 

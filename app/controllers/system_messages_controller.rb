@@ -6,6 +6,7 @@ class SystemMessagesController < ApplicationController
   before_filter :get_unread_count, :only => [:show, :index]
   before_filter :receipt_is_checked, :only => [:mark_as_read, :move_to_trash]
   def index
+    @title = "通知"
     params[:page] ||= 1
     #获取此人未trash的所有通知
     @receipts = current_user.receipts.
