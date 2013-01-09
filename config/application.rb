@@ -19,7 +19,7 @@ module Patrick
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
-    config.autoload_paths += %W(#{config.root}/app/models/*)
+    config.autoload_paths += %W(#{config.root}/app/models/* #{config.root}/app/models/concerns)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -53,7 +53,8 @@ module Patrick
 
     config.active_record.observers = :timeline_event_observer, :photo_observer
 
-
+    #protect us from having models without attr_accessible set.
+#    config.active_record.whitelist_attributes = true
     ## Fixed
     # DEPRECATION WARNING: ActiveSupport::Memoizable is deprecated...
     ActiveSupport::Deprecation.silenced = true

@@ -1,0 +1,28 @@
+<div>
+  认证类型<%= @verify_form.verify_type %>
+</div>
+  <div>
+    <%= f.label :indentify_card, 'Indentify Card' %>:
+    <%= f.text_field :indentify_card %><br />
+  </div>
+  <div>
+    <%= f.label :phone_number, 'phone number' %>:
+    <%= f.text_field :phone_number%><br />
+  </div>
+
+  <div>
+    <%= f.label :real_name, 'real_name' %>:
+    <%= f.text_field :real_name %><br />
+  </div>
+
+  <div>
+    <%= f.label :description, 'Description' %>:
+    <%= f.text_area :description %><br />
+  </div>
+  <div>
+    emai: <%= @verify_form.email %>
+  </div>
+<div>
+    <%= f.file_field :image %>
+</div>
+  <%= f.submit %>

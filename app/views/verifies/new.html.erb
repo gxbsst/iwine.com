@@ -1,0 +1,8 @@
+<% content_for :js do %>
+<%= javascript_include_tag "verifies" %>
+<% end %>
+<%= form_for @verify_form do |f| %>
+<%= render "form" %>
+<% end %>
+
+
