@@ -2,7 +2,7 @@
 module Service
   module MailerService
 
-    class Mailer  # 赞
+    class Mailer
 
       HOST = Rails.configuration.action_mailer.default_url_options[:host]
 

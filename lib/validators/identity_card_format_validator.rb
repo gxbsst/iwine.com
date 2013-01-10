@@ -14,7 +14,8 @@ module IdentifyCardValidator
         end
         (chars << ARRCH[cardtemp % 11])
       else
-        raise card + '并非15位身份证号!'
+        #raise card + '并非15位身份证号!'
+        return false
       end
     end
 
@@ -25,7 +26,8 @@ module IdentifyCardValidator
         when 18
           chars = card.chars.to_a
         else
-          raise '无法识别身份证号!'
+          #raise '无法识别身份证号!'
+          return false
       end
       cardtemp = 0
       17.times do |i|
@@ -41,7 +43,7 @@ class IdentifyCardFormatValidator < ActiveModel::EachValidator
   def validate_each(object, attribute, value)
     unless ::IdentifyCardValidator.check(value)
       #object.errors.add(attribute, :indentify_card_format, options)
-      object.errors[attribute] << (options[:message] || "is not formatted properly")
+      object.errors[attribute] << (options[:message] || "无法识别身份证号")
     end
   end
 

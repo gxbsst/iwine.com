@@ -1,0 +1,64 @@
+<% content_for :title, @title%>
+<div class="whitespace ss1 verify">
+  <div class="verify_banner">
+    <%= link_to new_verify_path do %>
+        <%= image_tag "common/btn_verify.png", :size => '144x50', :alt => "申请认证" %>
+    <% end %>
+  </div>
+  <div class="pd40">
+    <h1>什么是社区用户认证</h1>
+    <div class="section">
+      <div class="float_r ml20">
+        <%= link_to new_verify_path do %>
+            <%= image_tag "common/btn_verify.png", :size => '144x50', :alt => "申请认证" %>
+        <% end %>
+      </div>
+      <div>iWine社区是关于葡萄酒的互联网社区。
+        我们针对从事葡萄酒相关行业的拥有真实社会身份并提供证明材料的人群进行认证，
+        包括但不限于：酒庄、贸易公司、餐饮零售行业从业人员，从事葡萄酒写作或推广的作家、
+        专栏作者、记者、认证讲师或自由职业者，葡萄酒相关的其它行业从业人员等。
+      </div>
+      <div class="clear"></div>
+    </div>
+    <h1>认证特权</h1>
+    <div class="section">
+      <div class="float_l mr20">
+        <%= image_tag "common/verify1.jpg", :size => '238x71', :alt => "醒目的认证用户标识" %>
+      </div>
+      <div class="float_l mr20">
+        <%= image_tag "common/verify2.jpg", :size => '203x71', :alt => "醒目的认证用户标识" %>
+      </div>
+      <div class="float_l">
+        <%= image_tag "common/verify3.jpg", :size => '280x71', :alt => "醒目的认证用户标识" %>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <h1>有关认证的回答</h1>
+    <div class="section">
+      <div>
+        <p>1. 如何修改认证说明？<br />
+          V用户可以自己修改认证说明，在&quot;帐号-认证信息&quot;页面即可修改。
+          需提供认证材料。证明材料主要用来辅助审核您的认证说明，需要递交能证明您新认证说明身份真实的资料，
+          例如：名片、工作证件、包含个人信息的营业执照，相关信息截图等。
+          <%= link_to "修改地址", new_verify_path %> 。
+        </p>
+        <p>&nbsp;</p>
+        <p>2. 认证用户可否修改昵称？<br />
+          V用户可以修改昵称，但我们建议V用户尽量实名，且不要过于频繁地修改昵称，以免您的朋友无法找到您。我们对于新昵称的审核会有相关的规范，例如禁止昵称官方化、昵称含不雅词汇等。对于不符合规范的昵称，为避免误解我们会将昵称恢复为前一个规范昵称。被此操作后，会有相应的通知发送。</p>
+        <p>&nbsp;</p>
+        <p>3. 认证是否收费？<br />
+          iWine目前所有的服务都是免费的；同样，认证过程也完全免费！</p>
+        <p>&nbsp;</p>
+        <p>
+          4. 如何防止账号被盗？账户被盗后如何找回？<br />
+          为了您的帐号安全，选择一些较为复杂的密码能够提高帐号安全性。如遇帐号被盗，可以登录iWine立即<%= link_to "修改密码", update_password_settings_path %>；
+          如果无法登录iWine，请您点击<%= link_to "找回密码", new_user_password_path %>。
+        </p>
+        <p>&nbsp;</p>
+        <p>5. 机构可否申请认证？<br />
+          目前iWine仅开放个人用户申请认证；机构认证的功能更新请关注后续iWine社区的更新动态。</p>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>

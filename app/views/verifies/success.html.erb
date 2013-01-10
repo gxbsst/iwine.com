@@ -1,0 +1,20 @@
+<% content_for :title, @title%>
+<% content_for :js do %>
+    <%= javascript_include_tag "verifies" %>
+<% end %>
+
+<div class="whitespace ws1">
+  <h1 class="main_title">用户认证</h1>
+  <div class="step_verify">
+    <div class="step_sec"></div>
+  </div>
+  <div class="success mb20">您已成功提交认证信息，我们会尽快审核您的认证信息并以站内信的方式告知您认证结果。</div>
+  <div class="align_c">
+    <%= link_to root_path, :class => :btn_gray_b do %>
+        <span>返回iWine首页</span>
+    <% end %>
+  </div>
+</div>
+
+
+

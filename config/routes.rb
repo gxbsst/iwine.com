@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
 
-  resources :verifies
+  resources :verifies do
+    collection do
+      get :success
+    end
+  end
 
   resources :system_messages do
     collection do

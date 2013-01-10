@@ -28,7 +28,7 @@
         <% end %>
       </div>
       <% if is_login_user? @user  # 如果用户登录而且访问自己的页面 %>
-      <div class="username"><%= @user.username %></div>
+      <div class="username"><%= @user.username %><%= raw verify_descirption %></div>
       <div class="mystatu">
         <p>
           <%= show_bio @user.profile.bio %>
@@ -43,7 +43,7 @@
         <%= link_to "设置", basic_settings_path %>
       </div>
       <% else %>
-       <div class="username"><%= @user.username %></div>
+       <div class="username"><%= @user.username %><%= raw verify_descirption %></div>
        <div class="mystatu">
         <p><%= show_bio(@user.profile.bio, false) %></p>
         <% if @user.profile.website.present? %>

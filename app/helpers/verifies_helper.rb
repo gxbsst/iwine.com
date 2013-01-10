@@ -7,9 +7,9 @@ module VerifiesHelper
   def audit_status
     return "未审核" unless current_user.audit?
     if current_user.verified?
-      "审核通过"
+      "认证审核通过"
     else
-      "审核未通过"
+      "认证审核未通过"
     end
   end
 

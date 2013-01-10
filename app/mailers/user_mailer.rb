@@ -34,4 +34,14 @@ class UserMailer < ActionMailer::Base
     @children = options[:children]
     mail(:to => @parent_user.email, :subject => APP_DATA["email"]["reply"]["subject"])
   end
+
+  def verify_rejected(user)
+    @user = user
+    mail(:to => user.email, :subject => "您申请的用户认证未通过审核")
+  end
+
+  def verify_accepted(user)
+    @user = user
+    mail(:to => user.email, :subject => "您申请的用户认证已通过审核")
+  end
 end

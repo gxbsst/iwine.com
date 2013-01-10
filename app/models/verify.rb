@@ -5,7 +5,7 @@ class Verify < ActiveRecord::Base
   VERIFY_TYPE_COMPANY = 2
 
   belongs_to :user
-  attr_accessible :description, :vocation_photo, :identify_card, :trade_type, :identify_photo
+  attr_accessible :description, :vocation_photo, :identify_card, :trade_type, :identify_photo, :agree_term
   attr_protected :audit_log_id, :audit_log_result
 
   mount_uploader :identify_photo, VerifyUploader::Identify
@@ -23,29 +23,23 @@ class Verify < ActiveRecord::Base
   #  super.merge('image' => image.as_json[:image], 'varify_type' => varify_type.as_json[:varify_type])
   #end
 
-  class VerifyType
-    attr_accessor :name, :id
-
-    MAPPING = { 1 => 'personal', 2 => 'company'}
-
-    def self.all;
-      MAPPING
+  state_machine initial: :inaudit do
+    event :accepted do
+      transition :inaudit => :accepted
     end
 
-    def id
-      MAPPING.invert[name]
+    event :rejected do
+      transition :inaudit => :rejected
     end
 
-    def logo;end
+    event :initial do
+      transition [:rejected, :inaudit] => :inaudit
+    end
 
-  end
-
-  class TradeType
-    attr_accessor :name, :id
-  end
-
-  class Image
-    attr_accessor :url
+    #before_transition :inaudit => :accepted do |order|
+    #  # process payment ...
+    #
+    #end
   end
 
 end

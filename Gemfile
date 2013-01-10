@@ -169,3 +169,5 @@ gem 'daemons', '1.1.9'
 
 # 虚拟属性 象  active record
 gem 'virtus', '0.5.2'
+
+gem 'state_machine'

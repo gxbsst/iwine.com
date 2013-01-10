@@ -6,30 +6,29 @@ module Service
     ACCEPTED = 2
     REJECTED = 1
 
-    def self.rejected(auditor, user, options = {})
-      User.transaction do
-        audit_log =  AuditLog.create(:owner_type => OWNER_TYPE_USER,
-                                     :business_id => user.id,
-                                     :created_by => auditor.id,
-                                     :result => REJECTED,
-                                     :comment => options[:comment]
-        )
-        user.accepted(audit_log)
-        # send email
+    class << self
+      def rejected(auditor, user, options = {})
+        user.accepted(build_audit_log(auditor, user, REJECTED,  options))
+        Service::MailerService::Mailer.deliver(UserMailer, :verify_rejected, user)
       end
+
+      def accepted(auditor, user, options = {})
+        user.accepted(build_audit_log(auditor, user, ACCEPTED,  options))
+        Service::MailerService::Mailer.deliver(UserMailer, :verify_accepted, user)
+      end
+
+      protected
+
+      def build_audit_log(auditor, auditable, result, options)
+        AuditLog.create(:owner_type => OWNER_TYPE_USER,
+                        :business_id => auditable.id,
+                        :created_by => auditor.id,
+                        :result => result,
+                        :comment => options[:comment]
+        )
+      end
+
     end
 
-    def self.accepted(auditor, user, options = {})
-      User.transaction do
-        audit_log =  AuditLog.create(:owner_type => OWNER_TYPE_USER,
-                                     :business_id => user.id,
-                                     :created_by => auditor.id,
-                                     :result => ACCEPTED,
-                                     :comment => options[:comment]
-        )
-        user.accepted(audit_log)
-        # send email
-      end
-    end
   end
 end

@@ -1,13 +1,18 @@
+<style type="text/css">
+  .message {
+      color: red;
+  }
+</style>
 <table class="form" width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <th width="90"><span class="red">*</span>认证类型</th>
+    <th width="90">认证类型</th>
     <td>
       <strong>个人认证</strong>
       <span class="font11">（目前iWine仅开放个人用户申请认证；机构认证的功能更新请关注后续iWine社区的更新动态。）</span>
     </td>
   </tr>
   <tr>
-    <th valign="top"><span class="red">*</span>昵称</th>
+    <th valign="top">昵称</th>
     <td><strong>不良夏生</strong></td>
   </tr>
   <tr>
@@ -48,7 +53,7 @@
         <div class="form_input clearfix">
           <div class="form_input_text">
             <div class="form_info">
-              请下载<a href="ic.doc">工作证明模版</a>，
+              请下载<%= link_to "工作证明模版", "/ic.doc" %>，
               填写完整并加盖公章后上传。律师/医生/注册会计师/警察/记者等行业用户，也可上传职业资格证书。
               提供名片作为证明资料的用户，请在下一步页面邀请互粉的认证用户好友为您进行辅助证明。
             </div>
@@ -58,7 +63,7 @@
         </div>
         <div class="form_input clearfix">
           <div class="form_input_text"></div>
-          <div class="input_name">身份证明</div>
+          <div class="input_name"><span class="red">*</span>身份证明</div>
           <div class="input_box"><%= f.file_field :identify_photo %> </div>
           <div class="form_info">支持jpg、png、gif格式，大小不超过2M/张。</div>
         </div>

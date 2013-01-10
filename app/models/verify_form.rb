@@ -15,11 +15,16 @@ class VerifyForm
   attribute :phone_number, String
   attribute :email, String
   attribute :user_id, Integer
+  attribute :agree_term, Integer
 
   attr_accessor :user, :profile, :verify
-  validates :identify_card, :description, :phone_number, :real_name, :presence => true
+  validates :identify_card, :presence => {:message => "请输入您的身份证号码"}
+  validates :description, :presence => {:message => "请输入认证说明"}
+  validates :phone_number, :presence => {:message => "请输入您的手机号码"}
+  validates :real_name, :presence => {:message => "请输入您的真实姓名"}
   validates :identify_card, :identify_card_format => true
   validates :agree_term, :acceptance => true, :on => :create
+  validates :vocation_photo, :identify_photo, :presence => {:message => "请上传认证照片"}, :on => :create
 
   def self.init(user)
     verify = user.verify || user.build_verify
@@ -79,6 +84,7 @@ class VerifyForm
   def update(params)
     params.each {|k, v| instance_variable_set("@#{k}", v) }
     save
+    verify.initial #stat machine
   end
 
   def new_record?

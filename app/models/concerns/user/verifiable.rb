@@ -9,12 +9,18 @@ class User
       has_one :verify, dependent: :destroy
     end
 
+    def apply_verify?
+     !verify.nil?
+    end
+
     def verified?
-      audit? && verify.audit_log_result == ACCEPTED
+      #audit? && verify.audit_log_result == ACCEPTED
+      audit? && verify.accepted?
     end
 
     def audit?
-      !verify.audit_log_result.nil?
+      apply_verify? && !verify.inaudit?
+      #!verify.audit_log_result.nil?
     end
 
     def audit_log
@@ -22,15 +28,22 @@ class User
     end
 
     def audit_log_comment
+      return nil unless audit?
       audit_log.comment
     end
 
     def accepted(audit_log)
+      verify.accepted
       sync_audit_log(audit_log)
     end
 
     def rejected(audit_log)
+      verify.injected
       sync_audit_log(audit_log)
+    end
+
+    def verify_desc
+      verify.description
     end
 
     protected
