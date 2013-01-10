@@ -1,0 +1,93 @@
+<table class="form" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th width="90"><span class="red">*</span>认证类型</th>
+    <td>
+      <strong>个人认证</strong>
+      <span class="font11">（目前iWine仅开放个人用户申请认证；机构认证的功能更新请关注后续iWine社区的更新动态。）</span>
+    </td>
+  </tr>
+  <tr>
+    <th valign="top"><span class="red">*</span>昵称</th>
+    <td><strong>不良夏生</strong></td>
+  </tr>
+  <tr>
+    <th><span class="red">*</span>真实姓名</th>
+    <td><%= f.text_field :real_name, :class => [:text, :W_inputStp] %></td>
+  </tr>
+  <tr>
+    <th><span class="red">*</span>身份证号码</th>
+    <td> <%= f.text_field :identify_card, :class => [:text, :W_inputStp] %></td>
+  </tr>
+  <tr>
+    <th valign="top">&nbsp;</th>
+    <td><span class="gray">请完善认证说明，成功认证后，将出现在你的认证说明介绍中。</span></td>
+  </tr>
+  <tr>
+    <th valign="top"><span class="red">*</span>认证说明</th>
+    <td>
+      <%= f.text_area :description, :size => '45x5', :class => :W_inputStp %>
+    </td>
+  </tr>
+  <tr>
+    <th>&nbsp;</th>
+    <td><span class="gray">请完善您的联系人信息，以下您所提交的材料仅供新浪认证使用，不会对外公开，请放心填写。</span> </td>
+  </tr>
+  <tr>
+    <th><span class="red">*</span>电子邮箱</th>
+    <td><%= @verify_form.email %></td>
+  </tr>
+  <tr>
+    <th><span class="red">*</span>联系手机</th>
+    <td><%= f.text_field :phone_number, :class => [:text, :W_inputStp] %></td>
+  </tr>
+  <tr>
+    <th valign="top"><span class="red">*</span>认证证明</th>
+    <td>
+      <div class="ic">
+        <div class="att">请下载工作证明模版，按照格式填写后并加盖所在单位公章后上传资料。</div>
+        <div class="form_input clearfix">
+          <div class="form_input_text">
+            <div class="form_info">
+              请下载<a href="ic.doc">工作证明模版</a>，
+              填写完整并加盖公章后上传。律师/医生/注册会计师/警察/记者等行业用户，也可上传职业资格证书。
+              提供名片作为证明资料的用户，请在下一步页面邀请互粉的认证用户好友为您进行辅助证明。
+            </div>
+          </div>
+          <div class="input_name"><span class="red">*</span>职位证明</div>
+          <div class="input_box"><%= f.file_field :vocation_photo %> </div>
+        </div>
+        <div class="form_input clearfix">
+          <div class="form_input_text"></div>
+          <div class="input_name">身份证明</div>
+          <div class="input_box"><%= f.file_field :identify_photo %> </div>
+          <div class="form_info">支持jpg、png、gif格式，大小不超过2M/张。</div>
+        </div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <th valign="top">&nbsp;</th>
+    <td class="check1">
+      <%= f.check_box :agree_term, :checked => true %>
+      <label for="check1">
+        我已阅读并同意<a href="#">《iWine个人认证用户管理条例》</a>
+        及<a href="#">《身份通服务协议》</a></label>
+    </td>
+  </tr>
+  <tr>
+    <th valign="top">&nbsp;</th>
+    <td class="gray">协议是用户与身份通之间的协议，勾选同意表明其接受身份通的这份协议内容。
+      <br />
+      iWine仅提供入口，不作为协议的任何一方，也不对协议内容承担任何权利义务。</td>
+  </tr>
+  <tr>
+    <th valign="top">&nbsp;</th>
+    <td class="gray">
+      <a href="javascript:void(0)" class="btn_green_s mr10 submit"><span>提交认证</span></a>
+      <%= link_to root_path, :class => :btn_gray_b do  %>
+          <span>取消</span>
+      <% end %>
+    </td>
+  </tr>
+</table>
+

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 Patrick::Application.routes.draw do
+
+  resources :verifies
+
   resources :system_messages do
     collection do
       post :mark_as_read
