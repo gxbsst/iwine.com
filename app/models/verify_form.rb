@@ -1,6 +1,9 @@
 # encoding: utf-8
 
 class VerifyForm
+
+  VERIFY_PHOTO_PATH = File.join(Rails.root, "app/assets","verify_files")
+
   include Virtus
   extend ActiveModel::Naming
   include ActiveModel::Conversion
@@ -12,6 +15,7 @@ class VerifyForm
   attribute :vocation_photo
   attribute :verify_type
   attribute :real_name, String
+  attribute :username, String
   attribute :phone_number, String
   attribute :email, String
   attribute :user_id, Integer
@@ -27,6 +31,7 @@ class VerifyForm
   validates :vocation_photo, :identify_photo, :presence => {:message => "请上传认证照片"}, :on => :create
 
   def self.init(user)
+
     verify = user.verify || user.build_verify
     new(:verify => verify, :user => user)
   end
@@ -61,6 +66,10 @@ class VerifyForm
 
   def real_name
    @real_name ||= profile.real_name
+  end
+
+  def username
+    @username ||= user.username
   end
 
   def phone_number
@@ -110,6 +119,7 @@ class VerifyForm
       user_id: user_id,
       identify_photo: identify_photo,
       vocation_photo: vocation_photo,
+      agree_term: agree_term,
       verify_type: Verify::VERIFY_TYPE_PERSONAL # TODO, 现在默认是个人， 以后还要添加公司
     }
   end

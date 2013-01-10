@@ -41,3 +41,4 @@ public/assets
 *.swm
 coverage
 rails_best_practices_output.html
+app/assets/verify_files/*

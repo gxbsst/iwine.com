@@ -10,7 +10,7 @@ module VerifyUploader
     # Override the directory where uploaded files will be stored.
     # This is a sensible default for uploaders that are meant to be mounted:
     def store_dir
-      "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.slug}"
+      "#{VerifyForm::VERIFY_PHOTO_PATH}/#{model.class.to_s.underscore}/#{mounted_as}/#{model.slug}"
     end
 
     # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -19,10 +19,7 @@ module VerifyUploader
       "/assets/userpic.jpg"
     end
 
-    version :origin do
-      resize_to_limit(APP_DATA["image"]["poster"]["origin"]["width"],
-                      APP_DATA["image"]["poster"]["origin"]["height"])
-    end
+
 
     def extension_white_list
       %w(jpg jpeg gif png)
@@ -31,21 +28,26 @@ module VerifyUploader
   end
 
   class Vocation < Base
-    def filename
-      if original_filename
-        model.read_attribute(:vocation_photo) ||
-            Digest::SHA1.hexdigest("#{Time.now.utc}--#{original_filename()}") + '.png'
-      end
+    version :thumb do
+      process :resize_to_limit => [APP_DATA["image"]["poster"]["origin"]["width"],
+                                 APP_DATA["image"]["poster"]["origin"]["height"]]
     end
+
+    def filename
+      model.read_attribute( :vocation_photo ) || Digest::SHA1.hexdigest("#{Time.now.utc}--#{original_filename()}") + '.png' if original_filename
+    end
+
   end
 
   class Identify < Base
-    def filename
-      if original_filename
-        model.read_attribute(:identify_photo) ||
-            Digest::SHA1.hexdigest("#{Time.now.utc}--#{original_filename()}") + '.png'
-      end
+    version :thumb do
+      process :resize_to_limit => [APP_DATA["image"]["poster"]["origin"]["width"],
+                                 APP_DATA["image"]["poster"]["origin"]["height"]]
     end
+    def filename
+      model.read_attribute( :identify_photo ) || Digest::SHA1.hexdigest("#{Time.now.utc}--#{original_filename()}") + '.png' if original_filename
+    end
+
   end
 
 end

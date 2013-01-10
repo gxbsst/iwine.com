@@ -5,6 +5,10 @@ Patrick::Application.routes.draw do
     collection do
       get :success
     end
+    member do
+      get :identify_photo
+      get :vocation_photo
+    end
   end
 
   resources :system_messages do
