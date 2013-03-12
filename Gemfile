@@ -47,7 +47,8 @@ gem 'hanzi_to_pinyin', :git => 'git://github.com/wxianfeng/hanzi_to_pinyin.git',
 # gem "breadcrumbs_on_rails"
 
 ## Exception Handler
-gem 'exception_notification', '3.0.0', :require => 'exception_notifier'
+#gem 'exception_notification', '3.0.0', :require => 'exception_notifier'
+gem 'exception_notification', git: 'git://github.com/alanjds/exception_notification.git'
 
 ## Success/Notice/Error Style
 gem "stickies", :git => "git://github.com/techbang/stickies.git", :branch => '5b18fae852f7'
