@@ -1,0 +1,8 @@
+# Logfile created on 2013-05-02 12:15:52 +0800 by logger.rb/31641
+[05/02/13 12:15:52 +0800 Weis-MacBook-Air.local (9026)] INFO : Dispatcher: thin
+[05/02/13 12:15:52 +0800 Weis-MacBook-Air.local (9026)] INFO : Application: My Application
+[05/02/13 12:15:52 +0800 Weis-MacBook-Air.local (9026)] WARN : Agent configured not to send data in this environment.
+[05/02/13 12:15:52 +0800 Weis-MacBook-Air.local (9026)] INFO : New Relic Ruby Agent 3.5.0.1 Initialized: pid = 9026
+[05/02/13 12:15:52 +0800 Weis-MacBook-Air.local (9026)] INFO : Agent Log at /Users/weston/Projects/Patrick/spec/log/newrelic_agent.log
+[05/02/13 12:15:52 +0800 Weis-MacBook-Air.local (9026)] INFO : Detected Unicorn, please see additional documentation: https://newrelic.com/docs/troubleshooting/im-using-unicorn-and-i-dont-see-any-data
+[05/02/13 12:15:52 +0800 Weis-MacBook-Air.local (9026)] INFO : NewRelic::Agent::Samplers::DelayedJobSampler sampler not available: No DJ worker present
